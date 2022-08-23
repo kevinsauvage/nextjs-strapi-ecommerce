@@ -1,0 +1,25 @@
+.btns {
+  margin: 2rem 0;
+}
+.totalItems {
+  color: grey;
+}
+
+.total {
+  font-size: 18px;
+}
+
+.emptyContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.emptyText {
+  margin: 2rem 0;
+  font-size: 18px;
+  font-weight: 500;
+  color: gray;
+}

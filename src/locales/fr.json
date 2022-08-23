@@ -1,0 +1,20 @@
+{
+    "page": {
+        "home": {
+            "title": "Title fr"
+        }
+    },
+    "link": {
+        "Home": "Home",
+        "Shop": "Boutique",
+        "About": "A propos",
+        "Contact": "Contacter",
+        "Terms": "Conditions",
+        "Privacy": "Privacité"
+    },
+    "LanguageSwitcher": {
+        "en": "Anglais",
+        "fr": "Francais",
+        "es": "Espagnole"
+    }
+}

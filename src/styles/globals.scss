@@ -1,0 +1,64 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'roboto', sans-serif;
+  background-color: #f9f9f9;
+  scroll-behavior: smooth;
+}
+
+a,
+button {
+  color: inherit;
+  text-decoration: none;
+  font-family: 'roboto', sans-serif;
+}
+
+button {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 0.125rem solid rgb(199, 0, 0);
+  outline-offset: 0.125rem;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+*::-webkit-input-placeholder {
+  color: rgb(147, 147, 147);
+}
+*:-moz-placeholder {
+  /* FF 4-18 */
+  color: rgb(147, 147, 147);
+  opacity: 1;
+}
+*::-moz-placeholder {
+  /* FF 19+ */
+  color: rgb(147, 147, 147);
+  opacity: 1;
+}
+*:-ms-input-placeholder {
+  /* IE 10+ */
+  color: rgb(147, 147, 147);
+}
+*::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: rgb(147, 147, 147);
+}
+*::placeholder {
+  /* modern browser */
+  color: rgb(147, 147, 147);
+}

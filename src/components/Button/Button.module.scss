@@ -1,0 +1,28 @@
+.button {
+  border-radius: 3px;
+  width: 100%;
+  max-width: 400px;
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: capitalize;
+  border: none;
+  height: 45px;
+}
+
+.primary {
+  background-color: whitesmoke;
+  color: black;
+  border: 2px solid black;
+}
+
+.secondary {
+  background-color: rgb(70, 70, 222);
+  color: white;
+  border: 2px solid white;
+}
+
+.tertiary {
+  background-color: black;
+  color: white;
+  border: 2px solid white;
+}

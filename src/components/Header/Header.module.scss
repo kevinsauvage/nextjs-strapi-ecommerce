@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  width: 100%;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  padding: 4px 0;
+  font-size: 13px;
+  border: 1px solid gainsboro;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  padding: 1rem 0;
+}
+
+.logo {
+  cursor: pointer;
+}

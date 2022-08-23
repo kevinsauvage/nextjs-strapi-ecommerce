@@ -1,0 +1,28 @@
+.container {
+  background-color: black;
+  color: white;
+}
+
+.top {
+  height: 300px;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 0;
+  border-top: 1px solid rgb(35, 35, 35);
+  font-size: 12px;
+}
+
+.list {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  .item {
+    list-style: none;
+  }
+}
