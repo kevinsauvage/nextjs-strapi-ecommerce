@@ -6,20 +6,22 @@ import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
 import routes from '../../data/routes';
 import Button from '../../components/Button/Button';
 import Slide from '../../components/Slide/Slide';
-import Wrapper from '../../components/Wrapper/Wrapper';
+import FlexColumn from '../../components/FlexColumn/FlexColumn';
 import styles from './Cart.module.scss';
 import CheckoutBtn from '../../components/CheckoutBtn/CheckoutBtn';
 import { UserContext } from '../../contexts/UserContext/UserContext';
 import useTotalPrice from '../../hooks/useTotalPrice';
+import ProductCheckoutCard from '../../components/ProductCheckoutCard/ProductCheckoutCard';
 
 export default function Cart() {
   const { cartOpen, resetToggle } = useContext(GlobalStoreContext);
   const { cart } = useContext(CartContext);
   const { user } = useContext(UserContext);
 
-  const total = useTotalPrice(cart);
+  const total = useTotalPrice(cart.items);
 
   const router = useRouter();
+  console.log(cart, 'caart');
 
   return (
     <Slide
@@ -28,28 +30,32 @@ export default function Cart() {
       title="Shopping Cart"
       headerRight={cart.length}
     >
-      {cart && Array.isArray(cart) && cart.length > 0 ? (
+      {cart && Array.isArray(cart.items) && cart.items.length > 0 ? (
         <>
-          {cart.map((item) => console.log(item))}
+          <ul className={styles.list}>
+            {cart.items.map((item) => (
+              <ProductCheckoutCard key={item.product.id} item={item} />
+            ))}
+          </ul>
           <footer>
             <div className={styles.total}>
               <p>Total : {total}</p>
             </div>
             <div className={styles.btns}>
-              <Wrapper>
+              <FlexColumn gap="1rem">
                 <Button
                   text="View cart"
                   extraClass={styles.btn}
                   tertiary
                   onClick={() => router.push('/cart')}
                 />
-
                 <CheckoutBtn
                   user={user}
+                  extraClass={styles.btn}
                   noUserRedirectURL={routes.base.login}
                   items={cart}
                 />
-              </Wrapper>
+              </FlexColumn>
             </div>
           </footer>
         </>

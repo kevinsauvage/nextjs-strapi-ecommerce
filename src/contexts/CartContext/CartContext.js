@@ -9,6 +9,13 @@ export function CartProvider({ children }) {
   const values = useMemo(
     () => ({
       cart: states.cart,
+
+      addToCart: async (product, quantity) => {
+        dispatch({
+          type: actions.ADD_TO_CART,
+          payload: { product, quantity },
+        });
+      },
     }),
     [states]
   );

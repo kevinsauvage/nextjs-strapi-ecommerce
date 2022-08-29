@@ -14,6 +14,7 @@ import whiteLogo from '../../assets/images/WhiteLogo.svg';
 function Header() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const { asPath } = useRouter();
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -48,7 +49,7 @@ function Header() {
         </Link>
         <Navbar active={isActive} />
         <Wrapper gap="0rem">
-          <UserButtons />
+          <UserButtons isActive={isActive} />
         </Wrapper>
       </Container>
     </header>

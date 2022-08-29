@@ -4,7 +4,12 @@ import apiHelper from '../../utils/apiHelper';
 import getStripe from '../../utils/getStripe';
 import Button from '../Button/Button';
 
-export default function CheckoutBtn({ user, noUserRedirectURL, items }) {
+export default function CheckoutBtn({
+  user,
+  noUserRedirectURL,
+  items,
+  extraClass,
+}) {
   const router = useRouter();
   const redirectToCheckout = async () => {
     if (!user || !user?.id) return router.push(noUserRedirectURL);
@@ -21,6 +26,11 @@ export default function CheckoutBtn({ user, noUserRedirectURL, items }) {
     return stripe.redirectToCheckout({ sessionId: res.id });
   };
   return (
-    <Button secondary onClick={() => redirectToCheckout()} text="Checkout" />
+    <Button
+      secondary
+      onClick={() => redirectToCheckout()}
+      text="Checkout"
+      extraClass={extraClass}
+    />
   );
 }

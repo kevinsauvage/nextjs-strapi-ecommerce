@@ -5,14 +5,18 @@ import {
   RiSearchLine,
   RiHeartsLine,
 } from 'react-icons/ri';
+import { CartContext } from '../../contexts/CartContext/CartContext';
 import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
+import useTotalItems from '../../hooks/useTotalItems';
 import HeaderButton from '../HeaderButton/HeaderButton';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import styles from './UserButtons.module.scss';
 
-export default function UserButtons() {
+export default function UserButtons({ isActive }) {
   const { toggleSearch, toggleCart, toggleUser } =
     useContext(GlobalStoreContext);
+
+  const { cart } = useContext(CartContext);
 
   const data = [
     {
@@ -38,6 +42,8 @@ export default function UserButtons() {
     },
   ];
 
+  const totalItems = useTotalItems(cart.items);
+
   return (
     <div className={styles.container}>
       <LanguageSwitcher />
@@ -50,6 +56,9 @@ export default function UserButtons() {
           {el.item}
         </HeaderButton>
       ))}
+      <div className={`${styles.totalItems} ${isActive ? styles.active : ''}`}>
+        {totalItems}
+      </div>
     </div>
   );
 }
