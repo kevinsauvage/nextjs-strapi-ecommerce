@@ -5,10 +5,9 @@ import SearchBar from '../SearchBar/SearchBar';
 import styles from './Layout.module.scss';
 import Cart from '../../ComponentsSlide/Cart/Cart';
 import User from '../../ComponentsSlide/User/User';
-import CategoryButtons from '../CategoryButtons/CategoryButtons';
 import { UserContext } from '../../contexts/UserContext/UserContext';
 
-function Layout({ children, categories, user }) {
+function Layout({ children, collections, user }) {
   const { addUser } = useContext(UserContext);
 
   useEffect(() => {
@@ -22,10 +21,9 @@ function Layout({ children, categories, user }) {
       <User />
       <div className={styles.container}>
         <Header />
-        <CategoryButtons categories={categories} />
         <div className={styles.children}>{children}</div>
       </div>
-      <Footer />
+      <Footer collections={collections} />
     </>
   );
 }

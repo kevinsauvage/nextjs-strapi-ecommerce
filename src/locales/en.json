@@ -15,7 +15,9 @@
         "About": "About",
         "Contact": "Contact",
         "Terms": "Terms",
-        "Privacy": "Privacy"
+        "Privacy": "Privacy",
+        "Profile": "Profile",
+        "Collections": "Collections"
     },
     "LanguageSwitcher": {
         "en": "English",

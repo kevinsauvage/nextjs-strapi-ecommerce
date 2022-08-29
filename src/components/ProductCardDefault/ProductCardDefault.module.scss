@@ -1,0 +1,28 @@
+.productCardDefault {
+  cursor: pointer;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.content {
+  padding: 1rem;
+  background-color: azure;
+}
+
+.image {
+  position: relative;
+  height: 150px;
+}
+
+.title {
+  font-weight: 500;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 14px;
+}

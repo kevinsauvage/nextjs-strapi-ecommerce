@@ -4,7 +4,6 @@ body {
   margin: 0;
   font-family: 'roboto', sans-serif;
   background-color: #f9f9f9;
-  scroll-behavior: smooth;
 }
 
 a,
@@ -20,6 +19,16 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+li {
+  list-style: none;
+}
+
+p,
+a,
+button {
+  letter-spacing: 2px;
 }
 
 *:focus:not(:focus-visible) {

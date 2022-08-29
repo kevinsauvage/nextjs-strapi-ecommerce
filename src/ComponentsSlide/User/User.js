@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
 import { UserContext } from '../../contexts/UserContext/UserContext';
 import Button from '../../components/Button/Button';
@@ -13,23 +12,31 @@ export default function User() {
   const { userOpen, resetToggle } = useContext(GlobalStoreContext);
   const { user, logOut } = useContext(UserContext);
 
-  const router = useRouter();
-
   return (
     <Slide
       isOpen={userOpen}
       handleClose={resetToggle}
-      title={user.id ? `${`${user.username}`}` : 'Login or Register'}
+      title={user.id ? 'Me' : 'Login or Register'}
     >
       {user && user.id ? (
-        <div>
-          <p>{user.email}</p>
-          <Button
-            text="User Profile"
-            secondary
-            onClick={() => router.push(routes.base.profile)}
-          />
-          <Button text="Log out " tertiary onClick={logOut} />
+        <div className={styles.userinfo}>
+          <div className={styles.main}>
+            <p>Some user data here</p>
+          </div>
+          <div className={styles.buttons}>
+            <Button
+              href={routes.base.profile}
+              text="PROFILE"
+              secondary
+              extraClass={styles.btn}
+            />
+            <Button
+              text="LOG OUT"
+              tertiary
+              onClick={logOut}
+              extraClass={styles.btn}
+            />
+          </div>
         </div>
       ) : (
         <>
@@ -39,15 +46,16 @@ export default function User() {
           </p>
           <FlexColumn gap="0.8rem">
             <Button
-              text="Login"
+              text="LOGIN"
               tertiary
-              onClick={() => router.push(routes.base.login)}
+              href={routes.base.login}
+              extraClass={styles.btn}
             />
-
             <Button
-              text="Register"
+              text="SIGN UP"
               secondary
-              onClick={() => router.push(routes.base.register)}
+              href={routes.base.register}
+              extraClass={styles.btn}
             />
           </FlexColumn>
         </>

@@ -1,10 +1,40 @@
 .container {
-  background-color: black;
-  color: white;
+  background-color: $primary;
+  color: $secondary;
 }
 
 .top {
-  height: 300px;
+  padding: 60px 0;
+  display: flex;
+  align-items: center;
+
+  .title {
+    font-size: 30px;
+    margin-bottom: 50px;
+    text-transform: capitalize;
+    white-space: nowrap;
+  }
+
+  .navList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30%;
+  }
+
+  .navItem {
+    display: inline-block;
+    margin-right: 30px;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: fit-content;
+    max-height: 130px;
+    flex-wrap: wrap;
+  }
 }
 
 .bottom {
@@ -15,14 +45,14 @@
   padding: 14px 0;
   border-top: 1px solid rgb(35, 35, 35);
   font-size: 12px;
-}
 
-.list {
-  display: flex;
-  gap: 8px;
-  align-items: center;
+  .list {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 
-  .item {
-    list-style: none;
+    .item {
+      list-style: none;
+    }
   }
 }

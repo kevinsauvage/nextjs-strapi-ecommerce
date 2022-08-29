@@ -1,5 +1,6 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import styles from './Cart.module.scss';
+import Page from '../../components/Page/Page';
 import { messages } from '../../config/i18n';
 
 function CartPage() {
@@ -7,15 +8,9 @@ function CartPage() {
   if (router.isFallback) return <div>Loading product...</div>;
 
   return (
-    <div className="">
-      <Head>
-        <title>Cart</title>
-      </Head>
-
-      <div className="">
-        <h1>Cart page</h1>
-      </div>
-    </div>
+    <Page title="Cart">
+      <div className={styles.cart} />
+    </Page>
   );
 }
 

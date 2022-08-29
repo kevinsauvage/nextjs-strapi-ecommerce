@@ -1,15 +1,60 @@
 .container {
+  width: 100%;
+  padding: 8px 0;
+  padding: 60px 0;
+}
+
+.header {
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 30px;
+  margin-bottom: 30px;
+
+  span {
+    width: 60px;
+    height: 2px;
+    border-radius: 4px;
+    background-color: $strong;
+    display: inline-block;
+  }
+}
+
+.title {
+  text-align: center;
+}
+
+.list {
+  display: grid;
   width: 100%;
-  background-color: black;
-  padding: 8px 0;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+
+  @include respond(laptop_s) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include respond(tablet) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .button {
   padding: 0.5rem;
   border-radius: 8px;
   background-color: transparent;
-  color: white;
+}
+
+.img {
+  height: 180px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.name {
+  text-align: center;
+  margin-top: 14px;
+  font-size: 22px;
+  font-weight: 500;
 }

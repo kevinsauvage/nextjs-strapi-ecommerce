@@ -1,6 +1,7 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import styles from './Terms.module.scss';
 import { messages } from '../../config/i18n';
+import Page from '../../components/Page/Page';
 
 function TermsPage() {
   const router = useRouter();
@@ -8,15 +9,9 @@ function TermsPage() {
   if (router.isFallback) return <div>Loading product...</div>;
 
   return (
-    <div className="">
-      <Head>
-        <title>TermsPage</title>
-      </Head>
-
-      <div className="">
-        <h1>TermsPage page</h1>
-      </div>
-    </div>
+    <Page title="Terms">
+      <div className={styles.terms} />
+    </Page>
   );
 }
 

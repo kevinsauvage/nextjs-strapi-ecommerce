@@ -1,26 +1,21 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Page from '../../components/Page/Page';
 import { messages } from '../../config/i18n';
+import styles from './Search.module.scss';
 
-function SearchPage() {
+function Search() {
   const router = useRouter();
 
   if (router.isFallback) return <div>Loading product...</div>;
 
   return (
-    <div className="">
-      <Head>
-        <title>Search</title>
-      </Head>
-
-      <div className="">
-        <h1>Search page</h1>
-      </div>
-    </div>
+    <Page title="Search">
+      <div className={styles.search} />
+    </Page>
   );
 }
 
-export default SearchPage;
+export default Search;
 
 export function getStaticProps({ locale }) {
   return {

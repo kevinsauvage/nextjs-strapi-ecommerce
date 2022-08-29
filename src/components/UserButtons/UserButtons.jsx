@@ -1,11 +1,13 @@
 import { useContext } from 'react';
 import {
-  MdOutlineAccountCircle,
-  MdOutlineSearch,
-  MdOutlineShoppingCart,
-} from 'react-icons/md';
+  RiShoppingCart2Line,
+  RiUserLine,
+  RiSearchLine,
+  RiHeartsLine,
+} from 'react-icons/ri';
 import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
 import HeaderButton from '../HeaderButton/HeaderButton';
+import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
@@ -14,25 +16,31 @@ export default function UserButtons() {
 
   const data = [
     {
-      item: <MdOutlineSearch />,
+      item: <RiSearchLine />,
       id: 1,
       onClick: toggleSearch,
     },
-
     {
-      item: <MdOutlineAccountCircle />,
+      item: <RiHeartsLine />,
       id: 2,
       onClick: toggleUser,
     },
+
     {
-      item: <MdOutlineShoppingCart />,
+      item: <RiUserLine />,
       id: 3,
+      onClick: toggleUser,
+    },
+    {
+      item: <RiShoppingCart2Line />,
+      id: 4,
       onClick: toggleCart,
     },
   ];
 
   return (
     <div className={styles.container}>
+      <LanguageSwitcher />
       {data.map((el) => (
         <HeaderButton
           type="button"

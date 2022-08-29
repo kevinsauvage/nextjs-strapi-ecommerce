@@ -1,3 +1,4 @@
+import 'nextjs-breadcrumbs/dist/index.css';
 import '../styles/globals.scss';
 import App from 'next/app';
 import { NextIntlProvider } from 'next-intl';
@@ -6,16 +7,17 @@ import Layout from '../components/Layout/Layout';
 import { GlobalProvider } from '../contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '../contexts/CartContext/CartContext';
 import { UserProvider } from '../contexts/UserContext/UserContext';
+import { getShopifyClient } from '../lib/shopify';
 
 function MyApp({ Component, pageProps }) {
-  const { messages, categories, user } = pageProps;
+  const { messages, collections, user } = pageProps;
 
   return (
     <NextIntlProvider messages={messages}>
       <GlobalProvider>
         <UserProvider>
           <CartProvider>
-            <Layout categories={categories} user={user}>
+            <Layout collections={collections} user={user}>
               <Component {...pageProps} />
             </Layout>
           </CartProvider>
@@ -33,11 +35,11 @@ MyApp.getInitialProps = async (ctx) => {
 
   const userToken = ctx?.ctx?.req?.cookies?.jwt;
 
-  const categories = await apiCall.category.getCategories(locale);
-
+  const collections = await getShopifyClient(locale).collection.fetchAll();
+  const policies = await getShopifyClient(locale).shop.fetchPolicies();
+  const shopInfos = await getShopifyClient(locale).shop.fetchInfo();
   let user = null;
 
-  console.log(userToken);
   if (userToken) {
     try {
       const response = await apiCall.user.getMe(userToken);
@@ -50,7 +52,7 @@ MyApp.getInitialProps = async (ctx) => {
 
   return {
     ...appProps,
-    pageProps: { categories, user },
+    pageProps: { collections, user, policies, shopInfos },
   };
 };
 

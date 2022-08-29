@@ -10,7 +10,9 @@
         "About": "Sobre",
         "Contact": "Contactar",
         "Terms": "Condiciones",
-        "Privacy": "Privacidad"
+        "Privacy": "Privacidad",
+        "Profile": "Perfil",
+        "Collections": "collections"
     },
     "LanguageSwitcher": {
         "en": "Ingles",

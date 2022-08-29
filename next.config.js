@@ -6,7 +6,7 @@ const { i18nNextConfig } = require('./src/config/i18n');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['res.cloudinary.com'],
+    domains: ['res.cloudinary.com', 'cdn.shopify.com'],
   },
   sassOptions: {
     includePaths: [path.join(__dirname, './src/styles/')],

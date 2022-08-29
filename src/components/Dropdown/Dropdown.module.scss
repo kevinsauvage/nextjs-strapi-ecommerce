@@ -26,7 +26,7 @@
   position: absolute;
   right: 0.5rem;
   top: 130%;
-  background-color: black;
+  background-color: $primary;
   font-size: 1rem;
   border-radius: 4px;
   overflow: hidden;
@@ -38,7 +38,7 @@
   text-align: center;
   font-size: 0.9rem;
   background-color: white;
-  color: black;
+  color: $primary;
   font-weight: 600;
   cursor: pointer;
   border-bottom: 1px solid rgb(195, 223, 255);

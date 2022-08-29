@@ -1,28 +1,38 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Container from '../../components/Container/Container';
+import Page from '../../components/Page/Page';
+import ProductsList from '../../components/ProductList/ProductsList';
 import { messages } from '../../config/i18n';
-import apiCall from '../../utils/apiStrapi';
+import { getShopifyClient, parseShopifyResponse } from '../../lib/shopify';
+import styles from './shop.module.scss';
 
 function Shop({ products }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
-  return (
-    <div className="">
-      <Head>
-        <title>Shop</title>
-      </Head>
+  console.log(products);
 
-      <div className="">
-        <h1>Shop page</h1>
-      </div>
-    </div>
+  return (
+    <Page title="Shop page">
+      <main className={styles.shop}>
+        <Container>
+          <ProductsList products={products} />
+        </Container>
+      </main>
+    </Page>
   );
 }
 
 export default Shop;
 
-export async function getStaticProps({ locale }) {
-  const products = await apiCall.product.getProducts();
-  return { props: { products, messages: messages[locale] } };
-}
+export const getStaticProps = async ({ locale }) => {
+  const products = await getShopifyClient(locale).product.fetchAll();
+
+  return {
+    props: {
+      messages: messages[locale],
+      products: parseShopifyResponse(products),
+    },
+    revalidate: 10, // In seconds
+  };
+};

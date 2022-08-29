@@ -22,8 +22,12 @@ export default function Cart() {
   const router = useRouter();
 
   return (
-    <Slide isOpen={cartOpen} handleClose={resetToggle} title="Shopping Cart">
-      <p className={styles.totalItems}>{cart.length} items</p>
+    <Slide
+      isOpen={cartOpen}
+      handleClose={resetToggle}
+      title="Shopping Cart"
+      headerRight={cart.length}
+    >
       {cart && Array.isArray(cart) && cart.length > 0 ? (
         <>
           {cart.map((item) => console.log(item))}

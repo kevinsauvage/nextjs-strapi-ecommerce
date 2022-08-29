@@ -5,12 +5,14 @@
         }
     },
     "link": {
-        "Home": "Home",
+        "Home": "Acceuil",
         "Shop": "Boutique",
         "About": "A propos",
         "Contact": "Contacter",
         "Terms": "Conditions",
-        "Privacy": "Privacité"
+        "Privacy": "Privacité",
+        "Profile": "Profile",
+        "Collections": "collections"
     },
     "LanguageSwitcher": {
         "en": "Anglais",

@@ -26,56 +26,14 @@ const apiHelper = async (url, body = {}, method = 'POST', token) => {
     if (data) return data;
     return result;
   } catch (e) {
-    console.log(e);
+    return console.log(e);
   }
 };
-
-const getCategories = (locale) =>
-  apiHelper(
-    getStrapiURL(
-      `${apiRoute.strapiApi.categories}?populate=*&locale=${locale}`
-    ),
-    null,
-    'GET'
-  );
-
-const getCategory = (id, locale) =>
-  apiHelper(
-    getStrapiURL(
-      `${apiRoute.strapiApi.categories}/${id}?populate=*&locale=${locale}`
-    ),
-    null,
-    'GET'
-  );
-
-const getProducts = (locale) =>
-  apiHelper(
-    getStrapiURL(`${apiRoute.strapiApi.products}?populate=*&locale=${locale}`),
-    null,
-    'GET'
-  );
-
-const getProduct = (id, locale) =>
-  apiHelper(
-    getStrapiURL(
-      `${apiRoute.strapiApi.products}${id}?populate=*&locale=${locale}`
-    ),
-    null,
-    'GET'
-  );
 
 const getMe = async (token) =>
   apiHelper(getStrapiURL(apiRoute.strapiApi.me), null, 'get', token);
 
 const apiCall = {
-  product: {
-    getProduct,
-    getProducts,
-  },
-  category: {
-    getCategory,
-    getCategories,
-  },
   user: {
     getMe,
   },

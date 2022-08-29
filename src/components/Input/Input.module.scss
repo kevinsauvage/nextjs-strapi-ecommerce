@@ -16,4 +16,11 @@
   padding-left: 1rem;
   border: 0.4px solid gray;
   border-radius: 3px;
+  font-family: roboto;
+  resize: vertical;
+}
+
+.textarea {
+  padding-top: 1rem;
+  min-height: 200px;
 }

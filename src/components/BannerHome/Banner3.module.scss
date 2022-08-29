@@ -1,0 +1,41 @@
+.banner {
+  height: 410px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 30px 0;
+}
+
+.img1,
+.img2 {
+  background-position: right bottom;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 30px 0 60px 30px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.img1 {
+  background-image: url('../../assets/banner/dog-banner-blue-S.jpg');
+}
+
+.img2 {
+  background-image: url('../../assets/banner/cat-pink-S.png');
+}
+
+.title {
+  font-size: 50px;
+  font-weight: 600;
+}
+
+.description {
+  font-size: 22px;
+  font-weight: 400;
+  max-width: 80%;
+}

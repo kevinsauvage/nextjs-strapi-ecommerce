@@ -4,3 +4,15 @@
   margin: 2rem 0;
   text-align: center;
 }
+
+.userinfo {
+  height: 100%;
+  border: 1px solid $primary;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.btn {
+  width: 100%;
+}

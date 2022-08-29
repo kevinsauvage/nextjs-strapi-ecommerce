@@ -1,4 +1,5 @@
 /* eslint-disable react/button-has-type */
+import Link from 'next/link';
 import styles from './Button.module.scss';
 
 export default function Button({
@@ -9,15 +10,31 @@ export default function Button({
   extraClass,
   primary,
   secondary,
+  quaternary,
   tertiary,
   disabled,
+  href,
 }) {
   const getStyle = () => {
     if (primary) return styles.primary;
     if (secondary) return styles.secondary;
     if (tertiary) return styles.tertiary;
+    if (quaternary) return styles.quaternary;
     return '';
   };
+
+  if (href) {
+    return (
+      <Link href={href}>
+        <a
+          styles={extraStyles}
+          className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
+        >
+          {text}
+        </a>
+      </Link>
+    );
+  }
 
   return (
     <button

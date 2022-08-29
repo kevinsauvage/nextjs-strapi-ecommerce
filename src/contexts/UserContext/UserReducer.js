@@ -4,8 +4,7 @@ export const initialState = {
 
 export const actions = {
   ADD_USER: 'ADD_USER',
-  LOG_OUT: 'LOG_OUT',
-  LOG_IN: 'LOG_IN',
+  REMOVE_USER: 'REMOVE_USER',
 };
 
 export const UserReducer = (state = initialState, action) => {
@@ -14,12 +13,8 @@ export const UserReducer = (state = initialState, action) => {
       return { ...state, user: action.payload };
     }
 
-    case actions.LOG_OUT: {
+    case actions.REMOVE_USER: {
       return { ...state, user: {} };
-    }
-
-    case actions.LOG_IN: {
-      return { ...state, user: action.payload };
     }
 
     default:

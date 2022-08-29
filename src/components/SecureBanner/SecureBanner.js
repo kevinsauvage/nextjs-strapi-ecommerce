@@ -1,34 +1,49 @@
 import {
   MdOutlineDeliveryDining,
-  MdOutlineHeadsetMic,
+  MdOutlineLockOpen,
   MdOutlinePayments,
 } from 'react-icons/md';
+import { RiSecurePaymentLine } from 'react-icons/ri';
+import Container from '../Container/Container';
 import styles from './SecureBanner.module.scss';
 
 export default function SecureBanner() {
   const items = [
     {
-      text: 'Free shipping all order over $99',
+      text: 'Free shipping',
+      subtitle: 'Free shipping all order over $99',
       icon: <MdOutlineDeliveryDining />,
     },
     {
-      text: '100% secure payment',
+      text: 'Money guaranteed',
+      subtitle: '30 days money back',
       icon: <MdOutlinePayments />,
     },
     {
-      text: '30 days money back',
-      icon: <MdOutlineHeadsetMic />,
+      text: 'Safe Payment',
+      subtitle: 'Secured payment protection',
+      icon: <RiSecurePaymentLine />,
+    },
+    {
+      text: '100% safe',
+      subtitle: 'Secure shopping',
+      icon: <MdOutlineLockOpen />,
     },
   ];
 
   return (
     <div className={styles.container}>
-      {items.map((item) => (
-        <div key={item.text} className={styles.item}>
-          {item.icon}
-          {item.text}
-        </div>
-      ))}
+      <Container>
+        {items.map((item) => (
+          <div key={item.text} className={styles.item}>
+            {item.icon}
+            <div className={styles.content}>
+              <p className={styles.text}>{item.text}</p>
+              <p className={styles.subtitle}>{item.subtitle}</p>
+            </div>
+          </div>
+        ))}
+      </Container>
     </div>
   );
 }

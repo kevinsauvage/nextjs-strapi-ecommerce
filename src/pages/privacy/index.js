@@ -1,6 +1,7 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
+import styles from './Privacy.module.scss';
 import { messages } from '../../config/i18n';
+import Page from '../../components/Page/Page';
 
 function PrivacyPage() {
   const router = useRouter();
@@ -8,15 +9,9 @@ function PrivacyPage() {
   if (router.isFallback) return <div>Loading product...</div>;
 
   return (
-    <div className="">
-      <Head>
-        <title>PrivacyPage</title>
-      </Head>
-
-      <div className="">
-        <h1>PrivacyPage</h1>
-      </div>
-    </div>
+    <Page title="Terms">
+      <div className={styles.privacy} />
+    </Page>
   );
 }
 

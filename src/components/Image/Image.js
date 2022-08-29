@@ -11,8 +11,9 @@ function Image(props) {
   return (
     <NextImage
       loader={loader}
-      layout="responsive"
-      objectFit="contain"
+      layout={props.layout || 'responsive'}
+      objectFit="cover"
+      objectPosition={props.objectPosition || 'center center'}
       width={props.media.width}
       height={props.media.height}
       src={url}

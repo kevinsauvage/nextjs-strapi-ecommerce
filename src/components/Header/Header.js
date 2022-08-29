@@ -1,40 +1,57 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 import UserButtons from '../UserButtons/UserButtons';
 import Wrapper from '../Wrapper/Wrapper';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 import Navbar from '../Navbar/Navbar';
-import PhoneNumber from '../PhoneNumber/PhoneNumber';
 import Container from '../Container/Container';
-import ContactMail from '../ContactMail/ContactMail';
+import blackLogo from '../../assets/images/BlackLogo.svg';
+import whiteLogo from '../../assets/images/WhiteLogo.svg';
 
 function Header() {
-  return (
-    <div className={styles.container}>
-      <div className={styles.top}>
-        <Container>
-          <Wrapper>
-            <PhoneNumber />
-            <ContactMail />
-          </Wrapper>
-          <LanguageSwitcher />
-        </Container>
-      </div>
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const { asPath } = useRouter();
+  const handleScroll = () => {
+    const position = window.pageYOffset;
+    setScrollPosition(position);
+  };
 
-      <div className={styles.bottom}>
-        <Container>
-          <Link href="/">
-            <a className={styles.logo}>
-              <h2>Logo</h2>
-            </a>
-          </Link>
-          <Navbar />
-          <Wrapper gap="0rem">
-            <UserButtons />
-          </Wrapper>
-        </Container>
-      </div>
-    </div>
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const isActive = scrollPosition > 60;
+
+  const bgColor = asPath === '/' ? styles.bgHome : styles.bgPages;
+
+  return (
+    <header
+      className={`${styles.header} ${isActive ? styles.active : ''} ${bgColor}`}
+    >
+      <Container>
+        <Link href="/">
+          <a className={styles.logo}>
+            <Image
+              src={isActive ? blackLogo : whiteLogo}
+              layout="fill"
+              width={200}
+              height={33}
+            />
+          </a>
+        </Link>
+        <Navbar active={isActive} />
+        <Wrapper gap="0rem">
+          <UserButtons />
+        </Wrapper>
+      </Container>
+    </header>
   );
 }
 

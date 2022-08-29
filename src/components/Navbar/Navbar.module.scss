@@ -8,11 +8,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 3rem;
+  gap: 30px;
 }
 
 .item {
   list-style: none;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .button {
@@ -21,5 +23,35 @@
 }
 
 .active {
-  border-bottom: 1px solid rgb(0, 0, 0);
+  position: relative;
+  padding: 6px 0;
+
+  &::after {
+    content: '';
+    width: 105%;
+    height: 1px;
+    background-color: $secondary;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: animated-border 0.4s ease-in forwards;
+  }
+}
+
+.navbarActive {
+  &::after {
+    background-color: $primary;
+  }
+}
+
+@keyframes animated-border {
+  0% {
+    transform: translateX(-50%) scale(0);
+    bottom: 5px;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    bottom: 0px;
+  }
 }

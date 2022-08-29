@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
@@ -13,7 +13,6 @@ import { UserContext } from '../../contexts/UserContext/UserContext';
 export default function Login() {
   const { loginOpen, resetToggle } = useContext(GlobalStoreContext);
   const { login } = useContext(UserContext);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const router = useRouter();
 
@@ -25,14 +24,7 @@ export default function Login() {
       password: formData.password,
     };
 
-    const response = await login(userData);
-    const { error } = await response;
-
-    if (error) {
-      setErrorMessage(error.message);
-      return;
-    }
-    router.push('/profile');
+    await login(userData);
   };
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
@@ -56,7 +48,6 @@ export default function Login() {
           onChange={handleInputChange}
         />
         <FlexColumn gap="8px" style={{ marginTop: '2rem' }}>
-          <p>{errorMessage}</p>
           <Button text="Login" type="submit" secondary />
           <Button text="Forgot your password?" primary />
           <Button

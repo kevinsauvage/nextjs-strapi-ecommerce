@@ -1,16 +1,25 @@
 .register {
-  max-width: 400px;
   width: 100%;
-  padding-left: 50px;
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
 }
+
+.form {
+  max-width: 600px;
+  width: 100%;
+}
+
 .title {
   font-size: 18px;
-  color: black;
+  color: $primary;
   margin-bottom: 2rem;
   letter-spacing: 2px;
 }
+
 .subtitle {
   font-size: 14px;
   color: gray;
   font-weight: 400;
+  margin-bottom: 30px;
 }

@@ -1,0 +1,25 @@
+.page {
+  width: 100%;
+  height: 100%;
+}
+
+.banner {
+  height: 350px;
+  width: 100%;
+  background-color: #838383;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 30px;
+  background-image: linear-gradient(
+      90deg,
+      rgba($primary, 0.75) 0%,
+      rgba($primary, 0.75) 100%
+    ),
+    url('../../assets/banner/bones.jpg');
+  background-size: 100%;
+  background-position: center center;
+  object-fit: contain;
+  color: $secondary;
+}

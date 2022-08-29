@@ -9,6 +9,12 @@ const routes = {
     login: '/login',
     register: '/register',
     profile: '/profile',
+    collection: '/collection',
+  },
+
+  collections: {
+    dog: '/collection/dog',
+    cat: '/collection/cat',
   },
 };
 

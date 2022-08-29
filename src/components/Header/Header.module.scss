@@ -1,26 +1,58 @@
-.container {
-  position: relative;
+.header {
+  position: absolute;
   width: 100%;
-}
-
-.top {
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  transition: all 1s ease;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: black;
-  padding: 4px 0;
-  font-size: 13px;
-  border: 1px solid gainsboro;
+  color: $secondary;
+  height: 80px;
+
+  svg {
+    color: $secondary;
+  }
+
+  &.active {
+    transform: translateY(-60px);
+    position: fixed;
+    animation: slide-down 1s ease forwards;
+    background-color: $secondary;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    color: $primary;
+
+    svg {
+      color: $primary;
+    }
+  }
 }
 
-.bottom {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: black;
-  padding: 1rem 0;
+.bgHome {
+}
+
+.bgPages {
+  background-color: $primary;
+  position: static;
 }
 
 .logo {
   cursor: pointer;
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 210px;
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
 }
