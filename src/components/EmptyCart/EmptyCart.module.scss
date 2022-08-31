@@ -1,0 +1,27 @@
+.container {
+  padding: 100px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 500px;
+}
+
+.title {
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: 400;
+}
+.subtitle {
+  text-align: center;
+  font-size: 16px;
+  margin-bottom: 30px;
+
+  a {
+    color: $strong;
+  }
+}
+
+.btn {
+  margin-top: 40px;
+}

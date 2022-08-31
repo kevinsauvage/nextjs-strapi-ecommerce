@@ -14,6 +14,7 @@ export default function Button({
   tertiary,
   disabled,
   href,
+  ...rest
 }) {
   const getStyle = () => {
     if (primary) return styles.primary;
@@ -38,6 +39,7 @@ export default function Button({
 
   return (
     <button
+      {...rest}
       type={type || 'button'}
       onClick={onClick || null}
       styles={extraStyles}

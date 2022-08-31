@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  background-color: white;
+}
+
+.list {
+  display: flex;
+  align-items: center;
+}
+
+.image {
+  width: 200px;
+  height: 200px;
+  position: relative;
+}
+
+.item {
+  text-align: center;
+}
+
+.content {
+  padding: 1rem 0 1rem 2rem;
+}
+
+.input {
+  text-align: center;
+}
+
+.content {
+}

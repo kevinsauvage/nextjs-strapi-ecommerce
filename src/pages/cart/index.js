@@ -1,15 +1,77 @@
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
 import styles from './Cart.module.scss';
 import Page from '../../components/Page/Page';
 import { messages } from '../../config/i18n';
+import { CartContext } from '../../contexts/CartContext/CartContext';
+import CheckoutBtn from '../../components/CheckoutBtn/CheckoutBtn';
+import routes from '../../data/routes';
+import { UserContext } from '../../contexts/UserContext/UserContext';
+import useTotalPrice from '../../hooks/useTotalPrice';
+import EmptyCart from '../../components/EmptyCart/EmptyCart';
+import CartItem from '../../components/CartItem/CartItem';
+import Container from '../../components/Container/Container';
 
 function CartPage() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
+  const { cart } = useContext(CartContext);
+  const { user } = useContext(UserContext);
+  const total = useTotalPrice(cart.items);
+
   return (
     <Page title="Cart">
-      <div className={styles.cart} />
+      <Container>
+        <div className={styles.cart}>
+          {cart && Array.isArray(cart.items) && cart.items.length > 0 ? (
+            <div style={{ width: '100%', height: '100%' }}>
+              <table className={styles.table}>
+                <thead className={styles.head}>
+                  <tr>
+                    <th className="image text-left">Item</th>
+                    <th className="price">Price</th>
+                    <th className="qty">Quantity</th>
+                    <th className="total">Total</th>
+                    <th className="remove">Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {cart.items.map((item) => (
+                    <CartItem
+                      key={item.product.id}
+                      product={item.product}
+                      quantity={item.quantity}
+                    />
+                  ))}
+                </tbody>
+                <tfoot>
+                  <tr className={styles.summary}>
+                    <td className="total-action" colSpan="4">
+                      <input
+                        style={{ display: 'none', visibility: 'hidden' }}
+                      />
+                    </td>
+                    <td className={styles.price}>
+                      <span>€{total}</span>
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+              <div className={styles.btns}>
+                <CheckoutBtn
+                  user={user}
+                  extraClass={styles.btn}
+                  noUserRedirectURL={routes.base.login}
+                  items={cart}
+                />
+              </div>
+            </div>
+          ) : (
+            <EmptyCart />
+          )}
+        </div>
+      </Container>
     </Page>
   );
 }

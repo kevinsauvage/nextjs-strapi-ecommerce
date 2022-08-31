@@ -12,6 +12,7 @@ import CheckoutBtn from '../../components/CheckoutBtn/CheckoutBtn';
 import { UserContext } from '../../contexts/UserContext/UserContext';
 import useTotalPrice from '../../hooks/useTotalPrice';
 import ProductCheckoutCard from '../../components/ProductCheckoutCard/ProductCheckoutCard';
+import EmptyCart from '../../components/EmptyCart/EmptyCart';
 
 export default function Cart() {
   const { cartOpen, resetToggle } = useContext(GlobalStoreContext);
@@ -60,18 +61,7 @@ export default function Cart() {
           </footer>
         </>
       ) : (
-        <div className={styles.emptyContainer}>
-          <Image src="/emptyCart.svg" width="200" height="200" />
-          <p className={styles.emptyText}>Your cart is empty</p>
-          <Button
-            text="CONTINUE SHOPPING"
-            secondary
-            onClick={() => {
-              resetToggle();
-              router.push(routes.base.shop);
-            }}
-          />
-        </div>
+        <EmptyCart />
       )}
     </Slide>
   );

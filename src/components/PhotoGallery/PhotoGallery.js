@@ -2,7 +2,9 @@ import Image from 'next/image';
 import { useState } from 'react';
 import styles from './PhotoGallery.module.scss';
 
-export default function PhotoGallery({ items, handleSelect, selected }) {
+export default function PhotoGallery({ items }) {
+  const [selected, setSelected] = useState(items[0]);
+
   return (
     <div className={styles.container}>
       <div className={styles.selected}>
@@ -23,8 +25,8 @@ export default function PhotoGallery({ items, handleSelect, selected }) {
                 type="button"
                 className={styles.item}
                 key={item.id}
-                onClick={() => handleSelect(item)}
-                onKeyDown={() => handleSelect(item)}
+                onClick={() => setSelected(item)}
+                onKeyDown={() => setSelected(item)}
               >
                 <Image
                   src={src}

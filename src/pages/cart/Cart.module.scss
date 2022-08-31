@@ -1,2 +1,29 @@
 .cart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+}
+
+.table {
+  width: 100%;
+  background-color: white;
+  border: 1px solid gray;
+}
+
+.head {
+  border: 1px solid gray;
+}
+
+.summary {
+  text-align: right;
+}
+.price {
+  text-align: center;
+}
+
+.btns {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }

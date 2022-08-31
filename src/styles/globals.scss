@@ -29,6 +29,7 @@ p,
 a,
 button {
   letter-spacing: 2px;
+  line-height: 20px;
 }
 
 *:focus:not(:focus-visible) {
@@ -70,4 +71,15 @@ button {
 *::placeholder {
   /* modern browser */
   color: rgb(147, 147, 147);
+}
+
+td,
+th {
+  padding: 10px;
+  border: 1px solid #d4d4d4;
+  background-color: #ebefff;
+  text-align: center;
+}
+table {
+  border-collapse: collapse;
 }
