@@ -6,9 +6,10 @@ const routes = {
     shop: '/shop',
     terms: '/terms',
     privacy: '/privacy',
-    login: '/login',
-    register: '/register',
-    profile: '/profile',
+    login: '/account/login',
+    register: '/account/register',
+    profile: '/account/profile',
+    resetPassword: '/account/reset-password',
     collection: '/collection',
   },
 

@@ -1,31 +1,32 @@
-import { useContext, useState } from 'react';
+import { VscAdd, VscRemove } from 'react-icons/vsc';
+import Button from '@/components/Button/Button';
 import styles from './ProductDescription.module.scss';
-import { CartContext } from '../../contexts/CartContext/CartContext';
-import Button from '../Button/Button';
 
-export default function ProductDescription({ product }) {
-  const { addToCart } = useContext(CartContext);
-  const [selected, setSelected] = useState(product?.variants?.[0]);
-
+export default function ProductDescription({
+  product,
+  selected,
+  handleSelect,
+  handleAddToCart,
+  addOne,
+  removeOne,
+  quantity,
+  handleChangeInput,
+}) {
   const { title, availableForSale, descriptionHtml } = product;
-  console.log(product);
-
-  const handleSelect = (e) => {
-    const id = e.target.value;
-    const selectedVariant = product.variants.find(
-      (variant) => variant.id === id
-    );
-    console.log(selectedVariant, 'selected');
-    setSelected(selectedVariant);
-  };
 
   return (
     <div className={styles.ProductDescription}>
-      <h4 className="">
-        {title} - {selected?.priceV2?.currencyCode}
-        {selected?.priceV2?.amount}
-      </h4>
-      <div className="" dangerouslySetInnerHTML={{ __html: descriptionHtml }} />
+      <div className={styles.header}>
+        <h4 className={styles.title}>{title}</h4>
+        <p>
+          {selected?.priceV2?.amount} {selected?.priceV2?.currencyCode}
+        </p>
+      </div>
+
+      <div
+        className={styles.description}
+        dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+      />
 
       <select onChange={handleSelect}>
         {product.variants.map((variant) => (
@@ -34,13 +35,39 @@ export default function ProductDescription({ product }) {
           </option>
         ))}
       </select>
+
+      {availableForSale && (
+        <div className={styles.quantityContainer}>
+          <button type="button" onClick={addOne} className={styles.btnQuantity}>
+            <VscAdd />
+          </button>
+
+          <input
+            type="number"
+            size="4"
+            value={quantity}
+            className={styles.input}
+            onChange={handleChangeInput}
+          />
+
+          <button
+            type="button"
+            onClick={removeOne}
+            className={styles.btnQuantity}
+          >
+            <VscRemove />
+          </button>
+        </div>
+      )}
+
       {availableForSale && (
         <Button
+          extraClass={styles.btn}
           type="button"
           text="Add to cart"
           tertiary
           disabled={!availableForSale}
-          onClick={() => addToCart(selected, 1)}
+          onClick={handleAddToCart}
         />
       )}
 

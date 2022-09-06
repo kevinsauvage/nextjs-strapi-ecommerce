@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import routes from '../../data/routes';
+import routes from '@/data/routes';
 import styles from './ShopBtn.module.scss';
 
 export default function ShopBtn() {

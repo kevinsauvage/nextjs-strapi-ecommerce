@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { messages } from '@config/i18n';
+import Page from '@components/Page/Page';
 import styles from './Terms.module.scss';
-import { messages } from '../../config/i18n';
-import Page from '../../components/Page/Page';
 
 function TermsPage() {
   const router = useRouter();

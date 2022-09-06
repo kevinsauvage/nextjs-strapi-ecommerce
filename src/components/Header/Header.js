@@ -2,14 +2,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Navbar from '@/components/Navbar/Navbar';
+import Container from '@/components/Container/Container';
+import blackLogo from '@/assets/images/BlackLogo.svg';
+import whiteLogo from '@/assets/images/WhiteLogo.svg';
+import UserButtons from '@/components/UserButtons/UserButtons';
+import Wrapper from '@/components/Wrapper/Wrapper';
 import styles from './Header.module.scss';
-import UserButtons from '../UserButtons/UserButtons';
-import Wrapper from '../Wrapper/Wrapper';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
-import Navbar from '../Navbar/Navbar';
-import Container from '../Container/Container';
-import blackLogo from '../../assets/images/BlackLogo.svg';
-import whiteLogo from '../../assets/images/WhiteLogo.svg';
 
 function Header() {
   const [scrollPosition, setScrollPosition] = useState(0);

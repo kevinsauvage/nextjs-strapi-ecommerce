@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import Page from '../../components/Page/Page';
-import { messages } from '../../config/i18n';
+import Page from '@components/Page/Page';
+import { messages } from '@config/i18n';
 import styles from './Search.module.scss';
 
 function Search() {

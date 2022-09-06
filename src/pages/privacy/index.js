@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
+import { messages } from '@config/i18n';
+import Page from '@components/Page/Page';
 import styles from './Privacy.module.scss';
-import { messages } from '../../config/i18n';
-import Page from '../../components/Page/Page';
 
 function PrivacyPage() {
   const router = useRouter();

@@ -3,11 +3,13 @@ import styles from './Input.module.scss';
 export default function Input({
   id,
   name,
+  type,
   label,
   placeholder,
   onChange,
   required,
   textarea,
+  autoComplete,
 }) {
   return (
     <label htmlFor={id} className={styles.label}>
@@ -27,11 +29,12 @@ export default function Input({
         <input
           className={styles.input}
           id={id}
-          type="text"
+          type={type || 'text'}
           name={name}
           placeholder={placeholder}
           onChange={onChange}
           required={required}
+          autoComplete={autoComplete || ''}
         />
       )}
     </label>

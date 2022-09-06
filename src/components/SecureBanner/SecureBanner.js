@@ -4,7 +4,7 @@ import {
   MdOutlinePayments,
 } from 'react-icons/md';
 import { RiSecurePaymentLine } from 'react-icons/ri';
-import Container from '../Container/Container';
+import Container from '@/components/Container/Container';
 import styles from './SecureBanner.module.scss';
 
 export default function SecureBanner() {

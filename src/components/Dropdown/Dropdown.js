@@ -1,6 +1,6 @@
 import { Children, useRef, useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import useOnClickOutside from '../../hooks/useClickOutside';
+import useOnClickOutside from '@/hooks/useClickOutside';
 import styles from './Dropdown.module.scss';
 
 export default function Dropdown({

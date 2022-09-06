@@ -37,7 +37,7 @@ button {
 }
 
 *:focus-visible {
-  outline: 0.125rem solid rgb(199, 0, 0);
+  outline: 0.125rem solid $strong;
   outline-offset: 0.125rem;
 }
 

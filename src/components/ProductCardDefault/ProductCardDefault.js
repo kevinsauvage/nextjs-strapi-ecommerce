@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import limitStrLength from '../../utils/limitStringLength';
+import limitStrLength from '@/utils/limitStringLength';
+import Modal from '@/components/Modal/Modal';
+import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
 import styles from './ProductCardDefault.module.scss';
-import Modal from '../Modal/Modal';
-import ProductPresenter from '../ProductPresenter/ProductPresenter';
 
 export default function ProductCardDefault({ product }) {
   const { title, images, description, handle } = product;
@@ -13,7 +13,7 @@ export default function ProductCardDefault({ product }) {
   return (
     <>
       {isModalOpen && (
-        <Modal>
+        <Modal handleClose={() => setIsModalOpen(false)}>
           <ProductPresenter product={product} />
         </Modal>
       )}

@@ -1,7 +1,7 @@
-import routes from '../../data/routes';
-import Button from '../Button/Button';
-import Container from '../Container/Container';
-import FlexColumn from '../FlexColumn/FlexColumn';
+import routes from '@/data/routes';
+import Button from '@/components/Button/Button';
+import Container from '@/components/Container/Container';
+import FlexColumn from '@/components/FlexColumn/FlexColumn';
 import styles from './Banner1.module.scss';
 
 export default function BannerHome() {

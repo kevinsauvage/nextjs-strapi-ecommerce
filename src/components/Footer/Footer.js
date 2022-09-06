@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import routes from '../../data/routes';
-import Container from '../Container/Container';
+import routes from '@/data/routes';
+import Container from '@/components/Container/Container';
 import styles from './Footer.module.scss';
 
 function Footer({ collections }) {
   const t = useTranslations('link');
-
-  console.log(collections);
 
   const getCollections = () =>
     collections.map((category) => ({

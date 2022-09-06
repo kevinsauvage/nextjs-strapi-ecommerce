@@ -1,0 +1,42 @@
+.title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.description {
+  p,
+  div {
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+}
+
+.btn {
+  margin-top: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.quantityContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+
+.input {
+  text-align: center;
+}
+
+.btnQuantity {
+  padding: 4px;
+  svg {
+    font-size: 24px;
+  }
+}

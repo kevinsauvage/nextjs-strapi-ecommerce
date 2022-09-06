@@ -1,5 +1,5 @@
 import { ImPhone } from 'react-icons/im';
-import Wrapper from '../Wrapper/Wrapper';
+import Wrapper from '@/components/Wrapper/Wrapper';
 
 export default function PhoneNumber() {
   return (

@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl';
-import routes from '../../data/routes';
-import ActiveLink from '../ActiveLink/ActiveLink';
+import routes from '@/data/routes';
+import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import styles from './Navbar.module.scss';
 
 function Navbar({ active }) {

@@ -15,13 +15,11 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   return res ? res.json() : undefined;
 };
 
-const register = (user) => nextApiHelper(`${apiRoute.nextApi.register}`, user);
 const login = (user) => nextApiHelper(`${apiRoute.nextApi.login}`, user);
 const logout = () => nextApiHelper(`${apiRoute.nextApi.logout}`);
 
 const nextApiCall = {
   auth: {
-    register,
     login,
     logout,
   },

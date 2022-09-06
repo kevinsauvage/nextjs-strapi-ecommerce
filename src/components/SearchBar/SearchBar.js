@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { MdClose, MdSearch } from 'react-icons/md';
-import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
-import Container from '../Container/Container';
+import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
+import Container from '@/components/Container/Container';
 import styles from './SearchBar.module.scss';
 
 export default function SearchBar() {

@@ -1,5 +1,5 @@
-import routes from '../../data/routes';
-import Button from '../Button/Button';
+import routes from '@/data/routes';
+import Button from '@/components/Button/Button';
 import styles from './Banner2.module.scss';
 
 export default function BannerHome2() {

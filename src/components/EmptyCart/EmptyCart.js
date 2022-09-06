@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
-import { GlobalStoreContext } from '../../contexts/GlobalContext/GlobalContext';
-import routes from '../../data/routes';
-import Button from '../Button/Button';
+import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
+import routes from '@/data/routes';
+import Button from '@/components/Button/Button';
 import styles from './EmptyCart.module.scss';
 
 export default function EmptyCart() {

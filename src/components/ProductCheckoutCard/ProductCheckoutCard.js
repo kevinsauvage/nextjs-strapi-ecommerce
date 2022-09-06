@@ -1,30 +1,29 @@
 import Image from 'next/image';
 import styles from './ProductCheckoutCard.module.scss';
 
-export default function ProductCheckoutCard({ item }) {
-  const { product, quantity } = item;
-  console.log(item);
+export default function ProductCheckoutCard({ product }) {
+  console.log(product);
   return (
     <div className={styles.card}>
       <div className={styles.image}>
         <Image
-          src={product.image.src}
+          src={product?.variant.image.src}
           layout="fill"
-          width={product.image.width}
-          height={product.image.height}
+          width={product?.variant.image.width}
+          height={product?.variant.image.height}
           objectFit="cover"
         />
       </div>
       <div className={styles.body}>
         <div className={styles.row}>
-          <p className={styles.title}>{product.title}</p>
+          <p className={styles.title}>{product?.title}</p>
           <p className={styles.quantity}>
             <span>X</span>
-            {quantity}
+            {product?.quantity}
           </p>
         </div>
         <div className={styles.row}>
-          <p className={styles.description}>{product.description}</p>
+          <p className={styles.description}>{product?.variant.title}</p>
         </div>
       </div>
     </div>

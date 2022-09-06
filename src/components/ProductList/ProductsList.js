@@ -1,4 +1,4 @@
-import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import styles from './ProductList.module.scss';
 
 function ProductsList({ products }) {

@@ -42,6 +42,7 @@ export default function Button({
       {...rest}
       type={type || 'button'}
       onClick={onClick || null}
+      onKeyDown={(e) => e.key === 'Enter' && (onClick || null)}
       styles={extraStyles}
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()} `}

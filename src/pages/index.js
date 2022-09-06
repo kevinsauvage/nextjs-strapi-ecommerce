@@ -1,14 +1,13 @@
-import styles from '../styles/Home.module.scss';
-import { messages } from '../config/i18n';
-import SecureBanner from '../components/SecureBanner/SecureBanner';
-import Banner1 from '../components/BannerHome/Banner1';
-import Banner2 from '../components/BannerHome/Banner2';
-import Banner3 from '../components/BannerHome/Banner3';
-import CategoryButtons from '../components/CategoryButtons/CategoryButtons';
+import nookies from 'nookies';
+import CategoryButtons from '@/components/CategoryButtons/CategoryButtons';
+import SecureBanner from '@/components/SecureBanner/SecureBanner';
+import Banner1 from '@/components/BannerHome/Banner1';
+import Banner2 from '@/components/BannerHome/Banner2';
+import Banner3 from '@/components/BannerHome/Banner3';
+import { messages } from '@/config/i18n';
+import styles from '@/styles/Home.module.scss';
 
 export default function Home({ collections, policies, shopInfos }) {
-  console.log(shopInfos);
-
   return (
     <div className={styles.container}>
       <main className={styles.main}>
@@ -22,10 +21,15 @@ export default function Home({ collections, policies, shopInfos }) {
   );
 }
 
-export function getStaticProps({ locale }) {
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx);
+  console.log(cookies);
+  console.log(cookies.shopify_token, 'token ');
+
   return {
     props: {
-      messages: messages[locale],
+      messages: messages[ctx.locale],
+      cookies,
     },
   };
 }

@@ -1,7 +1,7 @@
 import * as fs from 'fs';
-import config from '../config';
-import { getShopifyClient } from '../lib/shopify';
-import routes from '../data/routes';
+import config from '@/config';
+import { getShopifyClient } from '@/lib/shopify';
+import routes from '@/data/routes';
 
 function Sitemap() {
   return null;

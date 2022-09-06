@@ -1,5 +1,5 @@
 import { MdEmail } from 'react-icons/md';
-import Wrapper from '../Wrapper/Wrapper';
+import Wrapper from '@/components/Wrapper/Wrapper';
 
 export default function ContactMail() {
   const mail = 'kevinsauvage@outlook.com';

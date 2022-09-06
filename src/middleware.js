@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import nookies from 'nookies';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -13,16 +14,34 @@ function middleware(request) {
   if (pathname.includes('/api')) return undefined;
 
   // Get user auth cookies
-  const cookieJWT = cookies.get('jwt');
+  const cookieShopify = cookies.get('shopify_token');
+
+  console.log(cookieShopify, 'middleware');
+
+  const cookiesShopifyExpires = cookies.get('shopify_token_expires');
+
+  console.log(cookiesShopifyExpires, 'middleware');
+
+  const isCookieExpired =
+    new Date(cookiesShopifyExpires).getDate() > new Date().getDate();
+
+  if (cookiesShopifyExpires) {
+    if (new Date(cookiesShopifyExpires).getDate() < new Date().getDate() - 1) {
+      // TODO = REFRESH TOKEN
+    } else if (isCookieExpired) {
+      nookies.destroy(request, 'shopify_token');
+      nookies.destroy(request, 'shopify_token_expires');
+    }
+  }
 
   if (
-    cookieJWT &&
+    cookieShopify &&
     (pathname.includes('/login') || pathname.includes('/register'))
   ) {
     return NextResponse.redirect(`${origin}/${locale || 'en'}/profile`);
   }
 
-  if (cookieJWT) return NextResponse.next();
+  if (cookieShopify) return NextResponse.next();
 
   if (pathname.includes('/profile')) {
     return NextResponse.redirect(`${origin}/${locale || 'en'}/login`);

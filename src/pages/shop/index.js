@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import Container from '../../components/Container/Container';
-import Page from '../../components/Page/Page';
-import ProductsList from '../../components/ProductList/ProductsList';
-import { messages } from '../../config/i18n';
-import { getShopifyClient, parseShopifyResponse } from '../../lib/shopify';
+import Container from '@/components/Container/Container';
+import Page from '@/components/Page/Page';
+import ProductsList from '@/components/ProductList/ProductsList';
+import { messages } from '@/config/i18n';
+import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify';
 import styles from './shop.module.scss';
 
 function Shop({ products }) {

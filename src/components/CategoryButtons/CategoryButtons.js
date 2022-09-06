@@ -1,7 +1,7 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import routes from '../../data/routes';
-import Container from '../Container/Container';
-import Image from '../Image/Image';
+import routes from '@/data/routes';
+import Container from '@/components/Container/Container';
 import styles from './CategoryButtons.module.scss';
 
 function CategoryButtons({ collections = [] }) {

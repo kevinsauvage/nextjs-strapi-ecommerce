@@ -1,30 +1,21 @@
 import { useRouter } from 'next/router';
-import React from 'react';
-import apiHelper from '../../utils/apiHelper';
-import getStripe from '../../utils/getStripe';
-import Button from '../Button/Button';
+import React, { useContext } from 'react';
+import { CartContext } from '@/contexts/CartContext/CartContext';
+import Button from '@/components/Button/Button';
 
-export default function CheckoutBtn({
-  user,
-  noUserRedirectURL,
-  items,
-  extraClass,
-}) {
+export default function CheckoutBtn({ noUserRedirectURL, extraClass }) {
+  const user = null;
   const router = useRouter();
+
+  const { getCheckoutById, cart } = useContext(CartContext);
+
   const redirectToCheckout = async () => {
-    if (!user || !user?.id) return router.push(noUserRedirectURL);
+    await getCheckoutById();
 
-    const res = await apiHelper('/api/checkout_sessions', {
-      items,
-      user,
-    });
-
-    if (!res || !res.id) return null;
-
-    const stripe = await getStripe();
-
-    return stripe.redirectToCheckout({ sessionId: res.id });
+    if (!cart?.shippingAddress) return router.push(cart.webUrl);
+    router.push(noUserRedirectURL);
   };
+
   return (
     <Button
       secondary

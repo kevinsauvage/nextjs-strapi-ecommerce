@@ -1,9 +1,11 @@
 {
   "env": {
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "node": true,
+    "jest": true
   },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "extends": ["airbnb", "prettier"],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -11,7 +13,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "plugins": ["react", "import"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -20,5 +22,22 @@
     "jsx-a11y/anchor-is-valid": "off",
     "default-param-last": 0,
     "no-underscore-dangle": 0
+  },
+  "ignorePatterns": ["node_modules/", ".next/"],
+  "settings": {
+    "import/resolver": {
+      "alias": [
+        ["@/components", "./src/components"],
+        ["@/contexts", "./src/contexts"],
+        ["@/config", "./src/config"],
+        ["@/hooks", "./src/hooks"],
+        ["@/assets", "./src/assets"],
+        ["@/data", "./src/data"],
+        ["@/styles", "./src/styles"],
+        ["@/lib", "./src/lib"],
+        ["@/helpers", "./src/helpers"],
+        ["@/utils", "./src/utils"]
+      ]
+    }
   }
 }

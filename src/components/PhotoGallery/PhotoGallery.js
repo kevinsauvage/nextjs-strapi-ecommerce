@@ -1,18 +1,15 @@
 import Image from 'next/image';
-import { useState } from 'react';
 import styles from './PhotoGallery.module.scss';
 
-export default function PhotoGallery({ items }) {
-  const [selected, setSelected] = useState(items[0]);
-
+export default function PhotoGallery({ items, selectedVariant, handleSelect }) {
   return (
     <div className={styles.container}>
       <div className={styles.selected}>
         <Image
-          src={selected.image.src}
-          alt={selected}
-          width={selected.image.width}
-          height={selected.image.height}
+          src={selectedVariant.image.src}
+          alt={selectedVariant}
+          width={selectedVariant.image.width}
+          height={selectedVariant.image.height}
           layout="responsive"
         />
       </div>
@@ -25,8 +22,8 @@ export default function PhotoGallery({ items }) {
                 type="button"
                 className={styles.item}
                 key={item.id}
-                onClick={() => setSelected(item)}
-                onKeyDown={() => setSelected(item)}
+                onClick={() => handleSelect(item)}
+                onKeyDown={() => handleSelect(item)}
               >
                 <Image
                   src={src}
