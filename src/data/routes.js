@@ -8,8 +8,8 @@ const routes = {
     privacy: '/privacy',
     login: '/account/login',
     register: '/account/register',
-    profile: '/account/profile',
-    resetPassword: '/account/reset-password',
+    profile: '/account',
+    resetPassword: '/account/reset',
     collection: '/collection',
   },
 

@@ -9,8 +9,8 @@ export default function Form({
 }) {
   return (
     <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
-      <h2>{title}</h2>
-      <p>{subtitle}</p>
+      <h2 className={styles.title}>{title}</h2>
+      <p className={styles.subtitle}>{subtitle}</p>
 
       {children}
     </form>

@@ -38,13 +38,13 @@ function middleware(request) {
     cookieShopify &&
     (pathname.includes('/login') || pathname.includes('/register'))
   ) {
-    return NextResponse.redirect(`${origin}/${locale || 'en'}/profile`);
+    return NextResponse.redirect(`${origin}/${locale || 'en'}/account/profile`);
   }
 
   if (cookieShopify) return NextResponse.next();
 
   if (pathname.includes('/profile')) {
-    return NextResponse.redirect(`${origin}/${locale || 'en'}/login`);
+    return NextResponse.redirect(`${origin}/${locale || 'en'}/account/login`);
   }
 
   return undefined;

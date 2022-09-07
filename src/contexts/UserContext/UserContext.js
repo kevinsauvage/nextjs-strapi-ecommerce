@@ -6,8 +6,10 @@ import {
   loginCustomer,
   registerCustomer,
   sendRecoverEmail,
+  resetCustomerPassword,
 } from '@/lib/shopify';
 import nextApiCall from '@/utils/apiNext';
+
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
@@ -15,6 +17,15 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const router = useRouter();
+
+  const handleToken = async (customerAccessToken) => {
+    // Send token to server to store it inside cookies
+    const res2 = await nextApiCall.auth.login(customerAccessToken);
+    if (res2?.ok) {
+      toast.success('Your login was successful');
+      router.push(routes.base.profile);
+    }
+  };
 
   const login = async (email, password) => {
     if (!email || !password) {
@@ -28,11 +39,7 @@ export function UserProvider({ children }) {
     const customerAccessToken = customerAccessTokenCreate?.customerAccessToken;
     const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
 
-    if (customerAccessToken) {
-      // Send token to server to store it inside cookies
-      const res2 = await nextApiCall.auth.login(customerAccessToken);
-      if (res2?.ok) router.push(routes.base.profile);
-    }
+    if (customerAccessToken) handleToken(customerAccessToken);
 
     if (customerUserErrors && customerUserErrors?.length > 0) {
       customerUserErrors.forEach((err) => toast.error(err.message));
@@ -54,39 +61,65 @@ export function UserProvider({ children }) {
     if (customerCreate && customerCreate.customer) login(email, password);
   };
 
-  const resetPassword = async (email) => {
+  const resetPasswordEmail = async (email) => {
     if (!email) {
       toast.error('Fill in missing required fields');
     }
-    const data = await sendRecoverEmail(email);
+
+    const data = await sendRecoverEmail(email, router.locale);
     const customerRecover = data?.customerRecover;
-    const customerError = customerRecover?.customerUserErrors;
+    const customerErrors = customerRecover?.customerUserErrors;
 
     console.log(data);
 
-    if (customerError) {
-      customerError.forEach((err) => toast.error(err.message));
+    if (customerErrors && customerErrors.length > 0) {
+      customerErrors.forEach((err) => toast.error(err.message));
+    } else {
+      toast.success('Check your emails');
+    }
+  };
+
+  const resetPassword = async (password, url) => {
+    if (!password || !url) {
+      toast.error('Fill in missing required fields');
+    }
+    const data = await resetCustomerPassword(password, url, router.locale);
+
+    const { customerResetByUrl } = data;
+
+    const customerUserErrors = customerResetByUrl?.customerUserErrors;
+    const customerAccessToken = customerResetByUrl?.customerAccessToken;
+
+    if (customerUserErrors && customerUserErrors.length > 0) {
+      customerUserErrors.forEach((err) => toast.error(err.message));
+    } else if (customerAccessToken && customerAccessToken.accessToken) {
+      handleToken(customerAccessToken);
+    }
+  };
+
+  const logout = async () => {
+    const res = await nextApiCall.auth.logout();
+
+    if (res && res.ok) {
+      dispatch({ type: actions.REMOVE_USER });
+      router.push(routes.base.home);
+    } else {
+      // handle error here
     }
   };
 
   const values = useMemo(
     () => ({
+      // States
       user: states.user,
 
+      // Functions
       addUser: (payload) => dispatch({ type: actions.ADD_USER, payload }),
       login,
       register,
+      resetPasswordEmail,
       resetPassword,
-      logout: async () => {
-        const res = await nextApiCall.auth.logout();
-        console.log(res, 'logout');
-        if (res && res.ok) {
-          dispatch({ type: actions.REMOVE_USER });
-          router.push(routes.base.home);
-        } else {
-          // handle error here
-        }
-      },
+      logout,
     }),
     [states]
   );

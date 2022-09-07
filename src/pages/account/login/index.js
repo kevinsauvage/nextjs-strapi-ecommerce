@@ -30,7 +30,6 @@ function LoginPage() {
           <Form
             title="LOGIN TO YOUR ACCOUNT"
             subtitle="Please complete the form below to login to your account"
-            className={styles.form}
             onSubmit={(e) => handleSubmit(e)}
           >
             <Input
@@ -49,13 +48,18 @@ function LoginPage() {
               onChange={handleInputChange}
             />
 
-            <Button text="Login" type="submit" tertiary />
+            <Button
+              extraClass={styles.btn}
+              text="Login"
+              type="submit"
+              tertiary
+            />
 
-            <div>
+            <div className={styles.forgotPassword}>
               <Link href={routes.base.resetPassword}>Forgot Password</Link>
             </div>
 
-            <div>
+            <div className={styles.register}>
               Don't have an account?{' '}
               <Link href={routes.base.register}>Register</Link> now.
             </div>

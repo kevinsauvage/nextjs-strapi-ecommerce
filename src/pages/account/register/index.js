@@ -9,6 +9,7 @@ import { messages } from '@/config/i18n';
 import useForm from '@/hooks/useForm';
 import Form from '@/components/Form/Form';
 import { UserContext } from '@/contexts/UserContext/UserContext';
+import routes from 'src/data/routes';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
@@ -29,7 +30,6 @@ function RegisterPage() {
       <Container>
         <div className={styles.register}>
           <Form
-            className={styles.form}
             onSubmit={handleSubmit}
             title="CREATE ACCOUNT"
             subtitle="Please complete the form below to create an account"
@@ -41,7 +41,6 @@ function RegisterPage() {
               type="email"
               placeholder="Email"
               onChange={handleInputChange}
-              required
             />
 
             <Input
@@ -52,13 +51,18 @@ function RegisterPage() {
               label="Password"
               autoComplete="current-password"
               onChange={handleInputChange}
-              required
             />
 
-            <Button text="Register" type="submit" tertiary />
+            <Button
+              extraClass={styles.btn}
+              text="Register"
+              type="submit"
+              tertiary
+            />
 
-            <div>
-              Already have an account? <Link href="/">Login</Link> now.
+            <div className={styles.alreadyRegistered}>
+              Already have an account?{' '}
+              <Link href={routes.base.login}>Login</Link> now.
             </div>
           </Form>
         </div>

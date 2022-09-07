@@ -5,21 +5,16 @@
   justify-content: center;
 }
 
-.form {
-  max-width: 600px;
-  width: 100%;
-}
-
-.title {
-  font-size: 18px;
-  color: $primary;
-  margin-bottom: 2rem;
-  letter-spacing: 2px;
-}
-
-.subtitle {
+.alreadyRegistered {
+  text-align: center;
   font-size: 14px;
-  color: gray;
-  font-weight: 400;
+  & a {
+    color: $strong;
+    text-decoration: underline;
+  }
+}
+
+.btn {
+  width: 100%;
   margin-bottom: 30px;
 }

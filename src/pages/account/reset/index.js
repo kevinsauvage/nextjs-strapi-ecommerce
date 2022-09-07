@@ -7,22 +7,28 @@ import Page from '@/components/Page/Page';
 import { messages } from '@/config/i18n';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
+import routes from 'src/data/routes';
+import Link from 'next/link';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
   const router = useRouter();
-  const { resetPassword } = useContext(UserContext);
+  const { resetPasswordEmail } = useContext(UserContext);
 
   if (router.isFallback) return <div>Loading product...</div>;
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
-    resetPassword(email.trim());
+    resetPasswordEmail(email.trim());
   });
   return (
     <Page title="Search">
       <div className={styles.ResetPassword}>
-        <Form title="Reset your password" onSubmit={handleSubmit}>
+        <Form
+          title="Reset your password"
+          subtitle="Enter your email address below to receive an email to reset your password"
+          onSubmit={handleSubmit}
+        >
           <Input
             id="email"
             label="Email address"
@@ -33,7 +39,15 @@ function ResetPassword() {
             required
           />
 
-          <Button type="submit" text="SEND ME AN EMAIL" />
+          <Button
+            extraClass={styles.btn}
+            type="submit"
+            text="SEND ME AN EMAIL"
+            tertiary
+          />
+          <div className={styles.backStore}>
+            Or go back to <Link href={routes.base.home}>store</Link>.
+          </div>
         </Form>
       </div>
     </Page>

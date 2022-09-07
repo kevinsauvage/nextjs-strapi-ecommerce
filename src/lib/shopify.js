@@ -48,13 +48,8 @@ export const registerCustomer = async (email, password, language) => {
       email:"${email}", 
       password:"${password}"
     }) {
-      userErrors {
-        field
-        message
-      }
-      customer {
-        id
-      }
+      userErrors { field message }
+      customer { id }
     }
   }`;
   return apiCall(mutation);
@@ -66,31 +61,32 @@ export const loginCustomer = async (email, password, language) => {
       email:"${email}", 
       password:"${password}"
     }) { 
-      customerAccessToken { 
-        accessToken, 
-        expiresAt 
-      }, 
-      customerUserErrors { 
-        code 
-        field
-        message
-      } 
+      customerAccessToken { accessToken expiresAt }, 
+      customerUserErrors { code field message } 
     } 
   }`;
 
   return apiCall(mutation);
 };
 
-export const sendRecoverEmail = (email) => {
-  const mutation = `mutation {
-  customerRecover(email: "${email}") {
-      customerUserErrors {
-        code 
-        field
-        message
-      }
+export const sendRecoverEmail = (email, language) => {
+  const mutation = `mutation @inContext(language: ${language.toUpperCase()}) {
+  customerRecover(email: "${email}") { customerUserErrors { code field message} }
+  }`;
+
+  return apiCall(mutation);
+};
+
+export const resetCustomerPassword = (password, resetUrl, language) => {
+  const mutation = `mutation @inContext(language: ${language.toUpperCase()}) {
+    customerResetByUrl(resetUrl: "${resetUrl}", password: "${password}") {
+      customer { id, email },
+      customerAccessToken { accessToken expiresAt }, 
+      customerUserErrors { code field message}
     }
   }`;
+
+  console.log(mutation);
 
   return apiCall(mutation);
 };
