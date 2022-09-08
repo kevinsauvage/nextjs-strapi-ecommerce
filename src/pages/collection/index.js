@@ -2,13 +2,12 @@ import { useRouter } from 'next/router';
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import { messages } from '@/config/i18n';
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify';
+import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 
 function CategoryPage({ collections }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
 
-  console.log(collections);
   return (
     <Page title="collections">
       <div>

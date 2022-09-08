@@ -5,7 +5,6 @@ import Container from '@/components/Container/Container';
 import styles from './CategoryButtons.module.scss';
 
 function CategoryButtons({ collections = [] }) {
-  console.log(collections);
   return (
     <div className={styles.container}>
       <Container>

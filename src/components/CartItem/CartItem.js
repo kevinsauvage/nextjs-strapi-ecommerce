@@ -10,7 +10,6 @@ import styles from './CartItem.module.scss';
 export default function CartItem({ product, inputId }) {
   const { removeFromCart, handleQuantityChange } = useContext(CartContext);
   const { quantity, variant } = product;
-  console.log(product);
 
   const [newQuantity, setNewQuantity] = useState(quantity);
 
@@ -67,6 +66,7 @@ export default function CartItem({ product, inputId }) {
             text="Update"
             onClick={handleUpdate}
             extraClass={styles.updateBtn}
+            tertiary
           />
         ) : null}
       </td>

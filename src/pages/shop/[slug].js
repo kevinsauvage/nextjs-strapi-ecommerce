@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router';
-import { messages } from '@config/i18n';
-import { getShopifyClient, parseShopifyResponse } from '@lib/shopify';
-import Page from '@components/Page/Page';
-import Container from '@components/Container/Container';
-import ProductPresenter from '@components/ProductPresenter/ProductPresenter';
+import { messages } from '@/config/i18n';
+import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
+import Page from '@/components/Page/Page';
+import Container from '@/components/Container/Container';
+import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
 import styles from './slug.module.scss';
 
 function ProductPage({ product }) {

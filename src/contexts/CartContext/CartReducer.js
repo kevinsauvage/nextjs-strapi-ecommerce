@@ -49,7 +49,6 @@ export const CartReducer = (state = initialState, action) => {
       };
 
     case actions.TOGGLE_CART_LOADING:
-      console.log('Toggling card loading...');
       return {
         ...state,
         isCheckoutLoading: true,

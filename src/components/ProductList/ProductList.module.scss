@@ -1,5 +1,37 @@
-.container {
+.containerGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 10px;
+  flex-direction: column;
+}
+
+.listContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.header {
+  background-color: white;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-shadow: $box-shadow-secondary;
+}
+
+.view {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn {
+  border: none;
+  outline: none;
+
+  svg {
+    font-size: 20px;
+  }
 }

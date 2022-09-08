@@ -1,10 +1,5 @@
 import { useContext } from 'react';
-import {
-  RiShoppingCart2Line,
-  RiUserLine,
-  RiSearchLine,
-  RiHeartsLine,
-} from 'react-icons/ri';
+import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
 import { CartContext } from '@/contexts/CartContext/CartContext';
 import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import HeaderButton from '@/components/HeaderButton/HeaderButton';
@@ -22,11 +17,6 @@ export default function UserButtons({ isActive }) {
       item: <RiSearchLine />,
       id: 1,
       onClick: toggleSearch,
-    },
-    {
-      item: <RiHeartsLine />,
-      id: 2,
-      onClick: toggleUser,
     },
 
     {

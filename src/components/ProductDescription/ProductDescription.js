@@ -18,7 +18,7 @@ export default function ProductDescription({
     <div className={styles.ProductDescription}>
       <div className={styles.header}>
         <h4 className={styles.title}>{title}</h4>
-        <p>
+        <p className={styles.price}>
           {selected?.priceV2?.amount} {selected?.priceV2?.currencyCode}
         </p>
       </div>
@@ -28,7 +28,7 @@ export default function ProductDescription({
         dangerouslySetInnerHTML={{ __html: descriptionHtml }}
       />
 
-      <select onChange={handleSelect}>
+      <select onChange={handleSelect} className={styles.select}>
         {product.variants.map((variant) => (
           <option value={variant.id} key={variant.id}>
             {variant.title}
@@ -37,38 +37,41 @@ export default function ProductDescription({
       </select>
 
       {availableForSale && (
-        <div className={styles.quantityContainer}>
-          <button type="button" onClick={addOne} className={styles.btnQuantity}>
-            <VscAdd />
-          </button>
+        <div className={styles.row}>
+          <div className={styles.quantityContainer}>
+            <button
+              type="button"
+              onClick={addOne}
+              className={styles.btnQuantity}
+            >
+              <VscAdd />
+            </button>
 
-          <input
-            type="number"
-            size="4"
-            value={quantity}
-            className={styles.input}
-            onChange={handleChangeInput}
-          />
+            <input
+              type="number"
+              size="4"
+              value={quantity}
+              className={styles.input}
+              onChange={handleChangeInput}
+            />
 
-          <button
+            <button
+              type="button"
+              onClick={removeOne}
+              className={styles.btnQuantity}
+            >
+              <VscRemove />
+            </button>
+          </div>
+          <Button
+            extraClass={styles.btn}
             type="button"
-            onClick={removeOne}
-            className={styles.btnQuantity}
-          >
-            <VscRemove />
-          </button>
+            text="ADD TO CART"
+            tertiary
+            disabled={!availableForSale}
+            onClick={handleAddToCart}
+          />
         </div>
-      )}
-
-      {availableForSale && (
-        <Button
-          extraClass={styles.btn}
-          type="button"
-          text="Add to cart"
-          tertiary
-          disabled={!availableForSale}
-          onClick={handleAddToCart}
-        />
       )}
 
       {!availableForSale && (

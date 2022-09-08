@@ -1,25 +1,50 @@
 import { useRouter } from 'next/router';
-import { createContext, useMemo, useReducer } from 'react';
+import { createContext, useEffect, useMemo, useReducer } from 'react';
 import { toast } from 'react-toastify';
 import routes from '@/data/routes';
+import nextApiCall from '@/utils/apiNext';
 import {
   loginCustomer,
   registerCustomer,
   sendRecoverEmail,
   resetCustomerPassword,
-} from '@/lib/shopify';
-import nextApiCall from '@/utils/apiNext';
+  getUser,
+} from '@/lib/shopify/customer';
 
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
 
-export function UserProvider({ children }) {
+export function UserProvider({ children, token }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const router = useRouter();
+  const { locale } = router;
+
+  const logout = async () => {
+    const res = await nextApiCall.auth.logout();
+    if (res && res.ok) {
+      dispatch({ type: actions.REMOVE_USER });
+      router.push(routes.base.home);
+    } else {
+      // handle error here
+    }
+  };
+
+  const getUserInfo = async () => {
+    const response = await getUser(token, locale);
+    if (response.customer) {
+      dispatch({ type: actions.ADD_USER, payload: response.customer });
+    }
+  };
+
+  useEffect(() => {
+    if (token && !states?.user?.id) getUserInfo(token);
+    else if (!token && states?.user?.id) logout();
+  }, [token]);
 
   const handleToken = async (customerAccessToken) => {
     // Send token to server to store it inside cookies
+    console.log(customerAccessToken);
     const res2 = await nextApiCall.auth.login(customerAccessToken);
     if (res2?.ok) {
       toast.success('Your login was successful');
@@ -97,24 +122,12 @@ export function UserProvider({ children }) {
     }
   };
 
-  const logout = async () => {
-    const res = await nextApiCall.auth.logout();
-
-    if (res && res.ok) {
-      dispatch({ type: actions.REMOVE_USER });
-      router.push(routes.base.home);
-    } else {
-      // handle error here
-    }
-  };
-
   const values = useMemo(
     () => ({
       // States
       user: states.user,
 
       // Functions
-      addUser: (payload) => dispatch({ type: actions.ADD_USER, payload }),
       login,
       register,
       resetPasswordEmail,

@@ -16,7 +16,6 @@ function CartPage() {
 
   if (router.isFallback) return <div>Loading product...</div>;
 
-  console.log(cart);
   return (
     <Page title="Cart" loading={isCheckoutLoading}>
       <Container>

@@ -16,8 +16,6 @@ function Password({ resetUrl }) {
 
   if (router.isFallback) return <div>Loading product...</div>;
 
-  console.log(resetUrl);
-
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
     resetPassword(password.trim(), resetUrl);
@@ -55,8 +53,6 @@ function Password({ resetUrl }) {
 export default Password;
 
 export function getServerSideProps({ locale, query, res }) {
-  console.log(query, 'serverside');
-
   if (!query.reset_url) {
     res.setHeader('location', routes.base.login);
     res.statusCode = 302;

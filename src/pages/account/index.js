@@ -5,17 +5,24 @@ import { messages } from '@/config/i18n';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
-function Profile({ user = {} }) {
-  const { logout } = useContext(UserContext);
+function Profile() {
+  const { logout, user } = useContext(UserContext);
 
+  console.log(user);
   return (
     <Page title="User Profile">
       <div className={styles.Profile}>
-        <div>Username: {user?.username}</div>
-
         <div>Email: {user?.email}</div>
-
         <Button onClick={logout} tertiary text="Logout" />
+        <div>
+          {user?.orders?.edges && user.orders?.edges.length > 0 ? (
+            user.orders?.edges.map((item) => console.log(item))
+          ) : (
+            <div>
+              <p>You didn't make any orders yet.</p>
+            </div>
+          )}
+        </div>
       </div>
     </Page>
   );
@@ -26,6 +33,5 @@ export default Profile;
 export const getStaticProps = async (ctx) => ({
   props: {
     messages: messages[ctx.locale],
-    revalidate: 10, // In seconds
   },
 });

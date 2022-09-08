@@ -3,7 +3,7 @@ import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
 import { messages } from '@/config/i18n';
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify';
+import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 
 function CategoryPage({ category }) {
   const router = useRouter();

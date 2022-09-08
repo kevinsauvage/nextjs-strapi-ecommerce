@@ -6,15 +6,15 @@ import Layout from '@/components/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
-import { getShopifyClient } from '@/lib/shopify';
+import { getShopifyClient } from '@/lib/shopify/index';
 
 function MyApp({ Component, pageProps }) {
-  const { messages, collections, user } = pageProps;
+  const { messages, collections, user, token } = pageProps;
 
   return (
     <NextIntlProvider messages={messages}>
       <GlobalProvider>
-        <UserProvider>
+        <UserProvider token={token}>
           <CartProvider>
             <Layout collections={collections} user={user}>
               <Component {...pageProps} />
@@ -35,12 +35,16 @@ MyApp.getInitialProps = async (ctx) => {
   const collections = await getShopifyClient(locale)?.collection?.fetchAll();
   const policies = await getShopifyClient(locale)?.shop?.fetchPolicies();
   const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
+  const cookies = nookies.get(ctx.ctx);
 
-  const cookies = nookies.get(ctx);
-  console.log(cookies, 'cookies');
   return {
     ...appProps,
-    pageProps: { collections, policies, shopInfos },
+    pageProps: {
+      collections,
+      policies,
+      shopInfos,
+      token: cookies?.shopify_token,
+    },
   };
 };
 

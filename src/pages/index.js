@@ -1,4 +1,3 @@
-import nookies from 'nookies';
 import CategoryButtons from '@/components/CategoryButtons/CategoryButtons';
 import SecureBanner from '@/components/SecureBanner/SecureBanner';
 import Banner1 from '@/components/BannerHome/Banner1';
@@ -22,14 +21,9 @@ export default function Home({ collections, policies, shopInfos }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const cookies = nookies.get(ctx);
-  console.log(cookies);
-  console.log(cookies.shopify_token, 'token ');
-
   return {
     props: {
       messages: messages[ctx.locale],
-      cookies,
     },
   };
 }

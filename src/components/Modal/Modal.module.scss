@@ -13,25 +13,37 @@
 
 .body {
   position: relative;
+  z-index: 9999;
+  box-shadow: $box-shadow-primary;
 }
 
 .content {
   width: 100%;
-  max-width: 900px;
-  max-height: 80%;
+  max-width: 800px;
+  max-height: 70vh;
   height: 100%;
-  padding: 60px;
   background-color: rgb(239, 239, 239);
   position: relative;
   border-radius: 3px;
+  overflow: auto;
 }
 
 .close {
   position: absolute;
-  right: 1rem;
-  top: 1rem;
+  border: none;
+  right: -15px;
+  top: -15px;
   z-index: 2;
-  svg {
-    font-size: 24px;
+  background-color: $primary;
+  padding: 8px;
+  border-radius: 50px;
+  color: white;
+  border: 0.1px solid white;
+  box-shadow: $box-shadow-secondary;
+
+  svg,
+  path {
+    font-size: 22px;
+    stroke: white;
   }
 }

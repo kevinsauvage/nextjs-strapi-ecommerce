@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server';
-import nookies from 'nookies';
+import { setCookie } from 'nookies';
+import routes from './data/routes';
+import { refreshToken } from './lib/shopify/customer';
 
 const PUBLIC_FILE = /\.(.*)$/;
+const expireAt = 1 * 24 * 60 * 60;
 
 function middleware(request) {
   const { nextUrl, cookies } = request;
@@ -16,38 +19,69 @@ function middleware(request) {
   // Get user auth cookies
   const cookieShopify = cookies.get('shopify_token');
 
-  console.log(cookieShopify, 'middleware');
-
+  // Get expire in Date format
   const cookiesShopifyExpires = cookies.get('shopify_token_expires');
 
-  console.log(cookiesShopifyExpires, 'middleware');
+  const response = NextResponse.next();
 
-  const isCookieExpired =
-    new Date(cookiesShopifyExpires).getDate() > new Date().getDate();
+  if (cookieShopify && cookiesShopifyExpires) {
+    const expireInMilliseconds = new Date(cookiesShopifyExpires).getTime();
+    const todayInMilliseconds = new Date().getTime();
 
-  if (cookiesShopifyExpires) {
-    if (new Date(cookiesShopifyExpires).getDate() < new Date().getDate() - 1) {
-      // TODO = REFRESH TOKEN
-    } else if (isCookieExpired) {
-      nookies.destroy(request, 'shopify_token');
-      nookies.destroy(request, 'shopify_token_expires');
+    const isExpired = expireInMilliseconds > todayInMilliseconds;
+
+    // Refresh the cookies 1h before they expire
+    if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
+      console.log('refresh cookies');
+
+      refreshToken(cookieShopify).then((res) => {
+        if (res.errors.length === 0) {
+          setCookie({ response }, 'shopify_token', res.refresh.accessToken, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            maxAge: expireAt,
+            path: '/',
+          });
+          setCookie(
+            { response },
+            'shopify_token_expires',
+            res.refresh.expiresAt,
+            {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== 'development',
+              maxAge: expireAt,
+              path: '/',
+            }
+          );
+        }
+      });
+    }
+
+    // If is not expired then go to profile page
+    if (
+      pathname.includes('/login') ||
+      (pathname.includes('/register') && !isExpired)
+    ) {
+      return NextResponse.redirect(
+        `${origin}/${locale || 'en'}${routes.base.profile}`
+      );
+    }
+    // If is expired then redirect to the login
+    if (pathname.includes('/profile') && isExpired) {
+      return NextResponse.redirect(
+        `${origin}/${locale || 'en'}${routes.base.login}`
+      );
     }
   }
 
-  if (
-    cookieShopify &&
-    (pathname.includes('/login') || pathname.includes('/register'))
-  ) {
-    return NextResponse.redirect(`${origin}/${locale || 'en'}/account/profile`);
+  // If there is no cookie then redirect to the login
+  if (pathname.includes('/profile') && !cookieShopify) {
+    return NextResponse.redirect(
+      `${origin}/${locale || 'en'}${routes.base.login}`
+    );
   }
 
-  if (cookieShopify) return NextResponse.next();
-
-  if (pathname.includes('/profile')) {
-    return NextResponse.redirect(`${origin}/${locale || 'en'}/account/login`);
-  }
-
-  return undefined;
+  return response;
 }
 
 export default middleware;

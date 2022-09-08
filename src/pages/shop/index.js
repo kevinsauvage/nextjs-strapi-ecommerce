@@ -3,22 +3,24 @@ import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
 import { messages } from '@/config/i18n';
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify';
+import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import styles from './shop.module.scss';
 
-function Shop({ products }) {
+function Shop({ products, categories }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
-  console.log(products);
-
+  console.log(categories);
   return (
     <Page title="Shop page">
-      <main className={styles.shop}>
-        <Container>
-          <ProductsList products={products} />
-        </Container>
-      </main>
+      <Container>
+        <main className={styles.shop}>
+          <div className={styles.filters}>Filters</div>
+          <div>
+            <ProductsList products={products} />
+          </div>
+        </main>
+      </Container>
     </Page>
   );
 }

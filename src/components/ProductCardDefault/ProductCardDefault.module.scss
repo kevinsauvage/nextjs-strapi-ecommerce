@@ -1,28 +1,61 @@
 .productCardDefault {
   cursor: pointer;
   background-color: white;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  border-radius: 8px;
   overflow: hidden;
+  border-radius: 3px;
+  box-shadow: $box-shadow-secondary;
+}
+
+.column {
+  display: grid;
+  grid-template-columns: 2fr 5fr;
 }
 
 .content {
-  padding: 1rem;
-  background-color: azure;
+  padding: 8px 10px 10px 10px;
+  text-align: center;
+  z-index: 99;
+  background-color: white;
+  height: 100%;
+  position: relative;
+}
+
+.quickView {
+  background-color: $primary;
+  color: white;
+  text-align: center;
+  padding: 4px;
+  position: absolute;
+  bottom: -100%;
+  width: 100%;
+  transition: all 0.3s ease-in-out;
+  z-index: 1;
 }
 
 .image {
   position: relative;
-  height: 150px;
+
+  &:hover .quickView {
+    bottom: 0;
+  }
 }
 
 .title {
-  font-weight: 500;
-  margin-bottom: 1rem;
-  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  font-size: 14px;
 }
 
 .description {
   font-weight: 400;
   font-size: 14px;
+}
+
+.price {
+  font-size: 13px;
+  font-weight: 400;
+  color: black;
+}
+
+.column {
 }

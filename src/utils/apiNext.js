@@ -15,7 +15,7 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   return res ? res.json() : undefined;
 };
 
-const login = (user) => nextApiHelper(`${apiRoute.nextApi.login}`, user);
+const login = (payload) => nextApiHelper(`${apiRoute.nextApi.login}`, payload);
 const logout = () => nextApiHelper(`${apiRoute.nextApi.logout}`);
 
 const nextApiCall = {
