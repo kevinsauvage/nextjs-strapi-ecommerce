@@ -43,6 +43,7 @@ function middleware(request) {
 
         // Refresh the cookies 1h before they expire
         if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
+          console.log('refresh token');
           refreshToken(cookieShopify).then((res) => {
             if (res.errors.length === 0) {
               setCookie(
