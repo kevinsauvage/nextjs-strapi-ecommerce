@@ -11,6 +11,8 @@ import { getShopifyClient } from '@/lib/shopify/index';
 function MyApp({ Component, pageProps }) {
   const { messages, collections, user, token } = pageProps;
 
+  console.log(pageProps);
+
   console.log(
     messages,
     'messages translated messages translated messages translated messages translated APP.js'
