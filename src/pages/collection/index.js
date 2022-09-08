@@ -4,7 +4,7 @@ import Page from '@/components/Page/Page';
 import { messages } from '@/config/i18n';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 
-function CategoryPage({ collections }) {
+function CategoryPage() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
 

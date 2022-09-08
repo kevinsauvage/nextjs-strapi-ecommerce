@@ -6,7 +6,7 @@ import { messages } from '@/config/i18n';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import styles from './shop.module.scss';
 
-function Shop({ products, categories }) {
+function Shop({ products }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
