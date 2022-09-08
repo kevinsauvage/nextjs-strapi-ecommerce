@@ -37,6 +37,9 @@ export function UserProvider({ children, token }) {
 
   const getUserInfo = async (accessToken) => {
     const response = await getUser(accessToken, locale);
+
+    console.log('getUserInfo res', response);
+
     if (response.customer) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }
@@ -63,6 +66,7 @@ export function UserProvider({ children, token }) {
       return;
     }
     toggleLoading(true);
+    console.log('Login', email, password);
     const data = await loginCustomer(email, password, router.locale);
 
     const { customerAccessTokenCreate } = data;
@@ -71,6 +75,8 @@ export function UserProvider({ children, token }) {
     const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
 
     if (customerAccessToken) {
+      console.log('getUserInfo', customerAccessToken);
+
       getUserInfo(customerAccessToken);
       handleToken(customerAccessToken);
     }
