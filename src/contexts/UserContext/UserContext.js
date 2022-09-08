@@ -31,13 +31,17 @@ export function UserProvider({ children, token }) {
   };
 
   const getUserInfo = async () => {
+    console.log('getUserInfo');
     const response = await getUser(token, locale);
     if (response.customer) {
+      console.log('dispatch user info', `user: ${response.customer}`);
+
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }
   };
 
   useEffect(() => {
+    console.log('token change, call user info');
     if (token && !states?.user?.id) getUserInfo(token);
     else if (!token && states?.user?.id) logout();
   }, [token]);
@@ -64,6 +68,8 @@ export function UserProvider({ children, token }) {
     const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
 
     if (customerAccessToken) {
+      console.log('receive login shopify response', customerAccessToken);
+
       getUserInfo(customerAccessToken);
       handleToken(customerAccessToken);
     }
