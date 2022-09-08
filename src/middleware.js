@@ -1,14 +1,14 @@
 import { NextResponse } from 'next/server';
 // import { setCookie } from 'nookies';
-import routes from './data/routes';
+// import routes from './data/routes';
 // import { refreshToken } from './lib/shopify/customer';
 
 const PUBLIC_FILE = /\.(.*)$/;
 // const expireAt = 1 * 24 * 60 * 60;
 
 function middleware(request) {
-  const { nextUrl, cookies } = request;
-  const { pathname, origin, locale } = nextUrl;
+  // const { nextUrl, cookies } = request;
+  // const { pathname, origin, locale } = nextUrl;
 
   const basicAuth = request.headers.get('authorization');
   const url = request.nextUrl;
@@ -26,21 +26,20 @@ function middleware(request) {
       ) {
         return null;
       }
-
+      const response = NextResponse.next();
+      /* 
       // Get user auth cookies
       const cookieShopify = cookies.get('shopify_token');
 
       // Get expire in Date format
       const cookiesShopifyExpires = cookies.get('shopify_token_expires');
 
-      const response = NextResponse.next();
 
       if (cookieShopify && cookiesShopifyExpires) {
         const expireInMilliseconds = new Date(cookiesShopifyExpires).getTime();
         const todayInMilliseconds = new Date().getTime();
 
         const isExpired = expireInMilliseconds > todayInMilliseconds;
-        /* 
         // Refresh the cookies 1h before they expire
         if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
           console.log('refresh token');
@@ -70,7 +69,7 @@ function middleware(request) {
               );
             }
           });
-        } */
+        } 
 
         // If is not expired then go to profile page
         if (
@@ -94,7 +93,7 @@ function middleware(request) {
         return NextResponse.redirect(
           `${origin}/${locale || 'en'}${routes.base.login}`
         );
-      }
+      } */
 
       return response;
     }
