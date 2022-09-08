@@ -77,7 +77,7 @@ export function UserProvider({ children, token }) {
     if (customerAccessToken) {
       console.log('getUserInfo', customerAccessToken);
 
-      getUserInfo(customerAccessToken);
+      getUserInfo(customerAccessToken.accessToken);
       handleToken(customerAccessToken);
     }
 
