@@ -45,9 +45,11 @@ MyApp.getInitialProps = async (ctx) => {
   const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
   const cookies = nookies.get(ctx.ctx);
 
+  console.log(collections, 'fetch inside getinitialprops');
+
   return {
-    ...appProps,
     pageProps: {
+      ...appProps,
       collections,
       policies,
       shopInfos,
