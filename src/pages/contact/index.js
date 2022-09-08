@@ -12,7 +12,7 @@ function ContactPage() {
 
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.name || !formData.message) return null;
-    return null;
+    return true;
   };
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);

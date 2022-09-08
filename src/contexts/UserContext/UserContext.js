@@ -46,6 +46,8 @@ export function UserProvider({ children, token }) {
   };
 
   useEffect(() => {
+    console.log('token', token);
+    console.log('user', states?.user);
     if (token && !states?.user?.id) getUserInfo(token);
     else if (!token && states?.user?.id) logout();
   }, [token]);
@@ -75,9 +77,9 @@ export function UserProvider({ children, token }) {
     const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
 
     if (customerAccessToken) {
-      console.log('getUserInfo', customerAccessToken);
-
+      // Fetch user information after successful login
       getUserInfo(customerAccessToken.accessToken);
+      // Set cookie token
       handleToken(customerAccessToken);
     }
 

@@ -33,7 +33,7 @@ export default function User() {
             <Button
               text="LOG OUT"
               tertiary
-              onClick={logOut}
+              onClick={() => logOut()}
               extraClass={styles.btn}
             />
           </div>
