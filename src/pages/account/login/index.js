@@ -16,14 +16,14 @@ function LoginPage() {
 
   if (router.isFallback) return <div>Loading product...</div>;
 
-  const { login } = useContext(UserContext);
+  const { login, loading } = useContext(UserContext);
 
   const { handleInputChange, handleSubmit } = useForm((formData) =>
     login(formData.email, formData.password)
   );
 
   return (
-    <Page title="login">
+    <Page title="login" loading={loading}>
       <Container>
         <div className={styles.login}>
           <Form

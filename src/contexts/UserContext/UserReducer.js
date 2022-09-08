@@ -1,10 +1,12 @@
 export const initialState = {
   user: {},
+  loading: false,
 };
 
 export const actions = {
   ADD_USER: 'ADD_USER',
   REMOVE_USER: 'REMOVE_USER',
+  CHANGE_LOADING: 'CHANGE_LOADING',
 };
 
 export const UserReducer = (state = initialState, action) => {
@@ -15,6 +17,11 @@ export const UserReducer = (state = initialState, action) => {
 
     case actions.REMOVE_USER: {
       return { ...state, user: {} };
+    }
+
+    case actions.CHANGE_LOADING: {
+      console.log('change loading States', action.payload);
+      return { ...state, loading: action.payload };
     }
 
     default:

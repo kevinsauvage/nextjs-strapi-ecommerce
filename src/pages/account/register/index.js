@@ -15,7 +15,7 @@ function RegisterPage() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
-  const { register } = useContext(UserContext);
+  const { register, loading } = useContext(UserContext);
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
@@ -25,7 +25,7 @@ function RegisterPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Register">
+    <Page title="Register" loading={loading}>
       <Container>
         <div className={styles.register}>
           <Form

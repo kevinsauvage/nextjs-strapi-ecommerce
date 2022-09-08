@@ -10,79 +10,98 @@ function middleware(request) {
   const { nextUrl, cookies } = request;
   const { pathname, origin, locale } = nextUrl;
 
-  // Early return if it is a public file such as an image
-  if (
-    request.nextUrl.pathname.startsWith('/_next') ||
-    request.nextUrl.pathname.includes('/api/') ||
-    PUBLIC_FILE.test(request.nextUrl.pathname)
-  ) {
-    return null;
-  }
+  const basicAuth = request.headers.get('authorization');
+  const url = request.nextUrl;
 
-  // Get user auth cookies
-  const cookieShopify = cookies.get('shopify_token');
+  if (basicAuth) {
+    const authValue = basicAuth.split(' ')[1];
+    const [user, pwd] = atob(authValue).split(':');
 
-  // Get expire in Date format
-  const cookiesShopifyExpires = cookies.get('shopify_token_expires');
+    if (user === 'kevin' && pwd === '50625062') {
+      // Early return if it is a public file such as an image
+      if (
+        request.nextUrl.pathname.startsWith('/_next') ||
+        request.nextUrl.pathname.includes('/api/') ||
+        PUBLIC_FILE.test(request.nextUrl.pathname)
+      ) {
+        return null;
+      }
 
-  const response = NextResponse.next();
+      // Get user auth cookies
+      const cookieShopify = cookies.get('shopify_token');
 
-  if (cookieShopify && cookiesShopifyExpires) {
-    const expireInMilliseconds = new Date(cookiesShopifyExpires).getTime();
-    const todayInMilliseconds = new Date().getTime();
+      // Get expire in Date format
+      const cookiesShopifyExpires = cookies.get('shopify_token_expires');
 
-    const isExpired = expireInMilliseconds > todayInMilliseconds;
+      const response = NextResponse.next();
 
-    // Refresh the cookies 1h before they expire
-    if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
-      refreshToken(cookieShopify).then((res) => {
-        if (res.errors.length === 0) {
-          setCookie({ response }, 'shopify_token', res.refresh.accessToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== 'development',
-            maxAge: expireAt,
-            path: '/',
-          });
-          setCookie(
-            { response },
-            'shopify_token_expires',
-            res.refresh.expiresAt,
-            {
-              httpOnly: true,
-              secure: process.env.NODE_ENV !== 'development',
-              maxAge: expireAt,
-              path: '/',
+      if (cookieShopify && cookiesShopifyExpires) {
+        const expireInMilliseconds = new Date(cookiesShopifyExpires).getTime();
+        const todayInMilliseconds = new Date().getTime();
+
+        const isExpired = expireInMilliseconds > todayInMilliseconds;
+
+        // Refresh the cookies 1h before they expire
+        if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
+          refreshToken(cookieShopify).then((res) => {
+            if (res.errors.length === 0) {
+              setCookie(
+                { response },
+                'shopify_token',
+                res.refresh.accessToken,
+                {
+                  httpOnly: true,
+                  secure: process.env.NODE_ENV !== 'development',
+                  maxAge: expireAt,
+                  path: '/',
+                }
+              );
+              setCookie(
+                { response },
+                'shopify_token_expires',
+                res.refresh.expiresAt,
+                {
+                  httpOnly: true,
+                  secure: process.env.NODE_ENV !== 'development',
+                  maxAge: expireAt,
+                  path: '/',
+                }
+              );
             }
+          });
+        }
+
+        // If is not expired then go to profile page
+        if (
+          pathname.includes('/login') ||
+          (pathname.includes('/register') && !isExpired)
+        ) {
+          return NextResponse.redirect(
+            `${origin}/${locale || 'en'}${routes.base.profile}`
           );
         }
-      });
-    }
+        // If is expired then redirect to the login
+        if (pathname.includes('/profile') && isExpired) {
+          return NextResponse.redirect(
+            `${origin}/${locale || 'en'}${routes.base.login}`
+          );
+        }
+      }
 
-    // If is not expired then go to profile page
-    if (
-      pathname.includes('/login') ||
-      (pathname.includes('/register') && !isExpired)
-    ) {
-      return NextResponse.redirect(
-        `${origin}/${locale || 'en'}${routes.base.profile}`
-      );
-    }
-    // If is expired then redirect to the login
-    if (pathname.includes('/profile') && isExpired) {
-      return NextResponse.redirect(
-        `${origin}/${locale || 'en'}${routes.base.login}`
-      );
+      // If there is no cookie then redirect to the login
+      if (pathname.includes('/profile') && !cookieShopify) {
+        return NextResponse.redirect(
+          `${origin}/${locale || 'en'}${routes.base.login}`
+        );
+      }
+
+      return response;
     }
   }
 
-  // If there is no cookie then redirect to the login
-  if (pathname.includes('/profile') && !cookieShopify) {
-    return NextResponse.redirect(
-      `${origin}/${locale || 'en'}${routes.base.login}`
-    );
-  }
+  url.pathname = '/api/auth';
 
-  return response;
+  return NextResponse.rewrite(url);
 }
 
 export default middleware;

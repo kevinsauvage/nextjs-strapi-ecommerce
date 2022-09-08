@@ -11,7 +11,7 @@ import styles from './password.module.scss';
 
 function Password({ resetUrl }) {
   const router = useRouter();
-  const { resetPassword } = useContext(UserContext);
+  const { resetPassword, loading } = useContext(UserContext);
 
   if (router.isFallback) return <div>Loading product...</div>;
 
@@ -21,7 +21,7 @@ function Password({ resetUrl }) {
   });
 
   return (
-    <Page title="Reset Password">
+    <Page title="Reset Password" loading={loading}>
       <div className={styles.password}>
         <Form
           title="Enter new password"

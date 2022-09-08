@@ -5,10 +5,10 @@ import { UserContext } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { logout, user } = useContext(UserContext);
+  const { logout, user, loading } = useContext(UserContext);
 
   return (
-    <Page title="User Profile">
+    <Page title="User Profile" loading={loading}>
       <div className={styles.Profile}>
         <div>Email: {user?.email}</div>
         <Button onClick={logout} tertiary text="Logout" />

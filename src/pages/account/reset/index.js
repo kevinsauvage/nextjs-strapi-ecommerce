@@ -12,7 +12,7 @@ import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
   const router = useRouter();
-  const { resetPasswordEmail } = useContext(UserContext);
+  const { resetPasswordEmail, loading } = useContext(UserContext);
 
   if (router.isFallback) return <div>Loading product...</div>;
 
@@ -21,7 +21,7 @@ function ResetPassword() {
     resetPasswordEmail(email.trim());
   });
   return (
-    <Page title="Search">
+    <Page title="Reset Password" loading={loading}>
       <div className={styles.ResetPassword}>
         <Form
           title="Reset your password"
@@ -45,7 +45,7 @@ function ResetPassword() {
             tertiary
           />
           <div className={styles.backStore}>
-            Or go back to <Link href={routes.base.home}>store</Link>.
+            Or go back to <Link href={routes.base.login}>Login</Link>.
           </div>
         </Form>
       </div>

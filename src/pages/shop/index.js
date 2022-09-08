@@ -10,7 +10,7 @@ function Shop({ products }) {
   if (router.isFallback) return <div>Loading product...</div>;
 
   return (
-    <Page title="Shop page">
+    <Page title="Shop">
       <Container>
         <main className={styles.shop}>
           <div className={styles.filters}>Filters</div>
