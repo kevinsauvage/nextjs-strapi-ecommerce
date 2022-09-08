@@ -33,12 +33,14 @@ MyApp.getInitialProps = async (ctx) => {
   const collections = await getShopifyClient(locale)?.collection?.fetchAll();
   const cookies = nookies.get(ctx.ctx);
 
+  const shopifyToken = cookies?.shopify_token;
+
   console.log(cookies, 'cookies getInitialProps');
 
   return {
     ...appProps,
     collections,
-    token: cookies?.shopify_token,
+    token: shopifyToken,
     messages: (await import(`../locales/${locale}.json`)).default,
   };
 };
