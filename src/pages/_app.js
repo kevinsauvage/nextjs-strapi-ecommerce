@@ -8,9 +8,7 @@ import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { getShopifyClient } from '@/lib/shopify/index';
 
-function MyApp({ Component, pageProps }) {
-  const { messages, collections, user, token, path } = pageProps;
-
+function MyApp({ Component, pageProps, messages, token, path, collections }) {
   console.log(
     messages,
     'messages translated messages translated messages translated messages translated APP.js'
@@ -21,7 +19,7 @@ function MyApp({ Component, pageProps }) {
       <GlobalProvider>
         <UserProvider token={token}>
           <CartProvider>
-            <Layout collections={collections} user={user}>
+            <Layout collections={collections}>
               <Component {...pageProps} />
             </Layout>
           </CartProvider>
@@ -37,22 +35,20 @@ MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
   const { locale } = ctx.router;
 
-  console.log(ctx);
   const collections = await getShopifyClient(locale)?.collection?.fetchAll();
   const policies = await getShopifyClient(locale)?.shop?.fetchPolicies();
   const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
   const cookies = nookies.get(ctx.ctx);
 
+  console.log('locale, :', locale, 'locale');
   return {
     ...appProps,
-    pageProps: {
-      collections,
-      policies,
-      shopInfos,
-      token: cookies?.shopify_token,
-      messages: (await import(`../locales/${locale}.json`)).default,
-      path: ctx.ctx.pathname,
-    },
+    collections,
+    policies,
+    shopInfos,
+    token: cookies?.shopify_token,
+    messages: (await import(`../locales/${locale}.json`)).default,
+    path: ctx.ctx.pathname,
   };
 };
 

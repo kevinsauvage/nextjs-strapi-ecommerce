@@ -8,7 +8,7 @@ function Footer({ collections }) {
   const t = useTranslations('link');
 
   const getCollections = () =>
-    collections.map((category) => ({
+    collections?.map((category) => ({
       name: category.title,
       href: `${routes.base.collection}/${category.handle}`,
       id: category.id,
@@ -41,7 +41,7 @@ function Footer({ collections }) {
                 <li key={item.id}>
                   <p className={styles.title}>{item.title}</p>
                   <ul className={styles.nav}>
-                    {item.items.map((el) => (
+                    {item?.items?.map((el) => (
                       <li className={styles.navItem} key={el.id}>
                         <Link href={el.href}>{el.name}</Link>
                       </li>
