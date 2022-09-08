@@ -9,7 +9,7 @@ export default function PhotoGallery({
   thumbsPerSlide = 4,
 }) {
   const [containerWidth, setContainerWidth] = useState(null);
-  const [thunbWidth, setThunbWidth] = useState(null);
+  const [thumbWidth, setThumbWidth] = useState(null);
 
   const galleryRef = useRef(null);
 
@@ -18,7 +18,7 @@ export default function PhotoGallery({
   }, [galleryRef?.current]);
 
   useEffect(() => {
-    setThunbWidth(containerWidth / thumbsPerSlide - 5);
+    setThumbWidth(containerWidth / thumbsPerSlide - 5);
   }, [containerWidth]);
 
   return (
@@ -41,7 +41,7 @@ export default function PhotoGallery({
               return (
                 <div
                   className={styles.item}
-                  style={thunbWidth && { width: `${thunbWidth}px` }}
+                  style={thumbWidth && { width: `${thumbWidth}px` }}
                 >
                   <button
                     className={styles.btn}

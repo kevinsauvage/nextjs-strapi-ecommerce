@@ -12,15 +12,8 @@ function ContactPage() {
   if (router.isFallback) return <div>Loading product...</div>;
 
   const onSubmit = async (formData) => {
-    if (!formData.email || !formData.name || !formData.message) return;
-
-    const data = {
-      email: formData.email,
-      name: formData.name,
-      message: formData.message,
-    };
-
-    console.log(data);
+    if (!formData.email || !formData.name || !formData.message) return null;
+    return null;
   };
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);

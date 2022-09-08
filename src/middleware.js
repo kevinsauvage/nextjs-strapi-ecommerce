@@ -11,10 +11,13 @@ function middleware(request) {
   const { pathname, origin, locale } = nextUrl;
 
   // Early return if it is a public file such as an image
-  if (PUBLIC_FILE.test(pathname)) return undefined;
-
-  // Early return if this is an api route
-  if (pathname.includes('/api')) return undefined;
+  if (
+    request.nextUrl.pathname.startsWith('/_next') ||
+    request.nextUrl.pathname.includes('/api/') ||
+    PUBLIC_FILE.test(request.nextUrl.pathname)
+  ) {
+    return null;
+  }
 
   // Get user auth cookies
   const cookieShopify = cookies.get('shopify_token');

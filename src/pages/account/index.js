@@ -15,7 +15,7 @@ function Profile() {
         <Button onClick={logout} tertiary text="Logout" />
         <div>
           {user?.orders?.edges && user.orders?.edges.length > 0 ? (
-            user.orders?.edges.map((item) => console.log(item))
+            user.orders?.edges.map((item) => JSON.stringify(item))
           ) : (
             <div>
               <p>You didn&apos;t make any orders yet.</p>

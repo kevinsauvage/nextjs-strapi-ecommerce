@@ -9,7 +9,7 @@ import { messages } from '@/config/i18n';
 import useForm from '@/hooks/useForm';
 import styles from './PasswordReset.module.scss';
 
-function PsswordReset() {
+function PasswordReset() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
@@ -57,7 +57,7 @@ function PsswordReset() {
   );
 }
 
-export default PsswordReset;
+export default PasswordReset;
 
 export function getStaticProps({ locale }) {
   return {
