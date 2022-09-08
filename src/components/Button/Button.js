@@ -28,7 +28,7 @@ export default function Button({
     return (
       <Link href={href}>
         <a
-          styles={extraStyles}
+          style={extraStyles}
           className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
         >
           {text}
@@ -43,7 +43,7 @@ export default function Button({
       type={type || 'button'}
       onClick={onClick || null}
       onKeyDown={(e) => e.key === 'Enter' && (onClick || null)}
-      styles={extraStyles}
+      style={extraStyles}
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
     >

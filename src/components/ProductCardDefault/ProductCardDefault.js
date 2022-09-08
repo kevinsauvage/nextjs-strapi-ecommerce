@@ -9,17 +9,10 @@ import styles from './ProductCardDefault.module.scss';
 export default function ProductCardDefault({ product, column }) {
   const { title, images, handle } = product;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHover, setIsHover] = useState(false);
-  const [image, setImage] = useState(images[0]);
+  const [image] = useState(images[0]);
 
   const price = product?.variants?.[0]?.priceV2?.amount;
   const currencyCode = product?.variants?.[0]?.priceV2?.currencyCode;
-
-  console.log(product.variants?.[0]);
-  useEffect(() => {
-    if (isHover) setImage(product.variants?.[0].image);
-    else setImage(images[0]);
-  }, [isHover]);
 
   return (
     <>

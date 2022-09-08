@@ -47,7 +47,8 @@ function PsswordReset() {
             <p>{errorMessage}</p>
             <Button text="Register" type="submit" tertiary />
             <div>
-              Don't have an account? <Link to="/register">Register</Link> now.
+              Don&apos;t have an account? <Link to="/register">Register</Link>{' '}
+              now.
             </div>
           </form>
         </div>

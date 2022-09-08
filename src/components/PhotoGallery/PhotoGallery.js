@@ -8,7 +8,6 @@ export default function PhotoGallery({
   handleSelect,
   thumbsPerSlide = 4,
 }) {
-  const [index, setIndex] = useState(thumbsPerSlide);
   const [containerWidth, setContainerWidth] = useState(null);
   const [thunbWidth, setThunbWidth] = useState(null);
 
@@ -34,7 +33,7 @@ export default function PhotoGallery({
           objectFit="cover"
         />
       </div>
-      {/*       <div className={styles.gallery}>
+      <div className={styles.gallery}>
         <ul className={styles.list}>
           {items &&
             items.map((item) => {
@@ -63,7 +62,7 @@ export default function PhotoGallery({
               );
             })}
         </ul>
-      </div> */}
+      </div>
     </div>
   );
 }

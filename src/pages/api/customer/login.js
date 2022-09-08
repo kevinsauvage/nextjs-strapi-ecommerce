@@ -5,13 +5,7 @@ const expireAt = 1 * 24 * 60 * 60;
 export default async (req, res) => {
   const { accessToken, expiresAt } = req.body;
 
-  console.log(req.body, 'login body');
-
   if (!accessToken || !expiresAt) throw new Error('Access token Missinng');
-
-  const date = new Date();
-  date.setTime(date.getTime() + 1 * 24 * 60 * 60);
-  const expires = date.toUTCString();
 
   try {
     setCookie({ res }, 'shopify_token', accessToken, {

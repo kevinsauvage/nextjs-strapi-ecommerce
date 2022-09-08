@@ -16,6 +16,7 @@ export default function address() {
 
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.password) return null;
+    return null;
   };
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
@@ -24,6 +25,7 @@ export default function address() {
       <Container>
         <div className={styles.login}>
           <Form
+            onSubmit={handleSubmit}
             title="ENTER YOUR SHIPPING ADDRESS"
             subtitle="  Please complete the form below to receive your order"
           >

@@ -32,12 +32,12 @@ export const apiCall = async (query) => {
     if (res && res.data) return res.data;
 
     if (res && res.errors) {
-      console.log(res.errors);
+      return console.log(res.errors);
       // TODO HANDLE ERRORS
     }
     return res;
   } catch (err) {
-    console.log(err);
+    return console.log(err);
     // TODO handle error here
   }
 };

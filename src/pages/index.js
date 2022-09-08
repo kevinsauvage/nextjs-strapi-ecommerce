@@ -6,7 +6,7 @@ import Banner3 from '@/components/BannerHome/Banner3';
 import { messages } from '@/config/i18n';
 import styles from '@/styles/Home.module.scss';
 
-export default function Home({ collections, policies, shopInfos }) {
+export default function Home({ collections }) {
   return (
     <div className={styles.container}>
       <main className={styles.main}>

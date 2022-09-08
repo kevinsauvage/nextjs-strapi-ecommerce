@@ -4,7 +4,6 @@ import { CartContext } from '@/contexts/CartContext/CartContext';
 import Button from '@/components/Button/Button';
 
 export default function CheckoutBtn({ noUserRedirectURL, extraClass }) {
-  const user = null;
   const router = useRouter();
 
   const { getCheckoutById, cart } = useContext(CartContext);
