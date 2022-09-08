@@ -1,10 +1,10 @@
 import { NextResponse } from 'next/server';
-import { setCookie } from 'nookies';
+// import { setCookie } from 'nookies';
 import routes from './data/routes';
-import { refreshToken } from './lib/shopify/customer';
+// import { refreshToken } from './lib/shopify/customer';
 
 const PUBLIC_FILE = /\.(.*)$/;
-const expireAt = 1 * 24 * 60 * 60;
+// const expireAt = 1 * 24 * 60 * 60;
 
 function middleware(request) {
   const { nextUrl, cookies } = request;
@@ -40,7 +40,7 @@ function middleware(request) {
         const todayInMilliseconds = new Date().getTime();
 
         const isExpired = expireInMilliseconds > todayInMilliseconds;
-
+        /* 
         // Refresh the cookies 1h before they expire
         if (expireInMilliseconds > todayInMilliseconds - 3600 && !isExpired) {
           console.log('refresh token');
@@ -70,7 +70,7 @@ function middleware(request) {
               );
             }
           });
-        }
+        } */
 
         // If is not expired then go to profile page
         if (
