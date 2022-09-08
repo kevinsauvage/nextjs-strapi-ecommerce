@@ -62,9 +62,3 @@ function ContactPage() {
 }
 
 export default ContactPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}

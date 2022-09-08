@@ -57,9 +57,3 @@ function PasswordReset() {
 }
 
 export default PasswordReset;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}

@@ -76,9 +76,3 @@ function CartPage() {
 }
 
 export default CartPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}

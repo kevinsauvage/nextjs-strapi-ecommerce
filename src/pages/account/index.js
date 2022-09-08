@@ -27,7 +27,3 @@ function Profile() {
 }
 
 export default Profile;
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {},
-});

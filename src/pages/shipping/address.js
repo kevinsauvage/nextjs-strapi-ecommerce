@@ -102,9 +102,3 @@ export default function address() {
     </Page>
   );
 }
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}

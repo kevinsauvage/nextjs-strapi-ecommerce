@@ -18,12 +18,3 @@ export default function Home({ collections }) {
     </div>
   );
 }
-
-export async function getServerSideProps(ctx) {
-  console.log(ctx.locale, 'locale');
-  return {
-    props: {
-      messages: (await import(`../locales/${ctx.locale}.json`)).default,
-    },
-  };
-}

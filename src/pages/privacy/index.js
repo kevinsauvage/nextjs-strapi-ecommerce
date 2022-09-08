@@ -15,9 +15,3 @@ function PrivacyPage() {
 }
 
 export default PrivacyPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}

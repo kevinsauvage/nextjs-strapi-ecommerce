@@ -15,9 +15,3 @@ function TermsPage() {
 }
 
 export default TermsPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}
