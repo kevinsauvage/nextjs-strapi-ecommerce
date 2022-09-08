@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const path = require('path');
-const { i18nNextConfig } = require('./src/config/i18n');
 
 const nextConfig = {
   reactStrictMode: true,
@@ -17,7 +16,10 @@ const nextConfig = {
         @import "animation.scss";`,
   },
 
-  ...i18nNextConfig,
+  i18n: {
+    locales: ['en', 'fr', 'es'],
+    defaultLocale: 'en',
+  },
 };
 
 module.exports = nextConfig;
