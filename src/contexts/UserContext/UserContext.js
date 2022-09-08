@@ -63,7 +63,10 @@ export function UserProvider({ children, token }) {
     const customerAccessToken = customerAccessTokenCreate?.customerAccessToken;
     const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
 
-    if (customerAccessToken) handleToken(customerAccessToken);
+    if (customerAccessToken) {
+      getUserInfo(customerAccessToken);
+      handleToken(customerAccessToken);
+    }
 
     if (customerUserErrors && customerUserErrors?.length > 0) {
       customerUserErrors.forEach((err) => toast.error(err.message));

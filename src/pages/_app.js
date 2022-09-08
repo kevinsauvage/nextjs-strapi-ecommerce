@@ -8,12 +8,7 @@ import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { getShopifyClient } from '@/lib/shopify/index';
 
-function MyApp({ Component, pageProps, messages, token, path, collections }) {
-  console.log(
-    messages,
-    'messages translated messages translated messages translated messages translated APP.js'
-  );
-  console.log('path :', path);
+function MyApp({ Component, pageProps, messages, token, collections }) {
   return (
     <NextIntlProvider messages={messages}>
       <GlobalProvider>
@@ -40,7 +35,6 @@ MyApp.getInitialProps = async (ctx) => {
   const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
   const cookies = nookies.get(ctx.ctx);
 
-  console.log('locale, :', locale, 'locale');
   return {
     ...appProps,
     collections,
@@ -48,7 +42,6 @@ MyApp.getInitialProps = async (ctx) => {
     shopInfos,
     token: cookies?.shopify_token,
     messages: (await import(`../locales/${locale}.json`)).default,
-    path: ctx.ctx.pathname,
   };
 };
 
