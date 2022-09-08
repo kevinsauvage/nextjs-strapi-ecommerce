@@ -30,7 +30,7 @@ export function UserProvider({ children, token }) {
     }
   };
 
-  const getUserInfo = async () => {
+  const getUserInfo = async (token) => {
     console.log('getUserInfo');
     const response = await getUser(token, locale);
     if (response.customer) {
