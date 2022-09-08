@@ -30,7 +30,7 @@ export const getStaticProps = async ({ locale }) => {
 
   return {
     props: {
-      messages: (await import(`../locales/${locale}.json`)).default,
+      messages: (await import(`../../locales/${locale}.json`)).default,
       products: parseShopifyResponse(products),
     },
     revalidate: 10, // In seconds

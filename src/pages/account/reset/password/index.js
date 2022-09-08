@@ -62,7 +62,7 @@ export async function getServerSideProps({ locale, query, res }) {
   return {
     props: {
       resetUrl: query.reset_url,
-      messages: (await import(`../locales/${locale}.json`)).default,
+      messages: (await import(`../../../../locales/${locale}.json`)).default,
     },
   };
 }
