@@ -30,9 +30,9 @@ export function UserProvider({ children, token }) {
     }
   };
 
-  const getUserInfo = async (token) => {
+  const getUserInfo = async (accessToken) => {
     console.log('getUserInfo');
-    const response = await getUser(token, locale);
+    const response = await getUser(accessToken, locale);
     if (response.customer) {
       console.log('dispatch user info', `user: ${response.customer}`);
 
