@@ -9,14 +9,14 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { getShopifyClient } from '@/lib/shopify/index';
 
 function MyApp({ Component, pageProps }) {
-  const { messagesTranslated, collections, user, token } = pageProps;
+  const { messages, collections, user, token } = pageProps;
 
   console.log(
-    messagesTranslated,
+    messages,
     'messages translated messages translated messages translated messages translated APP.js'
   );
   return (
-    <NextIntlProvider messages={messagesTranslated}>
+    <NextIntlProvider messages={messages}>
       <GlobalProvider>
         <UserProvider token={token}>
           <CartProvider>
@@ -36,6 +36,8 @@ MyApp.getInitialProps = async (ctx) => {
   const appProps = await App.getInitialProps(ctx);
   const { locale } = ctx.router;
 
+  console.log(locale, 'locale get initial props');
+
   const collections = await getShopifyClient(locale)?.collection?.fetchAll();
   const policies = await getShopifyClient(locale)?.shop?.fetchPolicies();
   const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
@@ -44,7 +46,6 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     ...appProps,
     pageProps: {
-      messagesTranslated: (await import(`../locales/${locale}.json`)).default,
       collections,
       policies,
       shopInfos,
