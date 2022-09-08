@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Page from '@/components/Page/Page';
-import { messages } from '@/config/i18n';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
@@ -29,8 +28,8 @@ function Profile() {
 
 export default Profile;
 
-export const getStaticProps = async (ctx) => ({
+export const getStaticProps = async ({ locale }) => ({
   props: {
-    messages: messages[ctx.locale],
+    messages: (await import(`../locales/${locale}.json`)).default,
   },
 });

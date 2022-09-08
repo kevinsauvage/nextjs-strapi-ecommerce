@@ -7,7 +7,6 @@ import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { getShopifyClient } from '@/lib/shopify/index';
-import { messages } from '@/config/i18n';
 
 function MyApp({ Component, pageProps }) {
   const { messagesTranslated, collections, user, token } = pageProps;
@@ -41,7 +40,7 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     ...appProps,
     pageProps: {
-      messagesTranslated: messages[locale],
+      messagesTranslated: (await import(`../locales/${locale}.json`)).default,
       collections,
       policies,
       shopInfos,

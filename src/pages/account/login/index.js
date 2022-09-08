@@ -6,7 +6,6 @@ import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import Form from '@/components/Form/Form';
 import Container from '@/components/Container/Container';
-import { messages } from '@/config/i18n';
 import useForm from '@/hooks/useForm';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
@@ -72,8 +71,8 @@ function LoginPage() {
 
 export default LoginPage;
 
-export const getStaticProps = (ctx) => ({
+export const getStaticProps = async ({ locale }) => ({
   props: {
-    messages: messages[ctx.locale],
+    messages: (await import(`../locales/${locale}.json`)).default,
   },
 });

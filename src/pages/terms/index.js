@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { messages } from '@/config/i18n';
 import Page from '@/components/Page/Page';
 import styles from './Terms.module.scss';
 
@@ -17,10 +16,10 @@ function TermsPage() {
 
 export default TermsPage;
 
-export function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: messages[locale],
+      messages: (await import(`../locales/${locale}.json`)).default,
     },
   };
 }

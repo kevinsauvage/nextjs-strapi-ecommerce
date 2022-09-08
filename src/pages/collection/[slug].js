@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
-import { messages } from '@/config/i18n';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 
 function CategoryPage({ category }) {
@@ -29,7 +28,10 @@ export async function getStaticProps({ params, locale }) {
   const category = parseShopifyResponse(data);
 
   return {
-    props: { category, messages: messages[locale] },
+    props: {
+      category,
+      messages: (await import(`../locales/${locale}.json`)).default,
+    },
     revalidate: 10, // In seconds
   };
 }

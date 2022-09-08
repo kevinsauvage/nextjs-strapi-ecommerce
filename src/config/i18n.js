@@ -1,13 +1,3 @@
-const es = require('../locales/es.json');
-const en = require('../locales/en.json');
-const fr = require('../locales/fr.json');
-
-const messages = {
-  es,
-  en,
-  fr,
-};
-
 const i18nNextConfig = {
   i18n: {
     locales: ['en', 'fr', 'es'],
@@ -15,4 +5,4 @@ const i18nNextConfig = {
   },
 };
 
-module.exports = { i18nNextConfig, messages };
+module.exports = { i18nNextConfig };

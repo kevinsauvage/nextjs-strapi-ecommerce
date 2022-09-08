@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { messages } from '@/config/i18n';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
@@ -30,7 +29,10 @@ export async function getStaticProps({ params, locale }) {
     params.slug
   );
   return {
-    props: { product: parseShopifyResponse(data), messages: messages[locale] },
+    props: {
+      product: parseShopifyResponse(data),
+      messages: (await import(`../locales/${locale}.json`)).default,
+    },
     revalidate: 10, // In seconds
   };
 }

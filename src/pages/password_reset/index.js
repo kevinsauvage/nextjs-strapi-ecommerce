@@ -5,7 +5,6 @@ import Button from '@/components/Button/Button';
 import Container from '@/components/Container/Container';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
-import { messages } from '@/config/i18n';
 import useForm from '@/hooks/useForm';
 import styles from './PasswordReset.module.scss';
 
@@ -59,10 +58,10 @@ function PasswordReset() {
 
 export default PasswordReset;
 
-export function getStaticProps({ locale }) {
+export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: messages[locale],
+      messages: (await import(`../locales/${locale}.json`)).default,
     },
   };
 }

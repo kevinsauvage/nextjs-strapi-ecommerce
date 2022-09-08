@@ -3,7 +3,6 @@ import SecureBanner from '@/components/SecureBanner/SecureBanner';
 import Banner1 from '@/components/BannerHome/Banner1';
 import Banner2 from '@/components/BannerHome/Banner2';
 import Banner3 from '@/components/BannerHome/Banner3';
-import { messages } from '@/config/i18n';
 import styles from '@/styles/Home.module.scss';
 
 export default function Home({ collections }) {
@@ -21,9 +20,10 @@ export default function Home({ collections }) {
 }
 
 export async function getServerSideProps(ctx) {
+  console.log(ctx.locale, 'locale');
   return {
     props: {
-      messages: messages[ctx.locale],
+      messages: (await import(`../locales/${ctx.locale}.json`)).default,
     },
   };
 }
