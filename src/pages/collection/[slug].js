@@ -30,7 +30,6 @@ export async function getStaticProps({ params, locale }) {
   return {
     props: {
       category,
-      messages: (await import(`../../locales/${locale}.json`)).default,
     },
     revalidate: 10, // In seconds
   };
