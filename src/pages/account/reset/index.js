@@ -7,7 +7,7 @@ import Page from '@/components/Page/Page';
 import { messages } from '@/config/i18n';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
-import routes from 'src/data/routes';
+import routes from '@/data/routes';
 import Link from 'next/link';
 import styles from './ResetPassword.module.scss';
 

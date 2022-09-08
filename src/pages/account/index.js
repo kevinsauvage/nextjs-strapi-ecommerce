@@ -19,7 +19,7 @@ function Profile() {
             user.orders?.edges.map((item) => console.log(item))
           ) : (
             <div>
-              <p>You didn't make any orders yet.</p>
+              <p>You didn&apos;t make any orders yet.</p>
             </div>
           )}
         </div>

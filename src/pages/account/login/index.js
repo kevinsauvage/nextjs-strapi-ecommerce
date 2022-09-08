@@ -60,7 +60,7 @@ function LoginPage() {
             </div>
 
             <div className={styles.register}>
-              Don't have an account?{' '}
+              Don&apos;t have an account?
               <Link href={routes.base.register}>Register</Link> now.
             </div>
           </Form>

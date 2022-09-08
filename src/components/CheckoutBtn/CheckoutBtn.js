@@ -12,7 +12,7 @@ export default function CheckoutBtn({ noUserRedirectURL, extraClass }) {
     await getCheckoutById();
 
     if (!cart?.shippingAddress) return router.push(cart.webUrl);
-    router.push(noUserRedirectURL);
+    return router.push(noUserRedirectURL);
   };
 
   return (

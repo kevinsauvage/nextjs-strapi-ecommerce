@@ -9,7 +9,7 @@ import { messages } from '@/config/i18n';
 import useForm from '@/hooks/useForm';
 import Form from '@/components/Form/Form';
 import { UserContext } from '@/contexts/UserContext/UserContext';
-import routes from 'src/data/routes';
+import routes from '@/data/routes';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
