@@ -31,22 +31,18 @@ MyApp.getInitialProps = async (ctx) => {
   const { locale } = ctx.router;
 
   const collections = await getShopifyClient(locale)?.collection?.fetchAll();
-  const policies = await getShopifyClient(locale)?.shop?.fetchPolicies();
-  const shopInfos = await getShopifyClient(locale)?.shop?.fetchInfo();
   const cookies = nookies.get(ctx.ctx);
 
   return {
     ...appProps,
     collections,
-    policies,
-    shopInfos,
     token: cookies?.shopify_token,
     messages: (await import(`../locales/${locale}.json`)).default,
   };
 };
 
-export function reportWebVitals(metric) {
+/* export function reportWebVitals(metric) {
   if (metric.label === 'web-vital') {
     // console.log(metric);
   }
-}
+} */
