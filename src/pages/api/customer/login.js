@@ -24,7 +24,6 @@ export default async (req, res) => {
 
     return res.status(200).json({ error: 'Cookie correctly set', ok: true });
   } catch (e) {
-    console.log(e);
     return res
       .status(404)
       .send({ error: 'Wrong credentials', ok: false, originalError: e });

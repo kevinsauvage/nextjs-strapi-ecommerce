@@ -8,7 +8,6 @@ import styles from './Profile.module.scss';
 function Profile() {
   const { logout, user } = useContext(UserContext);
 
-  console.log(user);
   return (
     <Page title="User Profile">
       <div className={styles.Profile}>

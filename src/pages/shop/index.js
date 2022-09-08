@@ -10,7 +10,6 @@ function Shop({ products, categories }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
 
-  console.log(categories);
   return (
     <Page title="Shop page">
       <Container>

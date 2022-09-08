@@ -44,7 +44,6 @@ export function UserProvider({ children, token }) {
 
   const handleToken = async (customerAccessToken) => {
     // Send token to server to store it inside cookies
-    console.log(customerAccessToken);
     const res2 = await nextApiCall.auth.login(customerAccessToken);
     if (res2?.ok) {
       toast.success('Your login was successful');
@@ -94,8 +93,6 @@ export function UserProvider({ children, token }) {
     const data = await sendRecoverEmail(email, router.locale);
     const customerRecover = data?.customerRecover;
     const customerErrors = customerRecover?.customerUserErrors;
-
-    console.log(data);
 
     if (customerErrors && customerErrors.length > 0) {
       customerErrors.forEach((err) => toast.error(err.message));

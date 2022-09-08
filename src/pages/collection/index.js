@@ -8,7 +8,6 @@ function CategoryPage({ collections }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
 
-  console.log(collections);
   return (
     <Page title="collections">
       <div>
