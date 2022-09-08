@@ -7,12 +7,13 @@ import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { getShopifyClient } from '@/lib/shopify/index';
+import { messages } from '@/config/i18n';
 
 function MyApp({ Component, pageProps }) {
-  const { messages, collections, user, token } = pageProps;
+  const { messagesTranslated, collections, user, token } = pageProps;
 
   return (
-    <NextIntlProvider messages={messages}>
+    <NextIntlProvider messages={messagesTranslated}>
       <GlobalProvider>
         <UserProvider token={token}>
           <CartProvider>
@@ -40,6 +41,7 @@ MyApp.getInitialProps = async (ctx) => {
   return {
     ...appProps,
     pageProps: {
+      messagesTranslated: messages[locale],
       collections,
       policies,
       shopInfos,
