@@ -15,9 +15,3 @@ function Search() {
 }
 
 export default Search;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {},
-  };
-}
