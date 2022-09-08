@@ -51,7 +51,7 @@ function Password({ resetUrl }) {
 
 export default Password;
 
-export async function getServerSideProps({ query, res }) {
+export async function getServerSideProps({ query, res, locale }) {
   if (!query.reset_url) {
     res.setHeader('location', routes.base.login);
     res.statusCode = 302;
@@ -62,6 +62,7 @@ export async function getServerSideProps({ query, res }) {
   return {
     props: {
       resetUrl: query.reset_url,
+      messages: (await import(`../../../../locales/${locale}.json`)).default,
     },
   };
 }

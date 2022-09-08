@@ -102,3 +102,9 @@ export default function address() {
     </Page>
   );
 }
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    messages: (await import(`../../locales/${locale}.json`)).default,
+  },
+});

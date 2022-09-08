@@ -27,3 +27,11 @@ function Profile() {
 }
 
 export default Profile;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../locales/${locale}.json`)).default,
+    },
+  };
+}

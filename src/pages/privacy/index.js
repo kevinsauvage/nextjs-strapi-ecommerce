@@ -15,3 +15,9 @@ function PrivacyPage() {
 }
 
 export default PrivacyPage;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    messages: (await import(`../../locales/${locale}.json`)).default,
+  },
+});

@@ -40,13 +40,13 @@ export default function PhotoGallery({
               const { width, height, src } = item.image;
               return (
                 <div
+                  key={item.id}
                   className={styles.item}
                   style={thumbWidth && { width: `${thumbWidth}px` }}
                 >
                   <button
                     className={styles.btn}
                     type="button"
-                    key={item.id}
                     onClick={() => handleSelect(item)}
                     onKeyDown={() => handleSelect(item)}
                   >

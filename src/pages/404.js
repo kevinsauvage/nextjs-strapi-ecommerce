@@ -10,3 +10,11 @@ export function Custom404() {
 }
 
 export default Custom404;
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      messages: (await import(`../locales/${locale}.json`)).default,
+    },
+  };
+}

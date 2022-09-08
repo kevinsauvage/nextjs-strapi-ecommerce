@@ -25,7 +25,8 @@ export async function getStaticProps({ locale }) {
   return {
     props: {
       collections,
+      messages: (await import(`../../locales/${locale}.json`)).default,
     },
-    revalidate: 10, // In seconds
+    revalidate: 60, // In seconds
   };
 }

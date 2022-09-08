@@ -62,3 +62,9 @@ function ContactPage() {
 }
 
 export default ContactPage;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    messages: (await import(`../../locales/${locale}.json`)).default,
+  },
+});

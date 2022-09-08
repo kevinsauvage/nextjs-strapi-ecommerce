@@ -15,3 +15,9 @@ function Search() {
 }
 
 export default Search;
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    messages: (await import(`../../locales/${locale}.json`)).default,
+  },
+});
