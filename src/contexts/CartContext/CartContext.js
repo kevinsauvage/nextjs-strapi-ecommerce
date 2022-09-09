@@ -61,42 +61,39 @@ export function CartProvider({ children }) {
   const addToCart = useCallback(
     async (variantId, quantity) => {
       const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
-      const checkId = states.checkout.id;
-      states.client.checkout
-        .addLineItems(checkId, lineItemsToAdd)
-        .then((res) => {
-          dispatch({
-            type: 'ADD_VARIANT_TO_CART',
-            payload: { isCartOpen: true, checkout: res },
-          });
+      const { id } = states.checkout;
+
+      states.client.checkout.addLineItems(id, lineItemsToAdd).then((res) => {
+        dispatch({
+          type: 'ADD_VARIANT_TO_CART',
+          payload: { isCartOpen: true, checkout: res },
         });
+      });
     },
     [states.client, states.checkout]
   );
 
   const removeFromCart = useCallback(
     (lineItemId) => {
-      const checkoutId = states.checkout.id;
+      const { id } = states.checkout;
       toggleLoading();
-      states.client.checkout
-        .removeLineItems(checkoutId, [lineItemId])
-        .then((res) => {
-          dispatch({
-            type: 'REMOVE_LINE_ITEM_IN_CART',
-            payload: { checkout: res },
-          });
+      states.client.checkout.removeLineItems(id, [lineItemId]).then((res) => {
+        dispatch({
+          type: 'REMOVE_LINE_ITEM_IN_CART',
+          payload: { checkout: res },
         });
+      });
     },
     [states.client, states.checkout]
   );
 
   const handleQuantityChange = useCallback(
     (quantity, id) => {
-      const checkoutId = states.checkout.id;
+      const checkId = states.checkout.id;
       const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
       toggleLoading();
       states.client.checkout
-        .updateLineItems(checkoutId, lineItemsToUpdate)
+        .updateLineItems(checkId, lineItemsToUpdate)
         .then((res) => {
           dispatch({
             type: 'UPDATE_QUANTITY_IN_CART',
