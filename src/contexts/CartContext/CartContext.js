@@ -61,9 +61,9 @@ export function CartProvider({ children }) {
   const addToCart = useCallback(
     async (variantId, quantity) => {
       const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
-      const checkoutId = states.checkout.id;
+      const checkId = states.checkout.id;
       states.client.checkout
-        .addLineItems(checkoutId, lineItemsToAdd)
+        .addLineItems(checkId, lineItemsToAdd)
         .then((res) => {
           dispatch({
             type: 'ADD_VARIANT_TO_CART',

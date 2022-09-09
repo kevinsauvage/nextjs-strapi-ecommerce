@@ -25,8 +25,8 @@ export default async (req, res) => {
       path: '/',
     });
 
-    return res.status(200).json({ error: 'Cookie correctly set', ok: true });
+    return res.status(200).json({ message: 'Cookie correctly set', ok: true });
   } catch (e) {
-    return res.status(404).send({ ok: false, originalError: e });
+    return res.status(404).send({ ok: false, error: e });
   }
 };
