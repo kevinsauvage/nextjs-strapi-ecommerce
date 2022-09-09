@@ -19,7 +19,7 @@ export default function Home({ collections }) {
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getServerSideProps({ locale }) {
   return {
     props: {
       messages: (await import(`../locales/${locale}.json`)).default,

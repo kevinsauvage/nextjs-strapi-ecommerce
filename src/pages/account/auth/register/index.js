@@ -75,7 +75,7 @@ export default RegisterPage;
 export async function getStaticProps({ locale }) {
   return {
     props: {
-      messages: (await import(`../../../locales/${locale}.json`)).default,
+      messages: (await import(`../../../../locales/${locale}.json`)).default,
     },
   };
 }

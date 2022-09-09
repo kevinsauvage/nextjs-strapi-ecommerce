@@ -11,15 +11,15 @@ import { getShopifyClient } from '@/lib/shopify/index';
 function MyApp({ Component, pageProps, messages, token, collections }) {
   return (
     <NextIntlProvider messages={messages}>
-      <GlobalProvider>
-        <UserProvider token={token}>
+      <UserProvider token={token}>
+        <GlobalProvider>
           <CartProvider>
             <Layout collections={collections}>
               <Component {...pageProps} />
             </Layout>
           </CartProvider>
-        </UserProvider>
-      </GlobalProvider>
+        </GlobalProvider>
+      </UserProvider>
     </NextIntlProvider>
   );
 }
