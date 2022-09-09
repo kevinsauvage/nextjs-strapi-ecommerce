@@ -6,14 +6,16 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import localStorageHelper from '@/helpers/localstorage';
 import Client from 'shopify-buy';
+import useLocalStorage from '@/hooks/useLocalStorage';
 import { CartReducer, initialState, actions } from './CartReducer';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
+  const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
+
   const router = useRouter();
 
   useEffect(() => {
@@ -30,26 +32,25 @@ export function CartProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (states.client && !localStorageHelper.load('checkoutId')) {
+    if (states.client && !checkoutId) {
       states.client.checkout.create().then((res) => {
         dispatch({ type: actions.CHECKOUT_FOUND, payload: res });
-        localStorageHelper.store('checkoutId', res.id);
+        setCheckoutId(res.id);
       });
     }
   }, [states.client]);
 
   const getCheckoutById = useCallback(async () => {
-    if (states.client && localStorageHelper.load('checkoutId')) {
-      await states.client.checkout
-        .fetch(localStorageHelper.load('checkoutId'))
-        .then((checkout) => {
-          dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
-        });
+    if (states.client && checkoutId) {
+      await states.client.checkout.fetch(checkoutId).then((checkout) => {
+        dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
+      });
     }
   }, [states.client]);
 
   useEffect(() => {
-    if (states.checkout.lineItems.length < 1) getCheckoutById();
+    if (states?.checkout && states?.checkout?.lineItems?.length < 1)
+      getCheckoutById();
   }, [states.client]);
 
   const toggleLoading = useCallback(

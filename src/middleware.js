@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import routes from './data/routes';
 
 const PUBLIC_FILE = /\.(.*)$/;
-// const expireAt = 1 * 24 * 60 * 60;
 
 function middleware(request) {
   const { nextUrl, cookies } = request;
