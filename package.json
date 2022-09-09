@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "next": "12.2.5",
-    "next-intl": "^2.7.4",
+    "next-intl": "^2.7.5",
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
