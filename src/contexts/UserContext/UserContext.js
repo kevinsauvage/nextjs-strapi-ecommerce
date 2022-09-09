@@ -49,13 +49,13 @@ export function UserProvider({ children, token }) {
     console.log('token', token);
     console.log('user', states?.user);
     if (token && !states?.user?.id) getUserInfo(token);
-    else if (!token && states?.user?.id) logout();
   }, [token]);
 
   const handleToken = async (customerAccessToken) => {
     // Send token to server to store it inside cookies
     const res2 = await nextApiCall.auth.login(customerAccessToken);
     toggleLoading(false);
+    console.log('set token', res2);
     if (res2?.ok) {
       toast.success('Your login was successful');
       router.push(routes.base.profile);
