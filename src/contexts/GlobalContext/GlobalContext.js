@@ -1,13 +1,5 @@
-import { Router, useRouter } from 'next/router';
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
-import routes from 'src/data/routes';
-import { UserContext } from '../UserContext/UserContext';
+import { useRouter } from 'next/router';
+import { createContext, useEffect, useMemo, useReducer } from 'react';
 import { GlobalReducer, initialState, actions } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
