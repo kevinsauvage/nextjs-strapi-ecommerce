@@ -3,13 +3,15 @@ import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
+import { useTranslations } from 'next-intl';
 
 function CategoryPage({ category }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
+  const t = useTranslations('page.pdp');
 
   return (
-    <Page title={`Category : ${category?.title}`}>
+    <Page title={`${t('title')} : ${category?.title}`}>
       <div>
         <Container>
           <ProductsList products={category?.products} />

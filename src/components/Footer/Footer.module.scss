@@ -16,24 +16,24 @@
   }
 
   .navList {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 30%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    gap: 60px;
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      width: fit-content;
+      flex-wrap: wrap;
+    }
   }
 
   .navItem {
     display: inline-block;
     margin-right: 30px;
-  }
-
-  .nav {
-    display: flex;
-    flex-direction: column;
-    gap: 30px;
-    width: fit-content;
-    max-height: 130px;
-    flex-wrap: wrap;
+    font-weight: 300;
   }
 }
 
@@ -53,6 +53,7 @@
 
     .item {
       list-style: none;
+      white-space: nowrap;
     }
   }
 }

@@ -23,7 +23,7 @@ export default function Cart() {
       isOpen={cartOpen}
       handleClose={resetToggle}
       title="Shopping Cart"
-      headerRight={cart.length}
+      headerRight={cart?.length}
     >
       {cart && Array.isArray(cart.lineItems) && cart.lineItems.length > 0 ? (
         <>

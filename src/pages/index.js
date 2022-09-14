@@ -1,19 +1,18 @@
-import CategoryButtons from '@/components/CategoryButtons/CategoryButtons';
 import SecureBanner from '@/components/SecureBanner/SecureBanner';
 import Banner1 from '@/components/BannerHome/Banner1';
 import Banner2 from '@/components/BannerHome/Banner2';
 import Banner3 from '@/components/BannerHome/Banner3';
 import styles from '@/styles/Home.module.scss';
+import Container from 'src/components/Container/Container';
 
-export default function Home({ collections }) {
+export default function Home() {
   return (
     <div className={styles.container}>
-      <main className={styles.main}>
+      <Container>
         <Banner1 />
-        <CategoryButtons collections={collections} />
         <Banner2 />
         <Banner3 />
-      </main>
+      </Container>
       <SecureBanner />
     </div>
   );

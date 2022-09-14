@@ -1,5 +1,12 @@
 import { useRouter } from 'next/router';
-import { createContext, useEffect, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useState,
+} from 'react';
 import { toast } from 'react-toastify';
 import routes from '@/data/routes';
 import nextApiCall from '@/utils/apiNext';
@@ -21,18 +28,21 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const [token, setToken] = useLocalStorage('customerAccessToken_shopify', '');
+  const [userAccessToken, setUserAccessToken] = useState(null);
 
   const router = useRouter();
   const { locale } = router;
 
-  const toggleLoading = (loading) =>
+  const toggleLoading = useCallback((loading) => {
     dispatch({ type: actions.CHANGE_LOADING, payload: loading });
+  }, []);
 
   const logout = async () => {
     toggleLoading(true);
 
     const res = await nextApiCall.auth.logout();
     setToken(null);
+    setUserAccessToken(null);
 
     if (res && res.ok) {
       dispatch({ type: actions.REMOVE_USER });
@@ -45,7 +55,8 @@ export function UserProvider({ children }) {
 
   const getUserInfo = async (accessToken) => {
     const response = await getUser(accessToken, locale);
-    if (response.customer) {
+    console.log(response);
+    if (response?.customer) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }
   };
@@ -59,6 +70,8 @@ export function UserProvider({ children }) {
       ...customerAccessToken,
       expire: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
     });
+
+    setUserAccessToken(customerAccessToken?.accessToken);
 
     toggleLoading(false);
 
@@ -84,6 +97,7 @@ export function UserProvider({ children }) {
 
     if (customerAccessToken?.accessToken) {
       getUserInfo(customerAccessToken.accessToken); // Fetch user information after successful login
+
       const res = await handleToken(customerAccessToken); // Set cookie token
       if (res) {
         toast.success('Your login was successful');
@@ -177,7 +191,7 @@ export function UserProvider({ children }) {
         logout();
       }
 
-      // If the shopify token of local storage token is going to expire soon, refresh the tokens
+      // If the shopify token of local storage token is going to expire soon, refresh the token
       if (
         expireInMilliseconds < todayInMilliseconds - 60 * 60 ||
         Number(token.expire) < todayInMilliseconds - 60 * 60
@@ -185,6 +199,8 @@ export function UserProvider({ children }) {
         handleRefreshToken(token.accessToken);
         return;
       }
+
+      setUserAccessToken(token.accessToken);
 
       // If no user is saved, fetch user information
       if (!states?.user?.id) {
@@ -200,6 +216,7 @@ export function UserProvider({ children }) {
       // States
       user: states.user,
       loading: states.loading,
+      userAccessToken,
 
       // Functions
       login,

@@ -97,3 +97,28 @@ export const refreshToken = async (token) => {
   const refresh = customerAccessTokenRenew?.customerAccessToken;
   return { errors, refresh };
 };
+
+export const associateCustomerToCheckout = async (
+  checkoutId,
+  customerAccessToken
+) => {
+  const mutation = `mutation {
+    checkoutCustomerAssociateV2(
+      checkoutId: "${checkoutId}"
+      customerAccessToken: "${customerAccessToken}"
+    ) {
+      checkout {
+        id
+      }
+      checkoutUserErrors {
+        code
+      }
+      customer {
+        id
+      }
+    }
+  }`;
+
+  const response = await apiCall(mutation);
+  console.log(response);
+};

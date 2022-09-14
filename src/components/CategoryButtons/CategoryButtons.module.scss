@@ -1,60 +1,30 @@
 .container {
   width: 100%;
-  padding: 8px 0;
-  padding: 60px 0;
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  margin-bottom: 30px;
-
-  span {
-    width: 60px;
-    height: 2px;
-    border-radius: 4px;
-    background-color: $strong;
-    display: inline-block;
-  }
-}
-
-.title {
-  text-align: center;
+  padding: 20px 0;
+  border-top: 0.1px solid gray;
+  border-bottom: 0.1px solid gray;
 }
 
 .list {
-  display: grid;
+  display: flex;
   width: 100%;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
+  gap: 60px;
+  justify-content: center;
+  align-items: center;
 
   @include respond(laptop_s) {
-    grid-template-columns: repeat(3, 1fr);
   }
 
   @include respond(tablet) {
-    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 .button {
-  padding: 0.5rem;
-  border-radius: 8px;
-  background-color: transparent;
-}
-
-.img {
-  height: 180px;
-  border-radius: 10px;
-  overflow: hidden;
-  position: relative;
+  color: $primary;
 }
 
 .name {
   text-align: center;
-  margin-top: 14px;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 16px;
+  font-weight: 400;
 }

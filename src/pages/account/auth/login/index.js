@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useContext } from 'react';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
@@ -13,22 +14,22 @@ import styles from './Login.module.scss';
 
 function LoginPage() {
   const router = useRouter();
-
   if (router.isFallback) return <div>Loading product...</div>;
 
   const { login, loading } = useContext(UserContext);
+  const t = useTranslations('page.account.auth.login');
 
   const { handleInputChange, handleSubmit } = useForm((formData) =>
     login(formData.email, formData.password)
   );
 
   return (
-    <Page title="login" loading={loading}>
+    <Page title={t('title')} loading={loading}>
       <Container>
         <div className={styles.login}>
           <Form
-            title="LOGIN TO YOUR ACCOUNT"
-            subtitle="Please complete the form below to login to your account"
+            title={t('form.title')}
+            subtitle={t('form.subtitle')}
             onSubmit={(e) => handleSubmit(e)}
           >
             <Input
@@ -38,7 +39,6 @@ function LoginPage() {
               placeholder="Email"
               onChange={handleInputChange}
             />
-
             <Input
               placeholder="Password"
               name="password"
@@ -46,20 +46,17 @@ function LoginPage() {
               label="Password"
               onChange={handleInputChange}
             />
-
             <Button
               extraClass={styles.btn}
               text="Login"
               type="submit"
               tertiary
             />
-
             <div className={styles.forgotPassword}>
-              <Link href={routes.base.resetPassword}>Forgot Password</Link>
+              <Link href={routes.base.resetPassword}>Reset Password</Link>
             </div>
-
             <div className={styles.register}>
-              Don&apos;t have an account?
+              Don&apos;t have an account?{' '}
               <Link href={routes.base.register}>Register</Link> now.
             </div>
           </Form>

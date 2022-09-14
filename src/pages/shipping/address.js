@@ -6,12 +6,14 @@ import Form from '@/components/Form/Form';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import useForm from '@/hooks/useForm';
+import { useTranslations } from 'next-intl';
 import styles from './address.module.scss';
 
 export default function address() {
   const router = useRouter();
 
   if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.shipping');
 
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.password) return null;
@@ -20,7 +22,7 @@ export default function address() {
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
   return (
-    <Page title="login">
+    <Page title={t('title')}>
       <Container>
         <div className={styles.login}>
           <Form

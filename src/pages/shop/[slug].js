@@ -3,11 +3,13 @@ import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
+import { useTranslations } from 'next-intl';
 import styles from './slug.module.scss';
 
 function ProductPage({ product }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.pdp');
 
   const { title, description } = product;
 

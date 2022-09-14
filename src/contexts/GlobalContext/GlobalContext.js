@@ -27,6 +27,10 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.TOGGLE_USER });
       },
 
+      setCollections: (collections) => {
+        dispatch({ type: actions.SET_COLLECTIONS, payload: collections });
+      },
+
       resetToggle: () => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
       },

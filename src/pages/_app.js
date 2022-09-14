@@ -4,9 +4,10 @@ import Layout from '@/components/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
-import { getShopifyClient } from '@/lib/shopify/index';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+
+import { getShopInfo, getCollections } from '@/lib/shopify/shop';
 
 import fr from '../locales/fr.json';
 import es from '../locales/es.json';
@@ -23,9 +24,8 @@ function MyApp({ Component, pageProps }) {
   const { locale } = useRouter();
 
   useEffect(() => {
-    getShopifyClient(locale)
-      ?.collection?.fetchAll()
-      .then((response) => setCollections(response));
+    getCollections().then((response) => setCollections(response));
+    getShopInfo();
   }, []);
 
   return (

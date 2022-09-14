@@ -3,7 +3,6 @@ import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
 import { CartContext } from '@/contexts/CartContext/CartContext';
 import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import HeaderButton from '@/components/HeaderButton/HeaderButton';
-import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
 import { useRouter } from 'next/router';
@@ -45,7 +44,6 @@ export default function UserButtons({ isActive }) {
 
   return (
     <div className={styles.container}>
-      <LanguageSwitcher />
       {data.map((el) => (
         <HeaderButton
           type="button"

@@ -9,11 +9,13 @@ import useForm from '@/hooks/useForm';
 import Form from '@/components/Form/Form';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
+import { useTranslations } from 'next-intl';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.account.auth.register');
 
   const { register, loading } = useContext(UserContext);
 
@@ -25,13 +27,13 @@ function RegisterPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Register" loading={loading}>
+    <Page title={t('title')} loading={loading}>
       <Container>
         <div className={styles.register}>
           <Form
             onSubmit={handleSubmit}
-            title="CREATE ACCOUNT"
-            subtitle="Please complete the form below to create an account"
+            title={t('form.title')}
+            subtitle={t('form.subtitle')}
           >
             <Input
               id="email"
@@ -41,7 +43,6 @@ function RegisterPage() {
               placeholder="Email"
               onChange={handleInputChange}
             />
-
             <Input
               placeholder="Password"
               type="password"
@@ -51,14 +52,12 @@ function RegisterPage() {
               autoComplete="current-password"
               onChange={handleInputChange}
             />
-
             <Button
               extraClass={styles.btn}
               text="Register"
               type="submit"
               tertiary
             />
-
             <div className={styles.alreadyRegistered}>
               Already have an account?{' '}
               <Link href={routes.base.login}>Login</Link> now.

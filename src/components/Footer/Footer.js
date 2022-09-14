@@ -16,8 +16,13 @@ function Footer({ collections }) {
 
   const linkInfo = [
     {
-      title: 'Information',
+      title: 'About us',
       id: 1,
+      text: 'Dicci is a fashion brand made for unisex use with an irreverent style. It started with jewelry, but has scaled up to something bigger and the reason for that is that we are fashion lovers.Our goal is to give you the best quality at an affordable price.',
+    },
+    {
+      title: 'Information',
+      id: 2,
       items: [
         { href: routes.base.contact, name: t('Contact'), id: 1 },
         { href: routes.base.privacy, name: t('Privacy'), id: 2 },
@@ -25,8 +30,8 @@ function Footer({ collections }) {
       ],
     },
     {
-      title: 'Shop by pet',
-      id: 2,
+      title: 'Collections',
+      id: 3,
       items: getCollections(),
     },
   ];
@@ -35,7 +40,7 @@ function Footer({ collections }) {
     <footer className={styles.container}>
       <Container>
         <div className={styles.top}>
-          <nav>
+          <nav className={styles.nav}>
             <ul className={styles.navList}>
               {linkInfo.map((item) => (
                 <li key={item.id}>
@@ -46,6 +51,7 @@ function Footer({ collections }) {
                         <Link href={el.href}>{el.name}</Link>
                       </li>
                     ))}
+                    {item.text && <p>{item.text}</p>}
                   </ul>
                 </li>
               ))}

@@ -1,14 +1,17 @@
 import { useRouter } from 'next/router';
+import { useTranslations } from 'next-intl';
 import Button from '@/components/Button/Button';
 import Container from '@/components/Container/Container';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import useForm from '@/hooks/useForm';
+import Form from '@/components/Form/Form';
 import styles from './Contact.module.scss';
 
 function ContactPage() {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.contact');
 
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.name || !formData.message) return null;
@@ -18,14 +21,16 @@ function ContactPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Contact Us">
+    <Page title={t('title')}>
       <Container>
         <div className={styles.contact}>
-          <form className={styles.form} onSubmit={handleSubmit} action="submit">
-            <h2 className={styles.title}>Get In Touch With Us</h2>
-            <h3 className={styles.subtitle}>
-              Please complete the form below, we will get back to you shortly.
-            </h3>
+          <Form
+            className={styles.form}
+            onSubmit={handleSubmit}
+            action="submit"
+            title={t('form.title')}
+            subtitle={t('form.subtitle')}
+          >
             <Input
               id="email"
               label="Email address"
@@ -42,7 +47,6 @@ function ContactPage() {
               onChange={handleInputChange}
               required
             />
-
             <Input
               placeholder="Message"
               textarea
@@ -52,9 +56,8 @@ function ContactPage() {
               onChange={handleInputChange}
               required
             />
-
             <Button text="SEND MESSAGE" type="submit" tertiary />
-          </form>
+          </Form>
         </div>
       </Container>
     </Page>

@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import Button from '@/components/Button/Button';
@@ -7,25 +9,26 @@ import Page from '@/components/Page/Page';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
-import Link from 'next/link';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
   const router = useRouter();
-  const { resetPasswordEmail, loading } = useContext(UserContext);
-
   if (router.isFallback) return <div>Loading product...</div>;
+
+  const { resetPasswordEmail, loading } = useContext(UserContext);
+  const t = useTranslations('page.account.reset.email');
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
     resetPasswordEmail(email.trim());
   });
+
   return (
-    <Page title="Reset Password" loading={loading}>
+    <Page title={t('title')} loading={loading}>
       <div className={styles.ResetPassword}>
         <Form
-          title="Reset your password"
-          subtitle="Enter your email address below to receive an email to reset your password"
+          title={t('form.title')}
+          subtitle={t('form.subtitle')}
           onSubmit={handleSubmit}
         >
           <Input
@@ -37,7 +40,6 @@ function ResetPassword() {
             onChange={handleInputChange}
             required
           />
-
           <Button
             extraClass={styles.btn}
             type="submit"

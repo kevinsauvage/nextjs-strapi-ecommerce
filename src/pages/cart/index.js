@@ -7,16 +7,17 @@ import routes from '@/data/routes';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
 import Container from '@/components/Container/Container';
+import { useTranslations } from 'next-intl';
 import styles from './Cart.module.scss';
 
 function CartPage() {
   const router = useRouter();
-  const { cart, isCheckoutLoading } = useContext(CartContext);
-
   if (router.isFallback) return <div>Loading product...</div>;
+  const { cart, isCheckoutLoading } = useContext(CartContext);
+  const t = useTranslations('page.cart');
 
   return (
-    <Page title="Cart" loading={isCheckoutLoading}>
+    <Page title={t('title')} loading={isCheckoutLoading}>
       <Container>
         <div className={styles.cart}>
           {cart &&

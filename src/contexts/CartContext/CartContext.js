@@ -2,19 +2,23 @@ import { useRouter } from 'next/router';
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useReducer,
 } from 'react';
 import Client from 'shopify-buy';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import { associateCustomerToCheckout } from '@/lib/shopify/customer';
 import { CartReducer, initialState, actions } from './CartReducer';
+import { UserContext } from '../UserContext/UserContext';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
   const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
+  const { userAccessToken } = useContext(UserContext);
 
   const router = useRouter();
 
@@ -31,8 +35,9 @@ export function CartProvider({ children }) {
     dispatch({ type: 'CLIENT_CREATED', payload: client });
   }, []);
 
-  useEffect(() => {
-    if (states.client && !checkoutId) {
+  const createCheckout = useCallback(async () => {
+    if (states.client) {
+      console.log('Creating Checkout');
       states.client.checkout.create().then((res) => {
         dispatch({ type: actions.CHECKOUT_FOUND, payload: res });
         setCheckoutId(res.id);
@@ -40,18 +45,32 @@ export function CartProvider({ children }) {
     }
   }, [states.client]);
 
+  useEffect(() => {
+    if (!checkoutId) createCheckout();
+  }, [createCheckout]);
+
   const getCheckoutById = useCallback(async () => {
-    if (states.client && checkoutId) {
+    if (states.client) {
+      console.log('getCheckoutById');
+
       await states.client.checkout.fetch(checkoutId).then((checkout) => {
-        dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
+        console.log(checkout, 'checkout fetched');
+        if (checkout)
+          dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
       });
     }
   }, [states.client]);
 
   useEffect(() => {
-    if (states?.checkout && states?.checkout?.lineItems?.length < 1)
-      getCheckoutById();
+    if (checkoutId && !states.checkout?.id) getCheckoutById();
   }, [states.client]);
+
+  useEffect(() => {
+    if (userAccessToken && checkoutId) {
+      console.log('associateCustomerToCheckout');
+      associateCustomerToCheckout(checkoutId, userAccessToken);
+    }
+  }, [userAccessToken, checkoutId]);
 
   const toggleLoading = useCallback(
     () => dispatch({ type: 'TOGGLE_CART_LOADING' }),
@@ -61,7 +80,10 @@ export function CartProvider({ children }) {
   const addToCart = useCallback(
     async (variantId, quantity) => {
       const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
-      const { id } = states.checkout;
+
+      if (!states?.checkout?.id) await createCheckout();
+
+      const id = states?.checkout?.id;
 
       states.client.checkout.addLineItems(id, lineItemsToAdd).then((res) => {
         dispatch({

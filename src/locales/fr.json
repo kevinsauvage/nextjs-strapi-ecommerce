@@ -1,7 +1,52 @@
 {
     "page": {
         "home": {
-            "title": "Title fr"
+            "title": "Title en"
+        },
+        "shop": {
+            "title": ""
+        },
+        "collections": {
+            "title": ""
+        },
+        "contact": {
+            "title": ""
+        },
+        "About": {
+            "title": ""
+        },
+        "pdp": {
+            "title": "Product description"
+        },
+        "search": {
+            "title": ""
+        },
+        "account": {
+            "auth": {
+                "login": {
+                    "title": ""
+                },
+                "register": {
+                    "title": ""
+                }
+            },
+            "reset": {
+                "email": {
+                    "title": ""
+                },
+                "password": {
+                    "title": ""
+                }
+            }
+        },
+        "cart": {
+            "title": ""
+        },
+        "privacy": {
+            "title": ""
+        },
+        "terms": {
+            "title": ""
         }
     },
     "link": {

@@ -3,14 +3,16 @@ import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
+import { useTranslations } from 'next-intl';
 import styles from './shop.module.scss';
 
 function Shop({ products }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.shop');
 
   return (
-    <Page title="Shop">
+    <Page title={t('title')}>
       <Container>
         <main className={styles.shop}>
           <div className={styles.filters}>Filters</div>

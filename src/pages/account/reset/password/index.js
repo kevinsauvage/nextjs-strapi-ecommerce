@@ -7,13 +7,16 @@ import Page from '@/components/Page/Page';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
+import { useTranslations } from 'next-intl';
 import styles from './password.module.scss';
 
 function Password({ resetUrl }) {
   const router = useRouter();
+  if (router.isFallback) return <div>Loading product...</div>;
+
   const { resetPassword, loading } = useContext(UserContext);
 
-  if (router.isFallback) return <div>Loading product...</div>;
+  const t = useTranslations('page.account.reset.password');
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
@@ -21,12 +24,12 @@ function Password({ resetUrl }) {
   });
 
   return (
-    <Page title="Reset Password" loading={loading}>
+    <Page title={t('title')} loading={loading}>
       <div className={styles.password}>
         <Form
-          title="Enter new password"
+          title={t('form.title')}
+          subtitle={t('form.subtitle')}
           onSubmit={handleSubmit}
-          subtitle="Fill the form below to update your password"
         >
           <Input
             id="password"
@@ -36,7 +39,6 @@ function Password({ resetUrl }) {
             placeholder="New password"
             onChange={handleInputChange}
           />
-
           <Button
             extraClass={styles.btn}
             type="submit"
