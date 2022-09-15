@@ -11,7 +11,7 @@ function CustomHits(props) {
     <>
       <div className={styles.hits}>
         {hits.length > 0 ? (
-          hits.map((hit) => <Hit hit={hit} />)
+          hits.map((hit) => <Hit key={hit.id} hit={hit} />)
         ) : (
           <p>No matching results</p>
         )}

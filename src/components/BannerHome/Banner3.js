@@ -1,6 +1,5 @@
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
-import Container from '@/components/Container/Container';
 import FlexColumn from '@/components/FlexColumn/FlexColumn';
 import styles from './Banner3.module.scss';
 

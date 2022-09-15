@@ -1,16 +1,13 @@
-import { useRouter } from 'next/router';
 import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
-import { useTranslations } from 'next-intl';
+import { useRouter } from 'next/router';
 import styles from './slug.module.scss';
 
 function ProductPage({ product }) {
   const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
-  const t = useTranslations('page.pdp');
-
+  if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
 
   return (

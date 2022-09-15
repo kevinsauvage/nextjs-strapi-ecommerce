@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
@@ -7,8 +6,6 @@ import { useTranslations } from 'next-intl';
 import styles from './shop.module.scss';
 
 function Shop({ products }) {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
   const t = useTranslations('page.shop');
 
   return (

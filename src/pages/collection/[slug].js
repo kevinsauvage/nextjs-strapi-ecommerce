@@ -6,9 +6,9 @@ import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
 import { useTranslations } from 'next-intl';
 
 function CategoryPage({ category }) {
+  const t = useTranslations('page.pdp');
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
-  const t = useTranslations('page.pdp');
 
   return (
     <Page title={`${t('title')} : ${category?.title}`}>

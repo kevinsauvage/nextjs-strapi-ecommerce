@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Form from '@/components/Form/Form';
@@ -12,9 +11,6 @@ import routes from '@/data/routes';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
-
   const { resetPasswordEmail, loading } = useContext(UserContext);
   const t = useTranslations('page.account.reset.email');
 

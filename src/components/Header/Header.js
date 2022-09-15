@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Container from '@/components/Container/Container';
 import UserButtons from '@/components/UserButtons/UserButtons';
-import Wrapper from '@/components/Wrapper/Wrapper';
 import styles from './Header.module.scss';
 
 function Header() {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const { asPath } = useRouter();
 
   const handleScroll = () => {
     const position = window.pageYOffset;

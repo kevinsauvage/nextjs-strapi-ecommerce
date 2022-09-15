@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
@@ -13,8 +12,6 @@ import { useTranslations } from 'next-intl';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
   const t = useTranslations('page.account.auth.register');
 
   const { register, loading } = useContext(UserContext);

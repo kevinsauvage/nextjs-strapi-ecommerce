@@ -3,7 +3,7 @@ import Banner1 from '@/components/BannerHome/Banner1';
 import Banner2 from '@/components/BannerHome/Banner2';
 import Banner3 from '@/components/BannerHome/Banner3';
 import styles from '@/styles/Home.module.scss';
-import Container from 'src/components/Container/Container';
+import Container from '@/components/Container/Container';
 
 export default function Home() {
   return (

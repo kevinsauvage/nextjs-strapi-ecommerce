@@ -3,7 +3,6 @@ import { Highlight } from 'react-instantsearch-hooks-web';
 import styles from './Hit.module.scss';
 
 function Hit({ hit }) {
-  console.log(hit);
   return (
     <a href={`/shop/${hit.handle}`} className={styles.hit}>
       <div className={styles.image}>

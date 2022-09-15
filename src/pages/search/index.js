@@ -1,18 +1,14 @@
-import { useRouter } from 'next/router';
 import Page from '@/components/Page/Page';
 import { useTranslations } from 'next-intl';
 import {
   Configure,
   CurrentRefinements,
-  DynamicWidgets,
   Highlight,
   Hits,
-  InstantSearch,
   Pagination,
   RefinementList,
   SearchBox,
   SortBy,
-  useInstantSearch,
 } from 'react-instantsearch-hooks-web';
 import Image from 'next/image';
 import styles from './Search.module.scss';
@@ -37,11 +33,7 @@ function Hit({ hit }) {
 }
 
 function Search() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
   const t = useTranslations('page.search');
-  const data = useInstantSearch();
-  console.log(data);
 
   return (
     <Page title={t('title')}>
@@ -59,7 +51,6 @@ function Search() {
           ]}
         />
         <CurrentRefinements />
-
         <Hits hitComponent={Hit} />
         <Pagination />
       </div>

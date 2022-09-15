@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useTranslations } from 'next-intl';
 import Button from '@/components/Button/Button';
 import Container from '@/components/Container/Container';
@@ -9,8 +8,6 @@ import Form from '@/components/Form/Form';
 import styles from './Contact.module.scss';
 
 function ContactPage() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
   const t = useTranslations('page.contact');
 
   const onSubmit = async (formData) => {

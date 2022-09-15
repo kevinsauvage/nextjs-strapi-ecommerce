@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-import React from 'react';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import Container from '@/components/Container/Container';
 import Form from '@/components/Form/Form';
@@ -9,10 +7,7 @@ import useForm from '@/hooks/useForm';
 import { useTranslations } from 'next-intl';
 import styles from './address.module.scss';
 
-export default function address() {
-  const router = useRouter();
-
-  if (router.isFallback) return <div>Loading product...</div>;
+export default function Address() {
   const t = useTranslations('page.shipping');
 
   const onSubmit = async (formData) => {

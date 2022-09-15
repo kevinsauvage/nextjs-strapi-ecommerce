@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useContext } from 'react';
 import { useTranslations } from 'next-intl';
@@ -13,9 +12,6 @@ import routes from '@/data/routes';
 import styles from './Login.module.scss';
 
 function LoginPage() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
-
   const { login, loading } = useContext(UserContext);
   const t = useTranslations('page.account.auth.login');
 

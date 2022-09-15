@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useContext } from 'react';
 import Page from '@/components/Page/Page';
 import { CartContext } from '@/contexts/CartContext/CartContext';
@@ -11,8 +10,6 @@ import { useTranslations } from 'next-intl';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading product...</div>;
   const { cart, isCheckoutLoading } = useContext(CartContext);
   const t = useTranslations('page.cart');
 

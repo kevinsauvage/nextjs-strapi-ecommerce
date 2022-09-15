@@ -7,7 +7,6 @@ import { MdClose } from 'react-icons/md';
 import styles from './SearchBar.module.scss';
 import CustomSearchBox from './CustomSearch/CustomSearchBox';
 import CustomHits from './Hits/Hits';
-import Autocomplete from './Autocomplete/Autocomplete';
 
 const searchClient = algoliasearch(
   'DD9FI7P48Z',
@@ -35,7 +34,7 @@ export default function SearchBar() {
               searchClient={searchClient}
               indexName="shopify_products"
             >
-              <Configure hitsPerPage={16} />{' '}
+              <Configure hitsPerPage={16} />
               <header className={styles.header}>
                 <p className={styles.labelText}> WHAT ARE YOU LOOKING FOR?</p>
                 <button
@@ -48,7 +47,6 @@ export default function SearchBar() {
                 </button>
               </header>
               <CustomSearchBox />
-              <Autocomplete />
               <CustomHits />
             </InstantSearch>
           </Container>
