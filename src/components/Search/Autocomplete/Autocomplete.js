@@ -5,14 +5,15 @@ import algoliasearch from 'algoliasearch/lite';
 import { Fragment, createElement, useEffect, useRef, useContext } from 'react';
 import { createRoot } from 'react-dom/client';
 import { CartContext } from '@/contexts/CartContext/CartContext';
+import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import styles from './Autocomplete.module.scss';
 import '@algolia/autocomplete-theme-classic';
 import ProductItem from '../ProductItem/ProductItem';
 
-const searchClient = algoliasearch(
-  'DD9FI7P48Z',
-  '3a6d58200005df1baa528946d412c1b8'
-);
+const appId = 'DD9FI7P48Z';
+const apiKey = '3a6d58200005df1baa528946d412c1b8';
+
+const searchClient = algoliasearch(appId, apiKey);
 
 const querySuggestionsPlugin = createQuerySuggestionsPlugin({
   searchClient,
@@ -20,6 +21,51 @@ const querySuggestionsPlugin = createQuerySuggestionsPlugin({
   getSearchParams() {
     return {
       hitsPerPage: 5,
+    };
+  },
+  transformSource({ source }) {
+    return {
+      ...source,
+      templates: {
+        ...source.templates,
+        header({ state }) {
+          if (state.query) {
+            return null;
+          }
+
+          return (
+            <>
+              <span className="aa-SourceHeaderTitle">Popular searches</span>
+              <div className="aa-SourceHeaderLine" />
+            </>
+          );
+        },
+      },
+    };
+  },
+});
+
+const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+  key: 'qs-with-rs-example',
+  limit: 3,
+  transformSource({ source }) {
+    return {
+      ...source,
+      templates: {
+        ...source.templates,
+        header({ state }) {
+          if (state.query) {
+            return null;
+          }
+
+          return (
+            <>
+              <span className="aa-SourceHeaderTitle">Your searches</span>
+              <div className="aa-SourceHeaderLine" />
+            </>
+          );
+        },
+      },
     };
   },
 });
@@ -36,7 +82,9 @@ function Autocomplete(props) {
     const search = autocomplete({
       container: containerRef.current,
       renderer: { createElement, Fragment, render: () => {} },
-      plugins: [querySuggestionsPlugin],
+      openOnFocus: true,
+      placeholder: 'Search',
+      plugins: [querySuggestionsPlugin, recentSearchesPlugin],
       getSources({ query }) {
         if (!query) return [];
 
