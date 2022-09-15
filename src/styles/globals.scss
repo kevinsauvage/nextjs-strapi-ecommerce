@@ -83,3 +83,16 @@ th {
 table {
   border-collapse: collapse;
 }
+
+.aa-Panel {
+  z-index: 999999999;
+}
+
+mark {
+  color: blue !important;
+}
+
+.Toastify__toast,
+.Toastify__toast-container {
+  z-index: 99999999999999 !important;
+}

@@ -20,6 +20,7 @@ export default function ProductPresenter({ product }) {
 
   const handleAddToCart = () => {
     if (quantity > 0) {
+      console.log(selectedVariant);
       addToCart(selectedVariant.id, quantity);
     }
   };

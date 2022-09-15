@@ -20,6 +20,14 @@
     htm "^3.0.0"
     preact "^10.0.0"
 
+"@algolia/autocomplete-plugin-algolia-insights@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.7.1.tgz#4d3bd770f229816958e3447d02f2e5250449e21f"
+  integrity sha512-W4a/iU1vYzcMmI+zZiuAsV/k9yHVnViAZ0d+HxwLKmE9c4qm0HxaF9452bz4umOXQ+3EyDDxtP1xeF5G5FACtw==
+  dependencies:
+    "@algolia/autocomplete-js" "1.7.1"
+    "@algolia/autocomplete-shared" "1.7.1"
+
 "@algolia/autocomplete-plugin-query-suggestions@^1.7.1":
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-query-suggestions/-/autocomplete-plugin-query-suggestions-1.7.1.tgz#5385a71903e835fe9f46cd04628ba22ffb9400b7"
@@ -2281,7 +2289,7 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
-search-insights@^2.1.0:
+search-insights@^2.1.0, search-insights@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/search-insights/-/search-insights-2.2.1.tgz#9c93344fbae5fbf2f88c1a81b46b4b5d888c11f7"
   integrity sha512-JDfVGZbKqTtiKVZjAVbkNw9C9f0ib80yx6Ea17M3z4RvPmuD0GYWXuFwA9++dpbreBEMH4TC3lQ29Zq7O4b5oA==

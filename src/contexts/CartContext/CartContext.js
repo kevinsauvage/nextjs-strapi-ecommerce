@@ -10,6 +10,7 @@ import {
 import Client from 'shopify-buy';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { associateCustomerToCheckout } from '@/lib/shopify/customer';
+import { toast } from 'react-toastify';
 import { CartReducer, initialState, actions } from './CartReducer';
 import { UserContext } from '../UserContext/UserContext';
 
@@ -79,6 +80,7 @@ export function CartProvider({ children }) {
 
   const addToCart = useCallback(
     async (variantId, quantity) => {
+      console.log(variantId);
       const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
 
       if (!states?.checkout?.id) await createCheckout();
@@ -90,6 +92,7 @@ export function CartProvider({ children }) {
           type: 'ADD_VARIANT_TO_CART',
           payload: { isCartOpen: true, checkout: res },
         });
+        if (res) toast.success('Product correctly added.');
       });
     },
     [states.client, states.checkout]
@@ -125,6 +128,8 @@ export function CartProvider({ children }) {
     },
     [states.client, states.checkout]
   );
+
+  console.log(states);
 
   const values = useMemo(
     () => ({
