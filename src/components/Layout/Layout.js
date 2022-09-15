@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
-import SearchBar from '@/components/SearchBar/SearchBar';
+import SearchBar from '@/components/Search/SearchBar';
 import Cart from '@/components/Cart/Cart';
 import User from '@/components/User/User';
 import styles from './Layout.module.scss';

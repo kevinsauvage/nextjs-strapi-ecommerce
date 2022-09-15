@@ -1,0 +1,26 @@
+.hit {
+  width: 100%;
+  box-shadow: $box-shadow-secondary;
+}
+
+.image {
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.content {
+  padding: 10px;
+  text-align: center;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.description {
+  font-size: 14px;
+  font-weight: 300;
+}

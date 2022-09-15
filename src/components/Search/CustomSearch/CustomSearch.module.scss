@@ -1,0 +1,32 @@
+.label {
+  width: 100%;
+  color: gray;
+  margin-bottom: 30px;
+  position: relative;
+  max-width: 700px;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  color: $primary;
+  font-size: 24px;
+  padding-bottom: 8px;
+  border: none;
+  border-bottom: 0.2px solid gray;
+
+  &:focus,
+  &:active {
+    outline: none;
+  }
+}
+
+.button {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
