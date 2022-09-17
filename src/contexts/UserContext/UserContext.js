@@ -55,7 +55,6 @@ export function UserProvider({ children }) {
 
   const getUserInfo = async (accessToken) => {
     const response = await getUser(accessToken, locale);
-    console.log(response);
     if (response?.customer) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }

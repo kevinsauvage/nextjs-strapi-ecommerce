@@ -23,7 +23,6 @@ export default function SearchBar() {
             onKeyDown={(e) => e.stopPropagation()}
           >
             <header className={styles.header}>
-              <p className={styles.labelText}> WHAT ARE YOU LOOKING FOR?</p>
               <button
                 tabIndex={0}
                 type="button"

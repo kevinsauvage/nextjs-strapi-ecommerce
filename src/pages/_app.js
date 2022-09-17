@@ -6,7 +6,6 @@ import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-
 import { getShopInfo, getCollections } from '@/lib/shopify/shop';
 
 import fr from '../locales/fr.json';

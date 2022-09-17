@@ -129,8 +129,6 @@ export function CartProvider({ children }) {
     [states.client, states.checkout]
   );
 
-  console.log(states);
-
   const values = useMemo(
     () => ({
       // States

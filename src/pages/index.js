@@ -4,8 +4,10 @@ import Banner2 from '@/components/BannerHome/Banner2';
 import Banner3 from '@/components/BannerHome/Banner3';
 import styles from '@/styles/Home.module.scss';
 import Container from '@/components/Container/Container';
+import { getLastOrderedProducts } from '@/lib/algolia';
 
-export default function Home() {
+export default function Home({ lastOrderedProduct }) {
+  console.log(lastOrderedProduct, 'Algolia lastOrderedProduct');
   return (
     <div className={styles.container}>
       <Container>
@@ -19,8 +21,11 @@ export default function Home() {
 }
 
 export async function getServerSideProps({ locale }) {
+  const lastOrderedProduct = await getLastOrderedProducts(locale);
+
   return {
     props: {
+      lastOrderedProduct,
       messages: (await import(`../locales/${locale}.json`)).default,
     },
   };

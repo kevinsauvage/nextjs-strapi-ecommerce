@@ -1,21 +1,13 @@
 .productCardDefault {
   cursor: pointer;
-  background-color: white;
   overflow: hidden;
   border-radius: 3px;
-  box-shadow: $box-shadow-secondary;
-}
-
-.column {
-  display: grid;
-  grid-template-columns: 2fr 5fr;
 }
 
 .content {
-  padding: 8px 10px 10px 10px;
+  padding: 8px 0;
   text-align: center;
   z-index: 99;
-  background-color: white;
   height: 100%;
   position: relative;
 }
@@ -34,7 +26,15 @@
 
 .image {
   position: relative;
+  border-radius: 16px;
+  overflow: hidden;
 
+  span {
+    transition: transform 0.25s;
+  }
+  &:hover span {
+    transform: scale(1.1);
+  }
   &:hover .quickView {
     bottom: 0;
   }

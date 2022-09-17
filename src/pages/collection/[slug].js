@@ -1,44 +1,83 @@
-import { useRouter } from 'next/router';
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
-import { useTranslations } from 'next-intl';
+import {
+  filterCollection,
+  getCollectionFilters,
+} from '@/lib/shopify/collections';
 
-function CategoryPage({ category }) {
-  const t = useTranslations('page.pdp');
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading category...</div>;
+const getFiltersFromParams = (filters, actualFilters) => {
+  const data = [
+    ...filters.reduce((result, filter) => {
+      const foundedFilter = actualFilters[filter.id];
 
+      if (foundedFilter) {
+        return [
+          ...result,
+          ...filter.values.reduce((acc, el) => {
+            if (
+              Array.isArray(foundedFilter)
+                ? foundedFilter.includes(el.label)
+                : [foundedFilter].includes(el.label)
+            ) {
+              const parsed = JSON.parse(el.input);
+
+              return [...acc, parsed];
+            }
+            return acc;
+          }, []),
+        ];
+      }
+      return result;
+    }, []),
+  ];
+  return data;
+};
+
+function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
+  getFiltersFromParams(filters, actualFilters);
   return (
-    <Page title={`${t('title')} : ${category?.title}`}>
-      <div>
-        <Container>
-          <ProductsList products={category?.products} />
-        </Container>
-      </div>
+    <Page title={`${title}`}>
+      <Container>
+        <ProductsList
+          products={products}
+          hasNextPage={pageInfo.hasNextPage}
+          filters={filters}
+          pageInfo={pageInfo}
+          actualFilters={actualFilters}
+        />
+      </Container>
     </Page>
   );
 }
 
 export default CategoryPage;
 
-export async function getStaticProps({ params, locale }) {
-  const data = await getShopifyClient(locale).collection.fetchByHandle(
-    params.slug
-  );
-  const category = parseShopifyResponse(data);
+export async function getServerSideProps({ params, query }) {
+  const page = query.page ? Number(query.page) * 10 : 10;
+
+  const availableFilters = await getCollectionFilters(params.slug);
+
+  const filtersFetchArray = getFiltersFromParams(availableFilters, query);
+
+  const data = await filterCollection(params.slug, page, filtersFetchArray);
+
+  const products = data?.products;
+  const pageInfo = data?.pageInfo;
 
   return {
     props: {
-      category,
-      messages: (await import(`../../locales/${locale}.json`)).default,
+      title: params.slug,
+      filters: availableFilters,
+      products,
+      pageInfo,
+      actualFilters: query,
+      filtersFetchArray,
     },
-    revalidate: 60, // In seconds
   };
 }
 
-export async function getStaticPaths({ locales, locale }) {
+/* export async function getStaticPaths({ locales, locale }) {
   const data = await getShopifyClient(locale).collection.fetchAll();
   const collections = parseShopifyResponse(data);
 
@@ -55,6 +94,7 @@ export async function getStaticPaths({ locales, locale }) {
 
   return {
     paths,
-    fallback: true,
+    fallback: false,
   };
 }
+ */

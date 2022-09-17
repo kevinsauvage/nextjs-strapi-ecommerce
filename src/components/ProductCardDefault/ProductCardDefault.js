@@ -6,10 +6,9 @@ import Modal from '@/components/Modal/Modal';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
 import styles from './ProductCardDefault.module.scss';
 
-export default function ProductCardDefault({ product, column }) {
+export default function ProductCardDefault({ product }) {
   const { title, images, handle } = product;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [image] = useState(images[0]);
 
   const price = product?.variants?.[0]?.priceV2?.amount;
   const currencyCode = product?.variants?.[0]?.priceV2?.currencyCode;
@@ -22,16 +21,16 @@ export default function ProductCardDefault({ product, column }) {
         </Modal>
       )}
 
-      <li className={`${styles.productCardDefault} ${column && styles.column}`}>
+      <li className={`${styles.productCardDefault}`}>
         <Link href={`/shop/${handle}`}>
           <a>
             <div className={styles.image}>
               <Image
-                src={image?.src}
+                src={images?.transformedSrc}
                 layout="responsive"
-                objectFit="cover"
-                width={image?.width}
-                height={image?.height}
+                objectFit="fill"
+                width={images?.width}
+                height={images?.height}
               />
               <div
                 className={styles.quickView}

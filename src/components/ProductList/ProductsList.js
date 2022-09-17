@@ -1,54 +1,108 @@
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
-import { useState } from 'react';
-import { TbGridDots, TbListDetails } from 'react-icons/tb';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import { ClipLoader } from 'react-spinners';
+import useOnScreen from '@/hooks/useOnScreen';
+import Filters from '../Filters/Filters';
 import styles from './ProductList.module.scss';
 
-function ProductsList({ products }) {
-  const [grid, setGrid] = useState(true);
-  const [column, setColumn] = useState(false);
+function ProductsList({
+  products,
+  hasNextPage = true,
+  filters,
+  actualFilters = [],
+}) {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+  const listInnerRef = useRef();
+  const isBottom = useOnScreen(listInnerRef);
 
-  const handleSetGrid = () => {
-    setGrid(true);
-    setColumn(false);
+  const handlePushQuery = (query, scroll) => {
+    router.push(
+      {
+        pathname: router.pathname,
+        query: {
+          ...router.query,
+          ...query,
+        },
+      },
+      undefined,
+      {
+        scroll,
+      }
+    );
   };
-  const handleSetColumn = () => {
-    setGrid(false);
-    setColumn(true);
+
+  useEffect(() => {
+    if (isBottom && hasNextPage) {
+      const newPage = router.query.page ? Number(router.query.page) + 1 : 2;
+      handlePushQuery({ page: newPage }, false);
+      setLoading(true);
+    }
+  }, [isBottom]);
+
+  useEffect(() => {
+    setLoading(false);
+  }, [products]);
+
+  const handleChangeFilter = (value, key) => {
+    const actualValue = actualFilters[key];
+    // Set query and return if key doesn't exist in filters
+
+    if (!actualValue)
+      return handlePushQuery({ ...{ [key]: value }, page: 1 }, true);
+    console.log(actualValue);
+
+    const actualValueArray = Array.isArray(actualValue)
+      ? actualValue
+      : actualValue.split(',');
+
+    const isIncluded = actualValueArray.includes(value);
+
+    console.log(isIncluded, 'isIncluded');
+
+    // check If key is present in URL
+    if (isIncluded) {
+      console.log('remove filter');
+
+      const newValueArray = actualValueArray.filter((item) => item !== value);
+
+      handlePushQuery({ page: 1, [key]: newValueArray }, true);
+    } else {
+      handlePushQuery({ page: 1, [key]: [...actualValueArray, value] }, true);
+    }
   };
+
   return (
-    <div>
-      <div className={styles.header}>
-        <p>Item 1 to {products.length} of 2300</p>
-        <div className={styles.view}>
-          <p>Select view </p>
-          <button
-            type="button"
-            className={styles.btn}
-            onClick={() => handleSetGrid()}
-          >
-            <TbGridDots />
-          </button>
+    <div className={styles.productsList}>
+      <Filters
+        filters={filters}
+        filtersSelected={actualFilters}
+        onChange={handleChangeFilter}
+      />
+      <div className={styles.products}>
+        {Array.isArray(products) && products.length > 0 ? (
+          <>
+            <ul className={styles.containerGrid}>
+              {products.map((product) => (
+                <ProductCardDefault key={product.id} product={product} />
+              ))}
+            </ul>
+            <div ref={listInnerRef} />
+          </>
+        ) : (
+          <div className={styles.noResults}>No results</div>
+        )}
 
-          <button
-            type="button"
-            className={styles.btn}
-            onClick={() => handleSetColumn()}
-          >
-            <TbListDetails />
-          </button>
+        {!hasNextPage && products.length > 0 && (
+          <div className={styles.noResults}>
+            <p>No more results</p>
+          </div>
+        )}
+        <div className={styles.loader}>
+          <ClipLoader loading={loading} />
         </div>
       </div>
-      <ul className={grid ? styles.containerGrid : styles.listContainer}>
-        {Array.isArray(products) &&
-          products.map((product) => (
-            <ProductCardDefault
-              key={product.id}
-              product={product}
-              grid={grid}
-              column={column}
-            />
-          ))}
-      </ul>
     </div>
   );
 }

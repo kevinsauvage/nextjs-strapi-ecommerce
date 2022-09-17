@@ -144,7 +144,12 @@ function Autocomplete(props) {
       ...props,
     });
 
+    document.querySelector('.aa-Input').focus();
+    document.querySelector('body').style.overflow = 'hidden';
+
     return () => {
+      document.querySelector('body').style.overflow = 'auto';
+
       search.destroy();
     };
   }, [props]);
