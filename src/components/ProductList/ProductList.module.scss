@@ -5,8 +5,10 @@
 .containerGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 60px;
+  gap: 20px;
   flex-direction: column;
+  align-content: flex-end;
+  align-items: flex-end;
 }
 
 .products {

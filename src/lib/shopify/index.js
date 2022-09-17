@@ -60,11 +60,10 @@ export const apiCallTest = async (query, variables) => {
     }
   );
   const res = await response.json();
-  console.log(res, 'resposne jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
   if (res && res.data) return res.data;
 
   if (res && res.errors) {
-    // return console.error(res.errors);
+    return console.error(res.errors);
     // TODO HANDLE ERRORS
   }
   return res;

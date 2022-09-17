@@ -28,9 +28,9 @@ export default function ProductCardDefault({ product }) {
               <Image
                 src={images?.transformedSrc}
                 layout="responsive"
-                objectFit="fill"
-                width={images?.width}
-                height={images?.height}
+                objectFit="cover"
+                width="100%"
+                height="100%"
               />
               <div
                 className={styles.quickView}

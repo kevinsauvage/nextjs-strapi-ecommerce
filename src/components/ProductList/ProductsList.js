@@ -67,10 +67,12 @@ function ProductsList({
 
       const newValueArray = actualValueArray.filter((item) => item !== value);
 
-      handlePushQuery({ page: 1, [key]: newValueArray }, true);
-    } else {
-      handlePushQuery({ page: 1, [key]: [...actualValueArray, value] }, true);
+      return handlePushQuery({ page: 1, [key]: newValueArray }, true);
     }
+    return handlePushQuery(
+      { page: 1, [key]: [...actualValueArray, value] },
+      true
+    );
   };
 
   return (
