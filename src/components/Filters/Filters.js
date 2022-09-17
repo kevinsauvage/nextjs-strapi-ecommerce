@@ -1,6 +1,6 @@
 import styles from './Filters.module.scss';
 
-export default function Filters({ filters, filtersSelected, onChange }) {
+export default function Filters({ filters = [], filtersSelected, onChange }) {
   console.log(filters);
   const isChecked = (key, value) => {
     const actualValues = filtersSelected[key];
