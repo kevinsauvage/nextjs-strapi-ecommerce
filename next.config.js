@@ -15,11 +15,6 @@ const nextConfig = {
         @import "mixins.scss"; 
         @import "animation.scss";`,
   },
-
-  i18n: {
-    locales: ['en', 'fr', 'es'],
-    defaultLocale: 'en',
-  },
 };
 
 module.exports = nextConfig;

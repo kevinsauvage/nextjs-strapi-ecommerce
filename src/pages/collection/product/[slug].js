@@ -42,20 +42,13 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export async function getStaticPaths({ locales }) {
+export async function getStaticPaths() {
   const data = await getShopifyClient().product.fetchAll();
   const products = parseShopifyResponse(data);
 
-  const paths = locales.reduce(
-    (acc, next) => [
-      ...acc,
-      ...products.map((product) => ({
-        params: { slug: String(product.handle) },
-        locale: next,
-      })),
-    ],
-    []
-  );
+  const paths = products.map((product) => ({
+    params: { slug: String(product.handle) },
+  }));
 
   return {
     paths,
