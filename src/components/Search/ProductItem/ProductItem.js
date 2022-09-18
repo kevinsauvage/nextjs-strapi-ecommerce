@@ -1,7 +1,7 @@
 function ProductItem({ hit, components, addToCart }) {
   console.log(hit);
   return (
-    <a href={`/shop/${hit.handle}`} className="aa-ItemLink">
+    <a href={`/collection/product/${hit.handle}`} className="aa-ItemLink">
       <div className="aa-ItemContent">
         <div className="aa-ItemIcon aa-ItemIcon--picture aa-ItemIcon--alignTop">
           <img src={hit.image} alt={hit.name} width="40" height="40" />
