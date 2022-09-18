@@ -24,7 +24,11 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
             {filter.values.map((value) => (
               // const input = JSON.parse(value.input);
               // console.log(input);
-              <label key={value.id} htmlFor={value.id} className={styles.label}>
+              <label
+                key={value.input}
+                htmlFor={value.id}
+                className={styles.label}
+              >
                 <input
                   type="range"
                   min="100"
@@ -48,7 +52,11 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
           <div key={filter.label} className={styles.filter}>
             <h6 className={styles.title}>{filter.label}</h6>
             {filter.values.map((value) => (
-              <label key={value.id} htmlFor={value.id} className={styles.label}>
+              <label
+                key={value.input}
+                htmlFor={value.id}
+                className={styles.label}
+              >
                 <input
                   type="checkbox"
                   name="filter"
