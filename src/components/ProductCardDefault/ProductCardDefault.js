@@ -27,7 +27,7 @@ export default function ProductCardDefault({ product }) {
           <a>
             <div className={styles.image}>
               <Image
-                src={images?.[0].transformedSrc}
+                src={images?.[0].sm}
                 layout="responsive"
                 objectFit="cover"
                 width="300"

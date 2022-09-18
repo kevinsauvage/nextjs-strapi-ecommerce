@@ -1,39 +1,21 @@
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import Container from '@/components/Container/Container';
 import UserButtons from '@/components/UserButtons/UserButtons';
 import styles from './Header.module.scss';
 import Navbar from '../Navbar/Navbar';
 
 function Header() {
-  const [scrollPosition, setScrollPosition] = useState(0);
-
-  const handleScroll = () => {
-    const position = window.pageYOffset;
-    setScrollPosition(position);
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  const isActive = scrollPosition > 60;
-
   return (
-    <header className={`${styles.header} ${isActive ? styles.active : ''}`}>
+    <header className={`${styles.header}`}>
       <Container>
-        <div className={styles.inner}>
+        <div className={`${styles.inner}`}>
           <Navbar />
           <Link href="/">
             <a className={styles.logo}>
-              <p>NAMEE</p>
+              <p>NAME</p>
             </a>
           </Link>
-          <UserButtons isActive={isActive} />
+          <UserButtons />
         </div>
       </Container>
     </header>

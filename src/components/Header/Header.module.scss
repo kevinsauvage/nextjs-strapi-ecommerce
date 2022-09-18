@@ -9,21 +9,12 @@
   transition: transform 1s ease;
   justify-content: space-between;
   align-items: center;
-  color: $primary;
+  color: whitesmoke;
   height: 66px;
+  background-color: black;
 
   svg {
-    color: $primary;
-  }
-
-  &.active {
-    position: absolute;
-    transform: translateY(-60px);
-    position: fixed;
-    animation: slide-down 1s ease forwards;
-    background-color: $secondary;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    top: 0;
+    color: whitesmoke;
   }
 }
 
@@ -31,9 +22,6 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
-}
-
-.bgHome {
 }
 
 .bgPages {
@@ -48,15 +36,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@keyframes slide-down {
-  0% {
-    opacity: 0;
-    transform: translateY(-60px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0px);
-  }
 }

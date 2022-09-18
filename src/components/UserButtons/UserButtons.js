@@ -8,7 +8,7 @@ import routes from '@/data/routes';
 import { useRouter } from 'next/router';
 import styles from './UserButtons.module.scss';
 
-export default function UserButtons({ isActive }) {
+export default function UserButtons() {
   const { toggleSearch, toggleCart, toggleUser } =
     useContext(GlobalStoreContext);
 
@@ -53,7 +53,7 @@ export default function UserButtons({ isActive }) {
           {el.item}
         </HeaderButton>
       ))}
-      <div className={`${styles.totalItems} ${isActive ? styles.active : ''}`}>
+      <div className={`${styles.totalItems}`}>
         {cart?.lineItems?.length || '0'}
       </div>
     </div>

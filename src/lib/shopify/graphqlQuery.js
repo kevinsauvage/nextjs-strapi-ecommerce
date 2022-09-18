@@ -38,7 +38,7 @@ const filterCollection = `
                 node{
                   src
                   altText
-                  transformedSrc(maxWidth: 500, maxHeight: 600)
+                  sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
                   width
                   height
                 }
@@ -71,7 +71,7 @@ const filterCollection = `
                   image {
                     src
                     altText
-                    transformedSrc(maxWidth: 500, maxHeight: 600)
+                    sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
                     width
                     height
                   }
@@ -109,7 +109,7 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
              node {
                src
                altText
-               transformedSrc(maxWidth: 500, maxHeight: 600)
+               sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
                width
                height
              }
@@ -144,7 +144,7 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
                image {
                  src
                  altText
-                 transformedSrc(maxWidth: 500, maxHeight: 600)
+                 sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
                  width
                  height
                }           

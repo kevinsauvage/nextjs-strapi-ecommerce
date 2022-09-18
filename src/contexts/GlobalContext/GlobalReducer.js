@@ -2,6 +2,7 @@ export const initialState = {
   searchOpen: false,
   cartOpen: false,
   userOpen: false,
+  isHeaderActive: false,
 };
 
 export const actions = {

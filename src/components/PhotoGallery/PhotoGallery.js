@@ -25,7 +25,7 @@ export default function PhotoGallery({
     <div className={styles.container} ref={galleryRef}>
       <div className={styles.selected}>
         <Image
-          src={selectedVariant.image.src}
+          src={selectedVariant.image?.sm || selectedVariant.image?.src}
           alt={selectedVariant}
           width="100%"
           height="100%"
@@ -37,7 +37,7 @@ export default function PhotoGallery({
         <div className={styles.gallery}>
           <ul className={styles.list}>
             {items.map((item) => {
-              const { src } = item.image;
+              const { sm } = item.image;
               return (
                 <div
                   key={item.id}
@@ -56,7 +56,7 @@ export default function PhotoGallery({
                     onKeyDown={() => handleSelect(item)}
                   >
                     <Image
-                      src={src}
+                      src={sm}
                       alt={item.title}
                       layout="fill"
                       objectFit="cover"

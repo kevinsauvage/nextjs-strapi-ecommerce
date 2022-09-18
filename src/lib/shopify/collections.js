@@ -26,7 +26,10 @@ export const filterCollection = async (
     const products = cleanProducts(res?.collection?.products.edges);
     const pageInfo = res?.collection?.products?.pageInfo;
 
-    return { products, pageInfo };
+    return {
+      products,
+      pageInfo,
+    };
   }
   return false;
 };

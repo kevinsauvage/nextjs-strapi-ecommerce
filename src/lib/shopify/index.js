@@ -8,7 +8,6 @@ export const getShopifyClient = () => {
     storefrontAccessToken:
       process.env.NEXT_PUBLIC_SHOPIFY_STORE_FRONT_ACCESS_TOKEN,
     domain: process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN,
-    language: 'en',
   };
 
   return Client.buildClient({ ...config });
@@ -60,7 +59,7 @@ export const apiCallTest = async (query, variables) => {
     }
   );
   const res = await response.json();
-  console.log(res, 'res apicalltest', variables);
+  console.log(res, 'res apiCallTest', variables);
   if (res && res.data) return res.data;
 
   if (res && res.errors) {
