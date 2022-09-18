@@ -37,11 +37,11 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
                   name="range"
                   id={value.id}
                   value={value.label}
-                  onChange={(e) => handleChangeInput(e.target.value, filter.id)}
+                  onChange={(e) =>
+                    handleChangeInput(e.target.value, filter.id, false)
+                  }
                   checked={isChecked(filter.id, value.label)}
                 />
-                <p>{value.label}</p>
-                <p>{value.count}</p>
               </label>
             ))}
           </div>
@@ -65,8 +65,8 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
                   onChange={(e) => onChange(e.target.value, filter.id)}
                   checked={isChecked(filter.id, value.label)}
                 />
-                <p>{value.label}</p>
-                <p>{value.count}</p>
+                <p className={styles.labelText}>{value.label}</p>
+                <small className={styles.count}>({value.count})</small>
               </label>
             ))}
           </div>

@@ -17,6 +17,7 @@ function CategoryPage({
   tags,
 }) {
   console.log(tags);
+  console.log(products);
   return (
     <Page title={`${title}`}>
       <Container>

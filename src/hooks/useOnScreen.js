@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 export default function useOnScreen(ref) {
   const [isIntersecting, setIntersecting] = useState(false);
 
-  let observer = null;
   useEffect(() => {
+    let observer = null;
     if (ref.current) {
       observer = new IntersectionObserver(([entry]) =>
         setIntersecting(entry.isIntersecting)
@@ -15,7 +15,7 @@ export default function useOnScreen(ref) {
       observer?.disconnect();
     };
     // Remove the observer as soon as the component is unmounted
-  }, []);
+  }, [ref]);
 
   return isIntersecting;
 }

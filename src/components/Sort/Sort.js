@@ -1,4 +1,4 @@
-import React from 'react';
+import styles from './Sort.module.scss';
 
 export default function Sort({ handleChange }) {
   const sortingOptions = [
@@ -8,12 +8,25 @@ export default function Sort({ handleChange }) {
   ];
 
   return (
-    <select selected={sortingOptions[0].label} onChange={handleChange}>
-      {sortingOptions.map((option) => (
-        <option key={option.name} value={option.label}>
-          {option.name}
-        </option>
-      ))}
-    </select>
+    <label className={styles.sort} htmlFor="sort">
+      <p className={styles.label}>Sort</p>
+      <select
+        id="sort"
+        aria-label="sort"
+        selected={sortingOptions[0].label}
+        onChange={handleChange}
+        className={styles.select}
+      >
+        {sortingOptions.map((option) => (
+          <option
+            key={option.name}
+            value={option.label}
+            className={styles.option}
+          >
+            {option.name}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

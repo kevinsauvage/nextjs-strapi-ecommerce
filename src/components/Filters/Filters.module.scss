@@ -1,5 +1,6 @@
 .filters {
   min-width: 200px;
+  color: rgb(83, 83, 83);
 }
 
 .label {
@@ -9,10 +10,20 @@
 }
 
 .title {
-  font-size: 18px;
+  font-size: 16px;
   margin-bottom: 8px;
 }
 
 .filter {
   margin-bottom: 30px;
+}
+
+.labelText {
+  margin: 0 4px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.count {
+  font-size: 12px;
 }

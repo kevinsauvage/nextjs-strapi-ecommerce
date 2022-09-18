@@ -15,11 +15,11 @@ export default function PhotoGallery({
 
   useEffect(() => {
     setContainerWidth(galleryRef.current.getBoundingClientRect().width);
-  }, [galleryRef?.current]);
+  }, []);
 
   useEffect(() => {
     setThumbWidth(containerWidth / thumbsPerSlide - 5);
-  }, [containerWidth]);
+  }, [containerWidth, thumbsPerSlide]);
 
   return (
     <div className={styles.container} ref={galleryRef}>
@@ -27,22 +27,27 @@ export default function PhotoGallery({
         <Image
           src={selectedVariant.image.src}
           alt={selectedVariant}
-          width={selectedVariant.image.width}
-          height={selectedVariant.image.height}
-          layout="responsive"
+          width="100%"
+          height="100%"
+          layout="fill"
           objectFit="cover"
         />
       </div>
-      <div className={styles.gallery}>
-        <ul className={styles.list}>
-          {items &&
-            items.map((item) => {
-              const { width, height, src } = item.image;
+      {items && items.length > 1 && (
+        <div className={styles.gallery}>
+          <ul className={styles.list}>
+            {items.map((item) => {
+              const { src } = item.image;
               return (
                 <div
                   key={item.id}
                   className={styles.item}
-                  style={thumbWidth && { width: `${thumbWidth}px` }}
+                  style={
+                    thumbWidth && {
+                      width: `${thumbWidth}px`,
+                      height: `${thumbWidth}px`,
+                    }
+                  }
                 >
                   <button
                     className={styles.btn}
@@ -53,16 +58,19 @@ export default function PhotoGallery({
                     <Image
                       src={src}
                       alt={item.title}
-                      layout="responsive"
-                      width={width}
-                      height={height}
+                      layout="fill"
+                      objectFit="cover"
+                      objectPosition="center"
+                      width="100%"
+                      height="100%"
                     />
                   </button>
                 </div>
               );
             })}
-        </ul>
-      </div>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import { apiCall } from './index';
 
-export const registerCustomer = async (email, password, language) => {
-  const mutation = `mutation @inContext(language: ${language.toUpperCase()}){
+export const registerCustomer = async (email, password) => {
+  const mutation = `mutation {
       customerCreate(input: {
         email:"${email}", 
         password:"${password}"
@@ -13,8 +13,8 @@ export const registerCustomer = async (email, password, language) => {
   return apiCall(mutation);
 };
 
-export const loginCustomer = async (email, password, language) => {
-  const mutation = `mutation @inContext(language: ${language.toUpperCase()}) { 
+export const loginCustomer = async (email, password) => {
+  const mutation = `mutation  { 
       customerAccessTokenCreate(input: {
         email:"${email}", 
         password:"${password}"
@@ -27,16 +27,16 @@ export const loginCustomer = async (email, password, language) => {
   return apiCall(mutation);
 };
 
-export const sendRecoverEmail = (email, language) => {
-  const mutation = `mutation @inContext(language: ${language.toUpperCase()}) {
+export const sendRecoverEmail = (email) => {
+  const mutation = `mutation  {
     customerRecover(email: "${email}") { customerUserErrors { code field message} }
     }`;
 
   return apiCall(mutation);
 };
 
-export const resetCustomerPassword = (password, resetUrl, language) => {
-  const mutation = `mutation @inContext(language: ${language.toUpperCase()}) {
+export const resetCustomerPassword = (password, resetUrl) => {
+  const mutation = `mutation  {
       customerResetByUrl(resetUrl: "${resetUrl}", password: "${password}") {
         customer { id, email },
         customerAccessToken { accessToken expiresAt }, 
@@ -47,8 +47,8 @@ export const resetCustomerPassword = (password, resetUrl, language) => {
   return apiCall(mutation);
 };
 
-export const getUser = async (token, language) => {
-  const query = `query @inContext(language: ${language.toUpperCase()}) {
+export const getUser = async (token) => {
+  const query = `query  {
       customer(customerAccessToken: "${token}") {
         id
         firstName

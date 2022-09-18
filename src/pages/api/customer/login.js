@@ -1,6 +1,6 @@
 import { setCookie } from 'nookies';
 
-export default async (req, res) => {
+const login = async (req, res) => {
   const { accessToken, expiresAt } = req.body;
 
   if (!accessToken || !expiresAt) throw new Error('Access token Missing');
@@ -30,3 +30,5 @@ export default async (req, res) => {
     return res.status(404).send({ ok: false, error: e });
   }
 };
+
+export default login;

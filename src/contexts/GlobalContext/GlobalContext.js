@@ -1,11 +1,22 @@
 import { useRouter } from 'next/router';
-import { createContext, useEffect, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import { GlobalReducer, initialState, actions } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
 
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
+
+  const resetToggle = useCallback(() => {
+    dispatch({ type: actions.RESET_TOGGLE_STATES });
+  }, []);
+
   const values = useMemo(
     () => ({
       searchOpen: states.searchOpen,
@@ -31,18 +42,16 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.SET_COLLECTIONS, payload: collections });
       },
 
-      resetToggle: () => {
-        dispatch({ type: actions.RESET_TOGGLE_STATES });
-      },
+      resetToggle,
     }),
-    [states]
+    [states, resetToggle]
   );
 
   const router = useRouter();
 
   useEffect(() => {
-    values.resetToggle();
-  }, [router.asPath]);
+    resetToggle();
+  }, [router.asPath, resetToggle]);
 
   return (
     <GlobalStoreContext.Provider value={values}>

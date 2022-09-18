@@ -1,6 +1,6 @@
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import useOnScreen from '@/hooks/useOnScreen';
 import Filters from '../Filters/Filters';
@@ -18,7 +18,9 @@ function ProductsList({
   const listInnerRef = useRef();
   const isBottom = useOnScreen(listInnerRef);
 
-  const handlePushQuery = useCallback((query, scroll) => {
+  const handlePushQuery = (query, scroll) => {
+    console.log('push query', query);
+    console.log('router query', router.query);
     router.push(
       {
         pathname: router.pathname,
@@ -32,7 +34,7 @@ function ProductsList({
         scroll,
       }
     );
-  }, []);
+  };
 
   useEffect(() => {
     if (isBottom && hasNextPage) {
@@ -40,6 +42,7 @@ function ProductsList({
       handlePushQuery({ page: newPage }, false);
       setLoading(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isBottom, handlePushQuery]);
 
   useEffect(() => {
@@ -88,7 +91,9 @@ function ProductsList({
         onChange={handleChangeFilter}
       />
       <div className={styles.products}>
-        <Sort handleChange={handleSort} />
+        <div className={styles.header}>
+          <Sort handleChange={handleSort} />
+        </div>
         {Array.isArray(products) && products.length > 0 ? (
           <>
             <ul className={styles.containerGrid}>

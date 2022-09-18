@@ -32,11 +32,13 @@ const filterCollection = `
             availableForSale
             handle
             id
+            descriptionHtml
             images(first: 1) {
               edges {
                 node{
+                  src
                   altText
-                  transformedSrc(maxWidth: 500, maxHeight: 500)
+                  transformedSrc(maxWidth: 500, maxHeight: 600)
                   width
                   height
                 }
@@ -57,7 +59,7 @@ const filterCollection = `
             title
             totalInventory
             vendor
-            variants(first: 100) {
+            variants(first: 10) {
               edges {
                 node {
                   availableForSale
@@ -67,7 +69,9 @@ const filterCollection = `
                   }
                   id
                   image {
-                    transformedSrc(maxWidth: 400, maxHeight: 600)
+                    src
+                    altText
+                    transformedSrc(maxWidth: 500, maxHeight: 600)
                     width
                     height
                   }
@@ -103,8 +107,11 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
          images(first: 20) {
            edges {
              node {
-               originalSrc
+               src
                altText
+               transformedSrc(maxWidth: 500, maxHeight: 600)
+               width
+               height
              }
            }
          }
@@ -135,8 +142,11 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
                }
                title
                image {
-                 originalSrc
+                 src
                  altText
+                 transformedSrc(maxWidth: 500, maxHeight: 600)
+                 width
+                 height
                }           
              } 
            }

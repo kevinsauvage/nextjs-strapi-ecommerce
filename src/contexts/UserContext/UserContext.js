@@ -31,13 +31,12 @@ export function UserProvider({ children }) {
   const [userAccessToken, setUserAccessToken] = useState(null);
 
   const router = useRouter();
-  const { locale } = router;
 
   const toggleLoading = useCallback((loading) => {
     dispatch({ type: actions.CHANGE_LOADING, payload: loading });
   }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     toggleLoading(true);
 
     const res = await nextApiCall.auth.logout();
@@ -51,132 +50,152 @@ export function UserProvider({ children }) {
     } else {
       toast.error('Something went wrong, please try again');
     }
-  };
+  }, [router, setToken, toggleLoading]);
 
-  const getUserInfo = async (accessToken) => {
-    const response = await getUser(accessToken, locale);
+  const getUserInfo = useCallback(async (accessToken) => {
+    const response = await getUser(accessToken);
     if (response?.customer) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }
-  };
+  }, []);
 
-  const handleToken = async (customerAccessToken) => {
-    // Send token to server to store it inside cookies
-    const res2 = await nextApiCall.auth.login(customerAccessToken);
+  const handleToken = useCallback(
+    async (customerAccessToken) => {
+      // Send token to server to store it inside cookies
+      const res2 = await nextApiCall.auth.login(customerAccessToken);
 
-    // Save token to local storage
-    setToken({
-      ...customerAccessToken,
-      expire: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
-    });
+      // Save token to local storage
+      setToken({
+        ...customerAccessToken,
+        expire: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
+      });
 
-    setUserAccessToken(customerAccessToken?.accessToken);
+      setUserAccessToken(customerAccessToken?.accessToken);
 
-    toggleLoading(false);
+      toggleLoading(false);
 
-    if (res2?.ok) return true;
-    return false;
-  };
+      if (res2?.ok) return true;
+      return false;
+    },
+    [setToken, toggleLoading]
+  );
 
-  const handleRefreshToken = async (accessToken) => {
-    const response = await refreshToken(accessToken);
-    if (response?.refresh) handleToken(response.refresh);
-  };
+  const handleRefreshToken = useCallback(
+    async (accessToken) => {
+      const response = await refreshToken(accessToken);
+      if (response?.refresh) handleToken(response.refresh);
+    },
+    [handleToken]
+  );
 
-  const login = async (email, password) => {
-    if (!email || !password) {
-      return toast.error('Fill in missing required fields');
-    }
-    toggleLoading(true);
-
-    const data = await loginCustomer(email, password, router.locale);
-    const { customerAccessTokenCreate } = data;
-    const customerAccessToken = customerAccessTokenCreate?.customerAccessToken;
-    const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
-
-    if (customerAccessToken?.accessToken) {
-      getUserInfo(customerAccessToken.accessToken); // Fetch user information after successful login
-
-      const res = await handleToken(customerAccessToken); // Set cookie token
-      if (res) {
-        toast.success('Your login was successful');
-        router.push(routes.base.profile);
+  const login = useCallback(
+    async (email, password) => {
+      if (!email || !password) {
+        return toast.error('Fill in missing required fields');
       }
-    }
+      toggleLoading(true);
 
-    if (customerUserErrors && customerUserErrors?.length > 0) {
+      const data = await loginCustomer(email, password, router.locale);
+      const { customerAccessTokenCreate } = data;
+      const customerAccessToken =
+        customerAccessTokenCreate?.customerAccessToken;
+      const customerUserErrors = customerAccessTokenCreate?.customerUserErrors;
+
+      if (customerAccessToken?.accessToken) {
+        getUserInfo(customerAccessToken.accessToken); // Fetch user information after successful login
+
+        const res = await handleToken(customerAccessToken); // Set cookie token
+        if (res) {
+          toast.success('Your login was successful');
+          router.push(routes.base.profile);
+        }
+      }
+
+      if (customerUserErrors && customerUserErrors?.length > 0) {
+        toggleLoading(false);
+        return customerUserErrors.forEach((err) => toast.error(err.message));
+      }
+
+      return false;
+    },
+    [getUserInfo, handleToken, router, toggleLoading]
+  );
+
+  const register = useCallback(
+    async (email, password) => {
+      if (!email || !password) {
+        return toast.error('Fill in missing required fields');
+      }
+
+      toggleLoading(true);
+
+      const data = await registerCustomer(email, password);
+      const { customerCreate } = data;
+
+      if (customerCreate && customerCreate.userErrors.length > 0) {
+        toggleLoading(false);
+        return customerCreate.userErrors.forEach((err) =>
+          toast.error(err.message)
+        );
+      }
+
+      if (customerCreate && customerCreate.customer)
+        return login(email, password);
+
+      return false;
+    },
+    [login, toggleLoading]
+  );
+
+  const resetPasswordEmail = useCallback(
+    async (email) => {
+      if (!email) {
+        return toast.error('Fill in missing required fields');
+      }
+
+      toggleLoading(true);
+      const data = await sendRecoverEmail(email);
+      const customerRecover = data?.customerRecover;
+      const customerErrors = customerRecover?.customerUserErrors;
       toggleLoading(false);
-      return customerUserErrors.forEach((err) => toast.error(err.message));
-    }
 
-    return false;
-  };
+      if (customerErrors && customerErrors.length > 0) {
+        return customerErrors.forEach((err) => toast.error(err.message));
+      }
 
-  const register = async (email, password) => {
-    if (!email || !password) {
-      return toast.error('Fill in missing required fields');
-    }
+      return toast.success('Check your emails');
+    },
+    [toggleLoading]
+  );
 
-    toggleLoading(true);
+  const resetPassword = useCallback(
+    async (password, url) => {
+      if (!password || !url) {
+        return toast.error('Fill in missing required fields');
+      }
+      toggleLoading(true);
 
-    const data = await registerCustomer(email, password, router.locale);
-    const { customerCreate } = data;
+      const data = await resetCustomerPassword(password, url);
+      const { customerResetByUrl } = data;
+      const customerUserErrors = customerResetByUrl?.customerUserErrors;
+      const customerAccessToken = customerResetByUrl?.customerAccessToken;
 
-    if (customerCreate && customerCreate.userErrors.length > 0) {
-      toggleLoading(false);
-      return customerCreate.userErrors.forEach((err) =>
-        toast.error(err.message)
-      );
-    }
+      if (customerUserErrors && customerUserErrors.length > 0) {
+        toggleLoading(false);
+        return customerUserErrors.forEach((err) => toast.error(err.message));
+      }
+      if (customerAccessToken && customerAccessToken.accessToken) {
+        const res = handleToken(customerAccessToken);
+        if (res) router.push(routes.base.profile);
+      }
 
-    if (customerCreate && customerCreate.customer)
-      return login(email, password);
-
-    return false;
-  };
-
-  const resetPasswordEmail = async (email) => {
-    if (!email) {
-      return toast.error('Fill in missing required fields');
-    }
-
-    toggleLoading(true);
-    const data = await sendRecoverEmail(email, router.locale);
-    const customerRecover = data?.customerRecover;
-    const customerErrors = customerRecover?.customerUserErrors;
-    toggleLoading(false);
-
-    if (customerErrors && customerErrors.length > 0) {
-      return customerErrors.forEach((err) => toast.error(err.message));
-    }
-
-    return toast.success('Check your emails');
-  };
-
-  const resetPassword = async (password, url) => {
-    if (!password || !url) {
-      return toast.error('Fill in missing required fields');
-    }
-    toggleLoading(true);
-
-    const data = await resetCustomerPassword(password, url, router.locale);
-    const { customerResetByUrl } = data;
-    const customerUserErrors = customerResetByUrl?.customerUserErrors;
-    const customerAccessToken = customerResetByUrl?.customerAccessToken;
-
-    if (customerUserErrors && customerUserErrors.length > 0) {
-      toggleLoading(false);
-      return customerUserErrors.forEach((err) => toast.error(err.message));
-    }
-    if (customerAccessToken && customerAccessToken.accessToken) {
-      const res = handleToken(customerAccessToken);
-      if (res) router.push(routes.base.profile);
-    }
-
-    return toast.success('Password has been updated successfully');
-  };
+      return toast.success('Password has been updated successfully');
+    },
+    [handleToken, router, toggleLoading]
+  );
 
   useEffect(() => {
+    console.log('runnn');
     if (token?.accessToken) {
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
@@ -195,6 +214,7 @@ export function UserProvider({ children }) {
         expireInMilliseconds < todayInMilliseconds - 60 * 60 ||
         Number(token.expire) < todayInMilliseconds - 60 * 60
       ) {
+        console.log('refresh token');
         handleRefreshToken(token.accessToken);
         return;
       }
@@ -203,12 +223,21 @@ export function UserProvider({ children }) {
 
       // If no user is saved, fetch user information
       if (!states?.user?.id) {
+        console.log('get user information');
         getUserInfo(token.accessToken);
       }
-    } else {
+    } else if (states?.user?.id) {
+      console.log('remove user');
       dispatch({ type: actions.REMOVE_USER });
     }
-  }, []);
+  }, [
+    getUserInfo,
+    handleRefreshToken,
+    logout,
+    states?.user?.id,
+    token,
+    userAccessToken,
+  ]);
 
   const values = useMemo(
     () => ({
@@ -225,7 +254,16 @@ export function UserProvider({ children }) {
       resetPassword,
       logout,
     }),
-    [states]
+    [
+      states,
+      login,
+      register,
+      resetPasswordEmail,
+      toggleLoading,
+      resetPassword,
+      logout,
+      userAccessToken,
+    ]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

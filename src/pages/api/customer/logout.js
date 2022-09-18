@@ -1,6 +1,6 @@
 import { destroyCookie } from 'nookies';
 
-export default async (req, res) => {
+const logout = async (req, res) => {
   destroyCookie({ res }, 'shopify_token', {
     path: '/',
   });
@@ -11,3 +11,5 @@ export default async (req, res) => {
 
   return res.status(200).send({ ok: true });
 };
+
+export default logout;

@@ -152,7 +152,7 @@ function Autocomplete(props) {
 
       search.destroy();
     };
-  }, [props]);
+  }, [props, addToCart]);
 
   return <div className={styles.autocomplete} ref={containerRef} />;
 }

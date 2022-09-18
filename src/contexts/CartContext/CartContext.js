@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   createContext,
   useCallback,
@@ -21,14 +20,11 @@ export function CartProvider({ children }) {
   const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
   const { userAccessToken } = useContext(UserContext);
 
-  const router = useRouter();
-
   useEffect(() => {
     const config = {
       storefrontAccessToken:
         process.env.NEXT_PUBLIC_SHOPIFY_STORE_FRONT_ACCESS_TOKEN,
       domain: process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN,
-      language: router.locale,
     };
 
     const client = Client.buildClient(config);
@@ -44,11 +40,11 @@ export function CartProvider({ children }) {
         setCheckoutId(res.id);
       });
     }
-  }, [states.client]);
+  }, [states.client, setCheckoutId]);
 
   useEffect(() => {
     if (!checkoutId) createCheckout();
-  }, [createCheckout]);
+  }, [createCheckout, checkoutId]);
 
   const getCheckoutById = useCallback(async () => {
     if (states.client) {
@@ -60,11 +56,11 @@ export function CartProvider({ children }) {
           dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
       });
     }
-  }, [states.client]);
+  }, [states.client, checkoutId]);
 
   useEffect(() => {
     if (checkoutId && !states.checkout?.id) getCheckoutById();
-  }, [states.client]);
+  }, [states.client, checkoutId, getCheckoutById, states.checkout.id]);
 
   useEffect(() => {
     if (userAccessToken && checkoutId) {
@@ -95,7 +91,7 @@ export function CartProvider({ children }) {
         if (res) toast.success('Product correctly added.');
       });
     },
-    [states.client, states.checkout]
+    [states.client, states.checkout, createCheckout]
   );
 
   const removeFromCart = useCallback(
@@ -109,7 +105,7 @@ export function CartProvider({ children }) {
         });
       });
     },
-    [states.client, states.checkout]
+    [states.client, states.checkout, toggleLoading]
   );
 
   const handleQuantityChange = useCallback(
@@ -126,7 +122,7 @@ export function CartProvider({ children }) {
           });
         });
     },
-    [states.client, states.checkout]
+    [states.client, states.checkout, toggleLoading]
   );
 
   const values = useMemo(
@@ -141,7 +137,7 @@ export function CartProvider({ children }) {
       handleQuantityChange,
       getCheckoutById,
     }),
-    [states]
+    [states, addToCart, removeFromCart, handleQuantityChange, getCheckoutById]
   );
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
