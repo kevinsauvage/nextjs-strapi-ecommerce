@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Container from '@/components/Container/Container';
 import UserButtons from '@/components/UserButtons/UserButtons';
 import styles from './Header.module.scss';
+import Navbar from '../Navbar/Navbar';
 
 function Header() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -26,7 +27,7 @@ function Header() {
     <header className={`${styles.header} ${isActive ? styles.active : ''}`}>
       <Container>
         <div className={styles.inner}>
-          <div>logo</div>
+          <Navbar />
           <Link href="/">
             <a className={styles.logo}>
               <p>NAMEE</p>

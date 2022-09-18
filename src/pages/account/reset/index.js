@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Form from '@/components/Form/Form';
@@ -12,7 +11,6 @@ import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
   const { resetPasswordEmail, loading } = useContext(UserContext);
-  const t = useTranslations('page.account.reset.email');
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
@@ -20,11 +18,11 @@ function ResetPassword() {
   });
 
   return (
-    <Page title={t('title')} loading={loading}>
+    <Page title="Password recovery" loading={loading}>
       <div className={styles.ResetPassword}>
         <Form
-          title={t('form.title')}
-          subtitle={t('form.subtitle')}
+          title="RESET YOUR PASSWORD"
+          subtitle="Enter your email address below to receive an email to reset your password"
           onSubmit={handleSubmit}
         >
           <Input
@@ -52,11 +50,3 @@ function ResetPassword() {
 }
 
 export default ResetPassword;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: (await import(`../../../locales/${locale}.json`)).default,
-    },
-  };
-}

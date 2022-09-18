@@ -1,12 +1,9 @@
 import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 import routes from '@/data/routes';
 import Container from '@/components/Container/Container';
 import styles from './Footer.module.scss';
 
 function Footer({ collections }) {
-  const t = useTranslations('link');
-
   const getCollections = () =>
     collections?.map((category) => ({
       name: category.title,
@@ -24,9 +21,9 @@ function Footer({ collections }) {
       title: 'Information',
       id: 2,
       items: [
-        { href: routes.base.contact, name: t('Contact'), id: 1 },
-        { href: routes.base.privacy, name: t('Privacy'), id: 2 },
-        { href: routes.base.terms, name: t('Terms'), id: 3 },
+        { href: routes.base.contact, name: 'Contact', id: 1 },
+        { href: routes.base.privacy, name: 'Privacy', id: 2 },
+        { href: routes.base.terms, name: 'Terms', id: 3 },
       ],
     },
     {

@@ -1,47 +1,29 @@
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
 import ProductsList from '@/components/ProductList/ProductsList';
+import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import {
   filterCollection,
   getCollectionFilters,
+  getProductTags,
 } from '@/lib/shopify/collections';
 
-const getFiltersFromParams = (filters, actualFilters) => {
-  const data = [
-    ...filters.reduce((result, filter) => {
-      const foundedFilter = actualFilters[filter.id];
-
-      if (foundedFilter) {
-        return [
-          ...result,
-          ...filter.values.reduce((acc, el) => {
-            if (
-              Array.isArray(foundedFilter)
-                ? foundedFilter.includes(el.label)
-                : [foundedFilter].includes(el.label)
-            ) {
-              const parsed = JSON.parse(el.input);
-
-              return [...acc, parsed];
-            }
-            return acc;
-          }, []),
-        ];
-      }
-      return result;
-    }, []),
-  ];
-  return data;
-};
-
-function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
-  getFiltersFromParams(filters, actualFilters);
+function CategoryPage({
+  title,
+  products,
+  filters,
+  pageInfo,
+  actualFilters,
+  tags,
+}) {
+  console.log(tags);
+  console.log(products);
   return (
     <Page title={`${title}`}>
       <Container>
         <ProductsList
           products={products}
-          hasNextPage={pageInfo.hasNextPage}
+          hasNextPage={pageInfo?.hasNextPage}
           filters={filters}
           pageInfo={pageInfo}
           actualFilters={actualFilters}
@@ -60,7 +42,16 @@ export async function getServerSideProps({ params, query }) {
 
   const filtersFetchArray = getFiltersFromParams(availableFilters, query);
 
-  const data = await filterCollection(params.slug, page, filtersFetchArray);
+  const sortKey = query.sort_key ? query.sort_key : 'RELEVANCE';
+
+  const data = await filterCollection(
+    params.slug,
+    page,
+    filtersFetchArray,
+    sortKey
+  );
+
+  const tags = await getProductTags();
 
   const products = data?.products;
   const pageInfo = data?.pageInfo;
@@ -72,7 +63,7 @@ export async function getServerSideProps({ params, query }) {
       products,
       pageInfo,
       actualFilters: query,
-      filtersFetchArray,
+      tags,
     },
   };
 }

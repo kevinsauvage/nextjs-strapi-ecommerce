@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useContext } from 'react';
-import { useTranslations } from 'next-intl';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
@@ -13,19 +12,18 @@ import styles from './Login.module.scss';
 
 function LoginPage() {
   const { login, loading } = useContext(UserContext);
-  const t = useTranslations('page.account.auth.login');
 
   const { handleInputChange, handleSubmit } = useForm((formData) =>
     login(formData.email, formData.password)
   );
 
   return (
-    <Page title={t('title')} loading={loading}>
+    <Page title="User Login" loading={loading}>
       <Container>
         <div className={styles.login}>
           <Form
-            title={t('form.title')}
-            subtitle={t('form.subtitle')}
+            title="LOGIN TO YOUR ACCOUNT"
+            subtitle="Please complete the form below to login to your account"
             onSubmit={(e) => handleSubmit(e)}
           >
             <Input
@@ -63,11 +61,3 @@ function LoginPage() {
 }
 
 export default LoginPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: (await import(`../../../../locales/${locale}.json`)).default,
-    },
-  };
-}

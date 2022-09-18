@@ -4,12 +4,9 @@ import Form from '@/components/Form/Form';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import useForm from '@/hooks/useForm';
-import { useTranslations } from 'next-intl';
 import styles from './address.module.scss';
 
 export default function Address() {
-  const t = useTranslations('page.shipping');
-
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.password) return null;
     return null;
@@ -17,7 +14,7 @@ export default function Address() {
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
   return (
-    <Page title={t('title')}>
+    <Page title="Address">
       <Container>
         <div className={styles.login}>
           <Form
@@ -99,9 +96,3 @@ export default function Address() {
     </Page>
   );
 }
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    messages: (await import(`../../locales/${locale}.json`)).default,
-  },
-});

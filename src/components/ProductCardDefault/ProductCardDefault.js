@@ -4,6 +4,7 @@ import { useState } from 'react';
 import limitStrLength from '@/utils/limitStringLength';
 import Modal from '@/components/Modal/Modal';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
+import routes from '@/data/routes';
 import styles from './ProductCardDefault.module.scss';
 
 export default function ProductCardDefault({ product }) {
@@ -22,15 +23,15 @@ export default function ProductCardDefault({ product }) {
       )}
 
       <li className={`${styles.productCardDefault}`}>
-        <Link href={`/shop/${handle}`}>
+        <Link href={`${routes.base.product}/${handle}`}>
           <a>
             <div className={styles.image}>
               <Image
-                src={images?.transformedSrc}
+                src={images?.[0].transformedSrc}
                 layout="responsive"
                 objectFit="cover"
-                width="100%"
-                height="100%"
+                width="300"
+                height="400"
               />
               <div
                 className={styles.quickView}

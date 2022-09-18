@@ -3,7 +3,6 @@ const routes = {
     home: '/',
     about: '/about',
     contact: '/contact',
-    shop: '/shop',
     terms: '/terms',
     privacy: '/privacy',
     login: '/account/auth/login',
@@ -11,11 +10,7 @@ const routes = {
     profile: '/account',
     resetPassword: '/account/reset',
     collection: '/collection',
-  },
-
-  collections: {
-    dog: '/collection/dog',
-    cat: '/collection/cat',
+    product: '/collection/product',
   },
 };
 

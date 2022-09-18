@@ -6,7 +6,6 @@ import SearchBar from '@/components/Search/SearchBar';
 import Cart from '@/components/Cart/Cart';
 import User from '@/components/User/User';
 import styles from './Layout.module.scss';
-import TopHeader from '../topHeader/TopHeader';
 import CategoryButtons from '../CategoryButtons/CategoryButtons';
 
 function Layout({ children, collections }) {
@@ -16,7 +15,6 @@ function Layout({ children, collections }) {
       <Cart />
       <User />
       <div className={styles.container}>
-        <TopHeader />
         <Header />
         <CategoryButtons collections={collections} />
         <div className={styles.children}>{children}</div>

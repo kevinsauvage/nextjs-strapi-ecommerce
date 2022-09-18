@@ -8,12 +8,9 @@ import useForm from '@/hooks/useForm';
 import Form from '@/components/Form/Form';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
-import { useTranslations } from 'next-intl';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
-  const t = useTranslations('page.account.auth.register');
-
   const { register, loading } = useContext(UserContext);
 
   const onSubmit = async (formData) => {
@@ -24,13 +21,13 @@ function RegisterPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title={t('title')} loading={loading}>
+    <Page title="Register your account" loading={loading}>
       <Container>
         <div className={styles.register}>
           <Form
             onSubmit={handleSubmit}
-            title={t('form.title')}
-            subtitle={t('form.subtitle')}
+            title="CREATE ACCOUNT"
+            subtitle="Please complete the form below to create an account"
           >
             <Input
               id="email"
@@ -67,11 +64,3 @@ function RegisterPage() {
 }
 
 export default RegisterPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: (await import(`../../../../locales/${locale}.json`)).default,
-    },
-  };
-}

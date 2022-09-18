@@ -1,28 +1,25 @@
 import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
 import styles from './Breadcrumbs.module.scss';
 import Crumbs from './Crumbs';
 
 export default function Breadcrumbs() {
   const router = useRouter();
-  const t = useTranslations('link');
 
   const routes = [
-    { Home: 'Home' },
-    { Shop: 'Shop' },
-    { About: 'About' },
-    { Contact: 'Contact' },
-    { Terms: 'Terms' },
-    { Privacy: 'Privacy' },
-    { Profile: 'Profile' },
-    { collections: 'Collections' },
+    { name: 'Home' },
+    { name: 'Shop' },
+    { name: 'About' },
+    { name: 'Contact' },
+    { name: 'Terms' },
+    { name: 'Privacy' },
+    { name: 'Profile' },
+    { name: 'Collections' },
   ];
 
   const generateText = (text) => {
     let title = '';
     routes.forEach((route) => {
-      if (text.toLowerCase() === Object.keys(route).toString().toLowerCase())
-        title = t(Object.keys(route).toString());
+      if (text.toLowerCase() === route.name.toLowerCase()) title = route.name;
     });
     return title || text;
   };
@@ -40,7 +37,7 @@ export default function Breadcrumbs() {
       return { href, title: generateText(title) };
     });
 
-    return [{ href: '/', title: t('Home') }, ...crumblist];
+    return [{ href: '/', title: 'Home' }, ...crumblist];
   }
 
   // Call the function to generate the breadcrumbs list

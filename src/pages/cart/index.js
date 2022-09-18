@@ -6,15 +6,13 @@ import routes from '@/data/routes';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
 import Container from '@/components/Container/Container';
-import { useTranslations } from 'next-intl';
 import styles from './Cart.module.scss';
 
 function CartPage() {
   const { cart, isCheckoutLoading } = useContext(CartContext);
-  const t = useTranslations('page.cart');
 
   return (
-    <Page title={t('title')} loading={isCheckoutLoading}>
+    <Page title="Your Cart" loading={isCheckoutLoading}>
       <Container>
         <div className={styles.cart}>
           {cart &&
@@ -74,11 +72,3 @@ function CartPage() {
 }
 
 export default CartPage;
-
-export async function getStaticProps({ locale }) {
-  return {
-    props: {
-      messages: (await import(`../../locales/${locale}.json`)).default,
-    },
-  };
-}

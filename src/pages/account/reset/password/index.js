@@ -6,13 +6,10 @@ import Page from '@/components/Page/Page';
 import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
-import { useTranslations } from 'next-intl';
 import styles from './password.module.scss';
 
 function Password({ resetUrl }) {
   const { resetPassword, loading } = useContext(UserContext);
-
-  const t = useTranslations('page.account.reset.password');
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
@@ -20,11 +17,11 @@ function Password({ resetUrl }) {
   });
 
   return (
-    <Page title={t('title')} loading={loading}>
+    <Page title="Password recovery" loading={loading}>
       <div className={styles.password}>
         <Form
-          title={t('form.title')}
-          subtitle={t('form.subtitle')}
+          title="ENTER YOUR NEW PASSWORD"
+          subtitle="Fill the form below to update your password"
           onSubmit={handleSubmit}
         >
           <Input
@@ -49,8 +46,7 @@ function Password({ resetUrl }) {
 
 export default Password;
 
-export async function getServerSideProps({ query, res, locale }) {
-  console.log(query);
+export async function getServerSideProps({ query, res }) {
   if (!query.reset_url) {
     res.setHeader('location', routes.base.login);
     res.statusCode = 302;
@@ -61,7 +57,6 @@ export async function getServerSideProps({ query, res, locale }) {
   return {
     props: {
       resetUrl: query.reset_url,
-      messages: (await import(`../../../../locales/${locale}.json`)).default,
     },
   };
 }

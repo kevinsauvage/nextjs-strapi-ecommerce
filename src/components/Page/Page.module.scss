@@ -4,7 +4,7 @@
 }
 
 .banner {
-  height: 240px;
+  height: 200px;
   width: 100%;
   background-color: #838383;
   display: flex;
@@ -13,11 +13,10 @@
   flex-direction: column;
   gap: 30px;
   background-image: linear-gradient(
-      90deg,
-      rgba($primary, 0.75) 0%,
-      rgba($primary, 0.75) 100%
-    ),
-    url('../../assets/banner/bones.jpg');
+    90deg,
+    rgba($primary, 0.9) 0%,
+    rgba($primary, 0.9) 100%
+  );
   background-size: 100%;
   background-position: center center;
   object-fit: contain;

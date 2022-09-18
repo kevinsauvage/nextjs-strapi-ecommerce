@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl';
 import Button from '@/components/Button/Button';
 import Container from '@/components/Container/Container';
 import Input from '@/components/Input/Input';
@@ -8,8 +7,6 @@ import Form from '@/components/Form/Form';
 import styles from './Contact.module.scss';
 
 function ContactPage() {
-  const t = useTranslations('page.contact');
-
   const onSubmit = async (formData) => {
     if (!formData.email || !formData.name || !formData.message) return null;
     return true;
@@ -18,15 +15,15 @@ function ContactPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title={t('title')}>
+    <Page title="Contact Us">
       <Container>
         <div className={styles.contact}>
           <Form
             className={styles.form}
             onSubmit={handleSubmit}
             action="submit"
-            title={t('form.title')}
-            subtitle={t('form.subtitle')}
+            title="GET IN TOUCH WITH US"
+            subtitle="Please complete the form below, we will get back to you shortly."
           >
             <Input
               id="email"
@@ -62,9 +59,3 @@ function ContactPage() {
 }
 
 export default ContactPage;
-
-export const getStaticProps = async ({ locale }) => ({
-  props: {
-    messages: (await import(`../../locales/${locale}.json`)).default,
-  },
-});

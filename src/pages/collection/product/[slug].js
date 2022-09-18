@@ -3,12 +3,15 @@ import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
 import { useRouter } from 'next/router';
+import { getProductRecommendation } from '@/lib/shopify/products';
 import styles from './slug.module.scss';
 
-function ProductPage({ product }) {
+function ProductPage({ product, recommendations }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
+
+  console.log(recommendations);
 
   return (
     <Page title={title} description={description}>
@@ -23,14 +26,17 @@ function ProductPage({ product }) {
 
 export default ProductPage;
 
-export async function getStaticProps({ params, locale }) {
-  const data = await getShopifyClient(locale).product.fetchByHandle(
-    params.slug
-  );
+export async function getStaticProps({ params }) {
+  const data = await getShopifyClient().product.fetchByHandle(params.slug);
+
+  const product = parseShopifyResponse(data);
+
+  const recommendations = await getProductRecommendation(product.id);
+
   return {
     props: {
-      product: parseShopifyResponse(data),
-      messages: (await import(`../../locales/${locale}.json`)).default,
+      product,
+      recommendations,
     },
     revalidate: 10, // In seconds
   };

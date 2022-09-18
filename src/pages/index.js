@@ -26,7 +26,6 @@ export async function getServerSideProps({ locale }) {
   return {
     props: {
       lastOrderedProduct,
-      messages: (await import(`../locales/${locale}.json`)).default,
     },
   };
 }

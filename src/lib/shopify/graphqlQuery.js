@@ -18,10 +18,10 @@ const getCollectionFilters = `query Facets($handle: String!) {
   }`;
 
 const filterCollection = `
-  query Search($handle: String!, $first: Int!, $filters: [ProductFilter!]) {
+  query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys) {
     collection(handle: $handle) {
       handle
-      products(first: $first, filters: $filters) {
+      products(first: $first, filters: $filters, sortKey: $sort) {
         pageInfo {
           hasNextPage
           endCursor
@@ -36,7 +36,7 @@ const filterCollection = `
               edges {
                 node{
                   altText
-                  transformedSrc(maxWidth: 500, maxHeight: 500, crop: CENTER)
+                  transformedSrc(maxWidth: 500, maxHeight: 500)
                   width
                   height
                 }
@@ -67,7 +67,7 @@ const filterCollection = `
                   }
                   id
                   image {
-                    transformedSrc(maxWidth: 500, maxHeight: 400, crop: CENTER)
+                    transformedSrc(maxWidth: 400, maxHeight: 600)
                     width
                     height
                   }
@@ -87,6 +87,68 @@ const filterCollection = `
   }
   `;
 
-const queries = { getCollectionFilters, filterCollection };
+const productTags = `query {
+    productTags(first: 50) {
+        edges {
+            node 
+          }
+    }
+  }`;
+
+const queryProductRecommendations = `query productRecommendations ($productId: ID!){
+  productRecommendations (productId: $productId) {
+   description
+         handle
+         id
+         images(first: 20) {
+           edges {
+             node {
+               originalSrc
+               altText
+             }
+           }
+         }
+         priceRange {
+           maxVariantPrice {
+             amount
+           }
+           minVariantPrice {
+             amount
+           }
+         }
+         productType
+         tags
+         title
+         variants(first: 20) {
+           edges {
+             node {
+               sku
+               availableForSale
+               id
+               compareAtPriceV2 {
+                 amount
+                 currencyCode
+               }
+               priceV2 {
+                 amount
+                 currencyCode
+               }
+               title
+               image {
+                 originalSrc
+                 altText
+               }           
+             } 
+           }
+         }     
+       }
+ }`;
+
+const queries = {
+  getCollectionFilters,
+  filterCollection,
+  productTags,
+  queryProductRecommendations,
+};
 
 export default queries;
