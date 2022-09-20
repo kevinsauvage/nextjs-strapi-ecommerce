@@ -44,7 +44,6 @@ export function GlobalProvider({ children }) {
       },
 
       setSelectedModalProduct: (product) => {
-        console.log(product);
         dispatch({ type: actions.MODAL_SELECTED_PRODUCT, payload: product });
       },
 

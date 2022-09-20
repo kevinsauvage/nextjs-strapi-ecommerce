@@ -5,7 +5,6 @@ import Carousel from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 
 function CategoryPage({ collections }) {
-  console.log(collections);
   return (
     <Page title="Collections">
       <div>

@@ -19,8 +19,6 @@ function ProductsList({
   const isBottom = useOnScreen(listInnerRef);
 
   const handlePushQuery = (query, scroll) => {
-    console.log('push query', query);
-    console.log('router query', router.query);
     router.push(
       {
         pathname: router.pathname,
@@ -55,7 +53,6 @@ function ProductsList({
 
     if (!actualValue || unique)
       return handlePushQuery({ ...{ [key]: value }, page: 1 }, true);
-    console.log(actualValue);
 
     const actualValueArray = Array.isArray(actualValue)
       ? actualValue
@@ -63,12 +60,8 @@ function ProductsList({
 
     const isIncluded = actualValueArray.includes(value);
 
-    console.log(isIncluded, 'isIncluded');
-
     // check If key is present in URL
     if (isIncluded) {
-      console.log('remove filter');
-
       const newValueArray = actualValueArray.filter((item) => item !== value);
 
       return handlePushQuery({ page: 1, [key]: newValueArray }, true);

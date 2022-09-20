@@ -195,7 +195,6 @@ export function UserProvider({ children }) {
   );
 
   useEffect(() => {
-    console.log('runnn');
     if (token?.accessToken) {
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
@@ -205,7 +204,6 @@ export function UserProvider({ children }) {
         expireInMilliseconds < todayInMilliseconds ||
         Number(token.expire) < todayInMilliseconds
       ) {
-        console.log('Expired');
         logout();
       }
 
@@ -214,7 +212,6 @@ export function UserProvider({ children }) {
         expireInMilliseconds < todayInMilliseconds - 60 * 60 ||
         Number(token.expire) < todayInMilliseconds - 60 * 60
       ) {
-        console.log('refresh token');
         handleRefreshToken(token.accessToken);
         return;
       }
@@ -223,11 +220,9 @@ export function UserProvider({ children }) {
 
       // If no user is saved, fetch user information
       if (!states?.user?.id) {
-        console.log('get user information');
         getUserInfo(token.accessToken);
       }
     } else if (states?.user?.id) {
-      console.log('remove user');
       dispatch({ type: actions.REMOVE_USER });
     }
   }, [

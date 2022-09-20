@@ -20,7 +20,6 @@ export const UserReducer = (state = initialState, action) => {
     }
 
     case actions.CHANGE_LOADING: {
-      console.log('change loading States', action.payload);
       return { ...state, loading: action.payload };
     }
 

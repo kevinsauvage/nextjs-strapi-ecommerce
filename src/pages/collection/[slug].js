@@ -8,15 +8,7 @@ import {
   getProductTags,
 } from '@/lib/shopify/collections';
 
-function CategoryPage({
-  title,
-  products,
-  filters,
-  pageInfo,
-  actualFilters,
-  tags,
-}) {
-  console.log(tags);
+function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
   return (
     <Page title={`${title}`}>
       <Container>

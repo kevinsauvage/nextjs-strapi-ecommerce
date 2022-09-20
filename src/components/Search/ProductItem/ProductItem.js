@@ -1,5 +1,4 @@
 function ProductItem({ hit, components, addToCart }) {
-  console.log(hit);
   return (
     <a href={`/collection/product/${hit.handle}`} className="aa-ItemLink">
       <div className="aa-ItemContent">

@@ -59,7 +59,6 @@ export const apiCallTest = async (query, variables) => {
     }
   );
   const res = await response.json();
-  console.log(res, 'res apiCallTest', variables);
   if (res && res.data) return res.data;
 
   if (res && res.errors) {

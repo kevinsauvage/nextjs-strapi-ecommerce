@@ -13,8 +13,6 @@ function ProductPage({ product, recommendations = [] }) {
   if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
 
-  console.log(recommendations);
-
   return (
     <Page title={title} description={description}>
       <Container width={270} padding={20}>

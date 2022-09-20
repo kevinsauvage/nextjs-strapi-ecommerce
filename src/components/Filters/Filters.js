@@ -20,10 +20,7 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
         .map((filter) => (
           <div key={filter.label} className={styles.filter}>
             <h6 className={styles.title}>{filter.label}</h6>
-            {console.log(filter)}
             {filter.values.map((value) => (
-              // const input = JSON.parse(value.input);
-              // console.log(input);
               <label
                 key={value.input}
                 htmlFor={value.id}

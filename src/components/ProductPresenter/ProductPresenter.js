@@ -10,7 +10,7 @@ export default function ProductPresenter({ product }) {
   const [selectedVariant, setSelectedVariant] = useState();
 
   useEffect(() => {
-    setSelectedVariant(product?.variants?.[0]);
+    if (product) setSelectedVariant(product?.variants?.[0]);
   }, [product]);
 
   const [quantity, setQuantity] = useState(1);
@@ -23,7 +23,6 @@ export default function ProductPresenter({ product }) {
 
   const handleAddToCart = () => {
     if (quantity > 0) {
-      console.log(selectedVariant);
       addToCart(selectedVariant.id, quantity);
     }
   };

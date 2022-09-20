@@ -34,7 +34,6 @@ export function CartProvider({ children }) {
 
   const createCheckout = useCallback(async () => {
     if (states.client) {
-      console.log('Creating Checkout');
       states.client.checkout.create().then((res) => {
         dispatch({ type: actions.CHECKOUT_FOUND, payload: res });
         setCheckoutId(res.id);
@@ -48,10 +47,7 @@ export function CartProvider({ children }) {
 
   const getCheckoutById = useCallback(async () => {
     if (states.client) {
-      console.log('getCheckoutById');
-
       await states.client.checkout.fetch(checkoutId).then((checkout) => {
-        console.log(checkout, 'checkout fetched');
         if (checkout)
           dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
       });
@@ -64,7 +60,6 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     if (userAccessToken && checkoutId) {
-      console.log('associateCustomerToCheckout');
       associateCustomerToCheckout(checkoutId, userAccessToken);
     }
   }, [userAccessToken, checkoutId]);
@@ -76,7 +71,6 @@ export function CartProvider({ children }) {
 
   const addToCart = useCallback(
     async (variantId, quantity) => {
-      console.log(variantId);
       const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
 
       if (!states?.checkout?.id) await createCheckout();

@@ -13,7 +13,6 @@ import ProductPresenter from '../ProductPresenter/ProductPresenter';
 
 function Layout({ children, collections }) {
   const { modalSelectedProduct, setSelectedModalProduct } = useGlobalContext();
-  console.log(modalSelectedProduct);
   return (
     <>
       <SearchBar />

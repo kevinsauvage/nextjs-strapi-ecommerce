@@ -9,7 +9,6 @@ export const getProductRecommendation = async (productId) => {
   });
   if (res && res?.productRecommendations) {
     const cleaned = cleanProducts(res.productRecommendations);
-    console.log(cleaned);
     return cleaned;
   }
   return [];

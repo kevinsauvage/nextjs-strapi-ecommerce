@@ -36,7 +36,6 @@ function middleware(request) {
         }
       } else if (pathname === '/account') {
         // Cannot access account if not login
-        console.log('cannot access account', pathname);
         return NextResponse.redirect(
           `${origin}/${locale || 'en'}${routes.base.login}`
         );
