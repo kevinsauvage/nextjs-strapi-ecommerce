@@ -154,11 +154,88 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
        }
  }`;
 
+const getCollections = `{
+  collections(first: 5, sortKey: RELEVANCE) {
+    edges {
+      node {
+        id
+        title
+        handle
+        description
+        products(first: 5, sortKey: BEST_SELLING) {
+          edges {
+            node {
+              handle
+              id
+              title
+              availableForSale
+              descriptionHtml
+              images(first: 1) {
+                edges {
+                  node {
+                    src
+                    altText
+                    sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+                    width
+                    height
+                  }
+                }
+              }
+              priceRange {
+                maxVariantPrice {
+                  amount
+                  currencyCode
+                }
+                minVariantPrice {
+                  amount
+                  currencyCode
+                }
+              }
+              productType
+              tags
+              title
+              totalInventory
+              vendor
+              variants(first: 10) {
+                edges {
+                  node {
+                    availableForSale
+                    compareAtPriceV2 {
+                      amount
+                      currencyCode
+                    }
+                    id
+                    image {
+                      src
+                      altText
+                      sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+                      width
+                      height
+                    }
+                    priceV2 {
+                      amount
+                      currencyCode
+                    }
+                    quantityAvailable
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
 const queries = {
   getCollectionFilters,
   filterCollection,
   productTags,
   queryProductRecommendations,
+  getCollections,
 };
 
 export default queries;

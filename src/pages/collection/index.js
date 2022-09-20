@@ -1,12 +1,25 @@
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
+import { getCollections } from '@/lib/shopify/collections';
+import Carousel from '@/components/Carousel/Carousel';
+import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 
-function CategoryPage() {
+function CategoryPage({ collections }) {
+  console.log(collections);
   return (
     <Page title="Collections">
       <div>
-        <Container />
+        <Container>
+          {Array.isArray(collections) &&
+            collections.map((collection) => (
+              <Carousel key={collection.id} title={collection.title}>
+                {Array.isArray(collection.products) &&
+                  collection.products.map((product) => (
+                    <ProductCardDefault key={product.id} product={product} />
+                  ))}
+              </Carousel>
+            ))}
+        </Container>
       </div>
     </Page>
   );
@@ -14,9 +27,8 @@ function CategoryPage() {
 
 export default CategoryPage;
 
-export async function getStaticProps({ locale }) {
-  const data = await getShopifyClient(locale).collection.fetchAll();
-  const collections = parseShopifyResponse(data);
+export async function getStaticProps() {
+  const collections = await getCollections();
 
   return {
     props: {

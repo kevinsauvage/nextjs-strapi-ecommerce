@@ -27,10 +27,12 @@ export const getFiltersFromParams = (filters = [], actualFilters) => {
   return data;
 };
 
-const cleanVariants = (variants) =>
-  variants.map((variant) => ({
+const cleanVariants = (variants = []) => {
+  if (!variants.length) return [];
+  return variants.map((variant) => ({
     ...variant.node,
   }));
+};
 
 const cleanImage = (images) =>
   images.map((image) => ({
@@ -39,19 +41,25 @@ const cleanImage = (images) =>
 
 export const cleanProducts = (prods) => {
   let products = [];
-  if (prods[0].node) {
+  if (prods?.[0]?.node) {
     products = prods.map((product) => ({
       ...product.node,
-      images: cleanImage(product.node.images.edges),
-      variants: cleanVariants(product.node.variants.edges),
+      images: cleanImage(product.node?.images?.edges),
+      variants: cleanVariants(product.node?.variants?.edges),
     }));
   }
-  if (prods[0].id) {
+  if (prods?.[0]?.id) {
     products = prods.map((product) => ({
       ...product,
-      images: cleanImage(product.images.edges),
-      variants: cleanVariants(product.variants.edges),
+      images: cleanImage(product?.images?.edges),
+      variants: cleanVariants(product?.variants?.edges),
     }));
   }
-  return products;
+
+  return products || prods;
 };
+export const cleanCollections = async (collections) =>
+  collections.map((collection) => ({
+    ...collection.node,
+    products: cleanProducts(collection.node.products.edges),
+  }));

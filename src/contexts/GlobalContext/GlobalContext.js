@@ -22,6 +22,7 @@ export function GlobalProvider({ children }) {
       searchOpen: states.searchOpen,
       cartOpen: states.cartOpen,
       userOpen: states.userOpen,
+      modalSelectedProduct: states.modalSelectedProduct,
 
       toggleSearch: () => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -40,6 +41,11 @@ export function GlobalProvider({ children }) {
 
       setCollections: (collections) => {
         dispatch({ type: actions.SET_COLLECTIONS, payload: collections });
+      },
+
+      setSelectedModalProduct: (product) => {
+        console.log(product);
+        dispatch({ type: actions.MODAL_SELECTED_PRODUCT, payload: product });
       },
 
       resetToggle,

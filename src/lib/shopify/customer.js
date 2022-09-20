@@ -120,5 +120,5 @@ export const associateCustomerToCheckout = async (
   }`;
 
   const response = await apiCall(mutation);
-  console.log(response);
+  return response;
 };

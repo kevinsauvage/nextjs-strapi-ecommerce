@@ -1,5 +1,5 @@
 import queries from './graphqlQuery';
-import { cleanProducts } from './helpers';
+import { cleanCollections, cleanProducts } from './helpers';
 
 const { parseShopifyResponse, apiCallTest } = require('.');
 
@@ -38,6 +38,14 @@ export const getProductTags = async () => {
   const res = await apiCallTest(queries.productTags);
   if (res) {
     return res.productTags.edges;
+  }
+  return [];
+};
+
+export const getCollections = async () => {
+  const res = await apiCallTest(queries.getCollections);
+  if (res) {
+    return cleanCollections(res.collections?.edges);
   }
   return [];
 };
