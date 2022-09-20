@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CartContext } from '@/contexts/CartContext/CartContext';
 import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
 import ProductDescription from '@/components/ProductDescription/ProductDescription';
@@ -7,9 +7,12 @@ import styles from './ProductPresenter.module.scss';
 export default function ProductPresenter({ product }) {
   const { addToCart } = useContext(CartContext);
 
-  const [selectedVariant, setSelectedVariant] = useState(
-    product?.variants?.[0]
-  );
+  const [selectedVariant, setSelectedVariant] = useState();
+
+  useEffect(() => {
+    setSelectedVariant(product?.variants?.[0]);
+  }, [product]);
+
   const [quantity, setQuantity] = useState(1);
 
   const handleSelect = (e) => {
