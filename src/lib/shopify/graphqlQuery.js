@@ -230,12 +230,80 @@ const getCollections = `{
 }
 `;
 
+const queryProduct = `query product($handle: String) {
+  product(handle: $handle) {
+    handle
+    id
+    title
+    availableForSale
+    descriptionHtml
+    images(first: 1) {
+      edges {
+        node {
+          src
+          altText
+          sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+          width
+          height
+        }
+      }
+    }
+    priceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    productType
+    tags
+    title
+    options(first: 50) {
+          id
+          name
+          values
+     }
+    totalInventory
+    vendor
+    variants(first: 10) {
+      edges {
+        node {
+          availableForSale
+          compareAtPriceV2 {
+            amount
+            currencyCode
+          }
+          id
+          image {
+            src
+            altText
+            sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+            width
+            height
+          }
+          priceV2 {
+            amount
+            currencyCode
+          }
+          quantityAvailable
+          title
+        }
+      }
+    }
+  }
+}
+`;
+
 const queries = {
   getCollectionFilters,
   filterCollection,
   productTags,
   queryProductRecommendations,
   getCollections,
+  queryProduct,
 };
 
 export default queries;

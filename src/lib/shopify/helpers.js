@@ -27,7 +27,7 @@ export const getFiltersFromParams = (filters = [], actualFilters) => {
   return data;
 };
 
-const cleanVariants = (variants = []) => {
+export const cleanVariants = (variants = []) => {
   if (!variants.length) return [];
   return variants.map((variant) => ({
     ...variant.node,
@@ -58,6 +58,7 @@ export const cleanProducts = (prods) => {
 
   return products || prods;
 };
+
 export const cleanCollections = async (collections) =>
   collections.map((collection) => ({
     ...collection.node,

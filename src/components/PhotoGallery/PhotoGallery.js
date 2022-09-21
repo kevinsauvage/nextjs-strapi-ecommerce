@@ -10,6 +10,7 @@ export default function PhotoGallery({
 }) {
   const [containerWidth, setContainerWidth] = useState(null);
   const [thumbWidth, setThumbWidth] = useState(null);
+  const [index] = useState(0);
 
   const galleryRef = useRef(null);
 
@@ -18,7 +19,7 @@ export default function PhotoGallery({
   }, []);
 
   useEffect(() => {
-    setThumbWidth(containerWidth / thumbsPerSlide - 5);
+    setThumbWidth(containerWidth / thumbsPerSlide - 5 - 15);
   }, [containerWidth, thumbsPerSlide]);
 
   return (
@@ -29,13 +30,17 @@ export default function PhotoGallery({
           alt={selectedVariant}
           width="100%"
           height="100%"
-          layout="fill"
+          layout="responsive"
           objectFit="cover"
         />
       </div>
       {items && items.length > 1 && (
         <div className={styles.gallery}>
-          <ul className={styles.list}>
+          <ul
+            className={styles.list}
+            style={{ transform: `translate3d(-${index * thumbWidth})px` }}
+          >
+            <div className={`${styles.arrowLeft} ${styles.arrow}`}>Left</div>
             {items.map((item) => {
               const { sm } = item.image;
               return (
@@ -68,6 +73,7 @@ export default function PhotoGallery({
                 </div>
               );
             })}
+            <div className={`${styles.arrowRight} ${styles.arrow}`}>rigth</div>
           </ul>
         </div>
       )}

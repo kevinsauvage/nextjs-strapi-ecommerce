@@ -12,7 +12,7 @@ export default function ProductDescription({
   quantity,
   handleChangeInput,
 }) {
-  const { title, availableForSale, descriptionHtml } = product;
+  const { title, availableForSale, descriptionHtml, variants, tags } = product;
 
   return (
     <div className={styles.ProductDescription}>
@@ -28,60 +28,57 @@ export default function ProductDescription({
         dangerouslySetInnerHTML={{ __html: descriptionHtml }}
       />
 
-      <select onChange={handleSelect} className={styles.select}>
-        {product.variants.map((variant) => (
-          <option value={variant.id} key={variant.id}>
-            {variant.title}
-          </option>
-        ))}
-      </select>
+      {tags && Array.isArray(tags) && tags.length && (
+        <div className={styles.tags}>
+          {tags.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
 
-      {availableForSale && (
-        <div className={styles.row}>
-          <div className={styles.quantityContainer}>
-            <button
-              type="button"
-              onClick={addOne}
-              className={styles.btnQuantity}
-            >
-              <VscAdd />
-            </button>
+      {variants && Array.isArray(variants) && variants.length && (
+        <select onChange={handleSelect} className={styles.select}>
+          {variants.map((variant) => (
+            <option value={variant.id} key={variant.id}>
+              {variant.title}
+            </option>
+          ))}
+        </select>
+      )}
 
-            <input
-              type="number"
-              size="4"
-              value={quantity}
-              className={styles.input}
-              onChange={handleChangeInput}
-            />
+      <div className={styles.row}>
+        <div className={styles.quantityContainer}>
+          <button type="button" onClick={addOne} className={styles.btnQuantity}>
+            <VscAdd />
+          </button>
 
-            <button
-              type="button"
-              onClick={removeOne}
-              className={styles.btnQuantity}
-            >
-              <VscRemove />
-            </button>
-          </div>
-          <Button
-            extraClass={styles.btn}
-            type="button"
-            text="ADD TO CART"
-            tertiary
-            disabled={!availableForSale}
-            onClick={handleAddToCart}
+          <input
+            type="number"
+            size="4"
+            value={quantity}
+            className={styles.input}
+            onChange={handleChangeInput}
           />
-        </div>
-      )}
 
-      {!availableForSale && (
-        <div className="">
-          <div className="" role="alert">
-            <span className="">Coming soon...</span>
-            <span className="">This article is not available yet.</span>
-          </div>
+          <button
+            type="button"
+            onClick={removeOne}
+            className={styles.btnQuantity}
+          >
+            <VscRemove />
+          </button>
         </div>
-      )}
+        <Button
+          extraClass={styles.btn}
+          type="button"
+          text={availableForSale ? 'ADD TO CART' : 'NOT AVAILABLE'}
+          tertiary
+          disabled={!availableForSale}
+          onClick={handleAddToCart}
+        />
+      </div>
     </div>
   );
 }

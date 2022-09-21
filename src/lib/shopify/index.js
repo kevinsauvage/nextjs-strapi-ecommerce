@@ -13,6 +13,14 @@ export const getShopifyClient = () => {
   return Client.buildClient({ ...config });
 };
 
+const config = {
+  storefrontAccessToken:
+    process.env.NEXT_PUBLIC_SHOPIFY_STORE_FRONT_ACCESS_TOKEN,
+  domain: process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN,
+};
+
+const client = Client.buildClient({ ...config });
+
 export const apiCall = async (query) => {
   try {
     const response = await fetch(
@@ -67,3 +75,5 @@ export const apiCallTest = async (query, variables) => {
   }
   return res;
 };
+
+export default client;

@@ -1,7 +1,6 @@
 .ProductDescription {
-  display: flex;
-  flex-direction: column;
-  padding: 30px;
+  max-width: 375px;
+  width: 100%;
 }
 
 .title {
@@ -82,4 +81,19 @@
   svg {
     font-size: 22px;
   }
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.tag {
+  background-color: $primary;
+  color: whitesmoke;
+  font-size: 14px;
+  border-radius: 6px;
+  padding: 6px 8px;
 }

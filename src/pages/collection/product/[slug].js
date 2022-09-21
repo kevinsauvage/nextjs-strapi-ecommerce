@@ -3,15 +3,18 @@ import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
 import { useRouter } from 'next/router';
-import { getProductRecommendation } from '@/lib/shopify/products';
+import { getProductRecommendation, getProduct } from '@/lib/shopify/products';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
+
 import styles from './slug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
   if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
+
+  console.log(product);
 
   return (
     <Page title={title} description={description}>
@@ -33,9 +36,7 @@ function ProductPage({ product, recommendations = [] }) {
 export default ProductPage;
 
 export async function getStaticProps({ params }) {
-  const data = await getShopifyClient().product.fetchByHandle(params.slug);
-
-  const product = parseShopifyResponse(data);
+  const product = await getProduct(params.slug);
 
   const recommendations = await getProductRecommendation(product.id);
 
