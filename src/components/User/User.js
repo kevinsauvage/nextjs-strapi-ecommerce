@@ -40,7 +40,7 @@ export default function User() {
         </div>
       ) : (
         <>
-          <Image src="/logn2.svg" width="300" height="300" />
+          <Image src="/logn2.svg" width="300" height="300" alt="user space" />
           <p className={styles.text}>
             Register to create an account or Login to connect to your account.
           </p>

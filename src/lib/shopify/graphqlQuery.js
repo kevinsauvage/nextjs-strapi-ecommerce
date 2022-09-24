@@ -71,7 +71,8 @@ const filterCollection = `
                   image {
                     src
                     altText
-                    sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+                    sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
+                    blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
                     width
                     height
                   }
@@ -144,7 +145,8 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
                image {
                  src
                  altText
-                 sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+                 sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
+                 blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
                  width
                  height
                }           
@@ -208,7 +210,8 @@ const getCollections = `{
                     image {
                       src
                       altText
-                      sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+                      sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
+                      blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
                       width
                       height
                     }
@@ -280,7 +283,8 @@ const queryProduct = `query product($handle: String) {
           image {
             src
             altText
-            sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+            sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+            blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
             width
             height
           }

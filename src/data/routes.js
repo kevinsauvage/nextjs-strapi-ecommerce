@@ -10,7 +10,7 @@ const routes = {
     profile: '/account',
     resetPassword: '/account/reset',
     collection: '/collection',
-    product: '/collection/product',
+    product: '/product',
   },
 };
 

@@ -18,7 +18,7 @@ function CartPage() {
           {cart &&
           Array.isArray(cart.lineItems) &&
           cart?.lineItems?.length > 0 ? (
-            <div style={{ width: '100%', height: '100%' }}>
+            <div>
               <table className={styles.table}>
                 <thead className={styles.head}>
                   <tr>

@@ -18,7 +18,7 @@ export default function EmptyCart() {
         Something missing? <Link href={routes.base.login}>Sign in </Link>
         to see items you may have added from another computer or device.
       </p>
-      <Image src="/emptyCart.svg" width="200" height="200" />
+      <Image src="/emptyCart.svg" width="200" height="200" alt="Empty cart" />
       <Button
         text="CONTINUE SHOPPING"
         secondary

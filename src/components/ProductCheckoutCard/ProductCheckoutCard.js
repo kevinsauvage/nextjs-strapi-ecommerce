@@ -6,11 +6,12 @@ export default function ProductCheckoutCard({ product }) {
     <div className={styles.card}>
       <div className={styles.image}>
         <Image
-          src={product?.variant.image.src}
+          src={product?.variant?.image?.src}
           layout="fill"
-          width={product?.variant.image.width}
-          height={product?.variant.image.height}
+          width={product?.variant?.image?.width}
+          height={product?.variant?.image?.height}
           objectFit="cover"
+          alt={product?.variant?.image?.alt}
         />
       </div>
       <div className={styles.body}>

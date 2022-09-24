@@ -38,7 +38,7 @@ export default function ProductDescription({
         </div>
       )}
 
-      {variants && Array.isArray(variants) && variants.length && (
+      {variants && Array.isArray(variants) && variants.length > 1 && (
         <select onChange={handleSelect} className={styles.select}>
           {variants.map((variant) => (
             <option value={variant.id} key={variant.id}>
