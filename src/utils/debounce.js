@@ -1,14 +1,13 @@
-const debounce = (callback, wait, immediate) => {
-  let timeout;
-  return (...args) => {
-    const callNow = immediate && !timeout;
-    const next = () => callback(...args);
-    clearTimeout(timeout);
-    timeout = setTimeout(next, wait);
-    if (callNow) {
-      next();
+const debounce = (func, delay) => {
+  let timerId;
+  return () => {
+    if (!timerId) {
+      func();
     }
+    clearTimeout(timerId);
+    timerId = setTimeout(() => {
+      timerId = null;
+    }, delay);
   };
 };
-
 export default debounce;

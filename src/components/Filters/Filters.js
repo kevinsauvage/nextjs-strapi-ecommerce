@@ -1,14 +1,12 @@
 import styles from './Filters.module.scss';
 
 export default function Filters({ filters = [], filtersSelected, onChange }) {
-  const isChecked = (input) => {
-    const key = Object.keys(JSON.parse(input));
-    const actualValues = filtersSelected[key];
-    const normalizedInput = JSON.stringify(JSON.parse(input));
+  const isChecked = (valueId, filterId) => {
+    const actualValues = filtersSelected[filterId];
 
     return Array.isArray(actualValues)
-      ? actualValues.includes(normalizedInput)
-      : [actualValues].includes(normalizedInput);
+      ? actualValues.includes(valueId)
+      : [actualValues].includes(valueId);
   };
 
   const handleChangeInput = (e) => {
@@ -36,10 +34,8 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
                   step="10"
                   name="range"
                   id={value.id}
-                  value={value.input}
-                  onChange={(e) =>
-                    handleChangeInput(JSON.parse(e.target.value))
-                  }
+                  value={value.id}
+                  onChange={() => handleChangeInput(value.id, filter.id)}
                 />
               </label>
             ))}
@@ -63,8 +59,8 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
                       name="filter"
                       id={value.id}
                       value={value.input}
-                      onChange={(e) => onChange(JSON.parse(e.target.value))}
-                      checked={isChecked(value.input)}
+                      onChange={() => onChange(value.id, filter.id)}
+                      checked={isChecked(value.id, filter.id)}
                     />
                     <p className={styles.labelText}>{value.label}</p>
                     <small className={styles.count}>({value.count})</small>

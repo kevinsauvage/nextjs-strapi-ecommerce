@@ -88,7 +88,7 @@ export function CartProvider({ children }) {
         else toast.error('Product not added. Try again later.');
       });
     },
-    [states.client, states.checkout, createCheckout]
+    [states.client, states.checkout, createCheckout, toggleCart]
   );
 
   const removeFromCart = useCallback(

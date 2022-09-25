@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import useOnScreen from '@/hooks/useOnScreen';
 import useRouterFilter from '@/hooks/useRouterFilter';
+import useThrottledEffect from '@/hooks/useThrottledEffect';
 import Filters from '../Filters/Filters';
 import styles from './ProductList.module.scss';
 import Sort from '../Sort/Sort';
@@ -18,41 +19,26 @@ function ProductsList({
   const router = useRouter();
   const listInnerRef = useRef();
   const isBottom = useOnScreen(listInnerRef);
+  const { addParam, pushQuery } = useRouterFilter();
 
-  const { addParam } = useRouterFilter();
-
-  const handlePushQuery = (query, scroll) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: {
-          ...router.query,
-          ...query,
-        },
-      },
-      undefined,
-      {
-        scroll,
+  useThrottledEffect(
+    () => {
+      if (isBottom && hasNextPage) {
+        setLoading(true);
+        const newPage = router.query.page ? Number(router.query.page) + 1 : 2;
+        pushQuery({ ...router.query, page: newPage }, false);
       }
-    );
-  };
-
-  useEffect(() => {
-    if (isBottom && hasNextPage) {
-      const newPage = router.query.page ? Number(router.query.page) + 1 : 2;
-      handlePushQuery({ page: newPage }, false);
-      setLoading(true);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isBottom, handlePushQuery]);
+    },
+    1500,
+    [isBottom, pushQuery]
+  );
 
   useEffect(() => {
     setLoading(false);
   }, [products]);
 
-  const handleChangeFilter = (value) => {
-    const key = Object.keys(value)[0];
-    addParam(key, JSON.stringify(value), true, true);
+  const handleChangeFilter = (valueId, filterId) => {
+    addParam(filterId, valueId, true, true);
   };
 
   const handleSort = (e) => {
@@ -82,7 +68,6 @@ function ProductsList({
         ) : (
           <div className={styles.noResults}>No results</div>
         )}
-
         {!hasNextPage && products.length > 0 && (
           <div className={styles.noResults}>
             <p>No more results</p>
