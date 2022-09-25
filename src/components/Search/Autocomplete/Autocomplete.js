@@ -144,7 +144,7 @@ function Autocomplete(props) {
       ...props,
     });
 
-    document.querySelector('.aa-Input').focus();
+    document.querySelector('.aa-Input')?.focus();
     document.querySelector('body').style.overflow = 'hidden';
 
     return () => {

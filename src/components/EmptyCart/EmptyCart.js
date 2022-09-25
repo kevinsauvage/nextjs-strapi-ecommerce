@@ -25,7 +25,7 @@ export default function EmptyCart() {
         extraClass={styles.btn}
         onClick={() => {
           resetToggle();
-          router.push(routes.base.shop);
+          router.push(routes.base.collection);
         }}
       />
     </div>

@@ -53,7 +53,9 @@ export function UserProvider({ children }) {
   }, [router, setToken, toggleLoading]);
 
   const getUserInfo = useCallback(async (accessToken) => {
+    console.log('Get user info');
     const response = await getUser(accessToken);
+    console.log(response);
     if (response?.customer) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });
     }
@@ -93,6 +95,7 @@ export function UserProvider({ children }) {
       if (!email || !password) {
         return toast.error('Fill in missing required fields');
       }
+      console.log('login');
       toggleLoading(true);
 
       const data = await loginCustomer(email, password, router.locale);
@@ -127,16 +130,18 @@ export function UserProvider({ children }) {
         return toast.error('Fill in missing required fields');
       }
 
+      console.log('register');
       toggleLoading(true);
 
       const data = await registerCustomer(email, password);
-      const { customerCreate } = data;
+      const { customerCreate, errors } = data;
 
-      if (customerCreate && customerCreate.userErrors.length > 0) {
+      console.log(data);
+
+      if (errors && errors.length > 0) {
         toggleLoading(false);
-        return customerCreate.userErrors.forEach((err) =>
-          toast.error(err.message)
-        );
+        toggleLoading(false);
+        return errors.forEach((err) => toast.error(err.message));
       }
 
       if (customerCreate && customerCreate.customer)
@@ -233,6 +238,8 @@ export function UserProvider({ children }) {
     token,
     userAccessToken,
   ]);
+
+  console.log(states);
 
   const values = useMemo(
     () => ({

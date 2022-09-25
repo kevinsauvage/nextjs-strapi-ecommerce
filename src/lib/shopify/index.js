@@ -36,12 +36,10 @@ export const apiCall = async (query) => {
       }
     );
     const res = await response.json();
+    console.log(res, 'res');
+    if (res.errors) return res;
     if (res && res.data) return res.data;
 
-    if (res && res.errors) {
-      return console.error(res.errors);
-      // TODO HANDLE ERRORS
-    }
     return res;
   } catch (err) {
     return console.error(err);

@@ -10,6 +10,8 @@ function middleware(request) {
   const basicAuth = request.headers.get('authorization');
   const url = request.nextUrl;
 
+  console.log(basicAuth);
+
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');
