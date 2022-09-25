@@ -137,9 +137,12 @@ export function UserProvider({ children }) {
       const { customerCreate, errors } = data;
 
       console.log(data);
+      if (customerCreate.userErrors && customerCreate.userErrors.length > 0) {
+        toggleLoading(false);
+        customerCreate.userErrors.forEach((err) => toast.error(err.message));
+      }
 
       if (errors && errors.length > 0) {
-        toggleLoading(false);
         toggleLoading(false);
         return errors.forEach((err) => toast.error(err.message));
       }
@@ -160,12 +163,17 @@ export function UserProvider({ children }) {
 
       toggleLoading(true);
       const data = await sendRecoverEmail(email);
+      console.log(data, 'ddd');
+      const { errors } = data;
       const customerRecover = data?.customerRecover;
       const customerErrors = customerRecover?.customerUserErrors;
       toggleLoading(false);
 
       if (customerErrors && customerErrors.length > 0) {
         return customerErrors.forEach((err) => toast.error(err.message));
+      }
+      if (errors && errors.length > 0) {
+        return errors.forEach((err) => toast.error(err.message));
       }
 
       return toast.success('Check your emails');

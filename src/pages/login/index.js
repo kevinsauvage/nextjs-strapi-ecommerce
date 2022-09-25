@@ -29,12 +29,14 @@ function LoginPage() {
             <Input
               id="email"
               label="Email address"
+              type="email"
               name="email"
               placeholder="Email"
               onChange={handleInputChange}
             />
             <Input
               placeholder="Password"
+              type="password"
               name="password"
               id="password"
               label="Password"
