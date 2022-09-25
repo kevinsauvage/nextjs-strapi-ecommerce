@@ -1,18 +1,16 @@
 .banner {
   position: relative;
   width: 100%;
-  height: 100vh;
-  background-image: url('../../assets/banner/dog-bg-blue-xl.png');
+  background-color: gray;
   background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
   display: flex;
   align-items: center;
-  padding: 0 0 40px 100px;
+  padding: 120px 30px 120px 60px;
   color: $secondary;
-  margin: 30px 0;
-  border-radius: 6px;
+  margin: 0 0 30px 0;
 }
 
 .container {
@@ -26,16 +24,15 @@
 }
 
 .title {
-  font-size: 80px;
+  font-size: 60px;
   font-weight: 600;
   margin-bottom: 20px;
 }
 .subtitle {
-  font-size: 34px;
+  font-size: 24px;
   margin-bottom: 30px;
   color: $primary;
   font-weight: 500;
-  letter-spacing: 2px;
   max-width: 437px;
 }
 .btn {

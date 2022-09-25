@@ -35,6 +35,7 @@ export const GlobalReducer = (state = initialState, action) => {
         userOpen: false,
         searchOpen: false,
         loginOpen: false,
+        modalSelectedProduct: false,
       };
     }
     default:

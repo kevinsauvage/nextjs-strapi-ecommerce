@@ -31,9 +31,15 @@ export async function getServerSideProps({ params, query }) {
 
   const availableFilters = await getCollectionFilters(params.slug);
 
-  const filtersFetchArray = getFiltersFromParams(availableFilters, query);
+  const queryFilter = query;
+  delete queryFilter.slug;
+  delete queryFilter.page;
+  delete queryFilter.sort_key;
+  const filtersFetchArray = getFiltersFromParams(queryFilter);
 
   const sortKey = query.sort_key ? query.sort_key : 'RELEVANCE';
+
+  console.log(filtersFetchArray, 'filtersFetchArray');
 
   const data = await filterCollection(
     params.slug,

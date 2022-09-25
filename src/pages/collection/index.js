@@ -10,14 +10,20 @@ function CategoryPage({ collections }) {
       <div>
         <Container>
           {Array.isArray(collections) &&
-            collections.map((collection) => (
-              <Carousel key={collection.id} title={collection.title}>
-                {Array.isArray(collection.products) &&
-                  collection.products.map((product) => (
-                    <ProductCardDefault key={product.id} product={product} />
-                  ))}
-              </Carousel>
-            ))}
+            collections.map(
+              (collection) =>
+                collection.products.length > 0 && (
+                  <Carousel key={collection.id} title={collection.title}>
+                    {Array.isArray(collection.products) &&
+                      collection.products.map((product) => (
+                        <ProductCardDefault
+                          key={product.id}
+                          product={product}
+                        />
+                      ))}
+                  </Carousel>
+                )
+            )}
         </Container>
       </div>
     </Page>

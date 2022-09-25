@@ -1,30 +1,15 @@
 // eslint-disable-next-line import/prefer-default-export
-export const getFiltersFromParams = (filters = [], actualFilters) => {
-  const data = [
-    ...filters.reduce((result, filter) => {
-      const foundedFilter = actualFilters[filter.id];
+export const getFiltersFromParams = (filters) => {
+  if (!Object.keys(filters).length) return [];
 
-      if (foundedFilter) {
-        return [
-          ...result,
-          ...filter.values.reduce((acc, el) => {
-            if (
-              Array.isArray(foundedFilter)
-                ? foundedFilter.includes(el.label)
-                : [foundedFilter].includes(el.label)
-            ) {
-              const parsed = JSON.parse(el.input);
+  const actualFilters = Object.keys(filters).map((key) => {
+    if (Array.isArray(filters[key])) {
+      return filters[key].map((filter) => JSON.parse(filter));
+    }
+    return JSON.parse(filters[key]);
+  });
 
-              return [...acc, parsed];
-            }
-            return acc;
-          }, []),
-        ];
-      }
-      return result;
-    }, []),
-  ];
-  return data;
+  return actualFilters.flat();
 };
 
 export const cleanVariants = (variants = []) => {

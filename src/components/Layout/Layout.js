@@ -24,7 +24,7 @@ function Layout({ children, collections }) {
 
         {modalSelectedProduct ? (
           <Modal handleClose={() => setSelectedModalProduct(false)}>
-            <ProductPresenter product={modalSelectedProduct} />
+            <ProductPresenter product={modalSelectedProduct} isModal />
           </Modal>
         ) : null}
         <div className={styles.children}>{children}</div>

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import useOnScreen from '@/hooks/useOnScreen';
+import useRouterFilter from '@/hooks/useRouterFilter';
 import Filters from '../Filters/Filters';
 import styles from './ProductList.module.scss';
 import Sort from '../Sort/Sort';
@@ -17,6 +18,8 @@ function ProductsList({
   const router = useRouter();
   const listInnerRef = useRef();
   const isBottom = useOnScreen(listInnerRef);
+
+  const { addParam } = useRouterFilter();
 
   const handlePushQuery = (query, scroll) => {
     router.push(
@@ -47,29 +50,9 @@ function ProductsList({
     setLoading(false);
   }, [products]);
 
-  const handleChangeFilter = (value, key, unique) => {
-    const actualValue = actualFilters[key];
-    // Set query and return if key doesn't exist in filters
-
-    if (!actualValue || unique)
-      return handlePushQuery({ ...{ [key]: value }, page: 1 }, true);
-
-    const actualValueArray = Array.isArray(actualValue)
-      ? actualValue
-      : actualValue.split(',');
-
-    const isIncluded = actualValueArray.includes(value);
-
-    // check If key is present in URL
-    if (isIncluded) {
-      const newValueArray = actualValueArray.filter((item) => item !== value);
-
-      return handlePushQuery({ page: 1, [key]: newValueArray }, true);
-    }
-    return handlePushQuery(
-      { page: 1, [key]: [...actualValueArray, value] },
-      true
-    );
+  const handleChangeFilter = (value) => {
+    const key = Object.keys(value)[0];
+    addParam(key, JSON.stringify(value), true, true);
   };
 
   const handleSort = (e) => {

@@ -4,7 +4,7 @@ import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
 import ProductDescription from '@/components/ProductDescription/ProductDescription';
 import styles from './ProductPresenter.module.scss';
 
-export default function ProductPresenter({ product }) {
+export default function ProductPresenter({ product, isModal }) {
   const { addToCart } = useContext(CartContext);
   console.log(product);
 
@@ -56,6 +56,7 @@ export default function ProductPresenter({ product }) {
         handleAddToCart={handleAddToCart}
         selected={selectedVariant}
         addOne={addOne}
+        isModal={isModal}
         removeOne={removeOne}
       />
     </div>

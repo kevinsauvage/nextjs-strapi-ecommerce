@@ -1,6 +1,8 @@
 .ProductDescription {
-  max-width: 375px;
+  max-width: 450px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .title {
@@ -31,6 +33,24 @@
 .description {
   margin: 20px 0;
   font-size: 14px;
+  & ul {
+    margin: 8px 0;
+  }
+  & > p {
+    margin: 8px 0;
+    margin-bottom: 12px;
+  }
+
+  & li {
+    list-style-type: circle;
+  }
+}
+
+.fullDescription {
+  display: block;
+  text-align: center;
+  margin: 30px 0 60px 0;
+  text-decoration: underline;
 }
 
 .select {
@@ -96,4 +116,20 @@
   font-size: 14px;
   border-radius: 6px;
   padding: 6px 8px;
+}
+
+.btn {
+  width: 100%;
+}
+
+.ProductDescriptionModal {
+  & .description {
+    & * {
+      display: none;
+    }
+
+    & p:first-child {
+      display: block;
+    }
+  }
 }

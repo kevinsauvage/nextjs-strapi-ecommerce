@@ -1,13 +1,17 @@
 .sort {
+  display: flex;
+  align-items: center;
 }
 
 .label {
   font-size: 12px;
   font-weight: 500;
+  margin-right: 8px;
 }
 .select {
   border: none;
-  background-color: transparent;
+  background-color: whitesmoke;
+  padding: 8px;
 }
 
 .option {

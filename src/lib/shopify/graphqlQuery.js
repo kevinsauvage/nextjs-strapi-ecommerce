@@ -39,6 +39,7 @@ const filterCollection = `
                   src
                   altText
                   sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+                  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                   width
                   height
                 }
@@ -72,7 +73,7 @@ const filterCollection = `
                     src
                     altText
                     sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
-                    blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
+                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
                     height
                   }
@@ -105,12 +106,14 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
    description
          handle
          id
+         descriptionHtml
          images(first: 20) {
            edges {
              node {
                src
                altText
                sm:  url(transform: { maxHeight: 500, maxWidth: 300, crop: CENTER })
+               blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                width
                height
              }
@@ -133,6 +136,7 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
                sku
                availableForSale
                id
+               quantityAvailable
                compareAtPriceV2 {
                  amount
                  currencyCode
@@ -146,7 +150,7 @@ const queryProductRecommendations = `query productRecommendations ($productId: I
                  src
                  altText
                  sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
-                 blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
+                 blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                  width
                  height
                }           
@@ -178,6 +182,7 @@ const getCollections = `{
                     src
                     altText
                     sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
                     height
                   }
@@ -211,7 +216,7 @@ const getCollections = `{
                       src
                       altText
                       sm:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER })
-                      blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
+                      blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                       width
                       height
                     }
@@ -246,6 +251,78 @@ const queryProduct = `query product($handle: String) {
           src
           altText
           sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+          width
+          height
+        }
+      }
+    }
+    priceRange {
+      maxVariantPrice {
+        amount
+        currencyCode
+      }
+      minVariantPrice {
+        amount
+        currencyCode
+      }
+    }
+    productType
+    tags
+    title
+    options(first: 50) {
+          id
+          name
+          values
+     }
+    totalInventory
+    vendor
+    variants(first: 10) {
+      edges {
+        node {
+          availableForSale
+          compareAtPriceV2 {
+            amount
+            currencyCode
+          }
+          id
+          image {
+            src
+            altText
+            sm: url(transform: {maxHeight: 800, maxWidth: 800, crop: CENTER})
+            blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+            width
+            height
+          }
+          priceV2 {
+            amount
+            currencyCode
+          }
+          quantityAvailable
+          title
+        }
+      }
+    }
+  }
+}
+`;
+
+const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
+  products(first: $first, sortKey: $sortKey ) {
+    edges {
+      node {
+    handle
+    id
+    title
+    availableForSale
+    descriptionHtml
+    images(first: 1) {
+      edges {
+        node {
+          src
+          altText
+          sm: url(transform: {maxHeight: 500, maxWidth: 300, crop: CENTER})
+          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
           width
           height
         }
@@ -284,7 +361,7 @@ const queryProduct = `query product($handle: String) {
             src
             altText
             sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
-            blurDataURL: url(transform: {maxHeight: 50, maxWidth: 50, crop: CENTER})
+            blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
             width
             height
           }
@@ -299,6 +376,8 @@ const queryProduct = `query product($handle: String) {
     }
   }
 }
+  }
+}
 `;
 
 const queries = {
@@ -308,6 +387,7 @@ const queries = {
   queryProductRecommendations,
   getCollections,
   queryProduct,
+  queryProducts,
 };
 
 export default queries;

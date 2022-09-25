@@ -25,3 +25,19 @@ export const getProduct = async (handle) => {
   }
   return [];
 };
+
+export const getProducts = async (sortKey, first) => {
+  const res = await apiCallTest(queries.queryProducts, {
+    first,
+    sortKey,
+  });
+
+  console.log(res, 'resss');
+
+  if (res && res?.products) {
+    return {
+      products: cleanProducts(res.products.edges),
+    };
+  }
+  return [];
+};

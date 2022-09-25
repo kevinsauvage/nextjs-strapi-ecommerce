@@ -12,6 +12,7 @@ export const GlobalStoreContext = createContext();
 
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
+  const router = useRouter();
 
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -51,8 +52,6 @@ export function GlobalProvider({ children }) {
     }),
     [states, resetToggle]
   );
-
-  const router = useRouter();
 
   useEffect(() => {
     resetToggle();

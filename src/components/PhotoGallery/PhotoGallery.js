@@ -7,12 +7,12 @@ export default function PhotoGallery({ selectedVariant }) {
     <div className={styles.container}>
       {selectedVariant?.id ? (
         <Image
-          src={selectedVariant?.image?.src}
+          src={selectedVariant?.image?.sm}
           alt={selectedVariant?.image?.alt || selectedVariant?.title}
-          width={selectedVariant?.image?.width}
-          height={selectedVariant?.image?.height}
+          width={800}
+          height={800}
           layout="responsive"
-          objectFit="cover"
+          objectFit="contain"
           priority
           blurDataURL={selectedVariant?.image?.blurDataURL}
           placeholder="blur"

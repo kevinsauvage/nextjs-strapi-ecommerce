@@ -12,6 +12,7 @@ import { associateCustomerToCheckout } from '@/lib/shopify/customer';
 import { toast } from 'react-toastify';
 import { CartReducer, initialState, actions } from './CartReducer';
 import { UserContext } from '../UserContext/UserContext';
+import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CartContext = createContext();
 
@@ -19,6 +20,7 @@ export function CartProvider({ children }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
   const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
   const { userAccessToken } = useContext(UserContext);
+  const { toggleCart } = useGlobalContext();
 
   useEffect(() => {
     const config = {
@@ -82,7 +84,8 @@ export function CartProvider({ children }) {
           type: 'ADD_VARIANT_TO_CART',
           payload: { isCartOpen: true, checkout: res },
         });
-        if (res) toast.success('Product correctly added.');
+        if (res) toggleCart(true);
+        else toast.error('Product not added. Try again later.');
       });
     },
     [states.client, states.checkout, createCheckout]

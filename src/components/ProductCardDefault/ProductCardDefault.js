@@ -25,6 +25,8 @@ export default function ProductCardDefault({ product }) {
               objectFit="cover"
               width="300"
               height="400"
+              blurDataURL={images?.[0]?.blurDataURL}
+              placeholder="blur"
             />
             <div
               className={styles.quickView}
