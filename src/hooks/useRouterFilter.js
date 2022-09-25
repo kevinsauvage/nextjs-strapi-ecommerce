@@ -7,29 +7,21 @@ const useRouterFilter = () => {
     const { [name]: param, ...rest } = query;
     let newQuery = {};
 
-    if (!param) {
-      newQuery = { ...rest, [name]: value };
-    } else if (Array.isArray(param)) {
+    if (!param) newQuery = { [name]: value };
+    else if (Array.isArray(param)) {
       if (param.indexOf(value) > -1) {
         newQuery = {
-          ...rest,
           [name]: param.filter((p) => p !== JSON.stringify(JSON.parse(value))),
         };
-      } else {
-        newQuery = { ...rest, [name]: [...param, value] };
-      }
-    } else if (param !== value) {
-      newQuery = { ...rest };
-    } else {
-      newQuery = { ...rest, [name]: [param, value] };
-    }
+      } else newQuery = { [name]: [...param, value] };
+    } else if (param !== value) newQuery = { [name]: [param, value] };
 
     if (changePage) newQuery.page = 1;
 
     push(
       {
         pathname,
-        query: newQuery,
+        query: { ...rest, ...newQuery },
       },
       undefined,
       { scroll }
