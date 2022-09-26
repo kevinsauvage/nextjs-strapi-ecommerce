@@ -124,11 +124,10 @@
 
 .ProductDescriptionModal {
   & .description {
-    & * {
+    & > * {
       display: none;
     }
-
-    & p:first-child {
+    & > :first-child {
       display: block;
     }
   }
