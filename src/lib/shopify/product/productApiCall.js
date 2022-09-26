@@ -1,11 +1,22 @@
-import { apiCallTest } from '.';
-import queries from './graphqlQuery';
-import { cleanProducts, cleanVariants } from './helpers';
+import shopifyStorefrontCall from '..';
+import { cleanProducts, cleanVariants } from '../helpers';
+import productQueries from './productQueries';
+
+export const getProductTags = async () => {
+  const res = await shopifyStorefrontCall(productQueries.productTags);
+  if (res) {
+    return res.productTags.edges;
+  }
+  return [];
+};
 
 export const getProductRecommendation = async (productId) => {
-  const res = await apiCallTest(queries.queryProductRecommendations, {
-    productId,
-  });
+  const res = await shopifyStorefrontCall(
+    productQueries.queryProductRecommendations,
+    {
+      productId,
+    }
+  );
   if (res && res?.productRecommendations) {
     const cleaned = cleanProducts(res.productRecommendations);
     return cleaned;
@@ -14,7 +25,7 @@ export const getProductRecommendation = async (productId) => {
 };
 
 export const getProduct = async (handle) => {
-  const res = await apiCallTest(queries.queryProduct, {
+  const res = await shopifyStorefrontCall(productQueries.queryProduct, {
     handle,
   });
   if (res && res?.product) {
@@ -27,12 +38,10 @@ export const getProduct = async (handle) => {
 };
 
 export const getProducts = async (sortKey, first) => {
-  const res = await apiCallTest(queries.queryProducts, {
+  const res = await shopifyStorefrontCall(productQueries.queryProducts, {
     first,
     sortKey,
   });
-
-  console.log(res, 'resss');
 
   if (res && res?.products) {
     return {

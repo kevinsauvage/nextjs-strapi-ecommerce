@@ -5,8 +5,8 @@ import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import {
   filterCollection,
   getCollectionFilters,
-  getProductTags,
-} from '@/lib/shopify/collections';
+} from '@/lib/shopify/collection/collectionApiCall';
+import { getProductTags } from '@/lib/shopify/product/productApiCall';
 
 function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
   return (
@@ -60,25 +60,3 @@ export async function getServerSideProps({ params, query }) {
     },
   };
 }
-
-/* export async function getStaticPaths({ locales, locale }) {
-  const data = await getShopifyClient(locale).collection.fetchAll();
-  const collections = parseShopifyResponse(data);
-
-  const paths = locales.reduce(
-    (acc, next) => [
-      ...acc,
-      ...collections.map((cat) => ({
-        params: { slug: String(cat.handle) },
-        locale: next,
-      })),
-    ],
-    []
-  );
-
-  return {
-    paths,
-    fallback: false,
-  };
-}
- */

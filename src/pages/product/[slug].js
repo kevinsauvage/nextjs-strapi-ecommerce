@@ -1,11 +1,14 @@
-import { getShopifyClient, parseShopifyResponse } from '@/lib/shopify/index';
+import { useRouter } from 'next/router';
 import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
 import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
-import { useRouter } from 'next/router';
-import { getProductRecommendation, getProduct } from '@/lib/shopify/products';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
+import {
+  getProduct,
+  getProductRecommendation,
+  getProducts,
+} from '@/lib/shopify/product/productApiCall';
 
 import styles from './slug.module.scss';
 
@@ -50,10 +53,10 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const data = await getShopifyClient().product.fetchAll();
-  const products = parseShopifyResponse(data);
+  const data = await getProducts('BEST_SELLING', 250);
 
-  const paths = products.map((product) => ({
+  console.log(data);
+  const paths = data.products.map((product) => ({
     params: { slug: String(product.handle) },
   }));
 

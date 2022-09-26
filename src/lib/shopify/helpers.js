@@ -60,5 +60,8 @@ export const cleanProducts = (prods) => {
 export const cleanCollections = async (collections) =>
   collections.map((collection) => ({
     ...collection.node,
-    products: cleanProducts(collection.node.products.edges),
+    products: cleanProducts(collection?.node?.products?.edges),
   }));
+
+export const parseShopifyResponse = (response) =>
+  JSON.parse(JSON.stringify(response));

@@ -1,8 +1,8 @@
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
-import { getCollections } from '@/lib/shopify/collections';
 import Carousel from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
+import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
 
 function CategoryPage({ collections }) {
   return (
@@ -33,7 +33,7 @@ function CategoryPage({ collections }) {
 export default CategoryPage;
 
 export async function getStaticProps() {
-  const collections = await getCollections();
+  const collections = await getCollectionsWithProducts(5);
 
   return {
     props: {

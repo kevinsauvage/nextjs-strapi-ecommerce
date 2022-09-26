@@ -8,8 +8,8 @@ import {
 } from 'react';
 import Client from 'shopify-buy';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import { associateCustomerToCheckout } from '@/lib/shopify/customer';
 import { toast } from 'react-toastify';
+import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { CartReducer, initialState, actions } from './CartReducer';
 import { UserContext } from '../UserContext/UserContext';
 import useGlobalContext from '../GlobalContext/useGlobalContext';

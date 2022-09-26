@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { getShopifyClient } from '../lib/shopify';
+import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 import routes from '../data/routes';
 import config from '../config';
 
@@ -26,7 +26,7 @@ export const getServerSideProps = async ({ res }) => {
       (staticPagePath) => `${BASE_URL}/${staticPagePath.replace('.js', '')}`
     );
 
-  const collections = await getShopifyClient().collection.fetchAll();
+  const collections = await getCollections(50);
 
   const dynamicPaths = collections.map(
     (collection) => `${BASE_URL}/${routes.base.collection}/${collection.handle}`

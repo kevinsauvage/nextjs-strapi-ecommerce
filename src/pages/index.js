@@ -2,9 +2,9 @@ import SecureBanner from '@/components/SecureBanner/SecureBanner';
 import Banner1 from '@/components/BannerHome/Banner1';
 import styles from '@/styles/Home.module.scss';
 import Container from '@/components/Container/Container';
-import { getProducts } from '@/lib/shopify/products';
 import Carousel from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
+import { getProducts } from '@/lib/shopify/product/productApiCall';
 
 export default function Home({ bestSelling }) {
   return (

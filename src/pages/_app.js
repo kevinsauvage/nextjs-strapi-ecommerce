@@ -4,14 +4,13 @@ import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useEffect, useState } from 'react';
-import { getShopInfo, getCollections } from '@/lib/shopify/shop';
+import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 
 function MyApp({ Component, pageProps }) {
   const [collections, setCollections] = useState([]);
 
   useEffect(() => {
-    getCollections().then((response) => setCollections(response));
-    getShopInfo();
+    getCollections(50).then((response) => setCollections(response));
   }, []);
 
   return (
