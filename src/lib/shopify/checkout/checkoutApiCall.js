@@ -13,6 +13,5 @@ export const associateCustomerToCheckout = async (
       customerAccessToken,
     }
   );
-  console.log(res, 'res');
   return res?.checkoutCustomerAssociateV2;
 };

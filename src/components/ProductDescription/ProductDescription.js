@@ -17,7 +17,6 @@ export default function ProductDescription({
 }) {
   const { title, descriptionHtml, variants } = product;
 
-  console.log('selected product: ', selected);
   return (
     <div
       className={

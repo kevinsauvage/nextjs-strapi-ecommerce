@@ -24,7 +24,6 @@ export const sendRecoverEmail = async (email) => {
     }
   );
 
-  console.log(res);
   return res?.customerRecover;
 };
 

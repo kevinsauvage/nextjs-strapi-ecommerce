@@ -27,9 +27,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp;
-
-/* export function reportWebVitals(metric) {
-  if (metric.label === 'web-vital') {
-    // console.log(metric);
-  }
-} */

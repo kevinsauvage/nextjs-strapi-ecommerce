@@ -47,7 +47,6 @@ export const getCollections = async (first) => {
     first,
   });
   if (res) {
-    console.log(res);
     return cleanCollections(res.collections?.edges);
   }
   return [];

@@ -10,8 +10,6 @@ function middleware(request) {
   const basicAuth = request.headers.get('authorization');
   const url = request.nextUrl;
 
-  console.log(basicAuth);
-
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');
@@ -38,7 +36,6 @@ function middleware(request) {
         }
       } else if (pathname === '/account') {
         // Cannot access account if not login
-        console.log('redicted login');
         return NextResponse.redirect(
           `${origin}/${locale || 'en'}${routes.base.login}`
         );

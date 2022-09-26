@@ -12,7 +12,6 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
   const handleChangeInput = (e) => {
     console.log(e);
   };
-  console.log(filters);
 
   return (
     <div className={styles.filters}>

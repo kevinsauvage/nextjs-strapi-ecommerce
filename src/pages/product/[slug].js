@@ -17,8 +17,6 @@ function ProductPage({ product, recommendations = [] }) {
   if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
 
-  console.log(product);
-
   return (
     <Page title={title} description={description}>
       <Container width={270} padding={20}>
@@ -55,7 +53,6 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const data = await getProducts('BEST_SELLING', 250);
 
-  console.log(data);
   const paths = data.products.map((product) => ({
     params: { slug: String(product.handle) },
   }));

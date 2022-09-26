@@ -55,7 +55,6 @@ export function UserProvider({ children }) {
   const getUserInfo = useCallback(
     async (accessToken) => {
       if (!states?.user?.id) {
-        console.log('Get user info');
         const response = await getUser(accessToken);
         if (response?.customer) {
           dispatch({ type: actions.ADD_USER, payload: response.customer });
@@ -89,7 +88,6 @@ export function UserProvider({ children }) {
   const handleRefreshToken = useCallback(
     async (accessToken) => {
       const response = await refreshToken(accessToken);
-      console.log(response, 'refresh token received');
       const { customerAccessToken } = response || {};
       if (customerAccessToken) handleToken(customerAccessToken);
     },
@@ -101,7 +99,6 @@ export function UserProvider({ children }) {
       if (!email || !password) {
         return toast.error('Fill in missing required fields');
       }
-      console.log('login');
       toggleLoading(true);
 
       const data = await loginCustomer({ email, password });
@@ -215,7 +212,6 @@ export function UserProvider({ children }) {
       ) {
         logout();
       }
-      console.log('run');
 
       // If the shopify token of local storage token is going to expire soon, refresh the token
       if (
@@ -233,7 +229,6 @@ export function UserProvider({ children }) {
         getUserInfo(token.accessToken);
       }
     } else if (states?.user?.id) {
-      console.log('remove user');
       dispatch({ type: actions.REMOVE_USER });
     }
   }, [

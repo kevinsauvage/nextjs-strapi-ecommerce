@@ -1,6 +1,5 @@
 const shopifyStorefrontCall = async (query, variables) => {
   console.log(variables, 'variables');
-  console.log(query, 'query');
   const response = await fetch(
     `https://${process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN}/api/2022-07/graphql.json`,
     {

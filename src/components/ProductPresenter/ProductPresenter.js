@@ -6,7 +6,6 @@ import styles from './ProductPresenter.module.scss';
 
 export default function ProductPresenter({ product, isModal }) {
   const { addToCart } = useContext(CartContext);
-  console.log(product);
 
   const [selectedVariant, setSelectedVariant] = useState();
 
