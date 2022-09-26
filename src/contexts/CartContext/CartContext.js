@@ -32,15 +32,19 @@ export function CartProvider({ children, client }) {
     if (!checkoutId) createCheckout();
   }, [createCheckout, checkoutId]);
 
-  const getCheckoutById = useCallback(async () => {
-    await client.checkout.fetch(checkoutId).then((checkout) => {
-      if (checkout)
-        dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
-    });
-  }, [client, checkoutId]);
+  const getCheckoutById = useCallback(
+    async (id) => {
+      console.log('get checkout');
+      await client.checkout.fetch(id).then((checkout) => {
+        if (checkout)
+          dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
+      });
+    },
+    [client]
+  );
 
   useEffect(() => {
-    if (checkoutId && !states.checkout?.id) getCheckoutById();
+    if (checkoutId && !states.checkout?.id) getCheckoutById(checkoutId);
   }, [checkoutId, getCheckoutById, states.checkout.id]);
 
   useEffect(() => {
@@ -115,9 +119,8 @@ export function CartProvider({ children, client }) {
       addToCart,
       removeFromCart,
       handleQuantityChange,
-      getCheckoutById,
     }),
-    [states, addToCart, removeFromCart, handleQuantityChange, getCheckoutById]
+    [states, addToCart, removeFromCart, handleQuantityChange]
   );
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

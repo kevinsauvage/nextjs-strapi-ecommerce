@@ -22,12 +22,15 @@ function ProductPage({ product, recommendations = [] }) {
       <Container width={270} padding={20}>
         <div className={styles.content}>
           <ProductPresenter product={product} />
-
-          <Carousel title="Recommended Products">
-            {recommendations.map((prod) => (
-              <ProductCardDefault key={product.id} product={prod} />
-            ))}
-          </Carousel>
+          {recommendations &&
+            Array.isArray(recommendations) &&
+            recommendations.length > 0 && (
+              <Carousel title="Recommended Products">
+                {recommendations.map((prod) => (
+                  <ProductCardDefault key={product.id} product={prod} />
+                ))}
+              </Carousel>
+            )}
         </div>
       </Container>
     </Page>

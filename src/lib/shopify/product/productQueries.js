@@ -6,7 +6,7 @@ const productTags = `query {
     }
   }`;
 
-const queryProductRecommendations = `query productRecommendations ($productId: ID!){
+const queryProductRecommendations = `query productRecommendations($productId: ID!) {
   productRecommendations (productId: $productId) {
    description
          handle
