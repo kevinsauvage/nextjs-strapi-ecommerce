@@ -1,24 +1,23 @@
-import { useContext } from 'react';
 import Image from 'next/image';
-import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import Button from '@/components/Button/Button';
 import Slide from '@/components/Slide/Slide';
 import FlexColumn from '@/components/FlexColumn/FlexColumn';
 import routes from '@/data/routes';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './User.module.scss';
 
 export default function User() {
-  const { userOpen, resetToggle } = useContext(GlobalStoreContext);
-  const { user, logOut } = useContext(UserContext);
+  const { userOpen, resetToggle } = useGlobalContext();
+  const { user, logOut } = useUserContext();
 
   return (
     <Slide
       isOpen={userOpen}
       handleClose={resetToggle}
-      title={user.id ? 'Me' : 'Login or Register'}
+      title={user ? 'Me' : 'Login or Register'}
     >
-      {user && user.id ? (
+      {user ? (
         <div className={styles.userinfo}>
           <div className={styles.main}>
             <p>Some user data here</p>

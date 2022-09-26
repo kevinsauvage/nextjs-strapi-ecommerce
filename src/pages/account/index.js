@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Page from '@/components/Page/Page';
-import { UserContext } from '@/contexts/UserContext/UserContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { logout, user, loading } = useContext(UserContext);
+  const { logout, user, loading } = useUserContext();
 
   return (
     <Page title="My Profile" loading={loading}>

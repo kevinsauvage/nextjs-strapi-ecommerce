@@ -54,14 +54,14 @@ export function UserProvider({ children }) {
 
   const getUserInfo = useCallback(
     async (accessToken) => {
-      if (!states?.user?.id) {
+      if (!states?.user) {
         const response = await getUser(accessToken);
-        if (response?.customer) {
+        if (response?.customer?.id) {
           dispatch({ type: actions.ADD_USER, payload: response.customer });
         }
       }
     },
-    [states.user.id]
+    [states.user]
   );
 
   const handleToken = useCallback(
@@ -201,7 +201,7 @@ export function UserProvider({ children }) {
   );
 
   useEffect(() => {
-    if (token?.accessToken) {
+    if (token?.accessToken && !userAccessToken) {
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
 
@@ -225,20 +225,9 @@ export function UserProvider({ children }) {
       setUserAccessToken(token.accessToken);
 
       // If no user is saved, fetch user information
-      if (!states?.user?.id) {
-        getUserInfo(token.accessToken);
-      }
-    } else if (states?.user?.id) {
-      dispatch({ type: actions.REMOVE_USER });
+      getUserInfo(token.accessToken);
     }
-  }, [
-    getUserInfo,
-    handleRefreshToken,
-    logout,
-    states?.user?.id,
-    token,
-    userAccessToken,
-  ]);
+  }, [getUserInfo, handleRefreshToken, logout, token, userAccessToken]);
 
   const values = useMemo(
     () => ({
