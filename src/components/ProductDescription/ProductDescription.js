@@ -57,7 +57,9 @@ export default function ProductDescription({
       )}
 
       {isModal && (
-        <Link href={`${routes.base.product}/${product.handle}`}>
+        <Link
+          href={`${routes.base.collection}/${product?.collections?.[0]?.handle}/${product.handle}`}
+        >
           <a className={styles.fullDescription}>See Full Description</a>
         </Link>
       )}
