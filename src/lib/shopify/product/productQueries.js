@@ -61,6 +61,13 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
                }           
              } 
            }
+         }
+         collections(first: 1) {
+          edges {
+            node {
+              handle
+            }
+          }
          }     
        }
  }`;
@@ -155,6 +162,13 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
         }
       }
     }
+    collections(first: 1) {
+      edges {
+        node {
+          handle
+        }
+      }
+     }   
     priceRange {
       maxVariantPrice {
         amount

@@ -29,14 +29,14 @@ export default CategoryPage;
 export async function getServerSideProps({ params, query }) {
   const page = query.page ? Number(query.page) * 10 : 10;
 
-  const availableFilters = await getCollectionFilters(params.slug);
+  const availableFilters = await getCollectionFilters(params.collectionSlug);
 
   const filtersFetchArray = getFiltersFromParams(availableFilters, query);
 
   const sortKey = query.sort_key ? query.sort_key : 'RELEVANCE';
 
   const data = await filterCollection(
-    params.slug,
+    params.collectionSlug,
     page,
     filtersFetchArray,
     sortKey
@@ -49,7 +49,7 @@ export async function getServerSideProps({ params, query }) {
 
   return {
     props: {
-      title: params.slug,
+      title: params.collectionSlug,
       filters: availableFilters,
       products,
       pageInfo,

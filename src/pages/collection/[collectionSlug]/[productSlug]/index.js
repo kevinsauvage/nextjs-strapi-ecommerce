@@ -40,7 +40,7 @@ function ProductPage({ product, recommendations = [] }) {
 export default ProductPage;
 
 export async function getStaticProps({ params }) {
-  const product = await getProduct(params.slug);
+  const product = await getProduct(params.productSlug);
 
   const recommendations = await getProductRecommendation(product.id);
 
@@ -57,7 +57,10 @@ export async function getStaticPaths() {
   const data = await getProducts('BEST_SELLING', 250);
 
   const paths = data.products.map((product) => ({
-    params: { slug: String(product.handle) },
+    params: {
+      productSlug: String(product.handle),
+      collectionSlug: String(product?.collections?.[0]?.handle),
+    },
   }));
 
   return {

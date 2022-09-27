@@ -27,8 +27,16 @@ const filterCollection = `
           endCursor
           startCursor
         }
+
         edges {
           node {
+            collections(first: 1) {
+              edges {
+                node {
+                  handle
+                }
+              }
+             }   
             availableForSale
             handle
             id
@@ -118,6 +126,13 @@ const getCollectionsWithProducts = `query ($first: Int){
         products(first: 20, sortKey: BEST_SELLING) {
           edges {
             node {
+              collections(first: 1) {
+                edges {
+                  node {
+                    handle
+                  }
+                }
+               }   
               handle
               id
               title

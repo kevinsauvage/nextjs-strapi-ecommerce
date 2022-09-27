@@ -5,6 +5,7 @@ import { MdOutlineDeleteForever } from 'react-icons/md';
 import { CartContext } from '@/contexts/CartContext/CartContext';
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
+import { toast } from 'react-toastify';
 import styles from './CartItem.module.scss';
 
 export default function CartItem({ product, inputId }) {
@@ -19,7 +20,7 @@ export default function CartItem({ product, inputId }) {
 
   const handleUpdate = () => {
     if (quantity < 1 || !quantity)
-      return alert('Quantity must be higher than zero');
+      return toast.error('Quantity must be higher than zero');
 
     return handleQuantityChange(newQuantity, product.id);
   };

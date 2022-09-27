@@ -9,9 +9,7 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
       : [actualValues].includes(valueId);
   };
 
-  const handleChangeInput = (e) => {
-    console.log(e);
-  };
+  const handleChangeInput = (e) => e;
 
   return (
     <div className={styles.filters}>

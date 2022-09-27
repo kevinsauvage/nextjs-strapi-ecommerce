@@ -34,7 +34,6 @@ export function CartProvider({ children, client }) {
 
   const getCheckoutById = useCallback(
     async (id) => {
-      console.log('get checkout');
       await client.checkout.fetch(id).then((checkout) => {
         if (checkout)
           dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });

@@ -25,6 +25,19 @@ export const getFiltersFromParams = (filters, actualFilters) => {
   return filtered;
 };
 
+export const cleanCollections = (collections) => {
+  if (!Array.isArray(collections)) return [];
+
+  return collections.map((collection) => ({
+    ...collection.node,
+    // eslint-disable-next-line no-use-before-define
+    products: cleanProducts(collection?.node?.products?.edges),
+  }));
+};
+
+export const parseShopifyResponse = (response) =>
+  JSON.parse(JSON.stringify(response));
+
 export const cleanVariants = (variants = []) => {
   if (!variants.length) return [];
   return variants.map((variant) => ({
@@ -44,6 +57,7 @@ export const cleanProducts = (prods) => {
       ...product.node,
       images: cleanImage(product.node?.images?.edges),
       variants: cleanVariants(product.node?.variants?.edges),
+      collections: cleanCollections(product.node?.collections?.edges) || [],
     }));
   }
   if (prods?.[0]?.id) {
@@ -51,17 +65,9 @@ export const cleanProducts = (prods) => {
       ...product,
       images: cleanImage(product?.images?.edges),
       variants: cleanVariants(product?.variants?.edges),
+      collections: cleanCollections(product?.collections?.edges) || [],
     }));
   }
 
   return products || prods;
 };
-
-export const cleanCollections = async (collections) =>
-  collections.map((collection) => ({
-    ...collection.node,
-    products: cleanProducts(collection?.node?.products?.edges),
-  }));
-
-export const parseShopifyResponse = (response) =>
-  JSON.parse(JSON.stringify(response));
