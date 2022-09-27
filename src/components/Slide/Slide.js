@@ -1,13 +1,7 @@
 import { MdClose } from 'react-icons/md';
 import styles from './Slide.module.scss';
 
-export default function Slide({
-  children,
-  isOpen,
-  handleClose,
-  title,
-  headerRight,
-}) {
+export default function Slide({ children, isOpen, handleClose, title }) {
   return isOpen ? (
     <div
       role="button"
@@ -23,11 +17,10 @@ export default function Slide({
         onKeyDown={(e) => e.stopPropagation()}
       >
         <header className={styles.header}>
+          <h5 className={styles.title}>{title}</h5>
           <button type="button" className={styles.close} onClick={handleClose}>
             <MdClose />
           </button>
-          <h5 className={styles.title}>{title}</h5>
-          <div className={styles.headerRight}>{headerRight || ''}</div>
         </header>
         <div className={styles.inner}>
           <div className={styles.children}>{children}</div>

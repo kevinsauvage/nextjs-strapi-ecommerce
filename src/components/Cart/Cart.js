@@ -22,7 +22,7 @@ export default function Cart() {
     <Slide
       isOpen={cartOpen}
       handleClose={resetToggle}
-      title="Shopping Cart"
+      title="Cart"
       headerRight={cart?.length}
     >
       {cart && Array.isArray(cart.lineItems) && cart.lineItems.length > 0 ? (
