@@ -1,21 +1,20 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { CartContext } from '@/contexts/CartContext/CartContext';
-import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
 import Slide from '@/components/Slide/Slide';
 import FlexColumn from '@/components/FlexColumn/FlexColumn';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import ProductCheckoutCard from '@/components/ProductCheckoutCard/ProductCheckoutCard';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Cart.module.scss';
 
 export default function Cart() {
-  const { cartOpen, resetToggle } = useContext(GlobalStoreContext);
-  const { cart } = useContext(CartContext);
-  const { user } = useContext(UserContext);
+  const { cartOpen, resetToggle } = useGlobalContext();
+  const { cart } = useCartContext();
+  const { user } = useUserContext();
   const router = useRouter();
 
   return (

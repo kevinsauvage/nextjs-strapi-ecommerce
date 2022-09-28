@@ -1,17 +1,16 @@
 import Link from 'next/link';
-import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import Form from '@/components/Form/Form';
 import Container from '@/components/Container/Container';
 import useForm from '@/hooks/useForm';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Login.module.scss';
 
 function LoginPage() {
-  const { login, loading } = useContext(UserContext);
+  const { login, loading } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm((formData) =>
     login(formData.email, formData.password)

@@ -1,12 +1,11 @@
-import { useContext } from 'react';
-import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import Container from '@/components/Container/Container';
 import { MdClose } from 'react-icons/md';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './SearchBar.module.scss';
 import Autocomplete from './Autocomplete/Autocomplete';
 
 export default function SearchBar() {
-  const { searchOpen, resetToggle } = useContext(GlobalStoreContext);
+  const { searchOpen, resetToggle } = useGlobalContext();
 
   return (
     searchOpen && (

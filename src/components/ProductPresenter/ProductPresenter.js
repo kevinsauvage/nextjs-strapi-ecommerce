@@ -1,11 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { CartContext } from '@/contexts/CartContext/CartContext';
+import { useEffect, useState } from 'react';
 import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
 import ProductDescription from '@/components/ProductDescription/ProductDescription';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './ProductPresenter.module.scss';
 
 export default function ProductPresenter({ product, isModal }) {
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCartContext();
 
   const [selectedVariant, setSelectedVariant] = useState();
 

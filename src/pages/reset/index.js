@@ -1,16 +1,15 @@
 import Link from 'next/link';
-import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Form from '@/components/Form/Form';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
-  const { resetPasswordEmail, loading } = useContext(UserContext);
+  const { resetPasswordEmail, loading } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;

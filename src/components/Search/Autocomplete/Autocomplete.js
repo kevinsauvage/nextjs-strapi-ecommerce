@@ -2,10 +2,10 @@
 import { autocomplete, getAlgoliaResults } from '@algolia/autocomplete-js';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 import algoliasearch from 'algoliasearch/lite';
-import { Fragment, createElement, useEffect, useRef, useContext } from 'react';
+import { Fragment, createElement, useEffect, useRef } from 'react';
 import { createRoot } from 'react-dom/client';
-import { CartContext } from '@/contexts/CartContext/CartContext';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Autocomplete.module.scss';
 import '@algolia/autocomplete-theme-classic';
 import ProductItem from '../ProductItem/ProductItem';
@@ -74,7 +74,7 @@ function Autocomplete(props) {
   const containerRef = useRef(null);
   const panelRootRef = useRef(null);
   const rootRef = useRef(null);
-  const { addToCart } = useContext(CartContext);
+  const { addToCart } = useCartContext();
 
   useEffect(() => {
     if (!containerRef.current) return undefined;

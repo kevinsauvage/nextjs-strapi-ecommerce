@@ -1,15 +1,14 @@
-import { useContext } from 'react';
 import Button from '@/components/Button/Button';
 import Form from '@/components/Form/Form';
 import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './password.module.scss';
 
 function Password({ resetUrl }) {
-  const { resetPassword, loading } = useContext(UserContext);
+  const { resetPassword, loading } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;

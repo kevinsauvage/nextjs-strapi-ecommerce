@@ -1,22 +1,18 @@
-import { useContext } from 'react';
 import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
-import { CartContext } from '@/contexts/CartContext/CartContext';
-import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import HeaderButton from '@/components/HeaderButton/HeaderButton';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
 import { useRouter } from 'next/router';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
-  const { toggleSearch, toggleCart, toggleUser } =
-    useContext(GlobalStoreContext);
+  const { toggleSearch, toggleCart, toggleUser } = useGlobalContext();
+  const { user } = useUserContext();
+  const { cart } = useCartContext();
 
   const router = useRouter();
-
-  const { user } = useContext(UserContext);
-
-  const { cart } = useContext(CartContext);
 
   const handleClickUser = () => {
     if (user && user.id) router.push(routes.base.profile);

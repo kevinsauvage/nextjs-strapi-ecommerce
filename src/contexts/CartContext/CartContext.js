@@ -1,7 +1,6 @@
 import {
   createContext,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useReducer,
@@ -10,15 +9,15 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import { toast } from 'react-toastify';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { CartReducer, initialState, actions } from './CartReducer';
-import { UserContext } from '../UserContext/UserContext';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
+import useUserContext from '../UserContext/useUserContext';
 
 export const CartContext = createContext();
 
 export function CartProvider({ children, client }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
   const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
-  const { userAccessToken } = useContext(UserContext);
+  const { userAccessToken } = useUserContext();
   const { toggleCart } = useGlobalContext();
 
   const createCheckout = useCallback(async () => {

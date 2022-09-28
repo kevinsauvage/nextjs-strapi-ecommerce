@@ -1,15 +1,15 @@
-import { useContext } from 'react';
 import Page from '@/components/Page/Page';
-import { CartContext } from '@/contexts/CartContext/CartContext';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import routes from '@/data/routes';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
 import Container from '@/components/Container/Container';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const { cart, isCheckoutLoading } = useContext(CartContext);
+  const { cart, isCheckoutLoading, removeFromCart, handleQuantityChange } =
+    useCartContext();
 
   return (
     <Page title="Your Cart" loading={isCheckoutLoading}>
@@ -35,6 +35,8 @@ function CartPage() {
                       key={item?.variant?.id}
                       product={item}
                       quantity={item?.quantity}
+                      removeFromCart={removeFromCart}
+                      handleQuantityChange={handleQuantityChange}
                     />
                   ))}
                 </tbody>

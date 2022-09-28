@@ -1,15 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { GlobalStoreContext } from '@/contexts/GlobalContext/GlobalContext';
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './EmptyCart.module.scss';
 
 export default function EmptyCart() {
   const router = useRouter();
-  const { resetToggle } = useContext(GlobalStoreContext);
+  const { resetToggle } = useGlobalContext();
 
   return (
     <div className={styles.container}>

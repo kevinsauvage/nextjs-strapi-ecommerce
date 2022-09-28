@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import Container from '@/components/Container/Container';
@@ -6,12 +5,12 @@ import Input from '@/components/Input/Input';
 import Page from '@/components/Page/Page';
 import useForm from '@/hooks/useForm';
 import Form from '@/components/Form/Form';
-import { UserContext } from '@/contexts/UserContext/UserContext';
 import routes from '@/data/routes';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
-  const { register, loading } = useContext(UserContext);
+  const { register, loading } = useUserContext();
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;

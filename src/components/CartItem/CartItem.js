@@ -1,15 +1,18 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineDeleteForever } from 'react-icons/md';
-import { CartContext } from '@/contexts/CartContext/CartContext';
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
 import { toast } from 'react-toastify';
 import styles from './CartItem.module.scss';
 
-export default function CartItem({ product, inputId }) {
-  const { removeFromCart, handleQuantityChange } = useContext(CartContext);
+export default function CartItem({
+  product,
+  inputId,
+  handleQuantityChange,
+  removeFromCart,
+}) {
   const { quantity, variant } = product;
 
   const [newQuantity, setNewQuantity] = useState(quantity);

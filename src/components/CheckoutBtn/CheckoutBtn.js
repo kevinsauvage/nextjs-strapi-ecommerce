@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
-import { CartContext } from '@/contexts/CartContext/CartContext';
 import Button from '@/components/Button/Button';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 
 export default function CheckoutBtn({ extraClass }) {
   const router = useRouter();
 
-  const { cart } = useContext(CartContext);
+  const { cart } = useCartContext();
 
   const redirectToCheckout = async () => router.push(cart.webUrl);
 
