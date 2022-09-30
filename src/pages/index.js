@@ -5,8 +5,10 @@ import Container from '@/components/Container/Container';
 import Carousel from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
+import { getShop } from '@/lib/shopify/shop/shopApiCall';
 
-export default function Home({ bestSelling }) {
+export default function Home({ bestSelling, shopInfo }) {
+  console.log(shopInfo);
   return (
     <div className={styles.container}>
       <Banner1 />
@@ -28,9 +30,12 @@ export default function Home({ bestSelling }) {
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);
+  const shopInfo = await getShop();
+
   return {
     props: {
       bestSelling,
+      shopInfo,
     },
     revalidate: 10,
   };

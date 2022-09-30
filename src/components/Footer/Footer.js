@@ -24,6 +24,8 @@ function Footer({ collections }) {
         { href: routes.base.contact, name: 'Contact', id: 1 },
         { href: routes.base.privacy, name: 'Privacy', id: 2 },
         { href: routes.base.terms, name: 'Terms', id: 3 },
+        { href: routes.base.refound, name: 'Refound', id: 4 },
+        { href: routes.base.shipping, name: 'Shipping', id: 5 },
       ],
     },
     {
