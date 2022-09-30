@@ -4,7 +4,7 @@ import styles from './ShopBtn.module.scss';
 
 export default function ShopBtn() {
   return (
-    <Link href={routes.base.shop}>
+    <Link href={routes.collections}>
       <a className={styles.ShopBtn}>Shop Now</a>
     </Link>
   );

@@ -35,7 +35,9 @@ export default function CartItem({
       <td className={styles.item}>
         <ul className={styles.list}>
           <li className={styles.image}>
-            <Link href={`${routes.base.shop}/${variant?.product?.handle}`}>
+            <Link
+              href={`${routes.collection}${variant?.product?.collections?.[0]?.handle}/${variant?.product?.handle}`}
+            >
               <a>
                 <Image
                   src={variant.image.src}

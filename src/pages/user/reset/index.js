@@ -40,7 +40,7 @@ function ResetPassword() {
             tertiary
           />
           <div className={styles.backStore}>
-            Or go back to <Link href={routes.base.login}>Login</Link>.
+            Or go back to <Link href={routes.login}>Login</Link>.
           </div>
         </Form>
       </div>

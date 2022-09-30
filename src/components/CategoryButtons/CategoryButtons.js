@@ -12,7 +12,7 @@ function CategoryButtons({ collections = [] }) {
             collections.map((category) => (
               <li key={category?.id}>
                 <Link
-                  href={`${routes.base.collection}/${category?.handle}`}
+                  href={`${routes.collection}/${category?.handle}`}
                   key={category.id}
                 >
                   <a className={styles.button}>

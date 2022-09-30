@@ -59,7 +59,7 @@ function CartPage() {
               <div className={styles.btns}>
                 <CheckoutBtn
                   extraClass={styles.btn}
-                  noUserRedirectURL={routes.base.login}
+                  noUserRedirectURL={routes.login}
                   items={cart}
                 />
               </div>

@@ -5,7 +5,7 @@ const PUBLIC_FILE = /\.(.*)$/;
 
 function middleware(request) {
   const { nextUrl, cookies } = request;
-  const { pathname, origin, locale } = nextUrl;
+  const { pathname, origin } = nextUrl;
 
   const basicAuth = request.headers.get('authorization');
   const url = request.nextUrl;
@@ -27,18 +27,14 @@ function middleware(request) {
       // Get user auth cookies
       const cookieShopify = cookies.get('shopify_token');
 
-      if (cookieShopify) {
-        // Cannot access auth page if already login
-        if (pathname.includes('/auth')) {
-          return NextResponse.redirect(
-            `${origin}/${locale || 'en'}${routes.base.profile}`
-          );
-        }
-      } else if (pathname === '/account') {
-        // Cannot access account if not login
-        return NextResponse.redirect(
-          `${origin}/${locale || 'en'}${routes.base.login}`
-        );
+      // Cannot access auth page if already login
+      if (cookieShopify && pathname.includes('/auth')) {
+        return NextResponse.redirect(`${origin}${routes.account}`);
+      }
+
+      // Cannot access account if not login
+      if (!cookieShopify && pathname.includes('/account')) {
+        return NextResponse.redirect(`${origin}${routes.login}`);
       }
 
       return NextResponse.next();

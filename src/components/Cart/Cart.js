@@ -49,7 +49,7 @@ export default function Cart() {
                 <CheckoutBtn
                   user={user}
                   extraClass={styles.btn}
-                  noUserRedirectURL={routes.base.login}
+                  noUserRedirectURL={routes.login}
                   items={cart}
                 />
               </FlexColumn>

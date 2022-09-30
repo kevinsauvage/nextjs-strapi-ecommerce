@@ -52,8 +52,8 @@ function RegisterPage() {
               tertiary
             />
             <div className={styles.alreadyRegistered}>
-              Already have an account?{' '}
-              <Link href={routes.base.login}>Login</Link> now.
+              Already have an account? <Link href={routes.login}>Login</Link>{' '}
+              now.
             </div>
           </Form>
         </div>

@@ -16,7 +16,7 @@ export default function ProductCardDefault({ product }) {
   return (
     <li className={`${styles.productCardDefault}`}>
       <Link
-        href={`${routes.base.collection}/${product?.collections?.[0]?.handle}/${handle}`}
+        href={`${routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
       >
         <a>
           <div className={styles.image}>

@@ -14,7 +14,7 @@ export default function EmptyCart() {
     <div className={styles.container}>
       <h2 className={styles.title}>Your cart is empty</h2>
       <p className={styles.subtitle}>
-        Something missing? <Link href={routes.base.login}>Sign in </Link>
+        Something missing? <Link href={routes.login}>Sign in </Link>
         to see items you may have added from another computer or device.
       </p>
       <Image src="/emptyCart.svg" width="200" height="200" alt="Empty cart" />
@@ -24,7 +24,7 @@ export default function EmptyCart() {
         extraClass={styles.btn}
         onClick={() => {
           resetToggle();
-          router.push(routes.base.collection);
+          router.push(routes.collection);
         }}
       />
     </div>

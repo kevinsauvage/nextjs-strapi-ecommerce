@@ -8,7 +8,6 @@ import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 
 export default function Home({ bestSelling, shopInfo }) {
-  console.log(shopInfo);
   return (
     <div className={styles.container}>
       <Banner1 />

@@ -45,7 +45,7 @@ export function UserProvider({ children }) {
 
     if (res && res.ok) {
       dispatch({ type: actions.REMOVE_USER });
-      router.push(routes.base.home);
+      router.push(routes.home);
       toggleLoading(false);
     } else {
       toast.error('Something went wrong, please try again');
@@ -112,7 +112,7 @@ export function UserProvider({ children }) {
 
         if (res) {
           toast.success('Your login was successful');
-          router.push(routes.base.profile);
+          router.push(routes.account);
         }
       }
 
@@ -191,7 +191,7 @@ export function UserProvider({ children }) {
         toggleLoading(false);
 
         const res = await handleToken(customerAccessToken);
-        if (res) router.push(routes.base.profile);
+        if (res) router.push(routes.account);
       }
       toggleLoading(false);
 

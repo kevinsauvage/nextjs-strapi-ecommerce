@@ -1,20 +1,19 @@
 const routes = {
-  base: {
-    home: '/',
-    about: '/about',
-    contact: '/contact',
-    login: '/login',
-    register: '/register',
-    profile: '/account',
-    resetPassword: '/reset',
-    collection: '/collection',
-    product: '/product',
-
-    terms: '/shop/terms',
-    privacy: '/shop/privacy',
-    refound: '/shop/refound',
-    shipping: '/shop/shipping',
-  },
+  home: '/',
+  about: '/about',
+  contact: '/contact',
+  collection: '/collection',
+  product: '/product',
+  // SHOP INFORMATION
+  terms: '/shop/terms',
+  privacy: '/shop/privacy',
+  refound: '/shop/refound',
+  shipping: '/shop/shipping',
+  // USER
+  login: '/user/auth/login',
+  register: '/user/auth/register',
+  account: '/user/account',
+  resetPassword: '/user/reset',
 };
 
 export default routes;

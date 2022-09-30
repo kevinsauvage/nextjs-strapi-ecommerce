@@ -9,7 +9,7 @@ import styles from './User.module.scss';
 
 export default function User() {
   const { userOpen, resetToggle } = useGlobalContext();
-  const { user, logOut } = useUserContext();
+  const { user, logout } = useUserContext();
 
   return (
     <Slide
@@ -24,7 +24,7 @@ export default function User() {
           </div>
           <div className={styles.buttons}>
             <Button
-              href={routes.base.profile}
+              href={routes.account}
               text="PROFILE"
               secondary
               extraClass={styles.btn}
@@ -32,7 +32,7 @@ export default function User() {
             <Button
               text="LOG OUT"
               tertiary
-              onClick={() => logOut()}
+              onClick={logout}
               extraClass={styles.btn}
             />
           </div>
@@ -47,13 +47,13 @@ export default function User() {
             <Button
               text="LOGIN"
               tertiary
-              href={routes.base.login}
+              href={routes.login}
               extraClass={styles.btn}
             />
             <Button
               text="SIGN UP"
               secondary
-              href={routes.base.register}
+              href={routes.register}
               extraClass={styles.btn}
             />
           </FlexColumn>

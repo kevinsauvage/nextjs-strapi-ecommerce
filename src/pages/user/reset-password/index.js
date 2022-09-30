@@ -47,7 +47,7 @@ export default Password;
 
 export async function getServerSideProps({ query, res }) {
   if (!query.reset_url) {
-    res.setHeader('location', routes.base.login);
+    res.setHeader('location', routes.login);
     res.statusCode = 302;
     res.end();
     return null;

@@ -7,7 +7,7 @@ function Footer({ collections }) {
   const getCollections = () =>
     collections?.map((category) => ({
       name: category.title,
-      href: `${routes.base.collection}/${category.handle}`,
+      href: `${routes.collection}/${category.handle}`,
       id: category.id,
     }));
 
@@ -21,11 +21,11 @@ function Footer({ collections }) {
       title: 'Information',
       id: 2,
       items: [
-        { href: routes.base.contact, name: 'Contact', id: 1 },
-        { href: routes.base.privacy, name: 'Privacy', id: 2 },
-        { href: routes.base.terms, name: 'Terms', id: 3 },
-        { href: routes.base.refound, name: 'Refound', id: 4 },
-        { href: routes.base.shipping, name: 'Shipping', id: 5 },
+        { href: routes.contact, name: 'Contact', id: 1 },
+        { href: routes.privacy, name: 'Privacy', id: 2 },
+        { href: routes.terms, name: 'Terms', id: 3 },
+        { href: routes.refound, name: 'Refound', id: 4 },
+        { href: routes.shipping, name: 'Shipping', id: 5 },
       ],
     },
     {
@@ -62,11 +62,11 @@ function Footer({ collections }) {
           <nav>
             <ul className={styles.list}>
               <li className={styles.item}>
-                <Link href={routes.base.terms}>Term and condition</Link>
+                <Link href={routes.terms}>Term and condition</Link>
               </li>
               /
               <li className={styles.item}>
-                <Link href={routes.base.privacy}>Privacy policy</Link>
+                <Link href={routes.privacy}>Privacy policy</Link>
               </li>
             </ul>
           </nav>

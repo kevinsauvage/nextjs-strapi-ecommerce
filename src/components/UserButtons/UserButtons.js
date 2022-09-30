@@ -15,7 +15,7 @@ export default function UserButtons() {
   const router = useRouter();
 
   const handleClickUser = () => {
-    if (user && user.id) router.push(routes.base.profile);
+    if (user && user.id) router.push(routes.account);
     else toggleUser();
   };
 

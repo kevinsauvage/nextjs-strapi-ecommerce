@@ -5,24 +5,7 @@ import Crumbs from './Crumbs';
 export default function Breadcrumbs() {
   const router = useRouter();
 
-  const routes = [
-    { name: 'Home' },
-    { name: 'Shop' },
-    { name: 'About' },
-    { name: 'Contact' },
-    { name: 'Terms' },
-    { name: 'Privacy' },
-    { name: 'Profile' },
-    { name: 'Collections' },
-  ];
-
-  const generateText = (text) => {
-    let title = '';
-    routes.forEach((route) => {
-      if (text.toLowerCase() === route.name.toLowerCase()) title = route.name;
-    });
-    return title || text;
-  };
+  const filterCrumb = ['shop', 'user', 'auth'];
 
   function generateBreadcrumbs() {
     const asPathWithoutQuery = router.asPath.split('?')[0];
@@ -31,13 +14,17 @@ export default function Breadcrumbs() {
       .split('/')
       .filter((v) => v.length > 0);
 
-    const crumblist = asPathNestedRoutes.map((subpath, idx) => {
+    const crumbList = asPathNestedRoutes.map((subpath, idx) => {
       const href = `/${asPathNestedRoutes.slice(0, idx + 1).join('/')}`;
       const title = subpath.split('-').join(' ');
-      return { href, title: generateText(title) };
+      return {
+        href,
+        title,
+        isNotClickable: filterCrumb.includes(title.toLowerCase()),
+      };
     });
 
-    return [{ href: '/', title: 'Home' }, ...crumblist];
+    return [{ href: '/', title: 'Home' }, ...crumbList];
   }
 
   // Call the function to generate the breadcrumbs list

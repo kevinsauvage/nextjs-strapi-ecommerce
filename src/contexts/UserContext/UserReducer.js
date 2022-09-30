@@ -16,7 +16,7 @@ export const UserReducer = (state = initialState, action) => {
     }
 
     case actions.REMOVE_USER: {
-      return { ...state, user: {} };
+      return { ...state, user: undefined };
     }
 
     case actions.CHANGE_LOADING: {

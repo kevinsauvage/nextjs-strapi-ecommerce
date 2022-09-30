@@ -4,9 +4,9 @@ import styles from './Navbar.module.scss';
 
 function Navbar({ active }) {
   const navigationItems = [
-    { name: 'Home', path: routes.base.home, id: 1 },
-    { name: 'Collections', path: routes.base.collection, id: 2 },
-    { name: 'Contact', path: routes.base.contact, id: 3 },
+    { name: 'Home', path: routes.home, id: 1 },
+    { name: 'Collections', path: routes.collection, id: 2 },
+    { name: 'Contact', path: routes.contact, id: 3 },
   ];
 
   return (

@@ -29,7 +29,7 @@ export const getServerSideProps = async ({ res }) => {
   const collections = await getCollections(50);
 
   const dynamicPaths = collections.map(
-    (collection) => `${BASE_URL}/${routes.base.collection}/${collection.handle}`
+    (collection) => `${BASE_URL}/${routes.collection}/${collection.handle}`
   );
 
   const allPaths = [...staticPaths, ...dynamicPaths];

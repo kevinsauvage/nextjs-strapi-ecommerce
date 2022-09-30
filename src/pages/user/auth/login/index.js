@@ -48,11 +48,11 @@ function LoginPage() {
               tertiary
             />
             <div className={styles.forgotPassword}>
-              <Link href={routes.base.resetPassword}>Reset Password</Link>
+              <Link href={routes.resetPassword}>Reset Password</Link>
             </div>
             <div className={styles.register}>
               Don&apos;t have an account?{' '}
-              <Link href={routes.base.register}>Register</Link> now.
+              <Link href={routes.register}>Register</Link> now.
             </div>
           </Form>
         </div>
