@@ -13,6 +13,7 @@ export default function Button({
   quaternary,
   tertiary,
   disabled,
+  width,
   href,
   ...rest
 }) {
@@ -28,7 +29,7 @@ export default function Button({
     return (
       <Link href={href}>
         <a
-          style={extraStyles}
+          style={{ ...extraStyles }}
           className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
         >
           {text}
@@ -43,7 +44,7 @@ export default function Button({
       type={type || 'button'}
       onClick={onClick || null}
       onKeyDown={(e) => e.key === 'Enter' && (onClick || null)}
-      style={extraStyles}
+      style={{ width, ...extraStyles }}
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()}`}
     >

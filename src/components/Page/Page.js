@@ -14,7 +14,7 @@ export default function Page({ children, title, loading }) {
         <h1 className={styles.title}>{title}</h1>
         <Breadcrumbs />
       </div>
-      {children}
+      <div className={styles.children}>{children}</div>
     </div>
   );
 }

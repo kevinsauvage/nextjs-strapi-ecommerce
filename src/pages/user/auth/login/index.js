@@ -19,7 +19,7 @@ function LoginPage() {
   return (
     <Page title="User Login" loading={loading}>
       <Container>
-        <div className={styles.login}>
+        <div>
           <Form
             title="LOGIN TO YOUR ACCOUNT"
             subtitle="Please complete the form below to login to your account"
@@ -41,12 +41,7 @@ function LoginPage() {
               label="Password"
               onChange={handleInputChange}
             />
-            <Button
-              extraClass={styles.btn}
-              text="Login"
-              type="submit"
-              tertiary
-            />
+            <Button width="100%" text="Login" type="submit" tertiary />
             <div className={styles.forgotPassword}>
               <Link href={routes.resetPassword}>Reset Password</Link>
             </div>

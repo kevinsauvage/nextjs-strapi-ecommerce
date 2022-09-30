@@ -22,7 +22,7 @@ function RegisterPage() {
   return (
     <Page title="Register your account" loading={loading}>
       <Container>
-        <div className={styles.register}>
+        <div>
           <Form
             onSubmit={handleSubmit}
             title="CREATE ACCOUNT"
@@ -45,12 +45,7 @@ function RegisterPage() {
               autoComplete="current-password"
               onChange={handleInputChange}
             />
-            <Button
-              extraClass={styles.btn}
-              text="Register"
-              type="submit"
-              tertiary
-            />
+            <Button width="100%" text="Register" type="submit" tertiary />
             <div className={styles.alreadyRegistered}>
               Already have an account? <Link href={routes.login}>Login</Link>{' '}
               now.

@@ -5,7 +5,6 @@ import Page from '@/components/Page/Page';
 import useForm from '@/hooks/useForm';
 import routes from '@/data/routes';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import styles from './password.module.scss';
 
 function Password({ resetUrl }) {
   const { resetPassword, loading } = useUserContext();
@@ -17,7 +16,7 @@ function Password({ resetUrl }) {
 
   return (
     <Page title="Password recovery" loading={loading}>
-      <div className={styles.password}>
+      <div>
         <Form
           title="ENTER YOUR NEW PASSWORD"
           subtitle="Fill the form below to update your password"
@@ -31,12 +30,7 @@ function Password({ resetUrl }) {
             placeholder="New password"
             onChange={handleInputChange}
           />
-          <Button
-            extraClass={styles.btn}
-            type="submit"
-            text="RESET PASSWORD"
-            tertiary
-          />
+          <Button width="100%" type="submit" text="RESET PASSWORD" tertiary />
         </Form>
       </div>
     </Page>

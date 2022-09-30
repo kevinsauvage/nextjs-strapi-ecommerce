@@ -18,7 +18,7 @@ function ResetPassword() {
 
   return (
     <Page title="Password recovery" loading={loading}>
-      <div className={styles.ResetPassword}>
+      <div>
         <Form
           title="RESET YOUR PASSWORD"
           subtitle="Enter your email address below to receive an email to reset your password"
@@ -34,7 +34,7 @@ function ResetPassword() {
             required
           />
           <Button
-            extraClass={styles.btn}
+            extraStyles={{ width: '100%' }}
             type="submit"
             text="SEND ME AN EMAIL"
             tertiary

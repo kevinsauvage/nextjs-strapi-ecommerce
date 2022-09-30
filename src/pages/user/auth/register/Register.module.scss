@@ -1,20 +1,9 @@
-.register {
-  width: 100%;
-  padding: 100px 0;
-  display: flex;
-  justify-content: center;
-}
-
 .alreadyRegistered {
   text-align: center;
+  margin-top: 30px;
   font-size: 14px;
   & a {
     color: $strong;
     text-decoration: underline;
   }
-}
-
-.btn {
-  width: 100%;
-  margin-bottom: 30px;
 }
