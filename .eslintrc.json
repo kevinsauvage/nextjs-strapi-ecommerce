@@ -39,7 +39,8 @@
         ["@/styles", "./src/styles"],
         ["@/lib", "./src/lib"],
         ["@/helpers", "./src/helpers"],
-        ["@/utils", "./src/utils"]
+        ["@/utils", "./src/utils"],
+        ["@/layout", "./src/layout"]
       ]
     }
   }
