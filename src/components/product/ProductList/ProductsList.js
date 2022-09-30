@@ -4,7 +4,7 @@ import { ClipLoader } from 'react-spinners';
 import useOnScreen from '@/hooks/useOnScreen';
 import useRouterFilter from '@/hooks/useRouterFilter';
 import useThrottledEffect from '@/hooks/useThrottledEffect';
-import Filters from '@/components/Filters/Filters';
+import Filters from '@/layout/Filters/Filters';
 import Sort from '@/components/Sort/Sort';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';

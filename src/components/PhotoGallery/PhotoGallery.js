@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Loader from '../Loader/Loader';
+import Loader from '@/layout/Loader/Loader';
 import styles from './PhotoGallery.module.scss';
 
 export default function PhotoGallery({ selectedVariant }) {

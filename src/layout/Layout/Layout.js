@@ -1,15 +1,15 @@
 import 'react-toastify/dist/ReactToastify.min.css';
 import { ToastContainer } from 'react-toastify';
-import Footer from '@/components/Footer/Footer';
-import Header from '@/components/Header/Header';
-import SearchBar from '@/components/Search/SearchBar';
-import Cart from '@/components/Cart/Cart';
-import User from '@/components/User/User';
+import Footer from '@/layout/Footer/Footer';
+import Header from '@/layout/Header/Header';
+import SearchBar from '@/layout/Search/SearchBar';
+import Cart from '@/layout/Cart/Cart';
+import User from '@/layout/User/User';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import CategoryButtons from '@/layout/CategoryButtons/CategoryButtons';
+import Modal from '@/layout/Modal/Modal';
+import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import styles from './Layout.module.scss';
-import CategoryButtons from '../CategoryButtons/CategoryButtons';
-import Modal from '../Modal/Modal';
-import ProductPresenter from '../product/ProductPresenter/ProductPresenter';
 
 function Layout({ children, collections }) {
   const { modalSelectedProduct, setSelectedModalProduct } = useGlobalContext();

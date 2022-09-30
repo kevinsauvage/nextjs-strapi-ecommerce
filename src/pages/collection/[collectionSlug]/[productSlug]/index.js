@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
-import Page from '@/components/Page/Page';
-import Container from '@/components/Container/Container';
+import Page from '@/layout/Page/Page';
+import Container from '@/layout/Container/Container';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
 import {

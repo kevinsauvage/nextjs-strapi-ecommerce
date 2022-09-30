@@ -1,6 +1,6 @@
-import Page from '@/components/Page/Page';
+import Page from '@/layout/Page/Page';
 import Carousel from '@/components/Carousel/Carousel';
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';

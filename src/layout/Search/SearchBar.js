@@ -1,4 +1,4 @@
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import { MdClose } from 'react-icons/md';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './SearchBar.module.scss';

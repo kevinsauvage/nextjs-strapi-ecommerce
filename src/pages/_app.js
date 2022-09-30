@@ -1,5 +1,5 @@
 import '../styles/globals.scss';
-import Layout from '@/components/Layout/Layout';
+import Layout from '@/layout/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';

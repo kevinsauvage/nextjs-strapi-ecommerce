@@ -1,8 +1,8 @@
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import Form from '@/components/Form/Form';
 import Input from '@/components/Input/Input';
-import Page from '@/components/Page/Page';
+import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
 import styles from './address.module.scss';
 

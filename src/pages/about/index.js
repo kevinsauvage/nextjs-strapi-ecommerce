@@ -1,4 +1,4 @@
-import Page from '@/components/Page/Page';
+import Page from '@/layout/Page/Page';
 import styles from './About.module.scss';
 
 function AboutPage() {

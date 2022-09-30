@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Loader from '@/components/Loader/Loader';
+import Loader from '@/layout/Loader/Loader';
 import styles from './Page.module.scss';
 
 export default function Page({ children, title, loading }) {

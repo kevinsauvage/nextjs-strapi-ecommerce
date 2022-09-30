@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import FlexColumn from '@/components/FlexColumn/FlexColumn';
+import FlexColumn from '@/layout/FlexColumn/FlexColumn';
 import config from '@/config/index';
 import Container from '../Container/Container';
 import styles from './Banner1.module.scss';

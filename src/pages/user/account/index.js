@@ -1,5 +1,5 @@
 import Button from '@/components/Button/Button';
-import Page from '@/components/Page/Page';
+import Page from '@/layout/Page/Page';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Profile.module.scss';
 

@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
-import Slide from '@/components/Slide/Slide';
-import FlexColumn from '@/components/FlexColumn/FlexColumn';
+import Slide from '@/layout/Slide/Slide';
+import FlexColumn from '@/layout/FlexColumn/FlexColumn';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import ProductCheckoutCard from '@/components/ProductCheckoutCard/ProductCheckoutCard';
+import ProductCheckoutCard from '@/components/product/ProductCheckoutCard/ProductCheckoutCard';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useCartContext from '@/contexts/CartContext/useCartContext';

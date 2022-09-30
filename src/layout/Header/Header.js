@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import UserButtons from '@/components/UserButtons/UserButtons';
+import Navbar from '@/components/Navbar/Navbar';
 import styles from './Header.module.scss';
-import Navbar from '../Navbar/Navbar';
 
 function Header() {
   return (

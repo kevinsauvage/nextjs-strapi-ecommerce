@@ -1,5 +1,5 @@
-import Container from '@/components/Container/Container';
-import Page from '@/components/Page/Page';
+import Container from '@/layout/Container/Container';
+import Page from '@/layout/Page/Page';
 import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import {
   filterCollection,

@@ -1,7 +1,7 @@
-import SecureBanner from '@/components/SecureBanner/SecureBanner';
-import Banner1 from '@/components/BannerHome/Banner1';
+import SecureBanner from '@/layout/SecureBanner/SecureBanner';
+import Banner1 from '@/layout/BannerHome/Banner1';
 import styles from '@/styles/Home.module.scss';
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import Carousel from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';

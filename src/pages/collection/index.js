@@ -1,5 +1,5 @@
-import Container from '@/components/Container/Container';
-import Page from '@/components/Page/Page';
+import Container from '@/layout/Container/Container';
+import Page from '@/layout/Page/Page';
 import Carousel from '@/components/Carousel/Carousel';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';

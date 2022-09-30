@@ -1,9 +1,9 @@
-import Page from '@/components/Page/Page';
+import Page from '@/layout/Page/Page';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import routes from '@/data/routes';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
-import Container from '@/components/Container/Container';
+import Container from '@/layout/Container/Container';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Cart.module.scss';
 
