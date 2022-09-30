@@ -1,12 +1,12 @@
 import Container from '@/components/Container/Container';
 import Page from '@/components/Page/Page';
-import ProductsList from '@/components/ProductList/ProductsList';
 import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import {
   filterCollection,
   getCollectionFilters,
 } from '@/lib/shopify/collection/collectionApiCall';
 import { getProductTags } from '@/lib/shopify/product/productApiCall';
+import ProductsList from '@/components/product/ProductList/ProductsList';
 
 function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
   return (

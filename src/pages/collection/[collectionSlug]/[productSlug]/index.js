@@ -1,8 +1,7 @@
 import { useRouter } from 'next/router';
 import Page from '@/components/Page/Page';
 import Container from '@/components/Container/Container';
-import ProductPresenter from '@/components/ProductPresenter/ProductPresenter';
-import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
 import {
   getProduct,
@@ -10,6 +9,7 @@ import {
   getProducts,
 } from '@/lib/shopify/product/productApiCall';
 
+import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import styles from './slug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {

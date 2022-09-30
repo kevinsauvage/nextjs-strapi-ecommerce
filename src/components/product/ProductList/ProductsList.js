@@ -1,13 +1,13 @@
-import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefault';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import useOnScreen from '@/hooks/useOnScreen';
 import useRouterFilter from '@/hooks/useRouterFilter';
 import useThrottledEffect from '@/hooks/useThrottledEffect';
-import Filters from '../Filters/Filters';
+import Filters from '@/components/Filters/Filters';
+import Sort from '@/components/Sort/Sort';
 import styles from './ProductList.module.scss';
-import Sort from '../Sort/Sort';
+import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 
 function ProductsList({
   products,

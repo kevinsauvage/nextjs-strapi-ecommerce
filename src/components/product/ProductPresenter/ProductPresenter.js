@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
-import ProductDescription from '@/components/ProductDescription/ProductDescription';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './ProductPresenter.module.scss';
+import ProductDescription from '../ProductDescription/ProductDescription';
 
 export default function ProductPresenter({ product, isModal }) {
   const { addToCart } = useCartContext();

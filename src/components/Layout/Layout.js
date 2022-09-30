@@ -9,7 +9,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Layout.module.scss';
 import CategoryButtons from '../CategoryButtons/CategoryButtons';
 import Modal from '../Modal/Modal';
-import ProductPresenter from '../ProductPresenter/ProductPresenter';
+import ProductPresenter from '../product/ProductPresenter/ProductPresenter';
 
 function Layout({ children, collections }) {
   const { modalSelectedProduct, setSelectedModalProduct } = useGlobalContext();
