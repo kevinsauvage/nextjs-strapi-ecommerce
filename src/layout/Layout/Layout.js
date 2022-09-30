@@ -21,7 +21,6 @@ function Layout({ children, collections }) {
       <div className={styles.container}>
         <Header />
         <CategoryButtons collections={collections} />
-
         {modalSelectedProduct ? (
           <Modal handleClose={() => setSelectedModalProduct(false)}>
             <ProductPresenter product={modalSelectedProduct} isModal />
