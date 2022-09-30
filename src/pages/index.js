@@ -7,7 +7,7 @@ import ProductCardDefault from '@/components/ProductCardDefault/ProductCardDefau
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 
-export default function Home({ bestSelling, shopInfo }) {
+export default function Home({ bestSelling }) {
   return (
     <div className={styles.container}>
       <Banner1 />
