@@ -30,46 +30,15 @@ export function CartProvider({ children }) {
   const { toggleCart } = useGlobalContext();
   const { cart, isCartLoading } = states;
 
-  const toggleLoading = useCallback(
-    () => dispatch({ type: 'TOGGLE_CART_LOADING' }),
-    []
-  );
-
-  const handleSetCart = useCallback((c) => {
-    if (c?.id) {
-      dispatch({ type: actions.ADD_CART, payload: c });
-    }
+  const toggleLoading = useCallback((is) => {
+    dispatch({ type: 'IS_CART_LOADING', payload: is });
   }, []);
 
-  const handleCreateCart = useCallback(async () => {
-    const res = await createCart();
-    if (res?.id) {
-      handleSetCart(res);
-      setCartId(res.id);
+  const handleSetCart = useCallback((newCart) => {
+    if (newCart?.id) {
+      dispatch({ type: actions.ADD_CART, payload: newCart });
     }
-  }, [setCartId, handleSetCart]);
-
-  useEffect(() => {
-    if (!cartId) handleCreateCart();
-  }, [handleCreateCart, cartId]);
-
-  const handleGetCartById = useCallback(
-    async (id) => {
-      const res = await getCartById(id);
-      handleSetCart(res);
-    },
-    [handleSetCart]
-  );
-
-  useEffect(() => {
-    if (cartId && !cart) handleGetCartById(cartId);
-  }, [cartId, handleGetCartById, cart]);
-
-  useEffect(() => {
-    if (userAccessToken && cartId) {
-      cartBuyerIdentityUpdate(cartId, { customerAccessToken: userAccessToken });
-    }
-  }, [userAccessToken, cartId]);
+  }, []);
 
   const addToCart = useCallback(
     async (merchandiseId, quantity, product = '') => {
@@ -80,7 +49,7 @@ export function CartProvider({ children }) {
           attributes: [{ key: 'product', value: product }],
         },
       ];
-
+      toggleLoading(true);
       const res = await addLinesToCart(cartId, lineItemsToAdd);
 
       if (res?.cart?.id) {
@@ -88,12 +57,12 @@ export function CartProvider({ children }) {
         toggleCart(true);
       } else toast.error('Product not added. Try again later.');
     },
-    [toggleCart, cartId, handleSetCart]
+    [toggleCart, cartId, handleSetCart, toggleLoading]
   );
 
   const removeFromCart = useCallback(
     async (lineItemId) => {
-      toggleLoading();
+      toggleLoading(true);
       const res = await removeLinesFromCart(cartId, [lineItemId]);
       if (res?.cart) handleSetCart(res.cart);
     },
@@ -102,13 +71,39 @@ export function CartProvider({ children }) {
 
   const handleQuantityChange = useCallback(
     async (quantity, id) => {
-      toggleLoading();
+      toggleLoading(true);
       const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
       const res = await updateLines(cartId, lineItemsToUpdate);
       if (res) handleSetCart(res);
     },
     [toggleLoading, cartId, handleSetCart]
   );
+
+  // Create cart if carts ID doesn't exist in local storage
+  useEffect(() => {
+    if (!cartId) {
+      createCart().then((res) => {
+        if (res?.id) {
+          handleSetCart(res);
+          setCartId(res.id);
+        }
+      });
+    }
+  }, [cartId, handleSetCart, setCartId]);
+
+  // If cartId is found in local storage, then get it from Shopify
+  useEffect(() => {
+    if (cartId && !cart) {
+      getCartById(cartId).then((res) => handleSetCart(res));
+    }
+  }, [cartId, cart, handleSetCart]);
+
+  // If user login,  associate user to cart
+  useEffect(() => {
+    if (userAccessToken && cartId) {
+      cartBuyerIdentityUpdate(cartId, { customerAccessToken: userAccessToken });
+    }
+  }, [userAccessToken, cartId]);
 
   const values = useMemo(
     () => ({
