@@ -71,3 +71,17 @@ export const cleanProducts = (prods) => {
 
   return products || prods;
 };
+
+const getValueByKey = (key, attribute) => {
+  const arrayAtt = attribute.filter((att) => att.key === key);
+  const product = arrayAtt[0].value;
+  return JSON.parse(product);
+};
+
+export const parseCart = (cart) => ({
+  ...cart,
+  lines: cart.lines.edges.map((line) => ({
+    ...line.node,
+    product: getValueByKey('product', line.node.attributes),
+  })),
+});

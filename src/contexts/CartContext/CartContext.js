@@ -7,118 +7,121 @@ import {
 } from 'react';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import { toast } from 'react-toastify';
-import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
+
+import {
+  cartBuyerIdentityUpdate,
+  getCartById,
+  addLinesToCart,
+  createCart,
+  removeLinesFromCart,
+  updateLines,
+} from '@/lib/shopify/cart/cartApiCall';
+
 import { CartReducer, initialState, actions } from './CartReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 import useUserContext from '../UserContext/useUserContext';
 
 export const CartContext = createContext();
 
-export function CartProvider({ children, client }) {
+export function CartProvider({ children }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
-  const [checkoutId, setCheckoutId] = useLocalStorage('checkoutId', '');
+  const [cartId, setCartId] = useLocalStorage('cartId', '');
   const { userAccessToken } = useUserContext();
   const { toggleCart } = useGlobalContext();
-
-  const createCheckout = useCallback(async () => {
-    client.checkout.create().then((res) => {
-      dispatch({ type: actions.CHECKOUT_FOUND, payload: res });
-      setCheckoutId(res.id);
-    });
-  }, [client, setCheckoutId]);
-
-  useEffect(() => {
-    if (!checkoutId) createCheckout();
-  }, [createCheckout, checkoutId]);
-
-  const getCheckoutById = useCallback(
-    async (id) => {
-      await client.checkout.fetch(id).then((checkout) => {
-        if (checkout)
-          dispatch({ type: actions.CHECKOUT_FOUND, payload: checkout });
-      });
-    },
-    [client]
-  );
-
-  useEffect(() => {
-    if (checkoutId && !states.checkout?.id) getCheckoutById(checkoutId);
-  }, [checkoutId, getCheckoutById, states.checkout.id]);
-
-  useEffect(() => {
-    if (userAccessToken && checkoutId) {
-      associateCustomerToCheckout(checkoutId, userAccessToken);
-    }
-  }, [userAccessToken, checkoutId]);
+  const { cart, isCartLoading } = states;
 
   const toggleLoading = useCallback(
     () => dispatch({ type: 'TOGGLE_CART_LOADING' }),
     []
   );
 
-  const addToCart = useCallback(
-    async (variantId, quantity) => {
-      const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
+  const handleSetCart = useCallback((c) => {
+    if (c?.id) {
+      dispatch({ type: actions.ADD_CART, payload: c });
+    }
+  }, []);
 
-      if (!states?.checkout?.id) await createCheckout();
+  const handleCreateCart = useCallback(async () => {
+    const res = await createCart();
+    if (res?.id) {
+      handleSetCart(res);
+      setCartId(res.id);
+    }
+  }, [setCartId, handleSetCart]);
 
-      const id = states?.checkout?.id;
+  useEffect(() => {
+    if (!cartId) handleCreateCart();
+  }, [handleCreateCart, cartId]);
 
-      client.checkout.addLineItems(id, lineItemsToAdd).then((res) => {
-        dispatch({
-          type: 'ADD_VARIANT_TO_CART',
-          payload: { isCartOpen: true, checkout: res },
-        });
-        if (res) toggleCart(true);
-        else toast.error('Product not added. Try again later.');
-      });
+  const handleGetCartById = useCallback(
+    async (id) => {
+      const res = await getCartById(id);
+      handleSetCart(res);
     },
-    [client, states.checkout, createCheckout, toggleCart]
+    [handleSetCart]
+  );
+
+  useEffect(() => {
+    if (cartId && !cart) handleGetCartById(cartId);
+  }, [cartId, handleGetCartById, cart]);
+
+  useEffect(() => {
+    if (userAccessToken && cartId) {
+      cartBuyerIdentityUpdate(cartId, { customerAccessToken: userAccessToken });
+    }
+  }, [userAccessToken, cartId]);
+
+  const addToCart = useCallback(
+    async (merchandiseId, quantity, product = '') => {
+      const lineItemsToAdd = [
+        {
+          merchandiseId,
+          quantity: parseInt(quantity, 10),
+          attributes: [{ key: 'product', value: product }],
+        },
+      ];
+
+      const res = await addLinesToCart(cartId, lineItemsToAdd);
+
+      if (res?.cart?.id) {
+        handleSetCart(res.cart);
+        toggleCart(true);
+      } else toast.error('Product not added. Try again later.');
+    },
+    [toggleCart, cartId, handleSetCart]
   );
 
   const removeFromCart = useCallback(
-    (lineItemId) => {
-      const { id } = states.checkout;
+    async (lineItemId) => {
       toggleLoading();
-      client.checkout.removeLineItems(id, [lineItemId]).then((res) => {
-        dispatch({
-          type: 'REMOVE_LINE_ITEM_IN_CART',
-          payload: { checkout: res },
-        });
-      });
+      const res = await removeLinesFromCart(cartId, [lineItemId]);
+      if (res?.cart) handleSetCart(res.cart);
     },
-    [client, states.checkout, toggleLoading]
+    [toggleLoading, handleSetCart, cartId]
   );
 
   const handleQuantityChange = useCallback(
-    (quantity, id) => {
-      const checkId = states.checkout.id;
-      const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
+    async (quantity, id) => {
       toggleLoading();
-      client.checkout
-        .updateLineItems(checkId, lineItemsToUpdate)
-        .then((res) => {
-          dispatch({
-            type: 'UPDATE_QUANTITY_IN_CART',
-            payload: { checkout: res },
-          });
-        });
+      const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
+      const res = await updateLines(cartId, lineItemsToUpdate);
+      if (res) handleSetCart(res);
     },
-    [client, states.checkout, toggleLoading]
+    [toggleLoading, cartId, handleSetCart]
   );
 
   const values = useMemo(
     () => ({
       // States
-      cart: states.checkout,
-      isCheckoutLoading: states.isCheckoutLoading,
+      cart,
+      isCartLoading,
 
       // Functions
       addToCart,
       removeFromCart,
       handleQuantityChange,
     }),
-    [states, addToCart, removeFromCart, handleQuantityChange]
+    [cart, isCartLoading, addToCart, removeFromCart, handleQuantityChange]
   );
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

@@ -24,18 +24,23 @@ export default function Cart() {
       title="Cart"
       headerRight={cart?.length}
     >
-      {cart && Array.isArray(cart.lineItems) && cart.lineItems.length > 0 ? (
+      {Array.isArray(cart?.lines) && cart.lines.length > 0 ? (
         <>
           <ul className={styles.list}>
-            {cart.lineItems.map((item) => (
-              <ProductCheckoutCard key={item?.id} product={item} />
+            {cart.lines.map((item) => (
+              <ProductCheckoutCard
+                key={item?.id}
+                product={item.product}
+                variant={item.merchandise}
+                quantity={item.quantity}
+              />
             ))}
           </ul>
           <footer>
             <div className={styles.total}>
               <p>
-                Total : {cart.paymentDueV2.amount || 0}
-                {cart.paymentDueV2.currencyCode}
+                Total : {cart.cost?.subtotalAmount?.amount || 0}
+                {cart.cost?.subtotalAmount?.currencyCode || 'USD'}
               </p>
             </div>
             <div className={styles.btns}>

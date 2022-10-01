@@ -9,12 +9,13 @@ import styles from './CartItem.module.scss';
 
 export default function CartItem({
   product,
+  variant,
   inputId,
+  quantity,
   handleQuantityChange,
   removeFromCart,
+  lineId,
 }) {
-  const { quantity, variant } = product;
-
   const [newQuantity, setNewQuantity] = useState(quantity);
 
   useEffect(() => {
@@ -25,10 +26,10 @@ export default function CartItem({
     if (quantity < 1 || !quantity)
       return toast.error('Quantity must be higher than zero');
 
-    return handleQuantityChange(newQuantity, product.id);
+    return handleQuantityChange(newQuantity, lineId);
   };
 
-  const totalPrice = Number(variant.priceV2.amount) * Number(quantity);
+  const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
 
   return (
     <tr className={styles.container}>
@@ -36,14 +37,13 @@ export default function CartItem({
         <ul className={styles.list}>
           <li className={styles.image}>
             <Link
-              href={`${routes.collection}${variant?.product?.collections?.[0]?.handle}/${variant?.product?.handle}`}
+              href={`${routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
             >
               <a>
                 <Image
-                  src={variant.image.src}
+                  src={variant.image.sm}
                   width={variant.image.width}
                   height={variant.image.height}
-                  alt="Electronic equipment"
                   layout="responsive"
                 />
               </a>
@@ -84,8 +84,8 @@ export default function CartItem({
           role="button"
           tabIndex="0"
           className={styles.delete}
-          onKeyDown={(e) => e.key === 'Enter' && removeFromCart(product.id)}
-          onClick={() => removeFromCart(product.id)}
+          onKeyDown={(e) => e.key === 'Enter' && removeFromCart(lineId)}
+          onClick={() => removeFromCart(lineId)}
         >
           <MdOutlineDeleteForever />
         </div>

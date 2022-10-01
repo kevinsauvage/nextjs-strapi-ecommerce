@@ -49,9 +49,7 @@ export default function UserButtons() {
           {el.item}
         </HeaderButton>
       ))}
-      <div className={`${styles.totalItems}`}>
-        {cart?.lineItems?.length || '0'}
-      </div>
+      <div className={`${styles.totalItems}`}>{cart?.lines?.length || '0'}</div>
     </div>
   );
 }

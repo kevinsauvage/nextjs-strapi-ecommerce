@@ -23,7 +23,7 @@ export default function ProductPresenter({ product, isModal }) {
 
   const handleAddToCart = () => {
     if (quantity > 0) {
-      addToCart(selectedVariant.id, quantity);
+      addToCart(selectedVariant.id, quantity, JSON.stringify(product));
     }
   };
 

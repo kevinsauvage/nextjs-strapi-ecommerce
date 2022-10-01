@@ -1,16 +1,13 @@
 // initial state
 export const initialState = {
   isCartOpen: false,
-  checkout: { lineItems: [] },
-  isCheckoutLoading: true,
+  cart: undefined,
+  isCartLoading: true,
 };
 
 // actions
 export const actions = {
-  CHECKOUT_FOUND: 'CHECKOUT_FOUND',
-  ADD_VARIANT_TO_CART: 'ADD_VARIANT_TO_CART',
-  UPDATE_QUANTITY_IN_CART: 'UPDATE_QUANTITY_IN_CART',
-  REMOVE_LINE_ITEM_IN_CART: 'REMOVE_LINE_ITEM_IN_CART',
+  ADD_CART: 'ADD_CART',
   OPEN_CART: 'OPEN_CART',
   CLOSE_CART: 'CLOSE_CART',
   TOGGLE_CART_LOADING: 'TOGGLE_CART_LOADING',
@@ -19,35 +16,21 @@ export const actions = {
 // Reducer
 export const CartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.CHECKOUT_FOUND:
-      return { ...state, checkout: action.payload, isCheckoutLoading: false };
+    case actions.ADD_CART:
+      return { ...state, cart: action.payload, isCartLoading: false };
 
     case actions.ADD_VARIANT_TO_CART:
       return {
         ...state,
         isCartOpen: action.payload.isCartOpen,
-        checkout: action.payload.checkout,
-        isCheckoutLoading: false,
-      };
-
-    case actions.UPDATE_QUANTITY_IN_CART:
-      return {
-        ...state,
-        checkout: action.payload.checkout,
-        isCheckoutLoading: false,
-      };
-
-    case actions.REMOVE_LINE_ITEM_IN_CART:
-      return {
-        ...state,
-        checkout: action.payload.checkout,
-        isCheckoutLoading: false,
+        cart: action.payload,
+        isCartLoading: false,
       };
 
     case actions.TOGGLE_CART_LOADING:
       return {
         ...state,
-        isCheckoutLoading: true,
+        isCartLoading: true,
       };
 
     case actions.OPEN_CART:

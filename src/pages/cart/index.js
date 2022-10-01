@@ -8,16 +8,14 @@ import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const { cart, isCheckoutLoading, removeFromCart, handleQuantityChange } =
+  const { cart, isCartLoading, removeFromCart, handleQuantityChange } =
     useCartContext();
 
   return (
-    <Page title="Your Cart" loading={isCheckoutLoading}>
+    <Page title="Your Cart" loading={isCartLoading}>
       <Container>
         <div className={styles.cart}>
-          {cart &&
-          Array.isArray(cart.lineItems) &&
-          cart?.lineItems?.length > 0 ? (
+          {Array.isArray(cart?.lines) && cart?.lines?.length > 0 ? (
             <div>
               <table className={styles.table}>
                 <thead className={styles.head}>
@@ -30,12 +28,14 @@ function CartPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {cart.lineItems.map((item) => (
+                  {cart.lines.map((item) => (
                     <CartItem
-                      key={item?.variant?.id}
-                      product={item}
+                      key={item?.id}
+                      product={item.product}
+                      variant={item.merchandise}
                       quantity={item?.quantity}
                       removeFromCart={removeFromCart}
+                      lineId={item.id}
                       handleQuantityChange={handleQuantityChange}
                     />
                   ))}

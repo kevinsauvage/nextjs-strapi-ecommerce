@@ -7,7 +7,7 @@ export default function CheckoutBtn({ extraClass }) {
 
   const { cart } = useCartContext();
 
-  const redirectToCheckout = async () => router.push(cart.webUrl);
+  const redirectToCheckout = async () => router.push(cart.checkoutUrl);
 
   return (
     <Button
