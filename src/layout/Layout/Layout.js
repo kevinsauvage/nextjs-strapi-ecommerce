@@ -13,6 +13,7 @@ import styles from './Layout.module.scss';
 
 function Layout({ children, collections }) {
   const { modalSelectedProduct, setSelectedModalProduct } = useGlobalContext();
+
   return (
     <>
       <SearchBar />

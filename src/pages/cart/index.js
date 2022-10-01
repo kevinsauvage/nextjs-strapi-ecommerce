@@ -49,8 +49,8 @@ function CartPage() {
                     </td>
                     <td className={styles.price}>
                       <span>
-                        {cart?.totalPriceV2?.amount}
-                        {cart?.totalPriceV2?.currencyCode}
+                        {cart?.cost?.subtotalAmount?.amount}{' '}
+                        {cart?.cost?.subtotalAmount?.currencyCode}
                       </span>
                     </td>
                   </tr>

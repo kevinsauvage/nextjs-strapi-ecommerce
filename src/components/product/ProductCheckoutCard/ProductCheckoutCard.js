@@ -2,7 +2,6 @@ import Image from 'next/image';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({ product, variant, quantity }) {
-  console.log(product, variant);
   return (
     <div className={styles.card}>
       <div className={styles.image}>

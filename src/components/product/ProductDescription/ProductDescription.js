@@ -11,8 +11,9 @@ export default function ProductDescription({
   handleAddToCart,
   addOne,
   removeOne,
-  quantity,
+  handleBlurInput,
   handleChangeInput,
+  quantity,
   isModal,
 }) {
   const { title, descriptionHtml, variants } = product;
@@ -63,6 +64,7 @@ export default function ProductDescription({
           <a className={styles.fullDescription}>See Full Description</a>
         </Link>
       )}
+      <p>{selected?.quantityAvailable} Available</p>
 
       {selected?.quantityAvailable > 0 ? (
         <div className={styles.row}>
@@ -77,9 +79,10 @@ export default function ProductDescription({
             <input
               type="number"
               size="4"
-              value={quantity}
               className={styles.input}
               onChange={handleChangeInput}
+              onBlur={handleBlurInput}
+              value={quantity}
             />
             <button
               type="button"
