@@ -24,6 +24,7 @@ function middleware(request) {
         return null;
       }
 
+      console.log(url, 'next url');
       // Get user auth cookies
       const cookieShopify = cookies.get('shopify_token');
 

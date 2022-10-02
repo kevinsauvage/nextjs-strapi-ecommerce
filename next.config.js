@@ -3,6 +3,15 @@ const path = require('path');
 
 const nextConfig = {
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/404',
+        destination: '/',
+        permanent: true,
+      },
+    ];
+  },
   images: {
     domains: ['res.cloudinary.com', 'cdn.shopify.com'],
   },

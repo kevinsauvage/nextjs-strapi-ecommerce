@@ -42,6 +42,15 @@ export default ProductPage;
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.productSlug);
 
+  if (!product || !product?.id) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
   const recommendations = await getProductRecommendation(product.id);
 
   return {

@@ -8,7 +8,13 @@ import {
 import { getProductTags } from '@/lib/shopify/product/productApiCall';
 import ProductsList from '@/components/product/ProductList/ProductsList';
 
-function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
+function CollectionSlugPage({
+  title,
+  products,
+  filters,
+  pageInfo,
+  actualFilters,
+}) {
   return (
     <Page title={`${title}`}>
       <Container>
@@ -24,12 +30,21 @@ function CategoryPage({ title, products, filters, pageInfo, actualFilters }) {
   );
 }
 
-export default CategoryPage;
+export default CollectionSlugPage;
 
 export async function getServerSideProps({ params, query }) {
   const page = query.page ? Number(query.page) * 10 : 10;
 
   const availableFilters = await getCollectionFilters(params.collectionSlug);
+
+  if (!availableFilters) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
 
   const filtersFetchArray = getFiltersFromParams(availableFilters, query);
 

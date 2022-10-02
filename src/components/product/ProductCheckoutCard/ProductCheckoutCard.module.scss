@@ -9,11 +9,14 @@
 }
 .image {
   position: relative;
-  width: 110px;
-  height: 110px;
+  max-width: 110px;
+  max-height: 110px;
+  width: 100%;
+  height: 100%;
 }
 .body {
   padding: 10px;
+  width: 100%;
 }
 .row {
   display: flex;
