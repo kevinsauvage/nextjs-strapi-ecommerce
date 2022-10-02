@@ -9,11 +9,13 @@ export default function CheckoutBtn({ extraClass }) {
 
   const redirectToCheckout = async () => router.push(cart.checkoutUrl);
 
+  const text = `Checkout (${cart.cost?.subtotalAmount?.amount} ${cart.cost?.subtotalAmount?.currencyCode})`;
+
   return (
     <Button
       secondary
       onClick={() => redirectToCheckout()}
-      text="Checkout"
+      text={text}
       extraClass={extraClass}
     />
   );

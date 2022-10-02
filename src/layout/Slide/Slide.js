@@ -16,14 +16,20 @@ export default function Slide({ children, isOpen, handleClose, title }) {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >
-        <header className={styles.header}>
-          <h5 className={styles.title}>{title}</h5>
-          <button type="button" className={styles.close} onClick={handleClose}>
-            <MdClose />
-          </button>
-        </header>
-        <div className={styles.inner}>
-          <div className={styles.children}>{children}</div>
+        <div style={{ position: 'relative', padding: '20px 30px' }}>
+          <header className={styles.header}>
+            <h5 className={styles.title}>{title}</h5>
+            <button
+              type="button"
+              className={styles.close}
+              onClick={handleClose}
+            >
+              <MdClose />
+            </button>
+          </header>
+          <div className={styles.inner}>
+            <div className={styles.children}>{children}</div>
+          </div>
         </div>
       </aside>
     </div>

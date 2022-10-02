@@ -68,7 +68,7 @@ const queryCartById = `query($id: ID!) {
                 image {
                   src
                   altText
-                  sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+                  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                   blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                   width
                   height
@@ -148,7 +148,7 @@ const queryAddBuyerIdentityToCart = `mutation cartBuyerIdentityUpdate(
                   image {
                     src
                     altText
-                    sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                     blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
                     height
@@ -227,7 +227,7 @@ const queryAddLines = `mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInpu
                         image {
                           src
                           altText
-                          sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+                          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                           blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                           width
                           height
@@ -309,7 +309,7 @@ const queryRemoveFromCart = `mutation cartLinesRemove($cartId: ID!, $lineIds: [I
                         image {
                           src
                           altText
-                          sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+                          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                           blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                           width
                           height
@@ -394,7 +394,7 @@ const queryUpdateLine = `mutation cartLineUpdate($cartId: ID!, $lines: [CartLine
                   image {
                     src
                     altText
-                    sm: url(transform: {maxHeight: 500, maxWidth: 500, crop: CENTER})
+                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                     blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
                     height

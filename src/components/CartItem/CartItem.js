@@ -44,8 +44,8 @@ export default function CartItem({
               <a>
                 <Image
                   src={variant.image.sm}
-                  width="400"
-                  height="400"
+                  width="500"
+                  height="750"
                   layout="responsive"
                   objectFit="cover"
                 />

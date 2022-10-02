@@ -1,0 +1,37 @@
+.quantityContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 24px;
+  width: fit-content;
+  position: relative;
+}
+
+.input {
+  text-align: center;
+  height: 100%;
+  width: 40px;
+  border: none;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  background-color: whitesmoke;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+.btnQuantity {
+  padding: 4px;
+  border: 1px solid gray;
+  height: 100%;
+
+  svg {
+    font-size: 18px;
+  }
+}

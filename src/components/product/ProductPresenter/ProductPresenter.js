@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
 import useCartContext from '@/contexts/CartContext/useCartContext';
-import { toast } from 'react-toastify';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 
@@ -28,31 +27,7 @@ export default function ProductPresenter({ product, isModal }) {
     }
   };
 
-  const addOne = () => {
-    if (quantity >= selectedVariant.quantityAvailable) {
-      return setQuantity(selectedVariant.quantityAvailable);
-    }
-    return setQuantity((prev) => prev + 1);
-  };
-
-  const removeOne = () => {
-    if (quantity > 1) setQuantity((prev) => prev - 1);
-  };
-
-  const handleChangeInput = (e) => {
-    const num = e.target.value;
-    if (num > selectedVariant.quantityAvailable) {
-      return toast.error(
-        `There is Only ${selectedVariant.quantityAvailable} variant available`
-      );
-    }
-    console.log(num);
-    return setQuantity(num);
-  };
-
-  const handleBlurInput = (e) => {
-    if (!e.target.value) setQuantity(1);
-  };
+  const handleChangeInput = (num) => setQuantity(num);
 
   return (
     <div className={styles.container}>
@@ -68,10 +43,7 @@ export default function ProductPresenter({ product, isModal }) {
         handleChangeInput={handleChangeInput}
         handleAddToCart={handleAddToCart}
         selected={selectedVariant}
-        addOne={addOne}
         isModal={isModal}
-        removeOne={removeOne}
-        handleBlurInput={handleBlurInput}
       />
     </div>
   );

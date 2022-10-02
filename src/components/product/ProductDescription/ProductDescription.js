@@ -1,7 +1,7 @@
-import { VscAdd, VscRemove } from 'react-icons/vsc';
 import Button from '@/components/Button/Button';
 import routes from '@/data/routes';
 import Link from 'next/link';
+import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import styles from './ProductDescription.module.scss';
 
 export default function ProductDescription({
@@ -9,14 +9,11 @@ export default function ProductDescription({
   selected,
   handleSelect,
   handleAddToCart,
-  addOne,
-  removeOne,
-  handleBlurInput,
   handleChangeInput,
-  quantity,
   isModal,
 }) {
-  const { title, descriptionHtml, variants } = product;
+  const { title, descriptionHtml, variants } = product || {};
+  const { quantityAvailable } = selected || {};
 
   return (
     <div
@@ -64,40 +61,21 @@ export default function ProductDescription({
           <a className={styles.fullDescription}>See Full Description</a>
         </Link>
       )}
-      <p>{selected?.quantityAvailable} Available</p>
+      <p>{quantityAvailable} Available</p>
 
-      {selected?.quantityAvailable > 0 ? (
+      {quantityAvailable > 0 ? (
         <div className={styles.row}>
-          <div className={styles.quantityContainer}>
-            <button
-              type="button"
-              onClick={removeOne}
-              className={styles.btnQuantity}
-            >
-              <VscRemove />
-            </button>
-            <input
-              type="number"
-              size="4"
-              className={styles.input}
-              onChange={handleChangeInput}
-              onBlur={handleBlurInput}
-              value={quantity}
-            />
-            <button
-              type="button"
-              onClick={addOne}
-              className={styles.btnQuantity}
-            >
-              <VscAdd />
-            </button>
-          </div>
+          <QuantityUpdater
+            originalQuantity={1}
+            onChange={handleChangeInput}
+            quantityAvailable={quantityAvailable}
+          />
           <Button
             extraClass={styles.btn}
             type="button"
             text="ADD TO CART"
             tertiary
-            disabled={selected?.quantityAvailable < 1}
+            disabled={quantityAvailable < 1}
             onClick={handleAddToCart}
           />
         </div>

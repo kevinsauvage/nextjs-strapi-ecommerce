@@ -7,10 +7,10 @@ export default function PhotoGallery({ selectedVariant }) {
     <div className={styles.container}>
       {selectedVariant?.id ? (
         <Image
-          src={selectedVariant?.image?.sm}
+          src={selectedVariant?.image?.src}
           alt={selectedVariant?.image?.alt || selectedVariant?.title}
-          width={800}
-          height={800}
+          width={selectedVariant?.image?.width}
+          height={selectedVariant?.image?.height}
           layout="responsive"
           objectFit="contain"
           priority
