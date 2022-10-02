@@ -195,7 +195,7 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (token?.accessToken && !accessToken) {
-      console.log('run 1');
+      console.log('run useEffect 1');
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
 
@@ -219,15 +219,11 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (!user?.id && token?.accessToken && !accessToken) {
-      console.log('run 2');
+      console.log('run useEffect 2');
       handleToken(token);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
+  }, [token, accessToken, user?.id, handleToken]);
 
-  useEffect(() => {
-    console.log('run empty');
-  }, []);
   const values = useMemo(
     () => ({
       // States
