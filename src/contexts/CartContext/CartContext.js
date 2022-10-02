@@ -26,7 +26,7 @@ export const CartContext = createContext();
 export function CartProvider({ children }) {
   const [states, dispatch] = useReducer(CartReducer, initialState);
   const [cartId, setCartId] = useLocalStorage('cartId', '');
-  const { userAccessToken } = useUserContext();
+  const { token } = useUserContext();
   const { toggleCart } = useGlobalContext();
   const { cart, isCartLoading } = states;
 
@@ -100,10 +100,12 @@ export function CartProvider({ children }) {
 
   // If user login,  associate user to cart
   useEffect(() => {
-    if (userAccessToken && cartId) {
-      cartBuyerIdentityUpdate(cartId, { customerAccessToken: userAccessToken });
+    if (token && cartId) {
+      cartBuyerIdentityUpdate(cartId, {
+        customerAccessToken: token.accessToken,
+      });
     }
-  }, [userAccessToken, cartId]);
+  }, [token, cartId]);
 
   const values = useMemo(
     () => ({

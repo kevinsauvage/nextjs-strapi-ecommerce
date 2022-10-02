@@ -13,7 +13,7 @@ const routes = {
   login: '/user/auth/login',
   register: '/user/auth/register',
   account: '/user/account',
-  resetPassword: '/user/reset',
+  resetPassword: '/user/reset/email',
 };
 
 export default routes;

@@ -1,33 +1,27 @@
-import { setCookie } from 'nookies';
+import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
 
 const login = async (req, res) => {
-  const { accessToken, expiresAt } = req.body;
-
-  if (!accessToken || !expiresAt) throw new Error('Access token Missing');
-
-  const expireInMilliseconds = new Date(expiresAt).getTime();
-  const nowInMilliseconds = new Date().getTime();
-
-  const expireTime = expireInMilliseconds - nowInMilliseconds;
-
   try {
-    setCookie({ res }, 'shopify_token', accessToken, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
-      maxAge: expireTime,
-      path: '/',
-    });
+    const { email, password } = req.body;
 
-    setCookie({ res }, 'shopify_token_expires', expiresAt, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV !== 'development',
-      maxAge: expireTime,
-      path: '/',
-    });
+    if (!email || !password) throw new Error('Access token Missing');
 
-    return res.status(200).json({ message: 'Cookie correctly set', ok: true });
-  } catch (e) {
-    return res.status(404).send({ ok: false, error: e });
+    const data = await loginCustomer({ email, password });
+
+    const { customerAccessToken, customerUserErrors } = data || {};
+
+    const responseObject = {};
+
+    if (customerUserErrors)
+      responseObject.customerUserErrors = customerUserErrors;
+
+    if (customerAccessToken) {
+      responseObject.customerAccessToken = customerAccessToken;
+    }
+
+    return res.status(200).json({ ok: true, ...responseObject });
+  } catch (error) {
+    return res.status(404).send({ ok: false, error });
   }
 };
 

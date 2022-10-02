@@ -15,13 +15,19 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   return res ? res.json() : undefined;
 };
 
-const login = (payload) => nextApiHelper(`${apiRoute.nextApi.login}`, payload);
 const logout = () => nextApiHelper(`${apiRoute.nextApi.logout}`);
+const register = (payload) =>
+  nextApiHelper(`${apiRoute.nextApi.register}`, payload);
+const login = (payload) => nextApiHelper(`${apiRoute.nextApi.login}`, payload);
+const saveToken = (payload) =>
+  nextApiHelper(`${apiRoute.nextApi.saveToken}`, payload);
 
 const nextApiCall = {
   auth: {
     login,
     logout,
+    saveToken,
+    register,
   },
 };
 

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import {
   createContext,
   useCallback,
@@ -7,16 +6,12 @@ import {
   useReducer,
   useState,
 } from 'react';
+import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import routes from '@/data/routes';
 import nextApiCall from '@/utils/apiNext';
-
 import useLocalStorage from '@/hooks/useLocalStorage';
-
 import {
-  getUser,
-  loginCustomer,
-  registerCustomer,
   sendRecoverEmail,
   resetCustomerPassword,
   refreshToken,
@@ -28,102 +23,104 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const [token, setToken] = useLocalStorage('customerAccessToken_shopify', '');
-  const [userAccessToken, setUserAccessToken] = useState(null);
+  const [accessToken, setAccessToken] = useState(undefined);
+
+  const { user } = states || {};
 
   const router = useRouter();
+  const { push } = router;
 
   const toggleLoading = useCallback((loading) => {
     dispatch({ type: actions.CHANGE_LOADING, payload: loading });
   }, []);
 
+  const handleError = useCallback(
+    (err) => {
+      if (Array.isArray(err)) {
+        toggleLoading(false);
+        return err.forEach((e) => toast.error(e.message));
+      }
+      return false;
+    },
+    [toggleLoading]
+  );
+
   const logout = useCallback(async () => {
     toggleLoading(true);
-
     const res = await nextApiCall.auth.logout();
-    setToken(null);
-    setUserAccessToken(null);
+    toggleLoading(false);
 
     if (res && res.ok) {
+      setToken(null);
       dispatch({ type: actions.REMOVE_USER });
-      router.push(routes.home);
-      toggleLoading(false);
+      push(routes.home);
     } else {
       toast.error('Something went wrong, please try again');
     }
-  }, [router, setToken, toggleLoading]);
-
-  const getUserInfo = useCallback(
-    async (accessToken) => {
-      if (!states?.user) {
-        const response = await getUser(accessToken);
-        if (response?.customer?.id) {
-          dispatch({ type: actions.ADD_USER, payload: response.customer });
-        }
-      }
-    },
-    [states.user]
-  );
+  }, [push, setToken, toggleLoading]);
 
   const handleToken = useCallback(
-    async (customerAccessToken) => {
-      // Send token to server to store it inside cookies
-      const res2 = await nextApiCall.auth.login(customerAccessToken);
-
+    async (customerAccessToken, redirectPath, successMessage = '') => {
       // Save token to local storage
+      console.log('handleToken');
+
+      setAccessToken(customerAccessToken.accessToken);
       setToken({
         ...customerAccessToken,
         expire: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
       });
 
-      setUserAccessToken(customerAccessToken?.accessToken);
+      // Send token to server to store it inside cookies
+      const res = await nextApiCall.auth.saveToken({ customerAccessToken });
+
+      const { customer } = res || {};
+
+      if (customer?.id) dispatch({ type: actions.ADD_USER, payload: customer });
 
       toggleLoading(false);
 
-      if (res2?.ok) return true;
+      if (res?.ok) {
+        if (successMessage) toast.success(successMessage);
+        if (redirectPath) push(redirectPath);
+      }
       return false;
     },
-    [setToken, toggleLoading]
+    [setToken, toggleLoading, push]
   );
 
   const handleRefreshToken = useCallback(
-    async (accessToken) => {
-      const response = await refreshToken(accessToken);
+    async (tok) => {
+      const response = await refreshToken(tok);
       const { customerAccessToken } = response || {};
-      if (customerAccessToken) handleToken(customerAccessToken);
+      if (customerAccessToken?.accessToken) handleToken(customerAccessToken);
     },
     [handleToken]
   );
 
   const login = useCallback(
     async (email, password) => {
-      if (!email || !password) {
+      if (!email || !password)
         return toast.error('Fill in missing required fields');
-      }
+
       toggleLoading(true);
 
-      const data = await loginCustomer({ email, password });
+      const res = await nextApiCall.auth.login({ email, password });
 
-      const { customerAccessToken, customerUserErrors } = data;
+      const { customerUserErrors, customerAccessToken } = res || {};
+
+      if (customerUserErrors?.length) return handleError(customerUserErrors);
 
       if (customerAccessToken?.accessToken) {
-        getUserInfo(customerAccessToken.accessToken); // Fetch user information after successful login
-
-        const res = await handleToken(customerAccessToken); // Set cookie token
-
-        if (res) {
-          toast.success('Your login was successful');
-          router.push(routes.account);
-        }
-      }
-
-      if (customerUserErrors && customerUserErrors?.length > 0) {
-        toggleLoading(false);
-        return customerUserErrors.forEach((err) => toast.error(err.message));
+        return handleToken(
+          customerAccessToken,
+          routes.account,
+          'Your login was successful'
+        );
       }
 
       return false;
     },
-    [getUserInfo, handleToken, router, toggleLoading]
+    [handleToken, toggleLoading, handleError]
   );
 
   const register = useCallback(
@@ -133,22 +130,23 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
-      const data = await registerCustomer({ email, password });
-      toggleLoading(false);
 
+      const data = await nextApiCall.auth.register({ email, password });
       if (!data) return toast.error('Something went wrong');
+      const { userErrors, customerAccessToken } = data;
+      if (userErrors?.length) return handleError(userErrors);
 
-      const { customer, userErrors } = data;
-
-      if (userErrors && userErrors.length > 0) {
-        userErrors.forEach((err) => toast.error(err.message));
+      if (customerAccessToken?.accessToken) {
+        handleToken(
+          customerAccessToken,
+          routes.account,
+          'You are now Registered'
+        );
       }
-
-      if (customer) return login(email, password);
 
       return false;
     },
-    [login, toggleLoading]
+    [toggleLoading, handleToken, handleError]
   );
 
   const resetPasswordEmail = useCallback(
@@ -158,18 +156,16 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
+
       const data = await sendRecoverEmail(email);
+
       toggleLoading(false);
 
       const { customerUserErrors } = data || {};
-
-      if (customerUserErrors && customerUserErrors.length > 0) {
-        return customerUserErrors.forEach((err) => toast.error(err.message));
-      }
-
+      if (customerUserErrors?.length) return handleError(customerUserErrors);
       return toast.success('Check your emails');
     },
-    [toggleLoading]
+    [toggleLoading, handleError]
   );
 
   const resetPassword = useCallback(
@@ -179,29 +175,27 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
+
       const data = await resetCustomerPassword(password, url);
       const { customerUserErrors, customerAccessToken } = data || {};
 
-      if (customerUserErrors && customerUserErrors.length > 0) {
-        toggleLoading(false);
+      if (customerUserErrors?.length) return handleError(customerUserErrors);
 
-        return customerUserErrors.forEach((err) => toast.error(err.message));
+      if (customerAccessToken?.accessToken) {
+        handleToken(
+          customerAccessToken,
+          routes.account,
+          'Password correctly updated'
+        );
       }
-      if (customerAccessToken && customerAccessToken.accessToken) {
-        toggleLoading(false);
-
-        const res = await handleToken(customerAccessToken);
-        if (res) router.push(routes.account);
-      }
-      toggleLoading(false);
-
-      return toast.success('Password has been updated successfully');
+      return true;
     },
-    [handleToken, router, toggleLoading]
+    [handleToken, toggleLoading, handleError]
   );
 
   useEffect(() => {
-    if (token?.accessToken && !userAccessToken) {
+    if (token?.accessToken && !accessToken) {
+      console.log('run 1');
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
 
@@ -219,22 +213,27 @@ export function UserProvider({ children }) {
         Number(token.expire) < todayInMilliseconds - 60 * 60
       ) {
         handleRefreshToken(token.accessToken);
-        return;
       }
-
-      setUserAccessToken(token.accessToken);
-
-      // If no user is saved, fetch user information
-      getUserInfo(token.accessToken);
     }
-  }, [getUserInfo, handleRefreshToken, logout, token, userAccessToken]);
+  }, [handleToken, handleRefreshToken, logout, token, accessToken]);
 
+  useEffect(() => {
+    if (!user?.id && token?.accessToken && !accessToken) {
+      console.log('run 2');
+      handleToken(token);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
+
+  useEffect(() => {
+    console.log('run empty');
+  }, []);
   const values = useMemo(
     () => ({
       // States
-      user: states.user,
+      user,
       loading: states.loading,
-      userAccessToken,
+      token,
 
       // Functions
       login,
@@ -246,13 +245,14 @@ export function UserProvider({ children }) {
     }),
     [
       states,
+      token,
+      user,
       login,
       register,
       resetPasswordEmail,
       toggleLoading,
       resetPassword,
       logout,
-      userAccessToken,
     ]
   );
 
