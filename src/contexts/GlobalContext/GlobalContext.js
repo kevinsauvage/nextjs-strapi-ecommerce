@@ -44,10 +44,6 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.SET_COLLECTIONS, payload: collections });
       },
 
-      setSelectedModalProduct: (product) => {
-        dispatch({ type: actions.MODAL_SELECTED_PRODUCT, payload: product });
-      },
-
       resetToggle,
     }),
     [states, resetToggle]

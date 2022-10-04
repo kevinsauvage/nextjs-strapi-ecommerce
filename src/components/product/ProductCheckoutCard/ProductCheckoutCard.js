@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
+import routes from '@/data/routes';
+import Link from 'next/link';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({
@@ -25,7 +27,13 @@ export default function ProductCheckoutCard({
       </div>
       <div className={styles.body}>
         <div className={styles.row}>
-          <p className={styles.title}>{product?.title}</p>
+          <Link
+            href={`${routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
+          >
+            <a>
+              <p className={styles.title}>{product?.title}</p>
+            </a>
+          </Link>
         </div>
         <div className={styles.row}>
           <p className={styles.variantTitle}>{variant?.title}</p>

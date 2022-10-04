@@ -12,6 +12,11 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
          handle
          id
          descriptionHtml
+         options {
+          id
+          name
+          values
+        }
          images(first: 20) {
            edges {
              node {
@@ -51,6 +56,10 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
                  currencyCode
                }
                title
+               selectedOptions {
+                name
+                value
+              }
                image {
                  src
                  altText
@@ -104,7 +113,7 @@ const queryProduct = `query product($handle: String) {
     productType
     tags
     title
-    options(first: 50) {
+    options {
           id
           name
           values
@@ -120,6 +129,10 @@ const queryProduct = `query product($handle: String) {
             currencyCode
           }
           id
+          selectedOptions {
+            name
+            value
+          }
           image {
             src
             altText
@@ -148,6 +161,11 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
     handle
     id
     title
+    options {
+      id
+      name
+      values
+    }
     availableForSale
     descriptionHtml
     images(first: 1) {
@@ -182,11 +200,6 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
     productType
     tags
     title
-    options(first: 50) {
-          id
-          name
-          values
-     }
     totalInventory
     vendor
     variants(first: 10) {
@@ -198,6 +211,10 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
             currencyCode
           }
           id
+          selectedOptions {
+            name
+            value
+          }
           image {
             src
             altText
@@ -221,11 +238,43 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
 }
 `;
 
+const queryProductVariant = `query product($handle: String, $input: [SelectedOptionInput!]!) {
+  product(handle: $handle) {
+    variantBySelectedOptions(selectedOptions: $input) {
+      availableForSale
+      compareAtPriceV2 {
+        amount
+        currencyCode
+      }
+      id
+      selectedOptions {
+        name
+        value
+      }
+      image {
+        src
+        altText
+        sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
+        blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+        width
+        height
+      }
+      priceV2 {
+        amount
+        currencyCode
+      }
+      quantityAvailable
+      title
+      }
+  }
+}
+`;
 const productQueries = {
   productTags,
   queryProductRecommendations,
   queryProduct,
   queryProducts,
+  queryProductVariant,
 };
 
 export default productQueries;

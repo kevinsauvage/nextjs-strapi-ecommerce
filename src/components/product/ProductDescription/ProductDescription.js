@@ -2,18 +2,20 @@ import Button from '@/components/Button/Button';
 import routes from '@/data/routes';
 import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
+import useProductContext from '@/contexts/ProductContext/useProductContext';
 import styles from './ProductDescription.module.scss';
+import Option from '../Option/Option';
 
 export default function ProductDescription({
   product,
   selected,
-  handleSelect,
   handleAddToCart,
   handleChangeInput,
   isModal,
 }) {
-  const { title, descriptionHtml, variants } = product || {};
+  const { title, descriptionHtml, options } = product || {};
   const { quantityAvailable } = selected || {};
+  const { isOptionSelected, setSelectedProductOption } = useProductContext();
 
   return (
     <div
@@ -44,15 +46,22 @@ export default function ProductDescription({
         </div>
       )} */}
 
-      {variants && Array.isArray(variants) && variants.length > 1 && (
-        <select onChange={handleSelect} className={styles.select}>
-          {variants.map((variant) => (
-            <option value={variant.id} key={variant.id}>
-              {variant.title}
-            </option>
-          ))}
-        </select>
-      )}
+      {Array.isArray(options) &&
+        options.length > 1 &&
+        options.map((option) => (
+          <Option
+            key={option.id}
+            option={option}
+            isSelected={isOptionSelected}
+            handleClick={(value, name) => {
+              console.log(value, name);
+              setSelectedProductOption(product.handle, {
+                name,
+                value,
+              });
+            }}
+          />
+        ))}
 
       {isModal && (
         <Link

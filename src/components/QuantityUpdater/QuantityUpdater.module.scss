@@ -11,10 +11,9 @@
   text-align: center;
   height: 100%;
   width: 40px;
+  font-weight: 700;
   border: none;
-  border-top: 1px solid grey;
-  border-bottom: 1px solid grey;
-  background-color: whitesmoke;
+  background-color: transparent;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -28,10 +27,10 @@
 
 .btnQuantity {
   padding: 4px;
-  border: 1px solid gray;
   height: 100%;
+  border: none;
 
   svg {
-    font-size: 18px;
+    font-size: 14px;
   }
 }

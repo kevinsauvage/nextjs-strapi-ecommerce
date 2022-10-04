@@ -23,6 +23,10 @@
   font-size: 15px;
   font-weight: 900;
   margin-bottom: 4px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .variantTitle {

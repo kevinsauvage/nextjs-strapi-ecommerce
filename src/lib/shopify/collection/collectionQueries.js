@@ -30,6 +30,11 @@ const filterCollection = `
 
         edges {
           node {
+            options {
+              id
+              name
+              values
+            }
             collections(first: 1) {
               edges {
                 node {
@@ -89,6 +94,10 @@ const filterCollection = `
                     amount
                     currencyCode
                   }
+                  selectedOptions {
+                    name
+                    value
+                  }
                   quantityAvailable
                   title
                 }
@@ -138,6 +147,11 @@ const getCollectionsWithProducts = `query ($first: Int){
               title
               availableForSale
               descriptionHtml
+              options {
+                id
+                name
+                values
+              }
               images(first: 1) {
                 edges {
                   node {
@@ -172,6 +186,10 @@ const getCollectionsWithProducts = `query ($first: Int){
                     compareAtPriceV2 {
                       amount
                       currencyCode
+                    }
+                    selectedOptions {
+                      name
+                      value
                     }
                     id
                     image {

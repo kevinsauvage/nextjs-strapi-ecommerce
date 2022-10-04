@@ -5,14 +5,14 @@ import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import User from '@/layout/User/User';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import CategoryButtons from '@/layout/CategoryButtons/CategoryButtons';
 import Modal from '@/layout/Modal/Modal';
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
+import useProductContext from '@/contexts/ProductContext/useProductContext';
 import styles from './Layout.module.scss';
 
 function Layout({ children, collections }) {
-  const { modalSelectedProduct, setSelectedModalProduct } = useGlobalContext();
+  const { selectedProduct, setSelectedProduct } = useProductContext();
 
   return (
     <>
@@ -22,9 +22,9 @@ function Layout({ children, collections }) {
       <div className={styles.container}>
         <Header />
         <CategoryButtons collections={collections} />
-        {modalSelectedProduct ? (
-          <Modal handleClose={() => setSelectedModalProduct(false)}>
-            <ProductPresenter product={modalSelectedProduct} isModal />
+        {selectedProduct ? (
+          <Modal handleClose={() => setSelectedProduct(false)}>
+            <ProductPresenter product={selectedProduct} isModal />
           </Modal>
         ) : null}
         <div className={styles.children}>{children}</div>

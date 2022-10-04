@@ -5,6 +5,7 @@ import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useEffect, useState } from 'react';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
+import { ProductProvider } from '@/contexts/ProductContext/ProductContext';
 
 function MyApp({ Component, pageProps }) {
   const [collections, setCollections] = useState([]);
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
       <GlobalProvider>
-        <CartProvider>
-          <Layout collections={collections}>
-            <Component {...pageProps} />
-          </Layout>
-        </CartProvider>
+        <ProductProvider>
+          <CartProvider>
+            <Layout collections={collections}>
+              <Component {...pageProps} />
+            </Layout>
+          </CartProvider>
+        </ProductProvider>
       </GlobalProvider>
     </UserProvider>
   );

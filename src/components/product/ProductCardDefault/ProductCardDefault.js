@@ -2,16 +2,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import routes from '@/data/routes';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import useProductContext from '@/contexts/ProductContext/useProductContext';
 import styles from './ProductCardDefault.module.scss';
 
 export default function ProductCardDefault({ product }) {
   const { title, images, handle } = product;
-
   const price = product?.variants?.[0]?.priceV2?.amount;
   const currencyCode = product?.variants?.[0]?.priceV2?.currencyCode;
 
-  const { setSelectedModalProduct } = useGlobalContext();
+  const { setSelectedProduct } = useProductContext();
 
   return (
     <li className={`${styles.productCardDefault}`}>
@@ -37,16 +36,15 @@ export default function ProductCardDefault({ product }) {
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                setSelectedModalProduct(product);
+                setSelectedProduct(product);
               }}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') setSelectedModalProduct(product);
+                if (e.key === 'Enter') setSelectedProduct(product);
               }}
             >
               Quick view
             </div>
           </div>
-
           <div className={styles.content}>
             <p className={styles.title}>{limitStrLength(title, 40)}</p>
             <p className={styles.price}>
