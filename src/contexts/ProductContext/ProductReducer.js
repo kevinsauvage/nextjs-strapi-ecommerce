@@ -13,7 +13,7 @@ export const actions = {
 export const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.SET_SELECTED_PRODUCT: {
-      return { ...state, modalSelectedProduct: action.payload };
+      return { ...state, selectedProduct: action.payload };
     }
     case actions.SET_SELECTED_PRODUCT_OPTION: {
       console.log('reducer receive product option', action.payload);
