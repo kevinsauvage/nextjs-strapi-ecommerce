@@ -10,10 +10,15 @@ import {
 } from '@/lib/shopify/product/productApiCall';
 
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
+import { useEffect } from 'react';
 import styles from './slug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
+  useEffect(() => {
+    if (!product?.id) router.push('/');
+  }, [router, product]);
+
   if (router.isFallback) return <div>Loading category...</div>;
   const { title, description } = product;
 
@@ -42,15 +47,6 @@ export default ProductPage;
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.productSlug);
 
-  if (!product || !product?.id) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      },
-    };
-  }
-
   const recommendations = await getProductRecommendation(product.id);
 
   return {
@@ -63,7 +59,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const data = await getProducts('BEST_SELLING', 250);
+  const data = await getProducts('BEST_SELLING', 100);
 
   const paths = data.products.map((product) => ({
     params: {
