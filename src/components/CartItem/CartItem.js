@@ -31,8 +31,6 @@ export default function CartItem({
 
   const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
 
-  console.log(product);
-
   return (
     <tr className={styles.container}>
       <td className={styles.item}>

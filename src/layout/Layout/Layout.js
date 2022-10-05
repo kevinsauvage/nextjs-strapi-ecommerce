@@ -14,7 +14,6 @@ import styles from './Layout.module.scss';
 function Layout({ children, collections }) {
   const { selectedProduct, setSelectedProduct } = useProductContext();
 
-  console.log(selectedProduct, 'selectedProduct');
   return (
     <>
       <SearchBar />

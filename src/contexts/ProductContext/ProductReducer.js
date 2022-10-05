@@ -16,11 +16,9 @@ export const ProductReducer = (state = initialState, action) => {
       return { ...state, selectedProduct: action.payload };
     }
     case actions.SET_SELECTED_PRODUCT_OPTION: {
-      console.log('reducer receive product option', action.payload);
       return { ...state, selectedProductOption: action.payload };
     }
     case actions.SET_SELECTED_VARIANT: {
-      console.log('reducer receive variant', action.payload);
       return { ...state, selectedVariant: action.payload };
     }
 

@@ -42,14 +42,10 @@ export const addLinesToCart = async (cartId, lines) => {
 };
 
 export const removeLinesFromCart = async (cartId, lineIds) => {
-  console.log(lineIds, 'lineIds');
-  console.log(cartId, 'cartId');
   const res = await shopifyStorefrontCall(cartQueries.queryRemoveFromCart, {
     cartId,
     lineIds,
   });
-
-  console.log(res?.cartLinesRemove);
 
   if (res?.cartLinesRemove) {
     return {
@@ -61,14 +57,10 @@ export const removeLinesFromCart = async (cartId, lineIds) => {
 };
 
 export const updateLines = async (cartId, lines) => {
-  console.log(lines, 'lines');
-  console.log(cartId, 'cartId');
   const res = await shopifyStorefrontCall(cartQueries.queryUpdateLine, {
     cartId,
     lines,
   });
-
-  console.log(res);
 
   if (res?.cartLinesUpdate) {
     return parseCart(res?.cartLinesUpdate?.cart);

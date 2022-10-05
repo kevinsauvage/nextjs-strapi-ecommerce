@@ -1,4 +1,10 @@
-import { createContext, useCallback, useMemo, useReducer } from 'react';
+import {
+  createContext,
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+} from 'react';
 import { getProductVariant } from '@/lib/shopify/product/productApiCall';
 import { ProductReducer, initialState, actions } from './ProductReducer';
 
@@ -67,7 +73,6 @@ export function ProductProvider({ children }) {
   );
 
   const setSelectedProduct = useCallback((product) => {
-    console.log(product, 'product selected');
     dispatch({ type: actions.SET_SELECTED_PRODUCT, payload: product });
   }, []);
 
@@ -89,7 +94,13 @@ export function ProductProvider({ children }) {
     },
     [selectedProductOption]
   );
-  console.log(selectedProduct);
+
+  useEffect(() => {
+    console.log(selectedProductOption);
+  }, [selectedProductOption]);
+  useEffect(() => {
+    console.log(selectedVariant);
+  }, [selectedVariant]);
 
   const values = useMemo(
     () => ({

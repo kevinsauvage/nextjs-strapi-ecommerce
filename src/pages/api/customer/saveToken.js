@@ -45,7 +45,6 @@ const saveToken = async (req, res) => {
 
     return res.status(200).json({ ok: true, ...responseObject });
   } catch (error) {
-    console.log(error);
     return res.status(error.status || 404).send({
       ok: false,
       error,

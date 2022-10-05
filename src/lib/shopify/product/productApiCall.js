@@ -52,7 +52,6 @@ export const getProducts = async (sortKey, first) => {
 };
 
 export const getProductVariant = async (handle, input = []) => {
-  console.log(input, 'input');
   const res = await shopifyStorefrontCall(productQueries.queryProductVariant, {
     handle,
     input,

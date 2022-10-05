@@ -9,7 +9,6 @@ import CollectionUi from '@/layout/CollectionUi/CollectionUi';
 import routes from '@/data/routes';
 
 export default function Home({ bestSelling, collections, newArrival }) {
-  console.log(newArrival);
   return (
     <div className={styles.container}>
       <Banner1 />

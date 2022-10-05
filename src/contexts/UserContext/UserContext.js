@@ -62,7 +62,6 @@ export function UserProvider({ children }) {
   const handleToken = useCallback(
     async (customerAccessToken, redirectPath, successMessage = '') => {
       // Save token to local storage
-      console.log('handleToken');
 
       setAccessToken(customerAccessToken.accessToken);
       setToken({
@@ -195,7 +194,6 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (token?.accessToken && !accessToken) {
-      console.log('run useEffect 1');
       const expireInMilliseconds = new Date(token.expiresAt).getTime();
       const todayInMilliseconds = new Date().getTime();
 
@@ -219,7 +217,6 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (!user?.id && token?.accessToken && !accessToken) {
-      console.log('run useEffect 2');
       handleToken(token);
     }
   }, [token, accessToken, user?.id, handleToken]);
