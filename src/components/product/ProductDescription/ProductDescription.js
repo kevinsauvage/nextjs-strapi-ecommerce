@@ -2,7 +2,6 @@ import Button from '@/components/Button/Button';
 import routes from '@/data/routes';
 import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
-import useProductContext from '@/contexts/ProductContext/useProductContext';
 import styles from './ProductDescription.module.scss';
 import Option from '../Option/Option';
 
@@ -11,11 +10,12 @@ export default function ProductDescription({
   selected,
   handleAddToCart,
   handleChangeInput,
+  handleSetSelectedProductOption,
+  isOptionSelected,
   isModal,
 }) {
   const { title, descriptionHtml, options } = product || {};
   const { quantityAvailable } = selected || {};
-  const { isOptionSelected, setSelectedProductOption } = useProductContext();
 
   return (
     <div
@@ -54,7 +54,7 @@ export default function ProductDescription({
             option={option}
             isSelected={isOptionSelected}
             handleClick={(value, name) => {
-              setSelectedProductOption({
+              handleSetSelectedProductOption({
                 name,
                 value,
               });

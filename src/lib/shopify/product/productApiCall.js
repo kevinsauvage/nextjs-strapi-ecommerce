@@ -50,12 +50,3 @@ export const getProducts = async (sortKey, first) => {
   }
   return [];
 };
-
-export const getProductVariant = async (handle, input = []) => {
-  const res = await shopifyStorefrontCall(productQueries.queryProductVariant, {
-    handle,
-    input,
-  });
-
-  return res?.product?.variantBySelectedOptions;
-};
