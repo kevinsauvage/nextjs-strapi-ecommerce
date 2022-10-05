@@ -16,52 +16,24 @@ export function ProductProvider({ children }) {
     states || {};
 
   const setSelectedProductOption = useCallback(
-    (handle, productOption) => {
+    (productOption) => {
       if (Array.isArray(productOption)) {
         return dispatch({
           type: actions.SET_SELECTED_PRODUCT_OPTION,
-          payload: {
-            handle,
-            productOptions: productOption,
-          },
+          payload: productOption,
         });
       }
 
       let payload = {};
 
-      if (
-        selectedProductOption?.handle === handle &&
-        selectedProductOption?.productOptions.length > 0
-      ) {
-        const exist = selectedProductOption?.productOptions.find(
+      if (selectedProductOption?.length > 0) {
+        const filtered = selectedProductOption?.filter(
           (option) =>
-            Object.values(option)[0] === Object.values(productOption)[0]
+            Object.values(option)[0] !== Object.values(productOption)[0]
         );
+        console.log(filtered, 'filtered');
 
-        if (exist) {
-          payload = {
-            handle,
-            productOptions: [
-              ...selectedProductOption.productOptions.filter(
-                (option) =>
-                  Object.values(option)[0] !== Object.values(productOption)[0]
-              ),
-              productOption,
-            ],
-          };
-        }
-
-        if (!exist) {
-          payload = {
-            handle,
-            productOptions: [
-              ...selectedProductOption.productOptions,
-              productOption,
-            ],
-          };
-        }
-      } else {
-        payload = { handle, productOptions: [productOption] };
+        payload = [...filtered, productOption];
       }
 
       return dispatch({
@@ -78,35 +50,29 @@ export function ProductProvider({ children }) {
 
   const isOptionSelected = useCallback(
     (optionName, optionValue) =>
-      selectedProductOption?.productOptions.find(
+      selectedProductOption?.find(
         (option) => option.name === optionName && option.value === optionValue
       ),
     [selectedProductOption]
   );
 
-  const setSelectedVariant = useCallback(
-    async (handle) => {
-      const variant = await getProductVariant(
-        handle,
-        selectedProductOption?.productOptions
-      );
-      dispatch({ type: actions.SET_SELECTED_VARIANT, payload: variant });
-    },
-    [selectedProductOption]
-  );
+  const setSelectedVariant = useCallback(async (variant) => {
+    dispatch({ type: actions.SET_SELECTED_VARIANT, payload: variant });
+  }, []);
 
   useEffect(() => {
-    console.log(selectedProductOption);
+    console.log('selectedProductOption', selectedProductOption);
   }, [selectedProductOption]);
+
   useEffect(() => {
-    console.log(selectedVariant);
+    console.log('selectedVariant', selectedVariant);
   }, [selectedVariant]);
 
   const values = useMemo(
     () => ({
       selectedProduct,
-      selectedProductOption,
       selectedVariant,
+      selectedProductOption,
       setSelectedProductOption,
       setSelectedProduct,
       isOptionSelected,

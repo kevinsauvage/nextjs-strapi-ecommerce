@@ -73,7 +73,7 @@ const filterCollection = `
             title
             totalInventory
             vendor
-            variants(first: 10) {
+            variants(first: 250) {
               edges {
                 node {
                   availableForSale
@@ -179,7 +179,7 @@ const getCollectionsWithProducts = `query ($first: Int){
               title
               totalInventory
               vendor
-              variants(first: 10) {
+              variants(first: 250) {
                 edges {
                   node {
                     availableForSale

@@ -54,7 +54,7 @@ export default function ProductDescription({
             option={option}
             isSelected={isOptionSelected}
             handleClick={(value, name) => {
-              setSelectedProductOption(product.handle, {
+              setSelectedProductOption({
                 name,
                 value,
               });

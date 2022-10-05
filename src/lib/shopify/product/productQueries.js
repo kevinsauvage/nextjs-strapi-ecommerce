@@ -40,7 +40,7 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
          productType
          tags
          title
-         variants(first: 20) {
+         variants(first: 250) {
            edges {
              node {
                sku
@@ -120,7 +120,7 @@ const queryProduct = `query product($handle: String) {
      }
     totalInventory
     vendor
-    variants(first: 10) {
+    variants(first: 250) {
       edges {
         node {
           availableForSale
@@ -202,7 +202,7 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
     title
     totalInventory
     vendor
-    variants(first: 10) {
+    variants(first: 250) {
       edges {
         node {
           availableForSale
