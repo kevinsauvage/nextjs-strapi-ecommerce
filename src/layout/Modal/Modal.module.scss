@@ -5,27 +5,19 @@
   left: 0;
   top: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  z-index: 9999;
+  z-index: 999999999;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.body {
-  position: relative;
-  z-index: 9999;
-  box-shadow: $box-shadow-primary;
-}
-
 .content {
   width: 100%;
-  max-width: 90vw;
-  max-height: 90vh;
+  max-width: 900px;
   background-color: white;
   position: relative;
   border-radius: 3px;
-  overflow: auto;
-  padding: 60px;
+  padding: 20px;
 }
 
 .close {

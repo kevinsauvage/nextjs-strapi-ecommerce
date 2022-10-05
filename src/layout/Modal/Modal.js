@@ -11,8 +11,8 @@ export default function Modal({ children, handleClose }) {
       onKeyPress={(e) => e.key === 'Enter' && handleClose(e)}
     >
       <div
+        className={styles.content}
         role="presentation"
-        className={styles.body}
         onClick={(e) => e.stopPropagation()}
         onKeyPress={(e) => e.stopPropagation()}
       >
@@ -24,8 +24,7 @@ export default function Modal({ children, handleClose }) {
         >
           <GrClose />
         </button>
-
-        <div className={styles.content}>{children}</div>
+        {children}
       </div>
     </div>
   );

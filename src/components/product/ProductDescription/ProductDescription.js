@@ -30,11 +30,21 @@ export default function ProductDescription({
           {selected?.priceV2?.amount} {selected?.priceV2?.currencyCode}
         </p>
       </div>
-
-      <div
-        className={styles.description}
-        dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-      />
+      <div className={styles.descriptionWrapper}>
+        <div
+          className={styles.description}
+          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+        />
+        {isModal && (
+          <div className={styles.fullDescription}>
+            <Link
+              href={`${routes.collection}/${product?.collections?.[0]?.handle}/${product.handle}`}
+            >
+              <a>See Full Description</a>
+            </Link>
+          </div>
+        )}
+      </div>
 
       {/*       {tags && Array.isArray(tags) && tags.length && (
         <div className={styles.tags}>
@@ -62,22 +72,16 @@ export default function ProductDescription({
           />
         ))}
 
-      {isModal && (
-        <Link
-          href={`${routes.collection}/${product?.collections?.[0]?.handle}/${product.handle}`}
-        >
-          <a className={styles.fullDescription}>See Full Description</a>
-        </Link>
-      )}
-      <p>{quantityAvailable} Available</p>
-
       {quantityAvailable > 0 ? (
-        <div className={styles.row}>
-          <QuantityUpdater
-            originalQuantity={1}
-            onChange={handleChangeInput}
-            quantityAvailable={quantityAvailable}
-          />
+        <>
+          <div className={styles.quantityUpdater}>
+            <QuantityUpdater
+              originalQuantity={1}
+              onChange={handleChangeInput}
+              quantityAvailable={quantityAvailable}
+            />
+          </div>
+          <p className={styles.quantity}>{quantityAvailable} Available</p>
           <Button
             extraClass={styles.btn}
             type="button"
@@ -86,7 +90,7 @@ export default function ProductDescription({
             disabled={quantityAvailable < 1}
             onClick={handleAddToCart}
           />
-        </div>
+        </>
       ) : (
         <Button
           extraClass={styles.btn}
