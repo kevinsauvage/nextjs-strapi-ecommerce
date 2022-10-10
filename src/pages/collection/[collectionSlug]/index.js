@@ -15,6 +15,7 @@ function CollectionSlugPage({
   pageInfo,
   actualFilters,
 }) {
+  console.log(filters);
   return (
     <Page title={`${title}`}>
       <Container>

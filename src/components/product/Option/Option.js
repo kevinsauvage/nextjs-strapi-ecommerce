@@ -3,7 +3,7 @@ import styles from './Option.module.scss';
 export default function Option({ option, handleClick, isSelected }) {
   return (
     Array.isArray(option.values) &&
-    option.values.length > 0 && (
+    option.values.length > 1 && (
       <div className={styles.option}>
         <label className={styles.label} htmlFor="button-color-select">
           {option.name}

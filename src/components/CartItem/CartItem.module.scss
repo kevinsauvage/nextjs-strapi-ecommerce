@@ -18,10 +18,7 @@
 
 .content {
   padding: 10px 0 10px 1rem;
-  justify-content: flex-start;
-  & p {
-    width: fit-content;
-  }
+  text-align: start;
 }
 
 .title {
