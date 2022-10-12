@@ -9,7 +9,7 @@ export default function Sort({ handleChange }) {
 
   return (
     <label className={styles.sort} htmlFor="sort">
-      <p className={styles.label}>Sort</p>
+      <p className={styles.label}>Sort By</p>
       <select
         id="sort"
         aria-label="sort"

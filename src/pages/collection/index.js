@@ -1,4 +1,3 @@
-import Container from '@/layout/Container/Container';
 import Page from '@/layout/Page/Page';
 import Carousel from '@/components/Carousel/Carousel';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
@@ -7,25 +6,18 @@ import ProductCardDefault from '@/components/product/ProductCardDefault/ProductC
 function CategoryPage({ collections }) {
   return (
     <Page title="Collections">
-      <div>
-        <Container>
-          {Array.isArray(collections) &&
-            collections.map(
-              (collection) =>
-                collection.products.length > 0 && (
-                  <Carousel key={collection.id} title={collection.title}>
-                    {Array.isArray(collection.products) &&
-                      collection.products.map((product) => (
-                        <ProductCardDefault
-                          key={product.id}
-                          product={product}
-                        />
-                      ))}
-                  </Carousel>
-                )
-            )}
-        </Container>
-      </div>
+      {Array.isArray(collections) &&
+        collections.map(
+          (collection) =>
+            collection.products.length > 0 && (
+              <Carousel key={collection.id} title={collection.title}>
+                {Array.isArray(collection.products) &&
+                  collection.products.map((product) => (
+                    <ProductCardDefault key={product.id} product={product} />
+                  ))}
+              </Carousel>
+            )
+        )}
     </Page>
   );
 }

@@ -1,0 +1,23 @@
+.LayoutButtons {
+  display: flex;
+  align-items: center;
+}
+
+.button {
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+
+.buttonGrid {
+  &.grid {
+    border: 1px solid $primary;
+  }
+}
+
+.buttonRow {
+  &.row {
+    border: 1px solid $primary;
+  }
+}

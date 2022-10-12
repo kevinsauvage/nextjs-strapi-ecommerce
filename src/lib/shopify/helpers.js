@@ -6,6 +6,11 @@ export const getFiltersFromParams = (filters, actualFilters) => {
     Object.keys(actualFilters).forEach((key) => {
       if (filter.id === key) {
         filter.values.forEach((value) => {
+          if (key === 'filter.v.price') {
+            // eslint-disable-next-line no-param-reassign
+            acc = [...acc, JSON.parse(value.input)];
+            return;
+          }
           if (Array.isArray(actualFilters[key])) {
             if (actualFilters[key].includes(value.id)) {
               // eslint-disable-next-line no-param-reassign

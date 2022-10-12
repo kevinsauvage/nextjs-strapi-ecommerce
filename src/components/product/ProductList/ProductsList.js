@@ -5,9 +5,12 @@ import useOnScreen from '@/hooks/useOnScreen';
 import useRouterFilter from '@/hooks/useRouterFilter';
 import useThrottledEffect from '@/hooks/useThrottledEffect';
 import Filters from '@/layout/Filters/Filters';
-import Sort from '@/components/Sort/Sort';
+import ListDisplay from '@/layout/ListDisplay/ListDisplay';
+import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
+import Sort from '../Sort/Sort';
+import ProductCardRow from '../ProductCardRow/ProductCardRow';
 
 function ProductsList({
   products,
@@ -15,11 +18,16 @@ function ProductsList({
   filters,
   actualFilters = [],
 }) {
+  // States
   const [loading, setLoading] = useState(false);
+  const [layout, setLayout] = useState('grid');
+  // Hooks
   const router = useRouter();
   const listInnerRef = useRef();
   const isBottom = useOnScreen(listInnerRef);
   const { addParam, pushQuery } = useRouterFilter();
+
+  console.log(actualFilters);
 
   useThrottledEffect(
     () => {
@@ -45,6 +53,10 @@ function ProductsList({
     handleChangeFilter(e.target.value, 'sort_key', true);
   };
 
+  const handleSetLayout = (newLayout) => {
+    setLayout(newLayout);
+  };
+
   return (
     <div className={styles.productsList}>
       <Filters
@@ -54,15 +66,20 @@ function ProductsList({
       />
       <div className={styles.products}>
         <div className={styles.header}>
+          <LayoutButtons handleChange={handleSetLayout} selected={layout} />
           <Sort handleChange={handleSort} />
         </div>
         {Array.isArray(products) && products.length > 0 ? (
           <>
-            <ul className={styles.containerGrid}>
-              {products.map((product) => (
-                <ProductCardDefault key={product.id} product={product} />
-              ))}
-            </ul>
+            <ListDisplay layout={layout}>
+              {products.map((product) => {
+                if (layout === 'grid')
+                  return (
+                    <ProductCardDefault key={product.id} product={product} />
+                  );
+                return <ProductCardRow key={product.id} product={product} />;
+              })}
+            </ListDisplay>
             <div ref={listInnerRef} />
           </>
         ) : (

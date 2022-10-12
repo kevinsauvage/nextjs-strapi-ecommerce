@@ -1,3 +1,6 @@
+import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+import MultiRangeSlider from '@/components/MultiRangeSlider/MultiRangeSlider';
+import Collapsible from '../Collapsible/Collapsible';
 import styles from './Filters.module.scss';
 
 export default function Filters({ filters = [], filtersSelected, onChange }) {
@@ -9,61 +12,61 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
       : [actualValues].includes(valueId);
   };
 
-  const handleChangeInput = (e) => e;
+  const handleChangeInput = (valueId) => {
+    console.log(valueId);
+  };
+
+  console.log(filters);
+
+  const getMinValue = (input) => JSON.parse(input).price.min;
+  const getMaxValue = (input) => JSON.parse(input).price.max;
 
   return (
     <div className={styles.filters}>
       {filters
         .filter((item) => item.type === 'PRICE_RANGE')
         .map((filter) => (
-          <div key={filter.label} className={styles.filter}>
-            <h6 className={styles.title}>{filter.label}</h6>
+          <Collapsible key={filter.label} title={filter.label}>
             {filter.values.map((value) => (
-              <label
-                key={value.input}
-                htmlFor={value.id}
-                className={styles.label}
-              >
-                <input
-                  type="range"
-                  min="100"
-                  max="500"
-                  step="10"
-                  name="range"
-                  id={value.id}
-                  value={value.id}
-                  onChange={() => handleChangeInput(value.id, filter.id)}
-                />
-              </label>
+              <MultiRangeSlider
+                key={value}
+                min={getMinValue(value.input)}
+                max={getMaxValue(value.input)}
+                onChange={({ min, max }) =>
+                  handleChangeInput(value.id, filter.id, min, max)
+                }
+              />
             ))}
-          </div>
+          </Collapsible>
         ))}
       {filters
         .filter((item) => item.type === 'LIST')
         .map(
           (filter) =>
             filter.values.length > 1 && (
-              <div key={filter.label} className={styles.filter}>
-                <h6 className={styles.title}>{filter.label}</h6>
+              <Collapsible key={filter.label} title={filter.label}>
                 {filter.values.map((value) => (
                   <label
                     key={value.input}
                     htmlFor={value.id}
                     className={styles.label}
                   >
-                    <input
-                      type="checkbox"
-                      name="filter"
-                      id={value.id}
-                      value={value.input}
-                      onChange={() => onChange(value.id, filter.id)}
-                      checked={isChecked(value.id, filter.id)}
-                    />
+                    <button
+                      className={styles.button}
+                      type="button"
+                      onClick={() => onChange(value.id, filter.id)}
+                    >
+                      {isChecked(value.id, filter.id) ? (
+                        <MdCheckBox size={20} color="purple" />
+                      ) : (
+                        <MdCheckBoxOutlineBlank size={20} />
+                      )}
+                    </button>
                     <p className={styles.labelText}>{value.label}</p>
                     <small className={styles.count}>({value.count})</small>
                   </label>
                 ))}
-              </div>
+              </Collapsible>
             )
         )}
     </div>

@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
-import Container from '@/layout/Container/Container';
 import Input from '@/components/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
@@ -21,38 +20,35 @@ function RegisterPage() {
 
   return (
     <Page title="Register your account" loading={loading}>
-      <Container>
-        <div>
-          <Form
-            onSubmit={handleSubmit}
-            title="CREATE ACCOUNT"
-            subtitle="Please complete the form below to create an account"
-          >
-            <Input
-              id="email"
-              label="Email address"
-              name="email"
-              type="email"
-              placeholder="Email"
-              onChange={handleInputChange}
-            />
-            <Input
-              placeholder="Password"
-              type="password"
-              name="password"
-              id="password"
-              label="Password"
-              autoComplete="current-password"
-              onChange={handleInputChange}
-            />
-            <Button width="100%" text="Register" type="submit" tertiary />
-            <div className={styles.alreadyRegistered}>
-              Already have an account? <Link href={routes.login}>Login</Link>{' '}
-              now.
-            </div>
-          </Form>
-        </div>
-      </Container>
+      <div>
+        <Form
+          onSubmit={handleSubmit}
+          title="CREATE ACCOUNT"
+          subtitle="Please complete the form below to create an account"
+        >
+          <Input
+            id="email"
+            label="Email address"
+            name="email"
+            type="email"
+            placeholder="Email"
+            onChange={handleInputChange}
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            name="password"
+            id="password"
+            label="Password"
+            autoComplete="current-password"
+            onChange={handleInputChange}
+          />
+          <Button width="100%" text="Register" type="submit" tertiary />
+          <div className={styles.alreadyRegistered}>
+            Already have an account? <Link href={routes.login}>Login</Link> now.
+          </div>
+        </Form>
+      </div>
     </Page>
   );
 }

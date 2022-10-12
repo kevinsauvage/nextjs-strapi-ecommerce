@@ -1,4 +1,3 @@
-import Container from '@/layout/Container/Container';
 import Page from '@/layout/Page/Page';
 import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import {
@@ -18,15 +17,13 @@ function CollectionSlugPage({
   console.log(filters);
   return (
     <Page title={`${title}`}>
-      <Container>
-        <ProductsList
-          products={products}
-          hasNextPage={pageInfo?.hasNextPage}
-          filters={filters}
-          pageInfo={pageInfo}
-          actualFilters={actualFilters}
-        />
-      </Container>
+      <ProductsList
+        products={products}
+        hasNextPage={pageInfo?.hasNextPage}
+        filters={filters}
+        pageInfo={pageInfo}
+        actualFilters={actualFilters}
+      />
     </Page>
   );
 }

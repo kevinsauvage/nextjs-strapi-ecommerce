@@ -3,12 +3,13 @@ import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import routes from '@/data/routes';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
+import Price from '@/components/Price/Price';
 import styles from './ProductCardDefault.module.scss';
 
 export default function ProductCardDefault({ product }) {
   const { title, images, handle } = product;
-  const price = product?.variants?.[0]?.priceV2?.amount;
-  const currencyCode = product?.variants?.[0]?.priceV2?.currencyCode;
+  const priceV2 = product?.variants?.[0]?.priceV2;
+  const compareAtPriceV2 = product?.variants?.[0]?.compareAtPriceV2;
 
   const { setSelectedProduct } = useProductContext();
 
@@ -47,12 +48,7 @@ export default function ProductCardDefault({ product }) {
           </div>
           <div className={styles.content}>
             <p className={styles.title}>{limitStrLength(title, 40)}</p>
-            <p className={styles.price}>
-              <strong>
-                {price}
-                {currencyCode}
-              </strong>
-            </p>
+            <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
           </div>
         </a>
       </Link>

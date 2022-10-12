@@ -1,17 +1,33 @@
 .option {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
 }
 
 .button {
   padding: 3px;
+  font-size: 12px;
+  border: 0.1px solid gray;
+}
+
+.buttonColor {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
 
 .name {
+  font-size: 12px;
+  margin-right: 8px;
 }
 .list {
   display: flex;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .selectedOption {
-  background-color: rgb(74, 222, 72);
+  border: 1px solid black;
+  color: black;
+  font-weight: 700;
 }

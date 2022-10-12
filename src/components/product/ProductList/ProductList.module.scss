@@ -17,10 +17,8 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  padding: 10px;
-  background-color: rgb(227, 227, 227);
-  margin-bottom: 20px;
+  justify-content: space-between;
+  padding: 8px 0;
 }
 
 .view {

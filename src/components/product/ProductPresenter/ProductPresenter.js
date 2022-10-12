@@ -10,7 +10,6 @@ export default function ProductPresenter({ product, isModal }) {
     selectedVariant,
     handleAddToCart,
     handleChangeInput,
-    quantity,
   } = useProductSelection({ product });
 
   return (
@@ -21,7 +20,6 @@ export default function ProductPresenter({ product, isModal }) {
       />
       <ProductDescription
         product={product}
-        quantity={quantity}
         handleChangeInput={handleChangeInput}
         handleAddToCart={handleAddToCart}
         handleSetSelectedProductOption={handleSetSelectedProductOption}

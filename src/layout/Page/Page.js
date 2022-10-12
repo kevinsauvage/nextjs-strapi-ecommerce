@@ -2,19 +2,19 @@ import Head from 'next/head';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Loader from '@/layout/Loader/Loader';
 import styles from './Page.module.scss';
+import Container from '../Container/Container';
 
-export default function Page({ children, title, loading }) {
+export default function Page({ children, title, loading, extraClass }) {
   return (
-    <div className={styles.page}>
+    <div className={`${styles.page} ${extraClass}`}>
       <Head>
         <title>{title}</title>
       </Head>
       {loading && <Loader />}
-      <div className={styles.banner}>
-        <h1 className={styles.title}>{title}</h1>
+      <Container>
         <Breadcrumbs />
-      </div>
-      <div className={styles.children}>{children}</div>
+        <div className={styles.children}>{children}</div>
+      </Container>
     </div>
   );
 }

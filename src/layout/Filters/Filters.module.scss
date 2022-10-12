@@ -1,10 +1,7 @@
 .filters {
-  min-width: 200px;
+  min-width: 280px;
   color: rgb(83, 83, 83);
-  border: 0.1px solid rgb(227, 227, 227);
-  padding: 16px;
   margin-right: 20px;
-  height: fit-content;
 }
 
 .label {
@@ -14,15 +11,16 @@
   margin: 4px 0;
 }
 
-.title {
-  font-size: 15px;
-  margin-bottom: 8px;
-  background-color: rgb(227, 227, 227);
-  padding: 6px;
-}
-
 .filter {
   margin-bottom: 30px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
 }
 
 .labelText {
