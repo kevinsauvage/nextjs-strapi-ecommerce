@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
-import useThrottledEffect from '@/hooks/useThrottledEffect';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import styles from './MultiRangeSlider.module.scss';
 
 function MultiRangeSlider({ min, max, onChange }) {
@@ -38,13 +37,11 @@ function MultiRangeSlider({ min, max, onChange }) {
 
   // Get min and max values when their state changes
 
-  useThrottledEffect(
-    () => {
+  const handleMouseUp = () => {
+    if (min !== minVal || max !== maxVal) {
       onChange({ min: minVal, max: maxVal });
-    },
-    1500,
-    [minVal, maxVal, onChange]
-  );
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -58,6 +55,7 @@ function MultiRangeSlider({ min, max, onChange }) {
           setMinVal(value);
           minValRef.current = value;
         }}
+        onMouseUp={() => handleMouseUp()}
         className={`${styles.thumb} ${styles.thumbLeft}`}
         style={{ zIndex: minVal > max - 100 && '5' }}
       />
@@ -71,6 +69,7 @@ function MultiRangeSlider({ min, max, onChange }) {
           setMaxVal(value);
           maxValRef.current = value;
         }}
+        onMouseUp={() => handleMouseUp()}
         className={`${styles.thumb} ${styles.thumbRight}`}
       />
 

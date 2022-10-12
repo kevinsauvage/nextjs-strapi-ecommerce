@@ -5,22 +5,13 @@ export const getFiltersFromParams = (filters, actualFilters) => {
   const filtered = filters.reduce((acc, filter) => {
     Object.keys(actualFilters).forEach((key) => {
       if (filter.id === key) {
-        filter.values.forEach((value) => {
-          if (key === 'filter.v.price') {
-            // eslint-disable-next-line no-param-reassign
-            acc = [...acc, JSON.parse(value.input)];
-            return;
-          }
-          if (Array.isArray(actualFilters[key])) {
-            if (actualFilters[key].includes(value.id)) {
-              // eslint-disable-next-line no-param-reassign
-              acc = [...acc, JSON.parse(value.input)];
-            }
-          } else if (value.id === actualFilters[key]) {
-            // eslint-disable-next-line no-param-reassign
-            acc = [...acc, JSON.parse(value.input)];
-          }
-        });
+        if (Array.isArray(actualFilters[key])) {
+          // eslint-disable-next-line no-param-reassign
+          acc = [...acc, ...actualFilters[key].map((f) => JSON.parse(f))];
+        } else {
+          // eslint-disable-next-line no-param-reassign
+          acc = [...acc, JSON.parse(actualFilters[key])];
+        }
       }
     });
 

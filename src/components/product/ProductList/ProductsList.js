@@ -25,9 +25,7 @@ function ProductsList({
   const router = useRouter();
   const listInnerRef = useRef();
   const isBottom = useOnScreen(listInnerRef);
-  const { addParam, pushQuery } = useRouterFilter();
-
-  console.log(actualFilters);
+  const { addParam, addUniqueParam, pushQuery } = useRouterFilter();
 
   useThrottledEffect(
     () => {
@@ -45,6 +43,7 @@ function ProductsList({
     setLoading(false);
   }, [products]);
 
+  // Functions
   const handleChangeFilter = (valueId, filterId) => {
     addParam(filterId, valueId, true, true);
   };
@@ -63,6 +62,7 @@ function ProductsList({
         filters={filters}
         filtersSelected={actualFilters}
         onChange={handleChangeFilter}
+        addUniqueParam={addUniqueParam}
       />
       <div className={styles.products}>
         <div className={styles.header}>

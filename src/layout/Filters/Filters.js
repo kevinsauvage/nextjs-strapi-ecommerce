@@ -3,23 +3,19 @@ import MultiRangeSlider from '@/components/MultiRangeSlider/MultiRangeSlider';
 import Collapsible from '../Collapsible/Collapsible';
 import styles from './Filters.module.scss';
 
-export default function Filters({ filters = [], filtersSelected, onChange }) {
-  const isChecked = (valueId, filterId) => {
+export default function Filters({
+  filters = [],
+  filtersSelected,
+  onChange,
+  addUniqueParam,
+}) {
+  const isChecked = (input, filterId) => {
     const actualValues = filtersSelected[filterId];
 
     return Array.isArray(actualValues)
-      ? actualValues.includes(valueId)
-      : [actualValues].includes(valueId);
+      ? actualValues.includes(input)
+      : [actualValues].includes(input);
   };
-
-  const handleChangeInput = (valueId) => {
-    console.log(valueId);
-  };
-
-  console.log(filters);
-
-  const getMinValue = (input) => JSON.parse(input).price.min;
-  const getMaxValue = (input) => JSON.parse(input).price.max;
 
   return (
     <div className={styles.filters}>
@@ -30,10 +26,13 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
             {filter.values.map((value) => (
               <MultiRangeSlider
                 key={value}
-                min={getMinValue(value.input)}
-                max={getMaxValue(value.input)}
+                min={JSON.parse(value?.input)?.price?.min}
+                max={JSON.parse(value?.input)?.price?.max}
                 onChange={({ min, max }) =>
-                  handleChangeInput(value.id, filter.id, min, max)
+                  addUniqueParam(
+                    filter.id,
+                    JSON.stringify({ price: { min, max } })
+                  )
                 }
               />
             ))}
@@ -54,9 +53,9 @@ export default function Filters({ filters = [], filtersSelected, onChange }) {
                     <button
                       className={styles.button}
                       type="button"
-                      onClick={() => onChange(value.id, filter.id)}
+                      onClick={() => onChange(value.input, filter.id)}
                     >
-                      {isChecked(value.id, filter.id) ? (
+                      {isChecked(value.input, filter.id) ? (
                         <MdCheckBox size={20} color="purple" />
                       ) : (
                         <MdCheckBoxOutlineBlank size={20} />

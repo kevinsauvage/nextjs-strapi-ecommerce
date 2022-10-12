@@ -14,7 +14,7 @@ function CollectionSlugPage({
   pageInfo,
   actualFilters,
 }) {
-  console.log(filters);
+  console.log(filters, 'availableFilters');
   return (
     <Page title={`${title}`}>
       <ProductsList
@@ -67,6 +67,7 @@ export async function getServerSideProps({ params, query }) {
       products,
       pageInfo,
       actualFilters: query,
+      filtersFetchArray,
       tags,
     },
   };

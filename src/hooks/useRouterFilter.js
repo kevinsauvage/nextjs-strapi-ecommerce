@@ -31,9 +31,15 @@ const useRouterFilter = () => {
     pushQuery({ ...rest, ...newQuery }, scroll);
   };
 
+  const addUniqueParam = (name, value) => {
+    const { [name]: param, ...rest } = query;
+    pushQuery({ ...rest, [name]: value });
+  };
+
   return {
     addParam,
     pushQuery,
+    addUniqueParam,
   };
 };
 
