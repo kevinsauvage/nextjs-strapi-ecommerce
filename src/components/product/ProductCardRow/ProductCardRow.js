@@ -26,16 +26,18 @@ export default function ProductCardRow({ product }) {
   return (
     <li className={`${styles.ProductCardRow}`}>
       <div className={styles.image}>
-        <Image
-          src={image?.sm}
-          alt={image?.alt}
-          layout="responsive"
-          objectFit="cover"
-          width="500"
-          height="750"
-          blurDataURL={image?.blurDataURL}
-          placeholder="blur"
-        />
+        {image?.sm && (
+          <Image
+            src={image?.sm}
+            alt={image?.alt}
+            layout="responsive"
+            objectFit="cover"
+            width="500"
+            height="750"
+            blurDataURL={image?.blurDataURL}
+            placeholder="blur"
+          />
+        )}
       </div>
 
       <div className={styles.content}>

@@ -24,11 +24,8 @@ function middleware(request) {
         return null;
       }
 
-      console.log(url, 'next url');
       // Get user auth cookies
       const cookieShopify = cookies.get('shopify_token');
-
-      console.log(cookieShopify, 'cookieShopify tokens');
 
       // Cannot access auth page if already login
       if (cookieShopify && pathname.includes('/auth')) {
@@ -42,7 +39,6 @@ function middleware(request) {
         console.log(' Cannot access account if not login');
         return NextResponse.redirect(`${origin}${routes.login}`);
       }
-      console.log('next');
       return NextResponse.next();
     }
   }
