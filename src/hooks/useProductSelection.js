@@ -40,14 +40,14 @@ export default function useProductSelection({ product }) {
         )
     );
 
-    if (difference.length) return true;
+    if (difference?.length) return true;
     return false;
   };
 
   // Find if the option is selected
   const isOptionSelected = useCallback(
     (optionName, optionValue) => {
-      if (selectedProductOption.length) {
+      if (selectedProductOption?.length) {
         return selectedProductOption?.find(
           (option) => option.name === optionName && option.value === optionValue
         );
