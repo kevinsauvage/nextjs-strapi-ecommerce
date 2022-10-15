@@ -28,7 +28,7 @@ export function CartProvider({ children }) {
   const [cartId, setCartId] = useLocalStorage('cartId', '');
   const { token } = useUserContext();
   const { toggleCart } = useGlobalContext();
-  const { cart, isCartLoading, isCartOpen } = states;
+  const { cart, isCartLoading } = states;
 
   const toggleLoading = useCallback((is) => {
     dispatch({ type: 'IS_CART_LOADING', payload: is });
