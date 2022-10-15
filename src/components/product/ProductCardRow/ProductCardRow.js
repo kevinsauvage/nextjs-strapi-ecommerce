@@ -7,7 +7,7 @@ import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
 import Price from '@/components/Price/Price';
 import styles from './ProductCardRow.module.scss';
-import Option from '../Option/Option';
+import Options from '../Options/Options';
 
 export default function ProductCardRow({ product }) {
   const {
@@ -51,45 +51,31 @@ export default function ProductCardRow({ product }) {
             </a>
           </Link>
           <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} />
-          <div className={styles.options}>
-            {Array.isArray(options) &&
-              options.length > 1 &&
-              options.map((option) => (
-                <Option
-                  key={option.id}
-                  option={option}
-                  isOptionOutOfStock={isOptionOutOfStock}
-                  isSelected={isOptionSelected}
-                  handleClick={(value, name) => {
-                    handleSetSelectedProductOption({
-                      name,
-                      value,
-                    });
-                  }}
-                />
-              ))}
-          </div>
+
+          <Options
+            styles={styles.options}
+            options={options}
+            isOptionOutOfStock={isOptionOutOfStock}
+            isSelected={isOptionSelected}
+            handleClick={handleSetSelectedProductOption}
+          />
         </div>
 
         <footer className={styles.footer}>
+          <QuantityUpdater
+            originalQuantity={1}
+            onChange={handleChangeInput}
+            quantityAvailable={quantityAvailable}
+          />
           {quantityAvailable > 0 ? (
-            <>
-              <div className={styles.quantityUpdater}>
-                <QuantityUpdater
-                  originalQuantity={1}
-                  onChange={handleChangeInput}
-                  quantityAvailable={quantityAvailable}
-                />
-              </div>
-              <Button
-                extraClass={styles.btn}
-                type="button"
-                text="ADD TO CART"
-                tertiary
-                disabled={quantityAvailable < 1}
-                onClick={handleAddToCart}
-              />
-            </>
+            <Button
+              extraClass={styles.btn}
+              type="button"
+              text="ADD TO CART"
+              tertiary
+              disabled={quantityAvailable < 1}
+              onClick={handleAddToCart}
+            />
           ) : (
             <Button
               extraClass={styles.btn}

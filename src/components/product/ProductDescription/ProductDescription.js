@@ -3,7 +3,7 @@ import routes from '@/data/routes';
 import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import styles from './ProductDescription.module.scss';
-import Option from '../Option/Option';
+import Options from '../Options/Options';
 
 export default function ProductDescription({
   product,
@@ -57,22 +57,13 @@ export default function ProductDescription({
         </div>
       )} */}
 
-      {Array.isArray(options) &&
-        options.length > 1 &&
-        options.map((option) => (
-          <Option
-            key={option.id}
-            option={option}
-            isOptionOutOfStock={isOptionOutOfStock}
-            isSelected={isOptionSelected}
-            handleClick={(value, name) => {
-              handleSetSelectedProductOption({
-                name,
-                value,
-              });
-            }}
-          />
-        ))}
+      <Options
+        styles={styles.options}
+        options={options}
+        isOptionOutOfStock={isOptionOutOfStock}
+        isSelected={isOptionSelected}
+        handleClick={handleSetSelectedProductOption}
+      />
 
       <div className={styles.quantityUpdater}>
         <QuantityUpdater

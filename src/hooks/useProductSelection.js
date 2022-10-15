@@ -72,7 +72,6 @@ export default function useProductSelection({ product }) {
 
   // Reset variant
   useEffect(() => {
-    console.log('remove selected variant');
     setSelectedVariant({});
   }, [selectedProductOption, product, setSelectedVariant]);
 
