@@ -23,9 +23,11 @@ export default function useProductSelection({ product }) {
         return setSelectedProductOption(productOption);
       }
 
-      const filtered = selectedProductOption?.filter(
-        (option) => Object.values(option)[0] !== Object.values(productOption)[0]
-      );
+      const filtered =
+        selectedProductOption?.filter(
+          (option) =>
+            Object.values(option)[0] !== Object.values(productOption)[0]
+        ) || [];
       return setSelectedProductOption([...filtered, productOption]);
     },
     [selectedProductOption]
@@ -77,9 +79,9 @@ export default function useProductSelection({ product }) {
   // Find available variant options
   useEffect(() => {
     if (product?.variants?.length) {
-      const options = product?.variants?.filter(
-        (variant) => variant.availableForSale
-      )?.[0]?.selectedOptions;
+      const options =
+        product?.variants?.filter((variant) => variant.availableForSale)?.[0]
+          ?.selectedOptions || product?.variants?.[0]?.selectedOptions;
       setSelectedProductOption(options);
     }
   }, [product, setSelectedVariant]);

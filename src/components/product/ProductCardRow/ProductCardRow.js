@@ -16,6 +16,7 @@ export default function ProductCardRow({ product }) {
     selectedVariant,
     handleAddToCart,
     handleChangeInput,
+    isOptionOutOfStock,
   } = useProductSelection({ product });
 
   const { title, handle, options } = product;
@@ -57,6 +58,7 @@ export default function ProductCardRow({ product }) {
                 <Option
                   key={option.id}
                   option={option}
+                  isOptionOutOfStock={isOptionOutOfStock}
                   isSelected={isOptionSelected}
                   handleClick={(value, name) => {
                     handleSetSelectedProductOption({
