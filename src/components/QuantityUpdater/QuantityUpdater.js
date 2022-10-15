@@ -13,10 +13,7 @@ export default function QuantityUpdater({
   const input = useRef(null);
 
   const addOne = () => {
-    if (quantity >= quantityAvailable) {
-      return setQuantity(Number(quantityAvailable));
-    }
-
+    if (quantity >= quantityAvailable) return setQuantity(1);
     onChange(Number(quantity + 1));
     return setQuantity((prev) => Number(prev) + 1);
   };
@@ -35,9 +32,7 @@ export default function QuantityUpdater({
         `There is Only ${quantityAvailable} variant available`
       );
     }
-    if (Number(num) !== Number(originalQuantity)) {
-      return setQuantity(num);
-    }
+    if (Number(num) !== Number(originalQuantity)) return setQuantity(num);
     return false;
   };
 

@@ -7,13 +7,7 @@
 .button {
   padding: 3px;
   font-size: 12px;
-  border: 0.1px solid gray;
-}
-
-.buttonColor {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  border: 0.1px solid rgb(0, 0, 0);
 }
 
 .name {
@@ -27,7 +21,12 @@
 }
 
 .selectedOption {
-  border: 1px solid black;
-  color: black;
-  font-weight: 700;
+  border: 0.1px solid rgb(16, 94, 0);
+  font-weight: 600;
+  background-color: green;
+  color: white;
+}
+
+.outOfStock {
+  opacity: 0.6;
 }

@@ -10,7 +10,6 @@ import {
 
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import { useEffect } from 'react';
-import styles from './slug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
@@ -22,7 +21,7 @@ function ProductPage({ product, recommendations = [] }) {
   const { title, description } = product;
 
   return (
-    <Page title={title} description={description} extraClass={styles.content}>
+    <Page title={title} description={description}>
       <ProductPresenter product={product} />
       {recommendations &&
         Array.isArray(recommendations) &&

@@ -13,6 +13,7 @@ export default function ProductDescription({
   handleSetSelectedProductOption,
   isOptionSelected,
   isModal,
+  isOptionOutOfStock,
 }) {
   const { title, descriptionHtml, options } = product || {};
   const { quantityAvailable } = selected || {};
@@ -62,6 +63,7 @@ export default function ProductDescription({
           <Option
             key={option.id}
             option={option}
+            isOptionOutOfStock={isOptionOutOfStock}
             isSelected={isOptionSelected}
             handleClick={(value, name) => {
               handleSetSelectedProductOption({
@@ -72,25 +74,23 @@ export default function ProductDescription({
           />
         ))}
 
+      <div className={styles.quantityUpdater}>
+        <QuantityUpdater
+          originalQuantity={1}
+          onChange={handleChangeInput}
+          quantityAvailable={quantityAvailable}
+        />
+      </div>
+      <p className={styles.quantity}>{quantityAvailable} Available</p>
       {quantityAvailable > 0 ? (
-        <>
-          <div className={styles.quantityUpdater}>
-            <QuantityUpdater
-              originalQuantity={1}
-              onChange={handleChangeInput}
-              quantityAvailable={quantityAvailable}
-            />
-          </div>
-          <p className={styles.quantity}>{quantityAvailable} Available</p>
-          <Button
-            extraClass={styles.btn}
-            type="button"
-            text="ADD TO CART"
-            tertiary
-            disabled={quantityAvailable < 1}
-            onClick={handleAddToCart}
-          />
-        </>
+        <Button
+          extraClass={styles.btn}
+          type="button"
+          text="ADD TO CART"
+          tertiary
+          disabled={quantityAvailable < 1}
+          onClick={handleAddToCart}
+        />
       ) : (
         <Button
           extraClass={styles.btn}
