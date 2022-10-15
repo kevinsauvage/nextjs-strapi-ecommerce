@@ -104,8 +104,9 @@ export default function useProductSelection({ product }) {
               .forEach((opt) => {
                 if (option.value === opt.value)
                   sizes.push(
-                    variant.selectedOptions.filter((o) => o.name === 'Size')[0]
-                      .value
+                    variant.selectedOptions.filter(
+                      (o) => o.name === 'Size'
+                    )?.[0]?.value
                   );
               });
             selectedProductOption
