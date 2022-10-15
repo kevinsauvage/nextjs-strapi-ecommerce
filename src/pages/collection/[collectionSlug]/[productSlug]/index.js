@@ -57,8 +57,8 @@ export async function getStaticPaths() {
 
   const paths = data.products.map((product) => ({
     params: {
-      productSlug: String(product.handle),
-      collectionSlug: String(product?.collections?.[0]?.handle),
+      productSlug: product.handle,
+      collectionSlug: product?.collections?.[0]?.handle,
     },
   }));
 
