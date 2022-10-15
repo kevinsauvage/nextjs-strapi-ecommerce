@@ -23,6 +23,12 @@ export function ProductProvider({ children }) {
     setSelectedProduct(null);
   }, [setSelectedProduct, router.asPath]);
 
+  useEffect(() => {
+    if (selectedProduct?.id) {
+      document.body.style.overflow = 'hidden';
+    } else document.body.style.overflow = 'visible';
+  }, [selectedProduct]);
+
   const values = useMemo(
     () => ({
       selectedProduct,

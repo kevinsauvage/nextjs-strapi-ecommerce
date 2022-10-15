@@ -68,6 +68,12 @@ export default function useProductSelection({ product }) {
     [availableColors, availableSize]
   );
 
+  // Reset variant
+  useEffect(() => {
+    console.log('remove selected variant');
+    setSelectedVariant({});
+  }, [selectedProductOption, product, setSelectedVariant]);
+
   // Find available variant options
   useEffect(() => {
     if (product?.variants?.length) {

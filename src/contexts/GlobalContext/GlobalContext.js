@@ -13,17 +13,24 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
+  const { cartOpen, searchOpen, userOpen, modalSelectedProduct } = states;
 
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
   }, []);
 
+  useEffect(() => {
+    if (cartOpen || searchOpen || userOpen) {
+      document.body.style.overflow = 'hidden';
+    } else document.body.style.overflow = 'visible';
+  }, [cartOpen, searchOpen, userOpen]);
+
   const values = useMemo(
     () => ({
-      searchOpen: states.searchOpen,
-      cartOpen: states.cartOpen,
-      userOpen: states.userOpen,
-      modalSelectedProduct: states.modalSelectedProduct,
+      searchOpen,
+      cartOpen,
+      userOpen,
+      modalSelectedProduct,
 
       toggleSearch: () => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -46,7 +53,7 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [states, resetToggle]
+    [cartOpen, searchOpen, userOpen, modalSelectedProduct, resetToggle]
   );
 
   useEffect(() => {
