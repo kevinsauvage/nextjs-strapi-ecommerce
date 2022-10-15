@@ -65,14 +65,12 @@ export default function ProductDescription({
         handleClick={handleSetSelectedProductOption}
       />
 
-      <div className={styles.quantityUpdater}>
-        <QuantityUpdater
-          originalQuantity={1}
-          onChange={handleChangeInput}
-          quantityAvailable={quantityAvailable}
-        />
-      </div>
-      <p className={styles.quantity}>{quantityAvailable} Available</p>
+      <QuantityUpdater
+        extraStyles={styles.quantityUpdater}
+        originalQuantity={1}
+        onChange={handleChangeInput}
+        quantityAvailable={quantityAvailable}
+      />
       {quantityAvailable > 0 ? (
         <Button
           extraClass={styles.btn}

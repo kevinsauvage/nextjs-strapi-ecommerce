@@ -8,6 +8,7 @@ export default function QuantityUpdater({
   originalQuantity,
   onChange,
   quantityAvailable,
+  extraStyles,
 }) {
   const [quantity, setQuantity] = useState(originalQuantity);
   const input = useRef(null);
@@ -42,7 +43,7 @@ export default function QuantityUpdater({
   };
 
   return (
-    <div className={styles.quantityContainer}>
+    <div className={`${styles.quantityContainer} ${extraStyles}`}>
       <button type="button" onClick={removeOne} className={styles.btnQuantity}>
         <VscRemove />
       </button>
