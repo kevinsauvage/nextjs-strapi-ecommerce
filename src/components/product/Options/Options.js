@@ -1,4 +1,3 @@
-import Separator from '@/components/Separator/Separator';
 import Option from './Option/Option';
 
 export default function Options({
@@ -6,29 +5,26 @@ export default function Options({
   isOptionOutOfStock,
   isSelected,
   handleClick,
+  styles,
 }) {
   return (
-    <div>
-      {Array.isArray(options) && options.length > 1 && (
-        <>
-          <Separator />
-          {options.map((option) => (
-            <Option
-              key={option.id}
-              option={option}
-              isOptionOutOfStock={isOptionOutOfStock}
-              isSelected={isSelected}
-              handleClick={(value, name) => {
-                handleClick({
-                  name,
-                  value,
-                });
-              }}
-            />
-          ))}
-          <Separator />
-        </>
-      )}
+    <div className={styles}>
+      {Array.isArray(options) &&
+        options.length > 1 &&
+        options.map((option) => (
+          <Option
+            key={option.id}
+            option={option}
+            isOptionOutOfStock={isOptionOutOfStock}
+            isSelected={isSelected}
+            handleClick={(value, name) => {
+              handleClick({
+                name,
+                value,
+              });
+            }}
+          />
+        ))}
     </div>
   );
 }
