@@ -4,7 +4,7 @@ import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import Price from '@/components/Price/Price';
 import Collapsible from '@/layout/Collapsible/Collapsible';
-import Separator from 'src/components/Separator/Separator';
+import Separator from '@/components/Separator/Separator';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
