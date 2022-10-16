@@ -24,14 +24,14 @@ function Carousel({ children, title, itemToShow = 5 }) {
       innerHeight * Children.count(children) - carouselWidth;
 
     if (translatePosition >= maxTranslatePosition) {
-      return;
+      return null;
     }
     const nextPosition = translatePosition + carouselWidth;
     console.log(nextPosition);
     if (nextPosition > maxTranslatePosition) {
-      setTranslatePosition(maxTranslatePosition);
+      return setTranslatePosition(maxTranslatePosition);
     }
-    setTranslatePosition(nextPosition);
+    return setTranslatePosition(nextPosition);
   };
 
   const handlePrev = () => {

@@ -3,7 +3,6 @@
   position: relative;
   max-width: 100px;
   width: 100%;
-  background-color: whitesmoke;
 }
 
 .inner {
@@ -24,7 +23,11 @@
   width: 100%;
   height: 30px;
   position: relative;
-  background-color: white;
+  background-color: #e1e1e1;
   z-index: 99;
   border: none;
+
+  svg {
+    font-size: 20px;
+  }
 }

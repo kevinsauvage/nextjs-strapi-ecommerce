@@ -21,11 +21,13 @@ export default function PhotoGallery({ selectedVariant, images }) {
               selectedVariant?.image?.alt ||
               selectedVariant?.title
             }
-            width={selectedVariant?.image?.width}
-            height={selectedVariant?.image?.height}
+            width={500}
+            height={700}
             layout="responsive"
             objectFit="cover"
+            objectPosition="center"
             priority
+            quality={50}
             blurDataURL={
               selected?.blurDataURL || selectedVariant?.image?.blurDataURL
             }
@@ -48,8 +50,6 @@ export default function PhotoGallery({ selectedVariant, images }) {
               <Image
                 src={image?.sm}
                 alt={image?.alt || selectedVariant?.title}
-                width={image?.width}
-                height={image?.height}
                 layout="fill"
                 objectFit="cover"
                 blurDataURL={image?.blurDataURL}

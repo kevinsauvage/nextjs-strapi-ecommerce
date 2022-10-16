@@ -30,7 +30,7 @@ function ProductPage({ product, recommendations = [] }) {
         recommendations.length > 0 && (
           <Carousel title="Recommended Products">
             {recommendations.map((prod) => (
-              <CarouselItem key={product.id}>
+              <CarouselItem key={prod.id}>
                 <ProductCardDefault product={prod} />
               </CarouselItem>
             ))}

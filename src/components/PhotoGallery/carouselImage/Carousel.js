@@ -11,10 +11,10 @@ export function CarouselItem({ children, height }) {
   );
 }
 
-function Carousel({ children }) {
+function Carousel({ children, itemToShow = 4 }) {
   const [translatePosition, setTranslatePosition] = useState(0);
   const carouselRef = useRef(null);
-  const itemHeight = 20;
+  const itemHeight = 100 / itemToShow;
 
   const handleNext = () => {
     const carouselHeight = carouselRef?.current?.getBoundingClientRect().height;
@@ -24,7 +24,7 @@ function Carousel({ children }) {
       innerHeight * Children.count(children) - carouselHeight;
 
     if (translatePosition === maxTranslatePosition) {
-      return setTranslatePosition(0);
+      return null;
     }
     const nextPosition = translatePosition + carouselHeight;
     console.log(nextPosition);

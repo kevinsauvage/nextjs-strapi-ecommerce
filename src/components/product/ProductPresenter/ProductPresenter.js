@@ -13,7 +13,6 @@ export default function ProductPresenter({ product, isModal }) {
     isOptionOutOfStock,
   } = useProductSelection({ product });
 
-  console.log(product);
   return (
     <div className={styles.container}>
       <PhotoGallery
