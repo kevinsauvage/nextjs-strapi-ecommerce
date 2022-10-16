@@ -1,5 +1,5 @@
 import shopifyStorefrontCall from '..';
-import { cleanProducts, cleanVariants } from '../helpers';
+import { cleanImage, cleanProducts, cleanVariants } from '../helpers';
 import productQueries from './productQueries';
 
 export const getProductTags = async () => {
@@ -31,7 +31,8 @@ export const getProduct = async (handle) => {
   if (res && res?.product) {
     return {
       ...res.product,
-      variants: cleanVariants(res.product?.variants?.edges),
+      images: cleanImage(res.product.images?.edges),
+      variants: cleanVariants(res.product.variants?.edges),
     };
   }
   return [];

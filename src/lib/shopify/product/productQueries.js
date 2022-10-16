@@ -88,7 +88,7 @@ const queryProduct = `query product($handle: String) {
     title
     availableForSale
     descriptionHtml
-    images(first: 1) {
+    images(first: 50) {
       edges {
         node {
           src

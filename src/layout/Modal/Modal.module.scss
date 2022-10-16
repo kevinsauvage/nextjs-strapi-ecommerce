@@ -17,25 +17,20 @@
   background-color: white;
   position: relative;
   border-radius: 3px;
-  padding: 20px;
+  padding: 0px;
+  max-height: 80vh;
 }
 
 .close {
   position: absolute;
   border: none;
-  right: -15px;
-  top: -15px;
+  right: 10px;
+  top: 10px;
   z-index: 2;
-  background-color: $primary;
-  padding: 8px;
-  border-radius: 50px;
-  color: white;
-  border: 0.1px solid white;
-  box-shadow: $box-shadow-secondary;
 
   svg,
   path {
-    font-size: 22px;
-    stroke: white;
+    font-size: 20px;
+    stroke: black;
   }
 }

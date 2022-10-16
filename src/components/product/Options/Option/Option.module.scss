@@ -1,5 +1,4 @@
 .option {
-  margin: 16px 0;
   display: flex;
   align-items: center;
 }
@@ -9,11 +8,14 @@
   font-size: 12px;
   font-weight: 600;
   border: 0.1px solid rgb(0, 0, 0);
+  min-width: 30px;
+  min-height: 30px;
 }
 
 .name {
-  font-size: 12px;
+  font-size: 14px;
   margin-right: 8px;
+  text-transform: uppercase;
 }
 
 .list {
@@ -23,9 +25,9 @@
 }
 
 .selectedOption {
-  border: 0.1px solid rgb(16, 94, 0);
+  border: 0.1px solid rgb(0, 0, 0);
   font-weight: 800;
-  background-color: green;
+  background-color: rgb(0, 0, 0);
   color: white;
 }
 

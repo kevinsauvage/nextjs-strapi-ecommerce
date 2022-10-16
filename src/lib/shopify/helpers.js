@@ -41,7 +41,7 @@ export const cleanVariants = (variants = []) => {
   }));
 };
 
-const cleanImage = (images) =>
+export const cleanImage = (images) =>
   images.map((image) => ({
     ...image.node,
   }));

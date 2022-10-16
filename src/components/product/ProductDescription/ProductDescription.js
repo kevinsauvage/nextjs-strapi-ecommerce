@@ -2,21 +2,27 @@ import Button from '@/components/Button/Button';
 import routes from '@/data/routes';
 import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
+import Price from '@/components/Price/Price';
+import Collapsible from '@/layout/Collapsible/Collapsible';
+import Separator from '@/components/Separator/Separator';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
 export default function ProductDescription({
-  product,
-  selected,
-  handleAddToCart,
-  handleChangeInput,
   handleSetSelectedProductOption,
-  isOptionSelected,
-  isModal,
   isOptionOutOfStock,
+  handleChangeInput,
+  isOptionSelected,
+  handleAddToCart,
+  selected,
+  product,
+  isModal,
 }) {
-  const { title, descriptionHtml, options } = product || {};
-  const { quantityAvailable } = selected || {};
+  const { title, descriptionHtml, options, collections, handle, variants } =
+    product || {};
+  const { quantityAvailable, priceV2, compareAtPriceV2 } = selected || {};
+
+  const href = `${routes.collection}/${collections?.[0]?.handle}/${handle}`;
 
   return (
     <div
@@ -25,45 +31,43 @@ export default function ProductDescription({
         `${isModal ? styles.ProductDescriptionModal : ''}`
       }
     >
-      <div className={styles.header}>
+      {isModal ? (
+        <Link href={href}>
+          <a>
+            <h4 className={styles.title}>{title}</h4>
+          </a>
+        </Link>
+      ) : (
         <h4 className={styles.title}>{title}</h4>
-        <p className={styles.price}>
-          {selected?.priceV2?.amount} {selected?.priceV2?.currencyCode}
-        </p>
-      </div>
-      <div className={styles.descriptionWrapper}>
-        <div
-          className={styles.description}
-          dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-        />
-        {isModal && (
-          <div className={styles.fullDescription}>
-            <Link
-              href={`${routes.collection}/${product?.collections?.[0]?.handle}/${product.handle}`}
-            >
-              <a>See Full Description</a>
-            </Link>
-          </div>
-        )}
-      </div>
-
-      {/*       {tags && Array.isArray(tags) && tags.length && (
-        <div className={styles.tags}>
-          {tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
-      )} */}
-
+      )}
+      <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
+      <Separator />
       <Options
         styles={styles.options}
         options={options}
         isOptionOutOfStock={isOptionOutOfStock}
         isSelected={isOptionSelected}
         handleClick={handleSetSelectedProductOption}
+        variants={variants}
       />
+      <Separator />
+
+      {isModal ? (
+        <Button
+          extraClass={styles.btnSeeProduct}
+          type="button"
+          text="SEE PRODUCT"
+          primary
+          href={href}
+        />
+      ) : (
+        <Collapsible title="Description">
+          <div
+            className={styles.description}
+            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+          />
+        </Collapsible>
+      )}
 
       <QuantityUpdater
         extraStyles={styles.quantityUpdater}

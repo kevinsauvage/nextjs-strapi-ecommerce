@@ -1,19 +1,22 @@
 .Price {
   display: flex;
   align-items: center;
-}
-
-.currentPrice {
-  font-size: 14px;
-  font-weight: 500;
   color: black;
 }
 
+.currentPrice {
+  font-size: 16px;
+  font-weight: 600;
+}
+
 .compareAtPriceV2 {
-  color: red;
   font-weight: 300;
+  color: black;
   font-size: 14px;
   margin-left: 8px;
   text-decoration: line-through;
-  opacity: 0.6;
+}
+
+.PriceDiscount {
+  color: red;
 }
