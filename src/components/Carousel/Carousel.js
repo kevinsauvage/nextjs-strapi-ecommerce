@@ -29,9 +29,9 @@ function Carousel({ children, title, itemToShow = 5 }) {
     const nextPosition = translatePosition + carouselWidth;
     console.log(nextPosition);
     if (nextPosition > maxTranslatePosition) {
-      return setTranslatePosition(maxTranslatePosition);
+      setTranslatePosition(maxTranslatePosition);
     }
-    return setTranslatePosition(nextPosition);
+    setTranslatePosition(nextPosition);
   };
 
   const handlePrev = () => {
