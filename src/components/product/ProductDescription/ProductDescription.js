@@ -4,7 +4,6 @@ import Link from 'next/link';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import Price from '@/components/Price/Price';
 import Collapsible from '@/layout/Collapsible/Collapsible';
-import Separator from '@/components/Separator/Separator';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
@@ -41,16 +40,13 @@ export default function ProductDescription({
         <h4 className={styles.title}>{title}</h4>
       )}
       <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
-      <Separator />
       <Options
-        styles={styles.options}
         options={options}
         isOptionOutOfStock={isOptionOutOfStock}
         isSelected={isOptionSelected}
         handleClick={handleSetSelectedProductOption}
         variants={variants}
       />
-      <Separator />
 
       {isModal ? (
         <Button

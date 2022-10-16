@@ -27,7 +27,6 @@ const filterCollection = `
           endCursor
           startCursor
         }
-
         edges {
           node {
             options {
@@ -46,7 +45,7 @@ const filterCollection = `
             handle
             id
             descriptionHtml
-            images(first: 1) {
+            images(first: 50) {
               edges {
                 node{
                   src
@@ -152,7 +151,7 @@ const getCollectionsWithProducts = `query ($first: Int){
                 name
                 values
               }
-              images(first: 1) {
+              images(first: 50) {
                 edges {
                   node {
                     src

@@ -1,6 +1,10 @@
 .option {
   display: flex;
   align-items: center;
+  margin-bottom: 16px;
+  &:last-child {
+    margin-bottom: none;
+  }
 }
 
 .button {

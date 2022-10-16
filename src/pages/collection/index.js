@@ -1,5 +1,5 @@
 import Page from '@/layout/Page/Page';
-import Carousel from '@/components/Carousel/Carousel';
+import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
 
@@ -13,7 +13,9 @@ function CategoryPage({ collections }) {
               <Carousel key={collection.id} title={collection.title}>
                 {Array.isArray(collection.products) &&
                   collection.products.map((product) => (
-                    <ProductCardDefault key={product.id} product={product} />
+                    <CarouselItem key={product.id}>
+                      <ProductCardDefault product={product} />
+                    </CarouselItem>
                   ))}
               </Carousel>
             )

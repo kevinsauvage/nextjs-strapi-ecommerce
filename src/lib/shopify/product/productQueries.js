@@ -17,7 +17,7 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
           name
           values
         }
-         images(first: 20) {
+         images(first: 50) {
            edges {
              node {
                src
@@ -168,7 +168,7 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
     }
     availableForSale
     descriptionHtml
-    images(first: 1) {
+    images(first: 50) {
       edges {
         node {
           src

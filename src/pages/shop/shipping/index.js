@@ -1,5 +1,5 @@
 import Page from '@/layout/Page/Page';
-import Carousel from '@/components/Carousel/Carousel';
+import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
@@ -16,7 +16,9 @@ function ShippingPage({ bestSelling, shopInfo }) {
           bestSelling.products.length > 0 && (
             <Carousel title="Best Selling Products">
               {bestSelling.products.map((product) => (
-                <ProductCardDefault key={product.id} product={product} />
+                <CarouselItem key={product.id}>
+                  <ProductCardDefault product={product} />
+                </CarouselItem>
               ))}
             </Carousel>
           )}

@@ -24,7 +24,6 @@ export default function ProductCardDefault({ product }) {
               src={images?.[0]?.sm}
               alt={images?.[0]?.alt}
               layout="responsive"
-              objectFit="cover"
               width="500"
               height="750"
               blurDataURL={images?.[0]?.blurDataURL}
