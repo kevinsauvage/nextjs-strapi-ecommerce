@@ -15,19 +15,19 @@ export default function PhotoGallery({ selectedVariant, images }) {
       {selectedVariant?.id && (
         <div className={styles.selectedImage}>
           <Image
-            src={selected?.src || selectedVariant?.image?.src}
+            src={selected?.sm || selectedVariant?.image?.sm}
             alt={
               selected?.alt ||
               selectedVariant?.image?.alt ||
               selectedVariant?.title
             }
             width={500}
-            height={700}
+            height={750}
             layout="responsive"
             objectFit="cover"
             objectPosition="center"
             priority
-            quality={50}
+            quality={100}
             blurDataURL={
               selected?.blurDataURL || selectedVariant?.image?.blurDataURL
             }
@@ -35,7 +35,6 @@ export default function PhotoGallery({ selectedVariant, images }) {
           />
         </div>
       )}
-
       <Carousel>
         {images.map((image) => (
           <CarouselItem key={image.src}>

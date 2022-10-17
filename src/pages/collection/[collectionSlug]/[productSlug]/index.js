@@ -7,18 +7,13 @@ import {
   getProductRecommendation,
   getProducts,
 } from '@/lib/shopify/product/productApiCall';
-
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
-import { useEffect } from 'react';
 import Separator from '@/components/Separator/Separator';
+import Loader from '@/layout/Loader/Loader';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
-  useEffect(() => {
-    if (!product?.id) router.push('/');
-  }, [router, product]);
-
-  if (router.isFallback) return <div>Loading category...</div>;
+  if (router.isFallback) return <Loader />;
   const { title, description } = product;
 
   return (
@@ -44,7 +39,6 @@ export default ProductPage;
 
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.productSlug);
-
   const recommendations = await getProductRecommendation(product.id);
 
   return {

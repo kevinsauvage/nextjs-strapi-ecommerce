@@ -50,6 +50,7 @@ const filterCollection = `
                 node{
                   src
                   altText
+                  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                   sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                   blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                   width
@@ -84,6 +85,7 @@ const filterCollection = `
                   image {
                     src
                     altText
+                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                     sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                     blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
@@ -156,6 +158,7 @@ const getCollectionsWithProducts = `query ($first: Int){
                   node {
                     src
                     altText
+                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                     sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                     blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                     width
@@ -194,6 +197,7 @@ const getCollectionsWithProducts = `query ($first: Int){
                     image {
                       src
                       altText
+                      s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                       sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                       blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                       width

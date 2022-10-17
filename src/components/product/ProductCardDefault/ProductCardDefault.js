@@ -6,11 +6,9 @@ import useProductContext from '@/contexts/ProductContext/useProductContext';
 import Price from '@/components/Price/Price';
 import styles from './ProductCardDefault.module.scss';
 
-export default function ProductCardDefault({ product }) {
-  const { title, images, handle } = product;
-  const priceV2 = product?.variants?.[0]?.priceV2;
-  const compareAtPriceV2 = product?.variants?.[0]?.compareAtPriceV2;
-
+export default function ProductCardDefault({ product = {} }) {
+  const { title, images, handle, variants } = product;
+  const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { setSelectedProduct } = useProductContext();
 
   return (
@@ -24,10 +22,11 @@ export default function ProductCardDefault({ product }) {
               src={images?.[0]?.sm}
               alt={images?.[0]?.alt}
               layout="responsive"
-              width="500"
-              height="750"
+              width={500}
+              height={750}
               blurDataURL={images?.[0]?.blurDataURL}
               placeholder="blur"
+              quality={70}
             />
             <div
               className={styles.quickView}

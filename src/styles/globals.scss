@@ -29,6 +29,12 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+
+  &:disabled,
+  &[disabled='disabled'] {
+    opacity: 0.6;
+    cursor: not-allowed !important;
+  }
 }
 
 li {

@@ -22,6 +22,7 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
              node {
                src
                altText
+               s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                width
@@ -63,6 +64,7 @@ const queryProductRecommendations = `query productRecommendations($productId: ID
                image {
                  src
                  altText
+                 s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
                  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
                  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
                  width
@@ -93,6 +95,7 @@ const queryProduct = `query product($handle: String) {
         node {
           src
           altText
+          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
           sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
           blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
           width
@@ -136,6 +139,7 @@ const queryProduct = `query product($handle: String) {
           image {
             src
             altText
+            s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
             sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
             blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
             width
@@ -173,6 +177,7 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
         node {
           src
           altText
+          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
           sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
           blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
           width
@@ -218,6 +223,7 @@ const queryProducts = `query products($first: Int, $sortKey: ProductSortKeys) {
           image {
             src
             altText
+            s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
             sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
             blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
             width
@@ -254,6 +260,7 @@ const queryProductVariant = `query product($handle: String, $input: [SelectedOpt
       image {
         src
         altText
+        s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
         sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
         blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
         width
