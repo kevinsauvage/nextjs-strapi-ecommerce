@@ -27,7 +27,7 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
             objectFit="cover"
             objectPosition="center"
             priority
-            quality={50}
+            quality={100}
             blurDataURL={
               selected?.blurDataURL || selectedVariant?.image?.blurDataURL
             }
