@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import Carousel, { CarouselItem } from './carouselImage/Carousel';
 import styles from './PhotoGallery.module.scss';
 
-export default function PhotoGallery({ selectedVariant, images }) {
+export default function PhotoGallery({ selectedVariant, images = [] }) {
   const [selected, setSelected] = useState(undefined);
 
   useEffect(() => {
