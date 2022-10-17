@@ -1,6 +1,7 @@
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { useRouter } from 'next/router';
 import styles from './Carousel.module.scss';
 
 export function CarouselItem({ children, width }) {
@@ -17,6 +18,11 @@ function Carousel({ children, title, itemToShow = 5 }) {
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [itemWidth] = useState(100 / itemToShow);
   const carouselRef = useRef(null);
+  const { asPath } = useRouter();
+
+  useEffect(() => {
+    setTranslatePosition(0);
+  }, [asPath]);
 
   useEffect(() => {
     if (carouselRef?.current) {

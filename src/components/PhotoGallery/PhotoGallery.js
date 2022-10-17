@@ -27,7 +27,7 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
             objectFit="cover"
             objectPosition="center"
             priority
-            quality={100}
+            quality={50}
             blurDataURL={
               selected?.blurDataURL || selectedVariant?.image?.blurDataURL
             }
@@ -47,12 +47,13 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
               onClick={() => setSelected(image)}
             >
               <Image
-                src={image?.sm}
+                src={image?.s}
                 alt={image?.alt || selectedVariant?.title}
                 layout="fill"
                 objectFit="cover"
                 blurDataURL={image?.blurDataURL}
                 placeholder="blur"
+                quality={50}
               />
             </button>
           </CarouselItem>

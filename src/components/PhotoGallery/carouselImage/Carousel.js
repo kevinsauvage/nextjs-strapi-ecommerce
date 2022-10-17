@@ -1,6 +1,7 @@
-import { Children, cloneElement, useRef, useState } from 'react';
+import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { useRouter } from 'next/router';
 import styles from './Carousel.module.scss';
 
 export function CarouselItem({ children, height }) {
@@ -12,22 +13,30 @@ export function CarouselItem({ children, height }) {
 }
 
 function Carousel({ children, itemToShow = 4 }) {
+  const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
+  const [carouselHeight, setCarouselHeight] = useState(0);
+  const [itemHeight] = useState(100 / itemToShow);
+  const { asPath } = useRouter();
   const carouselRef = useRef(null);
-  const itemHeight = 100 / itemToShow;
+
+  useEffect(() => {
+    setTranslatePosition(0);
+  }, [asPath]);
+
+  useEffect(() => {
+    if (carouselRef?.current) {
+      const height = carouselRef?.current?.getBoundingClientRect().height;
+      const totalHeight = (height / 100) * itemHeight;
+      const position = totalHeight * Children.count(children) - height;
+      setMaxTranslatePosition(position);
+      setCarouselHeight(height);
+    }
+  }, [children, itemHeight, carouselRef]);
 
   const handleNext = () => {
-    const carouselHeight = carouselRef?.current?.getBoundingClientRect().height;
-    const innerHeight = (carouselHeight / 100) * itemHeight;
-
-    const maxTranslatePosition =
-      innerHeight * Children.count(children) - carouselHeight;
-
-    if (translatePosition === maxTranslatePosition) {
-      return null;
-    }
+    if (translatePosition === maxTranslatePosition) return null;
     const nextPosition = translatePosition + carouselHeight;
-    console.log(nextPosition);
     if (nextPosition > maxTranslatePosition) {
       return setTranslatePosition(maxTranslatePosition);
     }
@@ -35,7 +44,6 @@ function Carousel({ children, itemToShow = 4 }) {
   };
 
   const handlePrev = () => {
-    const carouselHeight = carouselRef?.current?.getBoundingClientRect().height;
     const prevPosition = translatePosition - carouselHeight;
     if (prevPosition < 0) return setTranslatePosition(0);
     return setTranslatePosition(prevPosition);
@@ -51,6 +59,7 @@ function Carousel({ children, itemToShow = 4 }) {
       <button
         className={`${styles.previous} ${styles.button}`}
         type="button"
+        disabled={translatePosition === 0}
         onClick={handlePrev}
       >
         <IoIosArrowUp />
@@ -69,6 +78,7 @@ function Carousel({ children, itemToShow = 4 }) {
       <button
         className={`${styles.next} ${styles.button}`}
         type="button"
+        disabled={translatePosition === maxTranslatePosition}
         onClick={handleNext}
       >
         <IoIosArrowDown />
