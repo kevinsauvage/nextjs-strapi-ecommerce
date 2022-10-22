@@ -14,7 +14,7 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
 
   useEffect(() => {
     setLoaded(false);
-  }, [selected?.src, selectedVariant?.id]);
+  }, [selected?.src, selectedVariant?.image?.src]);
 
   return (
     <div className={styles.container}>
