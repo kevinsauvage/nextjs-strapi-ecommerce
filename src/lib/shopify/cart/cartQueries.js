@@ -64,7 +64,10 @@ const queryCartById = `query($id: ID!) {
                   amount
                   currencyCode
                 }
-                
+                selectedOptions {
+                  name
+                  value
+                }
                 image {
                   src
                   altText
@@ -144,7 +147,10 @@ const queryAddBuyerIdentityToCart = `mutation cartBuyerIdentityUpdate(
                     amount
                     currencyCode
                   }
-                  
+                  selectedOptions {
+                    name
+                    value
+                  }
                   image {
                     src
                     altText
@@ -223,7 +229,10 @@ const queryAddLines = `mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInpu
                           amount
                           currencyCode
                         }
-                        
+                        selectedOptions {
+                          name
+                          value
+                        }
                         image {
                           src
                           altText
@@ -305,7 +314,10 @@ const queryRemoveFromCart = `mutation cartLinesRemove($cartId: ID!, $lineIds: [I
                           amount
                           currencyCode
                         }
-                        
+                        selectedOptions {
+                          name
+                          value
+                        }
                         image {
                           src
                           altText
@@ -390,7 +402,10 @@ const queryUpdateLine = `mutation cartLineUpdate($cartId: ID!, $lines: [CartLine
                     amount
                     currencyCode
                   }
-                  
+                  selectedOptions {
+                    name
+                    value
+                  }
                   image {
                     src
                     altText

@@ -9,7 +9,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
-  const { resetPasswordEmail, loading } = useUserContext();
+  const { resetPasswordEmail } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
@@ -17,7 +17,7 @@ function ResetPassword() {
   });
 
   return (
-    <Page title="Password recovery" loading={loading}>
+    <Page title="Password recovery">
       <div>
         <Form
           title="RESET YOUR PASSWORD"

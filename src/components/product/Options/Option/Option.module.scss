@@ -1,25 +1,22 @@
 .option {
-  display: flex;
-  align-items: center;
   margin-bottom: 16px;
+
   &:last-child {
-    margin-bottom: none;
+    margin-bottom: 0;
   }
 }
 
 .button {
-  padding: 3px;
+  padding: 5px;
   font-size: 12px;
   font-weight: 600;
   border: 0.1px solid rgb(0, 0, 0);
-  min-width: 30px;
-  min-height: 30px;
 }
 
 .name {
   font-size: 14px;
   margin-right: 8px;
-  text-transform: uppercase;
+  font-weight: 400;
 }
 
 .list {
@@ -36,6 +33,5 @@
 }
 
 .outOfStock {
-  opacity: 0.6;
-  font-weight: 300;
+  opacity: 0.3;
 }

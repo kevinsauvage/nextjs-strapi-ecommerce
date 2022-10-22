@@ -1,10 +1,9 @@
 .quantityContainer {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 24px;
   width: fit-content;
-  position: relative;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  border: 1px solid gray;
 }
 
 .input {
@@ -26,11 +25,18 @@
 }
 
 .btnQuantity {
-  padding: 4px;
+  padding: 10px;
   height: 100%;
   border: none;
 
   svg {
-    font-size: 14px;
+    font-size: 12px;
+    color: gray;
+  }
+
+  &:hover {
+    svg {
+      color: black;
+    }
   }
 }

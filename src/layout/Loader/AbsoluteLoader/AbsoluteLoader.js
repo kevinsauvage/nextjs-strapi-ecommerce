@@ -1,6 +1,6 @@
-import styles from './Loader.module.scss';
+import styles from './AbsoluteLoader.module.scss';
 
-export default function Loader({ text }) {
+export default function AbsoluteLoader({ text }) {
   return (
     <div className={styles.loader}>
       <div>{text || 'Loading...'}</div>

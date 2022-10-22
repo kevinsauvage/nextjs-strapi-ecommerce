@@ -9,16 +9,22 @@ import CategoryButtons from '@/layout/CategoryButtons/CategoryButtons';
 import Modal from '@/layout/Modal/Modal';
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Layout.module.scss';
+import PageLoader from '../Loader/PageLoader/PageLoader';
 
 function Layout({ children, collections }) {
   const { selectedProduct, setSelectedProduct } = useProductContext();
+  const { isCartLoading } = useCartContext();
+  const { loading } = useUserContext();
 
   return (
     <>
       <SearchBar />
       <Cart />
       <User />
+      {(isCartLoading || loading) && <PageLoader />}
       <div className={styles.container}>
         <Header />
         <CategoryButtons collections={collections} />

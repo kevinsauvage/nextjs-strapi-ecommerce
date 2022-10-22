@@ -14,7 +14,7 @@ export default function ProductPresenter({ product, isModal }) {
   } = useProductSelection({ product });
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container}  ${isModal ? styles.modal : ''}`}>
       <PhotoGallery
         items={product.variants}
         images={product.images}

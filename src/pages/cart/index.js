@@ -7,11 +7,10 @@ import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const { cart, isCartLoading, removeFromCart, handleQuantityChange } =
-    useCartContext();
+  const { cart, removeFromCart, handleQuantityChange } = useCartContext();
 
   return (
-    <Page title="Your Cart" loading={isCartLoading}>
+    <Page title="Your Cart">
       <div className={styles.cart}>
         {Array.isArray(cart?.lines) && cart?.lines?.length > 0 ? (
           <>

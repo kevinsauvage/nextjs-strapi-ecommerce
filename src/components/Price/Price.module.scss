@@ -2,19 +2,28 @@
   display: flex;
   align-items: center;
   color: black;
-}
-
-.currentPrice {
-  font-size: 16px;
   font-weight: 600;
+
+  &.small {
+    font-size: 13px;
+  }
+
+  &.medium {
+    font-size: 15px;
+  }
+
+  &.large {
+    font-size: 17px;
+  }
 }
 
 .compareAtPriceV2 {
   font-weight: 300;
   color: black;
-  font-size: 14px;
   margin-left: 8px;
   text-decoration: line-through;
+  transform: scale(0.9);
+  transform-origin: center;
 }
 
 .PriceDiscount {

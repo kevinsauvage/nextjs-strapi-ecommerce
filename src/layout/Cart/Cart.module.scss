@@ -1,37 +1,20 @@
-.container {
-  background-color: gainsboro;
-}
-
-.totalItems {
-  color: grey;
-}
-
-.total {
-  font-size: 16px;
-}
-
-.emptyContainer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.emptyText {
-  margin: 2rem 0;
-  font-size: 18px;
-  font-weight: 500;
-  color: gray;
-}
-
 .btn {
   width: 100%;
+  margin-top: 10px;
 }
 
-.list {
+.subtotal {
   display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin: 30px 0;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 34px;
+}
+
+.subtotalTitle {
+  font-weight: 800;
+}
+
+.amount {
+  font-size: 14px;
+  font-weight: 800;
 }

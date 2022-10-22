@@ -9,7 +9,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
-  const { register, loading } = useUserContext();
+  const { register } = useUserContext();
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
@@ -19,7 +19,7 @@ function RegisterPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Register your account" loading={loading}>
+    <Page title="Register your account">
       <div>
         <Form
           onSubmit={handleSubmit}

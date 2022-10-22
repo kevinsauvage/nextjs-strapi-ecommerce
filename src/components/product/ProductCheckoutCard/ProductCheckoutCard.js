@@ -2,6 +2,8 @@ import Image from 'next/image';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import routes from '@/data/routes';
 import Link from 'next/link';
+import Price from '@/components/Price/Price';
+import SelectedOptions from '@/components/SelectedOptions/SelectedOptions';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({
@@ -11,46 +13,43 @@ export default function ProductCheckoutCard({
   onQuantityChange,
   remove,
 }) {
+  const {
+    image,
+    compareAtPriceV2,
+    priceV2,
+    quantityAvailable,
+    selectedOptions,
+  } = variant || {};
+
+  console.log(variant);
   return (
     <div className={styles.card}>
       <div className={styles.image}>
         <Image
-          src={variant?.image?.sm}
-          layout="responsive"
+          src={image?.sm}
+          layout="fill"
           objectFit="cover"
           width="500"
           height="750"
-          blurDataURL={variant?.image?.blurDataURL}
+          blurDataURL={image?.blurDataURL}
           placeholder="blur"
-          alt={variant?.image?.alt}
+          alt={image?.alt}
         />
       </div>
       <div className={styles.body}>
-        <div className={styles.row}>
-          <Link
-            href={`${routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
-          >
-            <a>
-              <p className={styles.title}>{product?.title}</p>
-            </a>
-          </Link>
-        </div>
-        <div className={styles.row}>
-          <p className={styles.variantTitle}>{variant?.title}</p>
-        </div>
-        <p className={styles.price}>
-          <strong>Price:</strong> {Number(variant?.priceV2?.amount)}{' '}
-          {variant?.priceV2?.currencyCode}
-        </p>
-        <p className={styles.price}>
-          <strong>Total:</strong>{' '}
-          {(Number(variant?.priceV2?.amount) * quantity).toFixed(2)}{' '}
-          {variant?.priceV2?.currencyCode}
-        </p>
+        <Link
+          href={`${routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
+        >
+          <a>
+            <p className={styles.title}>{product?.title}</p>
+          </a>
+        </Link>
+        <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
+        <SelectedOptions options={selectedOptions} />
         <div className={styles.bottom}>
           <QuantityUpdater
             originalQuantity={quantity}
-            quantityAvailable={variant?.quantityAvailable}
+            quantityAvailable={quantityAvailable}
             onChange={onQuantityChange}
           />
           <button className={styles.remove} type="button" onClick={remove}>

@@ -1,7 +1,19 @@
+import { useEffect, useRef, useState } from 'react';
 import { MdClose } from 'react-icons/md';
 import styles from './Slide.module.scss';
 
-export default function Slide({ children, isOpen, handleClose, title }) {
+export default function Slide({ isOpen, handleClose, title, footer, content }) {
+  const footerRef = useRef(null);
+  const [contentHeight, setContentHeight] = useState();
+  const headerHeight = 50;
+
+  useEffect(() => {
+    if (footerRef?.current) {
+      const rect = footerRef?.current?.getBoundingClientRect();
+      setContentHeight(window.innerHeight - rect.height - headerHeight);
+    }
+  }, []);
+
   return isOpen ? (
     <div
       role="button"
@@ -16,21 +28,25 @@ export default function Slide({ children, isOpen, handleClose, title }) {
         onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >
-        <div style={{ position: 'relative', padding: '20px 30px' }}>
-          <header className={styles.header}>
-            <h5 className={styles.title}>{title}</h5>
-            <button
-              type="button"
-              className={styles.close}
-              onClick={handleClose}
-            >
-              <MdClose />
-            </button>
-          </header>
-          <div className={styles.inner}>
-            <div className={styles.children}>{children}</div>
-          </div>
+        <header className={styles.header}>
+          <h5 className={styles.title}>{title}</h5>
+          <button type="button" className={styles.close} onClick={handleClose}>
+            <MdClose />
+          </button>
+        </header>
+        <div
+          className={styles.content}
+          style={{
+            maxHeight: `${contentHeight}px`,
+          }}
+        >
+          {content}
         </div>
+        {footer && (
+          <footer ref={footerRef} className={styles.footer}>
+            {footer}
+          </footer>
+        )}
       </aside>
     </div>
   ) : null;

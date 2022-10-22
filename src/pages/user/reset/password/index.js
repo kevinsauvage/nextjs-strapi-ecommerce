@@ -7,7 +7,7 @@ import routes from '@/data/routes';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 
 function Password({ resetUrl }) {
-  const { resetPassword, loading } = useUserContext();
+  const { resetPassword } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
@@ -15,7 +15,7 @@ function Password({ resetUrl }) {
   });
 
   return (
-    <Page title="Password recovery" loading={loading}>
+    <Page title="Password recovery">
       <div>
         <Form
           title="ENTER YOUR NEW PASSWORD"

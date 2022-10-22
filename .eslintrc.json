@@ -24,7 +24,16 @@
     "no-underscore-dangle": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "no-console": "warn"
+    "no-console": "warn",
+    "jsx-a11y/label-has-associated-control": [
+      2,
+      {
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
+        "depth": 3
+      }
+    ]
   },
   "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {

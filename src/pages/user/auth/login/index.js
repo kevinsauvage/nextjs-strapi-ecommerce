@@ -9,14 +9,14 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Login.module.scss';
 
 function LoginPage() {
-  const { login, loading } = useUserContext();
+  const { login } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm((formData) =>
     login(formData.email, formData.password)
   );
 
   return (
-    <Page title="User Login" loading={loading}>
+    <Page title="User Login">
       <div>
         <Form
           title="LOGIN TO YOUR ACCOUNT"

@@ -25,13 +25,13 @@ export function UserProvider({ children }) {
   const [token, setToken] = useLocalStorage('customerAccessToken_shopify', '');
   const [accessToken, setAccessToken] = useState(undefined);
 
-  const { user } = states || {};
+  const { user, loading } = states || {};
 
   const router = useRouter();
   const { push } = router;
 
-  const toggleLoading = useCallback((loading) => {
-    dispatch({ type: actions.CHANGE_LOADING, payload: loading });
+  const toggleLoading = useCallback((loadingState) => {
+    dispatch({ type: actions.CHANGE_LOADING, payload: loadingState });
   }, []);
 
   const handleError = useCallback(
@@ -225,7 +225,7 @@ export function UserProvider({ children }) {
     () => ({
       // States
       user,
-      loading: states.loading,
+      loading,
       token,
 
       // Functions
@@ -237,7 +237,7 @@ export function UserProvider({ children }) {
       logout,
     }),
     [
-      states,
+      loading,
       token,
       user,
       login,

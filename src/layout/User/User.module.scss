@@ -5,14 +5,29 @@
   text-align: center;
 }
 
-.userinfo {
+.userInfo {
   height: 100%;
   border: 1px solid $primary;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .btn {
   width: 100%;
+  margin-top: 10px;
+}
+
+.footer {
+  background-color: white;
+  padding: 20px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }

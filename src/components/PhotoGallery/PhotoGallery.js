@@ -1,21 +1,28 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import AbsoluteLoader from '@/layout/Loader/AbsoluteLoader/AbsoluteLoader';
 import Carousel, { CarouselItem } from './carouselImage/Carousel';
 import styles from './PhotoGallery.module.scss';
 
 export default function PhotoGallery({ selectedVariant, images = [] }) {
   const [selected, setSelected] = useState(undefined);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     setSelected(undefined);
   }, [selectedVariant]);
 
+  useEffect(() => {
+    setLoaded(false);
+  }, [selected?.src, selectedVariant?.id]);
+
   return (
     <div className={styles.container}>
       {selectedVariant?.id && (
         <div className={styles.selectedImage}>
+          {!loaded && <AbsoluteLoader />}
           <Image
-            src={selected?.sm || selectedVariant?.image?.sm}
+            src={selected?.src || selectedVariant?.image?.src}
             alt={
               selected?.alt ||
               selectedVariant?.image?.alt ||
@@ -27,11 +34,12 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
             objectFit="cover"
             objectPosition="center"
             priority
-            quality={100}
+            quality={70}
+            onLoadingComplete={() => setLoaded(true)}
+            placeholder="blur"
             blurDataURL={
               selected?.blurDataURL || selectedVariant?.image?.blurDataURL
             }
-            placeholder="blur"
           />
         </div>
       )}

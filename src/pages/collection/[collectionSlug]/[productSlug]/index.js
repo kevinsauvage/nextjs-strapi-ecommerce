@@ -9,11 +9,11 @@ import {
 } from '@/lib/shopify/product/productApiCall';
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import Separator from '@/components/Separator/Separator';
-import Loader from '@/layout/Loader/Loader';
+import PageLoader from '@/layout/Loader/PageLoader/PageLoader';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
-  if (router.isFallback) return <Loader />;
+  if (router.isFallback) return <PageLoader />;
   const { title, description } = product;
 
   return (
@@ -23,7 +23,7 @@ function ProductPage({ product, recommendations = [] }) {
       {recommendations &&
         Array.isArray(recommendations) &&
         recommendations.length > 0 && (
-          <Carousel title="Recommended Products">
+          <Carousel title="Recommended Products" itemToShow={4}>
             {recommendations.map((prod) => (
               <CarouselItem key={prod.id}>
                 <ProductCardDefault product={prod} />
