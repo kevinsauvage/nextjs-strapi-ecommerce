@@ -2,7 +2,7 @@
 export const initialState = {
   isCartOpen: false,
   cart: undefined,
-  isCartLoading: true,
+  isCartLoading: false,
 };
 
 // actions
