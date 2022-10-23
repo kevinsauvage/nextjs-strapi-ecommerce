@@ -47,10 +47,7 @@ export default function Home({ bestSelling, collections, newArrival }) {
           >
             {collections.map((collection) => (
               <CarouselItem key={collection.id}>
-                <CollectionCard
-                  collection={collection}
-                  link={`${routes.collection}/${collection?.handle}`}
-                />
+                <CollectionCard collection={collection} />
               </CarouselItem>
             ))}
           </Carousel>
