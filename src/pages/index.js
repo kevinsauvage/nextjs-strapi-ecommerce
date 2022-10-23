@@ -5,7 +5,6 @@ import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
-import routes from '@/data/routes';
 import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
