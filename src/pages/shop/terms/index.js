@@ -15,7 +15,7 @@ function TermsPage({ bestSelling, shopInfo }) {
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (
-            <Carousel title="Best Selling Products">
+            <Carousel title="Best Selling Products" horizontal>
               {bestSelling.products.map((product) => (
                 <CarouselItem key={product.id}>
                   <ProductCardDefault product={product} />

@@ -23,7 +23,14 @@ function ProductPage({ product, recommendations = [] }) {
       {recommendations &&
         Array.isArray(recommendations) &&
         recommendations.length > 0 && (
-          <Carousel title="Recommended Products" itemToShow={4}>
+          <Carousel
+            title="Recommended Products"
+            subtitle="Check out the products you may like"
+            itemToShow={4}
+            horizontal
+            showButtons={false}
+            showSeparator
+          >
             {recommendations.map((prod) => (
               <CarouselItem key={prod.id}>
                 <ProductCardDefault product={prod} />

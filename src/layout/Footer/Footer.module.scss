@@ -9,7 +9,6 @@
   align-items: center;
 
   .title {
-    font-size: 30px;
     margin-bottom: 50px;
     text-transform: capitalize;
     white-space: nowrap;
@@ -33,7 +32,6 @@
   .navItem {
     display: inline-block;
     margin-right: 30px;
-    font-weight: 300;
   }
 }
 
@@ -44,7 +42,6 @@
   width: 100%;
   padding: 14px 0;
   border-top: 1px solid rgb(35, 35, 35);
-  font-size: 12px;
 
   .list {
     display: flex;

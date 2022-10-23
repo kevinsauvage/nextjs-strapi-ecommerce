@@ -24,8 +24,6 @@
 }
 
 .title {
-  font-size: 14px;
-  font-weight: 700;
   margin-bottom: 4px;
 
   &:hover {
@@ -34,23 +32,18 @@
 }
 
 .variantTitle {
-  font-size: 14px;
   margin-bottom: 12px;
 }
 .quantity {
   display: flex;
   align-items: center;
-  font-size: 14px;
-  font-weight: 400;
 }
 .price {
-  font-size: 13px;
   margin-bottom: 4px;
 }
 
 .remove {
   border: none;
-  font-size: 13px;
   text-decoration: underline;
 }
 

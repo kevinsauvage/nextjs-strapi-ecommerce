@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import AbsoluteLoader from '@/layout/Loader/AbsoluteLoader/AbsoluteLoader';
-import Carousel, { CarouselItem } from './carouselImage/Carousel';
+import Carousel, { CarouselItem } from '../Carousel/Carousel';
 import styles from './PhotoGallery.module.scss';
 
 export default function PhotoGallery({ selectedVariant, images = [] }) {
@@ -43,7 +43,7 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
           />
         </div>
       )}
-      <Carousel>
+      <Carousel vertical itemToShow={4}>
         {images.map((image) => (
           <CarouselItem key={image.src}>
             <button

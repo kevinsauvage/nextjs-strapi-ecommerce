@@ -1,0 +1,79 @@
+:root {
+  --font-primary: sans-serif;
+  --font-secondary: serif;
+
+  /* set base values */
+  --text-base-size: 1em;
+  --text-scale-ratio: 1.1;
+
+  /* type scale */
+  --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
+  --text-sm: calc(1em / var(--text-scale-ratio));
+  --text-md: calc(1em);
+  --text-lg: calc(1em * var(--text-scale-ratio));
+  --text-xl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio)
+  );
+  --text-xxl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio)
+  );
+  --text-xxxl: calc(
+    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio)
+  );
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+form legend {
+  line-height: var(--heading-line-height);
+}
+
+h1 {
+  font-size: var(--text-xxxl);
+  @include respond(tablet) {
+    font-size: var(--text-xs);
+  }
+}
+
+h2 {
+  font-size: var(--text-xxl);
+}
+
+h3 {
+  font-size: var(--text-xl);
+}
+
+h4 {
+  font-size: var(--text-l);
+}
+
+h5 {
+  font-size: var(--text-md);
+}
+
+h6 {
+  font-size: var(--text-md);
+}
+
+small,
+label {
+  font-size: var(--text-sm);
+}
+
+p,
+li {
+  line-height: var(--body-line-height);
+  font-size: var(--text-md);
+}
+
+strong {
+  font-weight: 800;
+}

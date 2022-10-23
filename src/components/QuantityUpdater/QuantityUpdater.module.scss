@@ -1,6 +1,5 @@
 .quantityContainer {
   width: fit-content;
-  font-size: 14px;
   display: flex;
   align-items: center;
   border: 1px solid gray;
@@ -10,7 +9,6 @@
   text-align: center;
   height: 100%;
   width: 40px;
-  font-weight: 700;
   border: none;
   background-color: transparent;
   &::-webkit-outer-spin-button,

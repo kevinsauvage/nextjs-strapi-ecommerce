@@ -1,4 +1,7 @@
 import '../styles/globals.scss';
+import '../styles/colors.scss';
+import '../styles/typography.scss';
+import '../styles/spacing.scss';
 import Layout from '@/layout/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';

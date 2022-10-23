@@ -20,7 +20,6 @@ const nextConfig = {
     prependData: `
         @import "variables.scss"; 
         @import "responsive.scss"; 
-        @import "colors.scss"; 
         @import "mixins.scss"; 
         @import "animation.scss";`,
   },

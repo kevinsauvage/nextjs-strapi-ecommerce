@@ -2,22 +2,27 @@ import Page from '@/layout/Page/Page';
 import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
+import Separator from '@/components/Separator/Separator';
+import { Fragment } from 'react';
 
 function CategoryPage({ collections }) {
   return (
     <Page title="Collections">
       {Array.isArray(collections) &&
         collections.map(
-          (collection) =>
+          (collection, i) =>
             collection.products.length > 0 && (
-              <Carousel key={collection.id} title={collection.title}>
-                {Array.isArray(collection.products) &&
-                  collection.products.map((product) => (
-                    <CarouselItem key={product.id}>
-                      <ProductCardDefault product={product} />
-                    </CarouselItem>
-                  ))}
-              </Carousel>
+              <Fragment key={collection.id}>
+                <Carousel title={collection.title} horizontal>
+                  {Array.isArray(collection.products) &&
+                    collection.products.map((product) => (
+                      <CarouselItem key={product.id}>
+                        <ProductCardDefault product={product} />
+                      </CarouselItem>
+                    ))}
+                </Carousel>
+                {i < collections.length - 1 && <Separator margin="60px 0" />}
+              </Fragment>
             )
         )}
     </Page>

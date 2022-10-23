@@ -51,7 +51,7 @@ export default function CartItem({
             </Link>
           </li>
           <li className={styles.content}>
-            <p className={styles.title}>{product.title}</p>
+            <h4 className={styles.title}>{product.title}</h4>
             <p className={styles.variant}>{variant.title}</p>
           </li>
         </ul>

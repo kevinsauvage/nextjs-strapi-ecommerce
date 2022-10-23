@@ -61,7 +61,9 @@ export default function Filters({
                         <MdCheckBoxOutlineBlank size={20} />
                       )}
                     </button>
-                    <p className={styles.labelText}>{value.label}</p>
+                    <p className={styles.labelText}>
+                      <small>{value.label}</small>
+                    </p>
                     <small className={styles.count}>({value.count})</small>
                   </label>
                 ))}

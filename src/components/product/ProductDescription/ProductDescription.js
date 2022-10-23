@@ -37,10 +37,8 @@ export default function ProductDescription({
         `${isModal ? styles.ProductDescriptionModal : ''} `
       }
     >
-      <span className={styles.type}>
-        <p>{productType}</p>
-      </span>
-      <h4 className={styles.title}>{title}</h4>
+      <span className={styles.type}>{productType}</span>
+      <h1 className={styles.title}>{title}</h1>
       <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
       {!isModal && (
         <>

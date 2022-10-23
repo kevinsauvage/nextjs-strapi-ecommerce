@@ -1,0 +1,39 @@
+.Indicators {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .arrow {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.left {
+      margin-right: 10px;
+    }
+
+    &.right {
+      margin-left: 10px;
+    }
+    svg {
+      font-size: 26px;
+    }
+  }
+}
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: rgb(0, 0, 0);
+  margin-right: 14px;
+
+  &.last {
+    margin-right: 0px;
+  }
+
+  &.active {
+    outline: 0.125rem solid $strong;
+    outline-offset: 0.2rem;
+  }
+}
