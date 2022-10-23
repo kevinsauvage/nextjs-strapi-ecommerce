@@ -133,6 +133,16 @@ const getCollectionsWithProducts = `query ($first: Int){
         title
         handle
         description
+        image {
+          src
+          altText
+          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
+          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
+          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+          width
+          height
+        }
+      
         products(first: 20, sortKey: BEST_SELLING) {
           edges {
             node {
