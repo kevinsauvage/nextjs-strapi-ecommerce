@@ -41,7 +41,7 @@ export default function ProductCheckoutCard({
           href={`${routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
         >
           <a>
-            <p className={styles.title}>{product?.title}</p>
+            <h6 className={styles.title}>{product?.title}</h6>
           </a>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />

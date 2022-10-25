@@ -70,16 +70,14 @@ h6 {
 }
 
 small,
-label {
+label,
+strong {
   font-size: var(--text-sm);
+  font-family: var(--font-secondary);
 }
 
 p,
 li,
 a {
   font-size: var(--text-sm);
-}
-
-strong {
-  font-weight: 800;
 }

@@ -10,7 +10,7 @@ export default function Option({
     Array.isArray(option.values) &&
     option.values.length > 1 && (
       <div className={styles.option}>
-        <h6 className={styles.name}>{option.name}:</h6>
+        <strong className={styles.name}>{option.name}:</strong>
         <ul className={styles.list}>
           {option.values.map((value) => (
             <li key={value}>
