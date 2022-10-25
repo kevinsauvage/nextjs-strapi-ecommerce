@@ -1,6 +1,6 @@
 :root {
-  --font-primary: sans-serif;
-  --font-secondary: serif;
+  --font-primary: 'Poppins', sans-serif;
+  --font-secondary: 'Abril Fatface', cursive;
 
   /* set base values */
   --text-base-size: 1em;
@@ -17,10 +17,15 @@
   );
   --text-xxl: calc(
     1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
       var(--text-scale-ratio) * var(--text-scale-ratio)
   );
   --text-xxxl: calc(
     1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
+      var(--text-scale-ratio) * var(--text-scale-ratio) *
       var(--text-scale-ratio) * var(--text-scale-ratio) *
       var(--text-scale-ratio)
   );
@@ -34,6 +39,7 @@ h5,
 h6,
 form legend {
   line-height: var(--heading-line-height);
+  font-family: var(--font-secondary);
 }
 
 h1 {
@@ -69,9 +75,9 @@ label {
 }
 
 p,
-li {
-  line-height: var(--body-line-height);
-  font-size: var(--text-md);
+li,
+a {
+  font-size: var(--text-sm);
 }
 
 strong {

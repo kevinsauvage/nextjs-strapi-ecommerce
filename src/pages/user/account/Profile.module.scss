@@ -1,8 +1,29 @@
 .Profile {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 100%;
+}
+
+.banner {
+  margin-bottom: 100px;
+
+  .subtitle {
+    max-width: 500px;
+    text-align: center;
+    margin: 0 auto;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+}
+
+.main {
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
 }

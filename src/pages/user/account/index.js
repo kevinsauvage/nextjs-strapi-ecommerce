@@ -1,25 +1,42 @@
-import Button from '@/components/Button/Button';
 import Page from '@/layout/Page/Page';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import AccountInfo from '@/components/account/AccountInfo/AccountInfo';
+import DefaultAddress from '@/components/account/DefaultAddress/DefaultAddress';
+import Orders from '@/components/account/Orders/Orders';
+import Card from '@/components/account/Card/Card';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { logout, user } = useUserContext();
+  const { user } = useUserContext();
+
+  console.log(user);
 
   return (
     <Page title="My Profile">
       <div className={styles.Profile}>
-        <div>Email: {user?.email}</div>
-        <Button onClick={logout} tertiary text="Logout" />
-        <div>
-          {user?.orders?.edges && user.orders?.edges.length > 0 ? (
-            user.orders?.edges.map((item) => JSON.stringify(item))
-          ) : (
-            <div>
-              <p>You didn&apos;t make any orders yet.</p>
-            </div>
-          )}
+        <div className={styles.banner}>
+          <h1 className={styles.title}>
+            Welcome {user?.firstName} {user?.lastName}
+          </h1>
+          <p className={styles.subtitle}>
+            From Your Account Page You Have The Ability To View Your Recent
+            Account Activity And Update Your Account Information. Just Select A
+            Link Below.
+          </p>
         </div>
+        <main className={styles.main}>
+          <div className={styles.row}>
+            <Card title="Account Information">
+              <AccountInfo user={user} />
+            </Card>
+            <Card title="Default Address">
+              <DefaultAddress defaultAddress={user?.defaultAddress} />
+            </Card>
+          </div>
+          <Card title="Orders">
+            <Orders orders={user?.orders?.edges} />
+          </Card>
+        </main>
       </div>
     </Page>
   );

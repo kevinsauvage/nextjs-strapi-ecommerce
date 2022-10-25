@@ -47,7 +47,7 @@ export default function ProductCardRow({ product }) {
             href={`${routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
           >
             <a>
-              <p className={styles.title}>{limitStrLength(title, 90)}</p>
+              <h6 className={styles.title}>{limitStrLength(title, 90)}</h6>
             </a>
           </Link>
           <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} />

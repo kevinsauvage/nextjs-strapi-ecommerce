@@ -125,7 +125,7 @@ function Carousel({
           />
         )}
       </div>
-      {subtitle && <div className={styles.subtitle}>{subtitle}</div>}
+      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
       {showSeparator && <Separator />}
       <div
         {...handlers}

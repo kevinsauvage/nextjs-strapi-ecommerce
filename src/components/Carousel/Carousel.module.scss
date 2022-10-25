@@ -26,10 +26,7 @@
     align-items: center;
     justify-content: center;
     white-space: pre-wrap;
-    padding-right: 8px;
-    &:last-child {
-      padding-right: 0px;
-    }
+    padding: 4px;
   }
 
   &.horizontal {

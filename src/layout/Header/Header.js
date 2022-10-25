@@ -12,7 +12,7 @@ function Header() {
           <Navbar />
           <Link href="/">
             <a className={styles.logo}>
-              <p>NAME</p>
+              <h6>NAME</h6>
             </a>
           </Link>
           <UserButtons />
