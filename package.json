@@ -9,18 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@algolia/autocomplete-js": "^1.7.1",
-    "@algolia/autocomplete-plugin-query-suggestions": "^1.7.1",
-    "@algolia/autocomplete-plugin-recent-searches": "^1.7.1",
-    "@algolia/autocomplete-theme-classic": "^1.7.1",
-    "@algolia/client-search": "^5.0.0-alpha.19",
-    "algoliasearch": "^4.14.2",
     "next": "12.2.5",
     "nookies": "^2.5.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-icons": "^4.4.0",
-    "react-slideshow-image": "^4.0.5",
     "react-spinners": "^0.13.4",
     "react-swipeable": "^7.0.0",
     "react-toastify": "^9.0.8",

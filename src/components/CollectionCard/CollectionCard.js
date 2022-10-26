@@ -18,10 +18,10 @@ export default function CollectionCard({ collection }) {
             layout="responsive"
             objectFit="cover"
             objectPosition="center"
-            priority
             quality={70}
             placeholder="blur"
             blurDataURL={image?.blurDataURL}
+            loading="lazy"
           />
         </div>
         <div className={style.content}>

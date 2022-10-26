@@ -2,7 +2,6 @@ import Container from '@/layout/Container/Container';
 import { MdClose } from 'react-icons/md';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './SearchBar.module.scss';
-import Autocomplete from './Autocomplete/Autocomplete';
 
 export default function SearchBar() {
   const { searchOpen, resetToggle } = useGlobalContext();
@@ -31,8 +30,6 @@ export default function SearchBar() {
                 <MdClose />
               </button>
             </header>
-            <div id="autocomplete" />
-            <Autocomplete />
           </Container>
         </div>
       </div>

@@ -12,10 +12,6 @@ export default function Document() {
           crossOrigin="true"
         />
         <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.0.0/themes/algolia-min.css"
-        />
-        <link
           href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Poppins:wght@200;300;400;500;600&display=swap"
           rel="stylesheet"
         />
