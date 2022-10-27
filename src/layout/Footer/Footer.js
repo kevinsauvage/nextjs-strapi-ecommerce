@@ -43,7 +43,7 @@ function Footer({ collections }) {
             <ul className={styles.navList}>
               {linkInfo.map((item) => (
                 <li key={item.id}>
-                  <h5 className={styles.title}>{item.title}</h5>
+                  <h3 className={styles.title}>{item.title}</h3>
                   <ul className={styles.nav}>
                     {item?.items?.map((el) => (
                       <li className={styles.navItem} key={el.id}>

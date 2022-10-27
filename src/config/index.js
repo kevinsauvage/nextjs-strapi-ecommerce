@@ -2,6 +2,7 @@ const env = process.env.NODE_ENV;
 
 const config = {
   baseUrl: 'https://localhost:3000',
+  name: 'Site Name',
   homeBanner: {
     upTitle: '',
     title: 'New In Jewelry',

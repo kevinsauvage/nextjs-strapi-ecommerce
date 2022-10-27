@@ -13,7 +13,7 @@ export default function Collapsible({ children, title }) {
         className={Styles.header}
         onClick={() => setOpen((prev) => !prev)}
       >
-        <h6 className={Styles.title}>{title}</h6>
+        <strong className={Styles.title}>{title}</strong>
         <div className={Styles.icon}>
           <span />
           <span />

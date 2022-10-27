@@ -1,4 +1,5 @@
 import Separator from '@/components/Separator/Separator';
+import { Fragment } from 'react';
 import Option from './Option/Option';
 
 export default function Options({
@@ -12,12 +13,11 @@ export default function Options({
     <div className={styles}>
       {Array.isArray(options) &&
         options.map((option, i) => (
-          <>
+          <Fragment key={option.id}>
             {option.values?.length > 1 && i === 0 && (
               <Separator key={option.values[0].name} />
             )}
             <Option
-              key={option.id}
               option={option}
               isOptionOutOfStock={isOptionOutOfStock}
               isSelected={isSelected}
@@ -28,7 +28,7 @@ export default function Options({
                 });
               }}
             />
-          </>
+          </Fragment>
         ))}
     </div>
   );

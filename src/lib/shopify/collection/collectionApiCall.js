@@ -31,12 +31,16 @@ export const filterCollection = async (
   });
 
   if (res) {
+    console.log(res);
     const products = cleanProducts(res?.collection?.products.edges);
     const pageInfo = res?.collection?.products?.pageInfo;
+    const productsFilters = res?.collection?.products?.filters;
 
     return {
       products,
       pageInfo,
+      productsFilters,
+      seo: res?.collection?.seo,
     };
   }
   return false;

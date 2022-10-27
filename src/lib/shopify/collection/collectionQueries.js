@@ -21,7 +21,22 @@ const filterCollection = `
   query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys) {
     collection(handle: $handle) {
       handle
+      seo {
+        description
+        title
+      }
       products(first: $first, filters: $filters, sortKey: $sort) {
+        filters {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
+          }
+        }
         pageInfo {
           hasNextPage
           endCursor
