@@ -1,13 +1,13 @@
 import Link from 'next/link';
-import routes from '@/data/routes';
 import Container from '@/layout/Container/Container';
+import config from '@/config/index';
 import styles from './Footer.module.scss';
 
 function Footer({ collections }) {
   const getCollections = () =>
     collections?.map((category) => ({
       name: category.title,
-      href: `${routes.collection}/${category.handle}`,
+      href: `${config.routes.collection}/${category.handle}`,
       id: category.id,
     }));
 
@@ -21,11 +21,11 @@ function Footer({ collections }) {
       title: 'Information',
       id: 2,
       items: [
-        { href: routes.contact, name: 'Contact', id: 1 },
-        { href: routes.privacy, name: 'Privacy', id: 2 },
-        { href: routes.terms, name: 'Terms', id: 3 },
-        { href: routes.refound, name: 'Refound', id: 4 },
-        { href: routes.shipping, name: 'Shipping', id: 5 },
+        { href: config.routes.contact, name: 'Contact', id: 1 },
+        { href: config.routes.privacy, name: 'Privacy', id: 2 },
+        { href: config.routes.terms, name: 'Terms', id: 3 },
+        { href: config.routes.refound, name: 'Refound', id: 4 },
+        { href: config.routes.shipping, name: 'Shipping', id: 5 },
       ],
     },
     {
@@ -43,7 +43,7 @@ function Footer({ collections }) {
             <ul className={styles.navList}>
               {linkInfo.map((item) => (
                 <li key={item.id}>
-                  <h3 className={styles.title}>{item.title}</h3>
+                  <h4 className={styles.title}>{item.title}</h4>
                   <ul className={styles.nav}>
                     {item?.items?.map((el) => (
                       <li className={styles.navItem} key={el.id}>
@@ -62,11 +62,11 @@ function Footer({ collections }) {
           <nav>
             <ul className={styles.list}>
               <li className={styles.item}>
-                <Link href={routes.terms}>Term and condition</Link>
+                <Link href={config.routes.terms}>Term and condition</Link>
               </li>
               /
               <li className={styles.item}>
-                <Link href={routes.privacy}>Privacy policy</Link>
+                <Link href={config.routes.privacy}>Privacy policy</Link>
               </li>
             </ul>
           </nav>

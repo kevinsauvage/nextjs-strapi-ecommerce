@@ -1,9 +1,9 @@
 import Page from '@/layout/Page/Page';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import routes from '@/data/routes';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import config from '@/config/index';
 import styles from './Cart.module.scss';
 
 function CartPage() {
@@ -54,7 +54,7 @@ function CartPage() {
             <div className={styles.btns}>
               <CheckoutBtn
                 extraClass={styles.btn}
-                noUserRedirectURL={routes.login}
+                noUserRedirectURL={config.routes.login}
                 items={cart}
               />
             </div>

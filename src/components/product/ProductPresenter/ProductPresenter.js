@@ -1,9 +1,14 @@
-import PhotoGallery from '@/components/PhotoGallery/PhotoGallery';
 import useProductSelection from '@/hooks/useProductSelection';
+import PhotoGallery from '@/components/product/PhotoGallery/PhotoGallery';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 
-export default function ProductPresenter({ product, isModal }) {
+export default function ProductPresenter({
+  product,
+  isModal,
+  carousel,
+  gallery,
+}) {
   const {
     isOptionSelected,
     handleSetSelectedProductOption,
@@ -19,6 +24,9 @@ export default function ProductPresenter({ product, isModal }) {
         items={product.variants}
         images={product.images}
         selectedVariant={selectedVariant}
+        version="Gallery"
+        carousel={carousel}
+        gallery={gallery}
       />
       <ProductDescription
         product={product}

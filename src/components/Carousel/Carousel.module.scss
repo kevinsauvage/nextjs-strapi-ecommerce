@@ -2,10 +2,12 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+  padding-bottom: var(--space-3);
 
   .inner {
+    display: flex;
     white-space: nowrap;
-    transition: transform 0.3s;
+    transition: transform 0.3s ease-in-out;
     width: calc(100% - 60px);
     height: 100%;
     width: 100%;
@@ -23,10 +25,8 @@
   }
 
   .CarouselItem {
-    align-items: center;
-    justify-content: center;
-    white-space: pre-wrap;
-    padding: 4px;
+    padding-bottom: 4px;
+    flex: 0 0 auto;
   }
 
   &.horizontal {
@@ -39,10 +39,6 @@
     .button {
       width: 30px;
     }
-
-    .CarouselItem {
-      display: inline-flex;
-    }
   }
 
   &.vertical {
@@ -51,15 +47,12 @@
     .inner {
       height: calc(100% - 60px);
       width: 100%;
+      flex-direction: column;
     }
 
     .button {
       height: 30px;
       width: 100%;
-    }
-
-    .CarouselItem {
-      display: flex;
     }
   }
 }
@@ -68,7 +61,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-1);
 }
 
 .title {
@@ -76,5 +69,6 @@
 }
 
 .subtitle {
-  margin-bottom: var(--space-sm);
+  color: rgb(var(--color-dark-3));
+  margin-bottom: var(--space-1);
 }

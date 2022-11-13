@@ -1,6 +1,6 @@
 .container {
-  background-color: $primary;
-  color: $secondary;
+  background-color: rgb(var(--color-dark-0));
+  color: rgb(var(--color-dark-4));
 }
 
 .top {
@@ -11,7 +11,7 @@
   .title {
     margin-bottom: 50px;
     text-transform: capitalize;
-    white-space: nowrap;
+    color: rgb(var(--color-dark-4));
   }
 
   .navList {
@@ -32,6 +32,7 @@
   .navItem {
     display: inline-block;
     margin-right: 30px;
+    font-size: var(--font-size-sm);
   }
 }
 
@@ -42,6 +43,7 @@
   width: 100%;
   padding: 14px 0;
   border-top: 1px solid rgb(35, 35, 35);
+  font-size: var(--font-size-sm);
 
   .list {
     display: flex;

@@ -1,25 +1,24 @@
-import routes from '@/data/routes';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import config from '@/config/index';
 import styles from './Navbar.module.scss';
 
-function Navbar({ active }) {
+function Navbar() {
   const navigationItems = [
-    { name: 'Home', path: routes.home, id: 1 },
-    { name: 'Collections', path: routes.collection, id: 2 },
-    { name: 'Contact', path: routes.contact, id: 3 },
+    { name: 'Home', path: config.routes.home, id: 1 },
+    { name: 'Collections', path: config.routes.collection, id: 2 },
+    { name: 'Contact', path: config.routes.contact, id: 3 },
   ];
 
   return (
-    <nav className={styles.navbar}>
+    <nav>
       <ul className={styles.list}>
         {Array.isArray(navigationItems) &&
           navigationItems.map((_dataUrl) => (
-            <li key={_dataUrl.id} className={styles.item}>
+            <li key={_dataUrl.id}>
               <ActiveLink
                 href={_dataUrl?.path}
-                activeClass={`${styles.active} ${
-                  active && styles.navbarActive
-                }`}
+                activeClass={styles.active}
+                className={styles.item}
               >
                 <a>{_dataUrl?.name}</a>
               </ActiveLink>

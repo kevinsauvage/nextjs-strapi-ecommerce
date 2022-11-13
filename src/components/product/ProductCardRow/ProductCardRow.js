@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import routes from '@/data/routes';
 import limitStrLength from '@/utils/limitStringLength';
 import useProductSelection from '@/hooks/useProductSelection';
-import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
+import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
-import Price from '@/components/Price/Price';
+import config from '@/config/index';
+import Price from '../Price/Price';
 import styles from './ProductCardRow.module.scss';
 import Options from '../Options/Options';
 
@@ -44,7 +44,7 @@ export default function ProductCardRow({ product }) {
       <div className={styles.content}>
         <div>
           <Link
-            href={`${routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
+            href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
           >
             <a>
               <h6 className={styles.title}>{limitStrLength(title, 90)}</h6>

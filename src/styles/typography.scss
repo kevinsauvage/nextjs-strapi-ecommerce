@@ -1,77 +1,92 @@
 :root {
   --font-primary: 'Poppins', sans-serif;
-  --font-secondary: 'Abril Fatface', cursive;
 
-  /* set base values */
-  --text-base-size: 1em;
-  --text-scale-ratio: 1.1;
-
-  /* type scale */
-  --text-xs: calc(1em / (var(--text-scale-ratio) * var(--text-scale-ratio)));
-  --text-sm: calc(1em / var(--text-scale-ratio));
-  --text-md: calc(1em);
-  --text-lg: calc(1em * var(--text-scale-ratio));
-  --text-xl: calc(
-    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio)
-  );
-  --text-xxl: calc(
-    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio)
-  );
-  --text-xxxl: calc(
-    1em * var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio) * var(--text-scale-ratio) *
-      var(--text-scale-ratio)
-  );
+  --font-weight-0: 200;
+  --font-weight-1: 300;
+  --font-weight-2: 400;
+  --font-weight-3: 500;
+  --font-weight-4: 600;
+  --font-weight-5: 700;
+  --font-weight-6: 800;
 }
 
+/* Fluid font size variables, for browsers that support clamp */
+@supports (font-size: clamp(1rem, 1vw, 1rem)) {
+  :root {
+    --font-size-sm: clamp(0.76923rem, 0vw + 0.76923rem, 0.76923rem);
+    --font-size-base: clamp(1rem, 0vw + 1rem, 1rem);
+    --font-size-md: clamp(1.3rem, 0vw + 1.3rem, 1.3rem);
+    --font-size-lg: clamp(1.69rem, 0vw + 1.69rem, 1.69rem);
+    --font-size-xl: clamp(2.197rem, 0vw + 2.197rem, 2.197rem);
+    --font-size-xxl: clamp(2.8561rem, 0vw + 2.8561rem, 2.8561rem);
+    --font-size-xxxl: clamp(3.71293rem, 0vw + 3.71293rem, 3.71293rem);
+  }
+}
+/* Fallback variables for browsers that don't support clamp */
+@supports not (font-size: clamp(1rem, 1vw, 1rem)) {
+  :root {
+    --font-size-sm: 0.76923rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.3rem;
+    --font-size-lg: 1.69rem;
+    --font-size-xl: 2.197rem;
+    --font-size-xxl: 2.8561rem;
+    --font-size-xxxl: 3.71293rem;
+  }
+  @media screen and (min-width: 1280px) {
+    :root {
+      --font-size-sm: 0.76923rem;
+      --font-size-base: 1rem;
+      --font-size-md: 1.3rem;
+      --font-size-lg: 1.69rem;
+      --font-size-xl: 2.197rem;
+      --font-size-xxl: 2.8561rem;
+      --font-size-xxxl: 3.71293rem;
+    }
+  }
+}
 h1,
 h2,
 h3,
 h4,
 h5,
-h6,
-form legend {
-  line-height: var(--heading-line-height);
-  font-family: var(--font-secondary);
+h6 {
+  color: rgb(var(--color-dark-1));
+  font-weight: 400;
 }
 
 h1 {
-  font-size: var(--text-xxxl);
-  @include respond(tablet) {
-    font-size: var(--text-xs);
-  }
+  font-size: var(--font-size-xxxl);
+  line-height: calc(var(--font-size-xxxl) - 1px);
 }
 
 h2 {
-  font-size: var(--text-xxl);
+  font-size: var(--font-size-xxl);
 }
 
 h3 {
-  font-size: var(--text-xl);
+  font-size: var(--font-size-xl);
 }
 
 h4 {
-  font-size: var(--text-l);
+  font-size: var(--font-size-lg);
 }
 
 h5 {
-  font-size: var(--text-md);
+  font-size: var(--font-size--md);
 }
 
 h6 {
-  font-size: var(--text-md);
+  font-size: var(--font-size-sm);
 }
 
 small,
 label,
 strong {
-  font-size: var(--text-sm);
-  font-family: var(--font-secondary);
+  font-size: var(--font-size-sm);
+}
+
+a,
+p {
+  font-weight: var(--font-weight-0);
 }

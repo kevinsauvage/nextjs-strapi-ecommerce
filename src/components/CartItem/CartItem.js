@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { MdOutlineDeleteForever } from 'react-icons/md';
-import routes from '@/data/routes';
 import Button from '@/components/Button/Button';
 import { toast } from 'react-toastify';
+import config from '@/config/index';
 import styles from './CartItem.module.scss';
 
 export default function CartItem({
@@ -37,7 +37,7 @@ export default function CartItem({
         <ul className={styles.list}>
           <li className={styles.image}>
             <Link
-              href={`${routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
+              href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
             >
               <a>
                 <Image

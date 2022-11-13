@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import routes from './data/routes';
+import config from './config';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
@@ -31,13 +31,13 @@ function middleware(request) {
       if (cookieShopify && pathname.includes('/auth')) {
         console.log('Cannot access auth page if already login');
 
-        return NextResponse.redirect(`${origin}${routes.account}`);
+        return NextResponse.redirect(`${origin}${config.routes.account}`);
       }
 
       // Cannot access account if not login
       if (!cookieShopify && pathname.includes('/account')) {
         console.log(' Cannot access account if not login');
-        return NextResponse.redirect(`${origin}${routes.login}`);
+        return NextResponse.redirect(`${origin}${config.routes.login}`);
       }
       return NextResponse.next();
     }

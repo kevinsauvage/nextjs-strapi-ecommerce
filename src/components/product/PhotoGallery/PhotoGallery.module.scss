@@ -19,11 +19,26 @@ $maxHeight: 600px;
 
 .item {
   position: relative;
-  width: 90%;
-  height: 96%;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
   border: none;
 }
 .selected {
   border: 2px solid rgb(0, 0, 0);
+}
+
+.gallery {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+
+  .image {
+    position: relative;
+    display: block;
+    width: 100%;
+    border: none;
+  }
 }

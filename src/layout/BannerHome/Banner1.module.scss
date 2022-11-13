@@ -6,29 +6,42 @@
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
-  display: flex;
-  align-items: center;
-  padding: 120px 30px 120px 60px;
-  color: $secondary;
+  height: calc(100vh - 66px);
   margin: 0 0 30px 0;
+  text-align: center;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
+  height: 100%;
 }
 
 .container {
-  min-height: 500px;
+  padding: 50px;
+  border-radius: 4px;
+  width: fit-content;
+  height: fit-content;
 }
+
 .upTitle {
-  color: $primary;
+  color: rgb(var(--color-primary-0));
   letter-spacing: 3px;
 }
 
 .title {
+  color: rgb(var(--color-dark-0));
   margin-bottom: 20px;
 }
+
 .subtitle {
   margin-bottom: 30px;
-  color: $primary;
-  max-width: 437px;
+  color: rgb(var(--color-dark-2));
+  font-weight: var(--font-weight-0);
 }
+
 .btn {
   width: fit-content;
+  margin: 0 auto;
 }

@@ -10,7 +10,7 @@ function RefoundPage({ bestSelling, shopInfo }) {
   return (
     <Page title="Our privacy policy">
       <div className={styles.privacy}>
-        <div dangerouslySetInnerHTML={{ __html: refundPolicy.body }} />
+        <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (

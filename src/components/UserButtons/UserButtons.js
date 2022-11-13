@@ -1,10 +1,9 @@
 import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
-import HeaderButton from '@/components/HeaderButton/HeaderButton';
-import routes from '@/data/routes';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import config from '@/config/index';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
@@ -15,7 +14,7 @@ export default function UserButtons() {
   const router = useRouter();
 
   const handleClickUser = () => {
-    if (user && user.id) router.push(routes.account);
+    if (user && user.id) router.push(config.routes.account);
     else toggleUser();
   };
 
@@ -32,7 +31,14 @@ export default function UserButtons() {
       onClick: handleClickUser,
     },
     {
-      item: <RiShoppingCart2Line />,
+      item: (
+        <>
+          <RiShoppingCart2Line />
+          <div className={`${styles.totalItems}`}>
+            ({cart?.lines?.length || '0'} items)
+          </div>
+        </>
+      ),
       id: 4,
       onClick: toggleCart,
     },
@@ -41,15 +47,15 @@ export default function UserButtons() {
   return (
     <div className={styles.container}>
       {data.map((el) => (
-        <HeaderButton
+        <button
           type="button"
           key={el.id}
-          handleClick={() => el.onClick()}
+          onClick={() => el.onClick()}
+          className={styles.button}
         >
           {el.item}
-        </HeaderButton>
+        </button>
       ))}
-      <div className={`${styles.totalItems}`}>{cart?.lines?.length || '0'}</div>
     </div>
   );
 }

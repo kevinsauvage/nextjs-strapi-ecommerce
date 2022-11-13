@@ -2,38 +2,9 @@
   display: flex;
   align-items: center;
   width: 100%;
-  top: 30px;
-  left: 0;
-  right: 0;
-  z-index: 999999;
-  transition: transform 1s ease;
-  justify-content: space-between;
   align-items: center;
   color: whitesmoke;
   height: 66px;
-  background-color: black;
-
-  svg {
-    color: whitesmoke;
-  }
-}
-
-.inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 100%;
-}
-
-.bgPages {
-  background-color: $primary;
-  position: static;
-}
-
-.logo {
-  cursor: pointer;
-  position: relative;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: rgb(var(--color-dark-0));
+  color: rgb(var(--color-dark-4));
 }

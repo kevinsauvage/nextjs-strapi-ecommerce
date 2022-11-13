@@ -1,9 +1,9 @@
 import Button from '@/components/Button/Button';
-import routes from '@/data/routes';
 import Link from 'next/link';
-import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
-import Price from '@/components/Price/Price';
+import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
 import Separator from '@/components/Separator/Separator';
+import config from '@/config/index';
+import Price from '../Price/Price';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
@@ -75,7 +75,7 @@ export default function ProductDescription({
       </div>
       {isModal && (
         <Link
-          href={`${routes.collection}/${collections?.[0]?.handle}/${handle}`}
+          href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
         >
           <a className={styles.btnSeeProduct}>SEE FULL PRODUCT INFO</a>
         </Link>

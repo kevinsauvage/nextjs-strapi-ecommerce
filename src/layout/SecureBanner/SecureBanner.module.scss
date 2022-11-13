@@ -18,11 +18,11 @@
 
   svg {
     font-size: 50px;
-    color: $strong;
+    color: rgb(var(--color-primary-0));
   }
 }
 
 .text {
-  color: $primary;
+  color: rgb(var(--color-primary-0));
   margin-bottom: 8px;
 }

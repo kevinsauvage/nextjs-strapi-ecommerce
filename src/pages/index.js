@@ -1,9 +1,7 @@
 import SecureBanner from '@/layout/SecureBanner/SecureBanner';
 import Banner1 from '@/layout/BannerHome/Banner1';
-import styles from '@/styles/Home.module.scss';
 import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
-import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import { getCollectionsWithProducts } from '@/lib/shopify/collection/collectionApiCall';
 import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
@@ -12,7 +10,7 @@ import Separator from '@/components/Separator/Separator';
 
 export default function Home({ bestSelling, collections, newArrival }) {
   return (
-    <div className={styles.container}>
+    <div>
       <Banner1 />
       <Container>
         {newArrival &&
@@ -33,7 +31,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
               ))}
             </Carousel>
           )}
-
         <Separator margin="60px 0" />
         {Array.isArray(collections) && collections.length > 0 && (
           <Carousel
@@ -52,7 +49,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
           </Carousel>
         )}
         <Separator margin="60px 0" />
-
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (
@@ -79,14 +75,12 @@ export default function Home({ bestSelling, collections, newArrival }) {
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);
-  const shopInfo = await getShop();
   const newArrival = await getProducts('CREATED_AT', 20);
   const collections = await getCollectionsWithProducts(3);
 
   return {
     props: {
       bestSelling,
-      shopInfo,
       collections,
       newArrival,
     },

@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import AbsoluteLoader from '@/layout/Loader/AbsoluteLoader/AbsoluteLoader';
-import Carousel, { CarouselItem } from '../Carousel/Carousel';
+import Carousel, { CarouselItem } from '../../Carousel/Carousel';
 import styles from './PhotoGallery.module.scss';
 
-export default function PhotoGallery({ selectedVariant, images = [] }) {
+export default function PhotoGallery({
+  selectedVariant,
+  images = [],
+  gallery,
+}) {
   const [selected, setSelected] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
 
@@ -15,6 +19,28 @@ export default function PhotoGallery({ selectedVariant, images = [] }) {
   useEffect(() => {
     setLoaded(false);
   }, [selected?.src, selectedVariant?.image?.src]);
+
+  if (gallery) {
+    return (
+      <div className={styles.gallery}>
+        {images.map((image) => (
+          <Image
+            key={image?.src}
+            src={image?.sm}
+            alt={image?.alt || selectedVariant?.title}
+            layout="responsive"
+            width={image?.width}
+            height={image?.height}
+            objectFit="cover"
+            blurDataURL={image?.blurDataURL}
+            placeholder="blur"
+            quality={50}
+            className={`${styles.image} `}
+          />
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>

@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
-import routes from '@/data/routes';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
-import Price from '@/components/Price/Price';
+import config from '@/config/index';
 import styles from './ProductCardDefault.module.scss';
+import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants } = product;
@@ -14,7 +14,7 @@ export default function ProductCardDefault({ product = {} }) {
   return (
     <li className={`${styles.productCardDefault}`}>
       <Link
-        href={`${routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
+        href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
       >
         <a>
           <div className={styles.image}>

@@ -27,6 +27,6 @@
   text-transform: capitalize;
   cursor: pointer;
   &:hover {
-    color: $primary;
+    color: rgb(var(--color-primary-0));
   }
 }

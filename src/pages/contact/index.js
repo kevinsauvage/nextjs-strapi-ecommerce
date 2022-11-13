@@ -1,8 +1,8 @@
 import Button from '@/components/Button/Button';
-import Input from '@/components/Input/Input';
+import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import Form from '@/components/Form/Form';
+import Form from '@/components/forms/Form/Form';
 import styles from './Contact.module.scss';
 
 function ContactPage() {

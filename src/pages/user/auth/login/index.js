@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
-import Input from '@/components/Input/Input';
+import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
-import Form from '@/components/Form/Form';
+import Form from '@/components/forms/Form/Form';
 import useForm from '@/hooks/useForm';
-import routes from '@/data/routes';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import config from '@/config/index';
 import styles from './Login.module.scss';
 
 function LoginPage() {
@@ -41,11 +41,11 @@ function LoginPage() {
           />
           <Button width="100%" text="Login" type="submit" tertiary />
           <div className={styles.forgotPassword}>
-            <Link href={routes.resetPassword}>Reset Password</Link>
+            <Link href={config.routes.resetPassword}>Reset Password</Link>
           </div>
           <div className={styles.register}>
             Don&apos;t have an account?{' '}
-            <Link href={routes.register}>Register</Link> now.
+            <Link href={config.routes.register}>Register</Link> now.
           </div>
         </Form>
       </div>

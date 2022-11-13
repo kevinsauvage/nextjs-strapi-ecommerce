@@ -1,20 +1,12 @@
+import { useCallback, useState } from 'react';
+
 const { useRouter } = require('next/router');
 
 const useRouterFilter = () => {
-  const { pathname, query, push } = useRouter();
+  const { query, pathname, push } = useRouter();
+  const [selectedFilters, setSelectedFilters] = useState(undefined);
 
-  const pushQuery = (q, scroll) => {
-    push(
-      {
-        pathname,
-        query: q,
-      },
-      undefined,
-      { scroll }
-    );
-  };
-
-  const addParam = (name, value, scroll, changePage) => {
+  const addParam = (name, value) => {
     const { [name]: param, ...rest } = query;
     let newQuery = {};
 
@@ -27,19 +19,26 @@ const useRouterFilter = () => {
       } else newQuery = { [name]: [...param, value] };
     } else if (param !== value) newQuery = { [name]: [param, value] };
 
-    if (changePage) newQuery.page = 1;
-    pushQuery({ ...rest, ...newQuery }, scroll);
+    setSelectedFilters((prev) => ({ ...prev, ...newQuery }));
+    push({ pathname, query: { ...rest, ...newQuery } }, undefined, {
+      shallow: true,
+    });
   };
 
-  const addUniqueParam = (name, value) => {
-    const { [name]: param, ...rest } = query;
-    pushQuery({ ...rest, [name]: value });
-  };
+  const addUniqueParam = useCallback(
+    (name, value) => {
+      setSelectedFilters((prev) => ({ ...prev, [name]: value }));
+      push({ pathname, query: { ...query, [name]: value } }, undefined, {
+        shallow: true,
+      });
+    },
+    [query, push, pathname]
+  );
 
   return {
     addParam,
-    pushQuery,
     addUniqueParam,
+    selectedFilters,
   };
 };
 

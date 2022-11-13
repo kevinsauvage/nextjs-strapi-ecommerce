@@ -3,7 +3,10 @@
   max-width: 500px;
   display: flex;
   flex-direction: column;
-  padding: 0 30px 0 60px;
+  padding: 0 30px;
+  position: sticky;
+  top: 20px;
+  height: 100%;
 
   &.Separator + .Separator {
     display: none;
@@ -34,7 +37,6 @@
 
 .btnSeeProduct {
   margin: var(--space-md) auto;
-  font-size: var(--text-sm);
   text-decoration: underline;
 }
 

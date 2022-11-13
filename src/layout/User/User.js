@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Button from '@/components/Button/Button';
 import Slide from '@/layout/Slide/Slide';
-import routes from '@/data/routes';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import config from '@/config/index';
 import styles from './User.module.scss';
 
 function UserIsNotLoginButtons() {
@@ -11,14 +11,14 @@ function UserIsNotLoginButtons() {
     <footer className={styles.footer}>
       <Button
         text="LOGIN"
-        tertiary
-        href={routes.login}
+        primary
+        href={config.routes.login}
         extraClass={styles.btn}
       />
       <Button
         text="SIGN UP"
-        secondary
-        href={routes.register}
+        tertiary
+        href={config.routes.register}
         extraClass={styles.btn}
       />
     </footer>

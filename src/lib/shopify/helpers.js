@@ -74,10 +74,13 @@ const getValueByKey = (key, attribute) => {
   return JSON.parse(product);
 };
 
-export const parseCart = (cart) => ({
-  ...cart,
-  lines: cart.lines.edges.map((line) => ({
-    ...line.node,
-    product: getValueByKey('product', line.node.attributes),
-  })),
-});
+export const parseCart = (cart) =>
+  Array.isArray(cart?.lines?.edges)
+    ? {
+        ...cart,
+        lines: cart.lines.edges.map((line) => ({
+          ...line.node,
+          product: getValueByKey('product', line.node.attributes),
+        })),
+      }
+    : cart;

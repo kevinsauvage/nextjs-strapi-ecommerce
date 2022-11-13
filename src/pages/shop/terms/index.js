@@ -11,7 +11,7 @@ function TermsPage({ bestSelling, shopInfo }) {
   return (
     <Page title="Our terms and conditions">
       <div className={styles.terms}>
-        <div dangerouslySetInnerHTML={{ __html: termsOfService.body }} />
+        <div dangerouslySetInnerHTML={{ __html: termsOfService?.body }} />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (

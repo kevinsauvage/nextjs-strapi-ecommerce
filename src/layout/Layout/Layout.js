@@ -5,7 +5,6 @@ import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import User from '@/layout/User/User';
-import CategoryButtons from '@/layout/CategoryButtons/CategoryButtons';
 import Modal from '@/layout/Modal/Modal';
 import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
@@ -27,10 +26,9 @@ function Layout({ children, collections }) {
       {(isCartLoading || loading) && <PageLoader />}
       <div className={styles.container}>
         <Header />
-        <CategoryButtons collections={collections} />
         {selectedProduct ? (
           <Modal handleClose={() => setSelectedProduct(false)}>
-            <ProductPresenter product={selectedProduct} isModal />
+            <ProductPresenter product={selectedProduct} isModal carousel />
           </Modal>
         ) : null}
         <div className={styles.children}>{children}</div>

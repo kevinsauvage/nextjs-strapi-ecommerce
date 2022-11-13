@@ -1,10 +1,10 @@
 import Button from '@/components/Button/Button';
-import Form from '@/components/Form/Form';
-import Input from '@/components/Input/Input';
+import Form from '@/components/forms/Form/Form';
+import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import routes from '@/data/routes';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import config from '@/config/index';
 
 function Password({ resetUrl }) {
   const { resetPassword } = useUserContext();
@@ -41,7 +41,7 @@ export default Password;
 
 export async function getServerSideProps({ query, res }) {
   if (!query.reset_url) {
-    res.setHeader('location', routes.login);
+    res.setHeader('location', config.routes.login);
     res.statusCode = 302;
     res.end();
     return null;

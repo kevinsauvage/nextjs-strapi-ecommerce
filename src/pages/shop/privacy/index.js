@@ -10,7 +10,7 @@ function PrivacyPage({ bestSelling, shopInfo }) {
   return (
     <Page title="Our privacy policy">
       <div className={styles.privacy}>
-        <div dangerouslySetInnerHTML={{ __html: privacyPolicy.body }} />
+        <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (

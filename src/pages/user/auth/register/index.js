@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
-import Input from '@/components/Input/Input';
+import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import Form from '@/components/Form/Form';
-import routes from '@/data/routes';
+import Form from '@/components/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import config from '@/config/index';
 import styles from './Register.module.scss';
 
 function RegisterPage() {
@@ -45,7 +45,8 @@ function RegisterPage() {
           />
           <Button width="100%" text="Register" type="submit" tertiary />
           <div className={styles.alreadyRegistered}>
-            Already have an account? <Link href={routes.login}>Login</Link> now.
+            Already have an account?{' '}
+            <Link href={config.routes.login}>Login</Link> now.
           </div>
         </Form>
       </div>

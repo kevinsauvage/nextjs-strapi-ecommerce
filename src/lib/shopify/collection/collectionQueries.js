@@ -1,31 +1,12 @@
-const getCollectionFilters = `query Facets($handle: String!) {
-    collectionByHandle(handle: $handle) {
-      handle
-      products(first: 200) {
-        filters {
-          id
-          label
-          type
-          values {
-            id
-            label
-            count
-            input
-          }
-        }
-      }
-    }
-  }`;
-
-const filterCollection = `
-  query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys) {
+const filterCollectionForward = `
+  query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
     collection(handle: $handle) {
       handle
       seo {
         description
         title
       }
-      products(first: $first, filters: $filters, sortKey: $sort) {
+      products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
         filters {
           id
           label
@@ -39,6 +20,117 @@ const filterCollection = `
         }
         pageInfo {
           hasNextPage
+          hasPreviousPage
+          endCursor
+          startCursor
+        }
+        edges {
+          node {
+            options {
+              id
+              name
+              values
+            }
+            collections(first: 1) {
+              edges {
+                node {
+                  handle
+                }
+              }
+             }   
+            availableForSale
+            handle
+            id
+            descriptionHtml
+            images(first: 50) {
+              edges {
+                node{
+                  src
+                  altText
+                  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
+                  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
+                  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+                  width
+                  height
+                }
+              }
+            }
+            priceRange {
+              maxVariantPrice {
+                amount
+                currencyCode
+              }
+              minVariantPrice {
+                amount
+                currencyCode
+              }
+            }
+            productType
+            tags
+            title
+            totalInventory
+            vendor
+            variants(first: 250) {
+              edges {
+                node {
+                  availableForSale
+                  compareAtPriceV2 {
+                    amount
+                    currencyCode
+                  }
+                  id
+                  image {
+                    src
+                    altText
+                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
+                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
+                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+                    width
+                    height
+                  }
+                  priceV2 {
+                    amount
+                    currencyCode
+                  }
+                  selectedOptions {
+                    name
+                    value
+                  }
+                  quantityAvailable
+                  title
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  `;
+
+const filterCollectionBackward = `
+  query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $before: String) {
+    collection(handle: $handle) {
+      handle
+      seo {
+        description
+        title
+      }
+      products(last: $last,  filters: $filters, sortKey: $sort, before: $before) {
+        filters {
+          id
+          label
+          type
+          values {
+            id
+            label
+            count
+            input
+          }
+        }
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
           endCursor
           startCursor
         }
@@ -248,8 +340,8 @@ const getCollectionsWithProducts = `query ($first: Int){
 
 const queriesCollection = {
   getCollectionsWithProducts,
-  getCollectionFilters,
-  filterCollection,
+  filterCollectionForward,
+  filterCollectionBackward,
   getCollections,
 };
 

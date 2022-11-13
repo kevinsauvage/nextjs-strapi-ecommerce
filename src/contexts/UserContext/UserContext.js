@@ -8,7 +8,6 @@ import {
 } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import routes from '@/data/routes';
 import nextApiCall from '@/utils/apiNext';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {
@@ -16,6 +15,7 @@ import {
   resetCustomerPassword,
   refreshToken,
 } from '@/lib/shopify/customer/customerApiCall';
+import config from '@/config/index';
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
@@ -53,7 +53,7 @@ export function UserProvider({ children }) {
     if (res && res.ok) {
       setToken(null);
       dispatch({ type: actions.REMOVE_USER });
-      push(routes.home);
+      push(config.routes.home);
     } else {
       toast.error('Something went wrong, please try again');
     }
@@ -112,7 +112,7 @@ export function UserProvider({ children }) {
       if (customerAccessToken?.accessToken) {
         return handleToken(
           customerAccessToken,
-          routes.account,
+          config.routes.account,
           'Your login was successful'
         );
       }
@@ -138,7 +138,7 @@ export function UserProvider({ children }) {
       if (customerAccessToken?.accessToken) {
         handleToken(
           customerAccessToken,
-          routes.account,
+          config.routes.account,
           'You are now Registered'
         );
       }
@@ -183,7 +183,7 @@ export function UserProvider({ children }) {
       if (customerAccessToken?.accessToken) {
         handleToken(
           customerAccessToken,
-          routes.account,
+          config.routes.account,
           'Password correctly updated'
         );
       }

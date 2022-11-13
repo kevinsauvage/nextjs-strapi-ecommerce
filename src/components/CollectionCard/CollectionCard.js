@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import routes from '@/data/routes';
+import config from '@/config/index';
 import style from './CollectionCard.module.scss';
 
 export default function CollectionCard({ collection }) {
   const { title, image, handle } = collection || {};
 
   return (
-    <Link href={`${routes.collection}/${handle}`}>
+    <Link href={`${config.routes.collection}/${handle}`}>
       <a className={style.CollectionCard}>
         <div className={style.inner}>
           <Image

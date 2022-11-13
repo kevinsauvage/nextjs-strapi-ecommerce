@@ -13,28 +13,30 @@ function CartFooter() {
   const { cart } = useCartContext();
 
   return (
-    <footer className={styles.footer}>
-      <div className={styles.subtotal}>
-        <p className={styles.subtotalTitle}>Subtotal</p>
-        <p
-          className={styles.amount}
-        >{`${cart?.cost?.subtotalAmount?.currencyCode}${cart?.cost?.subtotalAmount?.amount}`}</p>
-      </div>
-      <Button
-        text="View cart"
-        extraClass={styles.btn}
-        tertiary
-        onClick={() => router.push('/cart')}
-      />
-      <CheckoutBtn extraClass={styles.btn} />
-    </footer>
+    cart?.lines.length && (
+      <footer className={styles.footer}>
+        <div className={styles.subtotal}>
+          <p className={styles.subtotalTitle}>Subtotal</p>
+          <p
+            className={styles.amount}
+          >{`${cart?.cost?.subtotalAmount?.currencyCode}${cart?.cost?.subtotalAmount?.amount}`}</p>
+        </div>
+        <Button
+          text="View cart"
+          extraClass={styles.btn}
+          tertiary
+          onClick={() => router.push('/cart')}
+        />
+        <CheckoutBtn extraClass={styles.btn} />
+      </footer>
+    )
   );
 }
 
 function CartContent() {
   const { cart, handleQuantityChange, removeFromCart } = useCartContext();
 
-  return Array.isArray(cart?.lines) && cart.lines.length > 0 ? (
+  return (
     <div className={styles.cart}>
       <ul className={styles.list}>
         {cart.lines.map((item) => (
@@ -50,8 +52,6 @@ function CartContent() {
         ))}
       </ul>
     </div>
-  ) : (
-    <EmptyCart />
   );
 }
 
@@ -65,8 +65,16 @@ export default function Cart() {
       handleClose={resetToggle}
       title="Cart"
       headerRight={cart?.length}
-      content={<CartContent />}
-      footer={<CartFooter />}
+      content={
+        Array.isArray(cart?.lines) && cart?.lines.length > 0 ? (
+          <CartContent />
+        ) : (
+          <EmptyCart />
+        )
+      }
+      footer={
+        Array.isArray(cart?.lines) && cart?.lines.length && <CartFooter />
+      }
     />
   );
 }

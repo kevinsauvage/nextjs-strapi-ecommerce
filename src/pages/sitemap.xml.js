@@ -1,7 +1,6 @@
 import * as fs from 'fs';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
-import routes from '../data/routes';
-import config from '../config';
+import config from '@/config/index';
 
 function Sitemap() {
   return null;
@@ -29,7 +28,8 @@ export const getServerSideProps = async ({ res }) => {
   const collections = await getCollections(50);
 
   const dynamicPaths = collections.map(
-    (collection) => `${BASE_URL}/${routes.collection}/${collection.handle}`
+    (collection) =>
+      `${BASE_URL}/${config.routes.collection}/${collection.handle}`
   );
 
   const allPaths = [...staticPaths, ...dynamicPaths];

@@ -33,7 +33,7 @@
   }
 
   &.active {
-    outline: 0.125rem solid $strong;
+    outline: 0.125rem solid rgb(var(--color-primary-0));
     outline-offset: 0.2rem;
   }
 }

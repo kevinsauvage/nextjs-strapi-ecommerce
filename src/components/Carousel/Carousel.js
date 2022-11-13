@@ -115,7 +115,7 @@ function Carousel({
   return (
     <>
       <div className={styles.header}>
-        {title && horizontal && <h2 className={styles.title}>{title}</h2>}
+        {title && horizontal && <h3 className={styles.title}>{title}</h3>}
         {horizontal && (
           <Indicators
             activeIndex={index}

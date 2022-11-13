@@ -18,7 +18,7 @@ function ProductPage({ product, recommendations = [] }) {
 
   return (
     <Page title={title} description={description}>
-      <ProductPresenter product={product} />
+      <ProductPresenter product={product} gallery />
       <Separator margin="60px 0" />
       {recommendations &&
         Array.isArray(recommendations) &&

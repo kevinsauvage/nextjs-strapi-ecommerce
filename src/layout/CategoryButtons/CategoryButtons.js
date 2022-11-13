@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import routes from '@/data/routes';
 import Container from '@/layout/Container/Container';
+import config from '@/config/index';
 import styles from './CategoryButtons.module.scss';
 
 function CategoryButtons({ collections = [] }) {
@@ -12,7 +12,7 @@ function CategoryButtons({ collections = [] }) {
             collections.map((category) => (
               <li key={category?.id}>
                 <Link
-                  href={`${routes.collection}/${category?.handle}`}
+                  href={`${config.routes.collection}/${category?.handle}`}
                   key={category.id}
                 >
                   <a className={styles.button}>

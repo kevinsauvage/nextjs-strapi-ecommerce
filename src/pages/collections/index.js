@@ -13,7 +13,11 @@ function CategoryPage({ collections }) {
           (collection, i) =>
             collection.products.length > 0 && (
               <Fragment key={collection.id}>
-                <Carousel title={collection.title} horizontal>
+                <Carousel
+                  title={collection.title}
+                  horizontal
+                  showButtons={false}
+                >
                   {Array.isArray(collection.products) &&
                     collection.products.map((product) => (
                       <CarouselItem key={product.id}>

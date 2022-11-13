@@ -1,11 +1,11 @@
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
-import Form from '@/components/Form/Form';
-import Input from '@/components/Input/Input';
+import Form from '@/components/forms/Form/Form';
+import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import routes from '@/data/routes';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import config from '@/config/index';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
@@ -40,7 +40,7 @@ function ResetPassword() {
             tertiary
           />
           <div className={styles.backStore}>
-            Or go back to <Link href={routes.login}>Login</Link>.
+            Or go back to <Link href={config.routes.login}>Login</Link>.
           </div>
         </Form>
       </div>

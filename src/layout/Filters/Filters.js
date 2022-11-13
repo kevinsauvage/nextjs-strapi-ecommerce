@@ -1,5 +1,6 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import MultiRangeSlider from '@/components/MultiRangeSlider/MultiRangeSlider';
+import Button from '@/components/Button/Button';
 import Collapsible from '../Collapsible/Collapsible';
 import styles from './Filters.module.scss';
 
@@ -8,6 +9,8 @@ export default function Filters({
   filtersSelected,
   onChange,
   addUniqueParam,
+  selectedFilters,
+  handleFilter,
 }) {
   const isChecked = (input, filterId) => {
     const actualValues = filtersSelected[filterId];
@@ -70,6 +73,9 @@ export default function Filters({
               </Collapsible>
             )
         )}
+      {selectedFilters && (
+        <Button tertiary text="Filter" onClick={handleFilter} />
+      )}
     </div>
   );
 }

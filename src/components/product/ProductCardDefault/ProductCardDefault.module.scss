@@ -4,47 +4,49 @@
   border-radius: 3px;
   height: 100%;
   width: 100%;
+  background-color: rgb(var(--color-light-1));
+  box-shadow: var(--elevation-light-1);
+
+  &:hover {
+    box-shadow: var(--elevation-light-4);
+  }
 }
 
 .content {
-  padding: 8px 0;
+  padding: 8px;
   text-align: center;
   z-index: 99;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100%;
 }
 
 .quickView {
-  background-color: $primary;
+  background-color: rgb(var(--color-primary-0));
   color: white;
   text-align: center;
   padding: 4px;
   position: absolute;
-  bottom: -100%;
+  opacity: 0;
+  bottom: 0;
   width: 100%;
-  transition: all 0.3s ease-in-out;
-  z-index: 1;
+  transition: opacity 0.3s ease-in;
 }
 
 .image {
   position: relative;
   overflow: hidden;
 
-  span {
-    transition: transform 0.25s;
-  }
-  &:hover span {
-    transform: scale(1.04);
-  }
   &:hover .quickView {
-    bottom: 0;
+    opacity: 1;
   }
 }
 
 .title {
   margin-bottom: 10px;
+  white-space: pre-wrap;
 }
 
 .description {

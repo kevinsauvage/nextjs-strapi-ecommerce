@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
-import routes from '@/data/routes';
+import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
 import Link from 'next/link';
-import Price from '@/components/Price/Price';
-import SelectedOptions from '@/components/SelectedOptions/SelectedOptions';
+import SelectedOptions from '@/components/product/SelectedOptions/SelectedOptions';
+import config from '@/config/index';
+import Price from '../Price/Price';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({
@@ -38,7 +38,7 @@ export default function ProductCheckoutCard({
       </div>
       <div className={styles.body}>
         <Link
-          href={`${routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
+          href={`${config.routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
         >
           <a>
             <h6 className={styles.title}>{product?.title}</h6>
