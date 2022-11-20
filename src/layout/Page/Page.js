@@ -5,12 +5,11 @@ import styles from './Page.module.scss';
 import Container from '../Container/Container';
 
 export default function Page({ children, title, extraClass, description }) {
+  const siteTitle = `${config.name} | ${title}`;
   return (
     <div className={`${styles.page} ${extraClass}`}>
       <Head>
-        <title>
-          {config.name} | {title}
-        </title>
+        <title>{siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Head>
       <Container>

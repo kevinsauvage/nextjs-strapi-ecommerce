@@ -84,3 +84,21 @@ export const parseCart = (cart) =>
         })),
       }
     : cart;
+
+export const withoutEdgesAndNodes = (data) => {
+  let result = Array.isArray(data) ? [] : {};
+
+  if (typeof data !== 'object') return data;
+
+  for (const key in data) {
+    if (typeof key === 'string' && key === 'edges') {
+      result = withoutEdgesAndNodes(data.edges.map((edge) => edge.node));
+    } else {
+      result = Object.assign(result, {
+        [key]: withoutEdgesAndNodes(data[key]),
+      });
+    }
+  }
+
+  return result;
+};

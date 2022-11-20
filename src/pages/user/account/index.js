@@ -9,8 +9,6 @@ import styles from './Profile.module.scss';
 function Profile() {
   const { user } = useUserContext();
 
-  console.log(user);
-
   return (
     <Page title="My Profile">
       <div className={styles.Profile}>

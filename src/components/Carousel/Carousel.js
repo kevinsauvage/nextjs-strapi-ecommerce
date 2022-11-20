@@ -68,8 +68,6 @@ function Carousel({
   }, [children, itemDimension, carouselRef, vertical]);
 
   const handleChangeIndex = (i) => {
-    console.log(i, 'i');
-    console.log(maxIndex, 'maxIndex');
     if (i < 0) setIndex(0);
     else if (i + 1 > maxIndex) setIndex(maxIndex);
     else setIndex(i);

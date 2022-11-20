@@ -52,7 +52,6 @@ export function CartProvider({ children }) {
       toggleLoading(true);
       const res = await addLinesToCart(cartId, lineItemsToAdd);
 
-      console.log(res, 'ress');
       if (res?.cart?.id) {
         handleSetCart(res.cart);
         toggleCart(true);

@@ -79,7 +79,6 @@ function CollectionSlugPage({ title, data }) {
 
   const handleFilter = async () => {
     const filters = getFiltersFromParams(productsFilters, query);
-    console.log(filters);
 
     setLoading(true);
     setProducts(null);

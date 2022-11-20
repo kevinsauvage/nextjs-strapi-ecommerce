@@ -21,7 +21,6 @@ export default function ProductCheckoutCard({
     selectedOptions,
   } = variant || {};
 
-  console.log(variant);
   return (
     <div className={styles.card}>
       <div className={styles.image}>

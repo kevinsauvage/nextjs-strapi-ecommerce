@@ -10,7 +10,6 @@ function AccountRow({ title, content }) {
 }
 
 export default function AccountInfo({ user }) {
-  console.log(user);
   return (
     <div className={style.AccountInfo}>
       <AccountRow
