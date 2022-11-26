@@ -4,7 +4,7 @@ import AccountInfo from '@/components/account/AccountInfo/AccountInfo';
 import DefaultAddress from '@/components/account/DefaultAddress/DefaultAddress';
 import Orders from '@/components/account/Orders/Orders';
 import Card from '@/components/account/Card/Card';
-import Button from 'src/components/Button/Button';
+import Button from '@/components/Button/Button';
 import styles from './Profile.module.scss';
 
 function Profile() {
