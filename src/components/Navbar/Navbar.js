@@ -2,7 +2,7 @@ import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import config from '@/config/index';
 import styles from './Navbar.module.scss';
 
-function Navbar({ headerMenu }) {
+function Navbar() {
   const navigationItems = [
     { name: 'Home', path: config.routes.home, id: 1 },
     { name: 'Collections', path: config.routes.collection, id: 2 },
