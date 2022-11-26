@@ -79,18 +79,6 @@ export function CartProvider({ children }) {
     [toggleLoading, cartId, handleSetCart]
   );
 
-  // Create cart if carts ID doesn't exist in local storage
-  useEffect(() => {
-    if (!cartId) {
-      createCart().then((res) => {
-        if (res?.id) {
-          handleSetCart(res);
-          setCartId(res.id);
-        }
-      });
-    }
-  }, [cartId, handleSetCart, setCartId]);
-
   // If cartId is found in local storage, then get it from Shopify
   useEffect(() => {
     if (cartId && !cart) {
@@ -106,6 +94,18 @@ export function CartProvider({ children }) {
       });
     }
   }, [token, cartId]);
+
+  // Create cart if carts ID doesn't exist in local storage
+  useEffect(() => {
+    if (!window.localStorage.getItem('cartId') && !cart) {
+      createCart().then((res) => {
+        if (res?.id) {
+          handleSetCart(res);
+          setCartId(res.id);
+        }
+      });
+    }
+  }, [cartId, cart, handleSetCart, setCartId]);
 
   const values = useMemo(
     () => ({

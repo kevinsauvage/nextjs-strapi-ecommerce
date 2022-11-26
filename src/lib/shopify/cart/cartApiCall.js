@@ -7,14 +7,14 @@ export const createCart = async (input) => {
   const res = await shopifyStorefrontCall(cartQueries.queryCreateCart, {
     input,
   });
-  return res?.cartCreate?.cart;
+  return res?.data?.cartCreate?.cart;
 };
 
 export const getCartById = async (id) => {
   const res = await shopifyStorefrontCall(cartQueries.queryCartById, {
     id,
   });
-  return res?.cart ? parseCart(res?.cart) : {};
+  return res?.data?.cart ? parseCart(res?.data?.cart) : {};
 };
 
 export const cartBuyerIdentityUpdate = async (cartId, buyerIdentity) => {
@@ -25,8 +25,8 @@ export const cartBuyerIdentityUpdate = async (cartId, buyerIdentity) => {
       buyerIdentity,
     }
   );
-  return res?.cartBuyerIdentityUpdate?.cart
-    ? parseCart(res?.cartBuyerIdentityUpdate?.cart)
+  return res?.data?.cartBuyerIdentityUpdate?.cart
+    ? parseCart(res?.data?.cartBuyerIdentityUpdate?.cart)
     : {};
 };
 
@@ -36,8 +36,8 @@ export const addLinesToCart = async (cartId, lines) => {
     lines,
   });
   return {
-    userErrors: res?.userErrors,
-    cart: parseCart(res?.cartLinesAdd?.cart),
+    userErrors: res?.data?.userErrors,
+    cart: parseCart(res?.data?.cartLinesAdd?.cart),
   };
 };
 
@@ -47,10 +47,10 @@ export const removeLinesFromCart = async (cartId, lineIds) => {
     lineIds,
   });
 
-  if (res?.cartLinesRemove) {
+  if (res?.data?.cartLinesRemove) {
     return {
-      userErrors: res?.userErrors,
-      cart: parseCart(res?.cartLinesRemove?.cart),
+      userErrors: res?.data?.userErrors,
+      cart: parseCart(res?.data?.cartLinesRemove?.cart),
     };
   }
   return false;
@@ -62,8 +62,8 @@ export const updateLines = async (cartId, lines) => {
     lines,
   });
 
-  if (res?.cartLinesUpdate) {
-    return parseCart(res?.cartLinesUpdate?.cart);
+  if (res?.data?.cartLinesUpdate) {
+    return parseCart(res?.data?.cartLinesUpdate?.cart);
   }
   return false;
 };
