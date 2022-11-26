@@ -4,7 +4,6 @@ import {
   useEffect,
   useMemo,
   useReducer,
-  useState,
 } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
@@ -14,16 +13,18 @@ import {
   sendRecoverEmail,
   resetCustomerPassword,
   refreshToken,
+  getUser,
 } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
+
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const [token, setToken] = useLocalStorage('customerAccessToken_shopify', '');
-  const [accessToken, setAccessToken] = useState(undefined);
+  const [token, setToken] = useLocalStorage('accessToken', '');
+  const ttl = 12 * 60 * 60;
 
   const { user, loading } = states || {};
 
@@ -59,41 +60,17 @@ export function UserProvider({ children }) {
     }
   }, [push, setToken, toggleLoading]);
 
-  const handleToken = useCallback(
-    async (customerAccessToken, redirectPath, successMessage = '') => {
-      // Save token to local storage
-
-      setAccessToken(customerAccessToken.accessToken);
-      setToken({
-        ...customerAccessToken,
-        expire: new Date().getTime() + 2 * 24 * 60 * 60 * 1000,
-      });
-
-      // Send token to server to store it inside cookies
-      const res = await nextApiCall.auth.saveToken({ customerAccessToken });
-
-      const { customer } = res || {};
-
-      if (customer?.id) dispatch({ type: actions.ADD_USER, payload: customer });
-
-      toggleLoading(false);
-
-      if (res?.ok) {
-        if (successMessage) toast.success(successMessage);
-        if (redirectPath) push(redirectPath);
-      }
-      return false;
-    },
-    [setToken, toggleLoading, push]
-  );
-
   const handleRefreshToken = useCallback(
     async (tok) => {
-      const response = await refreshToken(tok);
-      const { customerAccessToken } = response || {};
-      if (customerAccessToken?.accessToken) handleToken(customerAccessToken);
+      if (!tok) return;
+      const { customerAccessToken } = (await refreshToken(tok)) || {};
+      const { accessToken } = customerAccessToken || {};
+      if (accessToken) {
+        nextApiCall.saveToken({ accessToken });
+        setToken(accessToken, ttl);
+      }
     },
-    [handleToken]
+    [ttl, setToken]
   );
 
   const login = useCallback(
@@ -103,23 +80,25 @@ export function UserProvider({ children }) {
 
       toggleLoading(true);
 
-      const res = await nextApiCall.auth.login({ email, password });
+      const { customerUserErrors, accessToken, customer } =
+        (await nextApiCall.auth.login({ email, password })) || {};
 
-      const { customerUserErrors, customerAccessToken } = res || {};
+      toggleLoading(false);
 
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
-      if (customerAccessToken?.accessToken) {
-        return handleToken(
-          customerAccessToken,
-          config.routes.account,
-          'Your login was successful'
-        );
+      if (accessToken) setToken(accessToken, ttl);
+
+      if (customer?.id) {
+        dispatch({ type: actions.ADD_USER, payload: customer });
+        push(config.routes.account);
       }
+
+      toast.success('You were successfully logged in.');
 
       return false;
     },
-    [handleToken, toggleLoading, handleError]
+    [toggleLoading, handleError, push, setToken, ttl]
   );
 
   const register = useCallback(
@@ -129,23 +108,26 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
+      const registerRes = await nextApiCall.auth.register({ email, password });
+      toggleLoading(false);
 
-      const data = await nextApiCall.auth.register({ email, password });
-      if (!data) return toast.error('Something went wrong');
-      const { userErrors, customerAccessToken } = data;
+      if (!registerRes?.ok) return toast.error('Something went wrong');
+
+      const { userErrors, accessToken, customer } = registerRes || {};
       if (userErrors?.length) return handleError(userErrors);
 
-      if (customerAccessToken?.accessToken) {
-        handleToken(
-          customerAccessToken,
-          config.routes.account,
-          'You are now Registered'
-        );
+      toast.success('You were successfully registered');
+
+      if (accessToken) setToken(accessToken, ttl);
+
+      if (customer?.id) {
+        dispatch({ type: actions.ADD_USER, payload: customer });
+        push(config.routes.account);
       }
 
       return false;
     },
-    [toggleLoading, handleToken, handleError]
+    [toggleLoading, handleError, setToken, push, ttl]
   );
 
   const resetPasswordEmail = useCallback(
@@ -181,45 +163,43 @@ export function UserProvider({ children }) {
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
       if (customerAccessToken?.accessToken) {
-        handleToken(
+        /*        handleToken(
           customerAccessToken,
           config.routes.account,
           'Password correctly updated'
-        );
+        ); */
       }
       return true;
     },
-    [handleToken, toggleLoading, handleError]
+    [toggleLoading, handleError]
   );
 
   useEffect(() => {
-    if (token?.accessToken && !accessToken) {
-      const expireInMilliseconds = new Date(token.expiresAt).getTime();
-      const todayInMilliseconds = new Date().getTime();
-
+    if (token?.value) {
+      const now = new Date();
       // If shopify token or local storage TOKEN is expired logout immediately
-      if (
-        expireInMilliseconds < todayInMilliseconds ||
-        Number(token.expire) < todayInMilliseconds
-      ) {
+      if (now.getTime() > token.expiryTime * 1000) {
+        console.log('expired useEffect logout');
         logout();
-      }
-
-      // If the shopify token of local storage token is going to expire soon, refresh the token
-      if (
-        expireInMilliseconds < todayInMilliseconds - 60 * 60 ||
-        Number(token.expire) < todayInMilliseconds - 60 * 60
+      } else if (
+        now.getTime() < token.expiryTime * 1000 &&
+        now.getTime() > token.expiryTime * 1000 + 60 * 60 * 2
       ) {
-        handleRefreshToken(token.accessToken);
+        console.log('useEffect refresh token 2 hour before expiration');
+        handleRefreshToken(token.value);
       }
     }
-  }, [handleToken, handleRefreshToken, logout, token, accessToken]);
+  }, [handleRefreshToken, logout, token]);
 
   useEffect(() => {
-    if (!user?.id && token?.accessToken && !accessToken) {
-      handleToken(token);
+    if (!user?.id && token?.value) {
+      console.log('get user, useEffect');
+      getUser(token?.value).then((res) => {
+        if (res?.customer)
+          dispatch({ type: actions.ADD_USER, payload: res.customer });
+      });
     }
-  }, [token, accessToken, user?.id, handleToken]);
+  }, [token, user?.id]);
 
   const values = useMemo(
     () => ({

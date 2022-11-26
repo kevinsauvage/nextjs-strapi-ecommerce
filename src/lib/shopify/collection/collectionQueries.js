@@ -2,6 +2,8 @@ const filterCollectionForward = `
   query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
     collection(handle: $handle) {
       handle
+      descriptionHtml
+      title
       seo {
         description
         title
@@ -112,6 +114,9 @@ const filterCollectionBackward = `
   query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $before: String) {
     collection(handle: $handle) {
       handle
+      handle
+      descriptionHtml
+      title
       seo {
         description
         title
@@ -226,6 +231,15 @@ const getCollections = `query ($first: Int) {
         title
         handle
         description
+        image {
+          src
+          altText
+          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
+          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
+          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
+          width
+          height
+        }
       }
     }
   }

@@ -1,4 +1,5 @@
-import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
+import { loginCustomer, getUser } from '@/lib/shopify/customer/customerApiCall';
+import { setCookie } from 'nookies';
 
 const login = async (req, res) => {
   try {
@@ -10,16 +11,26 @@ const login = async (req, res) => {
 
     const { customerAccessToken, customerUserErrors } = data || {};
 
-    const responseObject = {};
-
-    if (customerUserErrors)
-      responseObject.customerUserErrors = customerUserErrors;
-
     if (customerAccessToken) {
-      responseObject.customerAccessToken = customerAccessToken;
+      const { accessToken } = customerAccessToken || {};
+      const { customer } = (await getUser(accessToken)) || {};
+
+      setCookie({ res }, 'shopify_token', accessToken, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV !== 'development',
+        maxAge: 12 * 60 * 60,
+        path: '/',
+      });
+
+      return res.status(200).json({
+        ok: true,
+        accessToken,
+        customerUserErrors,
+        customer,
+      });
     }
 
-    return res.status(200).json({ ok: true, ...responseObject });
+    return res.status(201).json({ ok: true });
   } catch (error) {
     return res.status(404).send({ ok: false, error });
   }

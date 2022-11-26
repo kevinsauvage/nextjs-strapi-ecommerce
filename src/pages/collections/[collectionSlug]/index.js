@@ -23,6 +23,7 @@ function CollectionSlugPage({ title, data }) {
   const [productsFilters, setProductsFilters] = useState(data?.productsFilters);
   const { addUniqueParam, addParam, selectedFilters } = useRouterFilter();
   const { query } = useRouter();
+  const { collection } = data || {};
 
   useEffect(() => {
     if (pageInfo) {
@@ -101,6 +102,10 @@ function CollectionSlugPage({ title, data }) {
 
   return (
     <Page title={`${title}`}>
+      <div>
+        <h1>{collection?.title}</h1>
+        <p>{collection?.descriptionHtml}</p>
+      </div>
       <div className={style.CollectionSlugPage}>
         <aside>
           <Filters

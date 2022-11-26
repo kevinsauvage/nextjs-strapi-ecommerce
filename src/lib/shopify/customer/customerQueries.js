@@ -1,14 +1,35 @@
 const queryRegister = `mutation ($input: CustomerCreateInput!) {
     customerCreate(input: $input) {
       userErrors { field message }
-      customer { id }
+      customer {
+        id
+        firstName
+        lastName
+        acceptsMarketing
+        email
+        phone
+        defaultAddress {
+          id
+        }
+        orders(first: 10) {
+          edges {
+              node {
+                  id
+                  name
+                  totalPrice
+                  fulfillmentStatus
+                  currencyCode
+              }
+          }
+        }
+      }
     }
   }`;
 
 const queryLogin = `mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
     customerAccessTokenCreate(input: $input) { 
-      customerAccessToken { accessToken expiresAt }, 
-      customerUserErrors { message } 
+      customerAccessToken { accessToken expiresAt }
+      customerUserErrors { message }
     } 
   }`;
 
@@ -20,8 +41,30 @@ const querySendRecoverEmail = `mutation customerRecover($email: String!) {
 
 const queryResetPassword = `mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
     customerResetByUrl(password: $password, resetUrl: $resetUrl) {
-        customerAccessToken { accessToken expiresAt }, 
+        customerAccessToken { accessToken expiresAt }
         customerUserErrors { code field message}
+        customer {
+          id
+          firstName
+          lastName
+          acceptsMarketing
+          email
+          phone
+          defaultAddress {
+            id
+          }
+          orders(first: 10) {
+            edges {
+                node {
+                    id
+                    name
+                    totalPrice
+                    fulfillmentStatus
+                    currencyCode
+                }
+            }
+          }
+        }
     }
   }`;
 

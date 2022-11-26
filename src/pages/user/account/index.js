@@ -4,10 +4,11 @@ import AccountInfo from '@/components/account/AccountInfo/AccountInfo';
 import DefaultAddress from '@/components/account/DefaultAddress/DefaultAddress';
 import Orders from '@/components/account/Orders/Orders';
 import Card from '@/components/account/Card/Card';
+import Button from 'src/components/Button/Button';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { user } = useUserContext();
+  const { user, logout } = useUserContext();
 
   return (
     <Page title="My Profile">
@@ -36,6 +37,7 @@ function Profile() {
           </Card>
         </main>
       </div>
+      <Button tertiary text="Log Out" onClick={logout} />
     </Page>
   );
 }

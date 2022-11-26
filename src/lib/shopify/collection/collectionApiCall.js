@@ -24,8 +24,10 @@ export const filterCollectionForward = async (
     const products = cleanProducts(res?.collection?.products.edges);
     const pageInfo = res?.collection?.products?.pageInfo;
     const productsFilters = res?.collection?.products?.filters;
+    const collection = res?.collection;
 
     return {
+      collection,
       products,
       pageInfo,
       productsFilters,
@@ -57,8 +59,10 @@ export const filterCollectionBackward = async (
     const products = cleanProducts(res?.collection?.products.edges);
     const pageInfo = res?.collection?.products?.pageInfo;
     const productsFilters = res?.collection?.products?.filters;
+    const collection = res?.collection;
 
     return {
+      collection,
       products,
       pageInfo,
       productsFilters,

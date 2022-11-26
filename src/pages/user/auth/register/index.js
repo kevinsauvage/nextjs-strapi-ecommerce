@@ -13,7 +13,7 @@ function RegisterPage() {
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
-    register(email.trim(), password.trim());
+    register(email?.trim(), password?.trim());
   };
 
   const { handleInputChange, handleSubmit } = useForm(onSubmit);

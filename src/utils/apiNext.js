@@ -26,9 +26,9 @@ const nextApiCall = {
   auth: {
     login,
     logout,
-    saveToken,
     register,
   },
+  saveToken,
 };
 
 export default nextApiCall;
