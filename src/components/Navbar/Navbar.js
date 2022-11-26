@@ -2,7 +2,7 @@ import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import config from '@/config/index';
 import styles from './Navbar.module.scss';
 
-function Navbar() {
+function Navbar({ headerMenu }) {
   const navigationItems = [
     { name: 'Home', path: config.routes.home, id: 1 },
     { name: 'Collections', path: config.routes.collection, id: 2 },
@@ -20,7 +20,7 @@ function Navbar() {
                 activeClass={styles.active}
                 className={styles.item}
               >
-                <a>{_dataUrl?.name}</a>
+                <span>{_dataUrl?.name}</span>
               </ActiveLink>
             </li>
           ))}

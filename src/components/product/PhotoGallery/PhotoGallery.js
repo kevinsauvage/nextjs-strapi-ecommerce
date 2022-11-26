@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
 import AbsoluteLoader from '@/layout/Loader/AbsoluteLoader/AbsoluteLoader';
 import Carousel, { CarouselItem } from '../../Carousel/Carousel';

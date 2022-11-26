@@ -14,10 +14,9 @@ function CategoryButtons({ collections = [] }) {
                 <Link
                   href={`${config.routes.collection}/${category?.handle}`}
                   key={category.id}
+                  className={styles.button}
                 >
-                  <a className={styles.button}>
-                    <p className={styles.name}>{category?.title}</p>
-                  </a>
+                  <p className={styles.name}>{category?.title}</p>
                 </Link>
               </li>
             ))}

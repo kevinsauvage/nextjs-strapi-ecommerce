@@ -3,10 +3,8 @@ import styles from './Logo.module.scss';
 
 export default function Logo() {
   return (
-    <Link href="/">
-      <a className={styles.Logo}>
-        <p>NAME STORE</p>
-      </a>
+    <Link href="/" className={styles.Logo}>
+      <p>NAME STORE</p>
     </Link>
   );
 }

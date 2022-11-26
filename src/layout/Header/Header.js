@@ -4,12 +4,12 @@ import Navbar from '@/components/Navbar/Navbar';
 import Logo from '@/components/Logo/Logo';
 import styles from './Header.module.scss';
 
-function Header() {
+function Header({ headerMenu }) {
   return (
     <header className={`${styles.header}`}>
       <Container>
         <Logo />
-        <Navbar />
+        <Navbar headerMenu={headerMenu} />
         <UserButtons />
       </Container>
     </header>

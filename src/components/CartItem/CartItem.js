@@ -39,15 +39,13 @@ export default function CartItem({
             <Link
               href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
             >
-              <a>
-                <Image
-                  src={variant.image.sm}
-                  width="500"
-                  height="750"
-                  layout="responsive"
-                  objectFit="cover"
-                />
-              </a>
+              <Image
+                src={variant.image.sm}
+                width="500"
+                height="750"
+                layout="responsive"
+                objectFit="cover"
+              />
             </Link>
           </li>
           <li className={styles.content}>

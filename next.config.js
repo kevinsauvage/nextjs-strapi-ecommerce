@@ -23,6 +23,9 @@ const nextConfig = {
         @import "mixins.scss"; 
         @import "animation.scss";`,
   },
+  experimental: {
+    allowMiddlewareResponseBody: true,
+  },
 };
 
 module.exports = nextConfig;

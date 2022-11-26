@@ -11,8 +11,8 @@ function CollectionUi({ title, link, products, buttonText, itemShown = 8 }) {
           <h5 className={styles.title}>{title}</h5>
         </div>
         {link && (
-          <Link href={link}>
-            <a className={styles.viewAll}>View all</a>
+          <Link href={link} className={styles.viewAll}>
+            View all
           </Link>
         )}
       </div>

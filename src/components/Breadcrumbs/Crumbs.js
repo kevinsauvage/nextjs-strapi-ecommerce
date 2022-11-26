@@ -16,8 +16,8 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
   }
   return (
     <>
-      <Link href={href}>
-        <a className={styles.crumbs}>{title}</a>
+      <Link href={href} className={styles.crumbs}>
+        {title}
       </Link>
       {!last && <p className={styles.arrow}>{'>'}</p>}
     </>

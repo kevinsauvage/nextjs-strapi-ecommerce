@@ -27,13 +27,12 @@ export default function Button({
 
   if (href) {
     return (
-      <Link href={href}>
-        <a
-          style={{ ...extraStyles }}
-          className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
-        >
-          {text}
-        </a>
+      <Link
+        href={href}
+        style={{ ...extraStyles }}
+        className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
+      >
+        {text}
       </Link>
     );
   }

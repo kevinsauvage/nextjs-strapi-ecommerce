@@ -3,49 +3,53 @@ import config from './config';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-function middleware(request) {
-  const { nextUrl, cookies } = request;
-  const { pathname, origin } = nextUrl;
-
-  const basicAuth = request.headers.get('authorization');
-  const url = request.nextUrl;
-
+const checkBasicAuth = (req) => {
+  const basicAuth = req?.headers?.get('authorization');
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');
 
-    if (user === 'kevin' && pwd === '50625062') {
-      // Early return if it is a public file such as an image
-      if (
-        request.nextUrl.pathname.startsWith('/_next') ||
-        request.nextUrl.pathname.includes('/api/') ||
-        PUBLIC_FILE.test(request.nextUrl.pathname)
-      ) {
-        return null;
-      }
+    if (user === 'kevin' && pwd === '50625062') return true;
+    return false;
+  }
+  return false;
+};
 
-      // Get user auth cookies
-      const cookieShopify = cookies.get('shopify_token');
+function middleware(request) {
+  const { nextUrl, cookies } = request;
+  const { pathname, origin } = nextUrl;
 
-      // Cannot access auth page if already login
-      if (cookieShopify && pathname.includes('/auth')) {
-        console.log('Cannot access auth page if already login');
-
-        return NextResponse.redirect(`${origin}${config.routes.account}`);
-      }
-
-      // Cannot access account if not login
-      if (!cookieShopify && pathname.includes('/account')) {
-        console.log(' Cannot access account if not login');
-        return NextResponse.redirect(`${origin}${config.routes.login}`);
-      }
-      return NextResponse.next();
-    }
+  if (!checkBasicAuth(request)) {
+    const url = nextUrl;
+    url.pathname = '/api/auth';
+    return NextResponse.rewrite(url);
   }
 
-  url.pathname = '/api/auth';
+  // Early return if it is a public file such as an image
+  if (
+    pathname.startsWith('/_next') ||
+    pathname.includes('/api/') ||
+    PUBLIC_FILE.test(pathname)
+  ) {
+    return null;
+  }
 
-  return NextResponse.rewrite(url);
+  // Get user auth cookies
+  const cookieShopify = cookies.get('shopify_token');
+
+  // Cannot access account if not login
+  if (!cookieShopify && pathname.includes('/account')) {
+    console.log('Cannot access account if not login');
+    return NextResponse.redirect(`${origin}${config.routes.login}`);
+  }
+
+  // Cannot access auth page if already login
+  if (cookieShopify && pathname.includes('/auth')) {
+    console.log('Cannot access auth page if already login');
+    return NextResponse.redirect(`${origin}${config.routes.account}`);
+  }
+
+  return NextResponse.next();
 }
 
 export default middleware;

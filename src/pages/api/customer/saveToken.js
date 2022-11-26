@@ -14,29 +14,17 @@ const saveToken = async (req, res) => {
 
     const responseObject = {};
 
-    const { accessToken, expiresAt } = customerAccessToken || {};
+    const { accessToken } = customerAccessToken || {};
 
     if (accessToken) {
-      const expireInMilliseconds = new Date(expiresAt).getTime();
-      const nowInMilliseconds = new Date().getTime();
-
-      const expireTime = expireInMilliseconds - nowInMilliseconds;
-
       setCookie({ res }, 'shopify_token', accessToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV !== 'development',
-        maxAge: expireTime,
+        maxAge: 60 * 60,
         path: '/',
       });
 
-      setCookie({ res }, 'shopify_token_expires', expiresAt, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: expireTime,
-        path: '/',
-      });
-
-      const customerResponse = await getUser(customerAccessToken.accessToken);
+      const customerResponse = await getUser(accessToken);
 
       if (customerResponse?.customer?.id) {
         responseObject.customer = customerResponse.customer;

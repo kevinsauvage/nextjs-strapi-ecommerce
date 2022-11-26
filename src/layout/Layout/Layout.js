@@ -13,7 +13,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './Layout.module.scss';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 
-function Layout({ children, collections }) {
+function Layout({ children, headerMenu }) {
   const { selectedProduct, setSelectedProduct } = useProductContext();
   const { isCartLoading } = useCartContext();
   const { loading } = useUserContext();
@@ -25,7 +25,7 @@ function Layout({ children, collections }) {
       <User />
       {(isCartLoading || loading) && <PageLoader />}
       <div className={styles.container}>
-        <Header />
+        <Header headerMenu={headerMenu} />
         {selectedProduct ? (
           <Modal handleClose={() => setSelectedProduct(false)}>
             <ProductPresenter product={selectedProduct} isModal carousel />
@@ -34,7 +34,7 @@ function Layout({ children, collections }) {
         <div className={styles.children}>{children}</div>
       </div>
       <ToastContainer position="bottom-center" newestOnTop theme="dark" />
-      <Footer collections={collections} />
+      <Footer />
     </>
   );
 }

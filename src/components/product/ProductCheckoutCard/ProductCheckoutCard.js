@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
 import Link from 'next/link';
 import SelectedOptions from '@/components/product/SelectedOptions/SelectedOptions';
@@ -39,9 +39,7 @@ export default function ProductCheckoutCard({
         <Link
           href={`${config.routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
         >
-          <a>
-            <h6 className={styles.title}>{product?.title}</h6>
-          </a>
+          <h6 className={styles.title}>{product?.title}</h6>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
         <SelectedOptions options={selectedOptions} />

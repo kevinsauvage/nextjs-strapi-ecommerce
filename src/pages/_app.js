@@ -3,27 +3,23 @@ import '../styles/colors.scss';
 import '../styles/typography.scss';
 import '../styles/spacing.scss';
 import '../styles/elevation.scss';
+import App from 'next/app';
+import { useEffect } from 'react';
 import Layout from '@/layout/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
-import { useEffect, useState } from 'react';
-import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 import { ProductProvider } from '@/contexts/ProductContext/ProductContext';
+import { getMenuFooter, getMenuHeader } from '@/lib/shopify/shop/shopApiCall';
 
-function MyApp({ Component, pageProps }) {
-  const [collections, setCollections] = useState([]);
-
-  useEffect(() => {
-    getCollections(50).then((response) => setCollections(response));
-  }, []);
-
+function MyApp({ Component, pageProps, headerMenu }) {
+  useEffect(() => {});
   return (
     <UserProvider>
       <GlobalProvider>
         <ProductProvider>
           <CartProvider>
-            <Layout collections={collections}>
+            <Layout headerMenu={headerMenu}>
               <Component {...pageProps} />
             </Layout>
           </CartProvider>
@@ -33,4 +29,10 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
+MyApp.getInitialProps = async (appContext) => {
+  const appProps = await App.getInitialProps(appContext);
+  const headerMenu = await getMenuHeader();
+  const footerMenu = await getMenuFooter();
+  return { ...appProps, headerMenu, footerMenu };
+};
 export default MyApp;

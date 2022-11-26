@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import useProductSelection from '@/hooks/useProductSelection';
@@ -46,9 +46,7 @@ export default function ProductCardRow({ product }) {
           <Link
             href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
           >
-            <a>
-              <h6 className={styles.title}>{limitStrLength(title, 90)}</h6>
-            </a>
+            <h6 className={styles.title}>{limitStrLength(title, 90)}</h6>
           </Link>
           <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} />
 

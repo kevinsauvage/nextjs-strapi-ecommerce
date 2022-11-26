@@ -75,9 +75,10 @@ export default function ProductDescription({
       </div>
       {isModal && (
         <Link
+          className={styles.btnSeeProduct}
           href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
         >
-          <a className={styles.btnSeeProduct}>SEE FULL PRODUCT INFO</a>
+          SEE FULL PRODUCT INFO
         </Link>
       )}
     </div>
