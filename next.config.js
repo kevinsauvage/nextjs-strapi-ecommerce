@@ -23,8 +23,8 @@ const nextConfig = {
         @import "mixins.scss"; 
         @import "animation.scss";`,
   },
-  experimental: {
-    allowMiddlewareResponseBody: true,
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
   },
 };
 
