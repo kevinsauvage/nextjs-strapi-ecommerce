@@ -1,6 +1,5 @@
-import { ClipLoader } from 'react-spinners';
 import ListDisplay from '@/layout/ListDisplay/ListDisplay';
-import PageLoader from 'src/layout/Loader/PageLoader/PageLoader';
+import PageLoader from '@/layout/Loader/PageLoader/PageLoader';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 import ProductCardRow from '../ProductCardRow/ProductCardRow';
