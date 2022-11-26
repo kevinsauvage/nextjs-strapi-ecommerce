@@ -65,7 +65,6 @@ function CollectionSlugPage({ title, data }) {
   const handleNext = async () => {
     const filters = getFilters();
     setLoading(true);
-    setProducts(null);
     window.scrollTo(0, 0);
     const res = await filterCollectionForward(
       title,
@@ -82,7 +81,6 @@ function CollectionSlugPage({ title, data }) {
     const filters = getFiltersFromParams(productsFilters, query);
 
     setLoading(true);
-    setProducts(null);
     window.scrollTo(0, 0);
     const res = await filterCollectionForward(
       title,

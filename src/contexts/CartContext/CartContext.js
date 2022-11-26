@@ -30,8 +30,8 @@ export function CartProvider({ children }) {
   const { toggleCart } = useGlobalContext();
   const { cart, isCartLoading } = states;
 
-  const toggleLoading = useCallback((is) => {
-    dispatch({ type: 'IS_CART_LOADING', payload: is });
+  const toggleLoading = useCallback((state) => {
+    dispatch({ type: 'IS_CART_LOADING', payload: state });
   }, []);
 
   const handleSetCart = useCallback((newCart) => {

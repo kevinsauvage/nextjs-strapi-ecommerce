@@ -1,5 +1,6 @@
 import { ClipLoader } from 'react-spinners';
 import ListDisplay from '@/layout/ListDisplay/ListDisplay';
+import PageLoader from 'src/layout/Loader/PageLoader/PageLoader';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 import ProductCardRow from '../ProductCardRow/ProductCardRow';
@@ -7,7 +8,9 @@ import ProductCardRow from '../ProductCardRow/ProductCardRow';
 function ProductsList({ products, loading, layout }) {
   return (
     <>
-      {Array.isArray(products) && products.length > 0 && !loading && (
+      {loading ? <PageLoader /> : ''}
+
+      {Array.isArray(products) && products.length > 0 ? (
         <ListDisplay layout={layout}>
           {products.map((product) => {
             if (layout === 'grid')
@@ -15,16 +18,14 @@ function ProductsList({ products, loading, layout }) {
             return <ProductCardRow key={product.id} product={product} />;
           })}
         </ListDisplay>
+      ) : (
+        ''
       )}
 
-      {Array.isArray(products) && products.length === 0 && !loading && (
+      {Array.isArray(products) && products.length === 0 && !loading ? (
         <div className={styles.noResults}>No results</div>
-      )}
-
-      {loading && (
-        <div className={styles.loader}>
-          <ClipLoader loading={loading} />
-        </div>
+      ) : (
+        ''
       )}
     </>
   );
