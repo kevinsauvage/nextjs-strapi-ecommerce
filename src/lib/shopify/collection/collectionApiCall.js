@@ -21,17 +21,17 @@ export const filterCollectionForward = async (
   );
 
   if (res) {
-    const products = cleanProducts(res?.collection?.products.edges);
-    const pageInfo = res?.collection?.products?.pageInfo;
-    const productsFilters = res?.collection?.products?.filters;
-    const collection = res?.collection;
+    const products = cleanProducts(res?.data?.collection?.products.edges);
+    const pageInfo = res?.data?.collection?.products?.pageInfo;
+    const productsFilters = res?.data?.collection?.products?.filters;
+    const collection = res?.data?.collection;
 
     return {
       collection,
       products,
       pageInfo,
       productsFilters,
-      seo: res?.collection?.seo,
+      seo: res?.data?.collection?.seo,
     };
   }
   return false;
@@ -57,16 +57,16 @@ export const filterCollectionBackward = async (
 
   if (res) {
     const products = cleanProducts(res?.collection?.products.edges);
-    const pageInfo = res?.collection?.products?.pageInfo;
-    const productsFilters = res?.collection?.products?.filters;
-    const collection = res?.collection;
+    const pageInfo = res?.data?.collection?.products?.pageInfo;
+    const productsFilters = res?.data?.collection?.products?.filters;
+    const collection = res?.data?.collection;
 
     return {
       collection,
       products,
       pageInfo,
       productsFilters,
-      seo: res?.collection?.seo,
+      seo: res?.data?.collection?.seo,
     };
   }
   return false;
@@ -77,7 +77,7 @@ export const getCollections = async (first) => {
     first,
   });
   if (res) {
-    return cleanCollections(res.collections?.edges);
+    return cleanCollections(res?.data?.collections?.edges);
   }
   return [];
 };
@@ -90,7 +90,7 @@ export const getCollectionsWithProducts = async (first) => {
     }
   );
   if (res) {
-    return cleanCollections(res.collections?.edges);
+    return cleanCollections(res.data?.collections?.edges);
   }
   return [];
 };

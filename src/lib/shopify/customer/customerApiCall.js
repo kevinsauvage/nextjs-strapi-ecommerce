@@ -6,14 +6,14 @@ export const registerCustomer = async (input) => {
     input,
   });
 
-  return res?.customerCreate;
+  return res?.data?.customerCreate;
 };
 
 export const loginCustomer = async (input) => {
   const res = await shopifyStorefrontCall(customerQueries.queryLogin, {
     input,
   });
-  return res?.customerAccessTokenCreate;
+  return res?.data?.customerAccessTokenCreate;
 };
 
 export const sendRecoverEmail = async (email) => {
@@ -24,7 +24,7 @@ export const sendRecoverEmail = async (email) => {
     }
   );
 
-  return res?.customerRecover;
+  return res;
 };
 
 export const resetCustomerPassword = async (password, resetUrl) => {
@@ -32,19 +32,19 @@ export const resetCustomerPassword = async (password, resetUrl) => {
     password,
     resetUrl,
   });
-  return res?.customerResetByUrl;
+  return res?.data?.customerResetByUrl;
 };
 
 export const getUser = async (token) => {
   const res = await shopifyStorefrontCall(customerQueries.queryCustomer, {
     token,
   });
-  return res;
+  return res?.data;
 };
 
 export const refreshToken = async (token) => {
   const res = await shopifyStorefrontCall(customerQueries.queryRefreshToken, {
     token,
   });
-  return res?.customerAccessTokenRenew;
+  return res?.data?.customerAccessTokenRenew;
 };

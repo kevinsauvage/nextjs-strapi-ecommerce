@@ -12,20 +12,11 @@ function useLocalStorage(key) {
 
     if (itemStr) {
       const item = JSON.parse(itemStr);
-      console.log(item, `storage for key ${key}`);
 
       const now = new Date();
 
-      if (item?.expiryTime) {
-        // compare the expiry time of the item with the current time
-        if (now.getTime() > item.expiryTime * 1000) {
-          // If the item is expired, delete the item from storage
-          // and return null
-          console.log('remove item expired');
-          localStorage.removeItem(key);
-        } else {
-          setStoredValue(item);
-        }
+      if (item?.expiryTime && now.getTime() > item.expiryTime * 1000) {
+        localStorage.removeItem(key);
       } else {
         setStoredValue(item);
       }

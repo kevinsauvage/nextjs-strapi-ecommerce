@@ -16,11 +16,8 @@ const shopifyStorefrontCall = async (query, variables) => {
       }
     );
     const res = await response.json();
-    if (res && res.data) return res.data;
-
-    if (res && res.errors) {
-      return console.error(res.errors);
-      // TODO HANDLE ERRORS
+    if (res.errors) {
+      console.log(res.errors);
     }
     return res;
   } catch (error) {

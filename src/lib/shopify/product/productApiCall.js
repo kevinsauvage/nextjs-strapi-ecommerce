@@ -5,7 +5,7 @@ import productQueries from './productQueries';
 export const getProductTags = async () => {
   const res = await shopifyStorefrontCall(productQueries.productTags);
   if (res) {
-    return res.productTags.edges;
+    return res?.data?.productTags.edges;
   }
   return [];
 };
@@ -17,8 +17,8 @@ export const getProductRecommendation = async (productId) => {
       productId,
     }
   );
-  if (res && res?.productRecommendations) {
-    const cleaned = cleanProducts(res.productRecommendations);
+  if (res && res?.data?.productRecommendations) {
+    const cleaned = cleanProducts(res?.data?.productRecommendations);
     return cleaned;
   }
   return [];
@@ -28,11 +28,11 @@ export const getProduct = async (handle) => {
   const res = await shopifyStorefrontCall(productQueries.queryProduct, {
     handle,
   });
-  if (res && res?.product) {
+  if (res && res?.data?.product) {
     return {
-      ...res.product,
-      images: cleanImage(res.product.images?.edges),
-      variants: cleanVariants(res.product.variants?.edges),
+      ...res?.data?.product,
+      images: cleanImage(res?.data?.product?.images?.edges),
+      variants: cleanVariants(res?.data?.product?.variants?.edges),
     };
   }
   return [];
@@ -44,9 +44,9 @@ export const getProducts = async (sortKey, first) => {
     sortKey,
   });
 
-  if (res && res?.products) {
+  if (res && res?.data?.products) {
     return {
-      products: cleanProducts(res.products.edges),
+      products: cleanProducts(res?.data?.products.edges),
     };
   }
   return [];

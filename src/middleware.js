@@ -39,13 +39,11 @@ function middleware(request) {
 
   // Cannot access account if not login
   if (!cookieShopify && pathname.includes('/account')) {
-    console.log('Cannot access account if not login');
     return NextResponse.redirect(`${origin}${config.routes.login}`);
   }
 
   // Cannot access auth page if already login
   if (cookieShopify && pathname.includes('/auth')) {
-    console.log('Cannot access auth page if already login');
     return NextResponse.redirect(`${origin}${config.routes.account}`);
   }
 

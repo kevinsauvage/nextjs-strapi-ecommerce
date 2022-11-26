@@ -6,7 +6,6 @@ import style from './CollectionCard.module.scss';
 export default function CollectionCard({ collection }) {
   const { title, image, handle } = collection || {};
 
-  console.log(collection);
   return (
     <Link
       href={`${config.routes.collection}/${handle}`}

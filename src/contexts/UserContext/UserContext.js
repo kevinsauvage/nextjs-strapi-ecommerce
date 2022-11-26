@@ -80,10 +80,11 @@ export function UserProvider({ children }) {
 
       toggleLoading(true);
 
-      const { customerUserErrors, accessToken, customer } =
+      const { customerUserErrors, accessToken, customer, ok } =
         (await nextApiCall.auth.login({ email, password })) || {};
-
       toggleLoading(false);
+
+      if (!ok) return toast.error('Something went wrong');
 
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
@@ -111,9 +112,10 @@ export function UserProvider({ children }) {
       const registerRes = await nextApiCall.auth.register({ email, password });
       toggleLoading(false);
 
-      if (!registerRes?.ok) return toast.error('Something went wrong');
+      const { userErrors, accessToken, customer, ok } = registerRes || {};
 
-      const { userErrors, accessToken, customer } = registerRes || {};
+      if (!ok) return toast.error('Something went wrong');
+
       if (userErrors?.length) return handleError(userErrors);
 
       toast.success('You were successfully registered');
@@ -142,8 +144,8 @@ export function UserProvider({ children }) {
 
       toggleLoading(false);
 
-      const { customerUserErrors } = data || {};
-      if (customerUserErrors?.length) return handleError(customerUserErrors);
+      const { errors } = data || {};
+      if (errors?.length) return handleError(errors);
       return toast.success('Check your emails');
     },
     [toggleLoading, handleError]
@@ -158,34 +160,40 @@ export function UserProvider({ children }) {
       toggleLoading(true);
 
       const data = await resetCustomerPassword(password, url);
-      const { customerUserErrors, customerAccessToken } = data || {};
+      toggleLoading(false);
+
+      const { customerUserErrors, customerAccessToken, customer } = data || {};
 
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
-      if (customerAccessToken?.accessToken) {
-        /*        handleToken(
-          customerAccessToken,
-          config.routes.account,
-          'Password correctly updated'
-        ); */
+      const { accessToken } = customerAccessToken || {};
+
+      if (accessToken) {
+        await nextApiCall.saveToken({ accessToken });
+        setToken(accessToken, ttl);
       }
+
+      if (customer?.id) {
+        dispatch({ type: actions.ADD_USER, payload: customer });
+        toast.success('Password correctly updated');
+        push(config.routes.account);
+      }
+
       return true;
     },
-    [toggleLoading, handleError]
+    [toggleLoading, handleError, push, ttl, setToken]
   );
 
   useEffect(() => {
     if (token?.value) {
       const now = new Date();
-      // If shopify token or local storage TOKEN is expired logout immediately
+
       if (now.getTime() > token.expiryTime * 1000) {
-        console.log('expired useEffect logout');
         logout();
       } else if (
         now.getTime() < token.expiryTime * 1000 &&
         now.getTime() > token.expiryTime * 1000 + 60 * 60 * 2
       ) {
-        console.log('useEffect refresh token 2 hour before expiration');
         handleRefreshToken(token.value);
       }
     }
@@ -193,7 +201,6 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     if (!user?.id && token?.value) {
-      console.log('get user, useEffect');
       getUser(token?.value).then((res) => {
         if (res?.customer)
           dispatch({ type: actions.ADD_USER, payload: res.customer });
