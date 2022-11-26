@@ -2,7 +2,7 @@ const filterCollectionForward = `
   query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
     collection(handle: $handle) {
       handle
-      descriptionHtml
+      description
       title
       seo {
         description
@@ -115,7 +115,7 @@ const filterCollectionBackward = `
     collection(handle: $handle) {
       handle
       handle
-      descriptionHtml
+      description
       title
       seo {
         description

@@ -102,7 +102,7 @@ function CollectionSlugPage({ title, data }) {
     <Page title={`${title}`}>
       <div>
         <h1>{collection?.title}</h1>
-        <p>{collection?.descriptionHtml}</p>
+        <p>{collection?.description}</p>
       </div>
       <div className={style.CollectionSlugPage}>
         <aside>
