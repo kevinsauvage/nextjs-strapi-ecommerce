@@ -18,12 +18,18 @@ import style from './CollectionSlug.module.scss';
 function CollectionSlugPage({ title, data }) {
   const [loading, setLoading] = useState(false);
   const [layout, setLayout] = useState('grid');
-  const [products, setProducts] = useState(data?.products);
-  const [pageInfo, setPageInfo] = useState(data?.pageInfo);
-  const [productsFilters, setProductsFilters] = useState(data?.productsFilters);
+  const [products, setProducts] = useState();
+  const [pageInfo, setPageInfo] = useState();
+  const [productsFilters, setProductsFilters] = useState();
   const { addUniqueParam, addParam, selectedFilters } = useRouterFilter();
   const { query } = useRouter();
   const { collection } = data || {};
+
+  useEffect(() => {
+    setProducts(data?.products);
+    setPageInfo(data?.pageInfo);
+    setProductsFilters(data?.productsFilters);
+  }, [data]);
 
   useEffect(() => {
     if (pageInfo) {

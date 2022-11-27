@@ -4,7 +4,7 @@ import style from './Pagination.module.scss';
 export default function Pagination({ handleNext, handlePrev, pageInfo }) {
   return (
     <div className={style.Pagination}>
-      {pageInfo?.hasPreviousPage || pageInfo.hasNextPage ? (
+      {pageInfo?.hasPreviousPage || pageInfo?.hasNextPage ? (
         <>
           <Button
             type="button"
