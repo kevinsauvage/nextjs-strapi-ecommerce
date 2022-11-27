@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import Page from '@/layout/Page/Page';
 import ProductsList from '@/components/product/ProductList/ProductsList';
 import { useRouter } from 'next/router';
