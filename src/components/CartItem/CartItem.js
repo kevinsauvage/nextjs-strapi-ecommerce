@@ -36,20 +36,20 @@ export default function CartItem({
       <td className={styles.item}>
         <ul className={styles.list}>
           <li className={styles.image}>
-            <Link
-              href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
-            >
-              <Image
-                src={variant.image.sm}
-                width="500"
-                height="750"
-                layout="responsive"
-                objectFit="cover"
-              />
-            </Link>
+            <Image
+              src={variant.image.sm}
+              alt={variant.image.alt || variant.title}
+              width={variant.image.width}
+              height={variant.image.height}
+            />
           </li>
           <li className={styles.content}>
-            <h4 className={styles.title}>{product.title}</h4>
+            <Link
+              className={styles.link}
+              href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
+            >
+              <h5 className={styles.title}>{product.title}</h5>
+            </Link>
             <p className={styles.variant}>{variant.title}</p>
           </li>
         </ul>

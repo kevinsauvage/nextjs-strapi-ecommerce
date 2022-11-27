@@ -3,12 +3,7 @@ import PhotoGallery from '@/components/product/PhotoGallery/PhotoGallery';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 
-export default function ProductPresenter({
-  product,
-  isModal,
-  carousel,
-  gallery,
-}) {
+export default function ProductPresenter({ product }) {
   const {
     isOptionSelected,
     handleSetSelectedProductOption,
@@ -19,15 +14,8 @@ export default function ProductPresenter({
   } = useProductSelection({ product });
 
   return (
-    <div className={`${styles.container}  ${isModal ? styles.modal : ''}`}>
-      <PhotoGallery
-        items={product.variants}
-        images={product.images}
-        selectedVariant={selectedVariant}
-        version="Gallery"
-        carousel={carousel}
-        gallery={gallery}
-      />
+    <div className={styles.container}>
+      <PhotoGallery images={product.images} />
       <ProductDescription
         product={product}
         isOptionOutOfStock={isOptionOutOfStock}
@@ -36,7 +24,7 @@ export default function ProductPresenter({
         handleSetSelectedProductOption={handleSetSelectedProductOption}
         selected={selectedVariant}
         isOptionSelected={isOptionSelected}
-        isModal={isModal}
+        isModal={false}
       />
     </div>
   );

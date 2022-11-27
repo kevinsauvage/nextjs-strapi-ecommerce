@@ -2,10 +2,9 @@ import SecureBanner from '@/layout/SecureBanner/SecureBanner';
 import Banner1 from '@/layout/BannerHome/Banner1';
 import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
-import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
+import Carousel from '@/components/Carousel/Carousel';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
-import Separator from '@/components/Separator/Separator';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 
 export default function Home({ bestSelling, collections, newArrival }) {
@@ -20,35 +19,25 @@ export default function Home({ bestSelling, collections, newArrival }) {
               title="Recommended Products"
               subtitle="Check out our recommended products"
               itemToShow={4}
-              horizontal
               showButtons={false}
-              showSeparator
             >
               {newArrival.products.map((prod) => (
-                <CarouselItem key={prod.id}>
-                  <ProductCardDefault product={prod} />
-                </CarouselItem>
+                <ProductCardDefault product={prod} key={prod.id} />
               ))}
             </Carousel>
           )}
-        <Separator margin="60px 0" />
         {Array.isArray(collections) && collections.length > 0 && (
           <Carousel
             title="Popular Collections"
             subtitle="Save on all best selling and exclusive styles"
             itemToShow={3}
-            horizontal
-            showSeparator
             showButtons={false}
           >
             {collections.map((collection) => (
-              <CarouselItem key={collection.id}>
-                <CollectionCard collection={collection} />
-              </CarouselItem>
+              <CollectionCard collection={collection} key={collection.id} />
             ))}
           </Carousel>
         )}
-        <Separator margin="60px 0" />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (
@@ -56,14 +45,10 @@ export default function Home({ bestSelling, collections, newArrival }) {
               title="Best Selling"
               subtitle="Check out our best selling products"
               itemToShow={4}
-              horizontal
               showButtons={false}
-              showSeparator
             >
               {bestSelling.products.map((prod) => (
-                <CarouselItem key={prod.id}>
-                  <ProductCardDefault product={prod} />
-                </CarouselItem>
+                <ProductCardDefault product={prod} key={prod.id} />
               ))}
             </Carousel>
           )}
@@ -84,6 +69,6 @@ export async function getStaticProps() {
       collections,
       newArrival,
     },
-    revalidate: 10,
+    revalidate: 60,
   };
 }

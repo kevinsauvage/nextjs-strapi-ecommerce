@@ -1,44 +1,20 @@
-$maxHeight: 600px;
-
-.container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  position: sticky;
-  top: calc((100vh - $maxHeight) / 2);
-  max-height: $maxHeight;
-  max-width: 500px;
-}
-.selectedImage {
-  position: relative;
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
-.item {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  border: none;
-}
-.selected {
-  border: 2px solid rgb(0, 0, 0);
-}
-
 .gallery {
   display: grid;
   width: 100%;
   height: 100%;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 16px;
+}
+
+.galleryImage {
+  position: relative;
+  display: block;
+  width: 100%;
+  border: none;
+  height: fit-content;
 
   .image {
-    position: relative;
-    display: block;
     width: 100%;
-    border: none;
+    height: fit-content;
   }
 }

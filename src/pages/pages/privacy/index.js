@@ -1,24 +1,22 @@
 import Page from '@/layout/Page/Page';
-import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
+import Carousel from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
-import styles from './refound.module.scss';
+import styles from './Privacy.module.scss';
 
-function RefoundPage({ bestSelling, shopInfo }) {
-  const { refundPolicy } = shopInfo || {};
+function PrivacyPage({ bestSelling, shopInfo }) {
+  const { privacyPolicy } = shopInfo || {};
   return (
     <Page title="Our privacy policy">
       <div className={styles.privacy}>
-        <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
+        <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (
-            <Carousel title="Best Selling Products" horizontal>
+            <Carousel title="Best Selling Products">
               {bestSelling.products.map((product) => (
-                <CarouselItem key={product.id}>
-                  <ProductCardDefault product={product} />
-                </CarouselItem>
+                <ProductCardDefault product={product} key={product.id} />
               ))}
             </Carousel>
           )}
@@ -27,7 +25,7 @@ function RefoundPage({ bestSelling, shopInfo }) {
   );
 }
 
-export default RefoundPage;
+export default PrivacyPage;
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);

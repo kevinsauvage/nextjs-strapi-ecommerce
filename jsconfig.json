@@ -12,7 +12,8 @@
       "@/lib/*": ["/src/lib/*"],
       "@/helpers/*": ["/src/helpers/*"],
       "@/utils/*": ["/src/utils/*"],
-      "@/layout/*": ["/src/layout/*"]
+      "@/layout/*": ["/src/layout/*"],
+      "@/modals/*": ["/src/modals/*"]
     }
   }
 }

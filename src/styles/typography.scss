@@ -9,42 +9,42 @@
   --font-weight-5: 700;
   --font-weight-6: 800;
 }
-
 /* Fluid font size variables, for browsers that support clamp */
 @supports (font-size: clamp(1rem, 1vw, 1rem)) {
   :root {
-    --font-size-sm: clamp(0.76923rem, 0vw + 0.76923rem, 0.76923rem);
-    --font-size-base: clamp(1rem, 0vw + 1rem, 1rem);
-    --font-size-md: clamp(1.3rem, 0vw + 1.3rem, 1.3rem);
-    --font-size-lg: clamp(1.69rem, 0vw + 1.69rem, 1.69rem);
-    --font-size-xl: clamp(2.197rem, 0vw + 2.197rem, 2.197rem);
-    --font-size-xxl: clamp(2.8561rem, 0vw + 2.8561rem, 2.8561rem);
-    --font-size-xxxl: clamp(3.71293rem, 0vw + 3.71293rem, 3.71293rem);
+    --font-size-sm: clamp(0.78rem, 0vw + 0.78rem, 0.78rem);
+    --font-size-base: clamp(0.94rem, 0vw + 0.94rem, 0.94rem);
+    --font-size-md: clamp(1.13rem, 0vw + 1.13rem, 1.13rem);
+    --font-size-lg: clamp(1.35rem, 0vw + 1.35rem, 1.35rem);
+    --font-size-xl: clamp(1.62rem, 0vw + 1.62rem, 1.62rem);
+    --font-size-xxl: clamp(1.94rem, 0vw + 1.94rem, 1.94rem);
+    --font-size-xxxl: clamp(2.33rem, 0vw + 2.33rem, 2.33rem);
   }
 }
 /* Fallback variables for browsers that don't support clamp */
 @supports not (font-size: clamp(1rem, 1vw, 1rem)) {
   :root {
-    --font-size-sm: 0.76923rem;
-    --font-size-base: 1rem;
-    --font-size-md: 1.3rem;
-    --font-size-lg: 1.69rem;
-    --font-size-xl: 2.197rem;
-    --font-size-xxl: 2.8561rem;
-    --font-size-xxxl: 3.71293rem;
+    --font-size-sm: 0.78rem;
+    --font-size-base: 0.94rem;
+    --font-size-md: 1.13rem;
+    --font-size-lg: 1.35rem;
+    --font-size-xl: 1.62rem;
+    --font-size-xxl: 1.94rem;
+    --font-size-xxxl: 2.33rem;
   }
   @media screen and (min-width: 1280px) {
     :root {
-      --font-size-sm: 0.76923rem;
-      --font-size-base: 1rem;
-      --font-size-md: 1.3rem;
-      --font-size-lg: 1.69rem;
-      --font-size-xl: 2.197rem;
-      --font-size-xxl: 2.8561rem;
-      --font-size-xxxl: 3.71293rem;
+      --font-size-sm: 0.78rem;
+      --font-size-base: 0.94rem;
+      --font-size-md: 1.13rem;
+      --font-size-lg: 1.35rem;
+      --font-size-xl: 1.62rem;
+      --font-size-xxl: 1.94rem;
+      --font-size-xxxl: 2.33rem;
     }
   }
 }
+
 h1,
 h2,
 h3,
@@ -52,12 +52,11 @@ h4,
 h5,
 h6 {
   color: rgb(var(--color-dark-1));
-  font-weight: 400;
+  font-weight: var(--font-weight-3);
 }
 
 h1 {
   font-size: var(--font-size-xxxl);
-  line-height: calc(var(--font-size-xxxl) - 1px);
 }
 
 h2 {
@@ -88,5 +87,5 @@ strong {
 
 a,
 p {
-  font-weight: var(--font-weight-0);
+  font-weight: var(--font-weight-2);
 }

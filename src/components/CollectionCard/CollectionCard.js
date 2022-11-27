@@ -4,7 +4,7 @@ import config from '@/config/index';
 import style from './CollectionCard.module.scss';
 
 export default function CollectionCard({ collection }) {
-  const { title, image, handle } = collection || {};
+  const { title, image, handle, description } = collection || {};
 
   return (
     <Link
@@ -15,8 +15,8 @@ export default function CollectionCard({ collection }) {
         <Image
           src={image?.src}
           alt={image?.alt || title}
-          width={500}
-          height={750}
+          width={700}
+          height={500}
           layout="responsive"
           objectFit="cover"
           objectPosition="center"
@@ -27,8 +27,11 @@ export default function CollectionCard({ collection }) {
         />
       </div>
       <div className={style.content}>
-        <h3 className={style.title}>{title}</h3>
-        <p className={style.count}>23 items</p>
+        <div className={style.header}>
+          <h4 className={style.title}>{title}</h4>
+          <p className={style.count}>23 items</p>
+        </div>
+        <p className={style.description}>{description}</p>
       </div>
     </Link>
   );

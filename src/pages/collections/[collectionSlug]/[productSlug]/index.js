@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Page from '@/layout/Page/Page';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
-import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
+import Carousel from '@/components/Carousel/Carousel';
 import {
   getProduct,
   getProductRecommendation,
@@ -18,7 +18,7 @@ function ProductPage({ product, recommendations = [] }) {
 
   return (
     <Page title={title} description={description}>
-      <ProductPresenter product={product} gallery />
+      <ProductPresenter product={product} />
       <Separator margin="60px 0" />
       {recommendations &&
         Array.isArray(recommendations) &&
@@ -27,14 +27,11 @@ function ProductPage({ product, recommendations = [] }) {
             title="Recommended Products"
             subtitle="Check out the products you may like"
             itemToShow={4}
-            horizontal
             showButtons={false}
             showSeparator
           >
             {recommendations.map((prod) => (
-              <CarouselItem key={prod.id}>
-                <ProductCardDefault product={prod} />
-              </CarouselItem>
+              <ProductCardDefault product={prod} key={prod.id} />
             ))}
           </Carousel>
         )}

@@ -5,8 +5,8 @@
 
 .top {
   padding: 60px 0;
-  display: flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 
   .title {
     margin-bottom: 50px;
@@ -16,7 +16,7 @@
 
   .navList {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-items: center;
     gap: 60px;
 
@@ -32,7 +32,7 @@
   .navItem {
     display: inline-block;
     margin-right: 30px;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-base);
   }
 }
 

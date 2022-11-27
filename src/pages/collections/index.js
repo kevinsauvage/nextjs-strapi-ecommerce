@@ -1,17 +1,17 @@
 import Page from '@/layout/Page/Page';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
-import ListDisplay from '@/layout/ListDisplay/ListDisplay';
+import style from './Collections.module.scss';
 
 function CategoryPage({ collections }) {
   return (
     <Page title="Collections">
-      <ListDisplay layout="grid">
+      <div className={style.grid}>
         {Array.isArray(collections) &&
           collections.map((collection) => (
             <CollectionCard key={collection.id} collection={collection} />
           ))}
-      </ListDisplay>
+      </div>
     </Page>
   );
 }

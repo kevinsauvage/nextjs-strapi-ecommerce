@@ -3,15 +3,18 @@ import { withRouter } from 'next/router';
 import { Children, cloneElement } from 'react';
 
 export default withRouter(
-  ({ router, children, as, href, className, activeClass, ...rest }) => (
-    <Link {...rest} href={href} as={as}>
-      {cloneElement(Children.only(children), {
-        className: `${className || ''} ${
-          router.asPath === href || router.asPath === as
-            ? activeClass || 'active'
-            : null
-        }`,
-      })}
-    </Link>
-  )
+  ({ router, children, as, url, className, activeClass, ...rest }) => {
+    const path = new URL(url)?.pathname;
+    return (
+      <Link {...rest} href={path} as={as}>
+        {cloneElement(Children.only(children), {
+          className: `${className || ''} ${
+            router.asPath === url || router.asPath === as
+              ? activeClass || 'active'
+              : null
+          }`,
+        })}
+      </Link>
+    );
+  }
 );

@@ -5,13 +5,17 @@ import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import User from '@/layout/User/User';
-import Modal from '@/layout/Modal/Modal';
-import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import { getMenuFooter, getMenuHeader } from '@/lib/shopify/shop/shopApiCall';
+import {
+  getMenuFooter,
+  getMenuHeader,
+  getShop,
+} from '@/lib/shopify/shop/shopApiCall';
 import { useEffect, useState } from 'react';
+
+import ModalProduct from '@/modals/modalProduct/ModalProduct';
 import styles from './Layout.module.scss';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 
@@ -21,13 +25,16 @@ function Layout({ children }) {
   const { loading } = useUserContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
+  const [shopInfo, setShopInfo] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
       const header = await getMenuHeader();
       const footer = await getMenuFooter();
+      const shop = await getShop();
       setMenuFooter(footer);
       setMenuHeader(header);
+      setShopInfo(shop);
     };
 
     fetchData().catch(console.error);
@@ -42,14 +49,15 @@ function Layout({ children }) {
       <div className={styles.container}>
         <Header headerMenu={menuHeader} />
         {selectedProduct ? (
-          <Modal handleClose={() => setSelectedProduct(false)}>
-            <ProductPresenter product={selectedProduct} isModal carousel />
-          </Modal>
+          <ModalProduct
+            handleClose={() => setSelectedProduct(false)}
+            product={selectedProduct}
+          />
         ) : null}
         <div className={styles.children}>{children}</div>
       </div>
       <ToastContainer position="bottom-center" newestOnTop theme="dark" />
-      <Footer footerMenu={menuFooter} />
+      <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
     </>
   );
 }

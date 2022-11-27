@@ -1,25 +1,22 @@
 import Page from '@/layout/Page/Page';
-import Carousel, { CarouselItem } from '@/components/Carousel/Carousel';
+import Carousel from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
-import styles from './Terms.module.scss';
+import styles from './shipping.module.scss';
 
-function TermsPage({ bestSelling, shopInfo }) {
-  const { termsOfService } = shopInfo || {};
-
+function ShippingPage({ bestSelling, shopInfo }) {
+  const { shippingPolicy } = shopInfo || {};
   return (
-    <Page title="Our terms and conditions">
-      <div className={styles.terms}>
-        <div dangerouslySetInnerHTML={{ __html: termsOfService?.body }} />
+    <Page title="Our privacy policy">
+      <div className={styles.privacy}>
+        <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
         {bestSelling &&
           Array.isArray(bestSelling.products) &&
           bestSelling.products.length > 0 && (
-            <Carousel title="Best Selling Products" horizontal>
+            <Carousel title="Best Selling Products">
               {bestSelling.products.map((product) => (
-                <CarouselItem key={product.id}>
-                  <ProductCardDefault product={product} />
-                </CarouselItem>
+                <ProductCardDefault product={product} key={product.id} />
               ))}
             </Carousel>
           )}
@@ -28,7 +25,7 @@ function TermsPage({ bestSelling, shopInfo }) {
   );
 }
 
-export default TermsPage;
+export default ShippingPage;
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);
@@ -39,6 +36,6 @@ export async function getStaticProps() {
       bestSelling,
       shopInfo,
     },
-    revalidate: 60,
+    revalidate: 10,
   };
 }
