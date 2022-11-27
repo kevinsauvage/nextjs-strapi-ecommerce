@@ -2,8 +2,9 @@ import Container from '@/layout/Container/Container';
 import UserButtons from '@/components/UserButtons/UserButtons';
 import Navbar from '@/components/Navbar/Navbar';
 import Logo from '@/components/Logo/Logo';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import { useRouter } from 'next/router';
 import styles from './Header.module.scss';
 
 function Header({ headerMenu }) {
@@ -15,6 +16,12 @@ function Header({ headerMenu }) {
   };
 
   const handleClose = () => setActiveItems([]);
+
+  const { asPath } = useRouter() || {};
+
+  useEffect(() => {
+    handleClose();
+  }, [asPath]);
 
   return (
     <div className={styles.container} ref={headerContainerRef}>
