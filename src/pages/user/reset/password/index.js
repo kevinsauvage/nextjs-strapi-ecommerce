@@ -39,12 +39,14 @@ function Password({ resetUrl }) {
 
 export default Password;
 
-export async function getServerSideProps({ query, res }) {
+export async function getServerSideProps({ query }) {
   if (!query.reset_url) {
-    res.setHeader('location', config.routes.login);
-    res.statusCode = 302;
-    res.end();
-    return null;
+    return {
+      redirect: {
+        destination: config.routes.login,
+        permanent: false,
+      },
+    };
   }
 
   return {
