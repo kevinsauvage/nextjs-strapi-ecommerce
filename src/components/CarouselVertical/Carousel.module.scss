@@ -1,7 +1,6 @@
 .Carousel {
   overflow: hidden;
   position: relative;
-  min-width: 90px;
   height: 100%;
 
   .inner {
@@ -28,7 +27,6 @@
 
   .CarouselItem {
     position: relative;
-    padding: 3px;
     flex: 0 0 auto;
   }
 }

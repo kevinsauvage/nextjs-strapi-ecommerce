@@ -26,7 +26,7 @@ export default function PhotoGalleryWithCarousel({
           {!loaded && <AbsoluteLoader />}
           <Image
             className={styles.image}
-            src={selected?.src || selectedVariant?.image?.src}
+            src={selected?.sm || selectedVariant?.image?.sm}
             alt={
               selected?.altText ||
               selectedVariant?.image?.altText ||
@@ -36,40 +36,31 @@ export default function PhotoGalleryWithCarousel({
             height={selected?.height || selectedVariant?.image?.height}
             quality={70}
             onLoadingComplete={() => setLoaded(true)}
-            placeholder="blur"
-            blurDataURL={
-              selected?.blurDataURL || selectedVariant?.image?.blurDataURL
-            }
           />
         </div>
       )}
-      {Array.isArray(images) && (
-        <CarouselVertical itemToShow={4} showButtons>
-          {images.map((image) => (
-            <button
-              key={image.src}
-              type="button"
-              className={
-                `${styles.item} ` +
-                `${image.src === selected?.src ? styles.selected : ''}`
-              }
-              onClick={() => setSelected(image)}
-            >
-              <Image
-                src={image?.s}
-                alt={image?.altText || selectedVariant?.title}
-                width={image?.width}
-                height={image?.height}
-                placeholder="blur"
-                blurDataURL={image?.blurDataURL}
-                quality={50}
-                loading="lazy"
-                className={styles.image}
-              />
-            </button>
-          ))}
-        </CarouselVertical>
-      )}
+      <CarouselVertical itemToShow={4} showButtons>
+        {images.map((image) => (
+          <button
+            key={image.src}
+            type="button"
+            className={
+              `${styles.item} ` +
+              `${image.src === selected?.src ? styles.selected : ''}`
+            }
+            onClick={() => setSelected(image)}
+          >
+            <Image
+              src={image?.s}
+              alt={image?.altText || selectedVariant?.title}
+              width={image?.width}
+              height={image?.height}
+              quality={40}
+              className={styles.image}
+            />
+          </button>
+        ))}
+      </CarouselVertical>
     </div>
   );
 }
