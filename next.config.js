@@ -23,9 +23,9 @@ const nextConfig = {
         @import "mixins.scss"; 
         @import "animation.scss";`,
   },
-  compiler: {
+  /*   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
-  },
+  }, */
 };
 
 module.exports = nextConfig;
