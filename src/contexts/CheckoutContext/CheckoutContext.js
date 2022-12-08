@@ -118,9 +118,9 @@ export function CheckoutProvider({ children }) {
         remove();
         dispatch({ type: actions.REMOVE_CHECKOUT });
         await handleCreateCheckout();
-        return;
+      } else {
+        handleResponse(res, null, false);
       }
-      handleResponse(res, null, false);
     }
   }, [checkoutId, checkout, handleResponse, remove, handleCreateCheckout]);
 
