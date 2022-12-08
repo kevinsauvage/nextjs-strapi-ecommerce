@@ -8,6 +8,7 @@ import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { ProductProvider } from '@/contexts/ProductContext/ProductContext';
+import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,9 +16,11 @@ function MyApp({ Component, pageProps }) {
       <GlobalProvider>
         <ProductProvider>
           <CartProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
+            <CheckoutProvider>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </CheckoutProvider>
           </CartProvider>
         </ProductProvider>
       </GlobalProvider>

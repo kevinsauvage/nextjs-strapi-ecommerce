@@ -2,17 +2,18 @@ import Page from '@/layout/Page/Page';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
-import useCartContext from '@/contexts/CartContext/useCartContext';
-import config from '@/config/index';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const { cart, removeFromCart, handleQuantityChange } = useCartContext();
+  const { checkout, handleQuantityChange, removeFromCheckout } =
+    useCheckoutContext();
 
   return (
     <Page title="Your Cart">
       <div className={styles.cart}>
-        {Array.isArray(cart?.lines) && cart?.lines?.length > 0 ? (
+        {Array.isArray(checkout?.lineItems) &&
+        checkout?.lineItems?.length > 0 ? (
           <>
             <table className={styles.table}>
               <thead className={styles.head}>
@@ -25,13 +26,15 @@ function CartPage() {
                 </tr>
               </thead>
               <tbody>
-                {cart.lines.map((item) => (
+                {checkout.lineItems.map((item) => (
                   <CartItem
                     key={item?.id}
-                    product={item.product}
-                    variant={item.merchandise}
+                    product={item.variant.product}
+                    collection={item.variant.product?.collections?.nodes?.[0]}
+                    variant={item.variant}
                     quantity={item?.quantity}
-                    removeFromCart={removeFromCart}
+                    title={item?.title}
+                    removeFromCart={removeFromCheckout}
                     lineId={item.id}
                     handleQuantityChange={handleQuantityChange}
                   />
@@ -44,8 +47,7 @@ function CartPage() {
                   </td>
                   <td className={styles.price}>
                     <span>
-                      {cart?.cost?.subtotalAmount?.amount}{' '}
-                      {cart?.cost?.subtotalAmount?.currencyCode}
+                      {checkout?.totalPrice} {checkout?.currencyCode}
                     </span>
                   </td>
                 </tr>
@@ -54,8 +56,9 @@ function CartPage() {
             <div className={styles.btns}>
               <CheckoutBtn
                 extraClass={styles.btn}
-                noUserRedirectURL={config.routes.login}
-                items={cart}
+                amount={checkout?.totalPrice}
+                currencyCode={checkout?.currencyCode}
+                url={checkout?.webUrl}
               />
             </div>
           </>

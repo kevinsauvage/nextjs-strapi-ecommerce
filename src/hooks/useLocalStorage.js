@@ -10,7 +10,7 @@ function useLocalStorage(key) {
     // Get from local storage by key
     const itemStr = window.localStorage.getItem(key);
 
-    if (itemStr) {
+    if (itemStr && itemStr !== 'undefined') {
       const item = JSON.parse(itemStr);
 
       const now = new Date();
@@ -48,7 +48,12 @@ function useLocalStorage(key) {
       window.localStorage.setItem(key, JSON.stringify(value));
     }
   };
-  return [storedValue, setValue];
+
+  const removeValue = () => {
+    setStoredValue(undefined);
+    localStorage.removeItem(key);
+  };
+  return [storedValue, setValue, removeValue];
 }
 
 export default useLocalStorage;

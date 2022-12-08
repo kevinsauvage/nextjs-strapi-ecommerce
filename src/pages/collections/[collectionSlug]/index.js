@@ -1,5 +1,5 @@
 import Page from '@/layout/Page/Page';
-import ProductsList from '@/components/product/ProductList/ProductsList';
+import ProductsList from '@/components/scopes/product/ProductList/ProductsList';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useRouterFilter from '@/hooks/useRouterFilter';
@@ -8,9 +8,9 @@ import {
   filterCollectionBackward,
 } from '@/lib/shopify/collection/collectionApiCall';
 import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
-import Sort from '@/components/product/Sort/Sort';
+import Sort from '@/components/scopes/product/Sort/Sort';
 import Filters from '@/layout/Filters/Filters';
-import Pagination from '@/components/product/Pagination/Pagination';
+import Pagination from '@/components/scopes/product/Pagination/Pagination';
 import { getFiltersFromParams } from '@/lib/shopify/helpers';
 import style from './CollectionSlug.module.scss';
 
@@ -105,9 +105,9 @@ function CollectionSlugPage({ title, data }) {
 
   return (
     <Page title={`${title}`}>
-      <div>
-        <h1>{collection?.title}</h1>
-        <p>{collection?.description}</p>
+      <div className={style.banner}>
+        <h1 className={style.title}>{collection?.title}</h1>
+        <p className={style.description}>{collection?.description}</p>
       </div>
       <div className={style.CollectionSlugPage}>
         <aside>

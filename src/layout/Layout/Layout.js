@@ -6,7 +6,7 @@ import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import User from '@/layout/User/User';
 import useProductContext from '@/contexts/ProductContext/useProductContext';
-import useCartContext from '@/contexts/CartContext/useCartContext';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import {
   getMenuFooter,
@@ -21,7 +21,7 @@ import PageLoader from '../Loader/PageLoader/PageLoader';
 
 function Layout({ children }) {
   const { selectedProduct, setSelectedProduct } = useProductContext();
-  const { isCartLoading } = useCartContext();
+  const { isCheckoutLoading } = useCheckoutContext();
   const { loading } = useUserContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
@@ -45,7 +45,7 @@ function Layout({ children }) {
       <SearchBar />
       <Cart />
       <User />
-      {(isCartLoading || loading) && <PageLoader />}
+      {(isCheckoutLoading || loading) && <PageLoader />}
       <div className={styles.container}>
         <Header headerMenu={menuHeader} />
         {selectedProduct ? (

@@ -1,17 +1,10 @@
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { useRouter } from 'next/router';
 import styles from './Carousel.module.scss';
 import Indicators from './Indicators/Indicators';
 
-function Carousel({
-  children,
-  title,
-  subtitle,
-  itemToShow = 5,
-  showButtons = true,
-}) {
+function Carousel({ children, title, subtitle, itemToShow = 5 }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -81,16 +74,6 @@ function Carousel({
       ) : null}
       {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
       <div {...handlers} className={`${styles.Carousel}`}>
-        {showButtons && (
-          <button
-            className={`${styles.button}`}
-            type="button"
-            disabled={translatePosition === 0}
-            onClick={() => handleChangeIndex(index - 1)}
-          >
-            <IoIosArrowBack />
-          </button>
-        )}
         <div
           ref={carouselRef}
           className={styles.inner}
@@ -107,16 +90,6 @@ function Carousel({
             </div>
           ))}
         </div>
-        {showButtons && (
-          <button
-            className={`${styles.next} ${styles.button}`}
-            type="button"
-            disabled={translatePosition === maxTranslatePosition}
-            onClick={() => handleChangeIndex(index + 1)}
-          >
-            <IoIosArrowForward />
-          </button>
-        )}
       </div>
     </div>
   );

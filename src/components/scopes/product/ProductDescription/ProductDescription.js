@@ -1,6 +1,6 @@
 import Button from '@/components/Button/Button';
 import Link from 'next/link';
-import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
+import QuantityUpdater from '@/components/scopes/product/QuantityUpdater/QuantityUpdater';
 import Separator from '@/components/Separator/Separator';
 import config from '@/config/index';
 import Price from '../Price/Price';

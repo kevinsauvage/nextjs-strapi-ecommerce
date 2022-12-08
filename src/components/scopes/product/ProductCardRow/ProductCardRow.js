@@ -2,7 +2,7 @@ import Image from 'next/legacy/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import useProductSelection from '@/hooks/useProductSelection';
-import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
+import QuantityUpdater from '@/components/scopes/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
 import config from '@/config/index';
 import Price from '../Price/Price';

@@ -3,7 +3,7 @@ import Banner1 from '@/layout/BannerHome/Banner1';
 import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import Carousel from '@/components/Carousel/Carousel';
-import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
 import CollectionCard from '@/components/CollectionCard/CollectionCard';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 
@@ -19,7 +19,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
               title="Recommended Products"
               subtitle="Check out our recommended products"
               itemToShow={4}
-              showButtons={false}
             >
               {newArrival.products.map((prod) => (
                 <ProductCardDefault product={prod} key={prod.id} />
@@ -31,7 +30,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
             title="Popular Collections"
             subtitle="Save on all best selling and exclusive styles"
             itemToShow={3}
-            showButtons={false}
           >
             {collections.map((collection) => (
               <CollectionCard collection={collection} key={collection.id} />
@@ -45,7 +43,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
               title="Best Selling"
               subtitle="Check out our best selling products"
               itemToShow={4}
-              showButtons={false}
             >
               {bestSelling.products.map((prod) => (
                 <ProductCardDefault product={prod} key={prod.id} />

@@ -1,16 +1,18 @@
 import Image from 'next/legacy/image';
-import QuantityUpdater from '@/components/product/QuantityUpdater/QuantityUpdater';
+import QuantityUpdater from '@/components/scopes/product/QuantityUpdater/QuantityUpdater';
 import Link from 'next/link';
-import SelectedOptions from '@/components/product/SelectedOptions/SelectedOptions';
+import SelectedOptions from '@/components/scopes/product/SelectedOptions/SelectedOptions';
 import config from '@/config/index';
 import Price from '../Price/Price';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({
+  collection,
   product,
   variant,
   quantity,
   onQuantityChange,
+  title,
   remove,
 }) {
   const {
@@ -37,9 +39,9 @@ export default function ProductCheckoutCard({
       </div>
       <div className={styles.body}>
         <Link
-          href={`${config.routes.collection}/${product.collections?.[0].handle}/${product.handle}`}
+          href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
         >
-          <h6 className={styles.title}>{product?.title}</h6>
+          <h6 className={styles.title}>{title}</h6>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
         <SelectedOptions options={selectedOptions} />

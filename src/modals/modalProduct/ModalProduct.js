@@ -1,7 +1,7 @@
-import PhotoGalleryWithCarousel from '@/components/product/PhotoGalleryWithCarousel/PhotoGalleryWithCarousel';
+import PhotoGalleryWithCarousel from '@/components/scopes/product/PhotoGalleryWithCarousel/PhotoGalleryWithCarousel';
 import useProductSelection from '@/hooks/useProductSelection';
 import Modal from '@/layout/Modal/Modal';
-import ProductDescription from '@/components/product/ProductDescription/ProductDescription';
+import ProductDescription from '@/components/scopes/product/ProductDescription/ProductDescription';
 import style from './modalProduct.module.scss';
 
 export default function ModalProduct({ handleClose, product }) {

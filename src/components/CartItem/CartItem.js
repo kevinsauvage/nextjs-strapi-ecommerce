@@ -14,7 +14,9 @@ export default function CartItem({
   quantity,
   handleQuantityChange,
   removeFromCart,
+  collection,
   lineId,
+  title,
 }) {
   const [newQuantity, setNewQuantity] = useState(quantity);
 
@@ -46,9 +48,9 @@ export default function CartItem({
           <li className={styles.content}>
             <Link
               className={styles.link}
-              href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${product?.handle}`}
+              href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
             >
-              <h5 className={styles.title}>{product.title}</h5>
+              <h5 className={styles.title}>{title}</h5>
             </Link>
             <p className={styles.variant}>{variant.title}</p>
           </li>

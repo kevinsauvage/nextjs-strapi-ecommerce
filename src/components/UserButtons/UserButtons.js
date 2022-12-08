@@ -2,14 +2,14 @@ import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import useCartContext from '@/contexts/CartContext/useCartContext';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
-  const { toggleSearch, toggleCart, toggleUser } = useGlobalContext();
+  const { toggleSearch, toggleCheckout, toggleUser } = useGlobalContext();
   const { user } = useUserContext();
-  const { cart } = useCartContext();
+  const { checkout } = useCheckoutContext();
 
   const router = useRouter();
 
@@ -35,12 +35,12 @@ export default function UserButtons() {
         <>
           <RiShoppingCart2Line />
           <div className={`${styles.totalItems}`}>
-            ({cart?.lines?.length || '0'} items)
+            ({checkout?.lines?.length || '0'} items)
           </div>
         </>
       ),
       id: 4,
-      onClick: toggleCart,
+      onClick: toggleCheckout,
     },
   ];
 

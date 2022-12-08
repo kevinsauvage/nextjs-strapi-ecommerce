@@ -2,6 +2,7 @@ const env = process.env.NODE_ENV;
 
 const config = {
   baseUrl: 'https://localhost:3000',
+  paymentUrl: 'https://checkout.ecomtestshopi.xyz',
   name: 'Site Name',
   routes: {
     home: '/',

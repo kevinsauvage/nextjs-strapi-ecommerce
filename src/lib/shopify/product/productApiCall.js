@@ -2,14 +2,6 @@ import shopifyStorefrontCall from '..';
 import { cleanImage, cleanProducts, cleanVariants } from '../helpers';
 import productQueries from './productQueries';
 
-export const getProductTags = async () => {
-  const res = await shopifyStorefrontCall(productQueries.productTags);
-  if (res) {
-    return res?.data?.productTags.edges;
-  }
-  return [];
-};
-
 export const getProductRecommendation = async (productId) => {
   const res = await shopifyStorefrontCall(
     productQueries.queryProductRecommendations,

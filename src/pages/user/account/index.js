@@ -1,9 +1,9 @@
 import Page from '@/layout/Page/Page';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import AccountInfo from '@/components/account/AccountInfo/AccountInfo';
-import DefaultAddress from '@/components/account/DefaultAddress/DefaultAddress';
-import Orders from '@/components/account/Orders/Orders';
-import Card from '@/components/account/Card/Card';
+import AccountInfo from '@/components/scopes/account/AccountInfo/AccountInfo';
+import DefaultAddress from '@/components/scopes/account/DefaultAddress/DefaultAddress';
+import Orders from '@/components/scopes/account/Orders/Orders';
+import Card from '@/components/scopes/account/Card/Card';
 import Button from '@/components/Button/Button';
 import styles from './Profile.module.scss';
 
@@ -22,6 +22,7 @@ function Profile() {
             Account Activity And Update Your Account Information. Just Select A
             Link Below.
           </p>
+          <Button tertiary text="Log Out" onClick={logout} />
         </div>
         <main className={styles.main}>
           <div className={styles.row}>
@@ -37,7 +38,6 @@ function Profile() {
           </Card>
         </main>
       </div>
-      <Button tertiary text="Log Out" onClick={logout} />
     </Page>
   );
 }

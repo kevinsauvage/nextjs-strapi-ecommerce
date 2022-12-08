@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import Page from '@/layout/Page/Page';
-import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
 import {
   getProduct,
   getProductRecommendation,
   getProducts,
 } from '@/lib/shopify/product/productApiCall';
-import ProductPresenter from '@/components/product/ProductPresenter/ProductPresenter';
+import ProductPresenter from '@/components/scopes/product/ProductPresenter/ProductPresenter';
 import Separator from '@/components/Separator/Separator';
 import PageLoader from '@/layout/Loader/PageLoader/PageLoader';
 
@@ -20,21 +20,17 @@ function ProductPage({ product, recommendations = [] }) {
     <Page title={title} description={description}>
       <ProductPresenter product={product} />
       <Separator margin="60px 0" />
-      {recommendations &&
-        Array.isArray(recommendations) &&
-        recommendations.length > 0 && (
-          <Carousel
-            title="Recommended Products"
-            subtitle="Check out the products you may like"
-            itemToShow={4}
-            showButtons={false}
-            showSeparator
-          >
-            {recommendations.map((prod) => (
-              <ProductCardDefault product={prod} key={prod.id} />
-            ))}
-          </Carousel>
-        )}
+      {Array.isArray(recommendations) && recommendations.length > 0 && (
+        <Carousel
+          title="Recommended Products"
+          subtitle="Check out the products you may like"
+          itemToShow={4}
+        >
+          {recommendations.map((prod) => (
+            <ProductCardDefault product={prod} key={prod.id} />
+          ))}
+        </Carousel>
+      )}
     </Page>
   );
 }

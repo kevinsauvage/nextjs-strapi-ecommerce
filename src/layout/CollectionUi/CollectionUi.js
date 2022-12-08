@@ -1,4 +1,4 @@
-import ProductCardDefault from '@/components/product/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
 import Button from '@/components/Button/Button';
 import Link from 'next/link';
 import styles from './collectionUi.module.scss';

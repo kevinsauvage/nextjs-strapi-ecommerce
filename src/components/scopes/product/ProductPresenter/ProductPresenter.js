@@ -1,5 +1,5 @@
 import useProductSelection from '@/hooks/useProductSelection';
-import PhotoGallery from '@/components/product/PhotoGallery/PhotoGallery';
+import PhotoGallery from '@/components/scopes/product/PhotoGallery/PhotoGallery';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 
@@ -15,7 +15,7 @@ export default function ProductPresenter({ product }) {
 
   return (
     <div className={styles.container}>
-      <PhotoGallery images={product.images} />
+      <PhotoGallery images={product.images} alt={product.title} />
       <ProductDescription
         product={product}
         isOptionOutOfStock={isOptionOutOfStock}

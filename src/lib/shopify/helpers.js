@@ -84,3 +84,35 @@ export const parseCart = (cart) =>
         })),
       }
     : cart;
+
+export const parseCheckout = (checkout) =>
+  Array.isArray(checkout?.lines?.edges)
+    ? {
+        ...checkout,
+        lines: checkout.lines.edges.map((line) => ({
+          ...line.node,
+          product: getValueByKey('product', line.node.attributes),
+        })),
+      }
+    : checkout;
+
+export const cleanGraphQLResponse = function (input) {
+  if (!input) return null;
+  const output = {};
+  const isObject = (obj) =>
+    obj !== null && typeof obj === 'object' && !Array.isArray(obj);
+
+  Object.keys(input).forEach((key) => {
+    if (input[key] && input[key].edges) {
+      output[key] = input[key].edges.map((edge) =>
+        cleanGraphQLResponse(edge.node)
+      );
+    } else if (isObject(input[key])) {
+      output[key] = cleanGraphQLResponse(input[key]);
+    } else if (key !== '__typename') {
+      output[key] = input[key];
+    }
+  });
+
+  return output;
+};

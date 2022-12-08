@@ -10,6 +10,21 @@ const queryRegister = `mutation ($input: CustomerCreateInput!) {
         phone
         defaultAddress {
           id
+          address1
+          address2
+          city
+          company
+          country
+          countryCodeV2
+          firstName
+          formatted
+          formattedArea
+          lastName
+          name
+          phone
+          province
+          provinceCode
+          zip
         }
         orders(first: 10) {
           edges {
@@ -52,6 +67,21 @@ const queryResetPassword = `mutation customerResetByUrl($password: String!, $res
           phone
           defaultAddress {
             id
+            address1
+            address2
+            city
+            company
+            country
+            countryCodeV2
+            firstName
+            formatted
+            formattedArea
+            lastName
+            name
+            phone
+            province
+            provinceCode
+            zip
           }
           orders(first: 10) {
             edges {
@@ -78,6 +108,21 @@ const queryCustomer = `query customer ($token: String!) {
       phone
       defaultAddress {
         id
+        address1
+        address2
+        city
+        company
+        country
+        countryCodeV2
+        firstName
+        formatted
+        formattedArea
+        lastName
+        name
+        phone
+        province
+        provinceCode
+        zip
       }
       orders(first: 10) {
         edges {

@@ -1,4 +1,4 @@
-import Button from '../../Button/Button';
+import Button from '@/components/Button/Button';
 import style from './Pagination.module.scss';
 
 export default function Pagination({ handleNext, handlePrev, pageInfo }) {

@@ -2,24 +2,24 @@ import { useRouter } from 'next/router';
 import Button from '@/components/Button/Button';
 import Slide from '@/layout/Slide/Slide';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import ProductCheckoutCard from '@/components/product/ProductCheckoutCard/ProductCheckoutCard';
+import ProductCheckoutCard from '@/components/scopes/product/ProductCheckoutCard/ProductCheckoutCard';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
-import useCartContext from '@/contexts/CartContext/useCartContext';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Cart.module.scss';
 
 function CartFooter() {
   const router = useRouter();
-  const { cart } = useCartContext();
+  const { checkout } = useCheckoutContext();
 
   return (
-    cart?.lines.length && (
+    checkout?.lineItems.length && (
       <footer className={styles.footer}>
         <div className={styles.subtotal}>
           <p className={styles.subtotalTitle}>Subtotal</p>
           <p
             className={styles.amount}
-          >{`${cart?.cost?.subtotalAmount?.currencyCode}${cart?.cost?.subtotalAmount?.amount}`}</p>
+          >{`${checkout?.currencyCode} ${checkout?.totalPrice}`}</p>
         </div>
         <Button
           text="View cart"
@@ -27,26 +27,34 @@ function CartFooter() {
           tertiary
           onClick={() => router.push('/cart')}
         />
-        <CheckoutBtn extraClass={styles.btn} />
+        <CheckoutBtn
+          extraClass={styles.btn}
+          amount={checkout?.totalPrice}
+          currencyCode={checkout?.currencyCode}
+          url={checkout?.webUrl}
+        />
       </footer>
     )
   );
 }
 
 function CartContent() {
-  const { cart, handleQuantityChange, removeFromCart } = useCartContext();
+  const { checkout, handleQuantityChange, removeFromCheckout } =
+    useCheckoutContext();
 
   return (
     <div className={styles.cart}>
       <ul className={styles.list}>
-        {cart.lines.map((item) => (
+        {checkout.lineItems.map((item) => (
           <ProductCheckoutCard
             key={item?.id}
-            product={item.product}
-            variant={item.merchandise}
+            product={item.variant.product}
+            collection={item.variant.product?.collections?.nodes?.[0]}
+            variant={item.variant}
             quantity={item.quantity}
+            title={item.title}
             lineId={item.id}
-            remove={() => removeFromCart(item.id)}
+            remove={() => removeFromCheckout(item.id)}
             onQuantityChange={(num) => handleQuantityChange(num, item.id)}
           />
         ))}
@@ -56,24 +64,25 @@ function CartContent() {
 }
 
 export default function Cart() {
-  const { cartOpen, resetToggle } = useGlobalContext();
-  const { cart } = useCartContext();
+  const { checkoutOpen, resetToggle } = useGlobalContext();
+  const { checkout } = useCheckoutContext();
 
   return (
     <Slide
-      isOpen={cartOpen}
+      isOpen={checkoutOpen}
       handleClose={resetToggle}
       title="Cart"
-      headerRight={cart?.length}
+      headerRight={checkout?.length}
       content={
-        Array.isArray(cart?.lines) && cart?.lines.length > 0 ? (
+        Array.isArray(checkout?.lineItems) && checkout?.lineItems.length > 0 ? (
           <CartContent />
         ) : (
           <EmptyCart />
         )
       }
       footer={
-        Array.isArray(cart?.lines) && cart?.lines.length && <CartFooter />
+        Array.isArray(checkout?.lineItems) &&
+        checkout?.lineItems.length && <CartFooter />
       }
     />
   );
