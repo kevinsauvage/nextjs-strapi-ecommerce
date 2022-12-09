@@ -1,9 +1,8 @@
 export const initialState = {
-  searchOpen: false,
   checkoutOpen: false,
   userOpen: false,
-  isHeaderActive: false,
-  modalSelectedProduct: undefined,
+  searchOpen: false,
+  selectedProduct: undefined,
 };
 
 export const actions = {
@@ -11,7 +10,7 @@ export const actions = {
   TOGGLE_USER: 'TOGGLE_USER',
   TOGGLE_CHECKOUT: 'TOGGLE_CHECKOUT',
   RESET_TOGGLE_STATES: 'RESET_TOGGLE_STATES',
-  MODAL_SELECTED_PRODUCT: 'MODAL_SELECTED_PRODUCT',
+  SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
 };
 
 export const GlobalReducer = (state = initialState, action) => {
@@ -25,18 +24,11 @@ export const GlobalReducer = (state = initialState, action) => {
     case actions.TOGGLE_USER: {
       return { ...state, userOpen: !state.userOpen };
     }
-    case actions.MODAL_SELECTED_PRODUCT: {
-      return { ...state, modalSelectedProduct: action.payload };
+    case actions.SET_SELECTED_PRODUCT: {
+      return { ...state, selectedProduct: action.payload };
     }
     case actions.RESET_TOGGLE_STATES: {
-      return {
-        ...state,
-        checkoutOpen: false,
-        userOpen: false,
-        searchOpen: false,
-        loginOpen: false,
-        modalSelectedProduct: false,
-      };
+      return initialState;
     }
     default:
       return state;

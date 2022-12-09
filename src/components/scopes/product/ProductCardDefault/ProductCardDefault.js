@@ -1,15 +1,15 @@
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
-import useProductContext from '@/contexts/ProductContext/useProductContext';
 import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
-  const { setSelectedProduct } = useProductContext() || {};
+  const { setSelectedProduct } = useGlobalContext() || {};
 
   return (
     <li className={`${styles.productCardDefault}`}>

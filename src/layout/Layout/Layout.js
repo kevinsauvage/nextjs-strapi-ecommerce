@@ -5,7 +5,6 @@ import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import User from '@/layout/User/User';
-import useProductContext from '@/contexts/ProductContext/useProductContext';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import {
@@ -16,11 +15,12 @@ import {
 import { useEffect, useState } from 'react';
 
 import ModalProduct from '@/modals/modalProduct/ModalProduct';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Layout.module.scss';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 
 function Layout({ children }) {
-  const { selectedProduct, setSelectedProduct } = useProductContext();
+  const { selectedProduct, setSelectedProduct } = useGlobalContext();
   const { isCheckoutLoading } = useCheckoutContext();
   const { loading } = useUserContext();
   const [menuHeader, setMenuHeader] = useState();

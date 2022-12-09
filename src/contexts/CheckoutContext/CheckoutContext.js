@@ -63,8 +63,7 @@ export function CheckoutProvider({ children }) {
       }
       if (userFeedback?.error) toast.error(userFeedback.error);
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [toggleLoading]
+    [toggleLoading, toggleCheckout]
   );
 
   const addToCheckout = useCallback(
@@ -89,7 +88,6 @@ export function CheckoutProvider({ children }) {
     async (lineItemId) => {
       toggleLoading(true);
       const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-
       const res = await removeLinesFromCheckout(checkoutId, [lineItemId]);
       handleResponse(res, userFeedbacks.removeLinesFromCheckout);
     },
@@ -100,7 +98,6 @@ export function CheckoutProvider({ children }) {
     async (quantity, id) => {
       toggleLoading(true);
       const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-
       const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
       const res = await updateLines(checkoutId, lineItemsToUpdate);
       handleResponse(res, userFeedbacks.updateLines);

@@ -13,24 +13,32 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
-  const { checkoutOpen, searchOpen, userOpen, modalSelectedProduct } = states;
+  const { checkoutOpen, searchOpen, userOpen, selectedProduct } = states;
 
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
   }, []);
 
   useEffect(() => {
-    if (checkoutOpen || searchOpen || userOpen) {
+    resetToggle();
+  }, [router.asPath, resetToggle]);
+
+  useEffect(() => {
+    if (checkoutOpen || searchOpen || userOpen || selectedProduct) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
-  }, [checkoutOpen, searchOpen, userOpen]);
+  }, [checkoutOpen, searchOpen, userOpen, selectedProduct]);
+
+  useEffect(() => {
+    console.log('%c global context render', 'color: blue');
+  });
 
   const values = useMemo(
     () => ({
       searchOpen,
       checkoutOpen,
       userOpen,
-      modalSelectedProduct,
+      selectedProduct,
 
       toggleSearch: () => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -47,18 +55,16 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.TOGGLE_USER });
       },
 
-      setCollections: (collections) => {
-        dispatch({ type: actions.SET_COLLECTIONS, payload: collections });
+      setSelectedProduct: (product) => {
+        console.log(product);
+        dispatch({ type: actions.RESET_TOGGLE_STATES });
+        dispatch({ type: actions.SET_SELECTED_PRODUCT, payload: product });
       },
 
       resetToggle,
     }),
-    [checkoutOpen, searchOpen, userOpen, modalSelectedProduct, resetToggle]
+    [checkoutOpen, searchOpen, userOpen, selectedProduct, resetToggle]
   );
-
-  useEffect(() => {
-    resetToggle();
-  }, [router.asPath, resetToggle]);
 
   return (
     <GlobalStoreContext.Provider value={values}>
