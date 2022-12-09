@@ -16,7 +16,11 @@ export const associateCustomerToCheckout = async (
       customerAccessToken,
     }
   );
-  return res?.data?.checkoutCustomerAssociateV2;
+  return {
+    checkout: cleanGraphQLResponse(
+      res?.data?.checkoutCustomerAssociateV2?.checkout
+    ),
+  };
 };
 
 export const createCheckout = async (input = {}) => {
@@ -26,7 +30,9 @@ export const createCheckout = async (input = {}) => {
     input,
   });
 
-  return cleanGraphQLResponse(res?.data?.checkoutCreate?.checkout);
+  return {
+    checkout: cleanGraphQLResponse(res?.data?.checkoutCreate?.checkout),
+  };
 };
 
 export const getCheckoutById = async (id) => {

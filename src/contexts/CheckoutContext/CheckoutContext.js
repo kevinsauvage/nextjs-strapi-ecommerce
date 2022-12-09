@@ -5,7 +5,6 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import { toast } from 'react-toastify';
 
 import {
@@ -16,11 +15,14 @@ import {
   addLinesToCheckout,
   removeLinesFromCheckout,
 } from '@/lib/shopify/checkout/checkoutApiCall';
+import localStorageHelper from '@/helpers/localStorageHelper';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 import useUserContext from '../UserContext/useUserContext';
 
 export const CheckoutContext = createContext();
+
+const storageCheckoutKey = 'checkoutId';
 
 const userFeedbacks = {
   removeLinesFromCheckout: {
@@ -41,10 +43,9 @@ const userFeedbacks = {
 
 export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
-  const [checkoutId, setCheckoutId, remove] = useLocalStorage('checkoutId', '');
-  const { token } = useUserContext();
-  const { toggleCheckout } = useGlobalContext();
   const { checkout, isCheckoutLoading } = states;
+  const { toggleCheckout } = useGlobalContext();
+  const { token } = useUserContext();
 
   const toggleLoading = useCallback((state) => {
     dispatch({ type: 'IS_CHECKOUT_LOADING', payload: state });
@@ -53,20 +54,23 @@ export function CheckoutProvider({ children }) {
   const handleResponse = useCallback(
     (res, userFeedback, toggle = true) => {
       toggleLoading(false);
-      if (!res?.checkout && userFeedback?.error.length) {
-        return toast.error(`${userFeedback?.error}`);
+
+      if (res?.checkout?.id) {
+        if (toggle) toggleCheckout();
+        dispatch({ type: actions.ADD_CHECKOUT, payload: res.checkout });
+        if (userFeedback?.success) toast.success(userFeedback.success);
+        return;
       }
-
-      if (userFeedback?.success) toast.success(userFeedback.success);
-
-      if (toggle) toggleCheckout();
-      return dispatch({ type: actions.ADD_CHECKOUT, payload: res.checkout });
+      if (userFeedback?.error) toast.error(userFeedback.error);
     },
-    [toggleLoading, toggleCheckout]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [toggleLoading]
   );
 
   const addToCheckout = useCallback(
     async (variantId, quantity) => {
+      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
+
       if (!checkoutId) return;
       const lineItemsToAdd = [
         {
@@ -78,65 +82,75 @@ export function CheckoutProvider({ children }) {
       const res = await addLinesToCheckout(checkoutId, lineItemsToAdd);
       handleResponse(res, userFeedbacks.addLinesToCheckout);
     },
-    [checkoutId, handleResponse, toggleLoading]
+    [handleResponse, toggleLoading]
   );
 
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
       toggleLoading(true);
+      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
+
       const res = await removeLinesFromCheckout(checkoutId, [lineItemId]);
       handleResponse(res, userFeedbacks.removeLinesFromCheckout);
     },
-    [toggleLoading, handleResponse, checkoutId]
+    [toggleLoading, handleResponse]
   );
 
   const handleQuantityChange = useCallback(
     async (quantity, id) => {
       toggleLoading(true);
+      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
+
       const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
       const res = await updateLines(checkoutId, lineItemsToUpdate);
       handleResponse(res, userFeedbacks.updateLines);
     },
-    [toggleLoading, checkoutId, handleResponse]
+    [toggleLoading, handleResponse]
   );
 
   const handleCreateCheckout = useCallback(async () => {
-    if (!window.localStorage.getItem('checkoutId') && !checkout) {
-      const res = await createCheckout({});
-      if (res?.id) {
-        handleResponse(res, null, false);
-        setCheckoutId(res.id);
-      }
+    const res = await createCheckout({});
+    if (!res) return;
+    if (res?.checkout?.id) {
+      handleResponse(res, null, false);
+      localStorageHelper.setValue(storageCheckoutKey, res.checkout.id);
     }
-  }, [checkout, handleResponse, setCheckoutId]);
+  }, [handleResponse]);
 
-  const handleGetCheckout = useCallback(async () => {
-    console.log('handlegetchecout ', 'id:', checkoutId, 'checkout: ', checkout);
-    if (checkoutId && !checkout) {
-      const res = await getCheckoutById(checkoutId);
-      if (res?.checkout?.orderStatusUrl) {
-        remove();
-        dispatch({ type: actions.REMOVE_CHECKOUT });
-        await handleCreateCheckout();
-      } else {
-        handleResponse(res, null, false);
-      }
-    }
-  }, [checkoutId, checkout, handleResponse, remove, handleCreateCheckout]);
+  const handleGetCheckout = useCallback(
+    async (id) => {
+      const res = await getCheckoutById(id);
+      if (!res) return;
+      if (res?.checkout?.orderStatusUrl) handleCreateCheckout();
+      else handleResponse(res, null, false);
+    },
+    [handleResponse, handleCreateCheckout]
+  );
 
-  useEffect(() => {
-    handleGetCheckout();
-  }, [handleGetCheckout]);
-
-  useEffect(() => {
+  const handleAssociateCustomer = useCallback(async () => {
+    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
     if (token?.value && checkoutId && !checkout?.email) {
-      associateCustomerToCheckout(checkoutId, token.value);
+      const res = await associateCustomerToCheckout(checkoutId, token.value);
+      handleResponse(res, null, false);
     }
-  }, [token, checkoutId, checkout?.email]);
+  }, [checkout?.email, handleResponse, token?.value]);
+
+  const handleRender = useCallback(async () => {
+    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
+    if (checkoutId && !checkout) {
+      await handleGetCheckout(checkoutId);
+    } else if (!checkoutId && !checkout) {
+      await handleCreateCheckout();
+    }
+  }, [checkout, handleCreateCheckout, handleGetCheckout]);
 
   useEffect(() => {
-    handleCreateCheckout();
-  }, [handleCreateCheckout]);
+    handleRender();
+  }, [handleRender]);
+
+  useEffect(() => {
+    handleAssociateCustomer();
+  }, [handleAssociateCustomer]);
 
   const values = useMemo(
     () => ({

@@ -17,6 +17,7 @@ function useLocalStorage(key) {
 
       if (item?.expiryTime && now.getTime() > item.expiryTime * 1000) {
         localStorage.removeItem(key);
+        setStoredValue(undefined);
       } else {
         setStoredValue(item);
       }
@@ -49,11 +50,28 @@ function useLocalStorage(key) {
     }
   };
 
+  const getValue = (getKey) => {
+    let returnValue = '';
+    const itemStr = window.localStorage.getItem(getKey);
+
+    if (itemStr && itemStr !== 'undefined') {
+      const item = JSON.parse(itemStr);
+
+      const now = new Date();
+
+      if (item?.expiryTime && now.getTime() > item.expiryTime * 1000) {
+        localStorage.removeItem(getKey);
+        returnValue = null;
+      }
+      returnValue = item;
+    }
+    return returnValue;
+  };
   const removeValue = () => {
     setStoredValue(undefined);
     localStorage.removeItem(key);
   };
-  return [storedValue, setValue, removeValue];
+  return [storedValue, setValue, getValue, removeValue];
 }
 
 export default useLocalStorage;
