@@ -196,7 +196,7 @@ export function UserProvider({ children }) {
       ) {
         handleRefreshToken(token.value);
       }
-    }
+    } else nextApiCall.auth.logout();
   }, [handleRefreshToken, logout, token]);
 
   useEffect(() => {

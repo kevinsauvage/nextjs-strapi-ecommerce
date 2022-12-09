@@ -29,10 +29,6 @@ export function GlobalProvider({ children }) {
     } else document.body.style.overflow = 'visible';
   }, [checkoutOpen, searchOpen, userOpen, selectedProduct]);
 
-  useEffect(() => {
-    console.log('%c global context render', 'color: blue');
-  });
-
   const values = useMemo(
     () => ({
       searchOpen,

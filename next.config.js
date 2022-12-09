@@ -2,7 +2,7 @@
 const path = require('path');
 
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   async redirects() {
     return [
       {
