@@ -1,6 +1,7 @@
 import { parseCookies } from 'nookies';
 import { loginCustomer, getUser } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
+import { getIpFromRequest } from '@/helpers/index';
 
 const login = async (req, res) => {
   try {
@@ -10,13 +11,15 @@ const login = async (req, res) => {
 
     const parsedCookies = parseCookies({ req });
     const delegateToken = parsedCookies?.shopifyDelegateToken;
+    const ip = getIpFromRequest(req);
 
-    const data = await loginCustomer({ email, password }, delegateToken);
+    const data = await loginCustomer({ email, password }, delegateToken, ip);
     const { customerAccessToken, customerUserErrors } = data || {};
 
     if (customerAccessToken) {
       const { accessToken } = customerAccessToken || {};
-      const { customer } = (await getUser(accessToken, delegateToken)) || {};
+      const { customer } =
+        (await getUser(accessToken, delegateToken, ip)) || {};
 
       handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 

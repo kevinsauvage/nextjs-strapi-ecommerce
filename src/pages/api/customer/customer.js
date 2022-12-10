@@ -1,11 +1,14 @@
 import { parseCookies, setCookie } from 'nookies';
 import { getUser, refreshToken } from '@/lib/shopify/customer/customerApiCall';
+import { getIpFromRequest } from '@/helpers/index';
 
 const expiresIn = 24 * 60 * 60;
 const refreshDelay = 2 * 60 * 60;
 
 export default async function handler(req, res) {
   const { method } = req;
+
+  const ip = getIpFromRequest(req);
 
   if (method === 'GET') {
     const parsedCookies = parseCookies({ req });
@@ -22,7 +25,7 @@ export default async function handler(req, res) {
       const now = new Date().getTime();
 
       if (now > expires - refreshDelay) {
-        const refreshRes = await refreshToken(token, delegateToken);
+        const refreshRes = await refreshToken(token, delegateToken, ip);
         const accessToken = refreshRes?.customerAccessToken?.accessToken;
 
         if (accessToken) {
@@ -42,7 +45,7 @@ export default async function handler(req, res) {
         }
       }
 
-      const { customer } = (await getUser(token, delegateToken)) || {};
+      const { customer } = (await getUser(token, delegateToken, ip)) || {};
 
       return res.status(200).json({ customer, ok: true });
     }

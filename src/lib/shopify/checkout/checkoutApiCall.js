@@ -6,10 +6,11 @@ import checkoutQueries from './checkoutQueries';
 export const associateCustomerToCheckout = async (
   checkoutId,
   customerAccessToken,
-  delegateAccessToken
+  delegateAccessToken,
+  ip
 ) => {
   console.log(
-    `-----------------------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}`
+    `-----------------------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
   );
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryAddCustomerToCheckout,

@@ -1,9 +1,9 @@
 import shopifyStorefrontCall, { shopifyAdminApiCall } from '..';
 import customerQueries from './customerQueries';
 
-export const registerCustomer = async (input, delegateToken) => {
+export const registerCustomer = async (input, delegateToken, ip) => {
   console.log(
-    `-------------------------------registerCustomer with delegate token: ${delegateToken}`
+    `registerCustomer with delegate token: ${delegateToken}  and ip: ${ip} -------------------------------`
   );
 
   const res = await shopifyStorefrontCall(
@@ -11,15 +11,16 @@ export const registerCustomer = async (input, delegateToken) => {
     {
       input,
     },
-    delegateToken
+    delegateToken,
+    ip
   );
 
   return res?.data?.customerCreate;
 };
 
-export const loginCustomer = async (input, delegateToken) => {
+export const loginCustomer = async (input, delegateToken, ip) => {
   console.log(
-    `-------------------------------loginCustomer with delegate token: ${delegateToken}`
+    `loginCustomer with delegate token: ${delegateToken}  and ip: ${ip} -------------------------------`
   );
 
   const res = await shopifyStorefrontCall(
@@ -27,14 +28,19 @@ export const loginCustomer = async (input, delegateToken) => {
     {
       input,
     },
-    delegateToken
+    delegateToken,
+    ip
   );
   return res?.data?.customerAccessTokenCreate;
 };
 
-export const deleteAccessToken = async (customerAccessToken, delegateToken) => {
+export const deleteAccessToken = async (
+  customerAccessToken,
+  delegateToken,
+  ip
+) => {
   console.log(
-    `-------------------------------deleteAccessToken with delegate token: ${delegateToken}`
+    `deleteAccessToken with delegate token: ${delegateToken}  and ip: ${ip} -------------------------------`
   );
 
   const res = await shopifyStorefrontCall(
@@ -42,7 +48,8 @@ export const deleteAccessToken = async (customerAccessToken, delegateToken) => {
     {
       customerAccessToken,
     },
-    delegateToken
+    delegateToken,
+    ip
   );
 
   const userErrors = res?.customerAccessTokenDelete?.userErrors;
@@ -72,9 +79,9 @@ export const resetCustomerPassword = async (password, resetUrl) => {
   return res?.data?.customerResetByUrl;
 };
 
-export const getUser = async (token, delegateToken) => {
+export const getUser = async (token, delegateToken, ip) => {
   console.log(
-    `-------------------------------getUser with delegate token: ${delegateToken}`
+    `getUser with delegate token: ${delegateToken} and ip: ${ip} -------------------------------`
   );
 
   const res = await shopifyStorefrontCall(
@@ -82,14 +89,15 @@ export const getUser = async (token, delegateToken) => {
     {
       token,
     },
-    delegateToken
+    delegateToken,
+    ip
   );
   return res?.data;
 };
 
-export const refreshToken = async (token, delegateToken) => {
+export const refreshToken = async (token, delegateToken, ip) => {
   console.log(
-    `-------------------------------refreshToken with delegate token: ${delegateToken}`
+    `refreshToken with delegate token: ${delegateToken}  and ip: ${ip} -------------------------------`
   );
 
   const res = await shopifyStorefrontCall(
@@ -97,18 +105,15 @@ export const refreshToken = async (token, delegateToken) => {
     {
       token,
     },
-    delegateToken
+    delegateToken,
+    ip
   );
   return res?.data?.customerAccessTokenRenew;
 };
 
 // ADMIN CALLS
 export const getDelegateToken = async (input) => {
-  console.log(
-    `-------------------------------getDelegateToken with input: ${JSON.stringify(
-      input
-    )}`
-  );
+  console.log(`getDelegateToken-------------------------------------`);
 
   const res = await shopifyAdminApiCall(
     customerQueries.queryDelegateAccessToken,

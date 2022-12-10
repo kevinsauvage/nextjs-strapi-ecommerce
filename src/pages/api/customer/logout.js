@@ -1,5 +1,6 @@
 import { destroyCookie, parseCookies } from 'nookies';
 import { deleteAccessToken } from '@/lib/shopify/customer/customerApiCall';
+import { getIpFromRequest } from '@/helpers/index';
 
 const logout = async (req, res) => {
   try {
@@ -13,7 +14,8 @@ const logout = async (req, res) => {
       : null;
 
     if (shopifyToken) {
-      await deleteAccessToken(shopifyToken?.token, delegateToken);
+      const ip = getIpFromRequest(req);
+      await deleteAccessToken(shopifyToken?.token, delegateToken, ip);
     }
 
     destroyCookie({ res }, 'shopifyToken', {

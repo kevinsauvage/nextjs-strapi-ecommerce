@@ -4,6 +4,7 @@ import {
 } from '@/lib/shopify/customer/customerApiCall';
 import { parseCookies } from 'nookies';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
+import { getIpFromRequest } from '@/helpers/index';
 
 const register = async (req, res) => {
   try {
@@ -13,8 +14,9 @@ const register = async (req, res) => {
 
     const parsedCookies = parseCookies({ req });
     const delegateToken = parsedCookies?.shopifyDelegateToken;
+    const ip = getIpFromRequest(req);
 
-    const data = await registerCustomer({ email, password }, delegateToken);
+    const data = await registerCustomer({ email, password }, delegateToken, ip);
 
     if (!data) {
       const error = new Error();
@@ -26,7 +28,12 @@ const register = async (req, res) => {
     const { customer, userErrors } = data || {};
 
     if (customer?.id) {
-      const dataLogin = await loginCustomer({ email, password }, delegateToken);
+      const dataLogin = await loginCustomer(
+        { email, password },
+        delegateToken,
+        ip
+      );
+
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
 
       handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
