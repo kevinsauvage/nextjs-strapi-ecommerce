@@ -1,155 +1,91 @@
-const queryRegister = `mutation ($input: CustomerCreateInput!) {
-    customerCreate(input: $input) {
-      userErrors { field message }
-      customer {
-        id
-        firstName
-        lastName
-        acceptsMarketing
-        email
-        phone
-        defaultAddress {
-          id
-          address1
-          address2
-          city
-          company
-          country
-          countryCodeV2
-          firstName
-          formatted
-          formattedArea
-          lastName
-          name
-          phone
-          province
-          provinceCode
-          zip
-        }
-        orders(first: 10) {
-          edges {
-              node {
-                  id
-                  name
-                  totalPrice
-                  fulfillmentStatus
-                  currencyCode
-              }
-          }
-        }
-      }
-    }
-  }`;
+import { customerFragment } from '../fragment';
 
-const queryLogin = `mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-    customerAccessTokenCreate(input: $input) { 
+const queryRegister = `
+mutation ($input: CustomerCreateInput!) {
+  customerCreate(input: $input) {
+    userErrors { field message }
+    customer {
+      ${customerFragment}
+    }
+  }
+}`;
+
+const queryLogin = `
+mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
+  customerAccessTokenCreate(input: $input) { 
+    customerAccessToken { accessToken expiresAt }
+    customerUserErrors { message }
+  } 
+}`;
+
+const querySendRecoverEmail = `
+mutation customerRecover($email: String!) {
+  customerRecover(email: $email) {
+    customerUserErrors { field message }
+  }
+}`;
+
+const queryResetPassword = `
+mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
+  customerResetByUrl(password: $password, resetUrl: $resetUrl) {
       customerAccessToken { accessToken expiresAt }
-      customerUserErrors { message }
-    } 
-  }`;
+      customerUserErrors { code field message}
+      customer {
+        ${customerFragment}
+      }
+  }
+}`;
 
-const querySendRecoverEmail = `mutation customerRecover($email: String!) {
-    customerRecover(email: $email) {
-      customerUserErrors { field message }
+const queryCustomer = `
+query customer ($token: String!) {
+  customer(customerAccessToken: $token) {
+    ${customerFragment}
+  }
+}`;
+
+const queryRefreshToken = `
+mutation ($token: String!) {
+  customerAccessTokenRenew(customerAccessToken: $token) {
+    customerAccessToken { accessToken expiresAt }
+    userErrors { field message }
+  }
+}`;
+
+const queryDelegateAccessToken = `
+mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
+  delegateAccessTokenCreate(input: $input) {
+    delegateAccessToken {
+      accessToken
+      createdAt
     }
-  }`;
-
-const queryResetPassword = `mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
-    customerResetByUrl(password: $password, resetUrl: $resetUrl) {
-        customerAccessToken { accessToken expiresAt }
-        customerUserErrors { code field message}
-        customer {
+    shop {
+      allProductCategories {
+        productTaxonomyNode {
           id
-          firstName
-          lastName
-          acceptsMarketing
-          email
-          phone
-          defaultAddress {
-            id
-            address1
-            address2
-            city
-            company
-            country
-            countryCodeV2
-            firstName
-            formatted
-            formattedArea
-            lastName
-            name
-            phone
-            province
-            provinceCode
-            zip
-          }
-          orders(first: 10) {
-            edges {
-                node {
-                    id
-                    name
-                    totalPrice
-                    fulfillmentStatus
-                    currencyCode
-                }
-            }
-          }
+          name
         }
-    }
-  }`;
-
-const queryCustomer = `query customer ($token: String!) {
-    customer(customerAccessToken: $token) {
-      id
-      firstName
-      lastName
-      acceptsMarketing
+      }
+      contactEmail
+      currencyCode
+      description
       email
-      phone
-      defaultAddress {
-        id
-        address1
-        address2
-        city
-        company
-        country
-        countryCodeV2
-        firstName
-        formatted
-        formattedArea
-        lastName
-        name
-        phone
-        province
-        provinceCode
-        zip
-      }
-      orders(first: 10) {
-        edges {
-            node {
-                id
-                name
-                totalPrice
-                fulfillmentStatus
-                currencyCode
-            }
-        }
-      }
     }
-  }`;
+    userErrors {
+      field
+      message
+    }
+  }
+}`;
 
-const queryRefreshToken = `mutation ($token: String!) {
-    customerAccessTokenRenew(customerAccessToken: $token) {
-      customerAccessToken {
-        accessToken
-        expiresAt
-      }
-      userErrors {
-        field
-        message
-      }
-    }
-  }`;
+const customerAccessTokenDelete = `
+mutation customerAccessTokenDelete($customerAccessToken: String!) {
+  customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+    deletedAccessToken
+    deletedCustomerAccessTokenId
+    userErrors { field message }
+  }
+}`;
+
 const customerQueries = {
   queryRegister,
   queryLogin,
@@ -157,6 +93,8 @@ const customerQueries = {
   queryResetPassword,
   queryCustomer,
   queryRefreshToken,
+  queryDelegateAccessToken,
+  customerAccessTokenDelete,
 };
 
 export default customerQueries;

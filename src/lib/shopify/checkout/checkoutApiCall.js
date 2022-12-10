@@ -7,8 +7,6 @@ export const associateCustomerToCheckout = async (
   checkoutId,
   customerAccessToken
 ) => {
-  console.log('%c associateCustomerToCheckout', 'color: red');
-
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryAddCustomerToCheckout,
     {
@@ -24,8 +22,6 @@ export const associateCustomerToCheckout = async (
 };
 
 export const createCheckout = async (input = {}) => {
-  console.log('%c createCheckout', 'color: red');
-
   const res = await shopifyStorefrontCall(checkoutQueries.queryCreateCheckout, {
     input,
   });
@@ -36,8 +32,6 @@ export const createCheckout = async (input = {}) => {
 };
 
 export const getCheckoutById = async (id) => {
-  console.log('%c getCheckoutById', 'color: red');
-
   const res = await shopifyStorefrontCall(checkoutQueries.queryCheckoutById, {
     id,
   });

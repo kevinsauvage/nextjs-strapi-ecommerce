@@ -52,7 +52,6 @@ export function GlobalProvider({ children }) {
       },
 
       setSelectedProduct: (product) => {
-        console.log(product);
         dispatch({ type: actions.RESET_TOGGLE_STATES });
         dispatch({ type: actions.SET_SELECTED_PRODUCT, payload: product });
       },

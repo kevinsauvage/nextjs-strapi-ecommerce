@@ -1,15 +1,25 @@
-import { destroyCookie } from 'nookies';
+/* eslint-disable camelcase */
+import { destroyCookie, parseCookies } from 'nookies';
+import { deleteAccessToken } from '@/lib/shopify/customer/customerApiCall';
 
 const logout = async (req, res) => {
-  destroyCookie({ res }, 'shopify_token', {
-    path: '/',
-  });
+  try {
+    const parsedCookies = parseCookies({ req });
+    const delegateToken = parsedCookies?.shopify_delegate_token;
+    const shopify_token = parsedCookies?.shopify_token;
 
-  destroyCookie({ res }, 'shopify_token_expires', {
-    path: '/',
-  });
+    if (shopify_token) {
+      await deleteAccessToken(shopify_token, delegateToken);
+    }
 
-  return res.status(200).send({ ok: true });
+    destroyCookie({ res }, 'shopify_token', {
+      path: '/',
+    });
+
+    res.status(200).send({ ok: true });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export default logout;

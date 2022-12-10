@@ -185,6 +185,19 @@ export function UserProvider({ children }) {
   );
 
   useEffect(() => {
+    if (!user?.id && token?.value) {
+      getUser(token?.value).then((res) => {
+        if (res?.customer)
+          dispatch({ type: actions.ADD_USER, payload: res.customer });
+      });
+    }
+  }, [token, user?.id]);
+
+  useEffect(() => {
+    nextApiCall.generateDelegateToken();
+  }, []);
+
+  useEffect(() => {
     if (token?.value) {
       const now = new Date();
 
@@ -196,17 +209,8 @@ export function UserProvider({ children }) {
       ) {
         handleRefreshToken(token.value);
       }
-    } else nextApiCall.auth.logout();
-  }, [handleRefreshToken, logout, token]);
-
-  useEffect(() => {
-    if (!user?.id && token?.value) {
-      getUser(token?.value).then((res) => {
-        if (res?.customer)
-          dispatch({ type: actions.ADD_USER, payload: res.customer });
-      });
     }
-  }, [token, user?.id]);
+  }, [handleRefreshToken, logout, token]);
 
   const values = useMemo(
     () => ({

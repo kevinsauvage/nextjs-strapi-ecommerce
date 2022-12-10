@@ -13,7 +13,7 @@ const saveToken = async (req, res) => {
 
     if (accessToken) {
       setCookie({ res }, 'shopify_token', accessToken, {
-        httpOnly: true,
+        httpOnly: false,
         secure: process.env.NODE_ENV !== 'development',
         maxAge: 60 * 60,
         path: '/',

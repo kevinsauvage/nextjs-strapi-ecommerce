@@ -5,7 +5,6 @@ import '../styles/spacing.scss';
 import '../styles/elevation.scss';
 import Layout from '@/layout/Layout/Layout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
-import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 
@@ -13,13 +12,11 @@ function MyApp({ Component, pageProps }) {
   return (
     <GlobalProvider>
       <UserProvider>
-        <CartProvider>
-          <CheckoutProvider>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </CheckoutProvider>
-        </CartProvider>
+        <CheckoutProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CheckoutProvider>
       </UserProvider>
     </GlobalProvider>
   );

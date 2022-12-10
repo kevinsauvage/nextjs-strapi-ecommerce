@@ -22,12 +22,16 @@ const login = (payload) => nextApiHelper(`${apiRoute.nextApi.login}`, payload);
 const saveToken = (payload) =>
   nextApiHelper(`${apiRoute.nextApi.saveToken}`, payload);
 
+const generateDelegateToken = () =>
+  nextApiHelper(`${apiRoute.nextApi.delegateToken}`);
+
 const nextApiCall = {
   auth: {
     login,
     logout,
     register,
   },
+  generateDelegateToken,
   saveToken,
 };
 
