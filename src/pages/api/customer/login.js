@@ -1,5 +1,6 @@
+import { parseCookies } from 'nookies';
 import { loginCustomer, getUser } from '@/lib/shopify/customer/customerApiCall';
-import { parseCookies, setCookie } from 'nookies';
+import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 
 const login = async (req, res) => {
   try {
@@ -7,29 +8,20 @@ const login = async (req, res) => {
 
     if (!email || !password) throw new Error('Access token Missing');
 
-    // Notice how the request object is passed
     const parsedCookies = parseCookies({ req });
-
-    const delegateToken = parsedCookies?.shopify_delegate_token;
+    const delegateToken = parsedCookies?.shopifyDelegateToken;
 
     const data = await loginCustomer({ email, password }, delegateToken);
-
     const { customerAccessToken, customerUserErrors } = data || {};
 
     if (customerAccessToken) {
       const { accessToken } = customerAccessToken || {};
       const { customer } = (await getUser(accessToken, delegateToken)) || {};
 
-      setCookie({ res }, 'shopify_token', accessToken, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: 12 * 60 * 60,
-        path: '/',
-      });
+      handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 
       return res.status(200).json({
         ok: true,
-        accessToken,
         customerUserErrors,
         customer,
       });

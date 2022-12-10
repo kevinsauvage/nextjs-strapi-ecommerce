@@ -5,14 +5,19 @@ import checkoutQueries from './checkoutQueries';
 // eslint-disable-next-line import/prefer-default-export
 export const associateCustomerToCheckout = async (
   checkoutId,
-  customerAccessToken
+  customerAccessToken,
+  delegateAccessToken
 ) => {
+  console.log(
+    `-----------------------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}`
+  );
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryAddCustomerToCheckout,
     {
       checkoutId,
       customerAccessToken,
-    }
+    },
+    delegateAccessToken
   );
   return {
     checkout: cleanGraphQLResponse(

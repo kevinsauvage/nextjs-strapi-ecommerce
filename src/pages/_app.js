@@ -11,13 +11,13 @@ import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 function MyApp({ Component, pageProps }) {
   return (
     <GlobalProvider>
-      <UserProvider>
-        <CheckoutProvider>
+      <CheckoutProvider>
+        <UserProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </CheckoutProvider>
-      </UserProvider>
+        </UserProvider>
+      </CheckoutProvider>
     </GlobalProvider>
   );
 }

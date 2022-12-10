@@ -2,7 +2,8 @@ import {
   registerCustomer,
   loginCustomer,
 } from '@/lib/shopify/customer/customerApiCall';
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies } from 'nookies';
+import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 
 const register = async (req, res) => {
   try {
@@ -10,10 +11,8 @@ const register = async (req, res) => {
 
     if (!email || !password) throw new Error('Missing body params Missing');
 
-    // Notice how the request object is passed
     const parsedCookies = parseCookies({ req });
-
-    const delegateToken = parsedCookies?.shopify_delegate_token;
+    const delegateToken = parsedCookies?.shopifyDelegateToken;
 
     const data = await registerCustomer({ email, password }, delegateToken);
 
@@ -30,16 +29,10 @@ const register = async (req, res) => {
       const dataLogin = await loginCustomer({ email, password }, delegateToken);
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
 
-      setCookie({ res }, 'shopify_token', accessToken, {
-        httpOnly: false,
-        secure: process.env.NODE_ENV !== 'development',
-        maxAge: 12 * 60 * 60,
-        path: '/',
-      });
+      handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 
       return res.status(200).json({
         ok: true,
-        accessToken,
         userErrors,
         customer,
       });

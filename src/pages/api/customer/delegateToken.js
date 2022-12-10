@@ -9,14 +9,17 @@ const getToken = async (req, res) => {
   try {
     const parsedCookies = parseCookies({ req });
 
-    const delegateTokenSaved = parsedCookies?.shopify_delegate_token;
+    const delegateTokenSaved = parsedCookies?.shopifyDelegateToken;
 
     if (delegateTokenSaved) {
       console.log('return >>>> delegate token already saved');
       return res.status(200).json({ ok: true });
     }
 
-    console.log('Create delegate token >>> Not saved yet');
+    console.log(
+      'Create delegate token >>> Not saved yet with accessScope :',
+      delegateAccessScope
+    );
     const response = await getDelegateToken({
       delegateAccessScope: delegateAccessScope.split(','),
       expiresIn,
@@ -38,7 +41,7 @@ const getToken = async (req, res) => {
       });
     }
 
-    setCookie({ res }, 'shopify_delegate_token', delegateToken, {
+    setCookie({ res }, 'shopifyDelegateToken', delegateToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',
       maxAge: expiresIn,

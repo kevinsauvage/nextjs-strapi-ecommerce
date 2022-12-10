@@ -2,7 +2,9 @@ import shopifyStorefrontCall, { shopifyAdminApiCall } from '..';
 import customerQueries from './customerQueries';
 
 export const registerCustomer = async (input, delegateToken) => {
-  console.log(`registerCustomer with delegate token: ${delegateToken}`);
+  console.log(
+    `-------------------------------registerCustomer with delegate token: ${delegateToken}`
+  );
 
   const res = await shopifyStorefrontCall(
     customerQueries.queryRegister,
@@ -16,7 +18,9 @@ export const registerCustomer = async (input, delegateToken) => {
 };
 
 export const loginCustomer = async (input, delegateToken) => {
-  console.log(`loginCustomer with delegate token: ${delegateToken}`);
+  console.log(
+    `-------------------------------loginCustomer with delegate token: ${delegateToken}`
+  );
 
   const res = await shopifyStorefrontCall(
     customerQueries.queryLogin,
@@ -29,7 +33,9 @@ export const loginCustomer = async (input, delegateToken) => {
 };
 
 export const deleteAccessToken = async (customerAccessToken, delegateToken) => {
-  console.log(`deleteAccessToken with delegate token: ${delegateToken}`);
+  console.log(
+    `-------------------------------deleteAccessToken with delegate token: ${delegateToken}`
+  );
 
   const res = await shopifyStorefrontCall(
     customerQueries.customerAccessTokenDelete,
@@ -67,7 +73,9 @@ export const resetCustomerPassword = async (password, resetUrl) => {
 };
 
 export const getUser = async (token, delegateToken) => {
-  console.log(`getUser with delegate token: ${delegateToken}`);
+  console.log(
+    `-------------------------------getUser with delegate token: ${delegateToken}`
+  );
 
   const res = await shopifyStorefrontCall(
     customerQueries.queryCustomer,
@@ -79,15 +87,29 @@ export const getUser = async (token, delegateToken) => {
   return res?.data;
 };
 
-export const refreshToken = async (token) => {
-  const res = await shopifyStorefrontCall(customerQueries.queryRefreshToken, {
-    token,
-  });
+export const refreshToken = async (token, delegateToken) => {
+  console.log(
+    `-------------------------------refreshToken with delegate token: ${delegateToken}`
+  );
+
+  const res = await shopifyStorefrontCall(
+    customerQueries.queryRefreshToken,
+    {
+      token,
+    },
+    delegateToken
+  );
   return res?.data?.customerAccessTokenRenew;
 };
 
 // ADMIN CALLS
 export const getDelegateToken = async (input) => {
+  console.log(
+    `-------------------------------getDelegateToken with input: ${JSON.stringify(
+      input
+    )}`
+  );
+
   const res = await shopifyAdminApiCall(
     customerQueries.queryDelegateAccessToken,
     {

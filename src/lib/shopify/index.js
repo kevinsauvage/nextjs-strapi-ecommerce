@@ -12,8 +12,6 @@ const shopifyStorefrontCall = async (query, variables, delegateToken) => {
       headers['Shopify-Storefront-Private-Token'] = delegateToken;
     } else headers['X-Shopify-Storefront-Access-Token'] = accessToken;
 
-    console.log(headers, 'headers');
-
     const response = await fetch(`https://${domain}/api/2022-07/graphql.json`, {
       method: 'POST',
       headers,

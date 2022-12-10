@@ -35,7 +35,7 @@ export default function UserButtons() {
         <>
           <RiShoppingCart2Line />
           <div className={`${styles.totalItems}`}>
-            ({checkout?.lines?.length || '0'} items)
+            ({checkout?.lineItems?.length || '0'})
           </div>
         </>
       ),

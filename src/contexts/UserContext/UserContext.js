@@ -8,26 +8,20 @@ import {
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import {
   sendRecoverEmail,
   resetCustomerPassword,
-  refreshToken,
-  getUser,
 } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
-
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const [token, setToken] = useLocalStorage('accessToken', '');
-  const ttl = 12 * 60 * 60;
-
   const { user, loading } = states || {};
-
+  const { handleAssociateCustomer } = useCheckoutContext();
   const router = useRouter();
   const { push } = router;
 
@@ -48,30 +42,16 @@ export function UserProvider({ children }) {
 
   const logout = useCallback(async () => {
     toggleLoading(true);
-    const res = await nextApiCall.auth.logout();
+    const res = await nextApiCall.logout();
     toggleLoading(false);
 
     if (res && res.ok) {
-      setToken(null);
       dispatch({ type: actions.REMOVE_USER });
       push(config.routes.home);
     } else {
       toast.error('Something went wrong, please try again');
     }
-  }, [push, setToken, toggleLoading]);
-
-  const handleRefreshToken = useCallback(
-    async (tok) => {
-      if (!tok) return;
-      const { customerAccessToken } = (await refreshToken(tok)) || {};
-      const { accessToken } = customerAccessToken || {};
-      if (accessToken) {
-        nextApiCall.saveToken({ accessToken });
-        setToken(accessToken, ttl);
-      }
-    },
-    [ttl, setToken]
-  );
+  }, [push, toggleLoading]);
 
   const login = useCallback(
     async (email, password) => {
@@ -79,27 +59,25 @@ export function UserProvider({ children }) {
         return toast.error('Fill in missing required fields');
 
       toggleLoading(true);
-
-      const { customerUserErrors, accessToken, customer, ok } =
-        (await nextApiCall.auth.login({ email, password })) || {};
+      const resLogin = await nextApiCall.login({ email, password });
       toggleLoading(false);
 
-      if (!ok) return toast.error('Something went wrong');
+      if (!resLogin?.ok) return toast.error('Something went wrong');
 
+      const customerUserErrors = resLogin?.customerUserErrors;
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
-      if (accessToken) setToken(accessToken, ttl);
-
+      const customer = resLogin?.customer;
       if (customer?.id) {
+        toast.success('You were successfully logged in.');
         dispatch({ type: actions.ADD_USER, payload: customer });
+        handleAssociateCustomer();
         push(config.routes.account);
       }
 
-      toast.success('You were successfully logged in.');
-
       return false;
     },
-    [toggleLoading, handleError, push, setToken, ttl]
+    [toggleLoading, handleError, push, handleAssociateCustomer]
   );
 
   const register = useCallback(
@@ -109,27 +87,24 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
-      const registerRes = await nextApiCall.auth.register({ email, password });
+      const registerRes = await nextApiCall.register({ email, password });
       toggleLoading(false);
 
-      const { userErrors, accessToken, customer, ok } = registerRes || {};
+      if (!registerRes?.ok) return toast.error('Something went wrong');
 
-      if (!ok) return toast.error('Something went wrong');
-
+      const userErrors = register?.userErrors;
       if (userErrors?.length) return handleError(userErrors);
 
-      toast.success('You were successfully registered');
-
-      if (accessToken) setToken(accessToken, ttl);
-
+      const customer = registerRes?.customer;
       if (customer?.id) {
+        toast.success('You were successfully registered');
         dispatch({ type: actions.ADD_USER, payload: customer });
         push(config.routes.account);
       }
 
       return false;
     },
-    [toggleLoading, handleError, setToken, push, ttl]
+    [toggleLoading, handleError, push]
   );
 
   const resetPasswordEmail = useCallback(
@@ -139,9 +114,7 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
-
       const data = await sendRecoverEmail(email);
-
       toggleLoading(false);
 
       const { errors } = data || {};
@@ -158,20 +131,12 @@ export function UserProvider({ children }) {
       }
 
       toggleLoading(true);
-
       const data = await resetCustomerPassword(password, url);
       toggleLoading(false);
 
-      const { customerUserErrors, customerAccessToken, customer } = data || {};
+      const { customerUserErrors, customer } = data || {};
 
       if (customerUserErrors?.length) return handleError(customerUserErrors);
-
-      const { accessToken } = customerAccessToken || {};
-
-      if (accessToken) {
-        await nextApiCall.saveToken({ accessToken });
-        setToken(accessToken, ttl);
-      }
 
       if (customer?.id) {
         dispatch({ type: actions.ADD_USER, payload: customer });
@@ -181,43 +146,31 @@ export function UserProvider({ children }) {
 
       return true;
     },
-    [toggleLoading, handleError, push, ttl, setToken]
+    [toggleLoading, handleError, push]
   );
 
-  useEffect(() => {
-    if (!user?.id && token?.value) {
-      getUser(token?.value).then((res) => {
-        if (res?.customer)
-          dispatch({ type: actions.ADD_USER, payload: res.customer });
-      });
-    }
-  }, [token, user?.id]);
+  const handleRender = useCallback(async () => {
+    console.log(
+      '%c call generate delegate token and get customer',
+      'color: red; font-size: 20px;'
+    );
 
-  useEffect(() => {
-    nextApiCall.generateDelegateToken();
+    await nextApiCall.generateDelegateToken();
+    const response = await nextApiCall.getCustomer();
+    if (response?.customer?.id) {
+      dispatch({ type: actions.ADD_USER, payload: response.customer });
+    }
   }, []);
 
   useEffect(() => {
-    if (token?.value) {
-      const now = new Date();
-
-      if (now.getTime() > token.expiryTime * 1000) {
-        logout();
-      } else if (
-        now.getTime() < token.expiryTime * 1000 &&
-        now.getTime() > token.expiryTime * 1000 + 60 * 60 * 2
-      ) {
-        handleRefreshToken(token.value);
-      }
-    }
-  }, [handleRefreshToken, logout, token]);
+    handleRender();
+  }, [handleRender]);
 
   const values = useMemo(
     () => ({
       // States
       user,
       loading,
-      token,
 
       // Functions
       login,
@@ -229,7 +182,6 @@ export function UserProvider({ children }) {
     }),
     [
       loading,
-      token,
       user,
       login,
       register,

@@ -9,15 +9,14 @@ import { toast } from 'react-toastify';
 import {
   createCheckout,
   updateLines,
-  associateCustomerToCheckout,
   getCheckoutById,
   addLinesToCheckout,
   removeLinesFromCheckout,
 } from '@/lib/shopify/checkout/checkoutApiCall';
 import localStorageHelper from '@/helpers/localStorageHelper';
+import nextApiCall from '@/utils/apiNext';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
-import useUserContext from '../UserContext/useUserContext';
 import userFeedbacks from './CheckoutUserFeedback';
 
 export const CheckoutContext = createContext();
@@ -28,7 +27,6 @@ export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
   const { toggleCheckout } = useGlobalContext();
-  const { token } = useUserContext();
 
   const toggleLoading = useCallback((state) => {
     dispatch({ type: 'IS_CHECKOUT_LOADING', payload: state });
@@ -89,6 +87,7 @@ export function CheckoutProvider({ children }) {
   );
 
   const handleCreateCheckout = useCallback(async () => {
+    console.log('%c create checkout', 'color: yellow; font-size: 20px;');
     const res = await createCheckout({});
     if (!res) return;
     if (res?.checkout?.id) {
@@ -99,6 +98,7 @@ export function CheckoutProvider({ children }) {
 
   const handleGetCheckout = useCallback(
     async (id) => {
+      console.log('%c get checkout', 'color: yellow; font-size: 20px;');
       const res = await getCheckoutById(id);
       if (!res) return;
       if (res?.checkout?.orderStatusUrl) handleCreateCheckout();
@@ -109,11 +109,15 @@ export function CheckoutProvider({ children }) {
 
   const handleAssociateCustomer = useCallback(async () => {
     const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-    if (token?.value && checkoutId && !checkout?.email) {
-      const res = await associateCustomerToCheckout(checkoutId, token.value);
+    if (checkoutId && !checkout?.email) {
+      console.log(
+        '%c associate customer to checkout',
+        'color: yellow; font-size: 20px;'
+      );
+      const res = await nextApiCall.associateCustomerToCheckout(checkoutId);
       handleResponse(res, null, false);
     }
-  }, [checkout?.email, handleResponse, token?.value]);
+  }, [checkout?.email, handleResponse]);
 
   const handleRender = useCallback(async () => {
     const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
@@ -128,10 +132,6 @@ export function CheckoutProvider({ children }) {
     handleRender();
   }, [handleRender]);
 
-  useEffect(() => {
-    handleAssociateCustomer();
-  }, [handleAssociateCustomer]);
-
   const values = useMemo(
     () => ({
       // States
@@ -142,6 +142,7 @@ export function CheckoutProvider({ children }) {
       addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
+      handleAssociateCustomer,
     }),
     [
       checkout,
@@ -149,6 +150,7 @@ export function CheckoutProvider({ children }) {
       addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
+      handleAssociateCustomer,
     ]
   );
 
