@@ -88,8 +88,6 @@ export const refreshToken = async (token) => {
 
 // ADMIN CALLS
 export const getDelegateToken = async (input) => {
-  console.log('getDelegateToken');
-
   const res = await shopifyAdminApiCall(
     customerQueries.queryDelegateAccessToken,
     {

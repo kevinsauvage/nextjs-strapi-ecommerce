@@ -36,7 +36,6 @@ function middleware(request) {
 
   // Get user auth cookies
   const cookieShopify = cookies.get('shopify_token');
-
   // Cannot access account if not login
   if (!cookieShopify && pathname.includes('/account')) {
     return NextResponse.redirect(`${origin}${config.routes.login}`);

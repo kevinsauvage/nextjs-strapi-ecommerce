@@ -5,6 +5,7 @@ import { deleteAccessToken } from '@/lib/shopify/customer/customerApiCall';
 const logout = async (req, res) => {
   try {
     const parsedCookies = parseCookies({ req });
+
     const delegateToken = parsedCookies?.shopify_delegate_token;
     const shopify_token = parsedCookies?.shopify_token;
 
