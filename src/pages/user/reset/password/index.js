@@ -5,14 +5,48 @@ import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
+import nextApiCall from '@/utils/apiNext';
+import { actions } from '@/contexts/UserContext/UserReducer';
 
 function Password({ resetUrl }) {
-  const { resetPassword } = useUserContext();
+  const { push, query } = useRouter();
+  const { toggleLoading, handleError, dispatch } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
-    resetPassword(password.trim(), resetUrl);
+
+    if (!password || password.length < 8) {
+      return toast.error(config.userFeedback.passwordLength);
+    }
+
+    toggleLoading(true);
+    const data = await nextApiCall.resetPassword(password, resetUrl);
+    toggleLoading(false);
+
+    const customerUserErrors = data?.customerUserErrors;
+    if (customerUserErrors?.length) return handleError(customerUserErrors);
+
+    const customer = data?.customer;
+    if (customer?.id) {
+      dispatch({ type: actions.ADD_USER, payload: customer });
+      toast.success(config.userFeedback.resetPassword.success);
+      return push(config.routes.account);
+    }
+    return toast.error(config.userFeedback.resetPassword.error);
   });
+
+  useEffect(() => {
+    if (query.reset_url) {
+      push(config.routes.resetPassword, undefined, { shallow: true });
+    }
+  }, [push, query]);
+
+  useEffect(() => {
+    if (!resetUrl) push(config.routes.login);
+  }, [resetUrl, push]);
 
   return (
     <Page title="Password recovery">

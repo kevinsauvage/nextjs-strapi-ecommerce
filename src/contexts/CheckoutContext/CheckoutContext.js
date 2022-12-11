@@ -14,10 +14,11 @@ import {
   removeLinesFromCheckout,
 } from '@/lib/shopify/checkout/checkoutApiCall';
 import localStorageHelper from '@/helpers/localStorageHelper';
-import nextApiCall from '@/utils/apiNext';
+import config from '@/config/index';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
-import userFeedbacks from './CheckoutUserFeedback';
+
+const { userFeedback } = config;
 
 export const CheckoutContext = createContext();
 
@@ -33,16 +34,16 @@ export function CheckoutProvider({ children }) {
   }, []);
 
   const handleResponse = useCallback(
-    (res, userFeedback, toggle = true) => {
+    (res, feedBack, toggle = true) => {
       toggleLoading(false);
 
       if (res?.checkout?.id) {
         if (toggle) toggleCheckout();
         dispatch({ type: actions.ADD_CHECKOUT, payload: res.checkout });
-        if (userFeedback?.success) toast.success(userFeedback.success);
+        if (feedBack?.success) toast.success(feedBack.success);
         return;
       }
-      if (userFeedback?.error) toast.error(userFeedback.error);
+      if (feedBack?.error) toast.error(feedBack.error);
     },
     [toggleLoading, toggleCheckout]
   );
@@ -60,7 +61,7 @@ export function CheckoutProvider({ children }) {
       ];
       toggleLoading(true);
       const res = await addLinesToCheckout(checkoutId, lineItemsToAdd);
-      handleResponse(res, userFeedbacks.addLinesToCheckout);
+      handleResponse(res, userFeedback.addLinesToCheckout);
     },
     [handleResponse, toggleLoading]
   );
@@ -70,7 +71,7 @@ export function CheckoutProvider({ children }) {
       toggleLoading(true);
       const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
       const res = await removeLinesFromCheckout(checkoutId, [lineItemId]);
-      handleResponse(res, userFeedbacks.removeLinesFromCheckout);
+      handleResponse(res, userFeedback.removeLinesFromCheckout, false);
     },
     [toggleLoading, handleResponse]
   );
@@ -81,7 +82,7 @@ export function CheckoutProvider({ children }) {
       const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
       const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
       const res = await updateLines(checkoutId, lineItemsToUpdate);
-      handleResponse(res, userFeedbacks.updateLines);
+      handleResponse(res, userFeedback.updateLines);
     },
     [toggleLoading, handleResponse]
   );
@@ -107,18 +108,6 @@ export function CheckoutProvider({ children }) {
     [handleResponse, handleCreateCheckout]
   );
 
-  const handleAssociateCustomer = useCallback(async () => {
-    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-    if (checkoutId && !checkout?.email) {
-      console.log(
-        '%c associate customer to checkout',
-        'color: yellow; font-size: 20px;'
-      );
-      const res = await nextApiCall.associateCustomerToCheckout(checkoutId);
-      handleResponse(res, null, false);
-    }
-  }, [checkout?.email, handleResponse]);
-
   const handleRender = useCallback(async () => {
     const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
     if (checkoutId && !checkout) {
@@ -137,12 +126,13 @@ export function CheckoutProvider({ children }) {
       // States
       checkout,
       isCheckoutLoading,
+      storageCheckoutKey,
 
       // Functions
       addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
-      handleAssociateCustomer,
+      handleResponse,
     }),
     [
       checkout,
@@ -150,7 +140,7 @@ export function CheckoutProvider({ children }) {
       addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
-      handleAssociateCustomer,
+      handleResponse,
     ]
   );
 

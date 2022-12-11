@@ -16,6 +16,13 @@ const login = async (req, res) => {
     const data = await loginCustomer({ email, password }, delegateToken, ip);
     const { customerAccessToken, customerUserErrors } = data || {};
 
+    if (customerUserErrors.length) {
+      return res.status(201).json({
+        ok: true,
+        customerUserErrors,
+      });
+    }
+
     if (customerAccessToken) {
       const { accessToken } = customerAccessToken || {};
       const { customer } =

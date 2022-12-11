@@ -2,6 +2,10 @@ const getShop = `query {
     shop {
         description
         name
+        primaryDomain {
+          host
+          url
+        }
         privacyPolicy {
             body
         }

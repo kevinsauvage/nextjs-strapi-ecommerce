@@ -5,6 +5,7 @@ const apiRoute = {
   delegateToken: '/api/customer/delegateToken',
   getUser: '/api/customer/customer',
   associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
+  resetPassword: '/api/customer/password/reset',
 };
 
 const nextApiHelper = async (url, body = {}, method = 'POST') => {
@@ -33,6 +34,11 @@ const associateCustomerToCheckout = (id) => {
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
+const resetPassword = (password, url) => {
+  const apiUrl = `${apiRoute.resetPassword}?password=${password}&url=${url}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
 const nextApiCall = {
   login,
   logout,
@@ -40,6 +46,7 @@ const nextApiCall = {
   generateDelegateToken,
   getCustomer,
   associateCustomerToCheckout,
+  resetPassword,
 };
 
 export default nextApiCall;

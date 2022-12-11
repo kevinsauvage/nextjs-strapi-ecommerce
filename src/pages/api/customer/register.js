@@ -27,6 +27,12 @@ const register = async (req, res) => {
 
     const { customer, userErrors } = data || {};
 
+    if (userErrors.length) {
+      return res.status(200).json({
+        userErrors,
+      });
+    }
+
     if (customer?.id) {
       const dataLogin = await loginCustomer(
         { email, password },

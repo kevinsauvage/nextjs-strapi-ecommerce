@@ -6,14 +6,22 @@ import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
+import { toast } from 'react-toastify';
+import { sendRecoverEmail } from '@/lib/shopify/customer/customerApiCall';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
-  const { resetPasswordEmail } = useUserContext();
+  const { toggleLoading, handleError } = useUserContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
-    resetPasswordEmail(email.trim());
+    if (!email) return toast.error(config.userFeedback?.missingFields);
+    toggleLoading(true);
+    const recoverRes = await sendRecoverEmail(email);
+    toggleLoading(false);
+    const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
+    if (errors?.length) return handleError(errors);
+    return toast.success(config.userFeedback.sendRecoverEmail.success);
   });
 
   return (

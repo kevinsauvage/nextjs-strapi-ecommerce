@@ -68,14 +68,30 @@ export const sendRecoverEmail = async (email) => {
     }
   );
 
-  return res;
+  return res?.data?.customerRecover;
 };
 
-export const resetCustomerPassword = async (password, resetUrl) => {
-  const res = await shopifyStorefrontCall(customerQueries.queryResetPassword, {
-    password,
-    resetUrl,
-  });
+export const resetCustomerPassword = async (
+  password,
+  resetUrl,
+  delegateToken,
+  ip
+) => {
+  console.log(
+    `Reset password with delegate token: ${delegateToken} and ip: ${ip} -------------------------------`
+  );
+
+  const res = await shopifyStorefrontCall(
+    customerQueries.queryResetPassword,
+    {
+      password,
+      resetUrl,
+    },
+    delegateToken,
+    ip
+  );
+
+  console.log(res, 'response');
   return res?.data?.customerResetByUrl;
 };
 
@@ -121,5 +137,7 @@ export const getDelegateToken = async (input) => {
       input,
     }
   );
-  return res;
+
+  console.log(res, 'delegate response');
+  return res?.data?.delegateAccessTokenCreate ?? null;
 };

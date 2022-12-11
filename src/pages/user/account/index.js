@@ -5,10 +5,31 @@ import DefaultAddress from '@/components/scopes/account/DefaultAddress/DefaultAd
 import Orders from '@/components/scopes/account/Orders/Orders';
 import Card from '@/components/scopes/account/Card/Card';
 import Button from '@/components/Button/Button';
+import nextApiCall from '@/utils/apiNext';
+import config from '@/config/index';
+import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { actions } from '@/contexts/UserContext/UserReducer';
 import styles from './Profile.module.scss';
 
+const { userFeedback } = config;
+
 function Profile() {
-  const { user, logout } = useUserContext();
+  const { user, toggleLoading, dispatch } = useUserContext();
+
+  const { push } = useRouter();
+
+  const logout = async () => {
+    toggleLoading(true);
+    const res = await nextApiCall.logout();
+    toggleLoading(false);
+    if (res?.ok) {
+      dispatch({ type: actions.REMOVE_USER });
+      toast.success(userFeedback.logout.success);
+      return push(config.routes.home);
+    }
+    return toast.error(userFeedback.logout.error);
+  };
 
   return (
     <Page title="My Profile">

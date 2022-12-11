@@ -140,6 +140,29 @@ defaultAddress {
   provinceCode
   zip
 }
+
+addresses(first: 250) {
+  edges {
+    node {
+      id
+      address1
+      address2
+      city
+      company
+      country
+      countryCodeV2
+      firstName
+      formatted
+      formattedArea
+      lastName
+      name
+      phone
+      province
+      provinceCode
+      zip
+    }
+  }
+}
 orders(first: 10) {
   edges {
       node {

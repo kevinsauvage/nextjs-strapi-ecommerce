@@ -58,18 +58,6 @@ mutation delegateAccessTokenCreate($input: DelegateAccessTokenInput!) {
       accessToken
       createdAt
     }
-    shop {
-      allProductCategories {
-        productTaxonomyNode {
-          id
-          name
-        }
-      }
-      contactEmail
-      currencyCode
-      description
-      email
-    }
     userErrors {
       field
       message

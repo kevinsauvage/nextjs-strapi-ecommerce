@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Button from '@/components/Button/Button';
 import Input from '@/components/forms/Input/Input';
@@ -6,14 +8,47 @@ import Form from '@/components/forms/Form/Form';
 import useForm from '@/hooks/useForm';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
+import nextApiCall from '@/utils/apiNext';
+import { actions } from '@/contexts/UserContext/UserReducer';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import localStorageHelper from '@/helpers/localStorageHelper';
+import { useCallback } from 'react';
 import styles from './Login.module.scss';
 
-function LoginPage() {
-  const { login } = useUserContext();
+const { userFeedback } = config;
 
-  const { handleInputChange, handleSubmit } = useForm((formData) =>
-    login(formData.email, formData.password)
-  );
+function LoginPage() {
+  const { toggleLoading, dispatch, handleError } = useUserContext();
+  const { checkout, handleResponse, storageCheckoutKey } = useCheckoutContext();
+
+  const { push } = useRouter();
+
+  const handleAssociateCustomer = useCallback(async () => {
+    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
+    if (checkoutId && !checkout?.email) {
+      const res = await nextApiCall.associateCustomerToCheckout(checkoutId);
+      handleResponse(res, null, false);
+    }
+  }, [checkout?.email, handleResponse, storageCheckoutKey]);
+
+  const onSubmit = async ({ email, password }) => {
+    if (!email || !password) return toast.error(userFeedback?.missingFields);
+    toggleLoading(true);
+    const resLogin = await nextApiCall.login({ email, password });
+    toggleLoading(false);
+    const customerUserErrors = resLogin?.customerUserErrors;
+    if (customerUserErrors?.length) return handleError(customerUserErrors);
+    const customer = resLogin?.customer;
+    if (customer?.id) {
+      toast.success(userFeedback.login.success);
+      dispatch({ type: actions.ADD_USER, payload: customer });
+      handleAssociateCustomer();
+      return push(config.routes.account);
+    }
+    return toast.error(userFeedback.login.error);
+  };
+
+  const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
     <Page title="User Login">
@@ -41,7 +76,7 @@ function LoginPage() {
           />
           <Button width="100%" text="Login" type="submit" tertiary />
           <div className={styles.forgotPassword}>
-            <Link href={config.routes.resetPassword}>Reset Password</Link>
+            <Link href={config.routes.emailResetPassword}>Reset Password</Link>
           </div>
           <div className={styles.register}>
             Don&apos;t have an account?{' '}

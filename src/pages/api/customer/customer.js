@@ -1,19 +1,18 @@
-import { parseCookies, setCookie } from 'nookies';
+import { parseCookies } from 'nookies';
 import { getUser, refreshToken } from '@/lib/shopify/customer/customerApiCall';
 import { getIpFromRequest } from '@/helpers/index';
+import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 
-const expiresIn = 24 * 60 * 60;
 const refreshDelay = 2 * 60 * 60;
 
 export default async function handler(req, res) {
   const { method } = req;
 
-  const ip = getIpFromRequest(req);
-
   if (method === 'GET') {
     const parsedCookies = parseCookies({ req });
     const shopifyTokenCookie = parsedCookies?.shopifyToken;
     const delegateToken = parsedCookies?.shopifyDelegateToken;
+    const ip = getIpFromRequest(req);
 
     const shopifyToken = shopifyTokenCookie
       ? JSON.parse(shopifyTokenCookie)
@@ -30,23 +29,12 @@ export default async function handler(req, res) {
 
         if (accessToken) {
           token = accessToken;
-          const expiresDate = new Date(new Date().getTime() + expiresIn * 1000);
-          const cookieValue = JSON.stringify({
-            expires: expiresDate,
-            token: accessToken,
-          });
-
-          setCookie({ res }, 'shopifyToken', cookieValue, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV !== 'development',
-            maxAge: expiresIn,
-            path: '/',
-          });
+          handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
         }
       }
 
-      const { customer } = (await getUser(token, delegateToken, ip)) || {};
-
+      const userRes = (await getUser(token, delegateToken, ip)) || {};
+      const customer = userRes?.customer;
       return res.status(200).json({ customer, ok: true });
     }
     return res.status(201).json({ ok: true });
