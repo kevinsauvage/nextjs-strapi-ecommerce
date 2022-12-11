@@ -18,10 +18,8 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, './src/styles/')],
     prependData: `
-        @import "variables.scss"; 
-        @import "responsive.scss"; 
-        @import "mixins.scss"; 
-        @import "animation.scss";`,
+        @import "responsive.scss";
+        `,
   },
   /*   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',

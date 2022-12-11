@@ -12,9 +12,10 @@ export const handleSetShopifyTokenCookies = (res, key, token) => {
     token,
   });
 
-  setCookie({ res }, 'shopifyToken', cookieValue, {
+  setCookie({ res }, key, cookieValue, {
     httpOnly: false,
     secure: process.env.NODE_ENV !== 'development',
+    sameSite: 'strict',
     maxAge: expiresIn,
     path: '/',
   });

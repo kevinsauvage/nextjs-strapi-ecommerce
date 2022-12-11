@@ -47,6 +47,7 @@ const getToken = async (req, res) => {
     setCookie({ res }, 'shopifyDelegateToken', delegateToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV !== 'development',
+      sameSite: 'strict',
       maxAge: expiresIn,
       path: '/',
     });
