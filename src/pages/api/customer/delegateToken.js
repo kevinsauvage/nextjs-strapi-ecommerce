@@ -33,7 +33,6 @@ const getToken = async (req, res) => {
 
     const delegateToken = response?.delegateAccessToken?.accessToken;
     const errors = response?.userErrors;
-    const shop = response?.shop;
 
     if (errors.length > 0) {
       console.error(errors);
