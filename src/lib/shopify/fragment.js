@@ -1,10 +1,12 @@
 export const variantFragment = `
+id
 availableForSale
+quantityAvailable
+title
 compareAtPriceV2 {
   amount
   currencyCode
 }
-id
 selectedOptions {
   name
   value
@@ -31,8 +33,7 @@ product {
      }
   }
 }
-quantityAvailable
-title
+
 `;
 
 export const checkoutFragment = `

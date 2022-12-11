@@ -6,15 +6,8 @@ import {
   useReducer,
 } from 'react';
 import { toast } from 'react-toastify';
-import {
-  createCheckout,
-  updateLines,
-  getCheckoutById,
-  addLinesToCheckout,
-  removeLinesFromCheckout,
-} from '@/lib/shopify/checkout/checkoutApiCall';
-import localStorageHelper from '@/helpers/localStorageHelper';
 import config from '@/config/index';
+import nextApiCall from '@/utils/apiNext';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 
@@ -48,29 +41,10 @@ export function CheckoutProvider({ children }) {
     [toggleLoading, toggleCheckout]
   );
 
-  const addToCheckout = useCallback(
-    async (variantId, quantity) => {
-      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-
-      if (!checkoutId) return;
-      const lineItemsToAdd = [
-        {
-          variantId,
-          quantity: parseInt(quantity, 10),
-        },
-      ];
-      toggleLoading(true);
-      const res = await addLinesToCheckout(checkoutId, lineItemsToAdd);
-      handleResponse(res, userFeedback.addLinesToCheckout);
-    },
-    [handleResponse, toggleLoading]
-  );
-
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
       toggleLoading(true);
-      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-      const res = await removeLinesFromCheckout(checkoutId, [lineItemId]);
+      const res = await nextApiCall.removeLinesFromCheckout({ lineItemId });
       handleResponse(res, userFeedback.removeLinesFromCheckout, false);
     },
     [toggleLoading, handleResponse]
@@ -79,47 +53,27 @@ export function CheckoutProvider({ children }) {
   const handleQuantityChange = useCallback(
     async (quantity, id) => {
       toggleLoading(true);
-      const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-      const lineItemsToUpdate = [{ id, quantity: parseInt(quantity, 10) }];
-      const res = await updateLines(checkoutId, lineItemsToUpdate);
+      const res = await nextApiCall.checkoutLineItemsUpdate({ id, quantity });
       handleResponse(res, userFeedback.updateLines);
     },
     [toggleLoading, handleResponse]
   );
 
-  const handleCreateCheckout = useCallback(async () => {
-    console.log('%c create checkout', 'color: yellow; font-size: 20px;');
-    const res = await createCheckout({});
-    if (!res) return;
-    if (res?.checkout?.id) {
-      handleResponse(res, null, false);
-      localStorageHelper.setValue(storageCheckoutKey, res.checkout.id);
-    }
-  }, [handleResponse]);
-
-  const handleGetCheckout = useCallback(
-    async (id) => {
-      console.log('%c get checkout', 'color: yellow; font-size: 20px;');
-      const res = await getCheckoutById(id);
-      if (!res) return;
-      if (res?.checkout?.orderStatusUrl) handleCreateCheckout();
-      else handleResponse(res, null, false);
-    },
-    [handleResponse, handleCreateCheckout]
-  );
-
   const handleRender = useCallback(async () => {
-    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-    if (checkoutId && !checkout) {
-      await handleGetCheckout(checkoutId);
-    } else if (!checkoutId && !checkout) {
-      await handleCreateCheckout();
+    if (!checkout?.id) {
+      const checkoutRes = await nextApiCall.getCheckout();
+      if (checkoutRes) handleResponse(checkoutRes, null, false);
+      console.log(checkoutRes, 'handleRender checkout res');
     }
-  }, [checkout, handleCreateCheckout, handleGetCheckout]);
+  }, [handleResponse, checkout]);
 
   useEffect(() => {
     handleRender();
   }, [handleRender]);
+
+  useEffect(() => {
+    console.log(checkout);
+  }, [checkout]);
 
   const values = useMemo(
     () => ({
@@ -129,18 +83,18 @@ export function CheckoutProvider({ children }) {
       storageCheckoutKey,
 
       // Functions
-      addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
       handleResponse,
+      toggleLoading,
     }),
     [
       checkout,
       isCheckoutLoading,
-      addToCheckout,
       removeFromCheckout,
       handleQuantityChange,
       handleResponse,
+      toggleLoading,
     ]
   );
 

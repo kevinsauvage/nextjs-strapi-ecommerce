@@ -3,7 +3,7 @@ import { parseCookies, setCookie } from 'nookies';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
 
-const expiresIn = 12 * 60 * 60;
+const expiresIn = 24 * 60 * 60;
 
 const getToken = async (req, res) => {
   try {

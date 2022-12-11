@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import nextApiCall from '@/utils/apiNext';
+import config from '@/config/index';
+
+const { userFeedback } = config;
 
 export default function useProductSelection({ product }) {
   const [selectedProductOption, setSelectedProductOption] = useState([]);
@@ -7,12 +11,20 @@ export default function useProductSelection({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [availableColors, setAvailableColors] = useState([]);
   const [availableSize, setAvailableSize] = useState([]);
-  const { addToCheckout } = useCheckoutContext();
+  const { toggleLoading, handleResponse } = useCheckoutContext();
 
   const handleChangeInput = (num) => setQuantity(num);
 
-  const handleAddToCart = () => {
-    if (quantity > 0) addToCheckout(selectedVariant.id, quantity);
+  const handleAddToCart = async () => {
+    const variantId = selectedVariant?.id;
+    if (quantity > 0 && variantId) {
+      toggleLoading(true);
+      const res = await nextApiCall.addToCheckout({ variantId, quantity });
+
+      console.log('add res >>> ', res);
+
+      handleResponse(res, userFeedback.addLinesToCheckout);
+    }
   };
 
   const handleSetSelectedProductOption = useCallback(

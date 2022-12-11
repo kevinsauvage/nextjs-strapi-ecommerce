@@ -25,6 +25,7 @@ export default function CartItem({
   }, [quantity]);
 
   const handleUpdate = () => {
+    console.log('call update quantity');
     if (quantity < 1 || !quantity)
       return toast.error('Quantity must be higher than zero');
 

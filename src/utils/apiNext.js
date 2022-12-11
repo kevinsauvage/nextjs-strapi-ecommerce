@@ -6,6 +6,12 @@ const apiRoute = {
   getUser: '/api/customer/customer',
   associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
   resetPassword: '/api/customer/password/reset',
+  checkout: {
+    getCheckout: '/api/checkout/getCheckout',
+    addToCheckout: '/api/checkout/addToCheckout',
+    removeLinesFromCheckout: '/api/checkout/removeLinesFromCheckout',
+    checkoutLineItemsUpdate: '/api/checkout/checkoutLineItemsUpdate',
+  },
 };
 
 const nextApiHelper = async (url, body = {}, method = 'POST') => {
@@ -23,12 +29,14 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   return res ? res.json() : undefined;
 };
 
+// Customer Next Api calls
 const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
 const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`);
 const getCustomer = () => nextApiHelper(`${apiRoute.getUser}`, null, 'GET');
 
+// Checkout Next Api calls
 const associateCustomerToCheckout = (id) => {
   const apiUrl = `${apiRoute.associateCustomerToCheckout}?checkout_id=${id}`;
   return nextApiHelper(apiUrl, null, 'GET');
@@ -39,6 +47,26 @@ const resetPassword = (password, url) => {
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
+const getCheckout = () => {
+  const apiUrl = `${apiRoute.checkout.getCheckout}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
+const addToCheckout = (payload) => {
+  const apiUrl = `${apiRoute.checkout.addToCheckout}`;
+  return nextApiHelper(apiUrl, payload, 'POST');
+};
+
+const removeLinesFromCheckout = (payload) => {
+  const apiUrl = `${apiRoute.checkout.removeLinesFromCheckout}`;
+  return nextApiHelper(apiUrl, payload, 'POST');
+};
+
+const checkoutLineItemsUpdate = (payload) => {
+  const apiUrl = `${apiRoute.checkout.checkoutLineItemsUpdate}`;
+  return nextApiHelper(apiUrl, payload, 'POST');
+};
+
 const nextApiCall = {
   login,
   logout,
@@ -47,6 +75,10 @@ const nextApiCall = {
   getCustomer,
   associateCustomerToCheckout,
   resetPassword,
+  getCheckout,
+  addToCheckout,
+  removeLinesFromCheckout,
+  checkoutLineItemsUpdate,
 };
 
 export default nextApiCall;

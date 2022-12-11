@@ -10,7 +10,7 @@ export const associateCustomerToCheckout = async (
   ip
 ) => {
   console.log(
-    `-----------------------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+    `--------------SERVER---------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
   );
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryAddCustomerToCheckout,
@@ -27,17 +27,30 @@ export const associateCustomerToCheckout = async (
   };
 };
 
-export const createCheckout = async (input = {}) => {
-  const res = await shopifyStorefrontCall(checkoutQueries.queryCreateCheckout, {
-    input,
-  });
+export const createCheckout = async (input, delegateAccessToken, ip) => {
+  console.log(
+    `---------------SERVER--------------create checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+  );
+
+  console.log(input, 'input');
+  const res = await shopifyStorefrontCall(
+    checkoutQueries.queryCreateCheckout,
+    {
+      input,
+    },
+    delegateAccessToken,
+    ip
+  );
 
   return {
     checkout: cleanGraphQLResponse(res?.data?.checkoutCreate?.checkout),
   };
 };
 
-export const getCheckoutById = async (id) => {
+export const getCheckoutById = async (id, delegateAccessToken, ip) => {
+  console.log(
+    `--------------SERVER---------------get checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+  );
   const res = await shopifyStorefrontCall(checkoutQueries.queryCheckoutById, {
     id,
   });
@@ -47,11 +60,25 @@ export const getCheckoutById = async (id) => {
   };
 };
 
-export const addLinesToCheckout = async (checkoutId, lineItems) => {
-  const res = await shopifyStorefrontCall(checkoutQueries.queryAddLinesItem, {
-    checkoutId,
-    lineItems,
-  });
+export const addLinesToCheckout = async (
+  checkoutId,
+  lineItems,
+  delegateAccessToken,
+  ip
+) => {
+  console.log(
+    `--------------SERVER---------------add line to checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+  );
+
+  const res = await shopifyStorefrontCall(
+    checkoutQueries.queryAddLinesItem,
+    {
+      checkoutId,
+      lineItems,
+    },
+    delegateAccessToken,
+    ip
+  );
 
   return {
     ...res?.data?.checkoutLineItemsAdd,
@@ -59,13 +86,24 @@ export const addLinesToCheckout = async (checkoutId, lineItems) => {
   };
 };
 
-export const removeLinesFromCheckout = async (checkoutId, lineItemIds) => {
+export const removeLinesFromCheckout = async (
+  checkoutId,
+  lineItemIds,
+  delegateAccessToken,
+  ip
+) => {
+  console.log(
+    `---------------SERVER--------------remove line from  checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+  );
+
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryRemoveFromCheckout,
     {
       checkoutId,
       lineItemIds,
-    }
+    },
+    delegateAccessToken,
+    ip
   );
 
   if (res?.data?.checkoutLineItemsRemove) {
@@ -79,11 +117,25 @@ export const removeLinesFromCheckout = async (checkoutId, lineItemIds) => {
   return false;
 };
 
-export const updateLines = async (checkoutId, lineItems) => {
-  const res = await shopifyStorefrontCall(checkoutQueries.queryUpdateLine, {
-    checkoutId,
-    lineItems,
-  });
+export const updateLines = async (
+  checkoutId,
+  lineItems,
+  delegateAccessToken,
+  ip
+) => {
+  console.log(
+    `-------------SERVER----------------update line to checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
+  );
+
+  const res = await shopifyStorefrontCall(
+    checkoutQueries.queryUpdateLine,
+    {
+      checkoutId,
+      lineItems,
+    },
+    delegateAccessToken,
+    ip
+  );
 
   if (res?.data?.checkoutLineItemsUpdate) {
     return {

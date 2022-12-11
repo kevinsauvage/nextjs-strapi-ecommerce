@@ -14,21 +14,24 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
       console.log(headers, 'headers');
     } else headers['X-Shopify-Storefront-Access-Token'] = accessToken;
 
+    const body = JSON.stringify({
+      query,
+      variables,
+    });
+
+    // console.log('body >>>>', body);
+
     const response = await fetch(`https://${domain}/api/2022-07/graphql.json`, {
       method: 'POST',
       headers,
-      body: JSON.stringify({
-        query,
-        variables,
-      }),
+      body,
     });
 
-    const res = await response.json();
-
+    const res = response && (await response.json());
     return res;
   } catch (error) {
     // TODO HANDLE ERRORS
-    return console.error(error);
+    return console.log('Error catched----------------------', error);
   }
 };
 
