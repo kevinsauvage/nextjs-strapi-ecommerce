@@ -11,7 +11,6 @@ import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import localStorageHelper from '@/helpers/localStorageHelper';
 import { useCallback } from 'react';
 import styles from './Login.module.scss';
 
@@ -19,17 +18,14 @@ const { userFeedback } = config;
 
 function LoginPage() {
   const { toggleLoading, dispatch, handleError } = useUserContext();
-  const { checkout, handleResponse, storageCheckoutKey } = useCheckoutContext();
+  const { handleResponse } = useCheckoutContext();
 
   const { push } = useRouter();
 
   const handleAssociateCustomer = useCallback(async () => {
-    const checkoutId = localStorageHelper.getValue(storageCheckoutKey);
-    if (checkoutId && !checkout?.email) {
-      const res = await nextApiCall.associateCustomerToCheckout(checkoutId);
-      handleResponse(res, null, false);
-    }
-  }, [checkout?.email, handleResponse, storageCheckoutKey]);
+    const res = await nextApiCall.associateCustomerToCheckout();
+    handleResponse(res, null, false);
+  }, [handleResponse]);
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return toast.error(userFeedback?.missingFields);

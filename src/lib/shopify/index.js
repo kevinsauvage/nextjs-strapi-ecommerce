@@ -19,8 +19,6 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
       variables,
     });
 
-    // console.log('body >>>>', body);
-
     const response = await fetch(`https://${domain}/api/2022-07/graphql.json`, {
       method: 'POST',
       headers,
@@ -31,7 +29,7 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     return res;
   } catch (error) {
     // TODO HANDLE ERRORS
-    return console.log('Error catched----------------------', error);
+    return console.log('Error ----------------------', error);
   }
 };
 

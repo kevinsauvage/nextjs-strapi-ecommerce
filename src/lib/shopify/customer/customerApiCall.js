@@ -91,7 +91,6 @@ export const resetCustomerPassword = async (
     ip
   );
 
-  console.log(res, 'response');
   return res?.data?.customerResetByUrl;
 };
 
@@ -138,6 +137,5 @@ export const getDelegateToken = async (input) => {
     }
   );
 
-  console.log(res, 'delegate response');
   return res?.data?.delegateAccessTokenCreate ?? null;
 };

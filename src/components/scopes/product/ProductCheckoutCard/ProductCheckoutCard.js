@@ -23,8 +23,6 @@ export default function ProductCheckoutCard({
     selectedOptions,
   } = variant || {};
 
-  console.log(quantityAvailable);
-
   return (
     <div className={styles.card}>
       <div className={styles.image}>

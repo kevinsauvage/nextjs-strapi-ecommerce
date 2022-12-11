@@ -63,17 +63,12 @@ export function CheckoutProvider({ children }) {
     if (!checkout?.id) {
       const checkoutRes = await nextApiCall.getCheckout();
       if (checkoutRes) handleResponse(checkoutRes, null, false);
-      console.log(checkoutRes, 'handleRender checkout res');
     }
   }, [handleResponse, checkout]);
 
   useEffect(() => {
     handleRender();
   }, [handleRender]);
-
-  useEffect(() => {
-    console.log(checkout);
-  }, [checkout]);
 
   const values = useMemo(
     () => ({

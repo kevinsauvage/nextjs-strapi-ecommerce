@@ -20,8 +20,6 @@ export default async function handler(req, res) {
 
       const { lineItemId } = body || {};
 
-      console.log(body, 'body');
-
       if (!lineItemId) {
         return res.status(400).json({ message: 'Missing query parameter' });
       }

@@ -2,17 +2,20 @@ import { parseCookies } from 'nookies';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getIpFromRequest } from '@/helpers/index';
 
+const checkoutCookiesName = 'shopifyCheckoutId';
+
 export default async function handler(req, res) {
-  const { method, query } = req;
+  const { method } = req;
 
   if (method === 'GET') {
-    const checkoutId = query?.checkout_id;
+    const parsedCookies = parseCookies({ req });
+    const checkoutId = parsedCookies?.[checkoutCookiesName];
 
     if (!checkoutId) {
-      return res.status(400).json({ message: 'Missing query parameter' });
+      return res
+        .status(400)
+        .json({ message: 'Missing checkout ID in cookies' });
     }
-
-    const parsedCookies = parseCookies({ req });
 
     const shopifyTokenCookie = parsedCookies?.shopifyToken;
 

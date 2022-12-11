@@ -29,8 +29,6 @@ export default async function handler(req, res) {
       ip
     );
 
-    console.log(resetRes, 'reset customer');
-
     const accessToken = resetRes?.customerAccessToken;
     const customerUserErrors = resetRes?.customerUserErrors;
     const customer = resetRes?.customer;
