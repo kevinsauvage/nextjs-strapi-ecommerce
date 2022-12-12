@@ -7,7 +7,7 @@ import useForm from '@/hooks/useForm';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
-import { sendRecoverEmail } from '@/lib/shopify/customer/customerApiCall';
+import nextApiCall from '@/utils/apiNext';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
@@ -17,7 +17,7 @@ function ResetPassword() {
     const { email } = formData;
     if (!email) return toast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
-    const recoverRes = await sendRecoverEmail(email);
+    const recoverRes = await nextApiCall.sendRecoverEmail({ email });
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
     if (errors?.length) return handleError(errors);

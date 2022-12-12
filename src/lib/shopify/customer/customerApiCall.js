@@ -60,14 +60,19 @@ export const deleteAccessToken = async (
   return res?.data;
 };
 
-export const sendRecoverEmail = async (email) => {
+export const sendRecoverEmail = async (email, delegateToken, ip) => {
+  console.log(
+    `sendRecoverEmail with delegate token: ${delegateToken}  and ip: ${ip} -------------------------------`
+  );
   const res = await shopifyStorefrontCall(
     customerQueries.querySendRecoverEmail,
     {
       email,
-    }
+    },
+    delegateToken,
+    ip
   );
-
+  console.log(res);
   return res?.data?.customerRecover;
 };
 

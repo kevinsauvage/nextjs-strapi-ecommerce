@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
     if (!password || password.length < 8 || !url) {
       return res.status(400).json({
-        status: 'error',
+        name: 'Bad Request',
         message: 'Password and URL required',
       });
     }

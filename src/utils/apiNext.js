@@ -6,6 +6,9 @@ const apiRoute = {
   getUser: '/api/customer/customer',
   associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
   resetPassword: '/api/customer/password/reset',
+  customer: {
+    sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
+  },
   checkout: {
     getCheckout: '/api/checkout/getCheckout',
     addToCheckout: '/api/checkout/addToCheckout',
@@ -67,12 +70,18 @@ const checkoutLineItemsUpdate = (payload) => {
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 
+const sendRecoverEmail = (payload) => {
+  const apiUrl = `${apiRoute.customer.sendRecoverEmail}`;
+  return nextApiHelper(apiUrl, payload, 'POST');
+};
+
 const nextApiCall = {
   login,
   logout,
   register,
   generateDelegateToken,
   getCustomer,
+  sendRecoverEmail,
   associateCustomerToCheckout,
   resetPassword,
   getCheckout,
