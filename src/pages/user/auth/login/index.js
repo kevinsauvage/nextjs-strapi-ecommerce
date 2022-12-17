@@ -31,6 +31,7 @@ function LoginPage() {
     if (!email || !password) return toast.error(userFeedback?.missingFields);
     toggleLoading(true);
     const resLogin = await nextApiCall.login({ email, password });
+    console.log(resLogin);
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) return handleError(customerUserErrors);

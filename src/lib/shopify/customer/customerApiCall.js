@@ -99,6 +99,7 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
+    console.log(res, 'res get user');
     return res?.data;
   } catch (err) {
     return console.error(err);

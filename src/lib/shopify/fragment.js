@@ -168,7 +168,10 @@ orders(first: 10) {
       node {
           id
           name
-          totalPrice
+          totalPrice {
+            amount
+            currencyCode
+          }
           fulfillmentStatus
           currencyCode
       }
