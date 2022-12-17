@@ -30,8 +30,6 @@ export default function ProductCheckoutCard({
           src={image?.sm}
           layout="fill"
           objectFit="cover"
-          width="500"
-          height="750"
           blurDataURL={image?.blurDataURL}
           placeholder="blur"
           alt={image?.alt}

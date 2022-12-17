@@ -2,7 +2,7 @@ export const imageFragment = `
 src
 altText
 sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER, preferredContentType: WEBP })
-blurDataURL: url(transform: {maxHeight: 7, maxWidth: 5, crop: CENTER})
+blurDataURL: url(transform: {maxHeight: 6, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
 width
 height`;
 
@@ -179,6 +179,7 @@ export const collectionFragment = `
 handle
 description
 title
+id
 image {
   ${imageFragment}
 }
