@@ -1,9 +1,11 @@
 .container {
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
+  bottom: 0;
+  top: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   z-index: 99999999;
   background-color: rgba(0, 0, 0, 0.7);
 }
@@ -12,16 +14,14 @@
   position: relative;
   height: fit-content;
   width: 100%;
-  padding: 2rem;
   border: whitesmoke;
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: white;
   transition: all 0.3s ease-in-out;
   opacity: 0;
+  background-color: white;
   animation: slide-down 0.3s ease-in-out forwards;
-  padding-bottom: 60px;
 
   svg {
     font-size: 30px;
@@ -33,18 +33,66 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding: 1rem 0;
   position: relative;
 }
 
 .buttonClose {
   position: absolute;
-  bottom: 0px;
   right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   border: none;
   cursor: pointer;
-  color: gray;
+  color: black;
 }
 
+.searchResult {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.searchProductCard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(156, 156, 156);
+}
+
+.image {
+  position: relative;
+  width: 100%;
+  max-width: 90px;
+  min-width: 90px;
+  height: 130px;
+}
+.details {
+  padding: 1rem;
+}
+
+.name {
+  font-size: var(--font-size-sm);
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.description {
+  font-size: var(--font-size-sm);
+  margin-bottom: 0.5rem;
+}
+
+.price {
+  font-size: var(--font-size-sm);
+}
+
+.input {
+  width: 50%;
+  min-width: 360px;
+  height: 2rem;
+  padding-left: 1rem;
+}
 @keyframes slide-down {
   0% {
     top: 0px;

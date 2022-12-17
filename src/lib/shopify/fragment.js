@@ -1,3 +1,11 @@
+export const imageFragment = `
+src
+altText
+sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER, preferredContentType: WEBP })
+blurDataURL: url(transform: {maxHeight: 7, maxWidth: 5, crop: CENTER})
+width
+height`;
+
 export const variantFragment = `
 id
 availableForSale
@@ -12,13 +20,7 @@ selectedOptions {
   value
 }
 image {
-  src
-  altText
-  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-  width
-  height
+  ${imageFragment}
 }
 priceV2 {
   amount
@@ -43,7 +45,10 @@ createdAt
 currencyCode
 email
 id
-totalPrice
+totalPrice {
+  amount
+  currencyCode
+}
 orderStatusUrl
 lineItemsSubtotalPrice {
   amount
@@ -71,13 +76,7 @@ descriptionHtml
 images(first: 50) {
   edges {
     node {
-      src
-      altText
-      s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-      sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-      blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-      width
-      height
+      ${imageFragment}
     }
   }
 }
@@ -181,13 +180,7 @@ handle
 description
 title
 image {
-  src
-  altText
-  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-  width
-  height
+  ${imageFragment}
 }
 seo {
   description

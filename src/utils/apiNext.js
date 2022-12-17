@@ -15,6 +15,9 @@ const apiRoute = {
     removeLinesFromCheckout: '/api/checkout/removeLinesFromCheckout',
     checkoutLineItemsUpdate: '/api/checkout/checkoutLineItemsUpdate',
   },
+  products: {
+    search: '/api/product/search',
+  },
 };
 
 const nextApiHelper = async (url, body = {}, method = 'POST') => {
@@ -79,6 +82,12 @@ const sendRecoverEmail = (payload) => {
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 
+// Products Next Api calls
+const searchProducts = (query = '') => {
+  const apiUrl = `${apiRoute.products.search}?searchTerm=${query}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
 const nextApiCall = {
   login,
   logout,
@@ -92,6 +101,7 @@ const nextApiCall = {
   addToCheckout,
   removeLinesFromCheckout,
   checkoutLineItemsUpdate,
+  searchProducts,
 };
 
 export default nextApiCall;
