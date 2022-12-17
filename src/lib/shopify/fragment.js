@@ -95,9 +95,9 @@ productType
 tags
 title
 options {
-      id
-      name
-      values
+  id
+  name
+  values
 }
 totalInventory
 vendor
@@ -175,3 +175,29 @@ orders(first: 10) {
       }
   }
 }`;
+
+export const collectionFragment = `
+handle
+description
+title
+seo {
+  description
+  title
+}`;
+
+export const filterFragment = `
+id
+label
+type
+values {
+  id
+  label
+  count
+  input
+}`;
+
+export const pageInfoFragment = `
+hasNextPage
+hasPreviousPage
+endCursor
+startCursor`;

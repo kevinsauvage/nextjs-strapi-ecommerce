@@ -1,4 +1,4 @@
-import 'react-toastify/dist/ReactToastify.min.css';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/Header';
@@ -12,12 +12,11 @@ import {
   getMenuHeader,
   getShop,
 } from '@/lib/shopify/shop/shopApiCall';
-import { useEffect, useState } from 'react';
-
 import ModalProduct from '@/modals/modalProduct/ModalProduct';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import styles from './Layout.module.scss';
 import PageLoader from '../Loader/PageLoader/PageLoader';
+import 'react-toastify/dist/ReactToastify.min.css';
+import styles from './Layout.module.scss';
 
 function Layout({ children }) {
   const { selectedProduct, setSelectedProduct } = useGlobalContext();

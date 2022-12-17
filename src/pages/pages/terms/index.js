@@ -1,13 +1,11 @@
 import Page from '@/layout/Page/Page';
 import Carousel from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
-import { getShop } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
+import { getTermsOfService } from '@/lib/shopify/shop/shopApiCall';
 import styles from './Terms.module.scss';
 
-function TermsPage({ bestSelling, shopInfo }) {
-  const { termsOfService } = shopInfo || {};
-
+function TermsPage({ bestSelling, termsOfService }) {
   return (
     <Page title="Our terms and conditions">
       <div className={styles.terms}>
@@ -30,13 +28,13 @@ export default TermsPage;
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);
-  const shopInfo = await getShop();
+  const shopInfo = await getTermsOfService();
+  const { termsOfService } = shopInfo;
 
   return {
     props: {
       bestSelling,
-      shopInfo,
+      termsOfService,
     },
-    revalidate: 60,
   };
 }

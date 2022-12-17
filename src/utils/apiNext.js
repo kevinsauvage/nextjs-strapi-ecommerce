@@ -18,18 +18,22 @@ const apiRoute = {
 };
 
 const nextApiHelper = async (url, body = {}, method = 'POST') => {
-  const object = {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  };
+  try {
+    const object = {
+      method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
 
-  if (body) object.body = JSON.stringify(body);
+    if (body) object.body = JSON.stringify(body);
 
-  const res = await fetch(url, object);
+    const res = await fetch(url, object);
 
-  return res ? res.json() : undefined;
+    return res ? res.json() : undefined;
+  } catch (err) {
+    return console.error(err);
+  }
 };
 
 // Customer Next Api calls

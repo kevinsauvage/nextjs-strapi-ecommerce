@@ -6,6 +6,7 @@ import {
   useMemo,
   useReducer,
 } from 'react';
+import nextApiCall from '@/utils/apiNext';
 import { GlobalReducer, initialState, actions } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
@@ -18,6 +19,14 @@ export function GlobalProvider({ children }) {
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
   }, []);
+
+  const handleRender = useCallback(async () => {
+    await nextApiCall.generateDelegateToken();
+  }, []);
+
+  useEffect(() => {
+    handleRender();
+  }, [handleRender]);
 
   useEffect(() => {
     resetToggle();

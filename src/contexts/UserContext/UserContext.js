@@ -27,7 +27,6 @@ export function UserProvider({ children }) {
   }, []);
 
   const handleRender = useCallback(async () => {
-    await nextApiCall.generateDelegateToken();
     const response = await nextApiCall.getCustomer();
     if (response?.customer?.id) {
       dispatch({ type: actions.ADD_USER, payload: response.customer });

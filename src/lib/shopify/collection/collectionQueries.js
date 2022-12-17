@@ -1,356 +1,78 @@
+import {
+  collectionFragment,
+  filterFragment,
+  pageInfoFragment,
+  productFragment,
+} from '../fragment';
+
 const filterCollectionForward = `
-  query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
-    collection(handle: $handle) {
-      handle
-      description
-      title
-      seo {
-        description
-        title
+query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
+  collection(handle: $handle) {
+    ${collectionFragment}
+    products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
+      filters {
+        ${filterFragment}
       }
-      products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
-        filters {
-          id
-          label
-          type
-          values {
-            id
-            label
-            count
-            input
-          }
-        }
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          endCursor
-          startCursor
-        }
-        edges {
-          node {
-            options {
-              id
-              name
-              values
-            }
-            collections(first: 1) {
-              edges {
-                node {
-                  handle
-                }
-              }
-             }   
-            availableForSale
-            handle
-            id
-            descriptionHtml
-            images(first: 50) {
-              edges {
-                node{
-                  src
-                  altText
-                  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                  width
-                  height
-                }
-              }
-            }
-            priceRange {
-              maxVariantPrice {
-                amount
-                currencyCode
-              }
-              minVariantPrice {
-                amount
-                currencyCode
-              }
-            }
-            productType
-            tags
-            title
-            totalInventory
-            vendor
-            variants(first: 250) {
-              edges {
-                node {
-                  availableForSale
-                  compareAtPriceV2 {
-                    amount
-                    currencyCode
-                  }
-                  id
-                  image {
-                    src
-                    altText
-                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                    width
-                    height
-                  }
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  quantityAvailable
-                  title
-                }
-              }
-            }
-          }
+      pageInfo {
+        ${pageInfoFragment}
+      }
+      edges {
+        node {
+          ${productFragment}
         }
       }
     }
   }
-  `;
+}`;
 
 const filterCollectionBackward = `
-  query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $before: String) {
-    collection(handle: $handle) {
-      handle
-      handle
-      description
-      title
-      seo {
-        description
-        title
+query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $before: String) {
+  collection(handle: $handle) {
+    ${collectionFragment}
+    products(last: $last,  filters: $filters, sortKey: $sort, before: $before) {
+      filters {
+        ${filterFragment}
       }
-      products(last: $last,  filters: $filters, sortKey: $sort, before: $before) {
-        filters {
-          id
-          label
-          type
-          values {
-            id
-            label
-            count
-            input
-          }
-        }
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          endCursor
-          startCursor
-        }
-        edges {
-          node {
-            options {
-              id
-              name
-              values
-            }
-            collections(first: 1) {
-              edges {
-                node {
-                  handle
-                }
-              }
-             }   
-            availableForSale
-            handle
-            id
-            descriptionHtml
-            images(first: 50) {
-              edges {
-                node{
-                  src
-                  altText
-                  s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                  sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                  blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                  width
-                  height
-                }
-              }
-            }
-            priceRange {
-              maxVariantPrice {
-                amount
-                currencyCode
-              }
-              minVariantPrice {
-                amount
-                currencyCode
-              }
-            }
-            productType
-            tags
-            title
-            totalInventory
-            vendor
-            variants(first: 250) {
-              edges {
-                node {
-                  availableForSale
-                  compareAtPriceV2 {
-                    amount
-                    currencyCode
-                  }
-                  id
-                  image {
-                    src
-                    altText
-                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                    width
-                    height
-                  }
-                  priceV2 {
-                    amount
-                    currencyCode
-                  }
-                  selectedOptions {
-                    name
-                    value
-                  }
-                  quantityAvailable
-                  title
-                }
-              }
-            }
-          }
+      pageInfo {
+        ${pageInfoFragment}
+      }
+      edges {
+        node {
+          ${productFragment}
         }
       }
     }
   }
-  `;
+}`;
 
-const getCollections = `query ($first: Int) {
+const getCollections = `
+query ($first: Int) {
   collections(first: $first, sortKey: RELEVANCE) {
     edges {
       node {
-        id
-        title
-        handle
-        description
-        image {
-          src
-          altText
-          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-          width
-          height
-        }
+        ${collectionFragment}
       }
     }
   }
-}
-`;
+}`;
 
-const getCollectionsWithProducts = `query ($first: Int){
+const getCollectionsWithProducts = `
+query ($first: Int){
   collections(first: $first, sortKey: RELEVANCE) {
     edges {
       node {
-        id
-        title
-        handle
-        description
-        image {
-          src
-          altText
-          s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-          sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-          blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-          width
-          height
-        }
-      
+        ${collectionFragment}
         products(first: 20, sortKey: BEST_SELLING) {
           edges {
             node {
-              collections(first: 1) {
-                edges {
-                  node {
-                    handle
-                  }
-                }
-               }   
-              handle
-              id
-              title
-              availableForSale
-              descriptionHtml
-              options {
-                id
-                name
-                values
-              }
-              images(first: 50) {
-                edges {
-                  node {
-                    src
-                    altText
-                    s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                    sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                    blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                    width
-                    height
-                  }
-                }
-              }
-              priceRange {
-                maxVariantPrice {
-                  amount
-                  currencyCode
-                }
-                minVariantPrice {
-                  amount
-                  currencyCode
-                }
-              }
-              productType
-              tags
-              title
-              totalInventory
-              vendor
-              variants(first: 250) {
-                edges {
-                  node {
-                    availableForSale
-                    compareAtPriceV2 {
-                      amount
-                      currencyCode
-                    }
-                    selectedOptions {
-                      name
-                      value
-                    }
-                    id
-                    image {
-                      src
-                      altText
-                      s:  url(transform: { maxHeight: 400, maxWidth: 275, crop: CENTER })
-                      sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER })
-                      blurDataURL: url(transform: {maxHeight: 10, maxWidth: 10, crop: CENTER})
-                      width
-                      height
-                    }
-                    priceV2 {
-                      amount
-                      currencyCode
-                    }
-                    quantityAvailable
-                    title
-                  }
-                }
-              }
+              ${productFragment}
             }
           }
         }
       }
     }
   }
-}
-`;
+}`;
 
 const queriesCollection = {
   getCollectionsWithProducts,

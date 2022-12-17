@@ -1,17 +1,19 @@
 import { checkoutFragment } from '../fragment';
 
-const queryCreateCheckout = `mutation checkoutCreate($input: CheckoutCreateInput!) {
-    checkoutCreate(input: $input) {
-      checkout {
-        ${checkoutFragment}
-      }
-      checkoutUserErrors {
-        message
-      }
+const queryCreateCheckout = `
+mutation checkoutCreate($input: CheckoutCreateInput!) {
+  checkoutCreate(input: $input) {
+    checkout {
+      ${checkoutFragment}
     }
-  }`;
+    checkoutUserErrors {
+      message
+    }
+  }
+}`;
 
-const queryAddLinesItem = `mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
+const queryAddLinesItem = `
+mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInput!]!) {
   checkoutLineItemsAdd(checkoutId: $checkoutId, lineItems: $lineItems) {
     checkout {
       ${checkoutFragment}
@@ -22,7 +24,8 @@ const queryAddLinesItem = `mutation checkoutLineItemsAdd($checkoutId: ID!, $line
   }
 }`;
 
-const queryAddCustomerToCheckout = `mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!) {
+const queryAddCustomerToCheckout = `
+mutation checkoutCustomerAssociateV2($checkoutId: ID!, $customerAccessToken: String!) {
   checkoutCustomerAssociateV2(checkoutId: $checkoutId, customerAccessToken: $customerAccessToken) {
     checkout {
       ${checkoutFragment}
@@ -33,7 +36,8 @@ const queryAddCustomerToCheckout = `mutation checkoutCustomerAssociateV2($checko
   }
 }`;
 
-const queryCheckoutById = `query($id: ID!) {
+const queryCheckoutById = `
+query($id: ID!) {
   node(id:$id) {
     id
     ... on Checkout {
@@ -42,7 +46,8 @@ const queryCheckoutById = `query($id: ID!) {
   }
 }`;
 
-const queryRemoveFromCheckout = `mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!) {
+const queryRemoveFromCheckout = `
+mutation checkoutLineItemsRemove($checkoutId: ID!, $lineItemIds: [ID!]!) {
   checkoutLineItemsRemove(checkoutId: $checkoutId, lineItemIds: $lineItemIds) {
     checkout {
       ${checkoutFragment}
@@ -53,7 +58,8 @@ const queryRemoveFromCheckout = `mutation checkoutLineItemsRemove($checkoutId: I
   }
 }`;
 
-const queryUpdateLine = `mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
+const queryUpdateLine = `
+mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItemUpdateInput!]!) {
   checkoutLineItemsUpdate(checkoutId: $checkoutId, lineItems: $lineItems) {
     checkout {
       ${checkoutFragment}

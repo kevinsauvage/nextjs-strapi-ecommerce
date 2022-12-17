@@ -1,12 +1,11 @@
 import Page from '@/layout/Page/Page';
 import Carousel from '@/components/Carousel/Carousel';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
-import { getShop } from '@/lib/shopify/shop/shopApiCall';
+import { getShippingPolicy } from '@/lib/shopify/shop/shopApiCall';
 import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
 import styles from './shipping.module.scss';
 
-function ShippingPage({ bestSelling, shopInfo }) {
-  const { shippingPolicy } = shopInfo || {};
+function ShippingPage({ bestSelling, shippingPolicy }) {
   return (
     <Page title="Our privacy policy">
       <div className={styles.privacy}>
@@ -29,13 +28,13 @@ export default ShippingPage;
 
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 20);
-  const shopInfo = await getShop();
+  const shopInfo = await getShippingPolicy();
+  const { shippingPolicy } = shopInfo;
 
   return {
     props: {
       bestSelling,
-      shopInfo,
+      shippingPolicy,
     },
-    revalidate: 10,
   };
 }

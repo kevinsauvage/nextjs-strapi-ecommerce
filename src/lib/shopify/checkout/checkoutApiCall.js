@@ -2,62 +2,58 @@ import shopifyStorefrontCall from '..';
 import { cleanGraphQLResponse } from '../helpers';
 import checkoutQueries from './checkoutQueries';
 
-// eslint-disable-next-line import/prefer-default-export
 export const associateCustomerToCheckout = async (
   checkoutId,
   customerAccessToken,
   delegateAccessToken,
   ip
 ) => {
-  console.log(
-    `--------------SERVER---------------associateCustomerToCheckout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
   const res = await shopifyStorefrontCall(
     checkoutQueries.queryAddCustomerToCheckout,
-    {
-      checkoutId,
-      customerAccessToken,
-    },
-    delegateAccessToken
-  );
-  return {
-    checkout: cleanGraphQLResponse(
-      res?.data?.checkoutCustomerAssociateV2?.checkout
-    ),
-  };
-};
-
-export const createCheckout = async (input, delegateAccessToken, ip) => {
-  console.log(
-    `---------------SERVER--------------create checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
-
-  console.log(input, 'input');
-  const res = await shopifyStorefrontCall(
-    checkoutQueries.queryCreateCheckout,
-    {
-      input,
-    },
+    { checkoutId, customerAccessToken },
     delegateAccessToken,
     ip
   );
 
-  return {
-    checkout: cleanGraphQLResponse(res?.data?.checkoutCreate?.checkout),
-  };
+  const checkout = res?.data?.checkoutCustomerAssociateV2?.checkout;
+  if (checkout) return { checkout: cleanGraphQLResponse(checkout) };
+  return null;
+};
+
+export const createCheckout = async (input, delegateAccessToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryCreateCheckout,
+      { input },
+      delegateAccessToken,
+      ip
+    );
+
+    const checkout = res?.data?.checkoutCreate?.checkout;
+
+    if (checkout) return { checkout: cleanGraphQLResponse(checkout) };
+    return null;
+  } catch (e) {
+    return console.error(e);
+  }
 };
 
 export const getCheckoutById = async (id, delegateAccessToken, ip) => {
-  console.log(
-    `--------------SERVER---------------get checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
-  const res = await shopifyStorefrontCall(checkoutQueries.queryCheckoutById, {
-    id,
-  });
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryCheckoutById,
+      { id },
+      delegateAccessToken,
+      ip
+    );
 
-  return {
-    checkout: cleanGraphQLResponse(res?.data?.node),
-  };
+    const checkout = res?.data?.node;
+
+    if (checkout) return { checkout: cleanGraphQLResponse(checkout) };
+    return null;
+  } catch (e) {
+    return console.error(e);
+  }
 };
 
 export const addLinesToCheckout = async (
@@ -66,24 +62,25 @@ export const addLinesToCheckout = async (
   delegateAccessToken,
   ip
 ) => {
-  console.log(
-    `--------------SERVER---------------add line to checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryAddLinesItem,
+      { checkoutId, lineItems },
+      delegateAccessToken,
+      ip
+    );
+    const response = res?.data?.checkoutLineItemsAdd;
 
-  const res = await shopifyStorefrontCall(
-    checkoutQueries.queryAddLinesItem,
-    {
-      checkoutId,
-      lineItems,
-    },
-    delegateAccessToken,
-    ip
-  );
-
-  return {
-    ...res?.data?.checkoutLineItemsAdd,
-    checkout: cleanGraphQLResponse(res?.data?.checkoutLineItemsAdd?.checkout),
-  };
+    if (response) {
+      return {
+        ...response,
+        checkout: cleanGraphQLResponse(response?.checkout),
+      };
+    }
+    return null;
+  } catch (e) {
+    return console.error(e);
+  }
 };
 
 export const removeLinesFromCheckout = async (
@@ -92,29 +89,26 @@ export const removeLinesFromCheckout = async (
   delegateAccessToken,
   ip
 ) => {
-  console.log(
-    `---------------SERVER--------------remove line from  checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryRemoveFromCheckout,
+      { checkoutId, lineItemIds },
+      delegateAccessToken,
+      ip
+    );
 
-  const res = await shopifyStorefrontCall(
-    checkoutQueries.queryRemoveFromCheckout,
-    {
-      checkoutId,
-      lineItemIds,
-    },
-    delegateAccessToken,
-    ip
-  );
+    const data = res?.data?.checkoutLineItemsRemove;
 
-  if (res?.data?.checkoutLineItemsRemove) {
-    return {
-      ...res?.data?.checkoutLineItemsRemove,
-      checkout: cleanGraphQLResponse(
-        res?.data?.checkoutLineItemsRemove?.checkout
-      ),
-    };
+    if (data) {
+      return {
+        ...data,
+        checkout: cleanGraphQLResponse(data?.checkout),
+      };
+    }
+    return null;
+  } catch (e) {
+    return console.error(e);
   }
-  return false;
 };
 
 export const updateLines = async (
@@ -123,27 +117,24 @@ export const updateLines = async (
   delegateAccessToken,
   ip
 ) => {
-  console.log(
-    `-------------SERVER----------------update line to checkout with delegateAccessToken: ${delegateAccessToken}  and ip: ${ip}`
-  );
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryUpdateLine,
+      { checkoutId, lineItems },
+      delegateAccessToken,
+      ip
+    );
 
-  const res = await shopifyStorefrontCall(
-    checkoutQueries.queryUpdateLine,
-    {
-      checkoutId,
-      lineItems,
-    },
-    delegateAccessToken,
-    ip
-  );
+    const response = res?.data?.checkoutLineItemsUpdate;
 
-  if (res?.data?.checkoutLineItemsUpdate) {
-    return {
-      ...res?.data?.checkoutUserErrors,
-      checkout: cleanGraphQLResponse(
-        res?.data?.checkoutLineItemsUpdate?.checkout
-      ),
-    };
+    if (response) {
+      return {
+        ...res?.data?.checkoutLineItemsUpdate,
+        checkout: cleanGraphQLResponse(response?.checkout),
+      };
+    }
+    return null;
+  } catch (e) {
+    return console.error(e);
   }
-  return false;
 };
