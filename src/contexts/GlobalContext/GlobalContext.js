@@ -33,7 +33,7 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (checkoutOpen || userOpen || selectedProduct) {
+    if (checkoutOpen || searchOpen || userOpen || selectedProduct) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
   }, [checkoutOpen, searchOpen, userOpen, selectedProduct]);
