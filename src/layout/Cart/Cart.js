@@ -29,7 +29,7 @@ function CartFooter() {
         />
         <CheckoutBtn
           extraClass={styles.btn}
-          amount={checkout?.totalPrice}
+          amount={checkout?.totalPrice?.amount}
           currencyCode={checkout?.currencyCode}
           url={checkout?.webUrl}
         />

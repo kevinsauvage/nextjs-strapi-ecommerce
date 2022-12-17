@@ -47,7 +47,8 @@ function CartPage() {
                   </td>
                   <td className={styles.price}>
                     <span>
-                      {checkout?.totalPrice} {checkout?.currencyCode}
+                      {checkout?.totalPrice?.currencyCode}{' '}
+                      {checkout?.currencyCode}
                     </span>
                   </td>
                 </tr>
@@ -56,7 +57,7 @@ function CartPage() {
             <div className={styles.btns}>
               <CheckoutBtn
                 extraClass={styles.btn}
-                amount={checkout?.totalPrice}
+                amount={checkout?.totalPrice?.amount}
                 currencyCode={checkout?.currencyCode}
                 url={checkout?.webUrl}
               />
