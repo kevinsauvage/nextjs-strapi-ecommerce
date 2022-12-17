@@ -18,8 +18,8 @@ export default function ProductCardDefault({ product = {} }) {
       >
         <div className={styles.image}>
           <Image
-            src={images?.[0]?.s}
-            alt={images?.[0]?.alt}
+            src={images?.[0]?.sm}
+            alt={images?.[0]?.alt || product?.title}
             layout="responsive"
             width={500}
             height={750}

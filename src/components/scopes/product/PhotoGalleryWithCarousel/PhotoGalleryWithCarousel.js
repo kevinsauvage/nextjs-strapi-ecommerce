@@ -34,7 +34,7 @@ export default function PhotoGalleryWithCarousel({
             }
             width={selected?.width || selectedVariant?.image?.width}
             height={selected?.height || selectedVariant?.image?.height}
-            quality={70}
+            quality={50}
             onLoadingComplete={() => setLoaded(true)}
           />
         </div>
@@ -51,11 +51,11 @@ export default function PhotoGalleryWithCarousel({
             onClick={() => setSelected(image)}
           >
             <Image
-              src={image?.s}
+              src={image?.sm}
               alt={image?.altText || selectedVariant?.title}
               width={image?.width}
               height={image?.height}
-              quality={40}
+              quality={10}
               className={styles.image}
             />
           </button>
