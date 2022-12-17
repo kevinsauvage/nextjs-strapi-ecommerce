@@ -25,7 +25,7 @@ export default function SearchBar() {
     setSearch(response);
   }, []);
 
-  const debouncedSearchTerm = useDebounce(query, 800);
+  const debouncedSearchTerm = useDebounce(query, 400);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
