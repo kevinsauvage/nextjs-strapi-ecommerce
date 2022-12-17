@@ -13,7 +13,7 @@ export const registerCustomer = async (input, delegateToken, ip) => {
     if (response) return response;
     return null;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -29,7 +29,7 @@ export const loginCustomer = async (input, delegateToken, ip) => {
     if (response) return response;
     return null;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -52,7 +52,7 @@ export const deleteAccessToken = async (
     }
     return response;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -67,7 +67,7 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
     const response = res?.data?.customerRecover;
     return response;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -87,7 +87,7 @@ export const resetCustomerPassword = async (
 
     return res?.data?.customerResetByUrl;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -101,7 +101,7 @@ export const getUser = async (token, delegateToken, ip) => {
     );
     return res?.data;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -115,7 +115,7 @@ export const refreshToken = async (token, delegateToken, ip) => {
     );
     return res?.data?.customerAccessTokenRenew;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
 
@@ -128,6 +128,6 @@ export const getDelegateToken = async (input) => {
     );
     return res?.data?.delegateAccessTokenCreate ?? null;
   } catch (err) {
-    return console.log(err);
+    return console.error(err);
   }
 };
