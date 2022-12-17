@@ -19,7 +19,7 @@ function CartFooter() {
           <p className={styles.subtotalTitle}>Subtotal</p>
           <p
             className={styles.amount}
-          >{`${checkout?.currencyCode} ${checkout?.totalPrice}`}</p>
+          >{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
         </div>
         <Button
           text="View cart"
