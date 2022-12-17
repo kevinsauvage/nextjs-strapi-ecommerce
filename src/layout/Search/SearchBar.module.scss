@@ -9,6 +9,7 @@
   z-index: 99999999;
   background-color: rgba(0, 0, 0, 0.7);
   overflow-y: scroll;
+  padding-top: 66px;
 }
 
 .form {
@@ -23,6 +24,9 @@
   opacity: 0;
   background-color: rgba(var(--color-dark-0));
   animation: slide-down 0.3s ease-in-out forwards;
+  position: fixed;
+  top: 0;
+  z-index: 999999999999999999;
 
   svg {
     font-size: 30px;
