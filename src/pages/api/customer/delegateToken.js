@@ -12,14 +12,9 @@ const getToken = async (req, res) => {
     const delegateTokenSaved = parsedCookies?.shopifyDelegateToken;
 
     if (delegateTokenSaved) {
-      console.log('return >>>> delegate token already saved');
       return res.status(200).json({ ok: true });
     }
 
-    console.log(
-      'Create delegate token >>> Not saved yet with accessScope :',
-      delegateAccessScope
-    );
     const response = await getDelegateToken({
       delegateAccessScope: delegateAccessScope.split(','),
       expiresIn,

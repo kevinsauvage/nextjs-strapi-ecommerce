@@ -22,7 +22,6 @@ export default function SearchBar() {
 
   const handleSearch = useCallback(async (value) => {
     const response = await nextApiCall.searchProducts(value);
-    console.log(response);
     setSearch(response);
   }, []);
 

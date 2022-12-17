@@ -10,7 +10,6 @@ export default async function handler(req, res) {
       const parsedCookies = parseCookies({ req });
       const { searchTerm } = query || {};
 
-      console.log(query, 'query -----------------------------');
       if (!searchTerm) {
         return res.status(400).json({ message: 'Missing search term' });
       }
@@ -22,8 +21,6 @@ export default async function handler(req, res) {
         delegateToken,
         ip
       );
-
-      console.log(searchResponse, 'searchResponse');
 
       return res.status(200).json(searchResponse);
     }

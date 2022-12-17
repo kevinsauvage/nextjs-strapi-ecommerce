@@ -28,15 +28,10 @@ export default async function handler(req, res) {
         );
 
         checkout = getCheckoutRes.checkout;
-        console.log(getCheckoutRes, ' <<<<<< res get checkout by ID ');
 
         if (res?.checkout?.orderStatusUrl) {
           const createCheckoutRes = await createCheckout({}, delegateToken, ip);
           checkout = createCheckoutRes?.checkout;
-          console.log(
-            'checkout fulfilled, create new checkout res >>>>',
-            createCheckoutRes
-          );
         }
       } else {
         const input = {};
@@ -46,10 +41,6 @@ export default async function handler(req, res) {
           input,
           delegateToken,
           ip
-        );
-        console.log(
-          createCheckoutRes,
-          '<<<< Checkout ID not found => created res'
         );
 
         checkout = createCheckoutRes?.checkout;

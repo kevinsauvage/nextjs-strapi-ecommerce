@@ -67,9 +67,6 @@ export const searchProducts = async (query, delegateToken, ip) => {
       ip
     );
 
-    console.log(`delegateToken: ${delegateToken}`);
-    console.log(`ip: ${ip}`);
-
     const response = res?.data?.products?.edges;
 
     if (response) {
@@ -78,7 +75,6 @@ export const searchProducts = async (query, delegateToken, ip) => {
         images: cleanImage(product.node?.images?.edges),
         collections: cleanCollections(product.node?.collections?.edges),
       }));
-      console.log(products, 'product');
       return products;
     }
     return null;

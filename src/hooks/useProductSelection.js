@@ -20,9 +20,6 @@ export default function useProductSelection({ product }) {
     if (quantity > 0 && variantId) {
       toggleLoading(true);
       const res = await nextApiCall.addToCheckout({ variantId, quantity });
-
-      console.log('add res >>> ', res);
-
       handleResponse(res, userFeedback.addLinesToCheckout);
     }
   };

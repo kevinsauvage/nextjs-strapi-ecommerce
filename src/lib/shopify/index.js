@@ -26,7 +26,6 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     });
 
     const res = response && (await response.json());
-    console.log(res, 'res');
     return res;
   } catch (error) {
     // TODO HANDLE ERRORS

@@ -21,8 +21,6 @@ export default async function handler(req, res) {
       const delegateToken = parsedCookies?.shopifyDelegateToken;
       const ip = getIpFromRequest(req);
       const emailRes = await sendRecoverEmail(email, delegateToken, ip);
-
-      console.log(emailRes, 'emailRes: ');
       return res.status(200).json(emailRes);
     } catch (err) {
       return res
