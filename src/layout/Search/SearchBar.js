@@ -1,12 +1,12 @@
+import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 import Image from 'next/legacy/image';
-import Container from '@/layout/Container/Container';
 import { MdClose } from 'react-icons/md';
+import Container from '@/layout/Container/Container';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import nextApiCall from '@/utils/apiNext';
-import { useCallback, useEffect, useState } from 'react';
 import limitStrLength from '@/utils/limitStringLength';
 import config from '@/config/index';
-import Link from 'next/link';
 import useDebounce from '@/hooks/useDebounce';
 import styles from './SearchBar.module.scss';
 
@@ -21,6 +21,7 @@ export default function SearchBar() {
   };
 
   const handleSearch = useCallback(async (value) => {
+    if (!value || value?.length < 3) return;
     const response = await nextApiCall.searchProducts(value);
     setSearch(response);
   }, []);
@@ -28,12 +29,8 @@ export default function SearchBar() {
   const debouncedSearchTerm = useDebounce(query, 400);
 
   useEffect(() => {
-    if (debouncedSearchTerm) {
-      console.log(`call search with query ${debouncedSearchTerm}`);
-      handleSearch(debouncedSearchTerm);
-    } else {
-      console.log('not debounce search term');
-    }
+    if (debouncedSearchTerm) handleSearch(debouncedSearchTerm);
+    else setSearch([]);
   }, [debouncedSearchTerm, handleSearch]);
 
   return (

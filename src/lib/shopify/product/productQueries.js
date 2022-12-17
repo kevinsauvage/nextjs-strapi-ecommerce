@@ -39,7 +39,12 @@ query products($query: String) {
         images(first: 2) {
           edges {
             node {
-              ${imageFragment}
+              src
+              altText
+              sm:  url(transform: { maxHeight: 325, maxWidth: 200, crop: CENTER, preferredContentType: WEBP })
+              blurDataURL: url(transform: {maxHeight: 7, maxWidth: 5, crop: CENTER})
+              width
+              height
             }
           }
         }
