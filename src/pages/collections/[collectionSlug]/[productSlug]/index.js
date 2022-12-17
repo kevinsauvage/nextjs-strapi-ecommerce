@@ -39,7 +39,9 @@ export default ProductPage;
 
 export async function getStaticProps({ params }) {
   const product = await getProduct(params.productSlug);
-  const recommendations = await getProductRecommendation(product.id);
+  const recommendations = await getProductRecommendation(product?.id);
+
+  if (!product || !recommendations) return { props: {} };
 
   return {
     props: {
