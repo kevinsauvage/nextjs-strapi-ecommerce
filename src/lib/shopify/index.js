@@ -11,10 +11,12 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     if (delegateToken && ip) {
       headers['Shopify-Storefront-Private-Token'] = delegateToken;
       headers['Shopify-Storefront-Buyer-IP'] = ip;
+      console.warn(
+        `!!!!!!! call shopify from frontend !!!!!!!${delegateToken}!!!${ip}!!!`
+      );
     } else headers['X-Shopify-Storefront-Access-Token'] = accessToken;
 
-    console.log(headers, 'headers');
-    console.log(JSON.stringify(query));
+    console.warn('!!!!!!! call shopify from frontend !!!!!!!');
     const body = JSON.stringify({
       query,
       variables,

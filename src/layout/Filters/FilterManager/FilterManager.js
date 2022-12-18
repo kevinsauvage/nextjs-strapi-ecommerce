@@ -1,13 +1,15 @@
 import { MdOutlineRemove } from 'react-icons/md';
+import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import styles from './FilterManager.module.scss';
 
-export default function FilterManager({
-  isSelectionDifferent,
-  selectedFilters,
-  removeFilter,
-  resetFilters,
-  applyFilters,
-}) {
+export default function FilterManager() {
+  const {
+    applyFilters,
+    selectedFilters,
+    removeFilter,
+    resetFilters,
+    isSelectionDifferent,
+  } = useCollectionContext();
   return (
     <div className={styles.FilterManager}>
       <div className={styles.filters}>

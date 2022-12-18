@@ -1,19 +1,13 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
+import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import Collapsible from '../Collapsible/Collapsible';
 import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
-export default function Filters({
-  applyFilters,
-  selectedFilters,
-  addFilter,
-  removeFilter,
-  filters,
-  resetFilters,
-  notAppliedFilters,
-  actualFilters,
-  isSelectionDifferent,
-}) {
+export default function Filters() {
+  const { selectedFilters, addFilter, removeFilter, actualFilters, filters } =
+    useCollectionContext();
+
   const isChecked = (valueId) => {
     if (!Array.isArray(selectedFilters)) return false;
     const res = selectedFilters?.some((filter) => filter.id === valueId);
@@ -23,16 +17,7 @@ export default function Filters({
   return (
     <div className={styles.filters}>
       {actualFilters.length || selectedFilters.length ? (
-        <FilterManager
-          notAppliedFilters={notAppliedFilters}
-          applyFilters={applyFilters}
-          selectedFilters={selectedFilters}
-          addFilter={addFilter}
-          removeFilter={removeFilter}
-          resetFilters={resetFilters}
-          actualFilters={actualFilters}
-          isSelectionDifferent={isSelectionDifferent}
-        />
+        <FilterManager />
       ) : null}
       {filters
         .filter((item) => item.type === 'LIST')
