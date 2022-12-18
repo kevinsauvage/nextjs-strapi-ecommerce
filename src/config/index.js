@@ -75,7 +75,7 @@ const config = {
 };
 
 if (env === 'production') {
-  config.baseUrl = 'https://www.ecomtestshopi.xyz/';
+  config.baseUrl = 'https://www.ecomtestshopi.xyz';
 }
 
 export default config;
