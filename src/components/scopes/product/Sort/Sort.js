@@ -14,7 +14,7 @@ export default function Sort({ handleChange }) {
         id="sort"
         aria-label="sort"
         selected={sortingOptions[0].label}
-        onChange={handleChange}
+        onChange={(event) => handleChange(event.target.value)}
         className={styles.select}
       >
         {sortingOptions.map((option) => (

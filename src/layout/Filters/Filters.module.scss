@@ -1,7 +1,10 @@
 .filters {
   min-width: 260px;
+  max-width: 300px;
   color: rgb(83, 83, 83);
   margin-right: 20px;
+  border: 1px solid rgb(var(--color-dark-4));
+  padding: 0.5rem;
 }
 
 .label {

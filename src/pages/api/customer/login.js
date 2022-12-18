@@ -28,7 +28,6 @@ const login = async (req, res) => {
       const response = await getUser(accessToken, delegateToken, ip);
       const customer = response?.customer;
 
-      console.log(response);
       handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 
       return res.status(200).json({

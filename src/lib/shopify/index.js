@@ -11,9 +11,10 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     if (delegateToken && ip) {
       headers['Shopify-Storefront-Private-Token'] = delegateToken;
       headers['Shopify-Storefront-Buyer-IP'] = ip;
-      console.log(headers, 'headers');
     } else headers['X-Shopify-Storefront-Access-Token'] = accessToken;
 
+    console.log(headers, 'headers');
+    console.log(JSON.stringify(query));
     const body = JSON.stringify({
       query,
       variables,
@@ -26,10 +27,11 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     });
 
     const res = response && (await response.json());
+
     return res;
   } catch (error) {
     // TODO HANDLE ERRORS
-    return console.log('Error ----------------------', error);
+    return console.error('Error ----------------------', error);
   }
 };
 

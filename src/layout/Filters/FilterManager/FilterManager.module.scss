@@ -1,0 +1,45 @@
+.FilterManager {
+  padding: 1rem;
+  border: 1px solid black;
+}
+
+.actualFilters,
+.notAppliedFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: black;
+}
+
+.filter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  width: fit-content;
+  gap: 0.5rem;
+  border-radius: 3px;
+  border: 1px solid black;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.button {
+  width: 100%;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+}

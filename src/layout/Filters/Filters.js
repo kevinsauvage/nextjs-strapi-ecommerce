@@ -1,46 +1,39 @@
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
-import MultiRangeSlider from '@/components/MultiRangeSlider/MultiRangeSlider';
-import Button from '@/components/Button/Button';
 import Collapsible from '../Collapsible/Collapsible';
 import styles from './Filters.module.scss';
+import FilterManager from './FilterManager/FilterManager';
 
 export default function Filters({
-  filters = [],
-  filtersSelected,
-  onChange,
-  addUniqueParam,
+  applyFilters,
   selectedFilters,
-  handleFilter,
+  addFilter,
+  removeFilter,
+  filters,
+  resetFilters,
+  notAppliedFilters,
+  actualFilters,
+  isSelectionDifferent,
 }) {
-  const isChecked = (input, filterId) => {
-    const actualValues = filtersSelected[filterId];
-
-    return Array.isArray(actualValues)
-      ? actualValues.includes(input)
-      : [actualValues].includes(input);
+  const isChecked = (valueId) => {
+    if (!Array.isArray(selectedFilters)) return false;
+    const res = selectedFilters?.some((filter) => filter.id === valueId);
+    return res;
   };
 
   return (
     <div className={styles.filters}>
-      {filters
-        .filter((item) => item.type === 'PRICE_RANGE')
-        .map((filter) => (
-          <Collapsible key={filter.label} title={filter.label}>
-            {filter.values.map((value) => (
-              <MultiRangeSlider
-                key={value}
-                min={JSON.parse(value?.input)?.price?.min}
-                max={JSON.parse(value?.input)?.price?.max}
-                onChange={({ min, max }) =>
-                  addUniqueParam(
-                    filter.id,
-                    JSON.stringify({ price: { min, max } })
-                  )
-                }
-              />
-            ))}
-          </Collapsible>
-        ))}
+      {actualFilters.length || selectedFilters.length ? (
+        <FilterManager
+          notAppliedFilters={notAppliedFilters}
+          applyFilters={applyFilters}
+          selectedFilters={selectedFilters}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          resetFilters={resetFilters}
+          actualFilters={actualFilters}
+          isSelectionDifferent={isSelectionDifferent}
+        />
+      ) : null}
       {filters
         .filter((item) => item.type === 'LIST')
         .map(
@@ -56,9 +49,13 @@ export default function Filters({
                     <button
                       className={styles.button}
                       type="button"
-                      onClick={() => onChange(value.input, filter.id)}
+                      onClick={() =>
+                        isChecked(value.id)
+                          ? removeFilter(value.id)
+                          : addFilter(value)
+                      }
                     >
-                      {isChecked(value.input, filter.id) ? (
+                      {isChecked(value.id) ? (
                         <MdCheckBox size={20} color="purple" />
                       ) : (
                         <MdCheckBoxOutlineBlank size={20} />
@@ -73,9 +70,6 @@ export default function Filters({
               </Collapsible>
             )
         )}
-      {selectedFilters && (
-        <Button tertiary text="Filter" onClick={handleFilter} />
-      )}
     </div>
   );
 }

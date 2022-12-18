@@ -2,7 +2,6 @@ import Image from 'next/legacy/image';
 import styles from './PhotoGallery.module.scss';
 
 export default function PhotoGallery({ images = [], alt }) {
-  console.log(images);
   return (
     <div className={styles.gallery}>
       {images.map((image) => (

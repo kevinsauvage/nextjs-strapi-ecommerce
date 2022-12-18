@@ -10,9 +10,6 @@ query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: 
   collection(handle: $handle) {
     ${collectionFragment}
     products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
-      filters {
-        ${filterFragment}
-      }
       pageInfo {
         ${pageInfoFragment}
       }
@@ -20,6 +17,9 @@ query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: 
         node {
           ${productFragment}
         }
+      }
+      filters {
+        ${filterFragment}
       }
     }
   }
@@ -30,9 +30,6 @@ query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: P
   collection(handle: $handle) {
     ${collectionFragment}
     products(last: $last,  filters: $filters, sortKey: $sort, before: $before) {
-      filters {
-        ${filterFragment}
-      }
       pageInfo {
         ${pageInfoFragment}
       }
@@ -40,6 +37,9 @@ query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: P
         node {
           ${productFragment}
         }
+      }
+      filters {
+        ${filterFragment}
       }
     }
   }
@@ -74,11 +74,23 @@ query ($first: Int){
   }
 }`;
 
+const getCollectionFilters = `
+query Search($handle: String!) {
+  collection(handle: $handle) {
+    products(first: 250) {
+      filters {
+        ${filterFragment}
+      }
+    }
+  }
+}`;
+
 const queriesCollection = {
   getCollectionsWithProducts,
   filterCollectionForward,
   filterCollectionBackward,
   getCollections,
+  getCollectionFilters,
 };
 
 export default queriesCollection;

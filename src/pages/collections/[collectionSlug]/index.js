@@ -1,107 +1,49 @@
 import Page from '@/layout/Page/Page';
 import ProductsList from '@/components/scopes/product/ProductList/ProductsList';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useRouterFilter from '@/hooks/useRouterFilter';
 import {
   filterCollectionForward,
   filterCollectionBackward,
+  getCollectionFilters,
 } from '@/lib/shopify/collection/collectionApiCall';
 import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
 import Sort from '@/components/scopes/product/Sort/Sort';
 import Filters from '@/layout/Filters/Filters';
 import Pagination from '@/components/scopes/product/Pagination/Pagination';
-import { getFiltersFromParams } from '@/lib/shopify/helpers';
+import { getFiltersFromQuery } from '@/lib/shopify/helpers';
+import nookies from 'nookies';
 import style from './CollectionSlug.module.scss';
 
-function CollectionSlugPage({ title, data }) {
-  const [loading, setLoading] = useState(false);
+function CollectionSlugPage({ title, data, filters }) {
   const [layout, setLayout] = useState('grid');
   const [products, setProducts] = useState();
   const [pageInfo, setPageInfo] = useState();
-  const [productsFilters, setProductsFilters] = useState();
-  const { addUniqueParam, addParam, selectedFilters } = useRouterFilter();
-  const { query } = useRouter();
+  const [productsFilters, setProductFilters] = useState([]);
   const { collection } = data || {};
+
+  const {
+    applyFilters,
+    selectedFilters,
+    addFilter,
+    removeFilter,
+    handleNext,
+    handlePrev,
+    loading,
+    handleSort,
+    resetFilters,
+    notAppliedFilters,
+    actualFilters,
+    isSelectionDifferent,
+  } = useRouterFilter(filters, pageInfo);
 
   useEffect(() => {
     setProducts(data?.products);
     setPageInfo(data?.pageInfo);
-    setProductsFilters(data?.productsFilters);
+    setProductFilters(data?.productsFilters);
   }, [data]);
 
-  useEffect(() => {
-    if (pageInfo) {
-      addUniqueParam('startCursor', pageInfo.startCursor);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageInfo]);
-
-  const handleRes = (res) => {
-    setProducts(res?.products);
-    setPageInfo(res?.pageInfo);
-    setProductsFilters(res?.productsFilters);
-  };
-
-  const getFilters = () => {
-    const filters = { ...query };
-    delete filters.collectionSlug;
-    delete filters.sort_key;
-    delete filters.startCursor;
-    return filters;
-  };
-
-  const handlePrev = async () => {
-    const filters = getFilters();
-    setLoading(true);
-    setProducts(null);
-    window.scrollTo(0, 0);
-    const res = await filterCollectionBackward(
-      title,
-      20,
-      filters,
-      query.sort_key,
-      pageInfo.endCursor
-    );
-    setLoading(false);
-    if (res) handleRes(res);
-  };
-
-  const handleNext = async () => {
-    const filters = getFilters();
-    setLoading(true);
-    window.scrollTo(0, 0);
-    const res = await filterCollectionForward(
-      title,
-      20,
-      filters,
-      query.sort_key,
-      pageInfo.startCursor
-    );
-    setLoading(false);
-    if (res) handleRes(res);
-  };
-
-  const handleFilter = async () => {
-    const filters = getFiltersFromParams(productsFilters, query);
-
-    setLoading(true);
-    window.scrollTo(0, 0);
-    const res = await filterCollectionForward(
-      title,
-      20,
-      filters,
-      query.sort_key,
-      null
-    );
-    setLoading(false);
-    if (res) handleRes(res);
-  };
   const handleSetLayout = (newLayout) => setLayout(newLayout);
-
-  const handleChangeFilter = (valueId, filterId) => addParam(filterId, valueId);
-
-  const handleSort = (e) => handleChangeFilter(e.target.value, 'sort_key');
 
   return (
     <Page title={`${title}`}>
@@ -113,11 +55,14 @@ function CollectionSlugPage({ title, data }) {
         <aside>
           <Filters
             filters={productsFilters}
-            filtersSelected={query}
-            onChange={handleChangeFilter}
-            addUniqueParam={addUniqueParam}
+            applyFilters={applyFilters}
             selectedFilters={selectedFilters}
-            handleFilter={handleFilter}
+            addFilter={addFilter}
+            removeFilter={removeFilter}
+            resetFilters={resetFilters}
+            notAppliedFilters={notAppliedFilters}
+            actualFilters={actualFilters}
+            isSelectionDifferent={isSelectionDifferent}
           />
         </aside>
         <main className={style.main}>
@@ -139,25 +84,56 @@ function CollectionSlugPage({ title, data }) {
 
 export default CollectionSlugPage;
 
-export async function getServerSideProps({ params, query }) {
+export async function getServerSideProps(ctx) {
+  const { params, query, req } = ctx;
   const { collectionSlug } = params || {};
+  const cookies = nookies.get(ctx);
+  const delegateToken = cookies?.shopifyDelegateToken;
+  const forwarded = req.headers['x-forwarded-for'];
 
-  const filters = { ...query };
-  delete filters.collectionSlug;
-  delete filters.sort_key;
-  delete filters.startCursor;
+  const ip =
+    typeof forwarded === 'string'
+      ? forwarded.split(/, /)[0]
+      : req.socket.remoteAddress;
 
-  const data = await filterCollectionForward(
+  const allFilters = await getCollectionFilters(
     collectionSlug,
-    20,
-    filters,
-    query.sort_key
+    delegateToken,
+    ip
   );
+
+  const filteredFilters = getFiltersFromQuery(allFilters, query);
+  const filters = filteredFilters.map((item) => JSON.parse(item.input));
+
+  let data;
+
+  if (query.direction === 'backward') {
+    data = await filterCollectionBackward(
+      collectionSlug,
+      20,
+      filters,
+      query.sort_key,
+      query.startCursor,
+      delegateToken,
+      ip
+    );
+  } else {
+    data = await filterCollectionForward(
+      collectionSlug,
+      20,
+      filters,
+      query.sort_key,
+      query.endCursor,
+      delegateToken,
+      ip
+    );
+  }
 
   return {
     props: {
       title: collectionSlug,
       data,
+      filters: allFilters,
     },
   };
 }

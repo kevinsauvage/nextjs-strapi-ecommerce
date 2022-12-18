@@ -7,7 +7,9 @@ export const filterCollectionForward = async (
   first = null,
   filters,
   sort = 'RELEVANCE',
-  after = null
+  after = null,
+  delegateToken,
+  ip
 ) => {
   try {
     const res = await shopifyStorefrontCall(
@@ -18,7 +20,9 @@ export const filterCollectionForward = async (
         filters,
         sort,
         after,
-      }
+      },
+      delegateToken,
+      ip
     );
 
     if (res) {
@@ -46,7 +50,9 @@ export const filterCollectionBackward = async (
   last = null,
   filters,
   sort = 'RELEVANCE',
-  before = null
+  before = null,
+  delegateToken,
+  ip
 ) => {
   try {
     const res = await shopifyStorefrontCall(
@@ -57,15 +63,18 @@ export const filterCollectionBackward = async (
         filters,
         sort,
         before,
-      }
+      },
+      delegateToken,
+      ip
     );
 
     if (res) {
-      const products = cleanProducts(res?.collection?.products.edges);
+      const products = cleanProducts(res?.data?.collection?.products.edges);
       const pageInfo = res?.data?.collection?.products?.pageInfo;
       const productsFilters = res?.data?.collection?.products?.filters;
       const collection = res?.data?.collection;
       const seo = res?.data?.collection?.seo;
+
       return {
         collection,
         products,
@@ -104,5 +113,21 @@ export const getCollectionsWithProducts = async (first) => {
     return null;
   } catch (e) {
     return console.error(e);
+  }
+};
+
+export const getCollectionFilters = async (handle, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      queriesCollection.getCollectionFilters,
+      { handle },
+      delegateToken,
+      ip
+    );
+    const filters = res?.data?.collection?.products?.filters;
+    if (filters) return filters;
+    return null;
+  } catch (err) {
+    return console.error(err);
   }
 };

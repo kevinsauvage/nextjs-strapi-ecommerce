@@ -85,3 +85,16 @@ export const cleanGraphQLResponse = function (input) {
 
   return output;
 };
+
+export const getFiltersFromQuery = (filters, query) => {
+  if (!query.filter) return [];
+  const newFilters = filters.reduce((acc, filter) => {
+    filter.values.forEach((value) => {
+      if (query.filter.includes(value.id)) {
+        acc.push(value);
+      }
+    });
+    return acc;
+  }, []);
+  return newFilters;
+};
