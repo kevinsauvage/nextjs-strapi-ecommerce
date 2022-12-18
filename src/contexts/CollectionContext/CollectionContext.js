@@ -22,9 +22,7 @@ export function CollectionProvider({ children, pageInfo, filters }) {
   }, [pageInfo]);
 
   useEffect(() => {
-    if (loading) {
-      window.scrollTo(0, 0);
-    }
+    if (loading) window.scrollTo(0, 0);
   }, [loading]);
 
   useEffect(() => {
@@ -125,6 +123,7 @@ export function CollectionProvider({ children, pageInfo, filters }) {
       newUrl.searchParams.delete('direction');
       newUrl.searchParams.delete('startCursor');
       newUrl.searchParams.delete('endCursor');
+      dispatch({ type: actions.SET_LOADING, payload: true });
       push(newUrl);
     },
     [asPath, push]
@@ -147,7 +146,7 @@ export function CollectionProvider({ children, pageInfo, filters }) {
       actualFilters.every((s) => s.id !== obj.id)
     );
     dispatch({ type: actions.SET_NOT_APPLIED_FILTERS, payload: result });
-  }, [actualFilters, filters, query, selectedFilters]);
+  }, [actualFilters, selectedFilters]);
 
   const values = useMemo(
     () => ({

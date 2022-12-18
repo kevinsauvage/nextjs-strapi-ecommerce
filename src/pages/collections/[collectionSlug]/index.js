@@ -48,7 +48,7 @@ export async function getServerSideProps(ctx) {
   if (query.direction === 'backward') {
     data = await filterCollectionBackward(
       collectionSlug,
-      20,
+      10,
       filters,
       query.sort_key,
       query.startCursor,
@@ -58,7 +58,7 @@ export async function getServerSideProps(ctx) {
   } else {
     data = await filterCollectionForward(
       collectionSlug,
-      20,
+      10,
       filters,
       query.sort_key,
       query.endCursor,
