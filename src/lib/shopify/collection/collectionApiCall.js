@@ -28,14 +28,12 @@ export const filterCollectionForward = async (
     if (res) {
       const products = cleanProducts(res?.data?.collection?.products.edges);
       const pageInfo = res?.data?.collection?.products?.pageInfo;
-      const productsFilters = res?.data?.collection?.products?.filters;
       const collection = res?.data?.collection;
       const seo = res?.data?.collection?.seo;
       return {
         collection,
         products,
         pageInfo,
-        productsFilters,
         seo,
       };
     }
@@ -71,7 +69,6 @@ export const filterCollectionBackward = async (
     if (res) {
       const products = cleanProducts(res?.data?.collection?.products.edges);
       const pageInfo = res?.data?.collection?.products?.pageInfo;
-      const productsFilters = res?.data?.collection?.products?.filters;
       const collection = res?.data?.collection;
       const seo = res?.data?.collection?.seo;
 
@@ -79,7 +76,6 @@ export const filterCollectionBackward = async (
         collection,
         products,
         pageInfo,
-        productsFilters,
         seo,
       };
     }

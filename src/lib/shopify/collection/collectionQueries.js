@@ -18,9 +18,6 @@ query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: 
           ${productFragment}
         }
       }
-      filters {
-        ${filterFragment}
-      }
     }
   }
 }`;
@@ -37,9 +34,6 @@ query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: P
         node {
           ${productFragment}
         }
-      }
-      filters {
-        ${filterFragment}
       }
     }
   }
@@ -77,7 +71,7 @@ query ($first: Int){
 const getCollectionFilters = `
 query Search($handle: String!) {
   collection(handle: $handle) {
-    products(first: 250) {
+    products(first: 0) {
       filters {
         ${filterFragment}
       }

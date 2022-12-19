@@ -25,7 +25,7 @@ export default function ProductCardDefault({ product = {} }) {
             height={750}
             blurDataURL={images?.[0]?.blurDataURL}
             placeholder="blur"
-            quality={70}
+            quality={40}
             loading="lazy"
           />
           <div

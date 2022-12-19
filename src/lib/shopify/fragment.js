@@ -107,7 +107,7 @@ collections(first: 1) {
     }
   }
 } 
-variants(first: 250) {
+variants(first: 50) {
   edges {
     node {
       ${variantFragment}
