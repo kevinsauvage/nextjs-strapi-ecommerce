@@ -88,6 +88,7 @@ const searchProducts = (query = '') => {
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
+
 const nextApiCall = {
   login,
   logout,

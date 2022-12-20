@@ -168,12 +168,59 @@ orders(first: 10) {
       node {
           id
           name
-          totalPrice {
+          fulfillmentStatus
+          currencyCode
+          customerUrl
+          email
+          financialStatus
+          orderNumber
+          phone
+          processedAt
+          totalRefunded {
             amount
             currencyCode
           }
-          fulfillmentStatus
-          currencyCode
+          totalShippingPrice {
+            amount
+            currencyCode
+          }
+          totalPrice {
+            amount
+            currencyCode
+          } 
+          cancelReason 
+          canceledAt
+          shippingAddress {
+            id
+            address1
+            address2
+            city
+            company
+            country
+            countryCodeV2
+            firstName
+            formatted
+            formattedArea
+            lastName
+            name
+            phone
+            province
+            provinceCode
+            zip
+          }
+          lineItems(first: 200) {
+            edges {
+              node {
+                quantity
+                title
+                quantity
+                variant {
+                    ${variantFragment}
+                }
+              }
+            }
+          }
+
       }
   }
 }`;
