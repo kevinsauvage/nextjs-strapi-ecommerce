@@ -270,10 +270,6 @@ export function CollectionProvider({ children }) {
     }
   }, [allFilters, pageInfo.endCursor, query, setPageInfo, setProducts]);
 
-  console.log('actual filters: ', actualFilters);
-  console.log('selected filters,', selectedFilters);
-  console.log('not applied filters: ', notAppliedFilters);
-
   // EFFECTS ==================================================================================================
 
   // Reset filters if collection change
