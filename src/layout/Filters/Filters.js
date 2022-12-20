@@ -5,8 +5,13 @@ import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
 export default function Filters() {
-  const { selectedFilters, addFilter, removeFilter, actualFilters, filters } =
-    useCollectionContext();
+  const {
+    selectedFilters,
+    setSelectedFilters,
+    removeFilter,
+    actualFilters,
+    allFilters,
+  } = useCollectionContext();
 
   const isChecked = (valueId) => {
     if (!Array.isArray(selectedFilters)) return false;
@@ -19,42 +24,44 @@ export default function Filters() {
       {actualFilters.length || selectedFilters.length ? (
         <FilterManager />
       ) : null}
-      {filters
-        .filter((item) => item.type === 'LIST')
-        .map(
-          (filter) =>
-            filter.values.length > 1 && (
-              <Collapsible key={filter.label} title={filter.label}>
-                {filter.values.map((value) => (
-                  <label
-                    key={value.input}
-                    htmlFor={value.id}
-                    className={styles.label}
-                  >
-                    <button
-                      className={styles.button}
-                      type="button"
-                      onClick={() =>
-                        isChecked(value.id)
-                          ? removeFilter(value.id)
-                          : addFilter(value)
-                      }
-                    >
-                      {isChecked(value.id) ? (
-                        <MdCheckBox size={20} color="purple" />
-                      ) : (
-                        <MdCheckBoxOutlineBlank size={20} />
-                      )}
-                    </button>
-                    <p className={styles.labelText}>
-                      <small>{value.label}</small>
-                    </p>
-                    <small className={styles.count}>({value.count})</small>
-                  </label>
-                ))}
-              </Collapsible>
+      {Array.isArray(allFilters)
+        ? allFilters
+            .filter((item) => item.type === 'LIST')
+            .map(
+              (filter) =>
+                filter.values.length > 1 && (
+                  <Collapsible key={filter.label} title={filter.label}>
+                    {filter.values.map((value) => (
+                      <label
+                        key={value.input}
+                        htmlFor={value.id}
+                        className={styles.label}
+                      >
+                        <button
+                          className={styles.button}
+                          type="button"
+                          onClick={() =>
+                            isChecked(value.id)
+                              ? removeFilter(value.id)
+                              : setSelectedFilters(value)
+                          }
+                        >
+                          {isChecked(value.id) ? (
+                            <MdCheckBox size={20} color="purple" />
+                          ) : (
+                            <MdCheckBoxOutlineBlank size={20} />
+                          )}
+                        </button>
+                        <p className={styles.labelText}>
+                          <small>{value.label}</small>
+                        </p>
+                        <small className={styles.count}>({value.count})</small>
+                      </label>
+                    ))}
+                  </Collapsible>
+                )
             )
-        )}
+        : null}
     </div>
   );
 }

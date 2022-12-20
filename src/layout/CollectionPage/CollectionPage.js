@@ -1,7 +1,6 @@
+import { useEffect, useState } from 'react';
 import Page from '@/layout/Page/Page';
 import ProductsList from '@/components/scopes/product/ProductList/ProductsList';
-import { useEffect, useState } from 'react';
-
 import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
 import Sort from '@/components/scopes/product/Sort/Sort';
 import Filters from '@/layout/Filters/Filters';
@@ -9,22 +8,38 @@ import Pagination from '@/components/scopes/product/Pagination/Pagination';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import style from './CollectionPage.module.scss';
 
-function CollectionPage({ title, data }) {
+function CollectionPage({ collection, pageInfo: initialPageInfo, filters }) {
   const [layout, setLayout] = useState('grid');
-  const [products, setProducts] = useState(data?.products);
-  const { collection } = data || {};
 
-  const { handleNext, handlePrev, loading, handleSort, pageInfo } =
-    useCollectionContext();
+  const {
+    handleNext,
+    handlePrev,
+    loading,
+    handleSort,
+    setPageInfo,
+    setProducts,
+    products,
+    setAllFilters,
+    pageInfo,
+  } = useCollectionContext();
 
   useEffect(() => {
-    setProducts(data?.products);
-  }, [data]);
+    if (collection.products) setProducts(collection.products);
+    if (initialPageInfo) setPageInfo(initialPageInfo);
+    if (filters) setAllFilters(filters);
+  }, [
+    collection,
+    filters,
+    initialPageInfo,
+    setAllFilters,
+    setPageInfo,
+    setProducts,
+  ]);
 
   const handleSetLayout = (newLayout) => setLayout(newLayout);
 
   return (
-    <Page title={`${title}`}>
+    <Page title={`${collection?.title}`}>
       <div className={style.banner}>
         <h1 className={style.title}>{collection?.title}</h1>
         <p className={style.description}>{collection?.description}</p>

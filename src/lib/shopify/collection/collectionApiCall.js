@@ -24,18 +24,12 @@ export const filterCollectionForward = async (
       delegateToken,
       ip
     );
+    const collection = res?.data?.collection;
 
-    if (res) {
-      const products = cleanProducts(res?.data?.collection?.products.edges);
-      const pageInfo = res?.data?.collection?.products?.pageInfo;
-      const collection = res?.data?.collection;
-      const seo = res?.data?.collection?.seo;
-      return {
-        collection,
-        products,
-        pageInfo,
-        seo,
-      };
+    if (collection) {
+      const products = cleanProducts(collection?.products.edges);
+      const pageInfo = collection?.products?.pageInfo;
+      return { collection: { ...collection, products }, pageInfo };
     }
     return null;
   } catch (e) {
@@ -66,18 +60,12 @@ export const filterCollectionBackward = async (
       ip
     );
 
-    if (res) {
-      const products = cleanProducts(res?.data?.collection?.products.edges);
-      const pageInfo = res?.data?.collection?.products?.pageInfo;
-      const collection = res?.data?.collection;
-      const seo = res?.data?.collection?.seo;
+    const collection = res?.data?.collection;
 
-      return {
-        collection,
-        products,
-        pageInfo,
-        seo,
-      };
+    if (collection) {
+      const products = cleanProducts(collection?.products.edges);
+      const pageInfo = collection?.products?.pageInfo;
+      return { collection: { ...collection, products }, pageInfo };
     }
     return false;
   } catch (e) {

@@ -1,6 +1,5 @@
 import {
   filterCollectionForward,
-  filterCollectionBackward,
   getCollectionFilters,
 } from '@/lib/shopify/collection/collectionApiCall';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
@@ -8,14 +7,10 @@ import nookies from 'nookies';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 import CollectionPage from '@/layout/CollectionPage/CollectionPage';
 
-function CollectionSlugPage({ data, filters, ...rest }) {
+function CollectionSlugPage(props) {
   return (
-    <CollectionProvider
-      pageInfo={data?.pageInfo}
-      products={data?.products}
-      filters={filters}
-    >
-      <CollectionPage {...rest} filters={filters} data={data} />
+    <CollectionProvider>
+      <CollectionPage {...props} />
     </CollectionProvider>
   );
 }
@@ -41,36 +36,25 @@ export async function getServerSideProps(ctx) {
   );
 
   const filteredFilters = getFiltersFromQuery(allFilters, query);
+
   const filters = filteredFilters.map((item) => JSON.parse(item.input));
 
-  let data;
+  const data = await filterCollectionForward(
+    collectionSlug,
+    10,
+    filters,
+    query.sort_key,
+    query.startCursor,
+    delegateToken,
+    ip
+  );
 
-  if (query.direction === 'backward') {
-    data = await filterCollectionBackward(
-      collectionSlug,
-      10,
-      filters,
-      query.sort_key,
-      query.startCursor,
-      delegateToken,
-      ip
-    );
-  } else {
-    data = await filterCollectionForward(
-      collectionSlug,
-      10,
-      filters,
-      query.sort_key,
-      query.endCursor,
-      delegateToken,
-      ip
-    );
-  }
+  const { collection = [], pageInfo = [] } = data || {};
 
   return {
     props: {
-      title: collectionSlug,
-      data,
+      collection,
+      pageInfo,
       filters: allFilters,
     },
   };

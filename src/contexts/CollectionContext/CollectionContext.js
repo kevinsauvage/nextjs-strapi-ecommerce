@@ -5,41 +5,70 @@ import {
   useMemo,
   useReducer,
 } from 'react';
+import { useRouter } from 'next/router';
 import config from '@/config/index';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
-import { useRouter } from 'next/router';
+import {
+  filterCollectionForward,
+  filterCollectionBackward,
+} from '@/lib/shopify/collection/collectionApiCall';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
 
 export const CollectionContext = createContext();
 
-export function CollectionProvider({ children, pageInfo, filters }) {
+export function CollectionProvider({ children }) {
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
-  const { loading, notAppliedFilters, selectedFilters, actualFilters } = states;
+  const {
+    loading,
+    notAppliedFilters,
+    selectedFilters,
+    actualFilters,
+    pageInfo,
+    products,
+    allFilters,
+  } = states;
+
   const { query, pathname, push, asPath } = useRouter();
 
-  useEffect(() => {
-    dispatch({ type: actions.SET_LOADING, payload: false });
-  }, [pageInfo]);
+  // Check if there is new filters to apply
+  const isSelectionDifferent = useCallback(() => {
+    if (notAppliedFilters.length) return true;
+    if (selectedFilters.length !== actualFilters.length) return true;
+    return false;
+  }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
 
-  useEffect(() => {
-    if (loading) window.scrollTo(0, 0);
-  }, [loading]);
+  const setPageInfo = useCallback((payload) => {
+    console.log('setPageInfo');
 
-  useEffect(() => {
-    if (query?.filter) {
-      const filteredFilters = getFiltersFromQuery(filters, query);
-      if (Array.isArray(filteredFilters)) {
-        dispatch({
-          type: actions.SET_SELECTED_FILTERS,
-          payload: filteredFilters,
-        });
-      }
-    }
-  }, [query, filters]);
+    dispatch({
+      type: actions.SET_PAGE_INFO,
+      payload,
+    });
+  }, []);
 
-  const addFilter = useCallback(
-    (filter) => {
-      const newFilters = [...selectedFilters, filter];
+  const setProducts = useCallback((payload) => {
+    console.log('setProducts');
+
+    dispatch({
+      type: actions.SET_PRODUCTS,
+      payload,
+    });
+  }, []);
+
+  const setAllFilters = useCallback((payload) => {
+    console.log('setAllFilters');
+
+    dispatch({
+      type: actions.SET_ALL_FILTERS,
+      payload,
+    });
+  }, []);
+
+  const setSelectedFilters = useCallback(
+    (payload) => {
+      console.log('setSelectedFilters');
+
+      const newFilters = [...selectedFilters, payload];
       dispatch({
         type: actions.SET_SELECTED_FILTERS,
         payload: newFilters,
@@ -50,6 +79,8 @@ export function CollectionProvider({ children, pageInfo, filters }) {
 
   const removeFilter = useCallback(
     (filterId) => {
+      console.log('removeFilter');
+
       const newFilters = selectedFilters.filter((f) => f.id !== filterId);
       dispatch({
         type: actions.SET_SELECTED_FILTERS,
@@ -59,19 +90,48 @@ export function CollectionProvider({ children, pageInfo, filters }) {
     [selectedFilters]
   );
 
-  const isSelectionDifferent = useCallback(() => {
-    if (notAppliedFilters.length) return true;
-    if (selectedFilters.length !== actualFilters.length) return true;
-    return false;
-  }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
+  const resetFilters = useCallback(async () => {
+    dispatch({ type: actions.SET_LOADING, payload: true });
+    console.log('resetFilters');
 
-  const applyFilters = useCallback(() => {
     const path = pathname.replace('[collectionSlug]', query.collectionSlug);
     const newUrl = new URL(config.baseUrl + path);
 
-    if (query.startCursor) newUrl.searchParams.delete('startCursor');
-    if (query.endCursor) newUrl.searchParams.delete('endCursor');
-    newUrl.searchParams.delete('backward');
+    dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
+    push(newUrl, undefined, { shallow: true });
+
+    const data = await filterCollectionForward(
+      query.collectionSlug,
+      10,
+      [],
+      query.sort_key,
+      null
+    );
+
+    console.log(data, 'data reset filters');
+
+    dispatch({ type: actions.SET_LOADING, payload: false });
+
+    if (data) {
+      const newProducts = data?.collection?.products;
+      const newPageInfo = data?.pageInfo;
+      if (newProducts) setProducts(newProducts);
+      if (newPageInfo) setPageInfo(newPageInfo);
+      window.scrollTo(0, 0);
+    }
+    return null;
+  }, [
+    pathname,
+    push,
+    query.collectionSlug,
+    query.sort_key,
+    setPageInfo,
+    setProducts,
+  ]);
+
+  const applyFilters = useCallback(async () => {
+    const path = pathname.replace('[collectionSlug]', query.collectionSlug);
+    const newUrl = new URL(config.baseUrl + path);
 
     if (selectedFilters.length > 0) {
       selectedFilters.forEach((item) => {
@@ -83,103 +143,231 @@ export function CollectionProvider({ children, pageInfo, filters }) {
 
     if (isSelectionDifferent()) {
       if (newUrl.pathname === pathname) return;
-      dispatch({ type: actions.SET_LOADING, payload: true });
     }
+    push(newUrl, undefined, { shallow: true });
 
-    push(newUrl.href);
+    dispatch({ type: actions.SET_LOADING, payload: true });
+
+    const filters = selectedFilters.map((item) => JSON.parse(item.input));
+
+    const data = await filterCollectionForward(
+      query.collectionSlug,
+      10,
+      filters,
+      query.sort_key,
+      null
+    );
+
+    dispatch({ type: actions.SET_LOADING, payload: false });
+
+    if (data) {
+      const newProducts = data?.collection?.products;
+      const newPageInfo = data?.pageInfo;
+      if (newProducts) setProducts(newProducts);
+      if (newPageInfo) setPageInfo(newPageInfo);
+      window.scrollTo(0, 0);
+    }
   }, [
     isSelectionDifferent,
     pathname,
     push,
-    query.collectionSlug,
-    query.endCursor,
-    query.sort_key,
-    query.startCursor,
+    query,
     selectedFilters,
+    setPageInfo,
+    setProducts,
   ]);
 
-  const handlePrev = useCallback(async () => {
-    const newUrl = new URL(config.baseUrl + asPath);
-    newUrl.searchParams.set('endCursor', pageInfo.endCursor);
-    newUrl.searchParams.set('startCursor', pageInfo.startCursor);
-    newUrl.searchParams.set('direction', 'backward');
-    dispatch({ type: actions.SET_LOADING, payload: true });
-    push(newUrl);
-  }, [asPath, pageInfo.endCursor, pageInfo.startCursor, push]);
-
-  const handleNext = useCallback(async () => {
-    const newUrl = new URL(config.baseUrl + asPath);
-    newUrl.searchParams.set('endCursor', pageInfo.endCursor);
-    newUrl.searchParams.set('startCursor', pageInfo.startCursor);
-    newUrl.searchParams.set('direction', 'forward');
-    dispatch({ type: actions.SET_LOADING, payload: true });
-    push(newUrl);
-  }, [asPath, pageInfo.endCursor, pageInfo.startCursor, push]);
-
   const handleSort = useCallback(
-    (value) => {
+    async (value) => {
+      if (!value) return null;
       const newUrl = new URL(config.baseUrl + asPath);
       newUrl.searchParams.set('sort_key', value);
-      newUrl.searchParams.delete('direction');
-      newUrl.searchParams.delete('startCursor');
-      newUrl.searchParams.delete('endCursor');
       dispatch({ type: actions.SET_LOADING, payload: true });
-      push(newUrl);
+
+      const filters = actualFilters.map((filter) => JSON.parse(filter.input));
+
+      const data = await filterCollectionForward(
+        query.collectionSlug,
+        10,
+        filters,
+        value,
+        null
+      );
+
+      dispatch({ type: actions.SET_LOADING, payload: false });
+
+      if (data) {
+        const newProducts = data?.collection?.products;
+        const newPageInfo = data?.pageInfo;
+        if (newProducts) setProducts(newProducts);
+        if (newPageInfo) setPageInfo(newPageInfo);
+        window.scrollTo(0, 0);
+        return push(newUrl, undefined, { shallow: true });
+      }
+      return null;
     },
-    [asPath, push]
+    [
+      actualFilters,
+      asPath,
+      push,
+      query.collectionSlug,
+      setPageInfo,
+      setProducts,
+    ]
   );
 
-  const resetFilters = useCallback(() => {
-    const path = pathname.replace('[collectionSlug]', query.collectionSlug);
-    const newUrl = new URL(config.baseUrl + path);
-    dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
-    push(newUrl);
-  }, [pathname, push, query.collectionSlug]);
+  // PAGINATION ==============================================================================================
+
+  const handlePrev = useCallback(async () => {
+    dispatch({ type: actions.SET_LOADING, payload: true });
+
+    const filteredFilters = getFiltersFromQuery(allFilters, query);
+    const filters = filteredFilters.map((item) => JSON.parse(item.input));
+
+    const data = await filterCollectionBackward(
+      query.collectionSlug,
+      10,
+      filters,
+      query.sort_key,
+      pageInfo.startCursor
+    );
+
+    console.log(data, 'data handleprevvvv');
+
+    dispatch({ type: actions.SET_LOADING, payload: false });
+
+    if (data) {
+      const newProducts = data?.collection?.products;
+      const newPageInfo = data?.pageInfo;
+      if (newProducts) setProducts(newProducts);
+      if (newPageInfo) setPageInfo(newPageInfo);
+      window.scrollTo(0, 0);
+    }
+  }, [allFilters, pageInfo.startCursor, query, setPageInfo, setProducts]);
+
+  const handleNext = useCallback(async () => {
+    dispatch({ type: actions.SET_LOADING, payload: true });
+
+    const filteredFilters = getFiltersFromQuery(allFilters, query);
+    const filters = filteredFilters.map((item) => JSON.parse(item.input));
+
+    const data = await filterCollectionForward(
+      query.collectionSlug,
+      10,
+      filters,
+      query.sort_key,
+      pageInfo.endCursor
+    );
+
+    dispatch({ type: actions.SET_LOADING, payload: false });
+
+    if (data) {
+      const newProducts = data?.collection?.products;
+      const newPageInfo = data?.pageInfo;
+      if (newProducts) setProducts(newProducts);
+      if (newPageInfo) setPageInfo(newPageInfo);
+      window.scrollTo(0, 0);
+    }
+  }, [allFilters, pageInfo.endCursor, query, setPageInfo, setProducts]);
+
+  console.log('actual filters: ', actualFilters);
+  console.log('selected filters,', selectedFilters);
+  console.log('not applied filters: ', notAppliedFilters);
+
+  // EFFECTS ==================================================================================================
+
+  // Reset filters if collection change
+  useEffect(() => {
+    dispatch({
+      type: actions.SET_SELECTED_FILTERS,
+      payload: [],
+    });
+  }, [query.collectionSlug]);
+
+  // Set the cursor in URL when page change
+  useEffect(() => {
+    if (pageInfo?.startCursor) {
+      console.log('set cursor useEffect');
+
+      const newUrl = new URL(config.baseUrl + asPath);
+      newUrl.searchParams.set('endCursor', pageInfo.endCursor);
+      newUrl.searchParams.set('startCursor', pageInfo.startCursor);
+      push(newUrl, undefined, { shallow: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageInfo]);
+
+  // Get filter from query and set it in selected filters
+  useEffect(() => {
+    if (query?.filter) {
+      const filteredFilters = getFiltersFromQuery(allFilters, query);
+      if (Array.isArray(filteredFilters)) {
+        console.log('set selected filter useEffect');
+
+        dispatch({
+          type: actions.SET_SELECTED_FILTERS,
+          payload: filteredFilters,
+        });
+      }
+    }
+  }, [query, allFilters]);
 
   useEffect(() => {
-    const values = getFiltersFromQuery(filters, query);
+    const values = getFiltersFromQuery(allFilters, query);
+    console.log('set actual filters');
+
     dispatch({ type: actions.SET_ACTUAL_FILTERS, payload: values });
-  }, [filters, query]);
+  }, [allFilters, query]);
 
   useEffect(() => {
     const result = selectedFilters.filter((obj) =>
       actualFilters.every((s) => s.id !== obj.id)
     );
+    console.log('set applied filters');
+
     dispatch({ type: actions.SET_NOT_APPLIED_FILTERS, payload: result });
   }, [actualFilters, selectedFilters]);
 
   const values = useMemo(
     () => ({
-      selectedFilters,
-      loading,
       notAppliedFilters,
+      selectedFilters,
       actualFilters,
-      handleSort,
-      addFilter,
+      allFilters,
+      pageInfo,
+      products,
+      loading,
+      isSelectionDifferent,
+      setSelectedFilters,
+      setAllFilters,
       removeFilter,
       applyFilters,
+      resetFilters,
+      setPageInfo,
+      setProducts,
+      handleSort,
       handleNext,
       handlePrev,
-      resetFilters,
-      isSelectionDifferent,
-      pageInfo,
-      filters,
     }),
     [
-      selectedFilters,
-      loading,
       notAppliedFilters,
+      selectedFilters,
       actualFilters,
-      handleSort,
-      addFilter,
+      allFilters,
+      pageInfo,
+      products,
+      loading,
+      isSelectionDifferent,
+      setSelectedFilters,
+      setAllFilters,
       removeFilter,
       applyFilters,
+      resetFilters,
+      setPageInfo,
+      setProducts,
+      handleSort,
       handleNext,
       handlePrev,
-      resetFilters,
-      isSelectionDifferent,
-      pageInfo,
-      filters,
     ]
   );
 

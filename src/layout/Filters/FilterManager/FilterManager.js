@@ -10,6 +10,7 @@ export default function FilterManager() {
     resetFilters,
     isSelectionDifferent,
   } = useCollectionContext();
+
   return (
     <div className={styles.FilterManager}>
       <div className={styles.filters}>
