@@ -1,4 +1,4 @@
-import { customerFragment } from '../fragment';
+import { customerFragment, customerInfoFragment } from '../fragment';
 
 const queryRegister = `
 mutation ($input: CustomerCreateInput!) {
@@ -43,6 +43,13 @@ query customer ($token: String!) {
   }
 }`;
 
+const queryCustomerInfo = `
+query customer ($token: String!) {
+  customer(customerAccessToken: $token) {
+    ${customerInfoFragment}
+  }
+}`;
+
 const queryRefreshToken = `
 mutation ($token: String!) {
   customerAccessTokenRenew(customerAccessToken: $token) {
@@ -83,6 +90,7 @@ const customerQueries = {
   queryRefreshToken,
   queryDelegateAccessToken,
   customerAccessTokenDelete,
+  queryCustomerInfo,
 };
 
 export default customerQueries;

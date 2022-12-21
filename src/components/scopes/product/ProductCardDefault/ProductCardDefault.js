@@ -18,14 +18,14 @@ export default function ProductCardDefault({ product = {} }) {
       >
         <div className={styles.image}>
           <Image
-            src={images?.[0]?.sm}
+            src={images?.[0]?.src}
             alt={images?.[0]?.alt || product?.title}
             layout="responsive"
             width={500}
             height={750}
             blurDataURL={images?.[0]?.blurDataURL}
             placeholder="blur"
-            quality={40}
+            quality={20}
             loading="lazy"
           />
           <div

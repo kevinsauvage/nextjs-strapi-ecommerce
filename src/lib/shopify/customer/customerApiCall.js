@@ -50,7 +50,7 @@ export const loginCustomer = async (input, delegateToken, ip) => {
 /**
  * It deletes a customer's access token from the Shopify store.
  * @param customerAccessToken - The token that you want to delete.
- * @param delegateToken - This is the token that you get from the shopify admin panel.
+ * @param delegateToken - This is the token that you get from the Shopify ADMIN API.
  * @param ip - The IP address of the customer.
  * @returns The response is a JSON object with a single key, "customerAccessTokenDelete".
  */
@@ -147,6 +147,29 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
+    return res?.data;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the customer's order
+ * information.
+ * @param token - the customer's access token
+ * @param delegateToken - This is the token that you get from the Shopify ADMIN API.
+ * @param ip - the ip address of the user
+ * @returns customer details
+ */
+export const getUserOrder = async (token, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.queryCustomerInfo,
+      { token },
+      delegateToken,
+      ip
+    );
+
     return res?.data;
   } catch (err) {
     return console.error(err);

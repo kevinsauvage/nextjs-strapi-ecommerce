@@ -1,7 +1,7 @@
 export const imageFragment = `
 src
 altText
-sm:  url(transform: { maxHeight: 750, maxWidth: 500, crop: CENTER, preferredContentType: WEBP })
+sm: url(transform: { maxHeight: 375, maxWidth: 250, crop: CENTER, preferredContentType: WEBP })
 blurDataURL: url(transform: {maxHeight: 6, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
 width
 height`;
@@ -54,7 +54,7 @@ lineItemsSubtotalPrice {
   amount
   currencyCode
 }
-lineItems(first: 250) {
+lineItems(first: 100) {
   edges {
     node {
       id
@@ -73,7 +73,7 @@ id
 title
 availableForSale
 descriptionHtml
-images(first: 50) {
+images(first: 6) {
   edges {
     node {
       ${imageFragment}
@@ -107,7 +107,7 @@ collections(first: 1) {
     }
   }
 } 
-variants(first: 50) {
+variants(first: 8) {
   edges {
     node {
       ${variantFragment}
@@ -139,9 +139,28 @@ defaultAddress {
   province
   provinceCode
   zip
-}
+}`;
 
-addresses(first: 250) {
+export const customerInfoFragment = `
+defaultAddress {
+  id
+  address1
+  address2
+  city
+  company
+  country
+  countryCodeV2
+  firstName
+  formatted
+  formattedArea
+  lastName
+  name
+  phone
+  province
+  provinceCode
+  zip
+}
+addresses(first: 10) {
   edges {
     node {
       id
@@ -208,7 +227,7 @@ orders(first: 10) {
             provinceCode
             zip
           }
-          lineItems(first: 200) {
+          lineItems(first: 100) {
             edges {
               node {
                 quantity
