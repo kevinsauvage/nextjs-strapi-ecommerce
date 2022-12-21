@@ -1,26 +1,9 @@
-// eslint-disable-next-line import/prefer-default-export
-export const getFiltersFromParams = (filters, actualFilters) => {
-  if (!Object.keys(actualFilters).length) return [];
-
-  const filtered = filters.reduce((acc, filter) => {
-    Object.keys(actualFilters).forEach((key) => {
-      if (filter.id === key) {
-        if (Array.isArray(actualFilters[key])) {
-          // eslint-disable-next-line no-param-reassign
-          acc = [...acc, ...actualFilters[key].map((f) => JSON.parse(f))];
-        } else {
-          // eslint-disable-next-line no-param-reassign
-          acc = [...acc, JSON.parse(actualFilters[key])];
-        }
-      }
-    });
-
-    return acc;
-  }, []);
-
-  return filtered;
-};
-
+/**
+ * It takes an array of collections, and returns an array of collections with the products property
+ * being an array of products
+ * @param collections - Array
+ * @returns An array of objects.
+ */
 export const cleanCollections = (collections) => {
   if (!Array.isArray(collections)) return [];
 
@@ -31,6 +14,11 @@ export const cleanCollections = (collections) => {
   }));
 };
 
+/**
+ * It takes an array of objects, and returns an array of objects with only the `node` property
+ * @param [variants] - Array of variants
+ * @returns An array of objects.
+ */
 export const cleanVariants = (variants = []) => {
   if (!variants.length) return [];
   return variants.map((variant) => ({
@@ -38,11 +26,22 @@ export const cleanVariants = (variants = []) => {
   }));
 };
 
+/**
+ * It takes an array of objects, and returns an array of objects with the same keys, but with the
+ * values of the keys being the same as the values of the keys in the original objects
+ * @param images - This is the array of images that we're going to clean up.
+ */
 export const cleanImage = (images) =>
   images.map((image) => ({
     ...image.node,
   }));
 
+/**
+ * It takes an array of products, and returns an array of products with the images, variants, and
+ * collections cleaned up.
+ * @param prods - [{node: {...}, node: {...}}, {node: {...}, node: {...}}]
+ * @returns An array of objects.
+ */
 export const cleanProducts = (prods) => {
   let products = [];
   if (prods?.[0]?.node) {
@@ -65,6 +64,12 @@ export const cleanProducts = (prods) => {
   return products || prods;
 };
 
+/**
+ * It takes a GraphQL response and returns a new object with the same data, but without the __typename
+ * and edges properties
+ * @param input - The input object to clean.
+ * @returns an object.
+ */
 export const cleanGraphQLResponse = function (input) {
   if (!input) return null;
   const output = {};
@@ -86,6 +91,14 @@ export const cleanGraphQLResponse = function (input) {
   return output;
 };
 
+/**
+ * It takes an array of filters and a query object, and returns an array of filter values that are
+ * present in the query object
+ * @param filters - [{id: 'color', values: [{id: 'red', name: 'Red'}, {id: 'blue', name: 'Blue'}]},
+ * {id: 'size', values: [{id: 'small', name: 'Small'}, {id:
+ * @param query - {
+ * @returns An array of objects.
+ */
 export const getFiltersFromQuery = (filters, query) => {
   if (!query.filter) return [];
   const newFilters = filters.reduce((acc, filter) => {

@@ -2,6 +2,14 @@ import shopifyStorefrontCall from '..';
 import { cleanGraphQLResponse } from '../helpers';
 import checkoutQueries from './checkoutQueries';
 
+/**
+ * This function associates a customer to a checkout.
+ * @param checkoutId - The checkout ID that you want to associate the customer to.
+ * @param customerAccessToken - The customer's access token
+ * @param delegateAccessToken - The access token for the shopify store
+ * @param ip - the IP address of the customer
+ * @returns The checkout object.
+ */
 export const associateCustomerToCheckout = async (
   checkoutId,
   customerAccessToken,
@@ -20,6 +28,13 @@ export const associateCustomerToCheckout = async (
   return null;
 };
 
+/**
+ * It creates a checkout object in Shopify, and returns the checkout object.
+ * @param input - { email: string, password: string }
+ * @param delegateAccessToken - This is the access token that you get from the Shopify API.
+ * @param ip - The IP address of the user.
+ * @returns The checkout object.
+ */
 export const createCheckout = async (input, delegateAccessToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(
@@ -38,6 +53,13 @@ export const createCheckout = async (input, delegateAccessToken, ip) => {
   }
 };
 
+/**
+ * It takes a checkout id, a delegate access token, and an ip address, and returns a checkout object
+ * @param id - the checkout id
+ * @param delegateAccessToken - This is the access token that you get from the Shopify API.
+ * @param ip - the IP address of the user
+ * @returns The checkout object.
+ */
 export const getCheckoutById = async (id, delegateAccessToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(
@@ -56,6 +78,16 @@ export const getCheckoutById = async (id, delegateAccessToken, ip) => {
   }
 };
 
+/**
+ * It takes a checkoutId, lineItems, delegateAccessToken, and ip as arguments and returns a response
+ * object with a checkout property.
+ * @param checkoutId - The checkout ID that you want to add the line items to.
+ * @param lineItems - [{variantId: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8yODU2ODgyMDA5MjQ4MQ==",
+ * quantity: 1}]
+ * @param delegateAccessToken - This is the access token that you get from the Shopify API.
+ * @param ip - the ip address of the user
+ * @returns The checkout object.
+ */
 export const addLinesToCheckout = async (
   checkoutId,
   lineItems,
@@ -83,6 +115,15 @@ export const addLinesToCheckout = async (
   }
 };
 
+/**
+ * It takes a checkoutId, lineItemIds, delegateAccessToken, and ip as arguments and returns a checkout
+ * object with the line items removed.
+ * @param checkoutId - The checkout ID
+ * @param lineItemIds - [String]
+ * @param delegateAccessToken - This is the access token that you get from the shopify API.
+ * @param ip - the ip address of the user
+ * @returns The checkout object.
+ */
 export const removeLinesFromCheckout = async (
   checkoutId,
   lineItemIds,
@@ -111,6 +152,15 @@ export const removeLinesFromCheckout = async (
   }
 };
 
+/**
+ * It takes a checkoutId, lineItems, delegateAccessToken, and ip as arguments and returns a response
+ * object with a checkout property.
+ * @param checkoutId - The checkout ID
+ * @param lineItems - [{
+ * @param delegateAccessToken - This is the access token that you get from the Shopify API.
+ * @param ip - the ip address of the user
+ * @returns The checkout object.
+ */
 export const updateLines = async (
   checkoutId,
   lineItems,

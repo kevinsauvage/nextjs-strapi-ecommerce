@@ -2,6 +2,19 @@ import queriesCollection from './collectionQueries';
 import { cleanCollections, cleanProducts } from '../helpers';
 import shopifyStorefrontCall from '..';
 
+/**
+ * It takes a collection handle, a first value, a filters object, a sort value, an after value, a
+ * delegate token, and an ip address, and returns a collection object with a products array and a
+ * pageInfo object.
+ * @param handle - the handle of the collection
+ * @param [first=null] - The number of products to return.
+ * @param filters - [{key: "tag", value: "test"}]
+ * @param [sort=RELEVANCE] - 'RELEVANCE'
+ * @param [after=null] - String
+ * @param delegateToken - This is the token that you get from the Shopify API.
+ * @param ip - the ip address of the user
+ * @returns collection
+ */
 export const filterCollectionForward = async (
   handle,
   first = null,
@@ -37,6 +50,18 @@ export const filterCollectionForward = async (
   }
 };
 
+/**
+ * It takes a collection handle, a last value, a filters object, a sort value, a before value, a
+ * delegate token, and an ip address and returns a collection object with products and pageInfo
+ * @param handle - the handle of the collection
+ * @param [last=null] - The number of products to return.
+ * @param filters - [{key: "product_type", value: "Shirt"}]
+ * @param [sort=RELEVANCE] - 'RELEVANCE'
+ * @param [before=null] - String
+ * @param delegateToken - This is the token that you get from the Shopify API.
+ * @param ip - the ip address of the user
+ * @returns collection
+ */
 export const filterCollectionBackward = async (
   handle,
   last = null,
@@ -73,6 +98,11 @@ export const filterCollectionBackward = async (
   }
 };
 
+/**
+ * It takes a number as an argument, and returns an array of objects.
+ * @param first - The number of collections to return.
+ * @returns An array of objects.
+ */
 export const getCollections = async (first) => {
   try {
     const res = await shopifyStorefrontCall(queriesCollection.getCollections, {
@@ -86,6 +116,11 @@ export const getCollections = async (first) => {
   }
 };
 
+/**
+ * It takes a number as an argument, and returns an array of objects.
+ * @param first - The number of collections to return.
+ * @returns An array of objects.
+ */
 export const getCollectionsWithProducts = async (first) => {
   try {
     const res = await shopifyStorefrontCall(
@@ -100,6 +135,14 @@ export const getCollectionsWithProducts = async (first) => {
   }
 };
 
+/**
+ * It's a function that takes in a handle, a delegate token, and an IP address, and returns a list of
+ * filters for a collection
+ * @param handle - the handle of the collection you want to get the filters for
+ * @param delegateToken - This is the token that you get from the Shopify API.
+ * @param ip - the IP address of the user
+ * @returns Array of filters
+ */
 export const getCollectionFilters = async (handle, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(

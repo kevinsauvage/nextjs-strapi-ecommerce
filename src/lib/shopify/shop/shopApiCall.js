@@ -1,6 +1,10 @@
 import shopifyStorefrontCall from '..';
 import shopQueries from './shopQueries';
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API and returns the shop object.
+ * @returns An object with the following properties:
+ */
 export const getShop = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getShop);
@@ -10,6 +14,10 @@ export const getShop = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API and returns the data from the call.
+ * @returns An array of objects.
+ */
 export const getPrivacyPolicy = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getPrivacyPolicy);
@@ -19,6 +27,11 @@ export const getPrivacyPolicy = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the refund policy of a
+ * Shopify store.
+ * @returns The return value is an array of objects.
+ */
 export const getRefundPolicy = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getRefundPolicy);
@@ -28,6 +41,11 @@ export const getRefundPolicy = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the shipping policy of a
+ * Shopify store.
+ * @returns An array of objects.
+ */
 export const getShippingPolicy = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getShippingPolicy);
@@ -37,6 +55,11 @@ export const getShippingPolicy = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the Terms of Service for the
+ * store.
+ * @returns The return value is an array of objects.
+ */
 export const getTermsOfService = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getTermsOfService);
@@ -46,6 +69,11 @@ export const getTermsOfService = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the menu items for the main
+ * menu.
+ * @returns An array of objects.
+ */
 export const getMenuHeader = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMenu, {
@@ -57,6 +85,11 @@ export const getMenuHeader = async () => {
   }
 };
 
+/**
+ * It's a function that makes a call to the Shopify Storefront API to get the menu items for the footer
+ * menu.
+ * @returns An array of objects.
+ */
 export const getMenuFooter = async () => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMenu, {
