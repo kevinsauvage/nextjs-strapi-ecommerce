@@ -1,7 +1,14 @@
+import { useRouter } from 'next/router';
+import config from 'src/config';
 import OrderCard from '../OrderCard/OrderCard';
 import style from './Orders.module.scss';
 
 export default function Orders({ orders }) {
+  const { push } = useRouter();
+
+  const handleSeeAll = () => {
+    push(config.routes.orders);
+  };
   return (
     <div className={style.Orders}>
       {orders && orders.length > 0 ? (
@@ -11,6 +18,9 @@ export default function Orders({ orders }) {
           <p>You didn&apos;t make any orders yet.</p>
         </div>
       )}
+      <button type="button" onClick={handleSeeAll}>
+        See All
+      </button>
     </div>
   );
 }

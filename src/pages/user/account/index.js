@@ -10,8 +10,6 @@ import config from '@/config/index';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { actions } from '@/contexts/UserContext/UserReducer';
-import nookies from 'nookies';
-import { getUserOrder } from '@/lib/shopify/customer/customerApiCall';
 import styles from './Profile.module.scss';
 
 const { userFeedback } = config;
@@ -66,28 +64,3 @@ function Profile() {
 }
 
 export default Profile;
-
-export const getServerSideProps = async (ctx) => {
-  const { req } = ctx;
-  const cookies = nookies.get(ctx);
-  const delegateToken = cookies?.shopifyDelegateToken;
-  const shopifyToken = cookies?.shopifyToken
-    ? JSON.parse(cookies?.shopifyToken)?.token
-    : null;
-
-  const forwarded = req.headers['x-forwarded-for'];
-
-  const ip =
-    typeof forwarded === 'string'
-      ? forwarded.split(/, /)[0]
-      : req.socket.remoteAddress;
-
-  const response = await getUserOrder(shopifyToken, delegateToken, ip);
-
-  const customer = response?.customer || null;
-  return {
-    props: {
-      customer,
-    },
-  };
-};

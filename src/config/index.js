@@ -19,6 +19,7 @@ const config = {
     account: '/user/account',
     emailResetPassword: '/user/reset/email',
     resetPassword: '/user/reset/password',
+    orders: '/user/orders',
   },
   homeBanner: {
     upTitle: '',

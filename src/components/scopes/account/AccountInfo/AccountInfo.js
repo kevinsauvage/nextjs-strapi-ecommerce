@@ -17,8 +17,8 @@ export default function AccountInfo({ user }) {
         content={user?.firstName ? `${user?.firstName} ${user?.lastName}` : ''}
       />
       <AccountRow title="Email" content={user?.email} />
-      <AccountRow title="Order" content={user?.orders?.edges?.length} />
-      <AccountRow title="Total spent" content="Todo" />
+      <AccountRow title="Member since" content="TODO" />
+      <AccountRow title="Total spent" content="TODO" />
     </div>
   );
 }
