@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import config from 'src/config';
+import config from '@/config/index';
 import OrderCard from '../OrderCard/OrderCard';
 import style from './Orders.module.scss';
 
