@@ -1,4 +1,5 @@
 import shopifyStorefrontCall, { shopifyAdminApiCall } from '..';
+import { cleanGraphQLResponse } from '../helpers';
 import customerQueries from './customerQueries';
 
 /**
@@ -23,7 +24,6 @@ export const registerCustomer = async (input, delegateToken, ip) => {
     return console.error(err);
   }
 };
-
 /**
  * It takes in an input object, a delegate token, and an IP address, and returns a response object.
  * @param input - { email: 'test@test.com', password: 'test' }
@@ -46,7 +46,6 @@ export const loginCustomer = async (input, delegateToken, ip) => {
     return console.error(err);
   }
 };
-
 /**
  * It deletes a customer's access token from the Shopify store.
  * @param customerAccessToken - The token that you want to delete.
@@ -76,7 +75,6 @@ export const deleteAccessToken = async (
     return console.error(err);
   }
 };
-
 /**
  * It sends a password reset email to the customer's email address
  * @param email - the email address of the customer
@@ -98,7 +96,6 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
     return console.error(err);
   }
 };
-
 /**
  * It takes a password, resetUrl, delegateToken, and ip as arguments and returns a customerResetByUrl
  * object.
@@ -106,11 +103,7 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
  * @param resetUrl - The reset URL that was sent to the customer's email address.
  * @param delegateToken - This is the token that you get from the Shopify ADMIN API.
  * @param ip - The IP address of the customer.
- * @returns {
- *   "data": {
- *     "customerResetByUrl": {
- *       "customer": {
- *         "id": "Z2lkOi8vc2hvcGlmeS9DdXN0b21lci8yMzUzMzUzMzUzMzUzMzU=",
+ * @returns customer - The customer object
  */
 export const resetCustomerPassword = async (
   password,
@@ -131,7 +124,6 @@ export const resetCustomerPassword = async (
     return console.error(err);
   }
 };
-
 /**
  * It takes a token, a delegate token, and an IP address, and returns a customer object.
  * @param token - The token that is returned from the Shopify API when a user logs in.
@@ -147,12 +139,12 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    return res?.data;
+    const response = cleanGraphQLResponse(res?.data) || null;
+    return response;
   } catch (err) {
     return console.error(err);
   }
 };
-
 /**
  * It's a function that makes a call to the Shopify Storefront API to get the customer's order
  * information.
@@ -164,18 +156,21 @@ export const getUser = async (token, delegateToken, ip) => {
 export const getUserOrder = async (token, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(
-      customerQueries.queryCustomerInfo,
+      customerQueries.customerOrdersFragment,
       { token },
       delegateToken,
       ip
     );
 
-    return res?.data;
+    if (res?.data) {
+      const response = cleanGraphQLResponse(res?.data);
+      return response || null;
+    }
+    throw Error('Cannot get customer');
   } catch (err) {
     return console.error(err);
   }
 };
-
 /**
  * It takes a token, a delegate token, and an IP address, and returns a new token.
  * @param token - The token that needs to be refreshed
@@ -196,8 +191,6 @@ export const refreshToken = async (token, delegateToken, ip) => {
     return console.error(err);
   }
 };
-
-// ADMIN CALLS
 /**
  * It takes an input object, and returns a response object
  * @param input - {

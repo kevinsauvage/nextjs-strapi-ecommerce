@@ -1,7 +1,7 @@
 export const imageFragment = `
 src
 altText
-sm: url(transform: { maxHeight: 375, maxWidth: 250, crop: CENTER, preferredContentType: WEBP })
+sm:  url(transform: { maxHeight: 375, maxWidth: 250, crop: CENTER, preferredContentType: WEBP })
 blurDataURL: url(transform: {maxHeight: 6, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
 width
 height`;
@@ -122,26 +122,7 @@ lastName
 acceptsMarketing
 email
 phone
-defaultAddress {
-  id
-  address1
-  address2
-  city
-  company
-  country
-  countryCodeV2
-  firstName
-  formatted
-  formattedArea
-  lastName
-  name
-  phone
-  province
-  provinceCode
-  zip
-}`;
 
-export const customerInfoFragment = `
 defaultAddress {
   id
   address1
@@ -182,6 +163,68 @@ addresses(first: 10) {
     }
   }
 }
+orders(first: 10) {
+  edges {
+      node {
+          id
+          name
+          fulfillmentStatus
+          currencyCode
+          customerUrl
+          email
+          financialStatus
+          orderNumber
+          phone
+          processedAt
+          totalRefunded {
+            amount
+            currencyCode
+          }
+          totalShippingPrice {
+            amount
+            currencyCode
+          }
+          totalPrice {
+            amount
+            currencyCode
+          }
+          cancelReason
+          canceledAt
+          shippingAddress {
+            id
+            address1
+            address2
+            city
+            company
+            country
+            countryCodeV2
+            firstName
+            formatted
+            formattedArea
+            lastName
+            name
+            phone
+            province
+            provinceCode
+            zip
+          }
+          lineItems(first: 100) {
+            edges {
+              node {
+                quantity
+                title
+                quantity
+                variant {
+                    ${variantFragment}
+                }
+              }
+            }
+          }
+      }
+  }
+}`;
+
+export const customerOrdersFragment = `
 orders(first: 10) {
   edges {
       node {

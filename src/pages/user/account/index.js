@@ -16,12 +16,11 @@ import styles from './Profile.module.scss';
 
 const { userFeedback } = config;
 
-function Profile({ customer }) {
-  console.log('🚀 ~ file: index.js:20 ~ Profile ~ customer', customer);
+function Profile() {
   const { user, toggleLoading, dispatch } = useUserContext();
-
   const { push } = useRouter();
 
+  console.log(user);
   const logout = async () => {
     toggleLoading(true);
     const res = await nextApiCall.logout();
@@ -58,7 +57,7 @@ function Profile({ customer }) {
             </Card>
           </div>
           <Card title="Orders">
-            <Orders orders={user?.orders?.edges} />
+            <Orders orders={user?.orders} />
           </Card>
         </main>
       </div>
