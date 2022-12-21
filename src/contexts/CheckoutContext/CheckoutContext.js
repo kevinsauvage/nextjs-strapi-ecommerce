@@ -22,10 +22,12 @@ export function CheckoutProvider({ children }) {
   const { checkout, isCheckoutLoading } = states;
   const { toggleCheckout } = useGlobalContext();
 
+  /* A callback function that is used to toggle the loading state of the checkout. */
   const toggleLoading = useCallback((state) => {
     dispatch({ type: 'IS_CHECKOUT_LOADING', payload: state });
   }, []);
 
+  /* A callback function that is used to handle the response of the API call. */
   const handleResponse = useCallback(
     (res, feedBack, toggle = true) => {
       toggleLoading(false);
@@ -41,6 +43,7 @@ export function CheckoutProvider({ children }) {
     [toggleLoading, toggleCheckout]
   );
 
+  /* A callback function that is used to remove a line item from the checkout. */
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
       toggleLoading(true);
@@ -50,6 +53,7 @@ export function CheckoutProvider({ children }) {
     [toggleLoading, handleResponse]
   );
 
+  /* A callback function that is used to update the quantity of a line item in the checkout. */
   const handleQuantityChange = useCallback(
     async (quantity, id) => {
       toggleLoading(true);
@@ -59,6 +63,7 @@ export function CheckoutProvider({ children }) {
     [toggleLoading, handleResponse]
   );
 
+  /* A callback function that is used to render the checkout. */
   const handleRender = useCallback(async () => {
     if (!checkout?.id) {
       const checkoutRes = await nextApiCall.getCheckout();

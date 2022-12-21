@@ -218,6 +218,7 @@ export function CollectionProvider({ children }) {
 
   // PAGINATION ==============================================================================================
 
+  /* A function that is called when the user clicks on the previous button. */
   const handlePrev = useCallback(async () => {
     dispatch({ type: actions.SET_LOADING, payload: true });
 
@@ -232,7 +233,7 @@ export function CollectionProvider({ children }) {
       pageInfo.startCursor
     );
 
-    console.log(data, 'data handleprevvvv');
+    console.log(data, 'data handle prev');
 
     dispatch({ type: actions.SET_LOADING, payload: false });
 
@@ -245,6 +246,7 @@ export function CollectionProvider({ children }) {
     }
   }, [allFilters, pageInfo.startCursor, query, setPageInfo, setProducts]);
 
+  /* A function that is called when the user clicks on the next button. */
   const handleNext = useCallback(async () => {
     dispatch({ type: actions.SET_LOADING, payload: true });
 

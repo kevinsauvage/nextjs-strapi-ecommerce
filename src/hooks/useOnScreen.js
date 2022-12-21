@@ -1,5 +1,10 @@
 import { useEffect, useState } from 'react';
 
+/**
+ * It returns a boolean value that indicates whether the element is visible on the screen or not
+ * @param ref - The ref of the element you want to observe.
+ * @returns The isIntersecting state.
+ */
 export default function useOnScreen(ref) {
   const [isIntersecting, setIntersecting] = useState(false);
 

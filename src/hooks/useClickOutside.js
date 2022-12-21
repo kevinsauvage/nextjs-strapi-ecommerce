@@ -1,5 +1,11 @@
 import { useEffect } from 'react';
 
+/**
+ * It adds an event listener to the document that listens for a mousedown or touchstart event. If the
+ * event target is not the ref's current element or a descendent of it, then the handler is called
+ * @param ref - The ref of the element you want to detect clicks outside of.
+ * @param handler - The function to call when the user clicks outside of the ref element.
+ */
 export default function useOnClickOutside(ref, handler) {
   useEffect(() => {
     const listener = (event) => {

@@ -1,6 +1,12 @@
 const { useEffect, useState } = require('react');
 
-// Hook
+/**
+ * UseDebounce returns a debounced value. It will only update the debounced value after the specified
+ * delay, and if the value has changed.
+ * @param value - The value to pass through the debounce.
+ * @param delay - The delay in milliseconds for the debounce.
+ * @returns The debounced value.
+ */
 function useDebounce(value, delay) {
   // State and setters for debounced value
   const [debouncedValue, setDebouncedValue] = useState(value);

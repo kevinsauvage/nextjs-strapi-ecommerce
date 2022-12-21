@@ -15,10 +15,12 @@ export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { user, loading } = states || {};
 
+  /* A function that is called when the component is mounted. */
   const toggleLoading = useCallback((loadingState) => {
     dispatch({ type: actions.CHANGE_LOADING, payload: loadingState });
   }, []);
 
+  /* A function that is called when an error occurs. */
   const handleError = useCallback((err) => {
     if (Array.isArray(err)) {
       return err.forEach((e) => toast.error(e.message));
@@ -26,6 +28,7 @@ export function UserProvider({ children }) {
     return false;
   }, []);
 
+  /* A function that is called when the component is mounted. */
   const handleRender = useCallback(async () => {
     const response = await nextApiCall.getCustomer();
     if (response?.customer?.id) {
