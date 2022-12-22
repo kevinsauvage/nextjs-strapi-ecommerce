@@ -153,10 +153,10 @@ export const getUser = async (token, delegateToken, ip) => {
  * @param ip - the ip address of the user
  * @returns customer details
  */
-export const getUserOrder = async (token, delegateToken, ip) => {
+export const getUserOrders = async (token, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(
-      customerQueries.customerOrdersFragment,
+      customerQueries.queryCustomerOrders,
       { token },
       delegateToken,
       ip
@@ -167,6 +167,21 @@ export const getUserOrder = async (token, delegateToken, ip) => {
       return response || null;
     }
     throw Error('Cannot get customer');
+  } catch (err) {
+    return console.error(err);
+  }
+};
+export const getOrderById = async (id, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.getOrderById,
+      { id },
+      delegateToken,
+      ip
+    );
+    const response = cleanGraphQLResponse(res?.data?.node);
+
+    return response || null;
   } catch (err) {
     return console.error(err);
   }

@@ -12,7 +12,7 @@ export default function Orders({ orders }) {
   return (
     <div className={style.Orders}>
       {orders && orders.length > 0 ? (
-        orders.map((order) => <OrderCard key={order.id} order={order} />)
+        orders.map((order) => <OrderCard key={order?.id} order={order} />)
       ) : (
         <div>
           <p>You didn&apos;t make any orders yet.</p>

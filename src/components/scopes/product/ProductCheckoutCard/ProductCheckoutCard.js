@@ -3,25 +3,25 @@ import QuantityUpdater from '@/components/scopes/product/QuantityUpdater/Quantit
 import Link from 'next/link';
 import SelectedOptions from '@/components/scopes/product/SelectedOptions/SelectedOptions';
 import config from '@/config/index';
+import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import Price from '../Price/Price';
 import styles from './ProductCheckoutCard.module.scss';
 
-export default function ProductCheckoutCard({
-  collection,
-  product,
-  variant,
-  quantity,
-  onQuantityChange,
-  title,
-  remove,
-}) {
+export default function ProductCheckoutCard({ lineItem }) {
+  const { handleQuantityChange, removeFromCheckout } = useCheckoutContext();
+
+  const { variant, quantity, id, title } = lineItem || {};
+
   const {
     image,
     compareAtPriceV2,
     priceV2,
+    product,
     quantityAvailable,
     selectedOptions,
   } = variant || {};
+
+  const collection = product?.collections?.nodes?.[0];
 
   return (
     <div className={styles.card}>
@@ -47,9 +47,13 @@ export default function ProductCheckoutCard({
           <QuantityUpdater
             originalQuantity={quantity}
             quantityAvailable={quantityAvailable}
-            onChange={onQuantityChange}
+            onChange={(num) => handleQuantityChange(num, id)}
           />
-          <button className={styles.remove} type="button" onClick={remove}>
+          <button
+            className={styles.remove}
+            type="button"
+            onClick={() => removeFromCheckout(id)}
+          >
             Remove
           </button>
         </div>

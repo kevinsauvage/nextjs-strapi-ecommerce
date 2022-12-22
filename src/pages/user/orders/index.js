@@ -1,33 +1,37 @@
-import { useEffect, useState } from 'react';
+// import { useState } from 'react';
 import Orders from '@/components/scopes/account/Orders/Orders';
+import nookies from 'nookies';
+import { getUserOrders } from '@/lib/shopify/customer/customerApiCall';
 
-export default function OrdersPage() {
-  const [orders, setOrders] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        // const orders = await getOrders();
-        setOrders(orders);
-      } catch (e) {
-        setError(e.message);
-      }
-    }
-    fetchData();
-  }, [orders]);
-
-  if (error) {
-    return <p>{error}</p>;
-  }
-
-  if (!orders.length) {
-    return <p>Loading...</p>;
-  }
-
+export default function OrdersPage({ orders }) {
   return (
     <div className="orders">
       <Orders orders={orders} />
     </div>
   );
 }
+
+export const getServerSideProps = async (ctx) => {
+  const { req } = ctx;
+  const cookies = nookies.get(ctx);
+  const delegateToken = cookies?.shopifyDelegateToken;
+  const shopifyToken = cookies?.shopifyToken
+    ? JSON.parse(cookies?.shopifyToken)?.token
+    : null;
+
+  const forwarded = req.headers['x-forwarded-for'];
+
+  const ip =
+    typeof forwarded === 'string'
+      ? forwarded.split(/, /)[0]
+      : req.socket.remoteAddress;
+
+  const response = await getUserOrders(shopifyToken, delegateToken, ip);
+
+  const customer = response?.customer || null;
+  return {
+    props: {
+      orders: customer?.orders || null,
+    },
+  };
+};

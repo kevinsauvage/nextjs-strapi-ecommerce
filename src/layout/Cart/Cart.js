@@ -39,24 +39,13 @@ function CartFooter() {
 }
 
 function CartContent() {
-  const { checkout, handleQuantityChange, removeFromCheckout } =
-    useCheckoutContext();
+  const { checkout } = useCheckoutContext();
 
   return (
     <div className={styles.cart}>
       <ul className={styles.list}>
         {checkout.lineItems.map((item) => (
-          <ProductCheckoutCard
-            key={item?.id}
-            product={item.variant.product}
-            collection={item.variant.product?.collections?.nodes?.[0]}
-            variant={item.variant}
-            quantity={item.quantity}
-            title={item.title}
-            lineId={item.id}
-            remove={() => removeFromCheckout(item.id)}
-            onQuantityChange={(num) => handleQuantityChange(num, item.id)}
-          />
+          <ProductCheckoutCard lineItem={item} key={item?.id} />
         ))}
       </ul>
     </div>

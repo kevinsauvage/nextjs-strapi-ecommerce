@@ -30,9 +30,9 @@ product {
   handle
   title
   collections(first: 1) {
-     nodes {
+    nodes {
         handle
-     }
+    }
   }
 }
 
@@ -106,7 +106,7 @@ collections(first: 1) {
       handle
     }
   }
-} 
+}
 variants(first: 8) {
   edges {
     node {
@@ -163,7 +163,7 @@ addresses(first: 10) {
     }
   }
 }
-orders(first: 10) {
+orders(first: 6) {
   edges {
       node {
           id
@@ -208,68 +208,59 @@ orders(first: 10) {
             provinceCode
             zip
           }
-          lineItems(first: 100) {
-            edges {
-              node {
-                quantity
-                title
-                quantity
-                variant {
-                    ${variantFragment}
-                }
-              }
-            }
-          }
       }
   }
+}`;
+
+export const orderFragment = `
+id
+name
+fulfillmentStatus
+currencyCode
+customerUrl
+email
+financialStatus
+orderNumber
+phone
+processedAt
+totalRefunded {
+  amount
+  currencyCode
+}
+totalShippingPrice {
+  amount
+  currencyCode
+}
+totalPrice {
+  amount
+  currencyCode
+}
+cancelReason
+canceledAt
+shippingAddress {
+  id
+  address1
+  address2
+  city
+  company
+  country
+  countryCodeV2
+  firstName
+  formatted
+  formattedArea
+  lastName
+  name
+  phone
+  province
+  provinceCode
+  zip
 }`;
 
 export const customerOrdersFragment = `
 orders(first: 10) {
   edges {
       node {
-          id
-          name
-          fulfillmentStatus
-          currencyCode
-          customerUrl
-          email
-          financialStatus
-          orderNumber
-          phone
-          processedAt
-          totalRefunded {
-            amount
-            currencyCode
-          }
-          totalShippingPrice {
-            amount
-            currencyCode
-          }
-          totalPrice {
-            amount
-            currencyCode
-          } 
-          cancelReason 
-          canceledAt
-          shippingAddress {
-            id
-            address1
-            address2
-            city
-            company
-            country
-            countryCodeV2
-            firstName
-            formatted
-            formattedArea
-            lastName
-            name
-            phone
-            province
-            provinceCode
-            zip
-          }
+          ${orderFragment}
           lineItems(first: 100) {
             edges {
               node {
@@ -282,7 +273,6 @@ orders(first: 10) {
               }
             }
           }
-
       }
   }
 }`;

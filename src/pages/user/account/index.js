@@ -10,6 +10,7 @@ import config from '@/config/index';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { actions } from '@/contexts/UserContext/UserReducer';
+
 import styles from './Profile.module.scss';
 
 const { userFeedback } = config;
@@ -18,7 +19,6 @@ function Profile() {
   const { user, toggleLoading, dispatch } = useUserContext();
   const { push } = useRouter();
 
-  console.log(user);
   const logout = async () => {
     toggleLoading(true);
     const res = await nextApiCall.logout();

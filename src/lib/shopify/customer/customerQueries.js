@@ -1,4 +1,9 @@
-import { customerFragment, customerInfoFragment } from '../fragment';
+import {
+  customerFragment,
+  customerOrdersFragment,
+  orderFragment,
+  variantFragment,
+} from '../fragment';
 
 const queryRegister = `
 mutation ($input: CustomerCreateInput!) {
@@ -12,10 +17,10 @@ mutation ($input: CustomerCreateInput!) {
 
 const queryLogin = `
 mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!) {
-  customerAccessTokenCreate(input: $input) { 
+  customerAccessTokenCreate(input: $input) {
     customerAccessToken { accessToken expiresAt }
     customerUserErrors { message }
-  } 
+  }
 }`;
 
 const querySendRecoverEmail = `
@@ -43,10 +48,10 @@ query customer ($token: String!) {
   }
 }`;
 
-const queryCustomerInfo = `
+const queryCustomerOrders = `
 query customer ($token: String!) {
   customer(customerAccessToken: $token) {
-    ${customerInfoFragment}
+    ${customerOrdersFragment}
   }
 }`;
 
@@ -81,6 +86,27 @@ mutation customerAccessTokenDelete($customerAccessToken: String!) {
   }
 }`;
 
+const getOrderById = `
+query ($id: ID!) {
+  node(id: $id) {
+    ... on Order {
+        ${orderFragment}
+        lineItems(first: 250) {
+            edges {
+                node {
+                  quantity
+                  title
+                  quantity
+                  variant {
+                      ${variantFragment}
+                  }
+                }
+            }
+        }
+    }
+  }
+}`;
+
 const customerQueries = {
   queryRegister,
   queryLogin,
@@ -90,7 +116,8 @@ const customerQueries = {
   queryRefreshToken,
   queryDelegateAccessToken,
   customerAccessTokenDelete,
-  queryCustomerInfo,
+  queryCustomerOrders,
+  getOrderById,
 };
 
 export default customerQueries;
