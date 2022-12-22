@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { getOrderById } from '@/lib/shopify/customer/customerApiCall';
-import ProductCheckoutCard from '@/components/scopes/product/ProductCheckoutCard/ProductCheckoutCard';
+import LineItemCard from '@/components/scopes/account/LineItemCard/LineItemCard';
+import Page from '@/layout/Page/Page';
+import styles from './OrderPage.module.scss';
 
 function OrderDetail({ order }) {
   const router = useRouter();
@@ -41,50 +43,55 @@ function OrderDetail({ order }) {
   } = shippingAddress;
 
   return (
-    <div>
-      <h1>Order Detail</h1>
-      <p>Name: {name}</p>
-      <p>Fulfillment Status: {fulfillmentStatus}</p>
-      <p>Email: {email}</p>
-      <p>Financial Status: {financialStatus}</p>
-      <p>Order Number: {orderNumber}</p>
-      <p>Phone: {phone}</p>
-      <p>Processed At: {processedAt}</p>
-      <p>
-        Total Shipping Price: {totalShippingPrice.amount}{' '}
-        {totalShippingPrice.currencyCode}
-      </p>
-      <p>
-        Total Price: {totalPrice.amount} {totalPrice.currencyCode}
-      </p>
-      {canceledAt ? (
-        <>
-          <p>
-            Total Refunded: {totalRefunded.amount} {totalRefunded.currencyCode}
-          </p>
-          <p>Cancel Reason: {cancelReason}</p>
-          <p>Canceled At: {canceledAt}</p>
-        </>
-      ) : null}
-      <h2>Shipping Address</h2>
-      <p>Address 1: {address1}</p>
-      <p>Address 2: {address2}</p>
-      <p>City: {city}</p>
-      {company ? <p>Company: {company}</p> : null}
-      <p>Country: {country}</p>
-      <p>Country Code: {countryCodeV2}</p>
-      <p>First Name: {firstName}</p>
-      <p>Last Name: {lastName}</p>
-      <p>Full Name: {fullName}</p>
-      <p>Phone: {shippingPhone}</p>
-      <p>Province: {province}</p>
-      <p>Province Code: {provinceCode}</p>
-      <p>Zip: {zip}</p>
-      <h2>Line Items</h2>
-      {lineItems.map((item) => (
-        <ProductCheckoutCard key={item.id} lineItem={item} />
-      ))}
-    </div>
+    <Page title="Order">
+      <div>
+        <h1>Order Detail</h1>
+        <p>Name: {name}</p>
+        <p>Fulfillment Status: {fulfillmentStatus}</p>
+        <p>Email: {email}</p>
+        <p>Financial Status: {financialStatus}</p>
+        <p>Order Number: {orderNumber}</p>
+        <p>Phone: {phone}</p>
+        <p>Processed At: {processedAt}</p>
+        <p>
+          Total Shipping Price: {totalShippingPrice.amount}{' '}
+          {totalShippingPrice.currencyCode}
+        </p>
+        <p>
+          Total Price: {totalPrice.amount} {totalPrice.currencyCode}
+        </p>
+        {canceledAt ? (
+          <>
+            <p>
+              Total Refunded: {totalRefunded.amount}{' '}
+              {totalRefunded.currencyCode}
+            </p>
+            <p>Cancel Reason: {cancelReason}</p>
+            <p>Canceled At: {canceledAt}</p>
+          </>
+        ) : null}
+        <h2>Shipping Address</h2>
+        <p>Address 1: {address1}</p>
+        <p>Address 2: {address2}</p>
+        <p>City: {city}</p>
+        {company ? <p>Company: {company}</p> : null}
+        <p>Country: {country}</p>
+        <p>Country Code: {countryCodeV2}</p>
+        <p>First Name: {firstName}</p>
+        <p>Last Name: {lastName}</p>
+        <p>Full Name: {fullName}</p>
+        <p>Phone: {shippingPhone}</p>
+        <p>Province: {province}</p>
+        <p>Province Code: {provinceCode}</p>
+        <p>Zip: {zip}</p>
+        <h2>Line Items</h2>
+        <div className={styles.lineItems}>
+          {lineItems.map((item) => (
+            <LineItemCard key={item.id} item={item} />
+          ))}
+        </div>
+      </div>
+    </Page>
   );
 }
 

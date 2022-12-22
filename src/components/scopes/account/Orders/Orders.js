@@ -3,7 +3,7 @@ import config from '@/config/index';
 import OrderCard from '../OrderCard/OrderCard';
 import style from './Orders.module.scss';
 
-export default function Orders({ orders }) {
+export default function Orders({ orders, displaySeeAllButton }) {
   const { push } = useRouter();
 
   const handleSeeAll = () => {
@@ -18,9 +18,11 @@ export default function Orders({ orders }) {
           <p>You didn&apos;t make any orders yet.</p>
         </div>
       )}
-      <button type="button" onClick={handleSeeAll}>
-        See All
-      </button>
+      {displaySeeAllButton && (
+        <button type="button" onClick={handleSeeAll}>
+          See All
+        </button>
+      )}
     </div>
   );
 }

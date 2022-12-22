@@ -55,7 +55,7 @@ function Profile() {
             </Card>
           </div>
           <Card title="Orders">
-            <Orders orders={user?.orders} />
+            <Orders orders={user?.orders} displaySeeAllButton />
           </Card>
         </main>
       </div>

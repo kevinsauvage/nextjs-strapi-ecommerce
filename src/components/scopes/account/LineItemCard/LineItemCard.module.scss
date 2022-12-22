@@ -1,0 +1,13 @@
+.LineItemCard {
+  display: flex;
+  position: relative;
+  width: 100%;
+  background-color: rgba(var(--color-light-1));
+}
+.image {
+  position: relative;
+}
+
+.details {
+  padding: 1rem;
+}
