@@ -2,12 +2,15 @@
 import Orders from '@/components/scopes/account/Orders/Orders';
 import nookies from 'nookies';
 import { getUserOrders } from '@/lib/shopify/customer/customerApiCall';
+import Page from '@/layout/Page/Page';
 
 export default function OrdersPage({ orders }) {
   return (
-    <div className="orders">
-      <Orders orders={orders} />
-    </div>
+    <Page>
+      <div className="orders">
+        <Orders orders={orders} />
+      </div>
+    </Page>
   );
 }
 
