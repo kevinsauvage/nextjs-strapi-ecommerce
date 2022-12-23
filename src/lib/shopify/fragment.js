@@ -259,21 +259,9 @@ shippingAddress {
 export const customerOrdersFragment = `
 orders(first: 10) {
   edges {
-      node {
-          ${orderFragment}
-          lineItems(first: 100) {
-            edges {
-              node {
-                quantity
-                title
-                quantity
-                variant {
-                    ${variantFragment}
-                }
-              }
-            }
-          }
-      }
+    node {
+        ${orderFragment}
+    }
   }
 }`;
 

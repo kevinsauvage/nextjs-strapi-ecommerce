@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import nookies from 'nookies';
 import { getOrderById } from '@/lib/shopify/customer/customerApiCall';
 import LineItemCard from '@/components/scopes/account/LineItemCard/LineItemCard';
@@ -6,9 +5,6 @@ import Page from '@/layout/Page/Page';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail({ order }) {
-  const router = useRouter();
-  if (router.isFallback) return <div>Loading...</div>;
-
   const {
     name,
     fulfillmentStatus,
@@ -43,7 +39,7 @@ function OrderDetail({ order }) {
   } = shippingAddress;
 
   return (
-    <Page title="Order">
+    <Page title={`Order: ${order.name}`}>
       <div>
         <h1>Order Detail</h1>
         <p>Name: {name}</p>

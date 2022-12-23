@@ -6,7 +6,7 @@ import Page from '@/layout/Page/Page';
 
 export default function OrdersPage({ orders }) {
   return (
-    <Page>
+    <Page title="Orders">
       <div className="orders">
         <Orders orders={orders} />
       </div>
