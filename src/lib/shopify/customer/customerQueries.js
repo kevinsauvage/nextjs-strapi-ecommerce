@@ -1,4 +1,5 @@
 import {
+  addressFragment,
   customerFragment,
   customerOrdersFragment,
   orderFragment,
@@ -107,6 +108,18 @@ query ($id: ID!) {
   }
 }`;
 
+const updateAddress = `
+mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessToken: String!, $id: ID!) {
+  customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $id) {
+    customerAddress {
+      ${addressFragment}
+    }
+    customerUserErrors {
+      message
+    }
+  }
+}`;
+
 const customerQueries = {
   queryRegister,
   queryLogin,
@@ -118,6 +131,7 @@ const customerQueries = {
   customerAccessTokenDelete,
   queryCustomerOrders,
   getOrderById,
+  updateAddress,
 };
 
 export default customerQueries;

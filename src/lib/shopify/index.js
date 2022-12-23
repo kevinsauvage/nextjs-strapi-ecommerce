@@ -11,6 +11,10 @@ const adminToken = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
  * @returns The response from the Shopify Storefront API.
  */
 const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
+  console.log(
+    '🚀 ~ file: index.js:14 ~ shopifyStorefrontCall ~ variables',
+    variables
+  );
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -35,6 +39,10 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
       headers,
       body,
     });
+    console.log(
+      '🚀 ~ file: index.js:35 ~ shopifyStorefrontCall ~ response',
+      response
+    );
 
     const res = response && (await response.json());
 

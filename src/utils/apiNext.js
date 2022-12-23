@@ -8,6 +8,7 @@ const apiRoute = {
   resetPassword: '/api/customer/password/reset',
   customer: {
     sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
+    addresses: '/api/customer/addresses',
   },
   checkout: {
     getCheckout: '/api/checkout/getCheckout',
@@ -39,6 +40,7 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
     if (body) object.body = JSON.stringify(body);
 
     const res = await fetch(url, object);
+    console.log('🚀 ~ file: apiNext.js:43 ~ nextApiHelper ~ res', res);
 
     return res ? res.json() : undefined;
   } catch (err) {
@@ -46,14 +48,12 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   }
 };
 
-// Customer Next Api calls
 const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
 const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`);
 const getCustomer = () => nextApiHelper(`${apiRoute.getUser}`, null, 'GET');
 
-// Checkout Next Api calls
 const associateCustomerToCheckout = (id) => {
   const apiUrl = `${apiRoute.associateCustomerToCheckout}?checkout_id=${id}`;
   return nextApiHelper(apiUrl, null, 'GET');
@@ -89,10 +89,24 @@ const sendRecoverEmail = (payload) => {
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 
-// Products Next Api calls
 const searchProducts = (query = '') => {
   const apiUrl = `${apiRoute.products.search}?searchTerm=${query}`;
   return nextApiHelper(apiUrl, null, 'GET');
+};
+
+const updateAddress = (payload) => {
+  const apiUrl = `${apiRoute.customer.addresses}`;
+  return nextApiHelper(apiUrl, payload, 'PUT');
+};
+
+const createAddress = (payload) => {
+  const apiUrl = `${apiRoute.customer.addresses}`;
+  return nextApiHelper(apiUrl, payload, 'POST');
+};
+
+const deleteAddress = (payload) => {
+  const apiUrl = `${apiRoute.customer.addresses}`;
+  return nextApiHelper(apiUrl, payload, 'DELETE');
 };
 
 const nextApiCall = {
@@ -109,6 +123,9 @@ const nextApiCall = {
   removeLinesFromCheckout,
   checkoutLineItemsUpdate,
   searchProducts,
+  updateAddress,
+  createAddress,
+  deleteAddress,
 };
 
 export default nextApiCall;

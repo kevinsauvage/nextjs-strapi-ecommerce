@@ -1,0 +1,12 @@
+.accountRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 0.1px solid gainsboro;
+  padding: 3px 0;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 14px;
+}

@@ -1,13 +1,5 @@
+import AccountRow from '../AccountRow/AccountRow';
 import style from './AccountInfo.module.scss';
-
-function AccountRow({ title, content }) {
-  return (
-    <div className={style.AccountRow}>
-      <p className={style.title}>{title}</p>
-      <p className={style.content}>{content}</p>
-    </div>
-  );
-}
 
 export default function AccountInfo({ user }) {
   return (

@@ -11,7 +11,6 @@ export default function Form({
     <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
       <h2 className={styles.title}>{title}</h2>
       <p className={styles.subtitle}>{subtitle}</p>
-
       {children}
     </form>
   );

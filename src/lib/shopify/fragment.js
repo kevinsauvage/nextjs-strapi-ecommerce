@@ -115,6 +115,24 @@ variants(first: 8) {
   }
 }`;
 
+export const addressFragment = `
+id
+address1
+address2
+city
+company
+country
+countryCodeV2
+firstName
+formatted
+formattedArea
+lastName
+name
+phone
+province
+provinceCode
+zip`;
+
 export const customerFragment = `
 id
 firstName
@@ -124,42 +142,12 @@ email
 phone
 
 defaultAddress {
-  id
-  address1
-  address2
-  city
-  company
-  country
-  countryCodeV2
-  firstName
-  formatted
-  formattedArea
-  lastName
-  name
-  phone
-  province
-  provinceCode
-  zip
+ ${addressFragment}
 }
 addresses(first: 10) {
   edges {
     node {
-      id
-      address1
-      address2
-      city
-      company
-      country
-      countryCodeV2
-      firstName
-      formatted
-      formattedArea
-      lastName
-      name
-      phone
-      province
-      provinceCode
-      zip
+      ${addressFragment}
     }
   }
 }

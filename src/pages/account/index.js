@@ -1,7 +1,6 @@
 import Page from '@/layout/Page/Page';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import AccountInfo from '@/components/scopes/account/AccountInfo/AccountInfo';
-import DefaultAddress from '@/components/scopes/account/DefaultAddress/DefaultAddress';
 import Orders from '@/components/scopes/account/Orders/Orders';
 import Card from '@/components/scopes/account/Card/Card';
 import Button from '@/components/Button/Button';
@@ -10,7 +9,7 @@ import config from '@/config/index';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { actions } from '@/contexts/UserContext/UserReducer';
-
+import Address from '@/components/scopes/account/Address/Address';
 import styles from './Profile.module.scss';
 
 const { userFeedback } = config;
@@ -18,6 +17,10 @@ const { userFeedback } = config;
 function Profile() {
   const { user, toggleLoading, dispatch } = useUserContext();
   const { push } = useRouter();
+
+  const handleManage = () => {
+    push(config.routes.addresses);
+  };
 
   const logout = async () => {
     toggleLoading(true);
@@ -51,7 +54,11 @@ function Profile() {
               <AccountInfo user={user} />
             </Card>
             <Card title="Default Address">
-              <DefaultAddress defaultAddress={user?.defaultAddress} />
+              <Address
+                address={user?.defaultAddress}
+                buttonText="  Manage addresses"
+                handleClick={handleManage}
+              />
             </Card>
           </div>
           <Card title="Orders">
