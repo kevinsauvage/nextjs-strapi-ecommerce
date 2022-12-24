@@ -31,7 +31,6 @@ function Addresses() {
 
   const handleSetAsDefault = async (id) => {
     setIsLoading(true);
-    window.scrollTo(0, 0);
     const res = await nextApiCall.updateCustomerDefaultAddress(id);
     setIsLoading(false);
     const { customer, customerUserErrors } = res || {};
