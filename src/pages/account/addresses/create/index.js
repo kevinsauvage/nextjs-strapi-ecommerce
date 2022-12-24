@@ -3,34 +3,32 @@ import React, { useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import config from '@/config/index';
 import styles from './create.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(false);
+  const { push } = useRouter();
 
   const handleSubmit = async (address) => {
     setIsLoading(true);
+    window.scrollTo(0, 0);
 
     const { customerAddress, customerUserErrors } =
       await nextApiCall.createAddress({ address });
 
     if (customerAddress) {
       toast.success('Address created successfully');
-    }
-
-    if (customerUserErrors) {
+      push(config.routes.addresses);
+    } else if (customerUserErrors.length) {
+      setIsLoading(false);
       customerUserErrors.map((err) => toast.error(err.message));
     } else toast.error('Something went wrong');
-
-    setIsLoading(false);
   };
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
-
   return (
-    <Page>
+    <Page loading={isLoading}>
       <div className={styles.addresses}>
         <div className={styles.header}>
           <div>

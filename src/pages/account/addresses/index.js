@@ -32,6 +32,7 @@ function Addresses() {
 
   const handleSetAsDefault = async (id) => {
     setIsLoading(true);
+    window.scrollTo(0, 0);
     const res = await nextApiCall.updateCustomerDefaultAddress(id);
     setIsLoading(false);
     const { customer, customerUserErrors } = res || {};
@@ -42,10 +43,8 @@ function Addresses() {
     handleError(customerUserErrors);
   };
 
-  if (isLoading) return <div>Loading...</div>;
-
   return (
-    <Page>
+    <Page loading={isLoading}>
       <div className={styles.addresses}>
         <div className={styles.header}>
           <div>
