@@ -1,16 +1,9 @@
 import Link from 'next/link';
-import config from 'src/config';
+import config from '@/config/index';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
-function Address({
-  address,
-  buttonText,
-  isAccount,
-  handleChange,
-  isDefault,
-  href,
-}) {
+function Address({ address, isAccount, handleChange, isDefault }) {
   const {
     id,
     address1,

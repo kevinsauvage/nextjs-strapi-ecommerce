@@ -18,10 +18,6 @@ function Profile() {
   const { user, toggleLoading, dispatch } = useUserContext();
   const { push } = useRouter();
 
-  const handleManage = () => {
-    push(config.routes.addresses);
-  };
-
   const logout = async () => {
     toggleLoading(true);
     const res = await nextApiCall.logout();
@@ -32,10 +28,6 @@ function Profile() {
       return push(config.routes.home);
     }
     return toast.error(userFeedback.logout.error);
-  };
-
-  const handleSeeAll = () => {
-    push(config.routes.orders);
   };
 
   return (
