@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import Address from '@/components/scopes/account/Address/Address';
+import { useEffect, useState } from 'react';
 import styles from './Profile.module.scss';
 
 const { userFeedback } = config;
@@ -17,6 +18,11 @@ const { userFeedback } = config;
 function Profile() {
   const { user, toggleLoading, dispatch } = useUserContext();
   const { push } = useRouter();
+
+  const [orders, setOrders] = useState();
+  useEffect(() => {
+    setOrders(user?.orders);
+  }, [user]);
 
   const logout = async () => {
     toggleLoading(true);
@@ -62,8 +68,8 @@ function Profile() {
             </Card>
           </div>
           <Card title="Orders">
-            <Orders orders={user?.orders} />
-            {user?.orders.length > 2 && (
+            <Orders orders={orders} />
+            {orders?.length > 2 && (
               <div className={styles.button}>
                 <Button
                   text="See all orders"

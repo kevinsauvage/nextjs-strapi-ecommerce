@@ -299,7 +299,7 @@ export const updateDefaultAddress = async (
       delegateToken,
       ip
     );
-    return res?.data?.customerDefaultAddressUpdate;
+    return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
   } catch (err) {
     return console.error(err);
   }
