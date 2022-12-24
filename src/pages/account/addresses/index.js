@@ -77,11 +77,6 @@ function Addresses() {
                   }
                   handleChange={handleSetAsDefault}
                   address={item}
-                  buttonText="Edit"
-                  href={`${config.routes.updateAddress}/${item.id.replace(
-                    'gid://shopify/MailingAddress/',
-                    ''
-                  )}`}
                 />
               </Card>
             ))}

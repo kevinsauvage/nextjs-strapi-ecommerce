@@ -34,6 +34,10 @@ function Profile() {
     return toast.error(userFeedback.logout.error);
   };
 
+  const handleSeeAll = () => {
+    push(config.routes.orders);
+  };
+
   return (
     <Page title="My Profile">
       <div className={styles.Profile}>
@@ -54,17 +58,29 @@ function Profile() {
               <AccountInfo user={user} />
             </Card>
             <Card title="Default Address">
-              <Address
-                isAccount
-                address={user?.defaultAddress}
-                buttonText="  Manage addresses"
-                handleClick={handleManage}
-                href={config.routes.addresses}
-              />
+              <Address isAccount address={user?.defaultAddress} />
+              <div className={styles.button}>
+                <Button
+                  text="Manage addresses"
+                  type="button"
+                  primary
+                  href={config.routes.addresses}
+                />
+              </div>
             </Card>
           </div>
           <Card title="Orders">
-            <Orders orders={user?.orders} displaySeeAllButton />
+            <Orders orders={user?.orders} />
+            {user?.orders.length > 2 && (
+              <div className={styles.button}>
+                <Button
+                  text="See all orders"
+                  type="button"
+                  primary
+                  href={config.routes.orders}
+                />
+              </div>
+            )}
           </Card>
         </main>
       </div>

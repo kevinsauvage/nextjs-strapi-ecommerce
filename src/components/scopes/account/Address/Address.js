@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import config from 'src/config';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
@@ -37,17 +38,25 @@ function Address({
       <AccountRow title="Province" content={province} />
       <AccountRow title="Country" content={country} />
       <div className={style.buttons}>
-        <Link className={style.button} href={href}>
-          {buttonText}
-        </Link>
         {!isAccount && !isDefault && (
-          <button
-            type="button"
-            className={style.button}
-            onClick={() => !isDefault && handleChange(id)}
-          >
-            Set as default
-          </button>
+          <>
+            <Link
+              className={style.button}
+              href={`${config.routes.updateAddress}/${id.replace(
+                'gid://shopify/MailingAddress/',
+                ''
+              )}`}
+            >
+              Edit
+            </Link>
+            <button
+              type="button"
+              className={style.button}
+              onClick={() => !isDefault && handleChange(id)}
+            >
+              Set as default
+            </button>
+          </>
         )}
       </div>
     </div>
