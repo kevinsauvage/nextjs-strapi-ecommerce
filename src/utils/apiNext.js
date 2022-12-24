@@ -9,6 +9,7 @@ const apiRoute = {
   customer: {
     sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
     addresses: '/api/customer/addresses',
+    defaultAddress: '/api/customer/defaultAddress',
   },
   checkout: {
     getCheckout: '/api/checkout/getCheckout',
@@ -40,7 +41,6 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
     if (body) object.body = JSON.stringify(body);
 
     const res = await fetch(url, object);
-    console.log('🚀 ~ file: apiNext.js:43 ~ nextApiHelper ~ res', res);
 
     return res ? res.json() : undefined;
   } catch (err) {
@@ -94,11 +94,6 @@ const searchProducts = (query = '') => {
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
-const updateAddress = (payload) => {
-  const apiUrl = `${apiRoute.customer.addresses}`;
-  return nextApiHelper(apiUrl, payload, 'PUT');
-};
-
 const createAddress = (payload) => {
   const apiUrl = `${apiRoute.customer.addresses}`;
   return nextApiHelper(apiUrl, payload, 'POST');
@@ -107,6 +102,26 @@ const createAddress = (payload) => {
 const deleteAddress = (payload) => {
   const apiUrl = `${apiRoute.customer.addresses}`;
   return nextApiHelper(apiUrl, payload, 'DELETE');
+};
+
+const getCustomerAddresses = () => {
+  const apiUrl = `${apiRoute.customer.addresses}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
+const updateCustomerDefaultAddress = (addressId) => {
+  const apiUrl = `${apiRoute.customer.defaultAddress}`;
+  return nextApiHelper(apiUrl, { addressId }, 'PUT');
+};
+
+const getAddressById = (addressId) => {
+  const apiUrl = `${apiRoute.customer.addresses}/${addressId}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
+const updateAddress = (payload, id) => {
+  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
+  return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
 const nextApiCall = {
@@ -126,6 +141,9 @@ const nextApiCall = {
   updateAddress,
   createAddress,
   deleteAddress,
+  getCustomerAddresses,
+  updateCustomerDefaultAddress,
+  getAddressById,
 };
 
 export default nextApiCall;

@@ -38,8 +38,6 @@ export function CollectionProvider({ children }) {
   }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
 
   const setPageInfo = useCallback((payload) => {
-    console.log('setPageInfo');
-
     dispatch({
       type: actions.SET_PAGE_INFO,
       payload,
@@ -47,8 +45,6 @@ export function CollectionProvider({ children }) {
   }, []);
 
   const setProducts = useCallback((payload) => {
-    console.log('setProducts');
-
     dispatch({
       type: actions.SET_PRODUCTS,
       payload,
@@ -56,8 +52,6 @@ export function CollectionProvider({ children }) {
   }, []);
 
   const setAllFilters = useCallback((payload) => {
-    console.log('setAllFilters');
-
     dispatch({
       type: actions.SET_ALL_FILTERS,
       payload,
@@ -66,8 +60,6 @@ export function CollectionProvider({ children }) {
 
   const setSelectedFilters = useCallback(
     (payload) => {
-      console.log('setSelectedFilters');
-
       const newFilters = [...selectedFilters, payload];
       dispatch({
         type: actions.SET_SELECTED_FILTERS,
@@ -79,8 +71,6 @@ export function CollectionProvider({ children }) {
 
   const removeFilter = useCallback(
     (filterId) => {
-      console.log('removeFilter');
-
       const newFilters = selectedFilters.filter((f) => f.id !== filterId);
       dispatch({
         type: actions.SET_SELECTED_FILTERS,
@@ -92,7 +82,6 @@ export function CollectionProvider({ children }) {
 
   const resetFilters = useCallback(async () => {
     dispatch({ type: actions.SET_LOADING, payload: true });
-    console.log('resetFilters');
 
     const path = pathname.replace('[collectionSlug]', query.collectionSlug);
     const newUrl = new URL(config.baseUrl + path);
@@ -107,8 +96,6 @@ export function CollectionProvider({ children }) {
       query.sort_key,
       null
     );
-
-    console.log(data, 'data reset filters');
 
     dispatch({ type: actions.SET_LOADING, payload: false });
 
@@ -233,8 +220,6 @@ export function CollectionProvider({ children }) {
       pageInfo.startCursor
     );
 
-    console.log(data, 'data handle prev');
-
     dispatch({ type: actions.SET_LOADING, payload: false });
 
     if (data) {
@@ -285,8 +270,6 @@ export function CollectionProvider({ children }) {
   // Set the cursor in URL when page change
   useEffect(() => {
     if (pageInfo?.startCursor) {
-      console.log('set cursor useEffect');
-
       const newUrl = new URL(config.baseUrl + asPath);
       newUrl.searchParams.set('endCursor', pageInfo.endCursor);
       newUrl.searchParams.set('startCursor', pageInfo.startCursor);
@@ -300,8 +283,6 @@ export function CollectionProvider({ children }) {
     if (query?.filter) {
       const filteredFilters = getFiltersFromQuery(allFilters, query);
       if (Array.isArray(filteredFilters)) {
-        console.log('set selected filter useEffect');
-
         dispatch({
           type: actions.SET_SELECTED_FILTERS,
           payload: filteredFilters,
@@ -312,7 +293,6 @@ export function CollectionProvider({ children }) {
 
   useEffect(() => {
     const values = getFiltersFromQuery(allFilters, query);
-    console.log('set actual filters');
 
     dispatch({ type: actions.SET_ACTUAL_FILTERS, payload: values });
   }, [allFilters, query]);
@@ -321,7 +301,6 @@ export function CollectionProvider({ children }) {
     const result = selectedFilters.filter((obj) =>
       actualFilters.every((s) => s.id !== obj.id)
     );
-    console.log('set applied filters');
 
     dispatch({ type: actions.SET_NOT_APPLIED_FILTERS, payload: result });
   }, [actualFilters, selectedFilters]);

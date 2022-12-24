@@ -15,7 +15,6 @@ export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { user, loading } = states || {};
 
-  console.log(user);
   /* A function that is called when the component is mounted. */
   const toggleLoading = useCallback((loadingState) => {
     dispatch({ type: actions.CHANGE_LOADING, payload: loadingState });

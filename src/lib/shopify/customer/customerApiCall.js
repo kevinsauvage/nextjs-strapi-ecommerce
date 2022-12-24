@@ -18,9 +18,7 @@ export const registerCustomer = async (input, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = res?.data?.customerCreate;
-    if (response) return response;
-    return null;
+    return res?.data?.customerCreate;
   } catch (err) {
     return console.error(err);
   }
@@ -40,9 +38,7 @@ export const loginCustomer = async (input, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = res?.data?.customerAccessTokenCreate;
-    if (response) return response;
-    return null;
+    return res?.data?.customerAccessTokenCreate;
   } catch (err) {
     return console.error(err);
   }
@@ -67,10 +63,6 @@ export const deleteAccessToken = async (
       ip
     );
     const response = res?.data?.customerAccessTokenDelete;
-    const userErrors = response?.userErrors;
-    if (userErrors?.length > 0) {
-      console.error(JSON.stringify(userErrors));
-    }
     return response;
   } catch (err) {
     return console.error(err);
@@ -91,8 +83,7 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = res?.data?.customerRecover;
-    return response;
+    return res?.data?.customerRecover;
   } catch (err) {
     return console.error(err);
   }
@@ -140,7 +131,7 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = cleanGraphQLResponse(res?.data) || null;
+    const response = cleanGraphQLResponse(res?.data);
     return response;
   } catch (err) {
     return console.error(err);
@@ -163,11 +154,8 @@ export const getUserOrders = async (token, delegateToken, ip) => {
       ip
     );
 
-    if (res?.data) {
-      const response = cleanGraphQLResponse(res?.data);
-      return response || null;
-    }
-    throw Error('Cannot get customer');
+    const response = cleanGraphQLResponse(res?.data);
+    return response;
   } catch (err) {
     return console.error(err);
   }
@@ -188,9 +176,7 @@ export const getOrderById = async (id, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = cleanGraphQLResponse(res?.data?.node);
-
-    return response || null;
+    return cleanGraphQLResponse(res?.data?.node);
   } catch (err) {
     return console.error(err);
   }
@@ -226,12 +212,44 @@ export const getDelegateToken = async (input) => {
       customerQueries.queryDelegateAccessToken,
       { input }
     );
-    return res?.data?.delegateAccessTokenCreate ?? null;
+    return res?.data?.delegateAccessTokenCreate;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+export const createAddress = async (
+  address,
+  customerAccessToken,
+  delegateToken,
+  ip
+) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.createAddress,
+      {
+        address,
+        customerAccessToken,
+      },
+      delegateToken,
+      ip
+    );
+    return res?.data?.customerAddressCreate;
   } catch (err) {
     return console.error(err);
   }
 };
 
+/**
+ * It takes in an address object, a customer access token, an id, a delegate token, and an ip address,
+ * and returns a response object.
+ * @param address - The address object to be updated.
+ * @param customerAccessToken - The customer's access token
+ * @param id - The ID of the address to update
+ * @param delegateToken - This is the token that you get from the Shopify API when you create a new
+ * customer.
+ * @param ip - the ip address of the user
+ * @returns The response is an object with the following properties:
+ */
 export const updateAddress = async (
   address,
   customerAccessToken,
@@ -250,10 +268,99 @@ export const updateAddress = async (
       delegateToken,
       ip
     );
-    console.log('🚀 ~ file: customerApiCall.js:253 ~ res', res);
-
-    return res;
+    return res?.data?.customerAddressUpdate;
   } catch (err) {
     return console.error(err);
+  }
+};
+
+/**
+ * It takes a customerAccessToken, addressId, delegateToken, and ip as arguments and returns a response
+ * object.
+ * @param customerAccessToken - "c8a8d8f8-f8f8-4f8f-8f8f-8f8f8f8f8f8f"
+ * @param addressId - "gid://shopify/CustomerAddress/1234"
+ * @param delegateToken - "gid://shopify/Customer/123456789"
+ * @param ip - '127.0.0.1'
+ * @returns {
+ *   "data": {
+ *     "customerDefaultAddressUpdate": {
+ *       "customer": {
+ *         "id": "Z2lkOi8vc2hvcGlmeS9DdXN0b21lci8yMzUzMzUzMzUzMzUz",
+ *         "defaultAddress
+ */
+export const updateDefaultAddress = async (
+  customerAccessToken,
+  addressId,
+  delegateToken,
+  ip
+) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.updateDefaultAddress,
+      {
+        customerAccessToken,
+        addressId,
+      },
+      delegateToken,
+      ip
+    );
+    return res?.data?.customerDefaultAddressUpdate;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+/**
+ * It makes a call to the Shopify Storefront API to get the customer's addresses.
+ * @param token - the customer's access token
+ * @param delegateToken - "gid://shopify/Customer/123456789"
+ * @param ip - '127.0.0.1'
+ * @returns {
+ *   "data": {
+ *     "customer": {
+ *       "addresses": [
+ *         {
+ *           "address1": "123 Fake St",
+ *           "address2": "",
+ *           "city": "Toronto",
+ *           "company": null,
+ *           "country": "Canada",
+ *           "countryCode": "CA",
+ *           "
+ */
+export const getCustomerAddresses = async (token, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.queryCustomerAddresses,
+      {
+        token,
+      },
+      delegateToken,
+      ip
+    );
+
+    const response = cleanGraphQLResponse(res?.data);
+    return response?.customer?.addresses;
+  } catch (error) {
+    return console.error(error);
+  }
+};
+
+export const getCustomerAddressById = async (token, id, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.getCustomerAddressById,
+      {
+        token,
+        id,
+      },
+      delegateToken,
+      ip
+    );
+
+    const response = cleanGraphQLResponse(res?.data);
+    return response.node;
+  } catch (error) {
+    return console.error(error);
   }
 };

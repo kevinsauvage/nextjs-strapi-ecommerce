@@ -55,9 +55,11 @@ function Profile() {
             </Card>
             <Card title="Default Address">
               <Address
+                isAccount
                 address={user?.defaultAddress}
                 buttonText="  Manage addresses"
                 handleClick={handleManage}
+                href={config.routes.addresses}
               />
             </Card>
           </div>

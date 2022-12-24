@@ -140,18 +140,10 @@ lastName
 acceptsMarketing
 email
 phone
-
 defaultAddress {
  ${addressFragment}
 }
-addresses(first: 10) {
-  edges {
-    node {
-      ${addressFragment}
-    }
-  }
-}
-orders(first: 6) {
+orders(first: 3) {
   edges {
       node {
           id

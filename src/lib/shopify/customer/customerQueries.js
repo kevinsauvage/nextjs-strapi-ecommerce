@@ -108,6 +108,18 @@ query ($id: ID!) {
   }
 }`;
 
+const createAddress = `
+mutation customerAddressCreate($address: MailingAddressInput!, $customerAccessToken: String!) {
+  customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
+    customerAddress {
+      ${addressFragment}
+    }
+    customerUserErrors {
+      message
+    }
+  }
+}`;
+
 const updateAddress = `
 mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessToken: String!, $id: ID!) {
   customerAddressUpdate(address: $address, customerAccessToken: $customerAccessToken, id: $id) {
@@ -116,6 +128,41 @@ mutation customerAddressUpdate($address: MailingAddressInput!, $customerAccessTo
     }
     customerUserErrors {
       message
+    }
+  }
+}`;
+
+const queryCustomerAddresses = `
+query customer ($token: String!) {
+  customer(customerAccessToken: $token) {
+    addresses(first: 100) {
+      edges {
+        node {
+          ${addressFragment}
+        }
+      }
+    }
+  }
+}
+`;
+
+const updateDefaultAddress = `
+mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: String!) {
+  customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
+    customer {
+      ${customerFragment}
+    }
+    customerUserErrors {
+      message
+    }
+  }
+}`;
+
+const getCustomerAddressById = `
+query ($id: ID!) {
+  node(id: $id) {
+    ... on MailingAddress {
+        ${addressFragment}
     }
   }
 }`;
@@ -132,6 +179,10 @@ const customerQueries = {
   queryCustomerOrders,
   getOrderById,
   updateAddress,
+  queryCustomerAddresses,
+  createAddress,
+  updateDefaultAddress,
+  getCustomerAddressById,
 };
 
 export default customerQueries;

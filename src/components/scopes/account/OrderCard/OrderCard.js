@@ -8,24 +8,7 @@ const ORDER_CARD_HEADER = style.orderCardHeader;
 const ORDER_CARD_DETAIL = style.orderCardDetail;
 const ORDER_CARD_BUTTON = style.orderCardButton;
 
-/* const ORDER_CARD_LINE_ITEM = style.orderCardLineItem;
-const ORDER_CARD_LINES = style.orderCardLines;
-function OrderCardLineItems({ lineItems = [] }) {
-  return (
-    <ul className={ORDER_CARD_LINES}>
-      {Array.isArray(lineItems)
-        ? lineItems.map((item) => (
-            <li key={item.id} className={ORDER_CARD_LINE_ITEM}>
-              {item.title} x {item.quantity}
-            </li>
-          ))
-        : null}
-    </ul>
-  );
-} */
-
 function OrderCard({ order }) {
-  console.log('🚀 ~ file: OrderCard.js:28 ~ OrderCard ~ order', order);
   const { push } = useRouter();
   const { name, financialStatus, totalPrice, email, processedAt } = order;
 

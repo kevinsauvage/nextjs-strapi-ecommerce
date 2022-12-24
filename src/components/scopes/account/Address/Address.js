@@ -1,8 +1,17 @@
+import Link from 'next/link';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
-function Address({ address, buttonText, handleClick }) {
+function Address({
+  address,
+  buttonText,
+  isAccount,
+  handleChange,
+  isDefault,
+  href,
+}) {
   const {
+    id,
     address1,
     address2,
     city,
@@ -17,7 +26,7 @@ function Address({ address, buttonText, handleClick }) {
 
   return (
     <div className={style.address}>
-      <p className={style.name} />
+      {isDefault && <div className={style.tag}>Default address</div>}
       <AccountRow title="Name" content={`${firstName} ${lastName}`} />
       <AccountRow title="Address1" content={address1} />
       {address2 && <AccountRow title="Address2" content={address2} />}
@@ -27,13 +36,20 @@ function Address({ address, buttonText, handleClick }) {
       <AccountRow title="City" content={city} />
       <AccountRow title="Province" content={province} />
       <AccountRow title="Country" content={country} />
-      <button
-        type="button"
-        onClick={() => handleClick(address)}
-        className={style.button}
-      >
-        {buttonText}
-      </button>
+      <div className={style.buttons}>
+        <Link className={style.button} href={href}>
+          {buttonText}
+        </Link>
+        {!isAccount && !isDefault && (
+          <button
+            type="button"
+            className={style.button}
+            onClick={() => !isDefault && handleChange(id)}
+          >
+            Set as default
+          </button>
+        )}
+      </div>
     </div>
   );
 }

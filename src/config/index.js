@@ -21,6 +21,8 @@ const config = {
     resetPassword: '/user/reset/password',
     orders: '/account/orders',
     addresses: '/account/addresses',
+    createAddress: '/account/addresses/create',
+    updateAddress: '/account/addresses',
   },
   homeBanner: {
     upTitle: '',

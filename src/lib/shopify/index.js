@@ -11,10 +11,6 @@ const adminToken = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
  * @returns The response from the Shopify Storefront API.
  */
 const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
-  console.log(
-    '🚀 ~ file: index.js:14 ~ shopifyStorefrontCall ~ variables',
-    variables
-  );
   try {
     const headers = {
       'Content-Type': 'application/json',
@@ -23,12 +19,8 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     if (delegateToken && ip) {
       headers['Shopify-Storefront-Private-Token'] = delegateToken;
       headers['Shopify-Storefront-Buyer-IP'] = ip;
-      console.warn(
-        `!!!!!!! call shopify from ----BACKEND---- with >>>>> !!!!!!!${delegateToken}!!!${ip}!!!`
-      );
     } else headers['X-Shopify-Storefront-Access-Token'] = accessToken;
 
-    console.warn('!!!!!!! call shopify from ----FRONTEND---- !!!!!!!');
     const body = JSON.stringify({
       query,
       variables,
@@ -39,10 +31,6 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
       headers,
       body,
     });
-    console.log(
-      '🚀 ~ file: index.js:35 ~ shopifyStorefrontCall ~ response',
-      response
-    );
 
     const res = response && (await response.json());
 

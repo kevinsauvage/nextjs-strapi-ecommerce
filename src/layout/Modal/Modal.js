@@ -8,14 +8,9 @@ export default function Modal({ children, handleClose }) {
       className={styles.modal}
       onClick={handleClose}
       role="button"
-      onKeyPress={(e) => e.key === 'Enter' && handleClose(e)}
+      onKeyDown={(e) => e.key === 'Enter' && handleClose(e)}
     >
-      <div
-        className={styles.content}
-        role="presentation"
-        onClick={(e) => e.stopPropagation()}
-        onKeyPress={(e) => e.stopPropagation()}
-      >
+      <div className={styles.header}>
         <button
           tabIndex="0"
           className={styles.close}
@@ -24,7 +19,16 @@ export default function Modal({ children, handleClose }) {
         >
           <GrClose />
         </button>
-        {children}
+      </div>
+      <div className={styles.inner}>
+        <div
+          className={styles.content}
+          role="presentation"
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
+          {children}
+        </div>
       </div>
     </div>
   );
