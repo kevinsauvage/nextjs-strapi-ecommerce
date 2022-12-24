@@ -36,7 +36,6 @@ function AddressUpdate() {
   const handleUpdateAddress = async (formData) => {
     try {
       setIsLoading(true);
-      window.scrollTo(0, 0);
       const { customerAddress, customerUserErrors } =
         await nextApiCall.updateAddress(
           {
