@@ -3,3 +3,10 @@
   grid-template-columns: repeat(auto-fill, minmax(47%, 1fr));
   gap: 1rem;
 }
+
+.top {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(47%, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}

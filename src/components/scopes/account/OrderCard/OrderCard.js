@@ -1,16 +1,25 @@
 import { useRouter } from 'next/router';
 import config from '@/config/index';
-import Card from '../Card/Card';
 import style from './OrderCard.module.scss';
+import AccountRow from '../AccountRow/AccountRow';
 
 const ORDER_CARD = style.orderCard;
-const ORDER_CARD_HEADER = style.orderCardHeader;
 const ORDER_CARD_DETAIL = style.orderCardDetail;
 const ORDER_CARD_BUTTON = style.orderCardButton;
 
-function OrderCard({ order }) {
+function OrderCard({ order, displayButton }) {
   const { push } = useRouter();
-  const { name, financialStatus, totalPrice, email, processedAt } = order;
+  const {
+    financialStatus,
+    totalPrice,
+    email,
+    processedAt,
+    canceledAt,
+    totalRefunded,
+    cancelReason,
+    phone,
+    fulfillmentStatus,
+  } = order || {};
 
   const getDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -24,18 +33,31 @@ function OrderCard({ order }) {
   };
 
   return (
-    <Card>
-      <div className={ORDER_CARD}>
-        <h4 className={ORDER_CARD_HEADER}>Order #{name}</h4>
-        <div className={ORDER_CARD_DETAIL}>
-          <p>Status: {financialStatus}</p>
-          <p>
-            Total: {totalPrice?.amount}
-            {totalPrice?.currencyCode}
-          </p>
-          <p>Email: {email}</p>
-          <p>ProcessedAt: {getDate(processedAt)}</p>
-        </div>
+    <div className={ORDER_CARD}>
+      <div className={ORDER_CARD_DETAIL}>
+        <AccountRow title="Financial Status" content={financialStatus} />
+        {!displayButton && (
+          <AccountRow title="Fulfillment Status" content={fulfillmentStatus} />
+        )}
+        <AccountRow
+          title="Total"
+          content={`${totalPrice?.amount} ${totalPrice?.currencyCode}`}
+        />
+        <AccountRow title="Email" content={email} />
+        {phone && <AccountRow title="Phone" content={phone} />}
+        <AccountRow title="ProcessedAt" content={getDate(processedAt)} />
+        {canceledAt ? (
+          <>
+            <AccountRow
+              title="Total Refunded"
+              content={`${totalRefunded.amount} ${totalRefunded.currencyCode}`}
+            />
+            <AccountRow title="Cancel Reason" content={cancelReason} />
+            <AccountRow title="Canceled At" content={canceledAt} />
+          </>
+        ) : null}
+      </div>
+      {displayButton && (
         <button
           type="button"
           className={ORDER_CARD_BUTTON}
@@ -43,8 +65,8 @@ function OrderCard({ order }) {
         >
           See order details
         </button>
-      </div>
-    </Card>
+      )}
+    </div>
   );
 }
 

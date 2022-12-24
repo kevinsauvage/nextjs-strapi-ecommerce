@@ -33,7 +33,6 @@ export default async function handler(req, res) {
 
     const id = `gid://shopify/Order/${query.orderId}?key=${query.key}`;
 
-    console.log('🚀 ~ file: [...orderId].js:36 ~ handler ~ id', id);
     switch (method) {
       case 'GET': {
         const orderRes = await getOrderById(id, delegateToken, ip);
