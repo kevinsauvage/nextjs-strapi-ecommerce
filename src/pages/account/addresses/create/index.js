@@ -14,7 +14,6 @@ function Addresses() {
 
   const handleSubmit = async (address) => {
     setIsLoading(true);
-    window.scrollTo(0, 0);
 
     const { customerAddress, customerUserErrors } =
       await nextApiCall.createAddress({ address });
