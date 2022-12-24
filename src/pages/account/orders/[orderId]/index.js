@@ -51,7 +51,11 @@ function OrderDetail() {
             </Card>
 
             <Card title="Shipping Address">
-              <Address address={shippingAddress} isAccount />
+              <Address
+                address={shippingAddress}
+                isAccount
+                displayButton={false}
+              />
             </Card>
           </div>
 

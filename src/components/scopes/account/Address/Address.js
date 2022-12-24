@@ -3,7 +3,13 @@ import config from '@/config/index';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
-function Address({ address, isAccount, handleChange, isDefault }) {
+function Address({
+  address,
+  isAccount,
+  handleChange,
+  isDefault,
+  displayButton = true,
+}) {
   const {
     id,
     address1,
@@ -30,28 +36,30 @@ function Address({ address, isAccount, handleChange, isDefault }) {
       <AccountRow title="City" content={city} />
       <AccountRow title="Province" content={province} />
       <AccountRow title="Country" content={country} />
-      <div className={style.buttons}>
-        {!isAccount && !isDefault && (
-          <>
-            <Link
-              className={style.button}
-              href={`${config.routes.updateAddress}/${id.replace(
-                'gid://shopify/MailingAddress/',
-                ''
-              )}`}
-            >
-              Edit
-            </Link>
-            <button
-              type="button"
-              className={style.button}
-              onClick={() => !isDefault && handleChange(id)}
-            >
-              Set as default
-            </button>
-          </>
-        )}
-      </div>
+      {displayButton && (
+        <div className={style.buttons}>
+          {!isDefault && !isAccount && (
+            <>
+              <Link
+                className={style.button}
+                href={`${config.routes.updateAddress}/${id.replace(
+                  'gid://shopify/MailingAddress/',
+                  ''
+                )}`}
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                className={style.button}
+                onClick={() => !isDefault && handleChange(id)}
+              >
+                Set as default
+              </button>
+            </>
+          )}
+        </div>
+      )}
     </div>
   );
 }
