@@ -1,11 +1,38 @@
-import nookies from 'nookies';
-import { getOrderById } from '@/lib/shopify/customer/customerApiCall';
 import LineItemCard from '@/components/scopes/account/LineItemCard/LineItemCard';
 import Page from '@/layout/Page/Page';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import nextApiCall from '@/utils/apiNext';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import config from '@/config/index';
 import styles from './OrderPage.module.scss';
 
-function OrderDetail({ order }) {
+function OrderDetail() {
+  const { query, push } = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [order, setOrder] = useState(null);
+  const { orderId } = query;
+  const id = `${orderId}?key=${query.key}`;
+
+  useEffect(() => {
+    async function fetchOrder() {
+      try {
+        if (orderId && query) {
+          const res = await nextApiCall.getOrderById(id);
+          if (res) setOrder(res);
+          else toast.error('Something went wrong');
+        }
+      } catch (error) {
+        toast.error('Something went wrong');
+        push(config.routes.addresses);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchOrder();
+  }, [id, orderId, push, query]);
+
   const {
     name,
     fulfillmentStatus,
@@ -21,7 +48,7 @@ function OrderDetail({ order }) {
     canceledAt,
     shippingAddress,
     lineItems,
-  } = order;
+  } = order || {};
 
   const {
     address1,
@@ -37,13 +64,13 @@ function OrderDetail({ order }) {
     province,
     provinceCode,
     zip,
-  } = shippingAddress;
+  } = shippingAddress || {};
 
   return (
-    <Page title={`Order: ${order.name}`}>
+    <Page title={`Order: ${name}`} loading={isLoading}>
       <AccountLayout
-        title={`Order: ${order.name}`}
-        subtitle="Please find bellow the details of the order"
+        title={`Order: ${name}`}
+        subtitle='"View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."'
       >
         <div>
           <h1>Order Detail</h1>
@@ -55,11 +82,11 @@ function OrderDetail({ order }) {
           <p>Phone: {phone}</p>
           <p>Processed At: {processedAt}</p>
           <p>
-            Total Shipping Price: {totalShippingPrice.amount}{' '}
-            {totalShippingPrice.currencyCode}
+            Total Shipping Price: {totalShippingPrice?.amount}{' '}
+            {totalShippingPrice?.currencyCode}
           </p>
           <p>
-            Total Price: {totalPrice.amount} {totalPrice.currencyCode}
+            Total Price: {totalPrice?.amount} {totalPrice?.currencyCode}
           </p>
           {canceledAt ? (
             <>
@@ -87,9 +114,10 @@ function OrderDetail({ order }) {
           <p>Zip: {zip}</p>
           <h2>Line Items</h2>
           <div className={styles.lineItems}>
-            {lineItems.map((item) => (
-              <LineItemCard key={item.id} item={item} />
-            ))}
+            {lineItems &&
+              lineItems.map((item) => (
+                <LineItemCard key={item.id} item={item} />
+              ))}
           </div>
         </div>
       </AccountLayout>
@@ -98,26 +126,3 @@ function OrderDetail({ order }) {
 }
 
 export default OrderDetail;
-
-export const getServerSideProps = async (ctx) => {
-  const { req, query } = ctx;
-  const cookies = nookies.get(ctx);
-  const delegateToken = cookies?.shopifyDelegateToken;
-
-  const forwarded = req.headers['x-forwarded-for'];
-
-  const ip =
-    typeof forwarded === 'string'
-      ? forwarded.split(/, /)[0]
-      : req.socket.remoteAddress;
-
-  const orderId = `gid://shopify/Order/${query.orderId}?key=${query.key}`;
-
-  const response = await getOrderById(orderId, delegateToken, ip);
-
-  return {
-    props: {
-      order: response || null,
-    },
-  };
-};

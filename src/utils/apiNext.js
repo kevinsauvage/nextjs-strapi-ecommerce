@@ -10,6 +10,7 @@ const apiRoute = {
     sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
     addresses: '/api/customer/addresses',
     defaultAddress: '/api/customer/defaultAddress',
+    orders: '/api/customer/orders',
   },
   checkout: {
     getCheckout: '/api/checkout/getCheckout',
@@ -124,6 +125,16 @@ const updateAddress = (payload, id) => {
   return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
+const getCustomerOrders = () => {
+  const apiUrl = `${apiRoute.customer.orders}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
+const getOrderById = (orderId) => {
+  const apiUrl = `${apiRoute.customer.orders}/${orderId}`;
+  return nextApiHelper(apiUrl, null, 'GET');
+};
+
 const nextApiCall = {
   login,
   logout,
@@ -144,6 +155,8 @@ const nextApiCall = {
   getCustomerAddresses,
   updateCustomerDefaultAddress,
   getAddressById,
+  getCustomerOrders,
+  getOrderById,
 };
 
 export default nextApiCall;
