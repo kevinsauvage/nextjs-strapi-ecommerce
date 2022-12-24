@@ -13,3 +13,27 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.createAddress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgb(var(--color-primary-0));
+  color: rgb(var(--color-primary-4));
+  padding: 1rem;
+  border-radius: 1rem;
+}
+
+.createAddressIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--color-primary-4));
+  border-radius: 50%;
+
+  svg {
+    color: rgb(var(--color-primary-0));
+    font-size: 30px;
+  }
+}

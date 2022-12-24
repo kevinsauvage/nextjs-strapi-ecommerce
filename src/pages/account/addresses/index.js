@@ -53,11 +53,14 @@ function Addresses() {
               Here is a list of all your addresses :
             </p>
           </div>
-          <div>
-            <Link href={config.routes.createAddress}>
-              Add a new address <MdOutlineAdd />
-            </Link>
-          </div>
+          <Link href={config.routes.createAddress}>
+            <div className={styles.createAddress}>
+              <p> Add a new address</p>
+              <span className={styles.createAddressIcon}>
+                <MdOutlineAdd />
+              </span>
+            </div>
+          </Link>
         </div>
 
         {Array.isArray(addresses) && addresses.length > 0 ? (
