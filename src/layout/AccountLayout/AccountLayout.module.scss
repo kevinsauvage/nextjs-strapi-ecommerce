@@ -1,0 +1,17 @@
+.AccountLayout {
+  margin-bottom: var(--space-4);
+}
+.banner {
+  margin: var(--space-2) 0;
+  background-color: rgb(var(--color-dark-0));
+  color: rgb(var(--color-light-0));
+  padding: var(--space-3) var(--space-4);
+}
+.title {
+  font-size: 30px;
+  color: rgb(var(--color-light-0));
+  margin-bottom: var(--space-1);
+}
+.subtitle {
+  max-width: 500px;
+}

@@ -3,12 +3,11 @@ import Address from '@/components/scopes/account/Address/Address';
 import Card from '@/components/scopes/account/Card/Card';
 import React, { useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
-import { MdOutlineAdd } from 'react-icons/md';
-import Link from 'next/link';
-import config from '@/config/index';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { toast } from 'react-toastify';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import CreateAddressButton from '@/components/scopes/account/CreateAddressButton/CreateAddressButton';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -45,49 +44,38 @@ function Addresses() {
 
   return (
     <Page loading={isLoading}>
-      <div className={styles.addresses}>
-        <div className={styles.header}>
-          <div>
-            <h1 className={styles.title}>Address List</h1>
-            <p className={styles.subtitle}>
-              Here is a list of all your addresses :
-            </p>
-          </div>
-          <Link href={config.routes.createAddress}>
-            <div className={styles.createAddress}>
-              <p> Add a new address</p>
-              <span className={styles.createAddressIcon}>
-                <MdOutlineAdd />
-              </span>
-            </div>
-          </Link>
-        </div>
-
-        {Array.isArray(addresses) && addresses.length > 0 ? (
-          <div className={styles.list}>
-            {addresses.map((item) => (
-              <Card
-                key={item.id}
-                first={
-                  item.id?.split('?')?.[0] ===
-                  user?.defaultAddress?.id?.split('?')?.[0]
-                }
-              >
-                <Address
-                  isDefault={
+      <AccountLayout
+        title="Find bellow your registered address"
+        subtitle="Welcome to your customer address list! Here you will find a complete record of all the addresses you have on file with us. These addresses are essential for accurate delivery of your orders and for efficient logistics and inventory management. If you need to update or delete any of your addresses, please let us know. We value your satisfaction and appreciate your help in maintaining a reliable customer address list."
+      >
+        <CreateAddressButton />
+        <div className={styles.addresses}>
+          {Array.isArray(addresses) && addresses.length > 0 ? (
+            <div className={styles.list}>
+              {addresses.map((item) => (
+                <Card
+                  key={item.id}
+                  first={
                     item.id?.split('?')?.[0] ===
                     user?.defaultAddress?.id?.split('?')?.[0]
                   }
-                  handleChange={handleSetAsDefault}
-                  address={item}
-                />
-              </Card>
-            ))}
-          </div>
-        ) : (
-          <p className={styles.noAddresses}>There is no addresses to show</p>
-        )}
-      </div>
+                >
+                  <Address
+                    isDefault={
+                      item.id?.split('?')?.[0] ===
+                      user?.defaultAddress?.id?.split('?')?.[0]
+                    }
+                    handleChange={handleSetAsDefault}
+                    address={item}
+                  />
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className={styles.noAddresses}>There is no addresses to show</p>
+          )}
+        </div>
+      </AccountLayout>
     </Page>
   );
 }

@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import config from '@/config/index';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import styles from './AddressUpdate.module.scss';
 
 function AddressUpdate() {
@@ -59,19 +60,20 @@ function AddressUpdate() {
 
   return (
     <Page loading={isLoading}>
-      <div className={styles.addresses}>
-        <h1 className={styles.title}>Address update</h1>
-        <p className={styles.subtitle}>
-          Fill in the following fields to update your address
-        </p>
-        {address && (
-          <AddressForm
-            buttonText="Update Address"
-            initialValues={address}
-            onSubmit={handleUpdateAddress}
-          />
-        )}
-      </div>
+      <AccountLayout
+        title="Update your address bellow"
+        subtitle="As a valued customer, it is important that your orders are delivered to you accurately and on time. That's why it is essential for us to have a complete and up-to-date customer address list. Inaccurate or outdated addresses can lead to delays, lost packages, and frustration for both you and us."
+      >
+        <div className={styles.form}>
+          {address && (
+            <AddressForm
+              buttonText="Update Address"
+              initialValues={address}
+              onSubmit={handleUpdateAddress}
+            />
+          )}
+        </div>
+      </AccountLayout>
     </Page>
   );
 }

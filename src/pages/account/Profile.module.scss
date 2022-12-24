@@ -3,25 +3,6 @@
   height: 100%;
 }
 
-.banner {
-  margin: 100px 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  .subtitle {
-    max-width: 500px;
-    text-align: center;
-    margin: 0 auto;
-    margin: var(--space-1) 0;
-  }
-
-  .title {
-    text-align: center;
-  }
-}
-
 .row {
   width: 100%;
   display: flex;
@@ -32,4 +13,10 @@
 .button {
   margin-top: 1rem;
   width: fit-content;
+}
+.logOut {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin: var(--space-1) 0;
 }

@@ -5,6 +5,7 @@ import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import config from '@/config/index';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import styles from './create.module.scss';
 
 function Addresses() {
@@ -29,17 +30,14 @@ function Addresses() {
 
   return (
     <Page loading={isLoading}>
-      <div className={styles.addresses}>
-        <div className={styles.header}>
-          <div>
-            <h1 className={styles.title}>Create a new address</h1>
-            <p className={styles.subtitle}>
-              Fill in the following fields to create a new address
-            </p>
-          </div>
+      <AccountLayout
+        title="Create the new address bellow"
+        subtitle="To create a new address in our system, please fill in the following fields. These details will be used to accurately deliver your orders and keep track of your delivery locations. Thank you for your help in maintaining a complete and up-to-date customer address list!"
+      >
+        <div className={styles.addresses}>
+          <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
         </div>
-        <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
-      </div>
+      </AccountLayout>
     </Page>
   );
 }

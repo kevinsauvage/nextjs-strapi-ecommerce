@@ -1,0 +1,25 @@
+.createAddress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  background-color: rgb(var(--color-primary-0));
+  color: rgb(var(--color-primary-4));
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: fit-content;
+  background: var(--gradient-primary);
+}
+
+.createAddressIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(var(--color-primary-4));
+  border-radius: 50%;
+
+  svg {
+    color: rgb(var(--color-primary-0));
+    font-size: 26px;
+  }
+}
