@@ -16,7 +16,7 @@ const { userFeedback } = config;
 function LoginPage() {
   const { toggleLoading } = useGlobalContext();
 
-  const { push } = useRouter();
+  const { reload } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return toast.error(userFeedback?.missingFields);
@@ -32,7 +32,7 @@ function LoginPage() {
 
     if (resLogin?.ok) {
       toast.success(userFeedback.login.success);
-      push(config.routes.account);
+      reload(config.routes.account);
       return true;
     }
     return toast.error(userFeedback.login.error);
