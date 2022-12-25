@@ -11,17 +11,23 @@ import nextApiCall from '@/utils/apiNext';
 import { toast } from 'react-toastify';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { user, toggleLoading, dispatch } = useUserContext();
+  const { user, dispatch } = useUserContext();
   const { push } = useRouter();
   const { userFeedback } = config;
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (user?.id) setIsLoading(false);
+  }, [user]);
 
   const logout = async () => {
-    toggleLoading(true);
+    setIsLoading(true);
     const res = await nextApiCall.logout();
-    toggleLoading(false);
+    setIsLoading(false);
     if (res?.ok) {
       dispatch({ type: actions.REMOVE_USER });
       toast.success(userFeedback.logout.success);
@@ -36,7 +42,7 @@ function Profile() {
   const title = `Welcome ${user?.firstName || ''} ${user?.lastName || ''}`;
 
   return (
-    <Page title="My Profile">
+    <Page title="My Profile" loading={isLoading}>
       <AccountLayout title={title} subtitle={subtitle}>
         <div className={styles.logOut}>
           <Button tertiary text="Log Out" onClick={logout} />

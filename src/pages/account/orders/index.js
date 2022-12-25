@@ -26,8 +26,9 @@ export default function OrdersPage() {
   }, []);
 
   return (
-    <Page title="Orders" loading={isLoading}>
+    <Page title="Orders">
       <AccountLayout
+        loading={isLoading}
         title="Orders"
         subtitle="Welcome to your order history! Here you can find a complete list of all your orders with us, along with details such as the date of purchase, the items included, and the delivery status. This is a useful resource for keeping track of your purchases and ensuring that your orders are being processed and delivered efficiently."
       >

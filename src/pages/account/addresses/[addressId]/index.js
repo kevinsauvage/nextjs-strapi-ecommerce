@@ -58,8 +58,9 @@ function AddressUpdate() {
   };
 
   return (
-    <Page loading={isLoading}>
+    <Page>
       <AccountLayout
+        loading={isLoading}
         title="Update your address bellow"
         subtitle="As a valued customer, it is important that your orders are delivered to you accurately and on time. That's why it is essential for us to have a complete and up-to-date customer address list. Inaccurate or outdated addresses can lead to delays, lost packages, and frustration for both you and us."
       >

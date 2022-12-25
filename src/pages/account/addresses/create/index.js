@@ -28,8 +28,9 @@ function Addresses() {
   };
 
   return (
-    <Page loading={isLoading}>
+    <Page>
       <AccountLayout
+        loading={isLoading}
         title="Create the new address bellow"
         subtitle="To create a new address in our system, please fill in the following fields. These details will be used to accurately deliver your orders and keep track of your delivery locations. Thank you for your help in maintaining a complete and up-to-date customer address list!"
       >

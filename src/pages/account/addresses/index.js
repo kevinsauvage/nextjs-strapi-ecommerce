@@ -42,8 +42,9 @@ function Addresses() {
   };
 
   return (
-    <Page loading={isLoading}>
+    <Page>
       <AccountLayout
+        loading={isLoading}
         title="Find bellow your registered address"
         subtitle="Welcome to your customer address list! Here you will find a complete record of all the addresses you have on file with us. These addresses are essential for accurate delivery of your orders and for efficient logistics and inventory management. If you need to update or delete any of your addresses, please let us know. We value your satisfaction and appreciate your help in maintaining a reliable customer address list."
       >

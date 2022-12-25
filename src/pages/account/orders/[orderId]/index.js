@@ -39,8 +39,9 @@ function OrderDetail() {
   const { name, shippingAddress, lineItems } = order || {};
 
   return (
-    <Page title={`Order: ${name}`} loading={isLoading}>
+    <Page title={`Order: ${name}`}>
       <AccountLayout
+        loading={isLoading}
         title={`Order: ${name}`}
         subtitle='"View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."'
       >
