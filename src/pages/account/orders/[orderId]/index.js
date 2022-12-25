@@ -20,7 +20,7 @@ function OrderDetail() {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        if (!orderId || !query) return;
+        if (!orderId || !query || order) return;
 
         const res = await nextApiCall.getOrderById(orderId);
 
@@ -39,7 +39,7 @@ function OrderDetail() {
       }
     }
     fetchOrder();
-  }, [orderId, back, query]);
+  }, [orderId, back, query, order]);
 
   const { name, shippingAddress, lineItems } = order || {};
 
