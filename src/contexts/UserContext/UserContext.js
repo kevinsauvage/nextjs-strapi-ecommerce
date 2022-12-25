@@ -1,19 +1,12 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useCallback, useMemo, useReducer } from 'react';
 import { toast } from 'react-toastify';
-import nextApiCall from '@/utils/apiNext';
 import { UserReducer, initialState, actions } from './UserReducer';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const { user, loading } = states || {};
+  const { user, loading, addresses, orders } = states || {};
 
   /* A function that is called when the component is mounted. */
   const toggleLoading = useCallback((loadingState) => {
@@ -28,30 +21,20 @@ export function UserProvider({ children }) {
     return false;
   }, []);
 
-  /* A function that is called when the component is mounted. */
-  const handleRender = useCallback(async () => {
-    const response = await nextApiCall.getCustomer();
-    if (response?.customer?.id) {
-      dispatch({ type: actions.ADD_USER, payload: response.customer });
-    }
-  }, []);
-
-  useEffect(() => {
-    handleRender();
-  }, [handleRender]);
-
   const values = useMemo(
     () => ({
       // States
       user,
       loading,
+      addresses,
+      orders,
 
       // Functions
       toggleLoading,
       handleError,
       dispatch,
     }),
-    [loading, user, toggleLoading, handleError, dispatch]
+    [loading, user, toggleLoading, handleError, dispatch, addresses, orders]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

@@ -1,42 +1,65 @@
-import { parseCookies } from 'nookies';
-import { loginCustomer, getUser } from '@/lib/shopify/customer/customerApiCall';
+import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
-import { getIpFromRequest } from '@/helpers/index';
+import { getInfoFromRequest } from '@/helpers/index';
+import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 
 const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { method, body } = req;
+    const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
-    if (!email || !password) throw new Error('Access token Missing');
+    switch (method) {
+      case 'POST': {
+        const { email, password } = body;
 
-    const parsedCookies = parseCookies({ req });
-    const delegateToken = parsedCookies?.shopifyDelegateToken;
-    const ip = getIpFromRequest(req);
+        if (!email || !password) throw new Error('Access token Missing');
 
-    const data = await loginCustomer({ email, password }, delegateToken, ip);
-    const { customerAccessToken, customerUserErrors } = data || {};
+        const data = await loginCustomer(
+          { email, password },
+          delegateToken,
+          ip
+        );
 
-    if (customerUserErrors.length) {
-      return res.status(201).json({
-        ok: true,
-        customerUserErrors,
-      });
+        if (!data) {
+          return res
+            .status(403)
+            .json({ error: 'Login call failed', ok: false });
+        }
+
+        const { customerAccessToken, customerUserErrors } = data || {};
+
+        if (customerUserErrors?.length) {
+          return res.status(201).json({
+            ok: true,
+            customerUserErrors,
+          });
+        }
+
+        const { accessToken } = customerAccessToken || {};
+
+        if (accessToken && checkoutId) {
+          handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
+
+          if (checkoutId) {
+            associateCustomerToCheckout(
+              checkoutId,
+              accessToken,
+              delegateToken,
+              ip
+            );
+          }
+
+          return res.status(200).json({ ok: true });
+        }
+        return res.status(500).send({ error: 'Internal Server Error' });
+      }
+
+      default: {
+        return res
+          .status(500)
+          .json({ ok: false, message: 'Method Not Allowed' });
+      }
     }
-
-    if (customerAccessToken) {
-      const { accessToken } = customerAccessToken || {};
-      const response = await getUser(accessToken, delegateToken, ip);
-      const customer = response?.customer;
-
-      handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
-
-      return res.status(200).json({
-        ok: true,
-        customer,
-      });
-    }
-
-    return res.status(500).json({ ok: false });
   } catch (error) {
     return res.status(404).send({ ok: false, error });
   }

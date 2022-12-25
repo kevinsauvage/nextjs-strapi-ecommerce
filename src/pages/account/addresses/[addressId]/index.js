@@ -47,13 +47,14 @@ function AddressUpdate() {
       if (customerAddress) {
         setAddress(customerAddress);
         toast.success('Address updated successfully');
-        back();
+        return back();
       }
       if (customerUserErrors) {
-        customerUserErrors.map((err) => toast.error(err.message));
-      } else toast.error('Something went wrong');
+        return customerUserErrors.map((err) => toast.error(err.message));
+      }
+      return toast.error('Something went wrong');
     } catch (err) {
-      toast.error('Something went wrong');
+      return toast.error('Something went wrong');
     }
   };
 

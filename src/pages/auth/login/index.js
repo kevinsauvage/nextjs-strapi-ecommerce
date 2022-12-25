@@ -9,23 +9,14 @@ import useForm from '@/hooks/useForm';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
-import { actions } from '@/contexts/UserContext/UserReducer';
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import { useCallback } from 'react';
 import styles from './Login.module.scss';
 
 const { userFeedback } = config;
 
 function LoginPage() {
-  const { toggleLoading, dispatch, handleError } = useUserContext();
-  const { handleResponse } = useCheckoutContext();
+  const { toggleLoading, handleError } = useUserContext();
 
   const { push } = useRouter();
-
-  const handleAssociateCustomer = useCallback(async () => {
-    const res = await nextApiCall.associateCustomerToCheckout();
-    handleResponse(res, null, false);
-  }, [handleResponse]);
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return toast.error(userFeedback?.missingFields);
@@ -34,11 +25,9 @@ function LoginPage() {
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) return handleError(customerUserErrors);
-    const customer = resLogin?.customer;
-    if (customer?.id) {
+
+    if (resLogin?.ok) {
       toast.success(userFeedback.login.success);
-      dispatch({ type: actions.ADD_USER, payload: customer });
-      handleAssociateCustomer();
       return push(config.routes.account);
     }
     return toast.error(userFeedback.login.error);

@@ -2,55 +2,72 @@ import {
   registerCustomer,
   loginCustomer,
 } from '@/lib/shopify/customer/customerApiCall';
-import { parseCookies } from 'nookies';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
-import { getIpFromRequest } from '@/helpers/index';
+import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
+import { getInfoFromRequest } from '@/helpers/index';
 
 const register = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { method, body } = req;
+    const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
-    if (!email || !password) throw new Error('Missing body params Missing');
+    switch (method) {
+      case 'POST': {
+        const { email, password } = body;
 
-    const parsedCookies = parseCookies({ req });
-    const delegateToken = parsedCookies?.shopifyDelegateToken;
-    const ip = getIpFromRequest(req);
+        if (!email || !password) throw new Error('Access token Missing');
 
-    const data = await registerCustomer({ email, password }, delegateToken, ip);
+        const data = await registerCustomer(
+          { email, password },
+          delegateToken,
+          ip
+        );
 
-    if (!data) {
-      const error = new Error();
-      error.message = 'Something went wrong registering customer';
-      error.status = 404;
-      throw error;
+        if (!data) {
+          const error = new Error();
+          error.message = 'Something went wrong registering customer';
+          error.status = 404;
+          throw error;
+        }
+
+        const { userErrors } = data || {};
+
+        if (userErrors.length) {
+          return res.status(200).json({
+            userErrors,
+          });
+        }
+
+        const dataLogin = await loginCustomer(
+          { email, password },
+          delegateToken,
+          ip
+        );
+
+        const accessToken = dataLogin?.customerAccessToken?.accessToken;
+
+        if (!accessToken) {
+          return res.status(403).send({ message: 'Login failed', ok: false });
+        }
+
+        handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
+
+        if (checkoutId) {
+          associateCustomerToCheckout(
+            checkoutId,
+            accessToken,
+            delegateToken,
+            ip
+          );
+        }
+
+        return res.status(200).json({ ok: true });
+      }
+      default:
+        return res
+          .status(500)
+          .json({ ok: false, message: 'Method Not Allowed' });
     }
-
-    const { customer, userErrors } = data || {};
-
-    if (userErrors.length) {
-      return res.status(200).json({
-        userErrors,
-      });
-    }
-
-    if (customer?.id) {
-      const dataLogin = await loginCustomer(
-        { email, password },
-        delegateToken,
-        ip
-      );
-
-      const accessToken = dataLogin?.customerAccessToken?.accessToken;
-
-      handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
-
-      return res.status(200).json({
-        ok: true,
-        userErrors,
-        customer,
-      });
-    }
-    return res.status(201).send({ ok: true, error: 'No content' });
   } catch (error) {
     return res.status(404).send({ ok: false, error });
   }

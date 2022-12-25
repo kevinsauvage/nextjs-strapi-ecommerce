@@ -1,21 +1,5 @@
-import { parseCookies } from 'nookies';
-import { getIpFromRequest } from '@/helpers/index';
+import { getInfoFromRequest } from '@/helpers/index';
 import { getOrderById } from '@/lib/shopify/customer/customerApiCall';
-
-const getInfoFromRequest = (req) => {
-  const parsedCookies = parseCookies({ req });
-
-  const delegateToken = parsedCookies?.shopifyDelegateToken;
-  const ip = getIpFromRequest(req);
-
-  const shopifyTokenCookie = parsedCookies?.shopifyToken;
-
-  const shopifyToken = shopifyTokenCookie
-    ? JSON.parse(shopifyTokenCookie)
-    : null;
-
-  return { shopifyToken, delegateToken, ip };
-};
 
 export default async function handler(req, res) {
   try {

@@ -5,17 +5,24 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import { toast } from 'react-toastify';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+import { actions } from '@/contexts/UserContext/UserReducer';
 
 export default function OrdersPage() {
-  const [orders, setAddresses] = useState([]);
+  const { orders, dispatch } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (orders) setIsLoading(false);
+  }, [orders]);
 
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
         const res = await nextApiCall.getCustomerOrders();
-        if (res && res?.length > 0) setAddresses(res);
-        else throw new Error();
+        if (res && res?.length > 0) {
+          dispatch({ type: actions.ADD_ORDERS, payload: res });
+        } else throw new Error();
       } catch (e) {
         toast.error('Something went wrong, please try again later');
       } finally {
@@ -23,7 +30,7 @@ export default function OrdersPage() {
       }
     };
     fetchAddresses();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Page title="Orders">

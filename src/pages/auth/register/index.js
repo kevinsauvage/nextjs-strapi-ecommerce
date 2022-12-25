@@ -8,14 +8,13 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
-import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
 
 function RegisterPage() {
-  const { toggleLoading, handleError, dispatch } = useUserContext();
+  const { toggleLoading, handleError } = useUserContext();
 
   const { push } = useRouter();
 
@@ -30,12 +29,12 @@ function RegisterPage() {
     toggleLoading(true);
     const registerRes = await nextApiCall.register({ email, password });
     toggleLoading(false);
+
     const userErrors = registerRes?.userErrors;
     if (userErrors?.length) return handleError(userErrors);
-    const customer = registerRes?.customer;
-    if (customer?.id) {
+
+    if (registerRes?.ok) {
       toast.success(userFeedback?.register?.success);
-      dispatch({ type: actions.ADD_USER, payload: customer });
       return push(config.routes.account);
     }
     return toast.error(userFeedback?.register?.error);

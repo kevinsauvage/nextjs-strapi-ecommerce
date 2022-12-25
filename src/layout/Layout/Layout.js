@@ -4,7 +4,6 @@ import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
-import User from '@/layout/User/User';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import {
@@ -43,7 +42,6 @@ function Layout({ children }) {
     <>
       <SearchBar />
       <Cart />
-      <User />
       {(isCheckoutLoading || loading) && <PageLoader />}
       <div className={styles.container}>
         <Header headerMenu={menuHeader} />

@@ -1,22 +1,15 @@
 import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
-  const { toggleSearch, toggleCheckout, toggleUser } = useGlobalContext();
-  const { user } = useUserContext();
+  const { toggleSearch, toggleCheckout } = useGlobalContext();
   const { checkout } = useCheckoutContext();
 
   const router = useRouter();
-
-  const handleClickUser = () => {
-    if (user && user.id) router.push(config.routes.account);
-    else toggleUser();
-  };
 
   const data = [
     {
@@ -28,7 +21,7 @@ export default function UserButtons() {
     {
       item: <RiUserLine />,
       id: 3,
-      onClick: handleClickUser,
+      onClick: () => router.push(config.routes.account),
     },
     {
       item: (

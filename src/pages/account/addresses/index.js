@@ -11,15 +11,18 @@ import CreateAddressButton from '@/components/scopes/account/CreateAddressButton
 import styles from './Addresses.module.scss';
 
 function Addresses() {
-  const [addresses, setAddresses] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { handleError, dispatch, user } = useUserContext();
+  const { handleError, dispatch, user, addresses } = useUserContext();
+
+  useEffect(() => {
+    if (addresses) setIsLoading(false);
+  }, [addresses]);
 
   useEffect(() => {
     const fetchAddresses = async () => {
       try {
         const res = await nextApiCall.getCustomerAddresses();
-        setAddresses(res);
+        dispatch({ type: actions.ADD_ADDRESSES, payload: res });
       } catch (e) {
         toast.error('Something went wrong, please try again later');
       } finally {
@@ -27,7 +30,7 @@ function Addresses() {
       }
     };
     fetchAddresses();
-  }, []);
+  }, [dispatch]);
 
   const handleSetAsDefault = async (id) => {
     setIsLoading(true);
@@ -36,9 +39,9 @@ function Addresses() {
     const { customer, customerUserErrors } = res || {};
     if (customer?.id) {
       toast.success('Address correctly set as default address');
-      dispatch({ type: actions.ADD_USER, payload: customer });
+      return dispatch({ type: actions.ADD_USER, payload: customer });
     }
-    handleError(customerUserErrors);
+    return handleError(customerUserErrors);
   };
 
   return (

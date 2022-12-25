@@ -42,8 +42,8 @@ function Profile() {
   const title = `Welcome ${user?.firstName || ''} ${user?.lastName || ''}`;
 
   return (
-    <Page title="My Profile" loading={isLoading}>
-      <AccountLayout title={title} subtitle={subtitle}>
+    <Page title="My Profile">
+      <AccountLayout title={title} subtitle={subtitle} loading={isLoading}>
         <div className={styles.logOut}>
           <Button tertiary text="Log Out" onClick={logout} />
         </div>
