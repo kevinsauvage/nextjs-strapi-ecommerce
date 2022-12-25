@@ -32,7 +32,8 @@ function LoginPage() {
 
     if (resLogin?.ok) {
       toast.success(userFeedback.login.success);
-      return push(config.routes.account);
+      push(config.routes.account);
+      return true;
     }
     return toast.error(userFeedback.login.error);
   };
