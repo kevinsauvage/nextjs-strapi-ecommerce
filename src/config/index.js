@@ -23,6 +23,7 @@ const config = {
     addresses: '/account/addresses',
     createAddress: '/account/addresses/create',
     updateAddress: '/account/addresses',
+    updateAccount: '/account/update',
   },
   homeBanner: {
     upTitle: '',

@@ -12,7 +12,8 @@ import styles from './Addresses.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
-  const { handleError, dispatch, user, addresses } = useUserContext();
+  const { handleError, dispatch, user, addresses, toggleLoading } =
+    useUserContext();
 
   useEffect(() => {
     if (addresses) setIsLoading(false);
@@ -33,15 +34,20 @@ function Addresses() {
   }, [dispatch]);
 
   const handleSetAsDefault = async (id) => {
-    setIsLoading(true);
-    const res = await nextApiCall.updateCustomerDefaultAddress(id);
-    setIsLoading(false);
-    const { customer, customerUserErrors } = res || {};
-    if (customer?.id) {
-      toast.success('Address correctly set as default address');
-      return dispatch({ type: actions.ADD_USER, payload: customer });
+    try {
+      toggleLoading(true);
+      const res = await nextApiCall.updateCustomerDefaultAddress(id);
+      const { customer, customerUserErrors } = res || {};
+      if (customer?.id) {
+        toast.success('Address correctly set as default address');
+        return dispatch({ type: actions.ADD_USER, payload: customer });
+      }
+      return handleError(customerUserErrors);
+    } catch (error) {
+      return toast.error('Something went wrong, please try again later');
+    } finally {
+      toggleLoading(false);
     }
-    return handleError(customerUserErrors);
   };
 
   return (

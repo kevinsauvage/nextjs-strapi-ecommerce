@@ -52,6 +52,14 @@ function Profile() {
             <div className={styles.row}>
               <Card title="Account Information">
                 <AccountInfo user={user} />
+                <div className={styles.button}>
+                  <Button
+                    text="Edit Account Information"
+                    type="button"
+                    tertiary
+                    href={config.routes.updateAccount}
+                  />
+                </div>
               </Card>
               <Card title="Default Address">
                 <Address isAccount address={user?.defaultAddress} />
@@ -59,7 +67,7 @@ function Profile() {
                   <Button
                     text="Manage addresses"
                     type="button"
-                    primary
+                    tertiary
                     href={config.routes.addresses}
                   />
                 </div>
@@ -72,7 +80,7 @@ function Profile() {
                   <Button
                     text="See all orders"
                     type="button"
-                    primary
+                    tertiary
                     href={config.routes.orders}
                   />
                 </div>

@@ -1,9 +1,10 @@
+import Loader from '@/components/Loader/Loader';
 import styles from './PageLoader.module.scss';
 
-export default function PageLoader({ text, position }) {
+export default function PageLoader({ position }) {
   return (
     <div className={styles.loader} style={{ position }}>
-      <div>{text || 'Loading...'}</div>
+      <Loader />
     </div>
   );
 }

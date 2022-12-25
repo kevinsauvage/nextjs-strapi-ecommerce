@@ -3,10 +3,10 @@ const apiRoute = {
   logout: '/api/customer/logout',
   register: '/api/customer/register',
   delegateToken: '/api/customer/delegateToken',
-  getUser: '/api/customer/customer',
   associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
   resetPassword: '/api/customer/password/reset',
   customer: {
+    index: '/api/customer',
     sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
     addresses: '/api/customer/addresses',
     defaultAddress: '/api/customer/defaultAddress',
@@ -53,7 +53,11 @@ const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
 const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`);
-const getCustomer = () => nextApiHelper(`${apiRoute.getUser}`, null, 'GET');
+const getCustomer = () =>
+  nextApiHelper(`${apiRoute.customer.index}`, null, 'GET');
+
+const updateCustomer = (payload) =>
+  nextApiHelper(`${apiRoute.customer.index}`, payload, 'PUT');
 
 const associateCustomerToCheckout = (id) => {
   const apiUrl = `${apiRoute.associateCustomerToCheckout}?checkout_id=${id}`;
@@ -157,6 +161,7 @@ const nextApiCall = {
   getAddressById,
   getCustomerOrders,
   getOrderById,
+  updateCustomer,
 };
 
 export default nextApiCall;

@@ -137,14 +137,28 @@ export const getUser = async (token, delegateToken, ip) => {
     return console.error(err);
   }
 };
-/**
- * It's a function that makes a call to the Shopify Storefront API to get the customer's order
- * information.
- * @param token - the customer's access token
- * @param delegateToken - This is the token that you get from the Shopify ADMIN API.
- * @param ip - the ip address of the user
- * @returns customer details
- */
+
+export const updateUserInfo = async (
+  customerAccessToken,
+  customer,
+  delegateToken,
+  ip
+) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.updateCustomer,
+      { customerAccessToken, customer },
+      delegateToken,
+      ip
+    );
+
+    const response = cleanGraphQLResponse(res?.data?.customerUpdate);
+    return response;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
 export const getUserOrders = async (token, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(

@@ -158,6 +158,15 @@ mutation customerDefaultAddressUpdate($addressId: ID!, $customerAccessToken: Str
   }
 }`;
 
+const updateCustomer = `
+mutation customerUpdate($customer: CustomerUpdateInput!, $customerAccessToken: String!) {
+  customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
+    customer { ${customerFragment} }
+    customerAccessToken { accessToken expiresAt }
+    customerUserErrors { message }
+  }
+}`;
+
 const getCustomerAddressById = `
 query ($id: ID!) {
   node(id: $id) {
@@ -183,6 +192,7 @@ const customerQueries = {
   createAddress,
   updateDefaultAddress,
   getCustomerAddressById,
+  updateCustomer,
 };
 
 export default customerQueries;

@@ -5,7 +5,6 @@ import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import {
   getMenuFooter,
   getMenuHeader,
@@ -20,7 +19,6 @@ import styles from './Layout.module.scss';
 function Layout({ children }) {
   const { selectedProduct, setSelectedProduct } = useGlobalContext();
   const { isCheckoutLoading } = useCheckoutContext();
-  const { loading } = useUserContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
@@ -42,7 +40,7 @@ function Layout({ children }) {
     <>
       <SearchBar />
       <Cart />
-      {(isCheckoutLoading || loading) && <PageLoader />}
+      {isCheckoutLoading && <PageLoader />}
       <div className={styles.container}>
         <Header headerMenu={menuHeader} />
         {selectedProduct ? (

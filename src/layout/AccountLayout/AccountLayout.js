@@ -3,10 +3,12 @@ import { toast } from 'react-toastify';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import nextApiCall from '@/utils/apiNext';
+import Loader from '@/components/Loader/Loader';
 import styles from './AccountLayout.module.scss';
+import PageLoader from '../Loader/PageLoader/PageLoader';
 
 function AccountLayout({ children, title, subtitle, loading }) {
-  const { user, dispatch } = useUserContext();
+  const { user, dispatch, loading: pageLoading } = useUserContext();
 
   useEffect(() => {
     const fetchAddresses = async () => {
@@ -25,11 +27,18 @@ function AccountLayout({ children, title, subtitle, loading }) {
 
   return (
     <div className={styles.AccountLayout}>
+      {pageLoading && <PageLoader />}
       <div className={styles.banner}>
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
-      {loading ? <div className={styles.loading}>Loading...</div> : children}
+      {loading ? (
+        <div className={styles.loading}>
+          <Loader />
+        </div>
+      ) : (
+        children
+      )}
     </div>
   );
 }

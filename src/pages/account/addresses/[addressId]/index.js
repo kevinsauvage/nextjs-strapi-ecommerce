@@ -6,12 +6,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './AddressUpdate.module.scss';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState(null);
+  const { toggleLoading } = useUserContext();
   const { addressId } = query;
   const id = `${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
 
@@ -35,14 +37,19 @@ function AddressUpdate() {
 
   const handleUpdateAddress = async (formData) => {
     try {
-      setIsLoading(true);
+      if (
+        !formData?.address1 ||
+        !formData?.city ||
+        !formData?.country ||
+        !formData?.firstName ||
+        !formData?.lastName ||
+        !formData?.zip
+      ) {
+        return toast.error('Missing field');
+      }
+      toggleLoading(true);
       const { customerAddress, customerUserErrors } =
-        await nextApiCall.updateAddress(
-          {
-            address: formData,
-          },
-          id
-        );
+        await nextApiCall.updateAddress({ address: formData }, id);
 
       if (customerAddress) {
         setAddress(customerAddress);
@@ -55,6 +62,8 @@ function AddressUpdate() {
       return toast.error('Something went wrong');
     } catch (err) {
       return toast.error('Something went wrong');
+    } finally {
+      toggleLoading(false);
     }
   };
 
