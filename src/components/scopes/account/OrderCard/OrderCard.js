@@ -27,9 +27,7 @@ function OrderCard({ order, displayButton }) {
   };
 
   const handleClickOrderDetails = () => {
-    push(
-      `${config.routes.orders}/${order?.id.replace('gid://shopify/Order/', '')}`
-    );
+    push(`${config.routes.orders}/${encodeURIComponent(order?.id)}`);
   };
 
   return (

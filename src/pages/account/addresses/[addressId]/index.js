@@ -15,13 +15,12 @@ function AddressUpdate() {
   const [address, setAddress] = useState(null);
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
-  const id = `gid://shopify/MailingAddress/${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
 
   useEffect(() => {
     async function fetchAddress() {
       try {
         if (addressId && query) {
-          const res = await nextApiCall.getAddressById(id);
+          const res = await nextApiCall.getAddressById(addressId);
           if (res) setAddress(res);
           else toast.error('Something went wrong');
         }
@@ -33,7 +32,7 @@ function AddressUpdate() {
       }
     }
     fetchAddress();
-  }, [addressId, id, push, query, back]);
+  }, [addressId, push, query, back]);
 
   const handleUpdateAddress = async (formData) => {
     try {
@@ -49,7 +48,7 @@ function AddressUpdate() {
       }
       toggleLoading(true);
       const { customerAddress, customerUserErrors } =
-        await nextApiCall.updateAddress({ address: formData }, id);
+        await nextApiCall.updateAddress({ address: formData }, addressId);
 
       if (customerAddress) {
         setAddress(customerAddress);

@@ -41,10 +41,7 @@ function Address({
         <div className={style.buttons}>
           <Link
             className={style.button}
-            href={`${config.routes.updateAddress}/${id.replace(
-              'gid://shopify/MailingAddress/',
-              ''
-            )}`}
+            href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
           >
             Edit
           </Link>
