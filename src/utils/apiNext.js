@@ -52,7 +52,8 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
 const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
-const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`);
+const generateDelegateToken = () =>
+  nextApiHelper(`${apiRoute.delegateToken}`, null, 'GET');
 const getCustomer = () =>
   nextApiHelper(`${apiRoute.customer.index}`, null, 'GET');
 
