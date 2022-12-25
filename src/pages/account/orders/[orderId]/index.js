@@ -21,6 +21,7 @@ function OrderDetail() {
     async function fetchOrder() {
       try {
         if (!orderId || !query || order) return;
+        setIsLoading(true);
 
         const res = await nextApiCall.getOrderById(orderId);
 
