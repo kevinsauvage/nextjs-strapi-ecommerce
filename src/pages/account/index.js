@@ -16,7 +16,7 @@ import styles from './Profile.module.scss';
 
 function Profile() {
   const { user } = useUserContext();
-  const { push } = useRouter();
+  const { reload } = useRouter();
   const { userFeedback } = config;
   const [isLoading, setIsLoading] = useState(true);
 
@@ -30,7 +30,7 @@ function Profile() {
     setIsLoading(false);
     if (res?.ok) {
       toast.success(userFeedback.logout.success);
-      return push(config.routes.home);
+      return reload(config.routes.home);
     }
     return toast.error(userFeedback.logout.error);
   };
