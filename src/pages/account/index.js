@@ -11,6 +11,7 @@ import nextApiCall from '@/utils/apiNext';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
 function Profile() {
@@ -90,5 +91,9 @@ function Profile() {
     </Page>
   );
 }
+
+Profile.getLayout = function getLayout(page) {
+  return <UserProvider>TEST{page}</UserProvider>;
+};
 
 export default Profile;

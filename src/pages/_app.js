@@ -4,15 +4,19 @@ import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   return (
     <GlobalProvider>
       <CheckoutProvider>
-        <UserProvider>
-          <Layout>
+        <Layout>
+          {router.pathname.startsWith('/account') ? (
+            <UserProvider>
+              <Component {...pageProps} />
+            </UserProvider>
+          ) : (
             <Component {...pageProps} />
-          </Layout>
-        </UserProvider>
+          )}
+        </Layout>
       </CheckoutProvider>
     </GlobalProvider>
   );
