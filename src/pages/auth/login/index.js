@@ -6,15 +6,15 @@ import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import Form from '@/components/forms/Form/Form';
 import useForm from '@/hooks/useForm';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Login.module.scss';
 
 const { userFeedback } = config;
 
 function LoginPage() {
-  const { toggleLoading, handleError } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const { push } = useRouter();
 
@@ -24,7 +24,11 @@ function LoginPage() {
     const resLogin = await nextApiCall.login({ email, password });
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
-    if (customerUserErrors?.length) return handleError(customerUserErrors);
+    if (customerUserErrors?.length) {
+      return customerUserErrors.forEach((element) =>
+        toast.error(element.message)
+      );
+    }
 
     if (resLogin?.ok) {
       toast.success(userFeedback.login.success);

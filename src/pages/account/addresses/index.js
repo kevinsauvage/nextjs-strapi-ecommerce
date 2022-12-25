@@ -9,12 +9,13 @@ import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import CreateAddressButton from '@/components/scopes/account/CreateAddressButton/CreateAddressButton';
 import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
-  const { handleError, dispatch, user, addresses, toggleLoading } =
-    useUserContext();
+  const { handleError, dispatch, user, addresses } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const fetchAddresses = useCallback(async () => {
     try {

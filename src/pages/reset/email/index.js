@@ -4,14 +4,14 @@ import Form from '@/components/forms/Form/Form';
 import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './ResetPassword.module.scss';
 
 function ResetPassword() {
-  const { toggleLoading, handleError } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { email } = formData;
@@ -20,7 +20,9 @@ function ResetPassword() {
     const recoverRes = await nextApiCall.sendRecoverEmail({ email });
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
-    if (errors?.length) return handleError(errors);
+    if (errors?.length) {
+      return errors.forEach((element) => toast.error(element.message));
+    }
     return toast.success(config.userFeedback.sendRecoverEmail.success);
   });
 

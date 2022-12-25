@@ -1,45 +1,47 @@
-import { parseCookies } from 'nookies';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
-import { getIpFromRequest } from '@/helpers/index';
-
-const checkoutCookiesName = 'shopifyCheckoutId';
+import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
-  const { method } = req;
+  try {
+    const { method } = req;
 
-  if (method === 'GET') {
-    const parsedCookies = parseCookies({ req });
-    const checkoutId = parsedCookies?.[checkoutCookiesName];
+    switch (method) {
+      case 'GET': {
+        const { delegateToken, ip, checkoutId, shopifyToken } =
+          getInfoFromRequest(req);
 
-    if (!checkoutId) {
-      return res
-        .status(400)
-        .json({ message: 'Missing checkout ID in cookies' });
+        if (!checkoutId) {
+          return res
+            .status(400)
+            .json({ message: 'Missing checkout ID in cookies' });
+        }
+
+        if (!shopifyToken) {
+          return res
+            .status(400)
+            .json({ message: 'Missing shopify token in cookies' });
+        }
+
+        const associateRes = await associateCustomerToCheckout(
+          checkoutId,
+          shopifyToken?.token,
+          delegateToken,
+          ip
+        );
+
+        if (!associateRes) {
+          return res
+            .status(400)
+            .json({ message: 'Customer not associate to checkout' });
+        }
+
+        return res.status(200).json(associateRes);
+      }
+      default: {
+        return res.status(500).json({ message: 'Method not allowed' });
+      }
     }
-
-    const shopifyTokenCookie = parsedCookies?.shopifyToken;
-
-    const shopifyToken = shopifyTokenCookie
-      ? JSON.parse(shopifyTokenCookie)
-      : null;
-
-    if (shopifyToken) {
-      const delegateToken = parsedCookies?.shopifyDelegateToken;
-
-      const ip = getIpFromRequest(req);
-
-      const associateRes = await associateCustomerToCheckout(
-        checkoutId,
-        shopifyToken?.token,
-        delegateToken,
-        ip
-      );
-
-      return res.status(200).json(associateRes);
-    }
-    return res
-      .status(201)
-      .json({ ok: true, message: 'Customer not logged in' });
+  } catch (error) {
+    return res.status(500).json({ error: error.message, stack: error.stack });
   }
-  return res.status(500).json({ message: 'Method not allowed' });
 }

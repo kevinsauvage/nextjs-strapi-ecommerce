@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import config from '@/config/index';
-import limitStrLength from 'src/utils/limitStringLength';
+import limitStrLength from '@/utils/limitStringLength';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
 function Address({
   address,
   isAccount,
-  handleChange,
   isDefault,
   handleDelete,
   displayButton = true,
@@ -38,7 +37,7 @@ function Address({
       <AccountRow title="City" content={city} />
       <AccountRow title="Province" content={province} />
       <AccountRow title="Country" content={country} />
-      {displayButton && !isDefault && !isAccount && (
+      {displayButton && !isAccount && (
         <div className={style.buttons}>
           <Link
             className={style.button}
@@ -50,9 +49,15 @@ function Address({
             Edit
           </Link>
 
-          <button type="button" onClick={handleDelete} className={style.button}>
-            Delete
-          </button>
+          {!isDefault && (
+            <button
+              type="button"
+              onClick={handleDelete}
+              className={style.button}
+            >
+              Delete
+            </button>
+          )}
         </div>
       )}
     </div>

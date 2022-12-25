@@ -3,17 +3,16 @@ import Form from '@/components/forms/Form/Form';
 import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
-import { actions } from '@/contexts/UserContext/UserReducer';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
-  const { toggleLoading, handleError, dispatch } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const { handleInputChange, handleSubmit } = useForm(async (formData) => {
     const { password } = formData;
@@ -23,15 +22,19 @@ function Password({ resetUrl }) {
     }
 
     toggleLoading(true);
+
     const data = await nextApiCall.resetPassword(password, resetUrl);
+
     toggleLoading(false);
 
     const customerUserErrors = data?.customerUserErrors;
-    if (customerUserErrors?.length) return handleError(customerUserErrors);
 
-    const customer = data?.customer;
-    if (customer?.id) {
-      dispatch({ type: actions.ADD_USER, payload: customer });
+    if (customerUserErrors?.length) {
+      return customerUserErrors.forEach((element) =>
+        toast.error(element.message)
+      );
+    }
+    if (data?.ok) {
       toast.success(config.userFeedback.resetPassword.success);
       return push(config.routes.account);
     }

@@ -1,43 +1,41 @@
-import { parseCookies } from 'nookies';
-import { getIpFromRequest } from '@/helpers/index';
 import { removeLinesFromCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
-
-const checkoutCookiesName = 'shopifyCheckoutId';
+import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
     const { method, body } = req;
 
-    if (method === 'POST') {
-      const parsedCookies = parseCookies({ req });
-      const checkoutId = parsedCookies?.[checkoutCookiesName];
+    switch (method) {
+      case 'POST': {
+        const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
-      if (!checkoutId) {
-        return res
-          .status(400)
-          .json({ message: 'Missing checkout ID in cookies' });
+        if (!checkoutId) {
+          return res
+            .status(400)
+            .json({ message: 'Missing checkout ID in cookies' });
+        }
+
+        const { lineItemId } = body || {};
+
+        if (!lineItemId) {
+          return res.status(400).json({ message: 'Missing query parameter' });
+        }
+
+        const removeLinesRes = await removeLinesFromCheckout(
+          checkoutId,
+          [lineItemId],
+          delegateToken,
+          ip
+        );
+
+        return res.status(200).json(removeLinesRes);
       }
 
-      const { lineItemId } = body || {};
-
-      if (!lineItemId) {
-        return res.status(400).json({ message: 'Missing query parameter' });
+      default: {
+        return res.status(400).json({ error: 'Method not allowed' });
       }
-      const delegateToken = parsedCookies?.shopifyDelegateToken;
-      const ip = getIpFromRequest(req);
-
-      const removeLinesRes = await removeLinesFromCheckout(
-        checkoutId,
-        [lineItemId],
-        delegateToken,
-        ip
-      );
-
-      return res.status(200).json(removeLinesRes);
     }
-    return res.status(500).json({ message: 'Method not allowed' });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ message: 'Server error' });
+  } catch (error) {
+    return res.status(500).json({ error: error.message, stack: error.stack });
   }
 }

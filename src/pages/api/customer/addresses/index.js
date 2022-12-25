@@ -2,23 +2,7 @@ import {
   getCustomerAddresses,
   createAddress,
 } from '@/lib/shopify/customer/customerApiCall';
-import { parseCookies } from 'nookies';
-import { getIpFromRequest } from '@/helpers/index';
-
-const getInfoFromRequest = (req) => {
-  const parsedCookies = parseCookies({ req });
-
-  const delegateToken = parsedCookies?.shopifyDelegateToken;
-  const ip = getIpFromRequest(req);
-
-  const shopifyTokenCookie = parsedCookies?.shopifyToken;
-
-  const shopifyToken = shopifyTokenCookie
-    ? JSON.parse(shopifyTokenCookie)
-    : null;
-
-  return { shopifyToken, delegateToken, ip };
-};
+import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
@@ -32,9 +16,8 @@ export default async function handler(req, res) {
     switch (method) {
       case 'GET': {
         const addresses = await getCustomerAddresses(token, delegateToken, ip);
-
         if (addresses) return res.status(200).json(addresses);
-        return res.status(500).json('Something went wrong');
+        return res.status(500).json({ message: 'Something went wrong' });
       }
 
       case 'POST': {
@@ -51,9 +34,7 @@ export default async function handler(req, res) {
           ip
         );
 
-        if (createdAddress) {
-          return res.status(200).json(createdAddress);
-        }
+        if (createdAddress) return res.status(200).json(createdAddress);
         return res.status(500).json('Something went wrong');
       }
 

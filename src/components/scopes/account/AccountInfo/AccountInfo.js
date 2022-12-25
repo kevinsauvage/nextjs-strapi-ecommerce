@@ -2,7 +2,7 @@ import AccountRow from '../AccountRow/AccountRow';
 import style from './AccountInfo.module.scss';
 
 export default function AccountInfo({ user }) {
-  const { firstName, lastName, phone, email, acceptsMarketing } = user;
+  const { firstName, lastName, phone, email, acceptsMarketing } = user || {};
   return (
     <div className={style.AccountInfo}>
       <AccountRow

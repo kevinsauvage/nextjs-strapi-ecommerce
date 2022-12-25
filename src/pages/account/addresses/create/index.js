@@ -5,12 +5,12 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import useUserContext from '@/contexts/UserContext/useUserContext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './create.module.scss';
 
 function Addresses() {
   const { back } = useRouter();
-  const { toggleLoading } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const handleSubmit = async (address) => {
     try {

@@ -4,7 +4,6 @@ import Footer from '@/layout/Footer/Footer';
 import Header from '@/layout/Header/Header';
 import SearchBar from '@/layout/Search/SearchBar';
 import Cart from '@/layout/Cart/Cart';
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import {
   getMenuFooter,
   getMenuHeader,
@@ -17,8 +16,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import styles from './Layout.module.scss';
 
 function Layout({ children }) {
-  const { selectedProduct, setSelectedProduct } = useGlobalContext();
-  const { isCheckoutLoading } = useCheckoutContext();
+  const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
@@ -40,7 +38,7 @@ function Layout({ children }) {
     <>
       <SearchBar />
       <Cart />
-      {isCheckoutLoading && <PageLoader />}
+      {loading && <PageLoader />}
       <div className={styles.container}>
         <Header headerMenu={menuHeader} />
         {selectedProduct ? (

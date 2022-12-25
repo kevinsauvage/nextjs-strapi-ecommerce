@@ -1,17 +1,12 @@
 import { createContext, useCallback, useMemo, useReducer } from 'react';
 import { toast } from 'react-toastify';
-import { UserReducer, initialState, actions } from './UserReducer';
+import { UserReducer, initialState } from './UserReducer';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const { user, loading, addresses, orders } = states || {};
-
-  /* A function that is called when the component is mounted. */
-  const toggleLoading = useCallback((loadingState) => {
-    dispatch({ type: actions.CHANGE_LOADING, payload: loadingState });
-  }, []);
+  const { user, addresses, orders } = states || {};
 
   /* A function that is called when an error occurs. */
   const handleError = useCallback((err) => {
@@ -25,16 +20,14 @@ export function UserProvider({ children }) {
     () => ({
       // States
       user,
-      loading,
       addresses,
       orders,
 
       // Functions
-      toggleLoading,
       handleError,
       dispatch,
     }),
-    [loading, user, toggleLoading, handleError, dispatch, addresses, orders]
+    [user, handleError, dispatch, addresses, orders]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

@@ -20,11 +20,7 @@ const login = async (req, res) => {
           ip
         );
 
-        if (!data) {
-          return res
-            .status(403)
-            .json({ error: 'Login call failed', ok: false });
-        }
+        if (!data) return res.status(403).json({ error: 'Login call failed' });
 
         const { customerAccessToken, customerUserErrors } = data || {};
 
@@ -55,13 +51,11 @@ const login = async (req, res) => {
       }
 
       default: {
-        return res
-          .status(500)
-          .json({ ok: false, message: 'Method Not Allowed' });
+        return res.status(500).json({ message: 'Method Not Allowed' });
       }
     }
   } catch (error) {
-    return res.status(404).send({ ok: false, error });
+    return res.status(500).json({ error: error.message, stack: error.stack });
   }
 };
 

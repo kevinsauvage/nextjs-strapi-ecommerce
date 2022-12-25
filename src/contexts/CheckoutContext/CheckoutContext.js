@@ -20,12 +20,7 @@ const storageCheckoutKey = 'checkoutId';
 export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
-  const { toggleCheckout } = useGlobalContext();
-
-  /* A callback function that is used to toggle the loading state of the checkout. */
-  const toggleLoading = useCallback((state) => {
-    dispatch({ type: 'IS_CHECKOUT_LOADING', payload: state });
-  }, []);
+  const { toggleCheckout, toggleLoading } = useGlobalContext();
 
   /* A callback function that is used to handle the response of the API call. */
   const handleResponse = useCallback(

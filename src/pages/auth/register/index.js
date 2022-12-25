@@ -4,17 +4,17 @@ import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import useForm from '@/hooks/useForm';
 import Form from '@/components/forms/Form/Form';
-import useUserContext from '@/contexts/UserContext/useUserContext';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
 
 function RegisterPage() {
-  const { toggleLoading, handleError } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
   const { push } = useRouter();
 
@@ -31,7 +31,9 @@ function RegisterPage() {
     toggleLoading(false);
 
     const userErrors = registerRes?.userErrors;
-    if (userErrors?.length) return handleError(userErrors);
+    if (userErrors?.length) {
+      return userErrors.forEach((element) => toast.error(element.message));
+    }
 
     if (registerRes?.ok) {
       toast.success(userFeedback?.register?.success);

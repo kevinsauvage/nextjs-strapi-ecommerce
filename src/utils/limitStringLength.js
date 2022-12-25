@@ -6,7 +6,7 @@
  * @returns a string.
  */
 const limitStrLength = (text, maxLength) => {
-  if (text.length > maxLength - 3) {
+  if (text?.length > maxLength - 3) {
     return `${text.substring(0, maxLength).trimEnd()}...`;
   }
 

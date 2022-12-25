@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import nextApiCall from '@/utils/apiNext';
 import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 
 const { userFeedback } = config;
 
@@ -15,7 +16,8 @@ export default function useProductSelection({ product }) {
   const [quantity, setQuantity] = useState(1);
   const [availableColors, setAvailableColors] = useState([]);
   const [availableSize, setAvailableSize] = useState([]);
-  const { toggleLoading, handleResponse } = useCheckoutContext();
+  const { handleResponse } = useCheckoutContext();
+  const { toggleLoading } = useGlobalContext();
 
   const handleChangeInput = (num) => setQuantity(num);
 

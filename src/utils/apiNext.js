@@ -1,13 +1,13 @@
 const apiRoute = {
-  login: '/api/customer/login',
-  logout: '/api/customer/logout',
-  register: '/api/customer/register',
+  login: '/api/customer/auth/login',
+  logout: '/api/customer/auth/logout',
+  register: '/api/customer/auth/register',
+
   delegateToken: '/api/customer/delegateToken',
   associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
-  resetPassword: '/api/customer/password/reset',
   customer: {
     index: '/api/customer',
-    sendRecoverEmail: '/api/customer/password/sendRecoverEmail',
+    password: '/api/customer/password',
     addresses: '/api/customer/addresses',
     defaultAddress: '/api/customer/defaultAddress',
     orders: '/api/customer/orders',
@@ -65,7 +65,7 @@ const associateCustomerToCheckout = (id) => {
 };
 
 const resetPassword = (password, url) => {
-  const apiUrl = `${apiRoute.resetPassword}?password=${password}&url=${url}`;
+  const apiUrl = `${apiRoute.customer.password}?password=${password}&url=${url}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
@@ -90,7 +90,7 @@ const checkoutLineItemsUpdate = (payload) => {
 };
 
 const sendRecoverEmail = (payload) => {
-  const apiUrl = `${apiRoute.customer.sendRecoverEmail}`;
+  const apiUrl = `${apiRoute.customer.password}`;
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 

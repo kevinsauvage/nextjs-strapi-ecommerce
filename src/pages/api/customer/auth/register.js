@@ -46,9 +46,8 @@ const register = async (req, res) => {
 
         const accessToken = dataLogin?.customerAccessToken?.accessToken;
 
-        if (!accessToken) {
-          return res.status(403).send({ message: 'Login failed', ok: false });
-        }
+        if (!accessToken)
+          return res.status(403).send({ message: 'Login failed' });
 
         handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 
@@ -64,12 +63,10 @@ const register = async (req, res) => {
         return res.status(200).json({ ok: true });
       }
       default:
-        return res
-          .status(500)
-          .json({ ok: false, message: 'Method Not Allowed' });
+        return res.status(500).json({ message: 'Method Not Allowed' });
     }
   } catch (error) {
-    return res.status(404).send({ ok: false, error });
+    return res.status(500).json({ error: error.message, stack: error.stack });
   }
 };
 

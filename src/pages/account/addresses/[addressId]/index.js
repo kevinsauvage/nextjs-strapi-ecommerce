@@ -6,14 +6,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import useUserContext from '@/contexts/UserContext/useUserContext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './AddressUpdate.module.scss';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [address, setAddress] = useState(null);
-  const { toggleLoading } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
   const id = `gid://shopify/MailingAddress/${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
 

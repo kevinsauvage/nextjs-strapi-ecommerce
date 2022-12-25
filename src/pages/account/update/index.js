@@ -10,11 +10,14 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import Button from '@/components/Button/Button';
 import Input from '@/components/forms/Input/Input';
 import { actions } from '@/contexts/UserContext/UserReducer';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
-  const { user, handleError, dispatch, toggleLoading } = useUserContext();
+  const { user, handleError, dispatch } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
+
   const { back } = useRouter();
 
   useEffect(() => {
@@ -69,6 +72,7 @@ function OrderDetail() {
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
       if (customer) {
+        toast.success('Customer information updated successfully');
         dispatch({ type: actions.ADD_USER, payload: customer });
         return back();
       }

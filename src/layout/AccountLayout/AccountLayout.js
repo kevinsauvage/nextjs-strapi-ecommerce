@@ -7,13 +7,12 @@ import Loader from '@/components/Loader/Loader';
 import Link from 'next/link';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import styles from './AccountLayout.module.scss';
-import PageLoader from '../Loader/PageLoader/PageLoader';
 
 function AccountLayout({ children, title, subtitle, loading, backTo }) {
-  const { user, dispatch, loading: pageLoading } = useUserContext();
+  const { user, dispatch } = useUserContext();
 
   useEffect(() => {
-    const fetchAddresses = async () => {
+    const getCustomer = async () => {
       try {
         if (user?.id) return;
         const res = await nextApiCall.getCustomer();
@@ -24,12 +23,11 @@ function AccountLayout({ children, title, subtitle, loading, backTo }) {
         toast.error('Something went wrong, please try again later');
       }
     };
-    fetchAddresses();
+    getCustomer();
   }, [dispatch, user]);
 
   return (
     <div className={styles.AccountLayout}>
-      {pageLoading && <PageLoader />}
       <div className={styles.banner}>
         {backTo && (
           <Link href={backTo.href} className={styles.backTo}>

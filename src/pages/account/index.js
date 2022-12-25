@@ -9,13 +9,12 @@ import Address from '@/components/scopes/account/Address/Address';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { toast } from 'react-toastify';
-import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styles from './Profile.module.scss';
 
 function Profile() {
-  const { user, dispatch } = useUserContext();
+  const { user } = useUserContext();
   const { push } = useRouter();
   const { userFeedback } = config;
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +28,6 @@ function Profile() {
     const res = await nextApiCall.logout();
     setIsLoading(false);
     if (res?.ok) {
-      dispatch({ type: actions.REMOVE_USER });
       toast.success(userFeedback.logout.success);
       return push(config.routes.home);
     }
