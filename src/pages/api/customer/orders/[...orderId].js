@@ -10,16 +10,15 @@ export default async function handler(req, res) {
     if (!token)
       return res.status(404).json({ error: 'Missing customer token cookie' });
 
-    const orderId = query?.orderId;
+    const orderId = query?.id;
 
+    console.log('🚀 ~ file: [...orderId].js:16 ~ handler ~ orderId', orderId);
     if (!orderId)
       return res.status(404).json({ error: 'Missing orderId param' });
 
-    const id = `gid://shopify/Order/${query.orderId}?key=${query.key}`;
-
     switch (method) {
       case 'GET': {
-        const orderRes = await getOrderById(id, delegateToken, ip);
+        const orderRes = await getOrderById(orderId, delegateToken, ip);
         if (orderRes) return res.status(200).json(orderRes);
         return res.status(500).json({ error: 'Internal server error' });
       }

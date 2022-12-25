@@ -16,14 +16,13 @@ function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const { orderId } = query;
-  const id = `${orderId}?key=${query.key}`;
 
   useEffect(() => {
     async function fetchOrder() {
       try {
         if (!orderId || !query) return;
 
-        const res = await nextApiCall.getOrderById(id);
+        const res = await nextApiCall.getOrderById(orderId);
 
         if (res?.error) {
           toast.error('Something went wrong');
@@ -40,7 +39,7 @@ function OrderDetail() {
       }
     }
     fetchOrder();
-  }, [id, orderId, back, query]);
+  }, [orderId, back, query]);
 
   const { name, shippingAddress, lineItems } = order || {};
 

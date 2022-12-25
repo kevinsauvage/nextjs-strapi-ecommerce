@@ -131,6 +131,7 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
+    console.log('🚀 ~ file: customerApiCall.js:134 ~ getUser ~ res', res);
     const response = cleanGraphQLResponse(res?.data);
     return response;
   } catch (err) {
@@ -304,6 +305,7 @@ export const updateAddress = async (
       delegateToken,
       ip
     );
+    console.log('🚀 ~ file: customerApiCall.js:308 ~ res', res);
     return res?.data?.customerAddressUpdate;
   } catch (err) {
     return console.error(err);
@@ -377,6 +379,10 @@ export const getCustomerAddresses = async (token, delegateToken, ip) => {
  * @returns The customer's address.
  */
 export const getCustomerAddressById = async (token, id, delegateToken, ip) => {
+  console.log(
+    '🚀 ~ file: customerApiCall.js:382 ~ getCustomerAddressById ~ id',
+    id
+  );
   try {
     const res = await shopifyStorefrontCall(
       customerQueries.getCustomerAddressById,
@@ -386,6 +392,10 @@ export const getCustomerAddressById = async (token, id, delegateToken, ip) => {
       },
       delegateToken,
       ip
+    );
+    console.log(
+      '🚀 ~ file: customerApiCall.js:392 ~ getCustomerAddressById ~ res',
+      res
     );
 
     const response = cleanGraphQLResponse(res?.data);

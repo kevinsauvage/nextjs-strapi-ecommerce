@@ -8,9 +8,10 @@ import { getInfoFromRequest } from '@/helpers/index';
 export default async function handler(req, res) {
   try {
     const { method, query } = req;
+    console.log('🚀 ~ file: [...addressId].js:11 ~ handler ~ query', query);
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
-    const addressId = query?.addressId;
+    const addressId = `${query.id}&customer_access_token=${query.customer_access_token}`;
 
     if (!token)
       return res.status(404).json({ message: 'Missing customer token cookie' });

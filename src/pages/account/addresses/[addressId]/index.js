@@ -15,6 +15,8 @@ function AddressUpdate() {
   const [address, setAddress] = useState(null);
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
+  console.log('🚀 ~ file: index.js:18 ~ AddressUpdate ~ addressId', addressId);
+  console.log(addressId);
 
   useEffect(() => {
     async function fetchAddress() {

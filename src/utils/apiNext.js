@@ -106,7 +106,7 @@ const createAddress = (payload) => {
 
 const deleteAddress = (addressId) => {
   const id = encodeURIComponent(addressId);
-  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
+  const apiUrl = `${apiRoute.customer.addresses}/id?id=${id}`;
   return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
@@ -121,14 +121,12 @@ const updateCustomerDefaultAddress = (addressId) => {
 };
 
 const getAddressById = (addressId) => {
-  const id = encodeURIComponent(addressId);
-  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
+  const apiUrl = `${apiRoute.customer.addresses}/id?id=${addressId}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
 const updateAddress = (payload, addressId) => {
-  const id = encodeURIComponent(addressId);
-  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
+  const apiUrl = `${apiRoute.customer.addresses}/id?id=${addressId}`;
   return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
@@ -138,7 +136,7 @@ const getCustomerOrders = () => {
 };
 
 const getOrderById = (orderId) => {
-  const apiUrl = `${apiRoute.customer.orders}/${orderId}`;
+  const apiUrl = `${apiRoute.customer.orders}/id?id=${orderId}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 

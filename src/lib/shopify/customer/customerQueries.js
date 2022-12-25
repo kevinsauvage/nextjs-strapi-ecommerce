@@ -10,9 +10,6 @@ const queryRegister = `
 mutation ($input: CustomerCreateInput!) {
   customerCreate(input: $input) {
     userErrors { field message }
-    customer {
-      ${customerFragment}
-    }
   }
 }`;
 
@@ -36,9 +33,6 @@ mutation customerResetByUrl($password: String!, $resetUrl: URL!) {
   customerResetByUrl(password: $password, resetUrl: $resetUrl) {
       customerAccessToken { accessToken expiresAt }
       customerUserErrors { code field message}
-      customer {
-        ${customerFragment}
-      }
   }
 }`;
 
