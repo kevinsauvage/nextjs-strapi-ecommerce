@@ -176,6 +176,14 @@ query ($id: ID!) {
   }
 }`;
 
+const deleteAddressById = `
+mutation customerAddressDelete($customerAccessToken: String!, $id: ID!) {
+  customerAddressDelete(customerAccessToken: $customerAccessToken, id: $id) {
+    customerUserErrors { message }
+    deletedCustomerAddressId
+  }
+}`;
+
 const customerQueries = {
   queryRegister,
   queryLogin,
@@ -193,6 +201,7 @@ const customerQueries = {
   updateDefaultAddress,
   getCustomerAddressById,
   updateCustomer,
+  deleteAddressById,
 };
 
 export default customerQueries;

@@ -104,9 +104,10 @@ const createAddress = (payload) => {
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 
-const deleteAddress = (payload) => {
-  const apiUrl = `${apiRoute.customer.addresses}`;
-  return nextApiHelper(apiUrl, payload, 'DELETE');
+const deleteAddress = (addressId) => {
+  const id = encodeURIComponent(addressId);
+  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
+  return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
 const getCustomerAddresses = () => {
@@ -120,11 +121,13 @@ const updateCustomerDefaultAddress = (addressId) => {
 };
 
 const getAddressById = (addressId) => {
-  const apiUrl = `${apiRoute.customer.addresses}/${addressId}`;
+  const id = encodeURIComponent(addressId);
+  const apiUrl = `${apiRoute.customer.addresses}/${id}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
-const updateAddress = (payload, id) => {
+const updateAddress = (payload, addressId) => {
+  const id = encodeURIComponent(addressId);
   const apiUrl = `${apiRoute.customer.addresses}/${id}`;
   return nextApiHelper(apiUrl, payload, 'PUT');
 };

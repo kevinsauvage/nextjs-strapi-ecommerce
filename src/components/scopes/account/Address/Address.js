@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import config from '@/config/index';
+import limitStrLength from 'src/utils/limitStringLength';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
@@ -8,6 +9,7 @@ function Address({
   isAccount,
   handleChange,
   isDefault,
+  handleDelete,
   displayButton = true,
 }) {
   const {
@@ -28,7 +30,7 @@ function Address({
     <div className={style.address}>
       {isDefault && <div className={style.tag}>Default address</div>}
       <AccountRow title="Name" content={`${firstName} ${lastName}`} />
-      <AccountRow title="Address1" content={address1} />
+      <AccountRow title="Address1" content={limitStrLength(address1, 30)} />
       {address2 && <AccountRow title="Address2" content={address2} />}
       {company && <AccountRow title="Company" content={company} />}
       {phone && <AccountRow title="Phone" content={phone} />}
@@ -36,28 +38,21 @@ function Address({
       <AccountRow title="City" content={city} />
       <AccountRow title="Province" content={province} />
       <AccountRow title="Country" content={country} />
-      {displayButton && (
+      {displayButton && !isDefault && !isAccount && (
         <div className={style.buttons}>
-          {!isDefault && !isAccount && (
-            <>
-              <Link
-                className={style.button}
-                href={`${config.routes.updateAddress}/${id.replace(
-                  'gid://shopify/MailingAddress/',
-                  ''
-                )}`}
-              >
-                Edit
-              </Link>
-              <button
-                type="button"
-                className={style.button}
-                onClick={() => !isDefault && handleChange(id)}
-              >
-                Set as default
-              </button>
-            </>
-          )}
+          <Link
+            className={style.button}
+            href={`${config.routes.updateAddress}/${id.replace(
+              'gid://shopify/MailingAddress/',
+              ''
+            )}`}
+          >
+            Edit
+          </Link>
+
+          <button type="button" onClick={handleDelete} className={style.button}>
+            Delete
+          </button>
         </div>
       )}
     </div>

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import styles from './Button.module.scss';
 
 export default function Button({
+  children,
   type,
   onClick,
   text,
@@ -47,6 +48,7 @@ export default function Button({
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()}`}
     >
+      {children}
       {text}
     </button>
   );

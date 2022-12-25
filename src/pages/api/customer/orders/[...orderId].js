@@ -8,12 +8,12 @@ export default async function handler(req, res) {
     const token = shopifyToken?.token;
 
     if (!token)
-      return res.status(404).json({ message: 'Missing customer token cookie' });
+      return res.status(404).json({ error: 'Missing customer token cookie' });
 
     const orderId = query?.orderId;
 
     if (!orderId)
-      return res.status(404).json({ message: 'Missing orderId param' });
+      return res.status(404).json({ error: 'Missing orderId param' });
 
     const id = `gid://shopify/Order/${query.orderId}?key=${query.key}`;
 
@@ -21,11 +21,11 @@ export default async function handler(req, res) {
       case 'GET': {
         const orderRes = await getOrderById(id, delegateToken, ip);
         if (orderRes) return res.status(200).json(orderRes);
-        return res.status(500).json({ message: 'Something went wrong' });
+        return res.status(500).json({ error: 'Internal server error' });
       }
 
       default:
-        return res.status(500).json({ message: 'Method not allowed' });
+        return res.status(500).json({ error: 'Method not allowed' });
     }
   } catch (error) {
     return res.status(500).json({ error: error.message, stack: error.stack });

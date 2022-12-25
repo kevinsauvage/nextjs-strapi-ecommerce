@@ -1,24 +1,9 @@
 import {
   updateAddress,
   getCustomerAddressById,
+  deleteAddressById,
 } from '@/lib/shopify/customer/customerApiCall';
-import { parseCookies } from 'nookies';
-import { getIpFromRequest } from '@/helpers/index';
-
-const getInfoFromRequest = (req) => {
-  const parsedCookies = parseCookies({ req });
-
-  const delegateToken = parsedCookies?.shopifyDelegateToken;
-  const ip = getIpFromRequest(req);
-
-  const shopifyTokenCookie = parsedCookies?.shopifyToken;
-
-  const shopifyToken = shopifyTokenCookie
-    ? JSON.parse(shopifyTokenCookie)
-    : null;
-
-  return { shopifyToken, delegateToken, ip };
-};
+import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
@@ -26,13 +11,14 @@ export default async function handler(req, res) {
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
     const addressId = query?.addressId;
-    const id = `gid://shopify/MailingAddress/${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
 
     if (!token)
       return res.status(404).json({ message: 'Missing customer token cookie' });
 
     if (!addressId)
       return res.status(400).json({ message: 'Missing addressId param' });
+
+    const id = decodeURIComponent(addressId);
 
     switch (method) {
       case 'GET': {
@@ -62,10 +48,14 @@ export default async function handler(req, res) {
           ip
         );
 
-        if (updatedAddress) {
-          return res.status(200).json(updatedAddress);
-        }
-        return res.status(500).json('Something went wrong');
+        if (updatedAddress) return res.status(200).json(updatedAddress);
+        return res.status(500).json({ message: 'Something went wrong' });
+      }
+
+      case 'DELETE': {
+        const deleteRes = await deleteAddressById(token, id, delegateToken, ip);
+        if (deleteRes) return res.json(deleteRes);
+        return res.status(404).json({ message: "Couldn't delete address" });
       }
 
       default:

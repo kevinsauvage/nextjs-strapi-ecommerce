@@ -29,15 +29,11 @@ export default async function handler(req, res) {
       }
 
       const userRes = (await getUser(token, delegateToken, ip)) || {};
-      console.log('🚀 ~ file: customer.js:28 ~ handler ~ userRes', userRes);
       const customer = userRes?.customer;
       return res.status(200).json({ customer, ok: true });
     }
   }
   if (method === 'PUT') {
-    const d = new Date();
-
-    console.log(`request receivd==>>>>>>>${d.toLocaleTimeString()}`);
     if (token) {
       const {
         body: {
@@ -66,15 +62,12 @@ export default async function handler(req, res) {
 
       if (phone) customerInput.phone = phone;
 
-      console.log(`Call update ==>>>>>>>${d.toLocaleTimeString()}`);
-
       const data = await updateUserInfo(
         token,
         customerInput,
         delegateToken,
         ip
       );
-      console.log(`Received response ==>>>>>>>${d.toLocaleTimeString()}`);
 
       if (!data) {
         return res.status(404).sent({ message: 'Could not update user' });
@@ -96,7 +89,6 @@ export default async function handler(req, res) {
           customerAccessToken?.accessToken
         );
       }
-      console.log(`Sending response ==>>>>>>>${d.toLocaleTimeString()}`);
 
       return res.status(200).json({ customer, ok: true });
     }

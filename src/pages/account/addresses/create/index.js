@@ -9,7 +9,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import styles from './create.module.scss';
 
 function Addresses() {
-  const { push } = useRouter();
+  const { back } = useRouter();
   const { toggleLoading } = useUserContext();
 
   const handleSubmit = async (address) => {
@@ -31,7 +31,7 @@ function Addresses() {
 
       if (customerAddress) {
         toast.success('Address created successfully');
-        return push(config.routes.addresses);
+        return back();
       }
       if (customerUserErrors.length) {
         return customerUserErrors.map((err) => toast.error(err.message));
@@ -45,9 +45,10 @@ function Addresses() {
   };
 
   return (
-    <Page>
+    <Page title="Create new address">
       <AccountLayout
         title="Create the new address bellow"
+        backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
         subtitle="To create a new address in our system, please fill in the following fields. These details will be used to accurately deliver your orders and keep track of your delivery locations. Thank you for your help in maintaining a complete and up-to-date customer address list!"
       >
         <div className={styles.addresses}>

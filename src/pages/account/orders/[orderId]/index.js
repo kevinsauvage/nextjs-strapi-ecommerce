@@ -12,7 +12,7 @@ import OrderCard from '@/components/scopes/account/OrderCard/OrderCard';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail() {
-  const { query, push } = useRouter();
+  const { query, back } = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const { orderId } = query;
@@ -21,20 +21,26 @@ function OrderDetail() {
   useEffect(() => {
     async function fetchOrder() {
       try {
-        if (orderId && query) {
-          const res = await nextApiCall.getOrderById(id);
-          if (res) setOrder(res);
-          else toast.error('Something went wrong');
+        if (!orderId || !query) return;
+
+        const res = await nextApiCall.getOrderById(id);
+
+        if (res?.error) {
+          toast.error('Something went wrong');
+          back();
+          return;
         }
+
+        setOrder(res);
       } catch (error) {
         toast.error('Something went wrong');
-        push(config.routes.addresses);
+        back();
       } finally {
         setIsLoading(false);
       }
     }
     fetchOrder();
-  }, [id, orderId, push, query]);
+  }, [id, orderId, back, query]);
 
   const { name, shippingAddress, lineItems } = order || {};
 
@@ -66,7 +72,7 @@ function OrderDetail() {
             <div className={styles.lineItems}>
               {lineItems &&
                 lineItems.map((item) => (
-                  <LineItemCard key={item.id} item={item} />
+                  <LineItemCard key={item.variant?.id} item={item} />
                 ))}
             </div>
           </Card>

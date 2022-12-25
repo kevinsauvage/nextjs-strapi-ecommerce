@@ -15,7 +15,7 @@ function AddressUpdate() {
   const [address, setAddress] = useState(null);
   const { toggleLoading } = useUserContext();
   const { addressId } = query;
-  const id = `${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
+  const id = `gid://shopify/MailingAddress/${addressId}?model_name=${query.model_name}&customer_access_token=${query.customer_access_token}`;
 
   useEffect(() => {
     async function fetchAddress() {
@@ -27,13 +27,13 @@ function AddressUpdate() {
         }
       } catch (error) {
         toast.error('Something went wrong');
-        push(config.routes.addresses);
+        back();
       } finally {
         setIsLoading(false);
       }
     }
     fetchAddress();
-  }, [addressId, id, push, query]);
+  }, [addressId, id, push, query, back]);
 
   const handleUpdateAddress = async (formData) => {
     try {
@@ -68,10 +68,11 @@ function AddressUpdate() {
   };
 
   return (
-    <Page>
+    <Page title="Update Address">
       <AccountLayout
         loading={isLoading}
         title="Update your address bellow"
+        backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
         subtitle="As a valued customer, it is important that your orders are delivered to you accurately and on time. That's why it is essential for us to have a complete and up-to-date customer address list. Inaccurate or outdated addresses can lead to delays, lost packages, and frustration for both you and us."
       >
         <div className={styles.form}>

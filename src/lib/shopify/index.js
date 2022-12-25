@@ -33,7 +33,6 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
     });
 
     const res = response && (await response.json());
-    console.log('🚀 ~ file: index.js:36 ~ shopifyStorefrontCall ~ res', res);
 
     return res;
   } catch (error) {

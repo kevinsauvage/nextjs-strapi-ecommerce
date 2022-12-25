@@ -1,13 +1,14 @@
 import Page from '@/layout/Page/Page';
 import Address from '@/components/scopes/account/Address/Address';
 import Card from '@/components/scopes/account/Card/Card';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import CreateAddressButton from '@/components/scopes/account/CreateAddressButton/CreateAddressButton';
+import config from '@/config/index';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -15,22 +16,15 @@ function Addresses() {
   const { handleError, dispatch, user, addresses, toggleLoading } =
     useUserContext();
 
-  useEffect(() => {
-    if (addresses) setIsLoading(false);
-  }, [addresses]);
-
-  useEffect(() => {
-    const fetchAddresses = async () => {
-      try {
-        const res = await nextApiCall.getCustomerAddresses();
-        dispatch({ type: actions.ADD_ADDRESSES, payload: res });
-      } catch (e) {
-        toast.error('Something went wrong, please try again later');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchAddresses();
+  const fetchAddresses = useCallback(async () => {
+    try {
+      const res = await nextApiCall.getCustomerAddresses();
+      dispatch({ type: actions.ADD_ADDRESSES, payload: res });
+    } catch (e) {
+      toast.error('Something went wrong, please try again later');
+    } finally {
+      setIsLoading(false);
+    }
   }, [dispatch]);
 
   const handleSetAsDefault = async (id) => {
@@ -50,10 +44,40 @@ function Addresses() {
     }
   };
 
+  const handleDelete = async (id) => {
+    try {
+      toggleLoading(true);
+      const res = await nextApiCall.deleteAddress(id);
+      const { customerUserErrors, deletedCustomerAddressId } = res || {};
+      if (customerUserErrors?.length) return handleError(customerUserErrors);
+      if (deletedCustomerAddressId) {
+        await fetchAddresses();
+        return toast.success('Address deleted successfully');
+      }
+      return toast.error('Something went wrong, please try again later');
+    } catch (error) {
+      return toast.error('Something went wrong, please try again later');
+    } finally {
+      toggleLoading(false);
+    }
+  };
+
+  const isDefault = (address) =>
+    address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
+
+  useEffect(() => {
+    if (addresses) setIsLoading(false);
+  }, [addresses]);
+
+  useEffect(() => {
+    fetchAddresses();
+  }, [fetchAddresses]);
+
   return (
-    <Page>
+    <Page title="Addresses">
       <AccountLayout
         loading={isLoading}
+        backTo={{ name: 'Back to Account', href: config.routes.account }}
         title="Find bellow your registered address"
         subtitle="Welcome to your customer address list! Here you will find a complete record of all the addresses you have on file with us. These addresses are essential for accurate delivery of your orders and for efficient logistics and inventory management. If you need to update or delete any of your addresses, please let us know. We value your satisfaction and appreciate your help in maintaining a reliable customer address list."
       >
@@ -62,20 +86,23 @@ function Addresses() {
           {Array.isArray(addresses) && addresses.length > 0 ? (
             <div className={styles.list}>
               {addresses.map((item) => (
-                <Card
-                  key={item.id}
-                  first={
-                    item.id?.split('?')?.[0] ===
-                    user?.defaultAddress?.id?.split('?')?.[0]
-                  }
-                >
+                <Card key={item.id}>
+                  {!isDefault(item) && (
+                    <button
+                      type="button"
+                      className={styles.buttonDefault}
+                      onClick={() =>
+                        !isDefault(item) && handleSetAsDefault(item.id)
+                      }
+                    >
+                      Set as default
+                    </button>
+                  )}
                   <Address
-                    isDefault={
-                      item.id?.split('?')?.[0] ===
-                      user?.defaultAddress?.id?.split('?')?.[0]
-                    }
+                    isDefault={isDefault(item)}
                     handleChange={handleSetAsDefault}
                     address={item}
+                    handleDelete={() => handleDelete(item.id)}
                   />
                 </Card>
               ))}

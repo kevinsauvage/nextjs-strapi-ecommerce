@@ -231,6 +231,7 @@ export const getDelegateToken = async (input) => {
     return console.error(err);
   }
 };
+
 export const createAddress = async (
   address,
   customerAccessToken,
@@ -248,6 +249,27 @@ export const createAddress = async (
       ip
     );
     return res?.data?.customerAddressCreate;
+  } catch (err) {
+    return console.error(err);
+  }
+};
+
+export const deleteAddressById = async (
+  customerAccessToken,
+  id,
+  delegateToken,
+  ip
+) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      customerQueries.deleteAddressById,
+      { customerAccessToken, id },
+      delegateToken,
+      ip
+    );
+
+    const response = cleanGraphQLResponse(res?.data?.customerAddressDelete);
+    return response;
   } catch (err) {
     return console.error(err);
   }

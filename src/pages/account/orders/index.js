@@ -7,6 +7,7 @@ import nextApiCall from '@/utils/apiNext';
 import { toast } from 'react-toastify';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
+import config from '@/config/index';
 
 export default function OrdersPage() {
   const { orders, dispatch } = useUserContext();
@@ -35,6 +36,7 @@ export default function OrdersPage() {
   return (
     <Page title="Orders">
       <AccountLayout
+        backTo={{ name: 'Back to Account', href: config.routes.account }}
         loading={isLoading}
         title="Orders"
         subtitle="Welcome to your order history! Here you can find a complete list of all your orders with us, along with details such as the date of purchase, the items included, and the delivery status. This is a useful resource for keeping track of your purchases and ensuring that your orders are being processed and delivered efficiently."

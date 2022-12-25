@@ -42,7 +42,7 @@ function Profile() {
   const title = `Welcome ${user?.firstName || ''} ${user?.lastName || ''}`;
 
   return (
-    <Page title="My Profile">
+    <Page title="Account">
       <AccountLayout title={title} subtitle={subtitle} loading={isLoading}>
         <div className={styles.logOut}>
           <Button tertiary text="Log Out" onClick={logout} />

@@ -15,7 +15,7 @@ import styles from './Update.module.scss';
 function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const { user, handleError, dispatch, toggleLoading } = useUserContext();
-  const { push } = useRouter();
+  const { back } = useRouter();
 
   useEffect(() => {
     if (user?.id) setIsLoading(false);
@@ -70,7 +70,7 @@ function OrderDetail() {
 
       if (customer) {
         dispatch({ type: actions.ADD_USER, payload: customer });
-        return push(config.routes.account);
+        return back();
       }
       return toast.error('Something went wrong');
     } catch (err) {
@@ -81,10 +81,11 @@ function OrderDetail() {
   };
 
   return (
-    <Page title="Customer Udapte">
+    <Page title="Update Customer Information">
       <AccountLayout
-        loading={isLoading}
+        loading={isLoading || !user}
         title="Update your information"
+        backTo={{ name: 'Back to Account', href: config.routes.account }}
         subtitle='"View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."'
       >
         <Form handleSubmit={handleSubmit}>

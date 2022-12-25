@@ -4,10 +4,12 @@ import { actions } from '@/contexts/UserContext/UserReducer';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import nextApiCall from '@/utils/apiNext';
 import Loader from '@/components/Loader/Loader';
+import Link from 'next/link';
+import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import styles from './AccountLayout.module.scss';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 
-function AccountLayout({ children, title, subtitle, loading }) {
+function AccountLayout({ children, title, subtitle, loading, backTo }) {
   const { user, dispatch, loading: pageLoading } = useUserContext();
 
   useEffect(() => {
@@ -29,6 +31,12 @@ function AccountLayout({ children, title, subtitle, loading }) {
     <div className={styles.AccountLayout}>
       {pageLoading && <PageLoader />}
       <div className={styles.banner}>
+        {backTo && (
+          <Link href={backTo.href} className={styles.backTo}>
+            <MdOutlineKeyboardBackspace />
+            {backTo.name}
+          </Link>
+        )}
         <h1 className={styles.title}>{title}</h1>
         <p className={styles.subtitle}>{subtitle}</p>
       </div>
