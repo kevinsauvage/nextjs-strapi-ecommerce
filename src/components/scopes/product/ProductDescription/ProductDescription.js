@@ -17,8 +17,6 @@ export default function ProductDescription({
 
   const { quantityAvailable, availableForSale, priceV2 } = selected || {};
 
-  console.log('🚀 ~ file: ProductDescription.js:20 ~ selected', selected);
-
   return (
     <div className={styles.ProductDescription}>
       <span className={styles.type}>{productType}</span>

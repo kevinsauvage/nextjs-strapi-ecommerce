@@ -57,6 +57,9 @@ export function CheckoutProvider({ children }) {
     async (quantity, id) => {
       toggleLoading(true);
       const res = await nextApiCall.checkoutLineItemsUpdate({ quantity }, id);
+
+      console.log('🚀 ~ file: CheckoutContext.js:61 ~ res', res);
+
       handleResponse(res, userFeedback.updateLines, false);
     },
     [toggleLoading, handleResponse]

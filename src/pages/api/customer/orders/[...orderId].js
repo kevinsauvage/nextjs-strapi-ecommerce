@@ -12,7 +12,6 @@ export default async function handler(req, res) {
 
     const orderId = query?.id;
 
-    console.log('🚀 ~ file: [...orderId].js:16 ~ handler ~ orderId', orderId);
     if (!orderId)
       return res.status(404).json({ error: 'Missing orderId param' });
 

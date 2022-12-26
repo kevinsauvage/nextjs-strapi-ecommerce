@@ -8,7 +8,6 @@ import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants, productType } = product;
-  console.log(product);
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { setSelectedProduct } = useGlobalContext() || {};
 
