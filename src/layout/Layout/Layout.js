@@ -50,7 +50,7 @@ function Layout({ children }) {
       {children}
       <SecureBanner />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
-      <ToastContainer position="top-right" newestOnTop theme="dark" />
+      <ToastContainer position="top-left" newestOnTop theme="dark" />
     </div>
   );
 }
