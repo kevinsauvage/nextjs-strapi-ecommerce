@@ -15,23 +15,23 @@ function AddressUpdate() {
   const [address, setAddress] = useState(null);
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
-  console.log('🚀 ~ file: index.js:18 ~ AddressUpdate ~ addressId', addressId);
-  console.log(addressId);
 
   useEffect(() => {
     async function fetchAddress() {
+      if (!addressId || !query) return back();
       try {
         if (addressId && query) {
           const res = await nextApiCall.getAddressById(addressId);
-          if (res) setAddress(res);
-          else toast.error('Something went wrong');
+          if (res) return setAddress(res);
+          return toast.error('Something went wrong');
         }
       } catch (error) {
         toast.error('Something went wrong');
-        back();
+        return back();
       } finally {
         setIsLoading(false);
       }
+      return null;
     }
     fetchAddress();
   }, [addressId, push, query, back]);
