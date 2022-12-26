@@ -19,10 +19,8 @@ function OrderDetail() {
 
   useEffect(() => {
     async function fetchOrder() {
+      if (!orderId || !query || order) return;
       try {
-        if (!orderId || !query || order) return;
-        setIsLoading(true);
-
         const res = await nextApiCall.getOrderById(orderId);
 
         if (res?.error) {

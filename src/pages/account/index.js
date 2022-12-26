@@ -74,7 +74,7 @@ function Profile() {
             </div>
             <Card title="Orders">
               <Orders orders={user?.orders} />
-              {user?.orders.length > 2 && (
+              {user?.orders.length > 0 && (
                 <div className={styles.button}>
                   <Button
                     text="See all orders"

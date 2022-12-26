@@ -46,15 +46,9 @@ function Address({
             Edit
           </Link>
 
-          {!isDefault && (
-            <button
-              type="button"
-              onClick={handleDelete}
-              className={style.button}
-            >
-              Delete
-            </button>
-          )}
+          <button type="button" onClick={handleDelete} className={style.button}>
+            Delete
+          </button>
         </div>
       )}
     </div>
