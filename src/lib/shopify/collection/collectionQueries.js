@@ -10,23 +10,9 @@ query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: 
   collection(handle: $handle) {
     ${collectionFragment}
     products(first: $first,  filters: $filters, sortKey: $sort, after: $after) {
-      pageInfo {
-        ${pageInfoFragment}
+      filters {
+        ${filterFragment}
       }
-      edges {
-        node {
-          ${productFragment}
-        }
-      }
-    }
-  }
-}`;
-
-const filterCollectionBackward = `
-query Search($handle: String!, $last: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $before: String) {
-  collection(handle: $handle) {
-    ${collectionFragment}
-    products(last: $last,  filters: $filters, sortKey: $sort, before: $before) {
       pageInfo {
         ${pageInfoFragment}
       }
@@ -82,7 +68,6 @@ query Search($handle: String!) {
 const queriesCollection = {
   getCollectionsWithProducts,
   filterCollectionForward,
-  filterCollectionBackward,
   getCollections,
   getCollectionFilters,
 };

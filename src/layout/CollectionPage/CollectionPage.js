@@ -13,7 +13,6 @@ function CollectionPage({ collection, pageInfo: initialPageInfo, filters }) {
 
   const {
     handleNext,
-    handlePrev,
     loading,
     handleSort,
     setPageInfo,
@@ -54,11 +53,7 @@ function CollectionPage({ collection, pageInfo: initialPageInfo, filters }) {
             <Sort handleChange={handleSort} />
           </div>
           <ProductsList products={products} layout={layout} loading={loading} />
-          <Pagination
-            handleNext={handleNext}
-            handlePrev={handlePrev}
-            pageInfo={pageInfo}
-          />
+          <Pagination handleNext={handleNext} pageInfo={pageInfo} />
         </main>
       </div>
     </Page>

@@ -42,57 +42,14 @@ export const filterCollectionForward = async (
     if (collection) {
       const products = cleanProducts(collection?.products.edges);
       const pageInfo = collection?.products?.pageInfo;
-      return { collection: { ...collection, products }, pageInfo };
+      const collectionFilters = collection?.products?.filters;
+      return {
+        collection: { ...collection, products },
+        pageInfo,
+        collectionFilters,
+      };
     }
     return null;
-  } catch (e) {
-    return console.error(e);
-  }
-};
-
-/**
- * It takes a collection handle, a last value, a filters object, a sort value, a before value, a
- * delegate token, and an ip address and returns a collection object with products and pageInfo
- * @param handle - the handle of the collection
- * @param [last=null] - The number of products to return.
- * @param filters - [{key: "product_type", value: "Shirt"}]
- * @param [sort=RELEVANCE] - 'RELEVANCE'
- * @param [before=null] - String
- * @param delegateToken - This is the token that you get from the Shopify API.
- * @param ip - the ip address of the user
- * @returns collection
- */
-export const filterCollectionBackward = async (
-  handle,
-  last = null,
-  filters,
-  sort = 'RELEVANCE',
-  before = null,
-  delegateToken,
-  ip
-) => {
-  try {
-    const res = await shopifyStorefrontCall(
-      queriesCollection.filterCollectionBackward,
-      {
-        handle,
-        last,
-        filters,
-        sort,
-        before,
-      },
-      delegateToken,
-      ip
-    );
-
-    const collection = res?.data?.collection;
-
-    if (collection) {
-      const products = cleanProducts(collection?.products.edges);
-      const pageInfo = collection?.products?.pageInfo;
-      return { collection: { ...collection, products }, pageInfo };
-    }
-    return false;
   } catch (e) {
     return console.error(e);
   }

@@ -13,7 +13,6 @@ import ModalProduct from '@/modals/modalProduct/ModalProduct';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 import 'react-toastify/dist/ReactToastify.min.css';
-import styles from './Layout.module.scss';
 
 function Layout({ children }) {
   const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
@@ -31,7 +30,7 @@ function Layout({ children }) {
       setShopInfo(shop);
     };
 
-    fetchData().catch(console.error);
+    fetchData();
   }, []);
 
   return (
@@ -39,17 +38,15 @@ function Layout({ children }) {
       <SearchBar />
       <Cart />
       {loading && <PageLoader />}
-      <div className={styles.container}>
-        <Header headerMenu={menuHeader} />
-        {selectedProduct ? (
-          <ModalProduct
-            handleClose={() => setSelectedProduct(false)}
-            product={selectedProduct}
-          />
-        ) : null}
-        <div className={styles.children}>{children}</div>
-      </div>
-      <ToastContainer position="bottom-center" newestOnTop theme="dark" />
+      <Header headerMenu={menuHeader} />
+      {selectedProduct ? (
+        <ModalProduct
+          handleClose={() => setSelectedProduct(false)}
+          product={selectedProduct}
+        />
+      ) : null}
+      {children}
+      <ToastContainer position="top-right" newestOnTop theme="dark" />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
     </>
   );

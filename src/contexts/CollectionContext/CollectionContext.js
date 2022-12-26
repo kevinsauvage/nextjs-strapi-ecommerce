@@ -8,10 +8,7 @@ import {
 import { useRouter } from 'next/router';
 import config from '@/config/index';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
-import {
-  filterCollectionForward,
-  filterCollectionBackward,
-} from '@/lib/shopify/collection/collectionApiCall';
+import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
 
 export const CollectionContext = createContext();
@@ -205,32 +202,6 @@ export function CollectionProvider({ children }) {
 
   // PAGINATION ==============================================================================================
 
-  /* A function that is called when the user clicks on the previous button. */
-  const handlePrev = useCallback(async () => {
-    dispatch({ type: actions.SET_LOADING, payload: true });
-
-    const filteredFilters = getFiltersFromQuery(allFilters, query);
-    const filters = filteredFilters.map((item) => JSON.parse(item.input));
-
-    const data = await filterCollectionBackward(
-      query.collectionSlug,
-      10,
-      filters,
-      query.sort_key,
-      pageInfo.startCursor
-    );
-
-    dispatch({ type: actions.SET_LOADING, payload: false });
-
-    if (data) {
-      const newProducts = data?.collection?.products;
-      const newPageInfo = data?.pageInfo;
-      if (newProducts) setProducts(newProducts);
-      if (newPageInfo) setPageInfo(newPageInfo);
-      window.scrollTo(0, 0);
-    }
-  }, [allFilters, pageInfo.startCursor, query, setPageInfo, setProducts]);
-
   /* A function that is called when the user clicks on the next button. */
   const handleNext = useCallback(async () => {
     dispatch({ type: actions.SET_LOADING, payload: true });
@@ -251,11 +222,17 @@ export function CollectionProvider({ children }) {
     if (data) {
       const newProducts = data?.collection?.products;
       const newPageInfo = data?.pageInfo;
-      if (newProducts) setProducts(newProducts);
+      if (newProducts) setProducts([...products, ...newProducts]);
       if (newPageInfo) setPageInfo(newPageInfo);
-      window.scrollTo(0, 0);
     }
-  }, [allFilters, pageInfo.endCursor, query, setPageInfo, setProducts]);
+  }, [
+    allFilters,
+    pageInfo.endCursor,
+    products,
+    query,
+    setPageInfo,
+    setProducts,
+  ]);
 
   // EFFECTS ==================================================================================================
 
@@ -266,17 +243,6 @@ export function CollectionProvider({ children }) {
       payload: [],
     });
   }, [query.collectionSlug]);
-
-  // Set the cursor in URL when page change
-  useEffect(() => {
-    if (pageInfo?.startCursor) {
-      const newUrl = new URL(config.baseUrl + asPath);
-      newUrl.searchParams.set('endCursor', pageInfo.endCursor);
-      newUrl.searchParams.set('startCursor', pageInfo.startCursor);
-      push(newUrl, undefined, { shallow: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pageInfo]);
 
   // Get filter from query and set it in selected filters
   useEffect(() => {
@@ -324,7 +290,6 @@ export function CollectionProvider({ children }) {
       setProducts,
       handleSort,
       handleNext,
-      handlePrev,
     }),
     [
       notAppliedFilters,
@@ -344,7 +309,6 @@ export function CollectionProvider({ children }) {
       setProducts,
       handleSort,
       handleNext,
-      handlePrev,
     ]
   );
 

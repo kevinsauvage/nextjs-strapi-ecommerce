@@ -1,8 +1,4 @@
-import {
-  filterCollectionForward,
-  getCollectionFilters,
-} from '@/lib/shopify/collection/collectionApiCall';
-import { getFiltersFromQuery } from '@/lib/shopify/helpers';
+import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import nookies from 'nookies';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 import CollectionPage from '@/layout/CollectionPage/CollectionPage';
@@ -29,33 +25,23 @@ export async function getServerSideProps(ctx) {
       ? forwarded.split(/, /)[0]
       : req.socket.remoteAddress;
 
-  const allFilters = await getCollectionFilters(
-    collectionSlug,
-    delegateToken,
-    ip
-  );
-
-  const filteredFilters = getFiltersFromQuery(allFilters, query);
-
-  const filters = filteredFilters.map((item) => JSON.parse(item.input));
-
   const data = await filterCollectionForward(
     collectionSlug,
     10,
-    filters,
+    [],
     query.sort_key,
     query.startCursor,
     delegateToken,
     ip
   );
 
-  const { collection = [], pageInfo = [] } = data || {};
+  const { collection = [], pageInfo = [], collectionFilters = [] } = data || {};
 
   return {
     props: {
       collection,
       pageInfo,
-      filters: allFilters,
+      filters: collectionFilters,
     },
   };
 }
