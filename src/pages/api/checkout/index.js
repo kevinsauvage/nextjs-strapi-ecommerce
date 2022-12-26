@@ -9,12 +9,13 @@ const expiresIn = 24 * 60 * 60;
 const checkoutCookiesName = 'shopifyCheckoutId';
 
 export default async function handler(req, res) {
-  const { method } = req;
   try {
+    const { method } = req;
+    const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
+
     switch (method) {
       case 'GET': {
         let checkout;
-        const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
         if (checkoutId) {
           const getCheckoutRes = await getCheckoutById(
@@ -58,6 +59,7 @@ export default async function handler(req, res) {
 
         return res.status(200).json({ checkout });
       }
+
       default: {
         return res.status(500).json({ message: 'Method not allowed' });
       }

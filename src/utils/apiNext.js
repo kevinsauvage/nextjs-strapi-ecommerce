@@ -2,9 +2,8 @@ const apiRoute = {
   login: '/api/customer/auth/login',
   logout: '/api/customer/auth/logout',
   register: '/api/customer/auth/register',
+  delegateToken: '/api/delegateToken',
 
-  delegateToken: '/api/customer/delegateToken',
-  associateCustomerToCheckout: '/api/checkout/associateCustomerToCheckout',
   customer: {
     index: '/api/customer',
     password: '/api/customer/password',
@@ -12,12 +11,12 @@ const apiRoute = {
     defaultAddress: '/api/customer/defaultAddress',
     orders: '/api/customer/orders',
   },
+
   checkout: {
-    getCheckout: '/api/checkout/getCheckout',
-    addToCheckout: '/api/checkout/addToCheckout',
-    removeLinesFromCheckout: '/api/checkout/removeLinesFromCheckout',
-    checkoutLineItemsUpdate: '/api/checkout/checkoutLineItemsUpdate',
+    index: '/api/checkout',
+    lineItems: '/api/checkout/lineItems',
   },
+
   products: {
     search: '/api/product/search',
   },
@@ -60,34 +59,29 @@ const getCustomer = () =>
 const updateCustomer = (payload) =>
   nextApiHelper(`${apiRoute.customer.index}`, payload, 'PUT');
 
-const associateCustomerToCheckout = (id) => {
-  const apiUrl = `${apiRoute.associateCustomerToCheckout}?checkout_id=${id}`;
-  return nextApiHelper(apiUrl, null, 'GET');
-};
-
 const resetPassword = (password, url) => {
   const apiUrl = `${apiRoute.customer.password}?password=${password}&url=${url}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
 const getCheckout = () => {
-  const apiUrl = `${apiRoute.checkout.getCheckout}`;
+  const apiUrl = `${apiRoute.checkout.index}`;
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
 const addToCheckout = (payload) => {
-  const apiUrl = `${apiRoute.checkout.addToCheckout}`;
+  const apiUrl = `${apiRoute.checkout.lineItems}`;
   return nextApiHelper(apiUrl, payload, 'POST');
 };
 
-const removeLinesFromCheckout = (payload) => {
-  const apiUrl = `${apiRoute.checkout.removeLinesFromCheckout}`;
-  return nextApiHelper(apiUrl, payload, 'POST');
+const removeLinesFromCheckout = (id) => {
+  const apiUrl = `${apiRoute.checkout.lineItems}/${encodeURIComponent(id)}`;
+  return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
-const checkoutLineItemsUpdate = (payload) => {
-  const apiUrl = `${apiRoute.checkout.checkoutLineItemsUpdate}`;
-  return nextApiHelper(apiUrl, payload, 'POST');
+const checkoutLineItemsUpdate = (payload, id) => {
+  const apiUrl = `${apiRoute.checkout.lineItems}/${encodeURIComponent(id)}`;
+  return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
 const sendRecoverEmail = (payload) => {
@@ -148,7 +142,6 @@ const nextApiCall = {
   generateDelegateToken,
   getCustomer,
   sendRecoverEmail,
-  associateCustomerToCheckout,
   resetPassword,
   getCheckout,
   addToCheckout,

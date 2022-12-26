@@ -42,7 +42,7 @@ export function CheckoutProvider({ children }) {
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
       toggleLoading(true);
-      const res = await nextApiCall.removeLinesFromCheckout({ lineItemId });
+      const res = await nextApiCall.removeLinesFromCheckout(lineItemId);
       handleResponse(res, userFeedback.removeLinesFromCheckout, false);
     },
     [toggleLoading, handleResponse]
@@ -52,7 +52,7 @@ export function CheckoutProvider({ children }) {
   const handleQuantityChange = useCallback(
     async (quantity, id) => {
       toggleLoading(true);
-      const res = await nextApiCall.checkoutLineItemsUpdate({ id, quantity });
+      const res = await nextApiCall.checkoutLineItemsUpdate({ quantity }, id);
       handleResponse(res, userFeedback.updateLines, false);
     },
     [toggleLoading, handleResponse]

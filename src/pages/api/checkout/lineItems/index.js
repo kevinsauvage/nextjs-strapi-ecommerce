@@ -1,18 +1,19 @@
-import { addLinesToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getInfoFromRequest } from '@/helpers/index';
+import { addLinesToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 
 export default async function handler(req, res) {
   try {
     const { method, body } = req;
     const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
+    if (!checkoutId) {
+      return res
+        .status(400)
+        .json({ message: 'Missing checkout ID in cookies' });
+    }
+
     switch (method) {
       case 'POST': {
-        if (!checkoutId) {
-          return res
-            .status(400)
-            .json({ message: 'Missing checkout ID in cookies' });
-        }
         const { quantity, variantId } = body || {};
 
         if (!quantity || !variantId) {
