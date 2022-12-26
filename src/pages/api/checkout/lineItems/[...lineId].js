@@ -14,7 +14,7 @@ export default async function handler(req, res) {
         .status(400)
         .json({ message: 'Missing checkout ID in cookies' });
     }
-    const lineId = decodeURIComponent(query.lineId);
+    const lineId = decodeURIComponent(query.id);
 
     if (!lineId) {
       return res.status(400).json({ message: 'Missing line id URL parameter' });

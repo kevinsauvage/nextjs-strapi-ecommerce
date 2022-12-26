@@ -75,12 +75,16 @@ const addToCheckout = (payload) => {
 };
 
 const removeLinesFromCheckout = (id) => {
-  const apiUrl = `${apiRoute.checkout.lineItems}/${encodeURIComponent(id)}`;
+  const apiUrl = `${apiRoute.checkout.lineItems}/id?id=${encodeURIComponent(
+    id
+  )}`;
   return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
 const checkoutLineItemsUpdate = (payload, id) => {
-  const apiUrl = `${apiRoute.checkout.lineItems}/${encodeURIComponent(id)}`;
+  const apiUrl = `${apiRoute.checkout.lineItems}/id?id=${encodeURIComponent(
+    id
+  )}`;
   return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
