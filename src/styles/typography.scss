@@ -1,48 +1,17 @@
 :root {
-  --font-primary: 'Poppins', sans-serif;
+  --font-heading: 'Oswald', sans-serif;
+  --font-primary: 'Roboto', sans-serif;
+}
 
-  --font-weight-0: 200;
-  --font-weight-1: 300;
-  --font-weight-2: 400;
-  --font-weight-3: 500;
-  --font-weight-4: 600;
-  --font-weight-5: 700;
-  --font-weight-6: 800;
-}
-/* Fluid font size variables, for browsers that support clamp */
-@supports (font-size: clamp(1rem, 1vw, 1rem)) {
-  :root {
-    --font-size-sm: clamp(0.78rem, 0vw + 0.78rem, 0.78rem);
-    --font-size-base: clamp(0.94rem, 0vw + 0.94rem, 0.94rem);
-    --font-size-md: clamp(1.13rem, 0vw + 1.13rem, 1.13rem);
-    --font-size-lg: clamp(1.35rem, 0vw + 1.35rem, 1.35rem);
-    --font-size-xl: clamp(1.62rem, 0vw + 1.62rem, 1.62rem);
-    --font-size-xxl: clamp(1.94rem, 0vw + 1.94rem, 1.94rem);
-    --font-size-xxxl: clamp(2.33rem, 0vw + 2.33rem, 2.33rem);
-  }
-}
-/* Fallback variables for browsers that don't support clamp */
-@supports not (font-size: clamp(1rem, 1vw, 1rem)) {
-  :root {
-    --font-size-sm: 0.78rem;
-    --font-size-base: 0.94rem;
-    --font-size-md: 1.13rem;
-    --font-size-lg: 1.35rem;
-    --font-size-xl: 1.62rem;
-    --font-size-xxl: 1.94rem;
-    --font-size-xxxl: 2.33rem;
-  }
-  @media screen and (min-width: 1280px) {
-    :root {
-      --font-size-sm: 0.78rem;
-      --font-size-base: 0.94rem;
-      --font-size-md: 1.13rem;
-      --font-size-lg: 1.35rem;
-      --font-size-xl: 1.62rem;
-      --font-size-xxl: 1.94rem;
-      --font-size-xxxl: 2.33rem;
-    }
-  }
+:root {
+  --font-size-sm: clamp(0.78rem, calc(0.77rem + 0.03vw), 0.8rem);
+  --font-size-base: clamp(0.94rem, calc(0.92rem + 0.11vw), 1rem);
+  --font-size-md: clamp(1.13rem, calc(1.08rem + 0.22vw), 1.25rem);
+  --font-size-lg: clamp(1.35rem, calc(1.28rem + 0.37vw), 1.56rem);
+  --font-size-xl: clamp(1.62rem, calc(1.5rem + 0.58vw), 1.95rem);
+  --font-size-xxl: clamp(1.94rem, calc(1.77rem + 0.87vw), 2.44rem);
+  --font-size-xxxl: clamp(2.33rem, calc(2.08rem + 1.25vw), 3.05rem);
+  --font-size-xxxl: clamp(2.8rem, calc(2.45rem + 1.77vw), 3.82rem);
 }
 
 h1,
@@ -52,40 +21,20 @@ h4,
 h5,
 h6 {
   color: rgb(var(--color-dark-1));
-  font-weight: var(--font-weight-3);
+  font-weight: 500;
+  font-family: var(--font-heading);
 }
 
-h1 {
-  font-size: var(--font-size-xxxl);
-}
-
-h2 {
-  font-size: var(--font-size-xxl);
-}
-
-h3 {
-  font-size: var(--font-size-xl);
-}
-
-h4 {
-  font-size: var(--font-size-lg);
-}
-
-h5 {
-  font-size: var(--font-size--md);
-}
-
-h6 {
-  font-size: var(--font-size-sm);
-}
-
-small,
 label,
 strong {
-  font-size: var(--font-size-sm);
+  font-family: var(--font-heading);
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
 }
 
 a,
 p {
-  font-weight: var(--font-weight-2);
+  font-weight: 400;
+  font-size: var(--font-size-base);
 }

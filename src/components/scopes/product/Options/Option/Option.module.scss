@@ -1,5 +1,5 @@
 .option {
-  margin-bottom: 16px;
+  padding-bottom: var(--space-2);
 
   &:last-child {
     margin-bottom: 0;
@@ -8,11 +8,19 @@
 
 .button {
   padding: 5px;
-  border: 0.1px solid rgb(0, 0, 0);
+  border: 0.1px solid rgb(var(--color-dark-2));
+  min-height: 46px;
+  min-width: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: rgb(var(--color-dark-2));
 }
 
 .name {
-  margin-right: 8px;
+  padding-bottom: var(--space-0);
+  display: block;
 }
 
 .list {
@@ -22,11 +30,42 @@
 }
 
 .selectedOption {
-  border: 0.1px solid rgb(0, 0, 0);
-  background-color: rgb(0, 0, 0);
-  color: white;
+  border: 2px solid rgb(var(--color-dark-0));
+  color: rgb(var(--color-dark-0));
 }
 
 .outOfStock {
-  opacity: 0.3;
+  opacity: 0.4;
+  position: relative;
+
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    /* Rising diagonal line */
+    background: linear-gradient(
+      to right bottom,
+      white,
+      white 48%,
+      black 49%,
+      black 51%,
+      white 52%,
+      white
+    ) !important;
+    /* Falling diagonal line */
+    background: linear-gradient(
+      to right top,
+      white,
+      white 48%,
+      black 49%,
+      black 51%,
+      white 52%,
+      white
+    ) !important;
+  }
 }

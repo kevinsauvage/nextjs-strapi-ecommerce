@@ -1,16 +1,11 @@
 .form {
   max-width: 460px;
   width: 100%;
-  margin: 0 auto;
+  margin: var(--space-2) auto;
 }
 
 .title {
   color: rgb(var(--color-base-0));
   margin-bottom: var(--space-1);
   font-size: var(--font-size-xl);
-}
-
-.subtitle {
-  color: rgb(var(--color-base-2));
-  margin-bottom: var(--space-4);
 }

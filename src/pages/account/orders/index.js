@@ -40,13 +40,13 @@ export default function OrdersPage() {
   }, [back, dispatch]);
 
   return (
-    <Page title="Orders">
-      <AccountLayout
-        backTo={{ name: 'Back to Account', href: config.routes.account }}
-        loading={isLoading}
-        title="Orders"
-        subtitle="Welcome to your order history! Here you can find a complete list of all your orders with us, along with details such as the date of purchase, the items included, and the delivery status. This is a useful resource for keeping track of your purchases and ensuring that your orders are being processed and delivered efficiently."
-      >
+    <Page
+      title="Orders"
+      backTo={{ name: 'Back to Account', href: config.routes.account }}
+      bannerTitle="Orders"
+      bannerDescription="Welcome to your order history! Here you can find a complete list of all your orders with us, along with details such as the date of purchase, the items included, and the delivery status. This is a useful resource for keeping track of your purchases and ensuring that your orders are being processed and delivered efficiently."
+    >
+      <AccountLayout loading={isLoading}>
         <div className="orders">
           <Orders orders={orders} />
         </div>

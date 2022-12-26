@@ -1,34 +1,34 @@
-import { RiShoppingCart2Line, RiUserLine, RiSearchLine } from 'react-icons/ri';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
+import Image from 'next/image';
+import cart from '../../../public/bag.svg';
+import user from '../../../public/user.svg';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
-  const { toggleSearch, toggleCheckout } = useGlobalContext();
+  const { toggleCheckout } = useGlobalContext();
   const { checkout } = useCheckoutContext();
 
   const router = useRouter();
 
   const data = [
     {
-      item: <RiSearchLine />,
-      id: 1,
-      onClick: toggleSearch,
-    },
-
-    {
-      item: <RiUserLine />,
+      item: <Image {...user} alt="user" />,
       id: 3,
       onClick: () => router.push(config.routes.account),
     },
     {
       item: (
         <>
-          <RiShoppingCart2Line />
-          <div className={`${styles.totalItems}`}>
-            ({checkout?.lineItems?.length || '0'})
+          <Image {...cart} alt="cart" />
+          <div className={styles.totalItems}>
+            <p className={styles.totalItemTitle}>Shopping Cart</p>
+            <p className={styles.price}>
+              {checkout?.totalPrice?.amount || 0}{' '}
+              {checkout?.totalPrice?.currencyCode}
+            </p>
           </div>
         </>
       ),

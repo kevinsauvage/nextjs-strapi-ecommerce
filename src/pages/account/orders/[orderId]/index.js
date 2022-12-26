@@ -43,15 +43,16 @@ function OrderDetail() {
   const { name, shippingAddress, lineItems } = order || {};
 
   const title = `Order${name ? `: ${name}` : ''}`;
-
+  const subtitle =
+    'View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us.';
   return (
-    <Page title={title}>
-      <AccountLayout
-        loading={isLoading}
-        title={title}
-        backTo={{ name: 'Back to orders', href: config.routes.orders }}
-        subtitle='"View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."'
-      >
+    <Page
+      title={title}
+      backTo={{ name: 'Back to orders', href: config.routes.orders }}
+      bannerTitle={title}
+      bannerDescription={subtitle}
+    >
+      <AccountLayout loading={isLoading}>
         <div>
           <div className={styles.top}>
             <Card title="Order details">

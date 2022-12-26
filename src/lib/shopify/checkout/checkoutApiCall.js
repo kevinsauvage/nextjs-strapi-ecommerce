@@ -69,9 +69,14 @@ export const getCheckoutById = async (id, delegateAccessToken, ip) => {
       ip
     );
 
-    const checkout = res?.data?.node;
+    const checkout = cleanGraphQLResponse(res?.data);
 
-    if (checkout) return { checkout: cleanGraphQLResponse(checkout) };
+    console.log(
+      '🚀 ~ file: checkoutApiCall.js:74 ~ getCheckoutById ~ checkout',
+      cleanGraphQLResponse(res?.data)
+    );
+
+    if (checkout) return { checkout: checkout.node };
     return null;
   } catch (e) {
     return console.error(e);
@@ -179,8 +184,8 @@ export const updateLines = async (
 
     if (response) {
       return {
-        ...res?.data?.checkoutLineItemsUpdate,
-        checkout: cleanGraphQLResponse(response?.checkout),
+        ...response,
+        checkout: cleanGraphQLResponse(response?.data?.checkout),
       };
     }
     return null;
@@ -208,7 +213,7 @@ export const updateCheckoutShippingAddress = async (
 
     if (response) {
       return {
-        ...res?.data?.checkoutShippingAddressUpdateV2,
+        ...response,
         checkout: cleanGraphQLResponse(response?.checkout),
       };
     }

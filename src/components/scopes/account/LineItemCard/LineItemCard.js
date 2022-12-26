@@ -12,7 +12,7 @@ function LineItemCard({ item }) {
     <div className={styles.LineItemCard}>
       <div className={styles.image}>
         <Image
-          src={image?.sm}
+          src={image?.small}
           alt={image?.alt || variantTitle}
           placeholder="blur"
           blurDataURL={image?.blurDataURL}

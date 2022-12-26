@@ -1,4 +1,3 @@
-import SecureBanner from '@/layout/SecureBanner/SecureBanner';
 import Banner1 from '@/layout/BannerHome/Banner1';
 import Container from '@/layout/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
@@ -50,7 +49,6 @@ export default function Home({ bestSelling, collections, newArrival }) {
             </Carousel>
           )}
       </Container>
-      <SecureBanner />
     </div>
   );
 }

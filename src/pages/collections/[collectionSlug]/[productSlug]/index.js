@@ -8,7 +8,6 @@ import {
   getProducts,
 } from '@/lib/shopify/product/productApiCall';
 import ProductPresenter from '@/components/scopes/product/ProductPresenter/ProductPresenter';
-import Separator from '@/components/Separator/Separator';
 import PageLoader from '@/layout/Loader/PageLoader/PageLoader';
 
 function ProductPage({ product, recommendations = [] }) {
@@ -17,21 +16,22 @@ function ProductPage({ product, recommendations = [] }) {
   const { title, description } = product;
 
   return (
-    <Page title={title} description={description}>
-      <ProductPresenter product={product} />
-      <Separator margin="60px 0" />
+    <>
+      <Page title={title} description={description}>
+        <ProductPresenter product={product} />
+      </Page>
       {Array.isArray(recommendations) && recommendations.length > 0 && (
         <Carousel
           title="Recommended Products"
           subtitle="Check out the products you may like"
-          itemToShow={4}
+          itemToShow={5}
         >
           {recommendations.map((prod) => (
             <ProductCardDefault product={prod} key={prod.id} />
           ))}
         </Carousel>
       )}
-    </Page>
+    </>
   );
 }
 

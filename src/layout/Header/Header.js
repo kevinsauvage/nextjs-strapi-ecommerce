@@ -26,11 +26,9 @@ function Header({ headerMenu }) {
   return (
     <div className={styles.container} ref={headerContainerRef}>
       <header className={`${styles.header}`}>
-        <Container>
-          <Logo />
-          <Navbar headerMenu={headerMenu} handleOver={handleOver} />
-          <UserButtons />
-        </Container>
+        <Logo />
+        <Navbar headerMenu={headerMenu} handleOver={handleOver} />
+        <UserButtons />
       </header>
       {activeItems?.length ? (
         <div

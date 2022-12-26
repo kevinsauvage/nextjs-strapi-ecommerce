@@ -14,12 +14,20 @@ export default function useProductSelection({ product }) {
   const [selectedProductOption, setSelectedProductOption] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [totalPrice, setTotalPrice] = useState();
   const [availableColors, setAvailableColors] = useState([]);
   const [availableSize, setAvailableSize] = useState([]);
   const { handleResponse } = useCheckoutContext();
   const { toggleLoading } = useGlobalContext();
 
   const handleChangeInput = (num) => setQuantity(num);
+
+  useEffect(() => {
+    if (quantity && selectedVariant?.id) {
+      const amount = Number(selectedVariant?.priceV2?.amount) * quantity;
+      setTotalPrice(amount.toFixed(2));
+    }
+  }, [quantity, selectedVariant, selectedVariant?.id]);
 
   /**
    * If the quantity is greater than 0 and the variantId exists, then toggle the loading to true and then
@@ -192,5 +200,6 @@ selectedOptions property of the variants in the variants array. */
     selectedProductOption,
     selectedVariant,
     availableColors,
+    totalPrice,
   };
 }

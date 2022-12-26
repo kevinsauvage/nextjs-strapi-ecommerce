@@ -1,9 +1,5 @@
 import Button from '@/components/Button/Button';
-import Link from 'next/link';
 import QuantityUpdater from '@/components/scopes/product/QuantityUpdater/QuantityUpdater';
-import Separator from '@/components/Separator/Separator';
-import config from '@/config/index';
-import Price from '../Price/Price';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
@@ -15,40 +11,18 @@ export default function ProductDescription({
   handleAddToCart,
   selected,
   product,
-  isModal,
+  totalPrice,
 }) {
-  const {
-    descriptionHtml,
-    productType,
-    collections,
-    variants,
-    options,
-    handle,
-    title,
-  } = product || {};
+  const { productType, variants, options, title } = product || {};
 
-  const { quantityAvailable, priceV2, compareAtPriceV2, availableForSale } =
-    selected || {};
+  const { quantityAvailable, availableForSale, priceV2 } = selected || {};
+
+  console.log('🚀 ~ file: ProductDescription.js:20 ~ selected', selected);
 
   return (
-    <div
-      className={
-        `${styles.ProductDescription} ` +
-        `${isModal ? styles.ProductDescriptionModal : ''} `
-      }
-    >
+    <div className={styles.ProductDescription}>
       <span className={styles.type}>{productType}</span>
       <h1 className={styles.title}>{title}</h1>
-      <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
-      {!isModal && (
-        <>
-          <Separator />
-          <div
-            className={styles.description}
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-          />
-        </>
-      )}
       <Options
         options={options}
         isOptionOutOfStock={isOptionOutOfStock}
@@ -56,31 +30,32 @@ export default function ProductDescription({
         handleClick={handleSetSelectedProductOption}
         variants={variants}
       />
-      <Separator />
-      <div className={styles.footer}>
+      <div className={styles.wrapper}>
         <QuantityUpdater
           originalQuantity={1}
           onChange={handleChangeInput}
           quantityAvailable={quantityAvailable}
         />
-        <Button
-          extraClass={styles.btn}
-          type="button"
-          text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
-          tertiary={availableForSale}
-          primary={!availableForSale}
-          disabled={!availableForSale}
-          onClick={handleAddToCart}
-        />
+        <div>
+          <p className={styles.totalPriceTitle}>
+            <strong>TOTAL PRICE</strong>
+          </p>
+          <p className={styles.totalPrice}>
+            <strong>
+              {totalPrice} {priceV2?.currencyCode}
+            </strong>
+          </p>
+        </div>
       </div>
-      {isModal && (
-        <Link
-          className={styles.btnSeeProduct}
-          href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
-        >
-          SEE FULL PRODUCT INFO
-        </Link>
-      )}
+      <Button
+        extraClass={styles.btn}
+        type="button"
+        text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
+        tertiary={availableForSale}
+        primary={!availableForSale}
+        disabled={!availableForSale}
+        onClick={handleAddToCart}
+      />
     </div>
   );
 }

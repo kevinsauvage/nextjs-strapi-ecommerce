@@ -9,6 +9,7 @@
   justify-content: center;
   box-shadow: var(--elevation-dark-2);
   transition: all 0.2s ease-in;
+  font-weight: 500px;
 
   &:hover {
     box-shadow: var(--elevation-dark-4);
@@ -29,7 +30,7 @@
 
 .tertiary {
   background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-dark-4));
+  color: rgb(var(--color-light-4));
   border: 2px solid rgb(var(--color-dark-0));
 }
 

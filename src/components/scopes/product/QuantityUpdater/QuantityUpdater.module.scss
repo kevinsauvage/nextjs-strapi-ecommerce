@@ -1,14 +1,23 @@
 .quantityContainer {
+}
+
+.label {
+  padding-bottom: var(--space-0);
+  display: block;
+}
+
+.inputBox {
   width: fit-content;
   display: flex;
   align-items: center;
   border: 1px solid gray;
+  min-height: 46px;
 }
 
 .input {
   text-align: center;
   height: 100%;
-  width: 40px;
+  width: 46px;
   border: none;
   background-color: transparent;
   &::-webkit-outer-spin-button,
@@ -25,6 +34,7 @@
 .btnQuantity {
   padding: 10px;
   height: 100%;
+  width: 46px;
   border: none;
 
   svg {

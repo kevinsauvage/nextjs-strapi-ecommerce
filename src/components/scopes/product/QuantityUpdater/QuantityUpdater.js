@@ -44,22 +44,33 @@ export default function QuantityUpdater({
 
   return (
     <div className={`${styles.quantityContainer} ${extraStyles}`}>
-      <button type="button" onClick={removeOne} className={styles.btnQuantity}>
-        <VscRemove />
-      </button>
-      <input
-        type="number"
-        ref={input}
-        size="4"
-        className={styles.input}
-        onChange={handleChangeInput}
-        onBlur={handleConfirmInput}
-        onKeyDown={(e) => e.key === 'Enter' && input.current.blur()}
-        value={quantity}
-      />
-      <button type="button" onClick={addOne} className={styles.btnQuantity}>
-        <VscAdd />
-      </button>
+      <label htmlFor="quantity" className={styles.label}>
+        SELECT QUANTITY
+      </label>
+      <div className={styles.inputBox}>
+        <button
+          type="button"
+          onClick={removeOne}
+          className={styles.btnQuantity}
+        >
+          <VscRemove />
+        </button>
+        <input
+          id="quantity"
+          name="quantity"
+          type="number"
+          ref={input}
+          size="4"
+          className={styles.input}
+          onChange={handleChangeInput}
+          onBlur={handleConfirmInput}
+          onKeyDown={(e) => e.key === 'Enter' && input.current.blur()}
+          value={quantity}
+        />
+        <button type="button" onClick={addOne} className={styles.btnQuantity}>
+          <VscAdd />
+        </button>
+      </div>
     </div>
   );
 }

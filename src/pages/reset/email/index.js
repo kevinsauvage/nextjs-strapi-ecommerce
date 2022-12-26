@@ -27,13 +27,13 @@ function ResetPassword() {
   });
 
   return (
-    <Page title="Password recovery">
+    <Page
+      title="Password recovery"
+      bannerTitle="Reset your password"
+      bannerDescription='"Enter your email address below to receive an email to reset your password"'
+    >
       <div>
-        <Form
-          title="RESET YOUR PASSWORD"
-          subtitle="Enter your email address below to receive an email to reset your password"
-          onSubmit={handleSubmit}
-        >
+        <Form title="PASSWORD RECOVERY" onSubmit={handleSubmit}>
           <Input
             id="email"
             label="Email address"

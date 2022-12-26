@@ -45,13 +45,13 @@ function RegisterPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Register your account">
+    <Page
+      title="Register your account"
+      bannerTitle="Register your account"
+      bannerDescription="Please complete the form below to create an account"
+    >
       <div>
-        <Form
-          onSubmit={handleSubmit}
-          title="CREATE ACCOUNT"
-          subtitle="Please complete the form below to create an account"
-        >
+        <Form onSubmit={handleSubmit} title="REGISTER">
           <Input
             id="email"
             label="Email address"

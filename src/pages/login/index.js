@@ -41,39 +41,37 @@ function LoginPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="User Login">
-      <div>
-        <Form
-          title="LOGIN TO YOUR ACCOUNT"
-          subtitle="Please complete the form below to login to your account"
-          onSubmit={(e) => handleSubmit(e)}
-        >
-          <Input
-            id="email"
-            label="Email address"
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleInputChange}
-          />
-          <Input
-            placeholder="Password"
-            type="password"
-            name="password"
-            id="password"
-            label="Password"
-            onChange={handleInputChange}
-          />
-          <Button width="100%" text="Login" type="submit" tertiary />
-          <div className={styles.forgotPassword}>
-            <Link href={config.routes.emailResetPassword}>Reset Password</Link>
-          </div>
-          <div className={styles.register}>
-            Don&apos;t have an account?{' '}
-            <Link href={config.routes.register}>Register</Link> now.
-          </div>
-        </Form>
-      </div>
+    <Page
+      title="User Login"
+      bannerTitle="Login to your account"
+      bannerDescription="Please complete the form below to login to your account"
+    >
+      <Form onSubmit={(e) => handleSubmit(e)} title="LOGIN">
+        <Input
+          id="email"
+          label="Email address"
+          type="email"
+          name="email"
+          placeholder="Email"
+          onChange={handleInputChange}
+        />
+        <Input
+          placeholder="Password"
+          type="password"
+          name="password"
+          id="password"
+          label="Password"
+          onChange={handleInputChange}
+        />
+        <Button width="100%" text="Login" type="submit" tertiary />
+        <div className={styles.forgotPassword}>
+          <Link href={config.routes.emailResetPassword}>Reset Password</Link>
+        </div>
+        <div className={styles.register}>
+          Don&apos;t have an account?{' '}
+          <Link href={config.routes.register}>Register</Link> now.
+        </div>
+      </Form>
     </Page>
   );
 }

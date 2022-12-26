@@ -33,12 +33,13 @@
 .title {
   color: rgb(var(--color-dark-0));
   margin-bottom: 20px;
+  font-size: var(--font-size-xxxl);
 }
 
 .subtitle {
   margin-bottom: 30px;
   color: rgb(var(--color-dark-2));
-  font-weight: var(--font-weight-0);
+  font-size: var(--font-size-md);
 }
 
 .btn {

@@ -1,4 +1,4 @@
-$header-height: 66px;
+$header-height: 100px;
 
 .header {
   display: flex;
@@ -10,6 +10,9 @@ $header-height: 66px;
   background-color: rgb(var(--color-dark-0));
   color: rgb(var(--color-dark-4));
   position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 0 var(--space-1);
 }
 
 .bigMenu {
@@ -36,7 +39,6 @@ $header-height: 66px;
 .item {
   color: rgb(var(--color-dark-0));
   font-size: var(--font-size-base);
-  font-weight: var(--font-weight-2);
   margin-bottom: 8px;
 }
 

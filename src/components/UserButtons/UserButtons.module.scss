@@ -1,23 +1,17 @@
 .container {
   display: flex;
-  align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-1);
   position: relative;
   margin-left: auto;
 
   svg {
     font-size: var(--font-size-md);
-    color: rgb(var(--color-dark-4));
+    color: rgb(var(--color-light-4));
 
     &:hover {
       color: rgb(var(--color-primary-3));
     }
   }
-}
-
-.totalItems {
-  font-size: var(--font-size-sm);
-  color: rgb(var(--color-dark-3));
 }
 
 .button {
@@ -27,4 +21,23 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.totalItems {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: var(--space-0);
+}
+
+.totalItemTitle {
+  font-size: var(--font-size-sm);
+  color: rgb(var(--color-light-3));
+  font-family: var(--font-primary);
+}
+
+.price {
+  font-weight: 600;
+  font-family: var(--font-heading);
+  font-size: var(--font-size-sm);
 }

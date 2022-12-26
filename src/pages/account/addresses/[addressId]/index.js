@@ -69,13 +69,13 @@ function AddressUpdate() {
   };
 
   return (
-    <Page title="Update Address">
-      <AccountLayout
-        loading={isLoading}
-        title="Update your address bellow"
-        backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
-        subtitle="As a valued customer, it is important that your orders are delivered to you accurately and on time. That's why it is essential for us to have a complete and up-to-date customer address list. Inaccurate or outdated addresses can lead to delays, lost packages, and frustration for both you and us."
-      >
+    <Page
+      title="Update Address"
+      backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
+      bannerTitle="Update your address bellow"
+      bannerDescription="As a valued customer, it is important that your orders are delivered to you accurately and on time. That's why it is essential for us to have a complete and up-to-date customer address list. Inaccurate or outdated addresses can lead to delays, lost packages, and frustration for both you and us."
+    >
+      <AccountLayout loading={isLoading}>
         <div className={styles.form}>
           {address && (
             <AddressForm

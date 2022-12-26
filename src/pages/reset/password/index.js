@@ -52,13 +52,13 @@ function Password({ resetUrl }) {
   }, [resetUrl, push]);
 
   return (
-    <Page title="Password recovery">
+    <Page
+      title="Password recovery"
+      bannerTitle="Reset your password"
+      bannerDescription='"Fill the form below to update your password"'
+    >
       <div>
-        <Form
-          title="ENTER YOUR NEW PASSWORD"
-          subtitle="Fill the form below to update your password"
-          onSubmit={handleSubmit}
-        >
+        <Form title="NEW PASSWORD" onSubmit={handleSubmit}>
           <Input
             id="password"
             label="New password"

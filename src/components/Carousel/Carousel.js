@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import styles from './Carousel.module.scss';
 import Indicators from './Indicators/Indicators';
 
-function Carousel({ children, title, subtitle, itemToShow = 5 }) {
+function Carousel({ children, title, itemToShow = 5 }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -72,7 +72,6 @@ function Carousel({ children, title, subtitle, itemToShow = 5 }) {
           />
         </div>
       ) : null}
-      {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
       <div {...handlers} className={`${styles.Carousel}`}>
         <div
           ref={carouselRef}

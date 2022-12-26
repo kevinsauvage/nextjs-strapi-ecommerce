@@ -85,14 +85,14 @@ function OrderDetail() {
   };
 
   return (
-    <Page title="Update Customer Information">
-      <AccountLayout
-        loading={isLoading || !user}
-        title="Update your information"
-        backTo={{ name: 'Back to Account', href: config.routes.account }}
-        subtitle='"View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."'
-      >
-        <Form handleSubmit={handleSubmit}>
+    <Page
+      title="Update account Information"
+      backTo={{ name: 'Back to Account', href: config.routes.account }}
+      bannerTitle="Update your information"
+      bannerDescription="View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."
+    >
+      <AccountLayout loading={isLoading || !user}>
+        <Form handleSubmit={handleSubmit} title="UPDATE ACCOUNT">
           <div className={styles.container}>
             <div className={styles.wrapper}>
               <Input

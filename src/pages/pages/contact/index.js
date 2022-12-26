@@ -14,15 +14,13 @@ function ContactPage() {
   const { handleInputChange, handleSubmit } = useForm(onSubmit);
 
   return (
-    <Page title="Contact Us">
+    <Page
+      title="Contact Us"
+      bannerTitle="Get in touch with us"
+      bannerDescription="Please complete the form below, we will get back to you shortly."
+    >
       <div className={styles.contact}>
-        <Form
-          className={styles.form}
-          onSubmit={handleSubmit}
-          action="submit"
-          title="GET IN TOUCH WITH US"
-          subtitle="Please complete the form below, we will get back to you shortly."
-        >
+        <Form onSubmit={handleSubmit} action="submit" title="CONTACT US">
           <Input
             id="email"
             label="Email address"

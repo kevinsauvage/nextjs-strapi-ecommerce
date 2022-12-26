@@ -7,7 +7,8 @@ import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
-  const { title, images, handle, variants } = product;
+  const { title, images, handle, variants, productType } = product;
+  console.log(product);
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { setSelectedProduct } = useGlobalContext() || {};
 
@@ -45,6 +46,7 @@ export default function ProductCardDefault({ product = {} }) {
           </div>
         </div>
         <div className={styles.content}>
+          <div className={styles.productType}>{productType}</div>
           <p className={styles.title}>{limitStrLength(title, 40)}</p>
           <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
         </div>

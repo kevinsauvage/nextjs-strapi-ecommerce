@@ -14,6 +14,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLoader from '../Loader/PageLoader/PageLoader';
 import styles from './Layout.module.scss';
 import 'react-toastify/dist/ReactToastify.min.css';
+import SecureBanner from '../SecureBanner/SecureBanner';
 
 function Layout({ children }) {
   const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
@@ -47,8 +48,9 @@ function Layout({ children }) {
         />
       ) : null}
       {children}
-      <ToastContainer position="top-right" newestOnTop theme="dark" />
+      <SecureBanner />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
+      <ToastContainer position="top-right" newestOnTop theme="dark" />
     </div>
   );
 }
