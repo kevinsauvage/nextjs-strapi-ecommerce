@@ -1,7 +1,9 @@
 export const imageFragment = `
 src
 altText
-sm:  url(transform: { maxHeight: 375, maxWidth: 250, crop: CENTER, preferredContentType: WEBP })
+small:  url(transform: { maxHeight: 225, maxWidth: 150, crop: CENTER, preferredContentType: WEBP })
+medium:  url(transform: { maxHeight: 600, maxWidth: 400, crop: CENTER, preferredContentType: WEBP })
+large:  url(transform: { maxHeight: 900, maxWidth: 600, crop: CENTER, preferredContentType: WEBP })
 blurDataURL: url(transform: {maxHeight: 6, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
 width
 height`;

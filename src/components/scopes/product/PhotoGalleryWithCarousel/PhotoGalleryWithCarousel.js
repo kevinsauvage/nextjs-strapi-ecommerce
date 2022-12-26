@@ -26,7 +26,7 @@ export default function PhotoGalleryWithCarousel({
           {!loaded && <AbsoluteLoader />}
           <Image
             className={styles.image}
-            src={selected?.sm || selectedVariant?.image?.sm}
+            src={selected?.large || selectedVariant?.image?.large}
             alt={
               selected?.altText ||
               selectedVariant?.image?.altText ||
@@ -51,7 +51,7 @@ export default function PhotoGalleryWithCarousel({
             onClick={() => setSelected(image)}
           >
             <Image
-              src={image?.sm}
+              src={image?.small}
               alt={image?.altText || selectedVariant?.title}
               width={image?.width}
               height={image?.height}

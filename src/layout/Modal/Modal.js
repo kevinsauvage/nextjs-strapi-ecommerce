@@ -10,17 +10,17 @@ export default function Modal({ children, handleClose }) {
       role="button"
       onKeyDown={(e) => e.key === 'Enter' && handleClose(e)}
     >
-      <div className={styles.header}>
-        <button
-          tabIndex="0"
-          className={styles.close}
-          type="button"
-          onClick={handleClose && handleClose}
-        >
-          <GrClose />
-        </button>
-      </div>
       <div className={styles.inner}>
+        <div className={styles.header}>
+          <button
+            tabIndex="0"
+            className={styles.close}
+            type="button"
+            onClick={handleClose && handleClose}
+          >
+            <GrClose />
+          </button>
+        </div>
         <div
           className={styles.content}
           role="presentation"

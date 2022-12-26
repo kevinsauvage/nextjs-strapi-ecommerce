@@ -12,6 +12,7 @@ import {
 import ModalProduct from '@/modals/modalProduct/ModalProduct';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLoader from '../Loader/PageLoader/PageLoader';
+import styles from './Layout.module.scss';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 function Layout({ children }) {
@@ -34,7 +35,7 @@ function Layout({ children }) {
   }, []);
 
   return (
-    <>
+    <div className={styles.layout}>
       <SearchBar />
       <Cart />
       {loading && <PageLoader />}
@@ -48,7 +49,7 @@ function Layout({ children }) {
       {children}
       <ToastContainer position="top-right" newestOnTop theme="dark" />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
-    </>
+    </div>
   );
 }
 

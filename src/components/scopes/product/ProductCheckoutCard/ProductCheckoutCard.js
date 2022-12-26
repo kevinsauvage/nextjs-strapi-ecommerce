@@ -27,7 +27,7 @@ export default function ProductCheckoutCard({ lineItem }) {
     <div className={styles.card}>
       <div className={styles.image}>
         <Image
-          src={image?.sm}
+          src={image?.small}
           layout="fill"
           objectFit="cover"
           blurDataURL={image?.blurDataURL}

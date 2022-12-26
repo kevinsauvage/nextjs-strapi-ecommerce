@@ -39,7 +39,7 @@ export default function CartItem({
         <ul className={styles.list}>
           <li className={styles.image}>
             <Image
-              src={variant.image.sm}
+              src={variant.image.small}
               alt={variant.image.alt || variant.title}
               width={variant.image.width}
               height={variant.image.height}
