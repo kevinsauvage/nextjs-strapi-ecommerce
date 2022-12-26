@@ -8,10 +8,12 @@ import { toast } from 'react-toastify';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import config from '@/config/index';
+import { useRouter } from 'next/router';
 
 export default function OrdersPage() {
   const { orders, dispatch } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
+  const { back } = useRouter();
 
   useEffect(() => {
     if (orders) setIsLoading(false);
@@ -21,9 +23,13 @@ export default function OrdersPage() {
     const fetchAddresses = async () => {
       try {
         const res = await nextApiCall.getCustomerOrders();
-        if (res && res?.length > 0) {
+        if (res) {
           dispatch({ type: actions.ADD_ORDERS, payload: res });
-        } else throw new Error();
+        } else {
+          toast.error('Something went wrong, please try again later');
+
+          back();
+        }
       } catch (e) {
         toast.error('Something went wrong, please try again later');
       } finally {
@@ -31,7 +37,7 @@ export default function OrdersPage() {
       }
     };
     fetchAddresses();
-  }, [dispatch]);
+  }, [back, dispatch]);
 
   return (
     <Page title="Orders">
