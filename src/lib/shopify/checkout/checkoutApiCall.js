@@ -188,3 +188,32 @@ export const updateLines = async (
     return console.error(e);
   }
 };
+
+export const updateCheckoutShippingAddress = async (
+  shippingAddress,
+  checkoutId,
+  delegateAccessToken,
+  ip
+) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.updateCheckoutShippingAddress,
+      { shippingAddress, checkoutId },
+      delegateAccessToken,
+      ip
+    );
+    console.log('🚀 ~ file: checkoutApiCall.js:205 ~ res', res);
+
+    const response = res?.data?.checkoutShippingAddressUpdateV2;
+
+    if (response) {
+      return {
+        ...res?.data?.checkoutShippingAddressUpdateV2,
+        checkout: cleanGraphQLResponse(response?.checkout),
+      };
+    }
+    return null;
+  } catch (e) {
+    return console.error(e);
+  }
+};

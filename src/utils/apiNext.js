@@ -88,6 +88,11 @@ const checkoutLineItemsUpdate = (payload, id) => {
   return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
+const checkoutUpdateShippingAddress = (payload) => {
+  const apiUrl = `${apiRoute.checkout.index}`;
+  return nextApiHelper(apiUrl, payload, 'PUT');
+};
+
 const sendRecoverEmail = (payload) => {
   const apiUrl = `${apiRoute.customer.password}`;
   return nextApiHelper(apiUrl, payload, 'POST');
@@ -161,6 +166,7 @@ const nextApiCall = {
   getCustomerOrders,
   getOrderById,
   updateCustomer,
+  checkoutUpdateShippingAddress,
 };
 
 export default nextApiCall;

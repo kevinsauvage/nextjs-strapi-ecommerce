@@ -2,6 +2,7 @@ import { setCookie } from 'nookies';
 import {
   createCheckout,
   getCheckoutById,
+  updateCheckoutShippingAddress,
 } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getInfoFromRequest } from '@/helpers/index';
 
@@ -10,7 +11,7 @@ const checkoutCookiesName = 'shopifyCheckoutId';
 
 export default async function handler(req, res) {
   try {
-    const { method } = req;
+    const { method, body } = req;
     const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
     switch (method) {
@@ -58,6 +59,25 @@ export default async function handler(req, res) {
         }
 
         return res.status(200).json({ checkout });
+      }
+
+      case 'PUT': {
+        const { shippingAddress } = body;
+
+        if (!shippingAddress || !checkoutId) {
+          return res
+            .status(500)
+            .send({ message: 'Missing shipping address or checkout id' });
+        }
+        const resUpdate = await updateCheckoutShippingAddress(
+          shippingAddress,
+          checkoutId,
+          delegateToken,
+          ip
+        );
+        console.log('🚀 ~ file: index.js:70 ~ handler ~ resUpdate', resUpdate);
+
+        return res.json(resUpdate);
       }
 
       default: {

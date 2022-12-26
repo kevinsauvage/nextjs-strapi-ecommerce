@@ -22,6 +22,10 @@ export function CheckoutProvider({ children }) {
   const { checkout, isCheckoutLoading } = states;
   const { toggleCheckout, toggleLoading } = useGlobalContext();
 
+  const handleSetCheckout = (payload) => {
+    dispatch({ type: actions.ADD_CHECKOUT, payload });
+  };
+
   /* A callback function that is used to handle the response of the API call. */
   const handleResponse = useCallback(
     (res, feedBack, toggle = true) => {
@@ -29,7 +33,7 @@ export function CheckoutProvider({ children }) {
 
       if (res?.checkout?.id) {
         if (toggle) toggleCheckout();
-        dispatch({ type: actions.ADD_CHECKOUT, payload: res.checkout });
+        handleSetCheckout(res.checkout);
         if (feedBack?.success) toast.success(feedBack.success);
         return;
       }
@@ -82,6 +86,7 @@ export function CheckoutProvider({ children }) {
       handleQuantityChange,
       handleResponse,
       toggleLoading,
+      handleSetCheckout,
     }),
     [
       checkout,

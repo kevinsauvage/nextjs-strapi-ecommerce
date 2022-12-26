@@ -70,6 +70,18 @@ mutation checkoutLineItemsUpdate($checkoutId: ID!, $lineItems: [CheckoutLineItem
   }
 }`;
 
+const updateCheckoutShippingAddress = `
+mutation checkoutShippingAddressUpdateV2($checkoutId: ID!, $shippingAddress: MailingAddressInput!) {
+  checkoutShippingAddressUpdateV2(checkoutId: $checkoutId, shippingAddress: $shippingAddress) {
+    checkout {
+      ${checkoutFragment}
+    }
+    checkoutUserErrors {
+      message
+    }
+  }
+}`;
+
 const checkoutQueries = {
   queryCreateCheckout,
   queryAddLinesItem,
@@ -77,6 +89,7 @@ const checkoutQueries = {
   queryAddCustomerToCheckout,
   queryRemoveFromCheckout,
   queryUpdateLine,
+  updateCheckoutShippingAddress,
 };
 
 export default checkoutQueries;

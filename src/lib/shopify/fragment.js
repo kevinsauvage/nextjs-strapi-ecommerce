@@ -6,6 +6,24 @@ blurDataURL: url(transform: {maxHeight: 6, maxWidth: 4, crop: CENTER,  preferred
 width
 height`;
 
+export const addressFragment = `
+id
+address1
+address2
+city
+company
+country
+countryCodeV2
+firstName
+formatted
+formattedArea
+lastName
+name
+phone
+province
+provinceCode
+zip`;
+
 export const variantFragment = `
 id
 availableForSale
@@ -53,6 +71,10 @@ orderStatusUrl
 lineItemsSubtotalPrice {
   amount
   currencyCode
+}
+
+shippingAddress {
+  ${addressFragment}
 }
 lineItems(first: 100) {
   edges {
@@ -114,24 +136,6 @@ variants(first: 8) {
     }
   }
 }`;
-
-export const addressFragment = `
-id
-address1
-address2
-city
-company
-country
-countryCodeV2
-firstName
-formatted
-formattedArea
-lastName
-name
-phone
-province
-provinceCode
-zip`;
 
 export const customerFragment = `
 id

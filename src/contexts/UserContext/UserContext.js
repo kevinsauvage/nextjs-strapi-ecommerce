@@ -8,12 +8,15 @@ import {
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { UserReducer, initialState, actions } from './UserReducer';
+import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { user, addresses, orders } = states || {};
+
+  const { handleSetCheckout } = useCheckoutContext();
 
   /* A function that is called when an error occurs. */
   const handleError = useCallback((err) => {
@@ -23,6 +26,49 @@ export function UserProvider({ children }) {
     return false;
   }, []);
 
+  const handleSetCheckoutShippingAddress = useCallback(
+    async (customer) => {
+      if (!customer.defaultAddress) return;
+      const {
+        defaultAddress: {
+          address1,
+          address2,
+          city,
+          company,
+          country,
+          firstName,
+          lastName,
+          phone,
+          province,
+          zip,
+        },
+      } = customer || {};
+
+      const payload = {
+        address1,
+        address2,
+        city,
+        company,
+        country,
+        firstName,
+        lastName,
+        phone,
+        province,
+        zip,
+      };
+      const res = await nextApiCall.checkoutUpdateShippingAddress({
+        shippingAddress: payload,
+      });
+
+      if (res?.checkout) {
+        handleSetCheckout(res.checkout);
+      } else {
+        console.error("Couldn't associate default address to checkout");
+      }
+    },
+    [handleSetCheckout]
+  );
+
   useEffect(() => {
     const getCustomer = async () => {
       try {
@@ -30,13 +76,14 @@ export function UserProvider({ children }) {
         const res = await nextApiCall.getCustomer();
         if (res && res?.customer?.id) {
           dispatch({ type: actions.ADD_USER, payload: res.customer });
+          handleSetCheckoutShippingAddress(res.customer);
         } else throw new Error();
       } catch (e) {
         toast.error('Something went wrong, please try again later');
       }
     };
     getCustomer();
-  }, [dispatch, user]);
+  }, [dispatch, user, handleSetCheckoutShippingAddress]);
 
   const values = useMemo(
     () => ({
