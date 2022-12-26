@@ -27,7 +27,7 @@ export async function getServerSideProps(ctx) {
 
   const data = await filterCollectionForward(
     collectionSlug,
-    40,
+    16,
     [],
     query.sort_key,
     query.startCursor,
