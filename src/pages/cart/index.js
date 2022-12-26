@@ -10,7 +10,11 @@ function CartPage() {
     useCheckoutContext();
 
   return (
-    <Page title="Your Cart">
+    <Page
+      title="Your Cart"
+      bannerTitle="Cart"
+      bannerDescription="Welcome to your cart! Here you can view all of the items you have added to your cart, adjust quantities, and proceed to checkout. Don't forget to apply any promotional codes or take advantage of any special offers before you complete your purchase. If you have any questions about your cart, please don't hesitate to contact us. We are here to help and make your shopping experience as smooth as possible. Thank you for choosing us!"
+    >
       <div className={styles.cart}>
         {Array.isArray(checkout?.lineItems) &&
         checkout?.lineItems?.length > 0 ? (
@@ -47,8 +51,7 @@ function CartPage() {
                   </td>
                   <td className={styles.price}>
                     <span>
-                      {checkout?.totalPrice?.currencyCode}{' '}
-                      {checkout?.currencyCode}
+                      {checkout?.totalPrice?.amount} {checkout?.currencyCode}
                     </span>
                   </td>
                 </tr>

@@ -1,6 +1,7 @@
 .cart {
   max-width: 800px;
   margin: 0 auto;
+  padding-bottom: var(--space-2);
 }
 
 .head {
@@ -18,4 +19,8 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+.table {
+  width: 100%;
 }

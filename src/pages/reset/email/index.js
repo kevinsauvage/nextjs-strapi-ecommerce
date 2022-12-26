@@ -30,7 +30,7 @@ function ResetPassword() {
     <Page
       title="Password recovery"
       bannerTitle="Reset your password"
-      bannerDescription='"Enter your email address below to receive an email to reset your password"'
+      bannerDescription="Welcome to our password recovery page! If you have forgotten your password and need to reset it, you can do so by filling out the form below. Simply enter the email address associated with your account, and we will send you a password reset link. If you have any issues or need further assistance, please don't hesitate to contact us. We are here to help and ensure that you can access your account safely and securely. Thank you for choosing us!"
     >
       <div>
         <Form title="PASSWORD RECOVERY" onSubmit={handleSubmit}>

@@ -36,7 +36,7 @@ function Profile() {
   };
 
   const subtitle =
-    'From here, you can manage your account and orders with ease. View and update your personal details, access your order history, and create and update your delivery addresses. Keep track of your orders and ensure accurate delivery.';
+    "Welcome to your customer account! Here you can view your order history, manage your addresses, and update your account information. Simply use the navigation menu to access these features and make your shopping experience more convenient. If you have any questions or need assistance, please don't hesitate to contact us. Thank you for choosing us!";
 
   const title = `Welcome ${user?.firstName || ''} ${user?.lastName || ''}`;
 

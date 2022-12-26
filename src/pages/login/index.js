@@ -44,7 +44,7 @@ function LoginPage() {
     <Page
       title="User Login"
       bannerTitle="Login to your account"
-      bannerDescription="Please complete the form below to login to your account"
+      bannerDescription="We highly recommend logging into your account to get the most out of your shopping experience with us. This includes the ability to view your past orders, track your current shipments, and manage your preferences. Plus, logging in helps keep your account secure. Thank you for choosing us, and we hope you have a great time shopping with us!"
     >
       <Form onSubmit={(e) => handleSubmit(e)} title="LOGIN">
         <Input

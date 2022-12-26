@@ -1,7 +1,9 @@
 .form {
-  max-width: 460px;
+  max-width: 600px;
   width: 100%;
   margin: var(--space-2) auto;
+  background-color: rgb(var(--color-light-2));
+  padding: var(--space-2) var(--space-4);
 }
 
 .title {

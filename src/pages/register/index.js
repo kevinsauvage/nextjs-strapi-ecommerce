@@ -48,7 +48,7 @@ function RegisterPage() {
     <Page
       title="Register your account"
       bannerTitle="Register your account"
-      bannerDescription="Please complete the form below to create an account"
+      bannerDescription="Welcome to our ecommerce site! We are so glad you decided to join us. By creating an account, you will be able to fully experience all that our site has to offer, such as fast and easy checkouts, the ability to track your orders and shipments, and the option to save your preferences for future visits. Plus, registering helps keep your account secure and personalized just for you. Thank you for choosing us, and we can't wait to see you again soon!"
     >
       <div>
         <Form onSubmit={handleSubmit} title="REGISTER">

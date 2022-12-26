@@ -89,7 +89,7 @@ function OrderDetail() {
       title="Update account Information"
       backTo={{ name: 'Back to Account', href: config.routes.account }}
       bannerTitle="Update your information"
-      bannerDescription="View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us."
+      bannerDescription="Welcome to the personal information update page! Here you can easily update your name, email, and password. Simply fill out the form and click 'Save Changes' to update your account. We appreciate you keeping your information current to help us provide a secure and personalized shopping experience. If you have any questions, please don't hesitate to contact us. Thank you for choosing us!"
     >
       <AccountLayout loading={isLoading || !user}>
         <Form handleSubmit={handleSubmit} title="UPDATE ACCOUNT">
@@ -155,7 +155,7 @@ function OrderDetail() {
               Check this case to receive our last update
             </label>
           </div>
-          <Button type="submit" tertiary text="Update" />
+          <Button type="submit" tertiary text="SAVE CHANGES" />
         </Form>
       </AccountLayout>
     </Page>

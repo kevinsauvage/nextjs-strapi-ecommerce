@@ -7,7 +7,7 @@ import styles from './refund.module.scss';
 
 function RefoundPage({ bestSelling, refundPolicy }) {
   return (
-    <Page title="Our privacy policy">
+    <Page title="Our refund policy">
       <div className={styles.privacy}>
         <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
         {bestSelling &&

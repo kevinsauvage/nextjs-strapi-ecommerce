@@ -7,7 +7,11 @@ import styles from './Privacy.module.scss';
 
 function PrivacyPage({ bestSelling, privacyPolicy }) {
   return (
-    <Page title="Our privacy policy">
+    <Page
+      title="Our privacy policy"
+      bannerTitle="Privacy"
+      bannerDescription="Welcome to our privacy page! At our company, we are committed to protecting your personal information and ensuring that your privacy is respected. We have implemented various measures to secure your information and prevent unauthorized access, use, or disclosure. We also adhere to all applicable laws and regulations regarding privacy and data protection. If you have any questions or concerns about your privacy, please don't hesitate to contact us. Thank you for choosing us and trusting us with your personal information."
+    >
       <div className={styles.privacy}>
         <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
         {bestSelling &&

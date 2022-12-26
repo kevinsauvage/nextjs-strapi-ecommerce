@@ -7,7 +7,11 @@ import styles from './shipping.module.scss';
 
 function ShippingPage({ bestSelling, shippingPolicy }) {
   return (
-    <Page title="Our privacy policy">
+    <Page
+      title="Our shipping policies"
+      bannerTitle="Shipping policies"
+      bannerDescription="Welcome to our shipping information page! Here you can find answers to frequently asked questions about our shipping policy and process, including how to track your order, available shipping options, and delivery times. If you have any additional questions or need assistance, please don't hesitate to contact us. Thank you for choosing us."
+    >
       <div className={styles.privacy}>
         <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
         {bestSelling &&

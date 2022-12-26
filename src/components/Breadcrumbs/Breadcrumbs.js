@@ -5,7 +5,7 @@ import Crumbs from './Crumbs';
 export default function Breadcrumbs() {
   const router = useRouter();
 
-  const filterCrumb = ['pages', 'reset'];
+  const filterCrumb = ['Pages', 'reset'];
 
   function generateBreadcrumbs() {
     const asPathWithoutQuery = router.asPath.split('?')[0];

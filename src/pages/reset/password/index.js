@@ -55,7 +55,7 @@ function Password({ resetUrl }) {
     <Page
       title="Password recovery"
       bannerTitle="Reset your password"
-      bannerDescription='"Fill the form below to update your password"'
+      bannerDescription="Welcome to our password input page! Here you can enter your new password to complete the reset process. Please make sure to choose a strong, unique password that you won't forget. This will help keep your account secure and protect your personal information. If you have any issues or need further assistance, please don't hesitate to contact us. We are here to help and ensure that you can access your account safely and securely. Thank you for choosing us!"
     >
       <div>
         <Form title="NEW PASSWORD" onSubmit={handleSubmit}>
