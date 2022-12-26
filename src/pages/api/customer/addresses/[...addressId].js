@@ -7,7 +7,6 @@ import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
-    console.log('received request ');
     const { method, query } = req;
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
@@ -47,11 +46,6 @@ export default async function handler(req, res) {
           id,
           delegateToken,
           ip
-        );
-
-        console.log(
-          '🚀 ~ file: [...addressId].js:51 ~ handler ~ updatedAddress',
-          updatedAddress
         );
 
         if (updatedAddress) return res.status(200).json(updatedAddress);

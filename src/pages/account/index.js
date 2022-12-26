@@ -7,33 +7,18 @@ import Button from '@/components/Button/Button';
 import config from '@/config/index';
 import Address from '@/components/scopes/account/Address/Address';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import nextApiCall from '@/utils/apiNext';
-import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
 function Profile() {
   const { user } = useUserContext();
-  const { reload } = useRouter();
-  const { userFeedback } = config;
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (user?.id) setIsLoading(false);
   }, [user]);
-
-  const logout = async () => {
-    setIsLoading(true);
-    const res = await nextApiCall.logout();
-    setIsLoading(false);
-    if (res?.ok) {
-      toast.success(userFeedback.logout.success);
-      return reload(config.routes.home);
-    }
-    return toast.error(userFeedback.logout.error);
-  };
 
   const subtitle =
     "Welcome to your customer account! Here you can view your order history, manage your addresses, and update your account information. Simply use the navigation menu to access these features and make your shopping experience more convenient. If you have any questions or need assistance, please don't hesitate to contact us. Thank you for choosing us!";
@@ -43,9 +28,6 @@ function Profile() {
   return (
     <Page title="Account" bannerTitle={title} bannerDescription={subtitle}>
       <AccountLayout loading={isLoading}>
-        <div className={styles.logOut}>
-          <Button tertiary text="Log Out" onClick={logout} />
-        </div>
         <div className={styles.Profile}>
           <main className={styles.main}>
             <div className={styles.row}>

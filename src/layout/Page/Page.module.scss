@@ -4,6 +4,7 @@
 }
 
 .banner {
+  position: relative;
   background-color: rgb(var(--color-dark-0));
   color: rgb(var(--color-light-0));
   padding: var(--space-2) var(--space-4) var(--space-3) var(--space-4);
@@ -27,4 +28,9 @@
   padding: 4px;
   width: fit-content;
   margin-bottom: var(--space-1);
+}
+.logOut {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }

@@ -39,11 +39,6 @@ export default async function handler(req, res) {
           ip
         );
 
-        console.log(
-          '🚀 ~ file: [...lineId].js:42 ~ handler ~ updateLinesRes',
-          updateLinesRes
-        );
-
         return res.status(200).json(updateLinesRes);
       }
 

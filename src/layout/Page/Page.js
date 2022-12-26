@@ -3,9 +3,14 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import config from '@/config/index';
 import { MdOutlineKeyboardBackspace } from 'react-icons/md';
 import Link from 'next/link';
-import styles from './Page.module.scss';
-import Container from '../Container/Container';
+import { useRouter } from 'next/router';
+import Button from '@/components/Button/Button';
+import nextApiCall from '@/utils/apiNext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { toast } from 'react-toastify';
 import PageLoader from '../Loader/PageLoader/PageLoader';
+import Container from '../Container/Container';
+import styles from './Page.module.scss';
 
 export default function Page({
   children,
@@ -16,7 +21,21 @@ export default function Page({
   bannerTitle,
   bannerDescription,
 }) {
+  const { pathname, push } = useRouter();
   const siteTitle = `${config.name} | ${title}`;
+  const { toggleLoading } = useGlobalContext();
+  const { userFeedback } = config;
+
+  const logout = async () => {
+    toggleLoading(true);
+    const res = await nextApiCall.logout();
+    toggleLoading(false);
+    if (res?.ok) {
+      return push(config.routes.login);
+    }
+    return toast.error(userFeedback.logout.error);
+  };
+
   return (
     <div className={`${styles.page}`}>
       <Head>
@@ -34,6 +53,11 @@ export default function Page({
                 <MdOutlineKeyboardBackspace />
                 {backTo.name}
               </Link>
+            )}
+            {pathname.startsWith('/account') && (
+              <div className={styles.logOut}>
+                <Button secondary text="Log Out" onClick={logout} />
+              </div>
             )}
             <h1 className={styles.title}>{bannerTitle}</h1>
             <p className={styles.subtitle}>{bannerDescription}</p>

@@ -175,8 +175,6 @@ export const updateLines = async (
       ip
     );
 
-    console.log('🚀 ~ file: checkoutApiCall.js:178 ~ res', res);
-
     const response = res?.data?.checkoutLineItemsUpdate;
 
     if (response) {

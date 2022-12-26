@@ -75,7 +75,6 @@ export default async function handler(req, res) {
           delegateToken,
           ip
         );
-        console.log('🚀 ~ file: index.js:70 ~ handler ~ resUpdate', resUpdate);
 
         return res.json(resUpdate);
       }
