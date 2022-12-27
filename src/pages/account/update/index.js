@@ -94,14 +94,14 @@ function OrderDetail() {
           <div className={styles.container}>
             <div className={styles.wrapper}>
               <Input
-                input
+                input="true"
                 id="firstName"
                 type="text"
                 label="First Name"
                 name="firstName"
               />
               <Input
-                input
+                input="true"
                 id="lastName"
                 type="text"
                 name="lastName"
@@ -110,24 +110,30 @@ function OrderDetail() {
             </div>
             <div className={styles.wrapper}>
               <Input
-                input
+                input="true"
                 id="email"
                 type="email"
                 label="Email Address"
                 name="email"
               />
               <Input
-                input
+                input="true"
                 id="password"
                 type="password"
                 name="password"
                 label="Password"
               />
             </div>
-            <Input input id="phone" type="text" name="phone" label="Phone" />
+            <Input
+              input="true"
+              id="phone"
+              type="text"
+              name="phone"
+              label="Phone"
+            />
             <label htmlFor="acceptsMarketing" className={styles.checkbox}>
               <input
-                checkbox
+                checkbox="true"
                 id="acceptsMarketing"
                 className={styles.checkboxInput}
                 type="checkbox"

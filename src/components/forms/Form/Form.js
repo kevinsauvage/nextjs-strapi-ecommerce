@@ -52,7 +52,13 @@ export default function Form({
     <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.border}>
-        <div className={styles.children}>{iterateOverChildren(children)}</div>
+        <div className={styles.children}>
+          {!initialValues
+            ? iterateOverChildren(children)
+            : formData
+            ? iterateOverChildren(children)
+            : null}
+        </div>
       </div>
     </form>
   );

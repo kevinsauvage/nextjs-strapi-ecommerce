@@ -18,7 +18,7 @@ function ContactPage() {
           name="email"
           placeholder="Email"
           required
-          input
+          input="true"
         />
         <Input placeholder="Name" name="name" id="name" label="Name" required />
         <Input
@@ -28,7 +28,7 @@ function ContactPage() {
           id="message"
           label="Message"
           required
-          input
+          input="true"
         />
         <Buttons text="SEND MESSAGE" />
       </Form>

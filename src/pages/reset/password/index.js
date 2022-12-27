@@ -59,7 +59,7 @@ function Password({ resetUrl }) {
           name="password"
           type="password"
           placeholder="New password"
-          input
+          input="true"
         />
         <Buttons text="RESET PASSWORD" />
       </Form>
