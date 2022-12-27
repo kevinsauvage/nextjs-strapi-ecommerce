@@ -55,7 +55,7 @@ function AddressUpdate() {
       if (customerAddress) {
         setAddress(customerAddress);
         toast.success('Address updated successfully');
-        return back();
+        return push(config.routes.addresses);
       }
       if (customerUserErrors) {
         return customerUserErrors.map((err) => toast.error(err.message));
