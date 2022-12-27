@@ -3,11 +3,15 @@ import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import EmptyCart from '@/components/EmptyCart/EmptyCart';
 import CartItem from '@/components/CartItem/CartItem';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import Address from '@/components/scopes/account/Address/Address';
+import Card from '@/components/scopes/account/Card/Card';
 import styles from './Cart.module.scss';
 
 function CartPage() {
   const { checkout, handleQuantityChange, removeFromCheckout } =
     useCheckoutContext();
+
+  console.log(checkout);
 
   return (
     <Page
@@ -57,13 +61,21 @@ function CartPage() {
                 </tr>
               </tfoot>
             </table>
-            <div className={styles.btns}>
-              <CheckoutBtn
-                extraClass={styles.btn}
-                amount={checkout?.totalPrice?.amount}
-                currencyCode={checkout?.currencyCode}
-                url={checkout?.webUrl}
-              />
+            <div>
+              <Card title="Shipping Address">
+                <Address
+                  displayButton={false}
+                  address={checkout.shippingAddress}
+                />
+              </Card>
+              <div className={styles.btns}>
+                <CheckoutBtn
+                  extraClass={styles.btn}
+                  amount={checkout?.totalPrice?.amount}
+                  currencyCode={checkout?.currencyCode}
+                  url={checkout?.webUrl}
+                />
+              </div>
             </div>
           </>
         ) : (
