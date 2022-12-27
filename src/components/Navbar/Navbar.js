@@ -1,15 +1,11 @@
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import Image from 'next/image';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import { useRouter } from 'next/router';
 import styles from './Navbar.module.scss';
 import searchIcon from '../../../public/search.svg';
 
 function Navbar({ headerMenu, handleOver }) {
   const { toggleSearch } = useGlobalContext();
-  const { origin } = useRouter();
-
-  console.log('🚀 ~ file: Navbar.js:12 ~ Navbar ~ origin', origin);
 
   return (
     <nav>

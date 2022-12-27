@@ -15,8 +15,6 @@ export default withRouter(
   }) => {
     const path = url.includes('http') ? new URL(url)?.pathname : url;
 
-    console.log(path, 'path');
-    console.log(router.asPath);
     return (
       <Link {...rest} href={path} as={as} scroll={scroll}>
         {cloneElement(Children.only(children), {

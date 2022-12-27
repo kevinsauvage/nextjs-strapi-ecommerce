@@ -63,8 +63,10 @@ export function UserProvider({ children }) {
       if (res?.checkout) {
         handleSetCheckout(res.checkout);
       } else {
-        console.log(res);
-        console.error("Couldn't associate default address to checkout");
+        console.error(
+          "Couldn't associate default address to checkout res>>>",
+          res
+        );
       }
     },
     [handleSetCheckout]
