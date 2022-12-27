@@ -2,14 +2,11 @@ import Page from '@/layout/Page/Page';
 import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
-import { useRouter } from 'next/router';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import config from '@/config/index';
 import styles from './create.module.scss';
 
 function Addresses() {
-  const { push } = useRouter();
   const { toggleLoading } = useGlobalContext();
 
   const handleSubmit = async (address) => {
@@ -30,8 +27,7 @@ function Addresses() {
         await nextApiCall.createAddress({ address });
 
       if (customerAddress) {
-        toast.success('Address created successfully');
-        return push(config.routes.addresses);
+        return toast.success('Address created successfully');
       }
       if (customerUserErrors.length) {
         return customerUserErrors.map((err) => toast.error(err.message));

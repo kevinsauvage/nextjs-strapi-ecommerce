@@ -1,7 +1,6 @@
 import Page from '@/layout/Page/Page';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import config from '@/config/index';
@@ -17,8 +16,6 @@ function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const { user, handleError, dispatch } = useUserContext();
   const { toggleLoading } = useGlobalContext();
-
-  const { back } = useRouter();
 
   useEffect(() => {
     if (user?.id) setIsLoading(false);
@@ -67,8 +64,7 @@ function OrderDetail() {
 
       if (customer) {
         toast.success('Customer information updated successfully');
-        dispatch({ type: actions.ADD_USER, payload: customer });
-        return back();
+        return dispatch({ type: actions.ADD_USER, payload: customer });
       }
       return toast.error('Something went wrong');
     } catch (err) {
