@@ -6,6 +6,7 @@ import styles from './AccountLayout.module.scss';
 
 const navItems = [
   { url: config.routes.account, title: 'Account' },
+  { url: config.routes.updateAccount, title: 'Update Account details' },
   { url: config.routes.addresses, title: 'My Addresses' },
   { url: config.routes.createAddress, title: 'Add new Address' },
   { url: config.routes.orders, title: 'My Orders' },

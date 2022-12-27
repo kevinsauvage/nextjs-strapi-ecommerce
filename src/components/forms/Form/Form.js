@@ -20,8 +20,11 @@ export default function Form({
       if (!isValidElement(child)) return child;
       const value = formData[child.props.name];
 
+      console.log('🚀 ~ file: Form.js:23 ~ Children.map ~ value', value);
+
       let objectProps = {
         ...child.props,
+        children: iterateOverChildren(child.props.children),
       };
 
       if (child.props.input) {

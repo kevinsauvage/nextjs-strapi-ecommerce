@@ -81,6 +81,8 @@ function OrderDetail() {
   return (
     <Page
       title="Update account Information"
+      bannerTitle="Update your information"
+      bannerDescription="Welcome to the personal information update page! Here you can easily update your name, email, and password. Simply fill out the form and click 'Save Changes' to update your account. We appreciate you keeping your information current to help us provide a secure and personalized shopping experience. If you have any questions, please don't hesitate to contact us. Thank you for choosing us!"
       backTo={{ name: 'Back to Account', href: config.routes.account }}
     >
       <AccountLayout loading={isLoading || !user}>
@@ -97,7 +99,6 @@ function OrderDetail() {
                 type="text"
                 label="First Name"
                 name="firstName"
-                value={formValues.firstName}
               />
               <Input
                 input
@@ -105,7 +106,6 @@ function OrderDetail() {
                 type="text"
                 name="lastName"
                 label="Last Name"
-                value={formValues.lastName}
               />
             </div>
             <div className={styles.wrapper}>
@@ -115,7 +115,6 @@ function OrderDetail() {
                 type="email"
                 label="Email Address"
                 name="email"
-                value={formValues.email}
               />
               <Input
                 input
@@ -123,17 +122,9 @@ function OrderDetail() {
                 type="password"
                 name="password"
                 label="Password"
-                value={formValues.password}
               />
             </div>
-            <Input
-              input
-              id="phone"
-              type="text"
-              name="phone"
-              label="Phone"
-              value={formValues.phone}
-            />
+            <Input input id="phone" type="text" name="phone" label="Phone" />
             <label htmlFor="acceptsMarketing" className={styles.checkbox}>
               <input
                 checkbox
