@@ -63,6 +63,7 @@ export function UserProvider({ children }) {
       if (res?.checkout) {
         handleSetCheckout(res.checkout);
       } else {
+        console.log(res);
         console.error("Couldn't associate default address to checkout");
       }
     },
@@ -74,6 +75,7 @@ export function UserProvider({ children }) {
       try {
         if (user?.id) return;
         const res = await nextApiCall.getCustomer();
+
         if (res && res?.customer?.id) {
           dispatch({ type: actions.ADD_USER, payload: res.customer });
           handleSetCheckoutShippingAddress(res.customer);

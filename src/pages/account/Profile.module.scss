@@ -1,8 +1,3 @@
-.Profile {
-  width: 100%;
-  height: 100%;
-}
-
 .row {
   width: 100%;
   display: flex;
@@ -13,10 +8,4 @@
 .button {
   margin-top: 1rem;
   width: fit-content;
-}
-.logOut {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-  margin: var(--space-1) 0;
 }

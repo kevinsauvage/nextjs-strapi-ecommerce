@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import Link from 'next/link';
-import Button from '@/components/Button/Button';
 import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import Form from '@/components/forms/Form/Form';
-import useForm from '@/hooks/useForm';
 import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import Buttons from '@/components/forms/Buttons/Buttons';
 import styles from './Login.module.scss';
 
 const { userFeedback } = config;
@@ -37,22 +36,16 @@ function LoginPage() {
     return toast.error(userFeedback.login.error);
   };
 
-  const { handleInputChange, handleSubmit } = useForm(onSubmit);
-
   return (
-    <Page
-      title="User Login"
-      bannerTitle="Login to your account"
-      bannerDescription="We highly recommend logging into your account to get the most out of your shopping experience with us. This includes the ability to view your past orders, track your current shipments, and manage your preferences. Plus, logging in helps keep your account secure. Thank you for choosing us, and we hope you have a great time shopping with us!"
-    >
-      <Form onSubmit={(e) => handleSubmit(e)} title="LOGIN">
+    <Page title="User Login">
+      <Form onSubmit={onSubmit} title="Login To You Account">
         <Input
           id="email"
           label="Email address"
           type="email"
           name="email"
           placeholder="Email"
-          onChange={handleInputChange}
+          required
         />
         <Input
           placeholder="Password"
@@ -60,15 +53,17 @@ function LoginPage() {
           name="password"
           id="password"
           label="Password"
-          onChange={handleInputChange}
+          required
         />
-        <Button width="100%" text="Login" type="submit" tertiary />
+        <Buttons text="Login" />
         <div className={styles.forgotPassword}>
-          <Link href={config.routes.emailResetPassword}>Reset Password</Link>
+          <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
         </div>
         <div className={styles.register}>
-          Don&apos;t have an account?{' '}
-          <Link href={config.routes.register}>Register</Link> now.
+          <p>
+            Don&apos;t have an account?
+            <Link href={config.routes.register}> REGISTER</Link> now.
+          </p>
         </div>
       </Form>
     </Page>

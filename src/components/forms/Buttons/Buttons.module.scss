@@ -1,0 +1,19 @@
+.buttons {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 2rem;
+  width: 100%;
+  margin: var(--space-2) 0;
+}
+
+.back {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  strong {
+    font-weight: 500;
+    font-size: 14px;
+  }
+}

@@ -29,7 +29,7 @@ export default async function handler(req, res) {
           ip
         );
 
-        const accessToken = resetRes?.customerAccessToken;
+        const accessToken = resetRes?.customerAccessToken?.accessToken;
         const customerUserErrors = resetRes?.customerUserErrors;
 
         if (accessToken) {

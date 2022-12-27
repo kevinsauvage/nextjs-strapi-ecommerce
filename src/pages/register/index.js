@@ -1,14 +1,13 @@
 import Link from 'next/link';
-import Button from '@/components/Button/Button';
 import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
-import useForm from '@/hooks/useForm';
 import Form from '@/components/forms/Form/Form';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import Buttons from '@/components/forms/Buttons/Buttons';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
@@ -42,23 +41,16 @@ function RegisterPage() {
     return toast.error(userFeedback?.register?.error);
   };
 
-  const { handleInputChange, handleSubmit } = useForm(onSubmit);
-
   return (
-    <Page
-      title="Register your account"
-      bannerTitle="Register your account"
-      bannerDescription="Welcome to our ecommerce site! We are so glad you decided to join us. By creating an account, you will be able to fully experience all that our site has to offer, such as fast and easy checkouts, the ability to track your orders and shipments, and the option to save your preferences for future visits. Plus, registering helps keep your account secure and personalized just for you. Thank you for choosing us, and we can't wait to see you again soon!"
-    >
+    <Page title="Register your account">
       <div>
-        <Form onSubmit={handleSubmit} title="REGISTER">
+        <Form onSubmit={onSubmit} title="Create New Customer Account">
           <Input
             id="email"
             label="Email address"
             name="email"
             type="email"
             placeholder="Email"
-            onChange={handleInputChange}
           />
           <Input
             placeholder="Password"
@@ -67,12 +59,11 @@ function RegisterPage() {
             id="password"
             label="Password"
             autoComplete="current-password"
-            onChange={handleInputChange}
           />
-          <Button width="100%" text="Register" type="submit" tertiary />
+          <Buttons text="CREATE AN ACCOUNT" />
           <div className={styles.alreadyRegistered}>
             Already have an account?{' '}
-            <Link href={config.routes.login}>Login</Link> now.
+            <Link href={config.routes.login}>LOGIN</Link> now.
           </div>
         </Form>
       </div>

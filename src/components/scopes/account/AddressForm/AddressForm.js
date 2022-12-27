@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Form from '@/components/forms/Form/Form';
-import Button from '@/components/Button/Button';
+import Input from '@/components/forms/Input/Input';
+import Buttons from '@/components/forms/Buttons/Buttons';
+import Section from '@/components/forms/Section/Section';
 import styles from './AddressForm.module.scss';
 
-function AddressForm({ initialValues = {}, onSubmit, buttonText }) {
-  const [formValues, setFormValues] = useState({
+function AddressForm({ initialValues, onSubmit, buttonText, title }) {
+  const [formValues] = useState({
     address1: initialValues?.address1 || '',
     address2: initialValues?.address2 || '',
     city: initialValues?.city || '',
@@ -17,46 +19,32 @@ function AddressForm({ initialValues = {}, onSubmit, buttonText }) {
     zip: initialValues?.zip || '',
   });
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSubmit(formValues);
-  };
-
-  const style = {
-    display: 'grid',
-  };
-
-  const getInputs = () =>
-    Object.keys(formValues).map((key) => {
-      let label = key.replace(/([A-Z])/g, ' $1').trim();
-      label = label[0].toUpperCase() + label.substring(1);
-
-      return (
-        <div className={styles.container} key={key}>
-          <label className={styles.label} htmlFor={key}>
-            {label}
-          </label>
-          <input
-            className={styles.input}
-            type="text"
-            id={key}
-            name={key}
-            value={formValues[key]}
-            onChange={handleChange}
-          />
-        </div>
-      );
-    });
-
   return (
-    <Form handleSubmit={handleSubmit}>
-      <div style={style}>{getInputs()}</div>
-      <Button type="submit" primary text={buttonText} />
+    <Form onSubmit={onSubmit} initialValues={formValues} title={title}>
+      <div>
+        <Section>
+          <h4 className={styles.title}>Contact Information</h4>
+          <Input
+            type="text"
+            id="firstName"
+            name="firstName"
+            label="First Name"
+          />
+          <Input type="text" id="lastName" name="lastName" label="Last Name" />
+          <Input type="text" id="company" name="company" label="Company" />
+          <Input type="text" id="phone" name="phone" label="Phone" />
+        </Section>
+        <Section>
+          <h4 className={styles.title}>Address</h4>
+          <Input type="text" id="address1" name="address1" label="Address1" />
+          <Input type="text" id="address2" name="address2" label="Address2" />
+          <Input type="text" id="city" name="city" label="City" />
+          <Input type="text" id="country" name="country" label="Country" />
+          <Input type="text" id="province" name="province" label="Province" />
+          <Input type="text" id="zip" name="zip" label="Zip" />
+        </Section>
+      </div>
+      <Buttons text={buttonText} />
     </Form>
   );
 }

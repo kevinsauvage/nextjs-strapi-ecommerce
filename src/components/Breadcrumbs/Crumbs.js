@@ -2,6 +2,7 @@ import Link from 'next/link';
 import styles from './Crumbs.module.scss';
 
 export default function Crumbs({ title, href, last, isNotClickable }) {
+  if (isNotClickable) return null;
   if (last) {
     const t = decodeURIComponent(title)
       .replace('gid://shopify/Order/', '')
@@ -14,7 +15,7 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
     return (
       <>
         <a className={styles.crumbs}>{title}</a>
-        {!last && <p className={styles.arrow}>{'>'}</p>}
+        {!last && <p className={styles.arrow}>/</p>}
       </>
     );
   }
@@ -23,7 +24,7 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
       <Link href={href} className={styles.crumbs}>
         {decodeURIComponent(title)}
       </Link>
-      {!last && <p className={styles.arrow}>{'>'}</p>}
+      {!last && <p className={styles.arrow}>/</p>}
     </>
   );
 }

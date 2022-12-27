@@ -28,47 +28,45 @@ function Profile() {
   return (
     <Page title="Account" bannerTitle={title} bannerDescription={subtitle}>
       <AccountLayout loading={isLoading}>
-        <div className={styles.Profile}>
-          <main className={styles.main}>
-            <div className={styles.row}>
-              <Card title="Account Information">
-                <AccountInfo user={user} />
-                <div className={styles.button}>
-                  <Button
-                    text="Edit Account Information"
-                    type="button"
-                    tertiary
-                    href={config.routes.updateAccount}
-                  />
-                </div>
-              </Card>
-              <Card title="Default Address">
-                <Address isAccount address={user?.defaultAddress} />
-                <div className={styles.button}>
-                  <Button
-                    text="Manage addresses"
-                    type="button"
-                    tertiary
-                    href={config.routes.addresses}
-                  />
-                </div>
-              </Card>
-            </div>
-            <Card title="Orders">
-              <Orders orders={user?.orders} />
-              {user?.orders.length > 0 && (
-                <div className={styles.button}>
-                  <Button
-                    text="See all orders"
-                    type="button"
-                    tertiary
-                    href={config.routes.orders}
-                  />
-                </div>
-              )}
+        <main className={styles.main}>
+          <div className={styles.row}>
+            <Card title="Account Information">
+              <AccountInfo user={user} />
+              <div className={styles.button}>
+                <Button
+                  text="Edit Account Information"
+                  type="button"
+                  tertiary
+                  href={config.routes.updateAccount}
+                />
+              </div>
             </Card>
-          </main>
-        </div>
+            <Card title="Default Address">
+              <Address isAccount address={user?.defaultAddress} />
+              <div className={styles.button}>
+                <Button
+                  text="Manage addresses"
+                  type="button"
+                  tertiary
+                  href={config.routes.addresses}
+                />
+              </div>
+            </Card>
+          </div>
+          <Card title="Orders">
+            <Orders orders={user?.orders} />
+            {user?.orders.length > 0 && (
+              <div className={styles.button}>
+                <Button
+                  text="See all orders"
+                  type="button"
+                  tertiary
+                  href={config.routes.orders}
+                />
+              </div>
+            )}
+          </Card>
+        </main>
       </AccountLayout>
     </Page>
   );

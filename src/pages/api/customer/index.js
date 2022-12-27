@@ -29,13 +29,15 @@ export default async function handler(req, res) {
 
           if (accessToken) {
             token = accessToken;
+
             handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
           }
         }
 
         const userRes = (await getUser(token, delegateToken, ip)) || {};
-        const customer = userRes?.customer;
-        return res.status(200).json({ customer, ok: true });
+        const customer = userRes?.response?.customer;
+        const errors = userRes?.errors;
+        return res.status(200).json({ customer, errors, ok: true });
       }
 
       case 'PUT': {

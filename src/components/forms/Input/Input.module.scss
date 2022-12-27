@@ -6,18 +6,31 @@
 
 .title {
   margin-bottom: 6px;
+  display: flex;
+}
+
+.required {
+  color: rgb(var(--color-red-0));
+  margin-left: 2px;
 }
 
 .input {
-  height: 46px;
+  height: 44px;
   width: 100%;
   padding-left: 1rem;
-  border: 0.4px solid gray;
-  border-radius: 3px;
-  font-family: roboto;
+  border: 1px solid rgb(var(--color-dark-4));
+  border-radius: 1px;
+  font-family: var(--font-heading);
   resize: vertical;
-}
+  background-color: white;
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+  }
+}
 .textarea {
   padding-top: 1rem;
   min-height: 200px;

@@ -16,6 +16,13 @@ const useForm = (onSubmit, initialState = {}) => {
   const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
+    const { type } = e.target;
+
+    if (type === 'checkbox') {
+      setFormData({ ...formData, [e.target.name]: !formData[e.target.name] });
+      return;
+    }
+
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 

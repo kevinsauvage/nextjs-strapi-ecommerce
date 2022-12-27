@@ -35,7 +35,10 @@ export default function Input({
   if (value) {
     return (
       <label htmlFor={id} className={styles.label}>
-        <p className={styles.title}>{label}</p>
+        <p className={styles.title}>
+          {label}
+          {required ? <span className={styles.required}>*</span> : ''}
+        </p>
         <input
           className={styles.input}
           id={id}
@@ -54,7 +57,10 @@ export default function Input({
 
   return (
     <label htmlFor={id} className={styles.label}>
-      <p className={styles.title}>{label}</p>
+      <p className={styles.title}>
+        {label}
+        {required ? <span className={styles.required}>*</span> : ''}
+      </p>
 
       <input
         className={styles.input}

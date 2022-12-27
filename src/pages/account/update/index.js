@@ -7,10 +7,10 @@ import { toast } from 'react-toastify';
 import config from '@/config/index';
 import Form from '@/components/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import Button from '@/components/Button/Button';
 import Input from '@/components/forms/Input/Input';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import Buttons from '@/components/forms/Buttons/Buttons';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -48,24 +48,18 @@ function OrderDetail() {
     }
   }, [email, firstName, lastName, password, phone, user]);
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (formData) => {
     if (
-      !formValues.password ||
-      !formValues.email ||
-      !formValues.firstName ||
-      !formValues.lastName
+      !formData.password ||
+      !formData.email ||
+      !formData.firstName ||
+      !formData.lastName
     ) {
       return toast.error('Please fill in all required fields');
     }
     try {
       toggleLoading(true);
-      const updateResponse = await nextApiCall.updateCustomer(formValues);
+      const updateResponse = await nextApiCall.updateCustomer(formData);
 
       const { customer, customerUserErrors } = updateResponse || {};
 
@@ -88,11 +82,13 @@ function OrderDetail() {
     <Page
       title="Update account Information"
       backTo={{ name: 'Back to Account', href: config.routes.account }}
-      bannerTitle="Update your information"
-      bannerDescription="Welcome to the personal information update page! Here you can easily update your name, email, and password. Simply fill out the form and click 'Save Changes' to update your account. We appreciate you keeping your information current to help us provide a secure and personalized shopping experience. If you have any questions, please don't hesitate to contact us. Thank you for choosing us!"
     >
       <AccountLayout loading={isLoading || !user}>
-        <Form handleSubmit={handleSubmit} title="UPDATE ACCOUNT">
+        <Form
+          onSubmit={handleSubmit}
+          title="Update your information"
+          initialValues={formValues}
+        >
           <div className={styles.container}>
             <div className={styles.wrapper}>
               <Input
@@ -100,7 +96,6 @@ function OrderDetail() {
                 type="text"
                 label="First Name"
                 name="firstName"
-                onChange={handleChange}
                 value={formValues.firstName}
               />
               <Input
@@ -108,7 +103,6 @@ function OrderDetail() {
                 type="text"
                 name="lastName"
                 label="Last Name"
-                onChange={handleChange}
                 value={formValues.lastName}
               />
             </div>
@@ -118,7 +112,6 @@ function OrderDetail() {
                 type="email"
                 label="Email Address"
                 name="email"
-                onChange={handleChange}
                 value={formValues.email}
               />
               <Input
@@ -126,7 +119,6 @@ function OrderDetail() {
                 type="password"
                 name="password"
                 label="Password"
-                onChange={handleChange}
                 value={formValues.password}
               />
             </div>
@@ -135,27 +127,20 @@ function OrderDetail() {
               type="text"
               name="phone"
               label="Phone"
-              onChange={handleChange}
               value={formValues.phone}
             />
-            <label htmlFor="acceptsMarketing">
+            <label htmlFor="acceptsMarketing" className={styles.checkbox}>
               <input
                 id="acceptsMarketing"
+                className={styles.checkboxInput}
                 type="checkbox"
                 name="acceptsMarketing"
                 label="Accepts marketing"
-                onChange={() =>
-                  setFormValues({
-                    ...formValues,
-                    acceptsMarketing: !formValues.acceptsMarketing,
-                  })
-                }
-                checked={formValues.acceptsMarketing}
               />
-              Check this case to receive our last update
+              <span>Check this case to receive our last update</span>
             </label>
           </div>
-          <Button type="submit" tertiary text="SAVE CHANGES" />
+          <Buttons text="UPDATE INFO" />
         </Form>
       </AccountLayout>
     </Page>

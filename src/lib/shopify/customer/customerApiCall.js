@@ -131,7 +131,11 @@ export const getUser = async (token, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    const response = cleanGraphQLResponse(res?.data);
+
+    const response = {
+      response: cleanGraphQLResponse(res?.data),
+      errors: res?.errors,
+    };
     return response;
   } catch (err) {
     return console.error(err);
