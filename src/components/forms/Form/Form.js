@@ -20,15 +20,22 @@ export default function Form({
       if (!isValidElement(child)) return child;
       const value = formData[child.props.name];
       const isInput = child.type.name === 'Input' || child.type === 'input';
+
+      console.log('🚀 ~ file: Form.js:24 ~ Children.map ~ isInput', isInput);
+
       const isCheckbox = child.props.type === 'checkbox';
 
-      return cloneElement(child, {
+      const result = cloneElement(child, {
         ...child.props,
         onChange: isInput ? handleInputChange : null,
         value: isInput && initialValues ? value : null,
         children: iterateOverChildren(child.props.children),
         checked: isCheckbox ? formData[child.props.name] : null,
       });
+
+      console.log('🚀 ~ file: Form.js:36 ~ Children.map ~ result', result);
+
+      return result;
     });
 
   return (
