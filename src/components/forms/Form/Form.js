@@ -53,11 +53,7 @@ export default function Form({
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.border}>
         <div className={styles.children}>
-          {!initialValues
-            ? iterateOverChildren(children)
-            : formData
-            ? iterateOverChildren(children)
-            : null}
+          {formData ? iterateOverChildren(children) : null}
         </div>
       </div>
     </form>
