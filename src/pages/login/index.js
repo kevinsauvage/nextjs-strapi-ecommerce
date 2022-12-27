@@ -46,6 +46,7 @@ function LoginPage() {
           name="email"
           placeholder="Email"
           required
+          input
         />
         <Input
           placeholder="Password"
@@ -54,6 +55,7 @@ function LoginPage() {
           id="password"
           label="Password"
           required
+          input
         />
         <Buttons text="Login" />
         <div className={styles.forgotPassword}>

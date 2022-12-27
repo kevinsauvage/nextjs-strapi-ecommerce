@@ -19,21 +19,30 @@ export default function Form({
     Children.map(childrenArray, (child) => {
       if (!isValidElement(child)) return child;
       const value = formData[child.props.name];
-      const isInput = child.type.name === 'Input' || child.type === 'input';
 
-      console.log('🚀 ~ file: Form.js:24 ~ Children.map ~ isInput', isInput);
-
-      const isCheckbox = child.props.type === 'checkbox';
-
-      const result = cloneElement(child, {
+      let objectProps = {
         ...child.props,
-        onChange: isInput ? handleInputChange : null,
-        value: isInput && initialValues ? value : null,
-        children: iterateOverChildren(child.props.children),
-        checked: isCheckbox ? formData[child.props.name] : null,
-      });
+      };
 
-      console.log('🚀 ~ file: Form.js:36 ~ Children.map ~ result', result);
+      if (child.props.input) {
+        objectProps = {
+          ...child.props,
+          onChange: handleInputChange,
+          value: initialValues ? value : null,
+          children: iterateOverChildren(child.props.children),
+        };
+      }
+
+      if (child.props.checkbox) {
+        objectProps = {
+          ...child.props,
+          onChange: handleInputChange,
+          checked: formData[child.props.name] || null,
+          children: iterateOverChildren(child.props.children),
+        };
+      }
+
+      const result = cloneElement(child, objectProps);
 
       return result;
     });

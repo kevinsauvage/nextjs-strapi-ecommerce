@@ -92,6 +92,7 @@ function OrderDetail() {
           <div className={styles.container}>
             <div className={styles.wrapper}>
               <Input
+                input
                 id="firstName"
                 type="text"
                 label="First Name"
@@ -99,6 +100,7 @@ function OrderDetail() {
                 value={formValues.firstName}
               />
               <Input
+                input
                 id="lastName"
                 type="text"
                 name="lastName"
@@ -108,6 +110,7 @@ function OrderDetail() {
             </div>
             <div className={styles.wrapper}>
               <Input
+                input
                 id="email"
                 type="email"
                 label="Email Address"
@@ -115,6 +118,7 @@ function OrderDetail() {
                 value={formValues.email}
               />
               <Input
+                input
                 id="password"
                 type="password"
                 name="password"
@@ -123,6 +127,7 @@ function OrderDetail() {
               />
             </div>
             <Input
+              input
               id="phone"
               type="text"
               name="phone"
@@ -131,6 +136,7 @@ function OrderDetail() {
             />
             <label htmlFor="acceptsMarketing" className={styles.checkbox}>
               <input
+                checkbox
                 id="acceptsMarketing"
                 className={styles.checkboxInput}
                 type="checkbox"

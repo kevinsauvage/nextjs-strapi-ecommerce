@@ -50,6 +50,7 @@ function RegisterPage() {
             label="Email address"
             name="email"
             type="email"
+            input
             placeholder="Email"
           />
           <Input
@@ -58,6 +59,7 @@ function RegisterPage() {
             name="password"
             id="password"
             label="Password"
+            input
             autoComplete="current-password"
           />
           <Buttons text="CREATE AN ACCOUNT" />

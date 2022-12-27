@@ -25,23 +25,60 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
         <Section>
           <h4 className={styles.title}>Contact Information</h4>
           <Input
+            input
             type="text"
             id="firstName"
             name="firstName"
             label="First Name"
           />
-          <Input type="text" id="lastName" name="lastName" label="Last Name" />
-          <Input type="text" id="company" name="company" label="Company" />
-          <Input type="text" id="phone" name="phone" label="Phone" />
+          <Input
+            input
+            type="text"
+            id="lastName"
+            name="lastName"
+            label="Last Name"
+          />
+          <Input
+            input
+            type="text"
+            id="company"
+            name="company"
+            label="Company"
+          />
+          <Input input type="text" id="phone" name="phone" label="Phone" />
         </Section>
         <Section>
           <h4 className={styles.title}>Address</h4>
-          <Input type="text" id="address1" name="address1" label="Address1" />
-          <Input type="text" id="address2" name="address2" label="Address2" />
-          <Input type="text" id="city" name="city" label="City" />
-          <Input type="text" id="country" name="country" label="Country" />
-          <Input type="text" id="province" name="province" label="Province" />
-          <Input type="text" id="zip" name="zip" label="Zip" />
+          <Input
+            input
+            type="text"
+            id="address1"
+            name="address1"
+            label="Address1"
+          />
+          <Input
+            input
+            type="text"
+            id="address2"
+            name="address2"
+            label="Address2"
+          />
+          <Input input type="text" id="city" name="city" label="City" />
+          <Input
+            input
+            type="text"
+            id="country"
+            name="country"
+            label="Country"
+          />
+          <Input
+            input
+            type="text"
+            id="province"
+            name="province"
+            label="Province"
+          />
+          <Input input type="text" id="zip" name="zip" label="Zip" />
         </Section>
       </div>
       <Buttons text={buttonText} />

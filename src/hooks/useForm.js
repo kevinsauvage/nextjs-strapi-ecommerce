@@ -18,17 +18,17 @@ const useForm = (onSubmit, initialState = {}) => {
   const handleInputChange = (e) => {
     const { type, name, value } = e.target;
 
-    console.log(
-      '🚀 ~ file: useForm.js:21 ~ handleInputChange ~  e.target',
-      e.target
-    );
-
     if (type === 'checkbox') {
       setFormData({ ...formData, [name]: !formData[name] });
+
       return;
     }
 
     setFormData({ ...formData, [name]: value });
+    console.log(
+      '🚀 ~ file: useForm.js:29 ~ handleInputChange ~ formData',
+      formData
+    );
   };
 
   const handleSubmit = async (e) => {

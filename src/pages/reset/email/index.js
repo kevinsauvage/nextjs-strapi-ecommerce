@@ -34,6 +34,7 @@ function ResetPassword() {
             type="email"
             placeholder="Email"
             required
+            input
           />
           <Buttons text="SEND ME AN EMAIL" />
         </Form>
