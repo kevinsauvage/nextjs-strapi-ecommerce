@@ -3,12 +3,9 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import AccountInfo from '@/components/scopes/account/AccountInfo/AccountInfo';
 import Orders from '@/components/scopes/account/Orders/Orders';
 import Card from '@/components/scopes/account/Card/Card';
-import Button from '@/components/Button/Button';
-import config from '@/config/index';
 import Address from '@/components/scopes/account/Address/Address';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Profile.module.scss';
 
 function Profile() {
@@ -32,48 +29,18 @@ function Profile() {
           <div className={styles.row}>
             <Card title="Account Information">
               <AccountInfo user={user} />
-              <div className={styles.button}>
-                <Button
-                  text="Edit Account Information"
-                  type="button"
-                  tertiary
-                  href={config.routes.updateAccount}
-                />
-              </div>
             </Card>
             <Card title="Default Address">
               <Address isAccount address={user?.defaultAddress} />
-              <div className={styles.button}>
-                <Button
-                  text="Manage addresses"
-                  type="button"
-                  tertiary
-                  href={config.routes.addresses}
-                />
-              </div>
             </Card>
           </div>
           <Card title="Orders">
             <Orders orders={user?.orders} />
-            {user?.orders.length > 0 && (
-              <div className={styles.button}>
-                <Button
-                  text="See all orders"
-                  type="button"
-                  tertiary
-                  href={config.routes.orders}
-                />
-              </div>
-            )}
           </Card>
         </main>
       </AccountLayout>
     </Page>
   );
 }
-
-Profile.getLayout = function getLayout(page) {
-  return <UserProvider>TEST{page}</UserProvider>;
-};
 
 export default Profile;

@@ -1,10 +1,8 @@
 import Head from 'next/head';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import config from '@/config/index';
-import { MdOutlineKeyboardBackspace } from 'react-icons/md';
-import Link from 'next/link';
+import { MdOutlineLogout } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import Button from '@/components/Button/Button';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { toast } from 'react-toastify';
@@ -17,7 +15,6 @@ export default function Page({
   title,
   description,
   loading,
-  backTo,
   bannerTitle,
   bannerDescription,
 }) {
@@ -48,16 +45,11 @@ export default function Page({
 
         {bannerDescription && bannerTitle && (
           <div className={styles.banner}>
-            {backTo && (
-              <Link href={backTo.href} className={styles.backTo}>
-                <MdOutlineKeyboardBackspace />
-                {backTo.name}
-              </Link>
-            )}
             {pathname.startsWith('/account') && (
-              <div className={styles.logOut}>
-                <Button secondary text="Log Out" onClick={logout} />
-              </div>
+              <button type="button" className={styles.logOut} onClick={logout}>
+                <p>Logout</p>
+                <MdOutlineLogout />
+              </button>
             )}
             <h1 className={styles.title}>{bannerTitle}</h1>
             <p className={styles.subtitle}>{bannerDescription}</p>

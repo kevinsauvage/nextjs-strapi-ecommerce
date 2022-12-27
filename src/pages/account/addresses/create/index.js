@@ -3,7 +3,6 @@ import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
-import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './create.module.scss';
@@ -47,7 +46,8 @@ function Addresses() {
   return (
     <Page
       title="Create new address"
-      backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
+      bannerTitle="Create the new address bellow"
+      bannerDescription="To create a new address in our system, please fill in the following fields. These details will be used to accurately deliver your orders and keep track of your delivery locations. Thank you for your help in maintaining a complete and up-to-date customer address list!"
     >
       <AccountLayout>
         <div className={styles.addresses}>

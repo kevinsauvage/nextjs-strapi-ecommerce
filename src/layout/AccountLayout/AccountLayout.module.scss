@@ -1,5 +1,9 @@
 .AccountLayout {
   margin-bottom: var(--space-4);
+  display: flex;
+  gap: var(--space-2);
+  width: 100%;
+  position: relative;
 }
 
 .loading {
@@ -7,4 +11,37 @@
   justify-content: center;
   align-items: center;
   height: 400px;
+}
+
+.nav {
+  min-width: 230px;
+}
+
+.list {
+  position: sticky;
+  display: block;
+  top: 2rem;
+}
+
+.children {
+  width: 100%;
+}
+
+.item {
+  border-left: 3px solid transparent;
+  padding: var(--space-1);
+  display: block;
+  background-color: rgb(var(--color-light-1));
+  font-size: var(--font-size-sm);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.listItem {
+  width: 100%;
+}
+.active {
+  border-left: 3px solid rgb(var(--color-primary-0));
 }
