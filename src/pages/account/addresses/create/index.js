@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import config from 'src/config';
+import config from '@/config/index';
 import styles from './create.module.scss';
 
 function Addresses() {
