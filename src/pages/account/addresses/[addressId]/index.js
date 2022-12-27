@@ -18,7 +18,6 @@ function AddressUpdate() {
 
   useEffect(() => {
     async function fetchAddress() {
-      if (!addressId || !query) return back();
       try {
         if (addressId && query) {
           const res = await nextApiCall.getAddressById(addressId);
