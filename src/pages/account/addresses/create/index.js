@@ -5,10 +5,11 @@ import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import config from 'src/config';
 import styles from './create.module.scss';
 
 function Addresses() {
-  const { back } = useRouter();
+  const { push } = useRouter();
   const { toggleLoading } = useGlobalContext();
 
   const handleSubmit = async (address) => {
@@ -30,7 +31,7 @@ function Addresses() {
 
       if (customerAddress) {
         toast.success('Address created successfully');
-        return back();
+        return push(config.routes.addresses);
       }
       if (customerUserErrors.length) {
         return customerUserErrors.map((err) => toast.error(err.message));
