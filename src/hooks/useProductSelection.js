@@ -1,10 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import nextApiCall from '@/utils/apiNext';
-import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-
-const { userFeedback } = config;
 
 /**
  * It's a custom hook that returns an object with a bunch of functions and state variables that are
@@ -40,7 +37,7 @@ export default function useProductSelection({ product }) {
     if (quantity > 0 && variantId) {
       toggleLoading(true);
       const res = await nextApiCall.addToCheckout({ variantId, quantity });
-      handleResponse(res, userFeedback.addLinesToCheckout);
+      handleResponse(res);
     }
   };
 
