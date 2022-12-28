@@ -5,7 +5,6 @@ import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import config from '@/config/index';
 import Address from '@/components/scopes/account/Address/Address';
 import Card from '@/components/scopes/account/Card/Card';
 import OrderCard from '@/components/scopes/account/OrderCard/OrderCard';
@@ -43,16 +42,10 @@ function OrderDetail() {
   const { name, shippingAddress, lineItems } = order || {};
 
   const title = `Order${name ? `: ${name}` : ''}`;
-  const subtitle =
-    'View detailed information about a specific order, including items, delivery address, and status, on the order details page. Track the progress of your order and update your delivery address if necessary. Thank you for your business and we hope you have a great experience with us.';
+
   return (
-    <Page
-      title={title}
-      backTo={{ name: 'Back to orders', href: config.routes.orders }}
-      bannerTitle={title}
-      bannerDescription={subtitle}
-    >
-      <AccountLayout loading={isLoading}>
+    <Page title={title}>
+      <AccountLayout loading={isLoading} title={title}>
         <div>
           <div className={styles.top}>
             <Card title="Order details">

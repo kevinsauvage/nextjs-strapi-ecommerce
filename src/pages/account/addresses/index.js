@@ -73,12 +73,11 @@ function Addresses() {
   }, [fetchAddresses]);
 
   return (
-    <Page
-      title="Addresses"
-      bannerTitle="Find bellow your registered address"
-      bannerDescription="Welcome to your customer address list! Here you will find a complete record of all the addresses you have on file with us. These addresses are essential for accurate delivery of your orders and for efficient logistics and inventory management. If you need to update or delete any of your addresses, please let us know. We value your satisfaction and appreciate your help in maintaining a reliable customer address list."
-    >
-      <AccountLayout loading={isLoading}>
+    <Page title="Addresses">
+      <AccountLayout
+        loading={isLoading}
+        title="Find bellow your registered address"
+      >
         <div className={styles.addresses}>
           {Array.isArray(addresses) && addresses.length > 0 ? (
             <div className={styles.list}>

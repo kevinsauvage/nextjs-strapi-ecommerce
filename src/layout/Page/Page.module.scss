@@ -30,15 +30,3 @@
   width: fit-content;
   margin-bottom: var(--space-1);
 }
-.logOut {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-0);
-  font-size: var(--font-size-md);
-  border: none;
-  background: transparent;
-}

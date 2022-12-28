@@ -1,8 +1,21 @@
 .AccountLayout {
+  position: relative;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.main {
   display: flex;
   gap: var(--space-2);
   width: 100%;
-  position: relative;
+}
+
+.banner {
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-1);
 }
 
 .loading {
@@ -11,6 +24,18 @@
   align-items: center;
   height: 100%;
   width: 100%;
+}
+
+.logOut {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-0);
+  font-size: var(--font-size-md);
+  border: 2px solid rgb(var(--color-dark-0));
+  border-radius: 3px;
+  padding: 3px;
+  background: transparent;
 }
 
 .nav {

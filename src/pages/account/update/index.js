@@ -3,7 +3,6 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import config from '@/config/index';
 import Form from '@/components/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import Input from '@/components/forms/Input/Input';
@@ -52,16 +51,10 @@ function OrderDetail() {
   };
 
   return (
-    <Page
-      title="Update account Information"
-      bannerTitle="Update your information"
-      bannerDescription="Welcome to the personal information update page! Here you can easily update your name, email, and password. Simply fill out the form and click 'Save Changes' to update your account. We appreciate you keeping your information current to help us provide a secure and personalized shopping experience. If you have any questions, please don't hesitate to contact us. Thank you for choosing us!"
-      backTo={{ name: 'Back to Account', href: config.routes.account }}
-    >
-      <AccountLayout loading={isLoading || !id}>
+    <Page title="Update account Information">
+      <AccountLayout loading={isLoading || !id} title="Update your information">
         <Form
           onSubmit={handleSubmit}
-          title="Update your information"
           initialValues={{
             acceptsMarketing: true,
             email,

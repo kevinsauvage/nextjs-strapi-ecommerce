@@ -41,18 +41,10 @@ function Addresses() {
   };
 
   return (
-    <Page
-      title="Create new address"
-      bannerTitle="Create the new address bellow"
-      bannerDescription="To create a new address in our system, please fill in the following fields. These details will be used to accurately deliver your orders and keep track of your delivery locations. Thank you for your help in maintaining a complete and up-to-date customer address list!"
-    >
-      <AccountLayout>
+    <Page title="Create new address">
+      <AccountLayout title="Create the new address bellow">
         <div className={styles.addresses}>
-          <AddressForm
-            buttonText="Create Address"
-            onSubmit={handleSubmit}
-            title="Add New Address"
-          />
+          <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
         </div>
       </AccountLayout>
     </Page>

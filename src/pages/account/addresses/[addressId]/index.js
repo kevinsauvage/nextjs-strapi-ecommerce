@@ -68,16 +68,12 @@ function AddressUpdate() {
   };
 
   return (
-    <Page
-      title="Update Address"
-      backTo={{ name: 'Back to addresses', href: config.routes.addresses }}
-    >
-      <AccountLayout loading={isLoading}>
+    <Page title="Update Address">
+      <AccountLayout loading={isLoading} title="Update Address">
         <div className={styles.form}>
           {address && (
             <AddressForm
               buttonText="Update Address"
-              title="Update Address"
               initialValues={address}
               onSubmit={handleUpdateAddress}
             />

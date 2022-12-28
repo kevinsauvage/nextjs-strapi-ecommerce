@@ -50,7 +50,7 @@ export default function Form({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
-      <h1 className={styles.title}>{title}</h1>
+      {title && <h1 className={styles.title}>{title}</h1>}
       <div className={styles.border}>
         <div className={styles.children}>{iterateOverChildren(children)}</div>
       </div>

@@ -17,14 +17,11 @@ function Profile() {
     if (user?.id) setIsLoading(false);
   }, [user]);
 
-  const subtitle =
-    "Welcome to your customer account! Here you can view your order history, manage your addresses, and update your account information. Simply use the navigation menu to access these features and make your shopping experience more convenient. If you have any questions or need assistance, please don't hesitate to contact us. Thank you for choosing us!";
-
   const title = `Welcome ${user?.firstName || ''} ${user?.lastName || ''}`;
 
   return (
-    <Page title="Account" bannerTitle={title} bannerDescription={subtitle}>
-      <AccountLayout loading={isLoading}>
+    <Page title="Account">
+      <AccountLayout title={title} loading={isLoading}>
         <main className={styles.main}>
           <div className={styles.row}>
             <Card title="Account Information">
