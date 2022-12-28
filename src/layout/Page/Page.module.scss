@@ -3,30 +3,3 @@
   height: 100%;
   padding-bottom: var(--space-4);
 }
-
-.banner {
-  position: relative;
-  background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-light-0));
-  padding: var(--space-2) var(--space-4) var(--space-3) var(--space-4);
-  margin-bottom: var(--space-2);
-}
-.title {
-  font-size: 30px;
-  color: rgb(var(--color-light-4));
-  margin-bottom: var(--space-1);
-}
-.subtitle {
-  max-width: 700px;
-}
-
-.backTo {
-  border: 1px solid rgb(var(--color-light-0));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 4px;
-  width: fit-content;
-  margin-bottom: var(--space-1);
-}

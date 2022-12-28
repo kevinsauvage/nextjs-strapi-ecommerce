@@ -38,11 +38,7 @@ function CollectionPage({ collection, pageInfo: initialPageInfo, filters }) {
   const handleSetLayout = (newLayout) => setLayout(newLayout);
 
   return (
-    <Page
-      title={`${collection?.title}`}
-      bannerTitle={collection?.title}
-      bannerDescription={collection?.description}
-    >
+    <Page title={`${collection?.title}`}>
       <div className={style.CollectionSlugPage}>
         <aside>
           <Filters />

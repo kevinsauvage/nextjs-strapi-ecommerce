@@ -5,14 +5,7 @@ import PageLoader from '../Loader/PageLoader/PageLoader';
 import Container from '../Container/Container';
 import styles from './Page.module.scss';
 
-export default function Page({
-  children,
-  title,
-  description,
-  loading,
-  bannerTitle,
-  bannerDescription,
-}) {
+export default function Page({ children, title, description, loading }) {
   const siteTitle = `${config.name} | ${title}`;
 
   return (
@@ -24,13 +17,6 @@ export default function Page({
       <Container>
         {loading && <PageLoader />}
         <Breadcrumbs />
-
-        {bannerDescription && bannerTitle && (
-          <div className={styles.banner}>
-            <h1 className={styles.title}>{bannerTitle}</h1>
-            <p className={styles.subtitle}>{bannerDescription}</p>
-          </div>
-        )}
         <div className={styles.children}>{children}</div>
       </Container>
     </div>
