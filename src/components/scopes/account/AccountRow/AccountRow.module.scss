@@ -7,6 +7,11 @@
 }
 
 .title {
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: var(--font-size-sm);
+  font-family: var(--font-heading);
+}
+
+.content {
+  font-size: var(--font-size-sm);
 }

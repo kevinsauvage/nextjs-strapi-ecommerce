@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import config from '@/config/index';
 import limitStrLength from '@/utils/limitStringLength';
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
@@ -43,11 +44,11 @@ function Address({
             className={style.button}
             href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
           >
-            Edit
+            <FaRegEdit />
           </Link>
 
           <button type="button" onClick={handleDelete} className={style.button}>
-            Delete
+            <FaRegTrashAlt />
           </button>
         </div>
       )}

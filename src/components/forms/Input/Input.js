@@ -48,7 +48,7 @@ export default function Input({
           onChange={onChange}
           required={required}
           autoComplete={autoComplete || ''}
-          value={value}
+          value={value || ''}
           {...rest}
         />
       </label>

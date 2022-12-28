@@ -3,10 +3,6 @@ import config from '@/config/index';
 import style from './OrderCard.module.scss';
 import AccountRow from '../AccountRow/AccountRow';
 
-const ORDER_CARD = style.orderCard;
-const ORDER_CARD_DETAIL = style.orderCardDetail;
-const ORDER_CARD_BUTTON = style.orderCardButton;
-
 function OrderCard({ order, displayButton }) {
   const { push } = useRouter();
   const {
@@ -22,8 +18,15 @@ function OrderCard({ order, displayButton }) {
   } = order || {};
 
   const getDate = (timestamp) => {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+
     const date = new Date(timestamp);
-    return date.toUTCString();
+    return date.toLocaleDateString('en-US', options);
   };
 
   const handleClickOrderDetails = () => {
@@ -31,8 +34,8 @@ function OrderCard({ order, displayButton }) {
   };
 
   return (
-    <div className={ORDER_CARD}>
-      <div className={ORDER_CARD_DETAIL}>
+    <div className={style.orderCard}>
+      <div className={style.orderCardDetail}>
         <AccountRow title="Financial Status" content={financialStatus} />
         {!displayButton && (
           <AccountRow title="Fulfillment Status" content={fulfillmentStatus} />
@@ -58,7 +61,7 @@ function OrderCard({ order, displayButton }) {
       {displayButton && (
         <button
           type="button"
-          className={ORDER_CARD_BUTTON}
+          className={style.orderCardButton}
           onClick={handleClickOrderDetails}
         >
           See order details

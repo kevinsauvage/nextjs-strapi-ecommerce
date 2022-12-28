@@ -16,34 +16,11 @@ function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const { user, handleError, dispatch } = useUserContext();
   const { toggleLoading } = useGlobalContext();
+  const { email, firstName, lastName, password, phone, id } = user || {};
 
   useEffect(() => {
-    if (user?.id) setIsLoading(false);
-  }, [user]);
-
-  const { email, firstName, lastName, password, phone } = user || {};
-
-  const [formValues, setFormValues] = useState({
-    acceptsMarketing: true,
-    email: email || '',
-    firstName: firstName || '',
-    lastName: lastName || '',
-    password: password || '',
-    phone: phone || '',
-  });
-
-  useEffect(() => {
-    if (user) {
-      setFormValues({
-        acceptsMarketing: true,
-        email: email || '',
-        firstName: firstName || '',
-        lastName: lastName || '',
-        password: password || '',
-        phone: phone || '',
-      });
-    }
-  }, [email, firstName, lastName, password, phone, user]);
+    if (id) setIsLoading(false);
+  }, [id]);
 
   const handleSubmit = async (formData) => {
     if (
@@ -81,64 +58,69 @@ function OrderDetail() {
       bannerDescription="Welcome to the personal information update page! Here you can easily update your name, email, and password. Simply fill out the form and click 'Save Changes' to update your account. We appreciate you keeping your information current to help us provide a secure and personalized shopping experience. If you have any questions, please don't hesitate to contact us. Thank you for choosing us!"
       backTo={{ name: 'Back to Account', href: config.routes.account }}
     >
-      <AccountLayout loading={isLoading || !user}>
+      <AccountLayout loading={isLoading || !id}>
         <Form
           onSubmit={handleSubmit}
           title="Update your information"
-          initialValues={formValues}
+          initialValues={{
+            acceptsMarketing: true,
+            email,
+            firstName,
+            lastName,
+            password,
+            phone,
+          }}
         >
-          <div className={styles.container}>
-            <div className={styles.wrapper}>
-              <Input
-                input="true"
-                id="firstName"
-                type="text"
-                label="First Name"
-                name="firstName"
-              />
-              <Input
-                input="true"
-                id="lastName"
-                type="text"
-                name="lastName"
-                label="Last Name"
-              />
-            </div>
-            <div className={styles.wrapper}>
-              <Input
-                input="true"
-                id="email"
-                type="email"
-                label="Email Address"
-                name="email"
-              />
-              <Input
-                input="true"
-                id="password"
-                type="password"
-                name="password"
-                label="Password"
-              />
-            </div>
+          <div className={styles.wrapper}>
             <Input
               input="true"
-              id="phone"
+              id="firstName"
               type="text"
-              name="phone"
-              label="Phone"
+              label="First Name"
+              name="firstName"
             />
-            <label htmlFor="acceptsMarketing" className={styles.checkbox}>
-              <input
-                checkbox="true"
-                id="acceptsMarketing"
-                className={styles.checkboxInput}
-                type="checkbox"
-                name="acceptsMarketing"
-                label="Accepts marketing"
-              />
-              <span>Check this case to receive our last update</span>
-            </label>
+            <Input
+              input="true"
+              id="lastName"
+              type="text"
+              name="lastName"
+              label="Last Name"
+            />
           </div>
+          <div className={styles.wrapper}>
+            <Input
+              input="true"
+              id="email"
+              type="email"
+              label="Email Address"
+              name="email"
+            />
+            <Input
+              input="true"
+              id="password"
+              type="password"
+              name="password"
+              label="Password"
+            />
+          </div>
+          <Input
+            input="true"
+            id="phone"
+            type="text"
+            name="phone"
+            label="Phone"
+          />
+          <label htmlFor="acceptsMarketing" className={styles.checkbox}>
+            <input
+              checkbox="true"
+              id="acceptsMarketing"
+              className={styles.checkboxInput}
+              type="checkbox"
+              name="acceptsMarketing"
+              label="Accepts marketing"
+            />
+            <span>Check this case to receive our last update</span>
+          </label>
           <Buttons text="UPDATE INFO" />
         </Form>
       </AccountLayout>

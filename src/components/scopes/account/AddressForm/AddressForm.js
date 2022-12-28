@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Form from '@/components/forms/Form/Form';
 import Input from '@/components/forms/Input/Input';
 import Buttons from '@/components/forms/Buttons/Buttons';
@@ -6,21 +5,36 @@ import Section from '@/components/forms/Section/Section';
 import styles from './AddressForm.module.scss';
 
 function AddressForm({ initialValues, onSubmit, buttonText, title }) {
-  const [formValues] = useState({
-    address1: initialValues?.address1 || '',
-    address2: initialValues?.address2 || '',
-    city: initialValues?.city || '',
-    company: initialValues?.company || '',
-    country: initialValues?.country || '',
-    firstName: initialValues?.firstName || '',
-    lastName: initialValues?.lastName || '',
-    phone: initialValues?.phone || '',
-    province: initialValues?.province || '',
-    zip: initialValues?.zip || '',
-  });
+  const {
+    address1,
+    address2,
+    city,
+    company,
+    lastName,
+    firstName,
+    zip,
+    phone,
+    country,
+    province,
+  } = initialValues || {};
 
   return (
-    <Form onSubmit={onSubmit} initialValues={formValues} title={title}>
+    <Form
+      onSubmit={onSubmit}
+      initialValues={{
+        address1,
+        address2,
+        city,
+        company,
+        country,
+        firstName,
+        lastName,
+        phone,
+        province,
+        zip,
+      }}
+      title={title}
+    >
       <div>
         <Section>
           <h4 className={styles.title}>Contact Information</h4>

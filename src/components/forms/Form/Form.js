@@ -18,7 +18,7 @@ export default function Form({
   const iterateOverChildren = (childrenArray) =>
     Children.map(childrenArray, (child) => {
       if (!isValidElement(child)) return child;
-      const value = formData[child.props.name];
+      const value = formData?.[child.props.name];
 
       let objectProps = {
         ...child.props,
@@ -38,7 +38,7 @@ export default function Form({
         objectProps = {
           ...child.props,
           onChange: handleInputChange,
-          checked: formData[child.props.name] || null,
+          checked: value || null,
           children: iterateOverChildren(child.props.children),
         };
       }
@@ -52,9 +52,7 @@ export default function Form({
     <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
       <h1 className={styles.title}>{title}</h1>
       <div className={styles.border}>
-        <div className={styles.children}>
-          {formData ? iterateOverChildren(children) : null}
-        </div>
+        <div className={styles.children}>{iterateOverChildren(children)}</div>
       </div>
     </form>
   );

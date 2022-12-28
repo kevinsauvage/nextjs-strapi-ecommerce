@@ -1,5 +1,4 @@
 .AccountLayout {
-  margin-bottom: var(--space-4);
   display: flex;
   gap: var(--space-2);
   width: 100%;
@@ -10,7 +9,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px;
+  height: 100%;
+  width: 100%;
 }
 
 .nav {
