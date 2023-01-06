@@ -16,7 +16,7 @@ export default function CheckoutBtn({ extraClass, amount, currencyCode, url }) {
 
   return (
     <Button
-      secondary
+      primary
       onClick={() => redirectToCheckout()}
       text={text}
       extraClass={extraClass}

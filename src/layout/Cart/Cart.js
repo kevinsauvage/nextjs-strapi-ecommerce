@@ -13,28 +13,26 @@ function CartFooter() {
   const { checkout } = useCheckoutContext();
 
   return (
-    checkout?.lineItems.length && (
-      <footer className={styles.footer}>
-        <div className={styles.subtotal}>
-          <p className={styles.subtotalTitle}>Subtotal</p>
-          <p
-            className={styles.amount}
-          >{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
-        </div>
-        <Button
-          text="View cart"
-          extraClass={styles.btn}
-          tertiary
-          onClick={() => router.push('/cart')}
-        />
-        <CheckoutBtn
-          extraClass={styles.btn}
-          amount={checkout?.totalPrice?.amount}
-          currencyCode={checkout?.currencyCode}
-          url={checkout?.webUrl}
-        />
-      </footer>
-    )
+    <footer className={styles.footer}>
+      <div className={styles.subtotal}>
+        <p className={styles.subtotalTitle}>Subtotal</p>
+        <p
+          className={styles.amount}
+        >{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
+      </div>
+      <Button
+        text="View cart"
+        extraClass={styles.btn}
+        contrast
+        onClick={() => router.push('/cart')}
+      />
+      <CheckoutBtn
+        extraClass={styles.btn}
+        amount={checkout?.totalPrice?.amount}
+        currencyCode={checkout?.currencyCode}
+        url={checkout?.webUrl}
+      />
+    </footer>
   );
 }
 
@@ -70,8 +68,9 @@ export default function Cart() {
         )
       }
       footer={
-        Array.isArray(checkout?.lineItems) &&
-        checkout?.lineItems.length && <CartFooter />
+        Array.isArray(checkout?.lineItems) && checkout?.lineItems.length ? (
+          <CartFooter />
+        ) : null
       }
     />
   );

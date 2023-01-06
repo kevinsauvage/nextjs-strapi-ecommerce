@@ -1,21 +1,12 @@
-import Loader from '@/components/Loader/Loader';
-import ActiveLink from '@/components/ActiveLink/ActiveLink';
-import config from '@/config/index';
 import { MdOutlineLogout } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
+import Loader from '@/components/Loader/Loader';
+import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './AccountLayout.module.scss';
-
-const navItems = [
-  { url: config.routes.account, title: 'Dashboard' },
-  { url: config.routes.updateAccount, title: 'Account details' },
-  { url: config.routes.addresses, title: 'Addresses' },
-  { url: config.routes.createAddress, title: 'Create address' },
-  { url: config.routes.orders, title: 'Orders' },
-  { url: config.routes.updateAccount, title: 'Wishlist' },
-];
 
 function AccountLayout({ children, loading, title }) {
   const { push } = useRouter();
@@ -44,7 +35,7 @@ function AccountLayout({ children, loading, title }) {
       <main className={styles.main}>
         <nav className={styles.nav}>
           <ul className={styles.list}>
-            {navItems.map((item) => (
+            {config?.accountNav?.map((item) => (
               <li className={styles.listItem} key={item.title}>
                 <ActiveLink url={item.url} scroll={false}>
                   {item.title}

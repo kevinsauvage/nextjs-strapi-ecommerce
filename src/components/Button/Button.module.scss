@@ -15,26 +15,26 @@
     background-color: t($primary);
     color: t($light);
   }
-
-  border: none;
 }
 
 .secondary {
-  background-color: var(--complementary);
-  color: var(--complementary);
-  border: 2px solid var(--complementary);
+  @include themed() {
+    background-color: t($complementary);
+    color: t($light);
+  }
 }
 
 .contrast {
   @include themed() {
     background-color: t($dark);
     color: t($light);
-    border: 2px solid t($dark);
   }
 }
 
 .outlined {
-  background-color: var(--color-light-0);
-  color: var(--color-dark-0);
-  border: 2px solid var(--color-dark-0);
+  @include themed() {
+    border: 2px solid t($dark);
+    background-color: t($light);
+    color: t($dark);
+  }
 }
