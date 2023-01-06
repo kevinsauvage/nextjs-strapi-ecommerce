@@ -1,6 +1,3 @@
-.quantityContainer {
-}
-
 .label {
   padding-bottom: var(--space-0);
   display: block;
@@ -20,6 +17,7 @@
   width: 46px;
   border: none;
   background-color: transparent;
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;

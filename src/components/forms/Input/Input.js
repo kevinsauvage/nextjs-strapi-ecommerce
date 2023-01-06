@@ -16,7 +16,10 @@ export default function Input({
   if (textarea) {
     return (
       <label htmlFor={id} className={styles.label}>
-        <b className={styles.title}>{label}</b>
+        <b className={styles.title}>
+          {label}
+          {required ? <span className={styles.required}>*</span> : ''}
+        </b>
 
         <textarea
           className={`${styles.input} ${styles.textarea}`}

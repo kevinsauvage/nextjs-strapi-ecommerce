@@ -44,9 +44,7 @@ export default function QuantityUpdater({
 
   return (
     <div className={`${styles.quantityContainer} ${extraStyles}`}>
-      <label htmlFor="quantity" className={styles.label}>
-        SELECT QUANTITY
-      </label>
+      <b className={styles.label}>SELECT QUANTITY</b>
       <div className={styles.inputBox}>
         <button
           type="button"

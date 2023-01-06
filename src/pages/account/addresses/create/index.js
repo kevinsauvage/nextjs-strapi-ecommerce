@@ -42,7 +42,7 @@ function Addresses() {
 
   return (
     <Page title="Create new address">
-      <AccountLayout title="Create the new address bellow">
+      <AccountLayout title="Create address">
         <div className={styles.addresses}>
           <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
         </div>

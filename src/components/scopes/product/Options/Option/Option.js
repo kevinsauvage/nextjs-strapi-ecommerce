@@ -10,9 +10,7 @@ export default function Option({
     Array.isArray(option.values) &&
     option.values.length > 1 && (
       <div className={styles.option}>
-        <label className={styles.name}>
-          SELECT {option.name?.toUpperCase()}:
-        </label>
+        <b className={styles.name}>SELECT {option.name?.toUpperCase()}</b>
         <ul className={styles.list}>
           {option.values.map((value) => (
             <li key={value}>

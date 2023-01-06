@@ -35,9 +35,7 @@ export default function ProductDescription({
           quantityAvailable={quantityAvailable}
         />
         <div>
-          <p className={styles.totalPriceTitle}>
-            <strong>TOTAL PRICE</strong>
-          </p>
+          <b className={styles.totalPriceTitle}>TOTAL PRICE</b>
           <p className={styles.totalPrice}>
             <strong>
               {totalPrice} {priceV2?.currencyCode}
@@ -49,7 +47,7 @@ export default function ProductDescription({
         extraClass={styles.btn}
         type="button"
         text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
-        tertiary={availableForSale}
+        contrast={availableForSale}
         primary={!availableForSale}
         disabled={!availableForSale}
         onClick={handleAddToCart}

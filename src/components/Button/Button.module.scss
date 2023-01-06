@@ -1,5 +1,4 @@
 .button {
-  text-transform: capitalize;
   border: none;
   height: 50px;
   padding: 0 60px;
@@ -28,9 +27,9 @@
 
 .contrast {
   @include themed() {
-    background-color: t($color-dark);
-    color: t($color-light);
-    border: 2px solid t($color-dark);
+    background-color: t($dark);
+    color: t($light);
+    border: 2px solid t($dark);
   }
 }
 

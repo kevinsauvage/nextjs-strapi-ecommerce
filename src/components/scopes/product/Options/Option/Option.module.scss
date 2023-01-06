@@ -8,13 +8,16 @@
 
 .button {
   padding: 5px;
-  border: 0.1px solid rgb(var(--color-dark-2));
   min-height: 46px;
   min-width: 46px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgb(var(--color-dark-2));
+
+  @include themed {
+    border: 0.1px solid t($dark);
+    color: t($dark);
+  }
 }
 
 .name {
@@ -29,8 +32,10 @@
 }
 
 .selectedOption {
-  border: 2px solid rgb(var(--color-dark-0));
-  color: rgb(var(--color-dark-0));
+  @include themed {
+    border: 2px solid t($dark);
+    color: t($dark);
+  }
 }
 
 .outOfStock {
@@ -47,24 +52,20 @@
     left: 0;
     z-index: -1;
     /* Rising diagonal line */
-    background: linear-gradient(
-      to right bottom,
-      white,
-      white 48%,
-      black 49%,
-      black 51%,
-      white 52%,
-      white
-    ) !important;
+    background: linear-gradient(to right bottom,
+        white,
+        white 48%,
+        black 49%,
+        black 51%,
+        white 52%,
+        white) !important;
     /* Falling diagonal line */
-    background: linear-gradient(
-      to right top,
-      white,
-      white 48%,
-      black 49%,
-      black 51%,
-      white 52%,
-      white
-    ) !important;
+    background: linear-gradient(to right top,
+        white,
+        white 48%,
+        black 49%,
+        black 51%,
+        white 52%,
+        white) !important;
   }
 }
