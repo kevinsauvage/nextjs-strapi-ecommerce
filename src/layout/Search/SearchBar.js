@@ -1,14 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/legacy/image';
 import { MdClose } from 'react-icons/md';
 import Container from '@/layout/Container/Container';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import nextApiCall from '@/utils/apiNext';
-import limitStrLength from '@/utils/limitStringLength';
-import config from '@/config/index';
 import useDebounce from '@/hooks/useDebounce';
 import styles from './SearchBar.module.scss';
+import SearchResults from '../SearchResults/SearchResults';
 
 export default function SearchBar() {
   const { searchOpen, resetToggle } = useGlobalContext();
@@ -35,22 +32,10 @@ export default function SearchBar() {
 
   return (
     searchOpen && (
-      <div className={`${styles.container}`}>
-        <div className={`${styles.form}`}>
-          <Container>
-            <header className={styles.header}>
-              <input
-                className={styles.input}
-                type="text"
-                placeholder="Search"
-                value={query}
-                onChange={handleChange}
-                aria-label="Search"
-                autoComplete="off"
-                autoCorrect="off"
-                autoCapitalize="off"
-                spellCheck="false"
-              />
+      <div className={styles.container}>
+        <Container>
+          <div className={styles.searchBar}>
+            <div className={styles.form}>
               <button
                 tabIndex={0}
                 type="button"
@@ -59,45 +44,25 @@ export default function SearchBar() {
               >
                 <MdClose />
               </button>
-            </header>
-          </Container>
-        </div>
-        <div>
-          <Container>
-            <div className={styles.searchResult}>
-              {search.map((item) => (
-                <div key={item.id} className={styles.searchProductCard}>
-                  <div className={styles.image}>
-                    <Image
-                      src={item?.images?.[0]?.sm}
-                      alt={item?.images?.[0]?.alt || item?.title}
-                      layout="fill"
-                      blurDataURL={item?.images?.[0]?.blurDataURL}
-                      placeholder="blur"
-                      quality={70}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className={styles.details}>
-                    <Link
-                      href={`${config.routes.collection}/${item?.collections?.[0].handle}/${item?.handle}`}
-                    >
-                      <p className={styles.name}>{item?.title}</p>
-                    </Link>
-
-                    <div className={styles.description}>
-                      {limitStrLength(item?.description, 40)}
-                    </div>
-                    <div className={styles.price}>
-                      {item?.priceRange?.maxVariantPrice?.currencyCode}
-                      {item?.priceRange?.maxVariantPrice?.amount}
-                    </div>
-                  </div>
-                </div>
-              ))}
+              <p className={styles.title}>WHAT ARE YOU LOOKING FOR?</p>
+              <label className={styles.header}>
+                <input
+                  className={styles.input}
+                  type="text"
+                  placeholder="Search"
+                  value={query}
+                  onChange={handleChange}
+                  aria-label="Search"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                />
+              </label>
             </div>
-          </Container>
-        </div>
+            <SearchResults results={search} />
+          </div>
+        </Container>
       </div>
     )
   );

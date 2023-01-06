@@ -1,0 +1,37 @@
+// Font weight
+$fontWeightLight: 300;
+$fontWeightNormal: 400;
+$fontWeightMedium: 500;
+$fontWeightSemiBold: 600;
+$fontWeightBold: 700;
+$fontWeightExtraBold: 800;
+
+// Font sizes
+$font-size: 14px;
+$ratio: 1.2;
+
+/* Calculate values */
+$fontSize--100: $font-size / $ratio;
+$fontSize-100: $font-size;
+$fontSize-200: $fontSize-100 * $ratio;
+$fontSize-300: $fontSize-200 * $ratio;
+$fontSize-400: $fontSize-300 * $ratio;
+$fontSize-500: $fontSize-400 * $ratio;
+$fontSize-600: $fontSize-500 * $ratio;
+
+
+// Colors
+$color-primary: #3094ff;
+$color-complementary: #f44e03;
+$color-light: #f5f8f9;
+$color-dark: #07111d;
+
+$dark: "dark";
+$light: 'light';
+$primary: 'primary';
+$complementary: 'complementary';
+$link: 'link';
+
+// Fonts
+$sans-serif: 'Poppins', sans-serif;
+$serif: Merriweather, Georgia, 'Times New Roman', serif;

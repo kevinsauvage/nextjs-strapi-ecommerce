@@ -1,13 +1,13 @@
+import { useCallback, useEffect, useState } from 'react';
 import Page from '@/layout/Page/Page';
 import Address from '@/components/scopes/account/Address/Address';
-import Card from '@/components/scopes/account/Card/Card';
-import React, { useCallback, useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import Section from '@/components/scopes/account/section/Section';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -74,39 +74,29 @@ function Addresses() {
 
   return (
     <Page title="Addresses">
-      <AccountLayout
-        loading={isLoading}
-        title="Find bellow your registered address"
-      >
-        <div className={styles.addresses}>
+      <AccountLayout loading={isLoading} title="Addresses">
+        <Section title="Default Address">
+          <Address address={user?.defaultAddress} isDefaultAddress />
+        </Section>
+        <Section title="Other Addresses">
           {Array.isArray(addresses) && addresses.length > 0 ? (
             <div className={styles.list}>
-              {addresses.map((item) => (
-                <Card key={item.id}>
-                  {!isDefault(item) && (
-                    <button
-                      type="button"
-                      className={styles.buttonDefault}
-                      onClick={() =>
-                        !isDefault(item) && handleSetAsDefault(item.id)
-                      }
-                    >
-                      Set as default
-                    </button>
-                  )}
+              {addresses
+                .filter((address) => !isDefault(address))
+                .map((item, i) => (
                   <Address
-                    isDefault={isDefault(item)}
-                    handleChange={handleSetAsDefault}
+                    key={item.id}
+                    title={`Address ${i + 1}`}
+                    handleSetAsDefault={handleSetAsDefault}
                     address={item}
                     handleDelete={() => handleDelete(item.id)}
                   />
-                </Card>
-              ))}
+                ))}
             </div>
           ) : (
             <p className={styles.noAddresses}>There is no addresses to show</p>
           )}
-        </div>
+        </Section>
       </AccountLayout>
     </Page>
   );

@@ -3,8 +3,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: gainsboro;
   padding: 30px 0;
+
+  @include themed() {
+    background-color: rgba(t($dark), 0.1);
+  }
 }
 
 .item {
@@ -14,15 +17,27 @@
   flex-direction: column;
   text-align: center;
   gap: 8px;
-  color: rgb(110, 110, 110);
 
-  svg {
-    font-size: 50px;
-    color: rgb(var(--color-primary-0));
+  @include themed() {
+    color: t($light);
+
+    svg {
+      color: t($dark);
+      font-size: 40px;
+    }
   }
 }
 
 .text {
-  color: rgb(var(--color-primary-0));
   margin-bottom: 8px;
+
+  @include themed() {
+    color: t($dark);
+  }
+}
+
+.subtitle {
+  @include themed() {
+    color: t($complementary);
+  }
 }

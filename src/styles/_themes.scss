@@ -1,0 +1,14 @@
+$themes: (
+  default: (dark: $color-dark,
+    light: $color-light,
+    primary: $color-primary,
+    complementary: $color-complementary,
+    link: $color-primary,
+  ),
+  dark: (dark: $color-dark,
+    light: $color-light,
+    primary: $color-primary,
+    complementary: $color-complementary,
+    link: $color-primary,
+  ),
+);

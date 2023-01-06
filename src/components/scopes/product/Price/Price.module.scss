@@ -5,20 +5,15 @@
 }
 
 .compareAtPriceV2 {
-  font-size: var(--font-size-base);
-  font-weight: 500;
   color: rgb(var(--color-red-0));
   margin-left: 8px;
   text-decoration: line-through;
   transform: scale(0.9);
   transform-origin: center;
-  font-family: var(--font-heading);
 }
 
 .currentPrice {
   strong {
-    font-size: var(--font-size-md);
     color: rgb(var(--color-dark-0));
-    font-weight: 500;
   }
 }

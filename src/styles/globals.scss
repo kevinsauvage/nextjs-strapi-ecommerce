@@ -1,18 +1,15 @@
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
-
 html,
 body {
   position: relative;
-  padding: 0;
-  margin: 0;
-  background-color: rgb(var(--color-light-4));
-  font-family: var(--font-primary);
-  color: rgb(var(--color-dark-0));
+  font-family: $sans-serif;
+  -webkit-text-size-adjust: 100%; //fix for iOS
+
+  @include themed() {
+    background-color: t("light");
+  }
 }
+
+
 
 a,
 button {
@@ -34,28 +31,34 @@ button {
   }
 }
 
-li {
-  list-style: none;
-}
-
 *:focus:not(:focus-visible) {
   outline: none;
 }
 
 *:focus-visible {
-  outline: 0.125rem solid rgb(var(--color-primary-0));
   outline-offset: 0.125rem;
+
+  @include themed() {
+    outline: 0.125rem solid t($complementary);
+  }
 }
 
 td,
 th {
   padding: 6px;
-  border: 1px solid #d4d4d4;
   text-align: center;
+
+  @include themed() {
+    border: 1px solid theme-var t($dark);
+  }
 }
+
 table {
   border-collapse: collapse;
-  background-color: white;
+
+  @include themed() {
+    background-color: t($dark);
+  }
 }
 
 .Toastify__toast,

@@ -16,14 +16,9 @@ function Navbar({ headerMenu, handleOver }) {
               key={menuItem.id}
               onMouseOver={() => handleOver(menuItem.items)}
               onFocus={() => handleOver(menuItem.items)}
+              className={styles.item}
             >
-              <ActiveLink
-                url={menuItem?.url}
-                activeClass={styles.active}
-                className={styles.item}
-              >
-                <span>{menuItem?.title}</span>
-              </ActiveLink>
+              <ActiveLink url={menuItem?.url}>{menuItem?.title}</ActiveLink>
             </li>
           ))}
         <li>

@@ -7,38 +7,35 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--elevation-dark-2);
   transition: all 0.2s ease-in;
-  font-weight: 600;
   text-transform: uppercase;
-  width: 100%;
-
-  &:hover {
-    box-shadow: var(--elevation-dark-4);
-  }
 }
 
 .primary {
-  background-color: rgb(var(--color-primary-1));
-  color: rgb(var(--color-primary-4));
+  @include themed() {
+    background-color: t($primary);
+    color: t($light);
+  }
+
   border: none;
 }
 
 .secondary {
-  background-color: rgb(var(--color-light-0));
-  color: rgb(var(--color-primary-0));
-  border: 2px solid rgb(var(--color-primary-0));
+  background-color: var(--complementary);
+  color: var(--complementary);
+  border: 2px solid var(--complementary);
 }
 
-.tertiary {
-  background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-light-4));
-  border: 2px solid rgb(var(--color-dark-0));
+.contrast {
+  @include themed() {
+    background-color: t($color-dark);
+    color: t($color-light);
+    border: 2px solid t($color-dark);
+  }
 }
 
 .outlined {
-  background-color: rgb(var(--color-light-0));
-  color: rgb(var(--color-dark-0));
-  border: 2px solid rgb(var(--color-dark-0));
-  box-shadow: var(--elevation-light-inset);
+  background-color: var(--color-light-0);
+  color: var(--color-dark-0);
+  border: 2px solid var(--color-dark-0);
 }

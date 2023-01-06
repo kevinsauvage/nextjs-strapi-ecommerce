@@ -1,0 +1,190 @@
+// @include text-shorten(3);
+@mixin text-shorten($numLines: 1) {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+
+  @supports (-webkit-line-clamp: $numLines) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: initial;
+    display: -webkit-box;
+    -webkit-line-clamp: $numLines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+$breakpoints: (
+  // 400px
+  'xs': 25em,
+  // 544px
+  'sm': 34em,
+  // 768px
+  'md': 48em,
+  // 960px
+  'lg': 60em,
+  // 1280px
+  'xl': 80em,
+  // 1440px,
+  'xxl': 90em
+);
+
+/* 
+* @include respond-above(md) {
+*    font-size: 18px;
+*    line-height: 26px;
+*    font-weight: 600;
+*
+}*/
+@mixin respond-above($breakpoint) {
+
+  // If the breakpoint exists in the map.
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Get the breakpoint value.
+    $breakpoint-value: map-get($breakpoints, $breakpoint);
+
+    // Write the media query.
+    @media (min-width: $breakpoint-value) {
+      @content;
+    }
+
+    // If the breakpoint doesn't exist in the map.
+  }
+
+  @else {
+    // Log a warning.
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}
+
+@mixin input-placeholder {
+  &.placeholder {
+    @content;
+  }
+
+  &:-moz-placeholder {
+    @content;
+  }
+
+  &::-moz-placeholder {
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    @content;
+  }
+
+  &::-webkit-input-placeholder {
+    @content;
+  }
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-center-column {
+  @include flex-center;
+  flex-direction: column;
+}
+
+@mixin flex-center-vert {
+  display: flex;
+  align-items: center;
+}
+
+@mixin flex-center-horiz {
+  display: flex;
+  justify-content: center;
+}
+
+@mixin fade($type) {
+  @if $type=='hide' {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1s, opacity 1s;
+  }
+
+  @else if $type=='show' {
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 1s, opacity 1s;
+  }
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+// @include fluid-font(320px, 1024px, 22px, 55px);
+@mixin fluid-font($min-width, $max-width, $min-font-size, $max-font-size) {
+  $unit1: unit($min-width);
+  $unit2: unit($max-width);
+  $unit3: unit($min-font-size);
+  $unit4: unit($max-font-size);
+
+  @if $unit1 ==$unit2 and $unit1 ==$unit3 and $unit1 ==$unit4 {
+    & {
+      font-size: $min-font-size;
+      line-height: $min-font-size * 1.618;
+
+      @media screen and (min-width: $min-width) {
+        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+        line-height: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * 1.618 * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+      }
+
+      @media screen and (min-width: $max-width) {
+        font-size: $max-font-size;
+        line-height: $max-font-size * 1.618;
+      }
+    }
+  }
+}
+
+@mixin spread-map($map: ()) {
+
+  @each $key,
+  $value in $map {
+    #{$key}: $value;
+  }
+}
+
+@mixin themed() {
+
+  @each $theme,
+  $map in $themes {
+    :global(.theme--#{$theme}) & {
+      $theme-map: () !global;
+
+      @each $key,
+      $submap in $map {
+        $value: map-get(map-get($themes, $theme), $key);
+        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+      }
+
+      @content;
+      $theme-map: null !global;
+    }
+  }
+}
+
+@function t($key) {
+  @return map-get($theme-map, $key);
+}

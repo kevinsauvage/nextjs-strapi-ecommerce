@@ -1,16 +1,17 @@
 .AccountLayout {
   position: relative;
+  padding: var(--space-5) 0;
 }
 
 .banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: var(--space-2);
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-3);
 }
 
 .title {
+  text-transform: uppercase;
 }
 
 .logOut {
@@ -18,12 +19,16 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-0);
-  font-size: var(--font-size-md);
-  border: 2px solid rgb(var(--color-dark-0));
   border-radius: 3px;
-  padding: 3px;
+  padding: 3px 8px;
   background: transparent;
+
+  @include themed() {
+    color: t($dark);
+    border: 2px solid t($dark);
+  }
 }
+
 .main {
   display: flex;
   gap: var(--space-2);
@@ -39,23 +44,10 @@
   display: block;
   top: 2rem;
 }
+
 .listItem {
   width: 100%;
-}
-.active {
-  border-left: 3px solid rgb(var(--color-primary-0));
-}
-
-.item {
-  border-left: 3px solid transparent;
-  padding: var(--space-1);
-  display: block;
-  background-color: rgb(var(--color-light-1));
-  font-size: var(--font-size-sm);
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  height: 50px;
 }
 
 .children {

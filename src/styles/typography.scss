@@ -1,86 +1,66 @@
-:root {
-  --font-heading: 'Oswald', sans-serif;
-  --font-primary: 'Roboto', sans-serif;
-}
-
-/* Fluid font size variables, for browsers that support clamp */
-@supports (font-size: clamp(1rem, 1vw, 1rem)) {
-  :root {
-    --font-size-sm: clamp(0.83rem, 0.16vw + 0.79rem, 0.99rem);
-    --font-size-base: clamp(1rem, 0.2vw + 0.95rem, 1.19rem);
-    --font-size-md: clamp(1.2rem, 0.24vw + 1.14rem, 1.43rem);
-    --font-size-lg: clamp(1.44rem, 0.28vw + 1.37rem, 1.71rem);
-    --font-size-xl: clamp(1.73rem, 0.34vw + 1.64rem, 2.05rem);
-    --font-size-xxl: clamp(2.07rem, 0.41vw + 1.97rem, 2.46rem);
-    --font-size-xxxl: clamp(2.49rem, 0.49vw + 2.37rem, 2.95rem);
-  }
-}
-/* Fallback variables for browsers that don't support clamp */
-@supports not (font-size: clamp(1rem, 1vw, 1rem)) {
-  :root {
-    --font-size-sm: 0.83rem;
-    --font-size-base: 1rem;
-    --font-size-md: 1.2rem;
-    --font-size-lg: 1.44rem;
-    --font-size-xl: 1.73rem;
-    --font-size-xxl: 2.07rem;
-    --font-size-xxxl: 2.49rem;
-  }
-  @media screen and (min-width: 1920px) {
-    :root {
-      --font-size-sm: 0.99rem;
-      --font-size-base: 1.19rem;
-      --font-size-md: 1.43rem;
-      --font-size-lg: 1.71rem;
-      --font-size-xl: 2.05rem;
-      --font-size-xxl: 2.46rem;
-      --font-size-xxxl: 2.95rem;
-    }
-  }
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  color: rgb(var(--color-dark-1));
-  font-family: var(--font-heading);
   font-style: normal;
-  font-weight: 400;
+  font-weight: $fontWeightSemiBold;
 }
 
 h1 {
-  font-size: var(--font-size-xxxl);
-  line-height: 68px;
-  margin-bottom: var(--space-1);
+  @include fluid-font(320px, 1024px, $fontSize-500, $fontSize-600);
+  font-weight: $fontWeightBold;
+
+  &.big {
+    @include fluid-font(320px,
+      1024px,
+      $fontSize-600 * $ratio,
+      $fontSize-600 * $ratio * $ratio );
+  }
 }
+
 h2 {
-  font-size: var(--font-size-xxl);
-  line-height: 60px;
+  @include fluid-font(320px, 1024px, $fontSize-400, $fontSize-500);
 }
 
 h3 {
-  font-size: var(--font-size-xl);
-  line-height: 56px;
+  @include fluid-font(320px, 1024px, $fontSize-300, $fontSize-400);
 }
 
 h4 {
-  font-size: var(--font-size-lg);
-  line-height: 56px;
+  @include fluid-font(320px, 1024px, $fontSize-200, $fontSize-300);
+}
+
+h5 {
+  @include fluid-font(320px, 1024px, $fontSize-100, $fontSize-200);
+}
+
+h6 {
+  @include fluid-font(320px, 1024px, $fontSize-100, $fontSize-100);
+}
+
+strong {
+  font-weight: $fontWeightBold;
+}
+
+label,
+a,
+button,
+p {
+  font-weight: $fontWeightNormal;
 }
 
 label,
 strong,
-a {
-  font-family: var(--font-heading);
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 21px;
+a,
+button,
+p,
+b {
+  line-height: 24px;
+  @include fluid-font(320px, 1024px, $fontSize--100, $fontSize-100);
 }
 
-p {
-  font-weight: 400;
-  font-size: var(--font-size-base);
+b {
+  font-weight: $fontWeightSemiBold;
 }

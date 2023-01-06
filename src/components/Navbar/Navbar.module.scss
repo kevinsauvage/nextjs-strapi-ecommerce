@@ -5,11 +5,7 @@
 }
 
 .item {
-  font-size: var(--font-size-sm);
-  color: rgb(var(--color-light-4));
-  font-family: var(--font-heading);
   text-transform: uppercase;
-  font-weight: 600;
   padding: var(--space-0);
   margin: 0 var(--space-0);
   display: flex;
@@ -21,8 +17,4 @@
 .searchIcon {
   margin-right: 4px;
   width: 20px;
-}
-
-.active {
-  border-bottom: 2px solid rgb(var(--color-light-4));
 }

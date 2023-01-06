@@ -26,9 +26,13 @@ function Header({ headerMenu }) {
   return (
     <div className={styles.container} ref={headerContainerRef}>
       <header className={`${styles.header}`}>
-        <Logo />
-        <Navbar headerMenu={headerMenu} handleOver={handleOver} />
-        <UserButtons />
+        <Container>
+          <div className={styles.headerInner}>
+            <Logo />
+            <Navbar headerMenu={headerMenu} handleOver={handleOver} />
+            <UserButtons />
+          </div>
+        </Container>
       </header>
       {activeItems?.length ? (
         <div
@@ -50,19 +54,15 @@ function Header({ headerMenu }) {
           >
             <Container>
               <div className={styles.content}>
-                <div className={styles.grid}>
+                <ul className={styles.grid}>
                   {activeItems.map((item) => (
-                    <div key={item.id}>
-                      <ActiveLink
-                        url={item?.url}
-                        activeClass={styles.active}
-                        className={styles.item}
-                      >
+                    <li key={item.id} className={styles.item}>
+                      <ActiveLink url={item?.url}>
                         <p>{item?.title}</p>
                       </ActiveLink>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </Container>
           </div>

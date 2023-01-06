@@ -5,7 +5,6 @@
   margin-left: auto;
 
   svg {
-    font-size: var(--font-size-md);
     color: rgb(var(--color-light-4));
 
     &:hover {
@@ -31,13 +30,8 @@
 }
 
 .totalItemTitle {
-  font-size: var(--font-size-sm);
   color: rgb(var(--color-light-3));
-  font-family: var(--font-primary);
 }
 
 .price {
-  font-weight: 600;
-  font-family: var(--font-heading);
-  font-size: var(--font-size-sm);
 }

@@ -1,11 +1,5 @@
-.row {
+.main {
   width: 100%;
   display: flex;
-  gap: 30px;
-  margin-bottom: 30px;
-}
-
-.button {
-  margin-top: 1rem;
-  width: fit-content;
+  gap: var(--space-4);
 }

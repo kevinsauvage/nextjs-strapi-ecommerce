@@ -1,25 +1,22 @@
 import Link from 'next/link';
 import config from '@/config/index';
-import limitStrLength from '@/utils/limitStringLength';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
-import AccountRow from '../AccountRow/AccountRow';
 import style from './Address.module.scss';
 
 function Address({
   address,
-  isAccount,
-  isDefault,
   handleDelete,
-  displayButton = true,
+  handleSetAsDefault,
+  isDefaultAddress,
+  title,
 }) {
   const {
     id,
     address1,
     address2,
+    name,
     city,
     country,
-    firstName,
-    lastName,
     province,
     zip,
     company,
@@ -28,17 +25,8 @@ function Address({
 
   return (
     <div className={style.address}>
-      {isDefault && <div className={style.tag}>Default address</div>}
-      <AccountRow title="Name" content={`${firstName} ${lastName}`} />
-      <AccountRow title="Address1" content={limitStrLength(address1, 30)} />
-      {address2 && <AccountRow title="Address2" content={address2} />}
-      {company && <AccountRow title="Company" content={company} />}
-      {phone && <AccountRow title="Phone" content={phone} />}
-      <AccountRow title="Zip" content={zip} />
-      <AccountRow title="City" content={city} />
-      <AccountRow title="Province" content={province} />
-      <AccountRow title="Country" content={country} />
-      {displayButton && !isAccount && (
+      <div className={style.header}>
+        <h5>{title}</h5>
         <div className={style.buttons}>
           <Link
             className={style.button}
@@ -46,11 +34,34 @@ function Address({
           >
             <FaRegEdit />
           </Link>
-
           <button type="button" onClick={handleDelete} className={style.button}>
             <FaRegTrashAlt />
           </button>
         </div>
+      </div>
+      <p className={`${style.row} ${style.name}`}>{name}</p>
+      <p className={style.row}>
+        {address1}, {address2}
+      </p>
+      <p className={style.row}>
+        {zip}, {city}
+      </p>
+      <p className={style.row}>
+        {province}, {country}
+      </p>
+      <div className={style.row}>
+        {company && <p>{company}</p>}
+        {phone && <p>{phone}</p>}
+      </div>
+
+      {!isDefaultAddress && (
+        <button
+          className={style.setAsDefault}
+          type="button"
+          onClick={() => handleSetAsDefault(id)}
+        >
+          Set as default
+        </button>
       )}
     </div>
   );

@@ -39,18 +39,12 @@
 .title {
   margin-bottom: 10px;
   white-space: pre-wrap;
-  font-family: var(--font-heading);
-  font-weight: 300;
-  font-size: var(--font-size-md);
 }
 
 .productType {
   color: rgb(var(--color-dark-3));
   width: fit-content;
-  font-family: var(--font-heading);
   text-transform: uppercase;
-  font-weight: 600;
-  font-size: 12px;
 }
 
 .description {

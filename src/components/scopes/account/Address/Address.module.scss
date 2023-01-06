@@ -2,16 +2,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 100%;
+  max-width: 400px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  text-transform: capitalize;
 }
 
 .tag {
-  background-color: rgb(var(--color-primary-0));
-  color: rgb(var(--color-primary-4));
   width: fit-content;
   padding: 3px 6px;
   border-radius: 3px;
-  font-size: var(--font-size-sm);
   margin-bottom: 1rem;
 }
 
@@ -19,7 +26,6 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-top: 1rem;
 }
 
 .button {
@@ -28,13 +34,16 @@
   justify-content: center;
   border: 1px solid black;
   width: fit-content;
-  height: 30px;
-  min-width: 30px;
-  background-color: rgb(var(--color-primary-4));
-  color: rgb(var(--color-primary-0));
-  border: 1px solid rgb(var(--color-primary-0));
+  background-color: rgb(var(--color-light-4));
+  color: rgb(var(--color-dark-0));
+  border: 1px solid rgb(var(--color-dark-0));
+}
 
-  svg {
-    font-size: 14px;
-  }
+
+.setAsDefault {
+  border: none;
+  text-decoration: underline;
+  width: fit-content;
+  margin-top: var(--space-2);
+  padding: 0;
 }

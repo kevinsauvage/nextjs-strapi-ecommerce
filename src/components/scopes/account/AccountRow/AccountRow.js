@@ -3,7 +3,7 @@ import styles from './AccountRow.module.scss';
 function AccountRow({ title, content }) {
   return (
     <div className={styles.accountRow}>
-      <p className={styles.title}>{title}</p>
+      <strong className={styles.title}>{title}</strong>
       <p className={styles.content}>{content}</p>
     </div>
   );

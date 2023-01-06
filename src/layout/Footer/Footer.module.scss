@@ -1,6 +1,8 @@
 .container {
-  background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-dark-4));
+  @include themed() {
+    background-color: t($dark);
+    color: t($light);
+  }
 }
 
 .top {
@@ -11,7 +13,6 @@
   .title {
     margin-bottom: 50px;
     text-transform: capitalize;
-    color: rgb(var(--color-dark-4));
   }
 
   .navList {
@@ -32,7 +33,6 @@
   .navItem {
     display: inline-block;
     margin-right: 30px;
-    font-size: var(--font-size-base);
   }
 }
 
@@ -42,17 +42,14 @@
   justify-content: space-between;
   width: 100%;
   padding: 14px 0;
-  border-top: 1px solid rgb(35, 35, 35);
-  font-size: var(--font-size-sm);
+
+  @include themed() {
+    border-top: 0.1px solid t($light);
+  }
 
   .list {
     display: flex;
     gap: 8px;
     align-items: center;
-
-    .item {
-      list-style: none;
-      white-space: nowrap;
-    }
   }
 }

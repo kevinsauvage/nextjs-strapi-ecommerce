@@ -9,6 +9,7 @@ import Input from '@/components/forms/Input/Input';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import Row from '@/components/forms/Row/Row';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -52,7 +53,7 @@ function OrderDetail() {
 
   return (
     <Page title="Update account Information">
-      <AccountLayout loading={isLoading || !id} title="Update your information">
+      <AccountLayout loading={isLoading || !id} title="Account Details">
         <Form
           onSubmit={handleSubmit}
           initialValues={{
@@ -64,7 +65,7 @@ function OrderDetail() {
             phone,
           }}
         >
-          <div className={styles.wrapper}>
+          <Row>
             <Input
               input="true"
               id="firstName"
@@ -79,8 +80,8 @@ function OrderDetail() {
               name="lastName"
               label="Last Name"
             />
-          </div>
-          <div className={styles.wrapper}>
+          </Row>
+          <Row className={styles.wrapper}>
             <Input
               input="true"
               id="email"
@@ -95,14 +96,16 @@ function OrderDetail() {
               name="password"
               label="Password"
             />
-          </div>
-          <Input
-            input="true"
-            id="phone"
-            type="text"
-            name="phone"
-            label="Phone"
-          />
+          </Row>
+          <Row>
+            <Input
+              input="true"
+              id="phone"
+              type="text"
+              name="phone"
+              label="Phone"
+            />
+          </Row>
           <label htmlFor="acceptsMarketing" className={styles.checkbox}>
             <input
               checkbox="true"

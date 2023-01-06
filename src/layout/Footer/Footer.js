@@ -20,13 +20,7 @@ function Footer({ menuFooter, shopInfo }) {
                     <ul className={styles.nav}>
                       {item?.items?.map((el) => (
                         <li className={styles.navItem} key={el.id}>
-                          <ActiveLink
-                            url={el?.url}
-                            activeClass={styles.active}
-                            className={styles.item}
-                          >
-                            <span>{el?.title}</span>
-                          </ActiveLink>
+                          <ActiveLink url={el?.url}>{el?.title}</ActiveLink>
                         </li>
                       ))}
                     </ul>

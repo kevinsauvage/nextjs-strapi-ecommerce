@@ -10,8 +10,8 @@ export default function Button({
   extraClass,
   primary,
   secondary,
-  quaternary,
-  tertiary,
+  contrast,
+  outlined,
   disabled,
   href,
   ...rest
@@ -19,8 +19,8 @@ export default function Button({
   const getStyle = () => {
     if (primary) return styles.primary;
     if (secondary) return styles.secondary;
-    if (tertiary) return styles.tertiary;
-    if (quaternary) return styles.quaternary;
+    if (contrast) return styles.contrast;
+    if (outlined) return styles.outlined;
     return '';
   };
 

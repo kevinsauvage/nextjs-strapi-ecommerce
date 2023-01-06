@@ -1,7 +1,7 @@
 import Loader from '@/components/Loader/Loader';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import config from '@/config/index';
-import { MdArrowForwardIos, MdOutlineLogout } from 'react-icons/md';
+import { MdOutlineLogout } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
@@ -9,11 +9,11 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './AccountLayout.module.scss';
 
 const navItems = [
-  { url: config.routes.account, title: 'Account' },
-  { url: config.routes.updateAccount, title: 'Update Account details' },
-  { url: config.routes.addresses, title: 'My Addresses' },
-  { url: config.routes.createAddress, title: 'Add new Address' },
-  { url: config.routes.orders, title: 'My Orders' },
+  { url: config.routes.account, title: 'Dashboard' },
+  { url: config.routes.updateAccount, title: 'Account details' },
+  { url: config.routes.addresses, title: 'Addresses' },
+  { url: config.routes.orders, title: 'Orders' },
+  { url: config.routes.updateAccount, title: 'Wishlist' },
 ];
 
 function AccountLayout({ children, loading, title }) {
@@ -43,22 +43,13 @@ function AccountLayout({ children, loading, title }) {
       <main className={styles.main}>
         <nav className={styles.nav}>
           <ul className={styles.list}>
-            <li className={styles.listItem}>
-              {navItems.map((item) => (
-                <ActiveLink
-                  key={item.url}
-                  url={item.url}
-                  activeClass={styles.active}
-                  className={styles.item}
-                  scroll={false}
-                >
-                  <div>
-                    <span>{item.title}</span>
-                    <MdArrowForwardIos />
-                  </div>
+            {navItems.map((item) => (
+              <li className={styles.listItem} key={item.title}>
+                <ActiveLink url={item.url} scroll={false}>
+                  {item.title}
                 </ActiveLink>
-              ))}
-            </li>
+              </li>
+            ))}
           </ul>
         </nav>
         <section className={styles.children}>

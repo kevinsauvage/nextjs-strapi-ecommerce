@@ -18,7 +18,9 @@ const nextConfig = {
   sassOptions: {
     includePaths: [path.join(__dirname, './src/styles/')],
     prependData: `
-        @import "responsive.scss";
+        @import "_variables.scss";
+        @import "_mixins.scss";
+        @import "_themes.scss";
         `,
   },
   experimental: {

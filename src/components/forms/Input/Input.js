@@ -16,7 +16,7 @@ export default function Input({
   if (textarea) {
     return (
       <label htmlFor={id} className={styles.label}>
-        <p className={styles.title}>{label}</p>
+        <b className={styles.title}>{label}</b>
 
         <textarea
           className={`${styles.input} ${styles.textarea}`}
@@ -35,10 +35,10 @@ export default function Input({
   if (value) {
     return (
       <label htmlFor={id} className={styles.label}>
-        <p className={styles.title}>
+        <b className={styles.title}>
           {label}
           {required ? <span className={styles.required}>*</span> : ''}
-        </p>
+        </b>
         <input
           className={styles.input}
           id={id}
@@ -57,10 +57,10 @@ export default function Input({
 
   return (
     <label htmlFor={id} className={styles.label}>
-      <p className={styles.title}>
+      <b className={styles.title}>
         {label}
         {required ? <span className={styles.required}>*</span> : ''}
-      </p>
+      </b>
 
       <input
         className={styles.input}

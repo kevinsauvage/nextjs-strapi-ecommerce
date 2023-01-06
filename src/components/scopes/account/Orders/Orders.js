@@ -1,21 +1,20 @@
-import Card from '../Card/Card';
 import OrderCard from '../OrderCard/OrderCard';
 import style from './Orders.module.scss';
 
 export default function Orders({ orders }) {
   return (
-    <div className={style.Orders}>
+    <ul className={style.Orders}>
       {orders && orders.length > 0 ? (
         orders.map((order) => (
-          <Card key={order?.id} title={order.name}>
+          <li key={order?.id}>
             <OrderCard order={order} displayButton />
-          </Card>
+          </li>
         ))
       ) : (
         <div>
           <p>You didn&apos;t make any orders yet.</p>
         </div>
       )}
-    </div>
+    </ul>
   );
 }

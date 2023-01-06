@@ -1,17 +1,20 @@
-.orderCard {
-}
-.orderCardHeader {
-  font-size: var(--font-size-base);
+.orderCard {}
+
+
+.header {
   margin-bottom: 1rem;
-}
-.orderCardDetail {
-}
-.orderCardLineItem {
-}
-.orderCardLines {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.orderCardButton {
-  margin-top: 1rem;
-  padding: 6px 9px;
+.orderCardDetail {}
+
+.orderCardLineItem {}
+
+.orderCardLines {}
+
+.link {
+  padding: 6px;
+  text-decoration: underline;
 }

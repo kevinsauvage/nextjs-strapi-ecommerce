@@ -1,5 +1,7 @@
-@import './globals.scss';
-@import './colors.scss';
+@import './reset.scss';
+@import './variables';
+@import './themes.scss';
 @import './typography.scss';
+@import './globals.scss';
 @import './spacing.scss';
-@import './elevation.scss';
+@import './mixins.scss';

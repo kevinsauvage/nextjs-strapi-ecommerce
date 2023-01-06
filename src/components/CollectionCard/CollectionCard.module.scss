@@ -9,8 +9,11 @@
 
   &:hover {
     .content {
-      background-color: rgba(var(--color-primary-0), 0.95);
       top: 0;
+
+      @include themed() {
+        background-color: rgba(t($primary), 0.95);
+      }
     }
   }
 }
@@ -22,13 +25,9 @@
   -webkit-filter: grayscale(100%);
 }
 
-.title {
-  color: rgb(var(--color-light-0));
-}
+.title {}
 
-.count {
-  color: rgb(var(--color-light-0));
-}
+.count {}
 
 .content {
   position: absolute;
@@ -37,12 +36,19 @@
   top: calc(100% - 80px);
   width: 100%;
   transition: all 0.3s ease;
-  background-color: rgba(var(--color-dark-0), 0.7);
+
+  @include themed() {
+    color: t($light);
+    background-color: rgba(t($dark), 0.7);
+  }
 
   .description {
-    color: rgb(var(--color-light-0));
     padding: 0 var(--space-1) var(--space-1) var(--space-1);
     white-space: pre-wrap;
+
+    @include themed() {
+      color: t($light);
+    }
   }
 
   .header {

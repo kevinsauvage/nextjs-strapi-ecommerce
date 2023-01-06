@@ -1,22 +1,28 @@
 $header-height: 100px;
 
 .header {
-  display: flex;
-  align-items: center;
   width: 100%;
   align-items: center;
-  color: whitesmoke;
+  padding: 0 var(--space-1);
+  z-index: 99999;
+  position: relative;
+
+  @include themed() {
+    color: t($light);
+    background-color: t($dark);
+  }
+}
+
+.headerInner {
+  width: 100%;
   height: $header-height;
-  background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-dark-4));
   position: relative;
   display: grid;
+  align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 0 var(--space-1);
 }
 
 .bigMenu {
-  background-color: rgba(var(--color-dark-0), 0.5);
   position: absolute;
   left: 0;
   right: 0;
@@ -28,7 +34,11 @@ $header-height: 100px;
 .inner {
   padding: 30px 0;
   animation: rotateZ 0.3s linear forwards;
-  background-color: white;
+
+  @include themed() {
+    background-color: t($dark);
+    border-top: 0.1px solid t($light);
+  }
 }
 
 .content {
@@ -37,9 +47,11 @@ $header-height: 100px;
 }
 
 .item {
-  color: rgb(var(--color-dark-0));
-  font-size: var(--font-size-base);
   margin-bottom: 8px;
+
+  @include themed() {
+    color: t($light);
+  }
 }
 
 .grid {

@@ -8,7 +8,7 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
       .replace('gid://shopify/Order/', '')
       .replace('gid://shopify/MailingAddress/', '')
       .split('?')[0];
-    return <p className={styles.crumbs}> {t}</p>;
+    return <strong className={styles.crumbs}> {t}</strong>;
   }
 
   if (isNotClickable) {

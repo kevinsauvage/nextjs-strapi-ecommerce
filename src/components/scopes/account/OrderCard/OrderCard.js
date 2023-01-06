@@ -1,10 +1,9 @@
-import { useRouter } from 'next/router';
 import config from '@/config/index';
+import Link from 'next/link';
 import style from './OrderCard.module.scss';
 import AccountRow from '../AccountRow/AccountRow';
 
 function OrderCard({ order, displayButton }) {
-  const { push } = useRouter();
   const {
     financialStatus,
     totalPrice,
@@ -29,12 +28,20 @@ function OrderCard({ order, displayButton }) {
     return date.toLocaleDateString('en-US', options);
   };
 
-  const handleClickOrderDetails = () => {
-    push(`${config.routes.orders}/${encodeURIComponent(order?.id)}`);
-  };
-
   return (
     <div className={style.orderCard}>
+      <div className={style.header}>
+        <h4>Order {order.name}</h4>
+        {displayButton && (
+          <Link
+            href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}
+            type="button"
+            className={style.link}
+          >
+            See order details
+          </Link>
+        )}
+      </div>
       <div className={style.orderCardDetail}>
         <AccountRow title="Financial Status" content={financialStatus} />
         {!displayButton && (
@@ -58,15 +65,6 @@ function OrderCard({ order, displayButton }) {
           </>
         ) : null}
       </div>
-      {displayButton && (
-        <button
-          type="button"
-          className={style.orderCardButton}
-          onClick={handleClickOrderDetails}
-        >
-          See order details
-        </button>
-      )}
     </div>
   );
 }

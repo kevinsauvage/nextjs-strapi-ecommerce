@@ -37,10 +37,10 @@ function Layout({ children }) {
 
   return (
     <div className={styles.layout}>
-      <SearchBar />
       <Cart />
       {loading && <PageLoader />}
       <Header headerMenu={menuHeader} />
+      <SearchBar />
       {selectedProduct ? (
         <ModalProduct
           handleClose={() => setSelectedProduct(false)}
