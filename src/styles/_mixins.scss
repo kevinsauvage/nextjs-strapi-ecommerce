@@ -176,7 +176,9 @@ $breakpoints: (
       @each $key,
       $submap in $map {
         $value: map-get(map-get($themes, $theme), $key);
-        $theme-map: map-merge($theme-map, ($key: $value)) !global;
+        $theme-map: map-merge($theme-map,
+          ($key: $value,
+          )) !global;
       }
 
       @content;
@@ -204,28 +206,21 @@ $breakpoints: (
 
     @include themed {
       background-color: t($onBackground);
-
     }
   }
 }
 
-@mixin filter() {
-  -webkit-backdrop-filter: contrast(75%) brightness(104%) saturate(187%) grayscale(100%);
-  backdrop-filter: contrast(75%) brightness(104%) saturate(187%) grayscale(100%);
-
-}
+@mixin filter() {}
 
 @mixin glassmorphism() {
-
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  will-change: transform;
+  backdrop-filter: url('#myblurfilter');
+  -webkikt-backdrop-filter: url('#myblurfilter');
   border-radius: $radius;
-
 
   @include themed {
     background-color: rgba(t($background), 0.3);
     color: t($onBackground);
     border: 1px solid rgba(t($background), 0.3);
   }
-
 }

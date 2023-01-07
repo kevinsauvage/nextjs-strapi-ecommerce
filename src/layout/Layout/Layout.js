@@ -51,6 +51,11 @@ function Layout({ children }) {
       <SecureBanner />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
       <ToastContainer position="top-left" newestOnTop theme="dark" />
+      <svg xmlns="https://www.w3.org/2000/svg" version="1.1" height="0">
+        <filter id="myblurfilter" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="8" />
+        </filter>
+      </svg>
     </div>
   );
 }

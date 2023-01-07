@@ -26,18 +26,20 @@ export default function BannerHome({ collections }) {
       <Container>
         <div className={styles.inner}>
           <div className={styles.container}>
-            <p className={styles.upTitle}>
-              <span />
-              Trending {date?.getFullYear()}
-            </p>
-            <h1 className={`${styles.title} big`}>{title}</h1>
-            <p className={styles.subtitle}>{description}</p>
-            <Link
-              href={`${config.routes.collection}/${handle}`}
-              className={styles.link}
-            >
-              Shop now
-            </Link>
+            <div className={styles.content}>
+              <p className={styles.upTitle}>
+                <span />
+                Trending {date?.getFullYear()}
+              </p>
+              <h1 className={`${styles.title} big`}>{title}</h1>
+              <p className={styles.subtitle}>{description}</p>
+              <Link
+                href={`${config.routes.collection}/${handle}`}
+                className={styles.link}
+              >
+                Shop now
+              </Link>
+            </div>
           </div>
         </div>
       </Container>

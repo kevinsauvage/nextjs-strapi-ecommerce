@@ -1,7 +1,7 @@
 .banner {
   position: relative;
   width: auto;
-  background-position: bottom;
+  background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
@@ -10,6 +10,7 @@
   border-radius: $radius;
   overflow: hidden;
   position: relative;
+
 
   &::after {
     content: '';
@@ -26,23 +27,25 @@
   @include flex-column;
   justify-content: center;
   position: relative;
-  position: absolute;
-  left: 0;
-  top: 0;
   width: 100%;
   height: 100%;
-  z-index: 99;
+
 }
 
 .container {
   position: relative;
   z-index: 9999;
+  margin-left: 100px;
+  width: fit-content;
+  @include glassmorphism;
+
+}
+
+.content {
   padding: var(--space-4);
-  margin-left: 130px;
   border-radius: 4px;
   width: fit-content;
   height: fit-content;
-  @include glassmorphism;
 }
 
 .upTitle {
@@ -72,7 +75,7 @@
 
 .subtitle {
   margin-bottom: 30px;
-  max-width: 430px;
+  max-width: 400px;
 }
 
 .link {
