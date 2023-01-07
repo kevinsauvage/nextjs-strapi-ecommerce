@@ -4,7 +4,6 @@ import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import styles from './create.module.scss';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -43,9 +42,7 @@ function Addresses() {
   return (
     <Page title="Create new address">
       <AccountLayout title="Create address">
-        <div className={styles.addresses}>
-          <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
-        </div>
+        <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
       </AccountLayout>
     </Page>
   );

@@ -106,18 +106,20 @@ function OrderDetail() {
               label="Phone"
             />
           </Row>
-          <label htmlFor="acceptsMarketing" className={styles.checkbox}>
-            <input
-              checkbox="true"
-              id="acceptsMarketing"
-              className={styles.checkboxInput}
-              type="checkbox"
-              name="acceptsMarketing"
-              label="Accepts marketing"
-            />
-            <span>Check this case to receive our last update</span>
-          </label>
-          <Buttons text="UPDATE INFO" />
+
+          <Buttons text="UPDATE INFO">
+            <label htmlFor="acceptsMarketing" className={styles.checkbox}>
+              <input
+                checkbox="true"
+                id="acceptsMarketing"
+                className={styles.checkboxInput}
+                type="checkbox"
+                name="acceptsMarketing"
+                label="Accepts marketing"
+              />
+              <span>Check this case to receive our last update</span>
+            </label>
+          </Buttons>
         </Form>
       </AccountLayout>
     </Page>

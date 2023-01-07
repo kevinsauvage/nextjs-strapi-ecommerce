@@ -8,9 +8,6 @@ import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Section from '@/components/scopes/account/section/Section';
-import config from '@/config/index';
-import Link from 'next/link';
-import { MdOutlineAddLocationAlt } from 'react-icons/md';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -82,13 +79,6 @@ function Addresses() {
           <Address address={user?.defaultAddress} isDefaultAddress />
         </Section>
         <Section title="Other Addresses">
-          <Link
-            href={config.routes.createAddress}
-            className={styles.addNewAddress}
-          >
-            Add new address
-            <MdOutlineAddLocationAlt />
-          </Link>
           {Array.isArray(addresses) && addresses.length > 0 ? (
             <div className={styles.list}>
               {addresses

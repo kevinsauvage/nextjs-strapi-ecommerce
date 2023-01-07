@@ -7,7 +7,6 @@ import { useEffect, useState } from 'react';
 import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import styles from './AddressUpdate.module.scss';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -70,15 +69,13 @@ function AddressUpdate() {
   return (
     <Page title="Update Address">
       <AccountLayout loading={isLoading} title="Update Address">
-        <div className={styles.form}>
-          {address && (
-            <AddressForm
-              buttonText="Update Address"
-              initialValues={address}
-              onSubmit={handleUpdateAddress}
-            />
-          )}
-        </div>
+        {address && (
+          <AddressForm
+            buttonText="Update Address"
+            initialValues={address}
+            onSubmit={handleUpdateAddress}
+          />
+        )}
       </AccountLayout>
     </Page>
   );

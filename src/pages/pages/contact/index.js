@@ -3,43 +3,45 @@ import Page from '@/layout/Page/Page';
 import Form from '@/components/forms/Form/Form';
 import Buttons from '@/components/forms/Buttons/Buttons';
 import TextArea from '@/components/forms/TextArea/TextArea';
+import FormContainer from '@/components/forms/FormContainer/FormContainer';
 
 function ContactPage() {
   const onSubmit = async (formData) => {
-    console.log(formData);
     if (!formData.email || !formData.name || !formData.message) return null;
     return true;
   };
 
   return (
     <Page title="Contact Us">
-      <Form onSubmit={onSubmit} action="submit" title="Contact Us">
-        <Input
-          id="email"
-          label="Email address"
-          name="email"
-          placeholder="Email"
-          required
-          input
-        />
-        <Input
-          placeholder="Name"
-          name="name"
-          id="name"
-          label="Name"
-          required
-          input
-        />
-        <TextArea
-          placeholder="Message"
-          name="message"
-          id="message"
-          label="Message"
-          required
-          input
-        />
-        <Buttons text="SEND MESSAGE" />
-      </Form>
+      <FormContainer>
+        <Form onSubmit={onSubmit} action="submit" title="Contact Us">
+          <Input
+            id="email"
+            label="Email address"
+            name="email"
+            placeholder="Email"
+            required
+            input
+          />
+          <Input
+            placeholder="Name"
+            name="name"
+            id="name"
+            label="Name"
+            required
+            input
+          />
+          <TextArea
+            placeholder="Message"
+            name="message"
+            id="message"
+            label="Message"
+            required
+            input
+          />
+          <Buttons text="SEND MESSAGE" />
+        </Form>
+      </FormContainer>
     </Page>
   );
 }

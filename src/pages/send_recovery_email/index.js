@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import FormContainer from '@/components/forms/FormContainer/FormContainer';
+import BackButton from '@/components/BackButton/BackButton';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
@@ -25,8 +27,8 @@ function ResetPassword() {
 
   return (
     <Page title="Password recovery">
-      <div>
-        <Form title="Password recovery" onSubmit={onSubmit}>
+      <FormContainer>
+        <Form title="Password Recovery" onSubmit={onSubmit}>
           <Input
             id="email"
             label="Email address"
@@ -34,11 +36,13 @@ function ResetPassword() {
             type="email"
             placeholder="Email"
             required
-            input="true"
+            input
           />
-          <Buttons text="SEND ME AN EMAIL" />
+          <Buttons text="SEND EMAIL">
+            <BackButton />
+          </Buttons>
         </Form>
-      </div>
+      </FormContainer>
     </Page>
   );
 }

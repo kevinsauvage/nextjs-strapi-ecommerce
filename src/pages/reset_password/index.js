@@ -8,6 +8,8 @@ import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import FormContainer from '@/components/forms/FormContainer/FormContainer';
+import BackButton from '@/components/BackButton/BackButton';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
@@ -52,17 +54,21 @@ function Password({ resetUrl }) {
 
   return (
     <Page title="Password recovery">
-      <Form title="Reset your password" onSubmit={onSubmit}>
-        <Input
-          id="password"
-          label="New password"
-          name="password"
-          type="password"
-          placeholder="New password"
-          input="true"
-        />
-        <Buttons text="RESET PASSWORD" />
-      </Form>
+      <FormContainer>
+        <Form title="Reset Password" onSubmit={onSubmit}>
+          <Input
+            id="password"
+            label="New password"
+            name="password"
+            type="password"
+            placeholder="New password"
+            input="true"
+          />
+          <Buttons text="RESET PASSWORD">
+            <BackButton />
+          </Buttons>
+        </Form>
+      </FormContainer>
     </Page>
   );
 }

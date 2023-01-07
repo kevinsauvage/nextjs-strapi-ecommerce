@@ -2,6 +2,12 @@
   width: 100%;
   padding-bottom: var(--space-2);
   display: block;
+
+
+
+  &:last-of-type {
+    padding: 0;
+  }
 }
 
 .title {

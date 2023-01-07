@@ -1,24 +1,12 @@
 import Page from '@/layout/Page/Page';
-import Carousel from '@/components/Carousel/Carousel';
-import { getProducts } from '@/lib/shopify/product/productApiCall';
-import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
 import { getRefundPolicy } from '@/lib/shopify/shop/shopApiCall';
 import styles from './refund.module.scss';
 
-function RefoundPage({ bestSelling, refundPolicy }) {
+function RefoundPage({ refundPolicy }) {
   return (
     <Page title="Our refund policy">
       <div className={styles.privacy}>
         <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
-        {bestSelling &&
-          Array.isArray(bestSelling.products) &&
-          bestSelling.products.length > 0 && (
-            <Carousel title="Best Selling Products">
-              {bestSelling.products.map((product) => (
-                <ProductCardDefault product={product} key={product.id} />
-              ))}
-            </Carousel>
-          )}
       </div>
     </Page>
   );
@@ -27,12 +15,10 @@ function RefoundPage({ bestSelling, refundPolicy }) {
 export default RefoundPage;
 
 export async function getStaticProps() {
-  const bestSelling = await getProducts('BEST_SELLING', 20);
   const shopInfo = await getRefundPolicy();
   const refundPolicy = shopInfo?.refundPolicy;
   return {
     props: {
-      bestSelling,
       refundPolicy,
     },
   };

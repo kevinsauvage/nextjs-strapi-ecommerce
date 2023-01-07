@@ -6,10 +6,12 @@
 .register,
 .forgotPassword {
   text-align: center;
+  font-size: $fontSize--100;
 
   & a {
-    color: rgb(var(--color-primary-0));
+    color: $color-primary;
     text-decoration: underline;
+    font-size: $fontSize--100;
   }
 }
 
@@ -17,4 +19,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.buttons {
+  gap: var(--space-2);
+  @include flex-center-vert;
 }

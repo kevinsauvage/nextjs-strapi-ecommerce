@@ -5,9 +5,9 @@ import Address from '@/components/scopes/account/Address/Address';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
 import Section from '@/components/scopes/account/section/Section';
-import styles from './Profile.module.scss';
+import styles from './Account.module.scss';
 
-function Profile() {
+function Account() {
   const { user } = useUserContext();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -32,4 +32,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Account;

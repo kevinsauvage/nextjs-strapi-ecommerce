@@ -8,6 +8,7 @@ import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import FormContainer from '@/components/forms/FormContainer/FormContainer';
 import styles from './Login.module.scss';
 
 const { userFeedback } = config;
@@ -38,36 +39,37 @@ function LoginPage() {
 
   return (
     <Page title="User Login">
-      <Form onSubmit={onSubmit} title="Login To You Account">
-        <Input
-          id="email"
-          label="Email address"
-          type="email"
-          name="email"
-          placeholder="Email"
-          required
-          input="true"
-        />
-        <Input
-          placeholder="Password"
-          type="password"
-          name="password"
-          id="password"
-          label="Password"
-          required
-          input="true"
-        />
-        <Buttons text="Login" />
-        <div className={styles.forgotPassword}>
-          <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
-        </div>
-        <div className={styles.register}>
-          <p>
-            Don&apos;t have an account?
-            <Link href={config.routes.register}> REGISTER</Link> now.
-          </p>
-        </div>
-      </Form>
+      <FormContainer>
+        <Form onSubmit={onSubmit} title="Login">
+          <Input
+            id="email"
+            label="Email address"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            input="true"
+          />
+          <Input
+            placeholder="Password"
+            type="password"
+            name="password"
+            id="password"
+            label="Password"
+            required
+            input="true"
+          />
+          <Buttons text="Login">
+            <div className={styles.register}>
+              <Link href={config.routes.register}>REGISTER</Link>
+            </div>
+          </Buttons>
+          <div className={styles.forgotPassword}>
+            Forget your password ?{' '}
+            <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
+          </div>
+        </Form>
+      </FormContainer>
     </Page>
   );
 }

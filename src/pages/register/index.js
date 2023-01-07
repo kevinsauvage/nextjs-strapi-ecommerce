@@ -8,6 +8,7 @@ import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import FormContainer from '@/components/forms/FormContainer/FormContainer';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
@@ -43,8 +44,8 @@ function RegisterPage() {
 
   return (
     <Page title="Register your account">
-      <div>
-        <Form onSubmit={onSubmit} title="Create New Customer Account">
+      <FormContainer>
+        <Form onSubmit={onSubmit} title="Register">
           <Input
             id="email"
             label="Email address"
@@ -62,13 +63,13 @@ function RegisterPage() {
             input="true"
             autoComplete="current-password"
           />
-          <Buttons text="CREATE AN ACCOUNT" />
-          <div className={styles.alreadyRegistered}>
-            Already have an account?{' '}
-            <Link href={config.routes.login}>LOGIN</Link> now.
-          </div>
+          <Buttons text="REGISTER">
+            <div className={styles.alreadyRegistered}>
+              <Link href={config.routes.login}>LOGIN</Link>
+            </div>
+          </Buttons>
         </Form>
-      </div>
+      </FormContainer>
     </Page>
   );
 }
