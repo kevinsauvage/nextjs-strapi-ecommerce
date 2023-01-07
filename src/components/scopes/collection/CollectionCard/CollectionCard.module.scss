@@ -63,4 +63,5 @@
   text-transform: uppercase;
   @include underline;
   font-size: $fontSize--100;
+  width: fit-content;
 }
