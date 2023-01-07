@@ -49,8 +49,7 @@
   color: $color-onBackground;
   @include glassmorphism;
   min-width: 160px;
-
-  padding: 1rem 1.5rem 1.5rem 1rem;
+  padding: 0.6rem 1.5rem 1.2rem 1rem;
 }
 
 .title {
