@@ -47,10 +47,11 @@
 
 .innerContent {
   width: fit-content;
-  color: $color-onBackground;
-  @include glassmorphism;
+  height: fit-content;
   min-width: 160px;
+  color: $color-onBackground;
   padding: 0.6rem 1.5rem 1.2rem 1rem;
+  @include glassmorphism;
 }
 
 .title {
