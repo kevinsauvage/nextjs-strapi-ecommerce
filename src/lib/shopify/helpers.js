@@ -70,7 +70,7 @@ export const cleanProducts = (prods) => {
  * @param input - The input object to clean.
  * @returns an object.
  */
-export const cleanGraphQLResponse = function (input) {
+export const cleanGraphQLResponse = (input) => {
   if (!input) return null;
   const output = {};
   const isObject = (obj) =>

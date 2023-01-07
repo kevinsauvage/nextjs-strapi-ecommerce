@@ -5,7 +5,13 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb", "prettier", "next"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:react-hooks/recommended"
+  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -13,45 +19,113 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "import"],
+  "plugins": [
+    "react",
+    "import"
+  ],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
     "react/prop-types": 0,
+    "react/no-unused-prop-types": "error",
+    "no-unused-vars": [
+      "error",
+      {
+        "ignoreRestSiblings": true,
+        "destructuredArrayIgnorePattern": "[A-Z]",
+        "caughtErrors": "none"
+      }
+    ],
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "default-param-last": 0,
     "no-underscore-dangle": 0,
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "labelComponents": ["CustomInputLabel"],
-        "labelAttributes": ["label"],
-        "controlComponents": ["CustomInput"],
+        "labelComponents": [
+          "CustomInputLabel"
+        ],
+        "labelAttributes": [
+          "label"
+        ],
+        "controlComponents": [
+          "CustomInput"
+        ],
         "depth": 3
       }
     ]
   },
-  "ignorePatterns": ["node_modules/", ".next/"],
+  "ignorePatterns": [
+    "node_modules/",
+    ".next/"
+  ],
   "settings": {
     "import/resolver": {
       "alias": [
-        ["@/components", "./src/components"],
-        ["@/contexts", "./src/contexts"],
-        ["@/config", "./src/config"],
-        ["@/hooks", "./src/hooks"],
-        ["@/assets", "./src/assets"],
-        ["@/data", "./src/data"],
-        ["@/styles", "./src/styles"],
-        ["@/lib", "./src/lib"],
-        ["@/helpers", "./src/helpers"],
-        ["@/utils", "./src/utils"],
-        ["@/layout", "./src/layout"],
-        ["@/modals", "./src/modals"]
+        [
+          "@/components",
+          "./src/components"
+        ],
+        [
+          "@/contexts",
+          "./src/contexts"
+        ],
+        [
+          "@/config",
+          "./src/config"
+        ],
+        [
+          "@/hooks",
+          "./src/hooks"
+        ],
+        [
+          "@/assets",
+          "./src/assets"
+        ],
+        [
+          "@/data",
+          "./src/data"
+        ],
+        [
+          "@/styles",
+          "./src/styles"
+        ],
+        [
+          "@/lib",
+          "./src/lib"
+        ],
+        [
+          "@/helpers",
+          "./src/helpers"
+        ],
+        [
+          "@/utils",
+          "./src/utils"
+        ],
+        [
+          "@/layout",
+          "./src/layout"
+        ],
+        [
+          "@/modals",
+          "./src/modals"
+        ]
       ]
     }
+  },
+  "globals": {
+    "React": "writable"
   }
 }

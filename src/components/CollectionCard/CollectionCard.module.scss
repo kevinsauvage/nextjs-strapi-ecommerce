@@ -25,10 +25,6 @@
   -webkit-filter: grayscale(100%);
 }
 
-.title {}
-
-.count {}
-
 .content {
   position: absolute;
   bottom: 0;
@@ -59,3 +55,7 @@
     padding: 0 var(--space-1);
   }
 }
+
+.title {}
+
+.count {}

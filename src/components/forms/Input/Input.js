@@ -8,63 +8,15 @@ export default function Input({
   placeholder,
   onChange,
   required,
-  textarea,
   autoComplete,
-  value,
   ...rest
 }) {
-  if (textarea) {
-    return (
-      <label htmlFor={id} className={styles.label}>
-        <b className={styles.title}>
-          {label}
-          {required ? <span className={styles.required}>*</span> : ''}
-        </b>
-
-        <textarea
-          className={`${styles.input} ${styles.textarea}`}
-          id={id}
-          type="text"
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          required={required}
-          {...rest}
-        />
-      </label>
-    );
-  }
-
-  if (value) {
-    return (
-      <label htmlFor={id} className={styles.label}>
-        <b className={styles.title}>
-          {label}
-          {required ? <span className={styles.required}>*</span> : ''}
-        </b>
-        <input
-          className={styles.input}
-          id={id}
-          type={type || 'text'}
-          name={name}
-          placeholder={placeholder}
-          onChange={onChange}
-          required={required}
-          autoComplete={autoComplete || ''}
-          value={value || ''}
-          {...rest}
-        />
-      </label>
-    );
-  }
-
   return (
     <label htmlFor={id} className={styles.label}>
       <b className={styles.title}>
         {label}
         {required ? <span className={styles.required}>*</span> : ''}
       </b>
-
       <input
         className={styles.input}
         id={id}

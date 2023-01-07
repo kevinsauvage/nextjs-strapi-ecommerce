@@ -2,9 +2,11 @@ import Input from '@/components/forms/Input/Input';
 import Page from '@/layout/Page/Page';
 import Form from '@/components/forms/Form/Form';
 import Buttons from '@/components/forms/Buttons/Buttons';
+import TextArea from '@/components/forms/TextArea/TextArea';
 
 function ContactPage() {
   const onSubmit = async (formData) => {
+    console.log(formData);
     if (!formData.email || !formData.name || !formData.message) return null;
     return true;
   };
@@ -18,17 +20,23 @@ function ContactPage() {
           name="email"
           placeholder="Email"
           required
-          input="true"
+          input
         />
-        <Input placeholder="Name" name="name" id="name" label="Name" required />
         <Input
+          placeholder="Name"
+          name="name"
+          id="name"
+          label="Name"
+          required
+          input
+        />
+        <TextArea
           placeholder="Message"
-          textarea
           name="message"
           id="message"
           label="Message"
           required
-          input="true"
+          input
         />
         <Buttons text="SEND MESSAGE" />
       </Form>
