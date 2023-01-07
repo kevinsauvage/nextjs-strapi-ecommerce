@@ -201,7 +201,11 @@ $breakpoints: (
     height: 2px;
     width: 60%;
     max-width: 40px;
-    background-color: $color-primary;
+
+    @include themed {
+      background-color: t($onBackground);
+
+    }
   }
 }
 
@@ -219,7 +223,7 @@ $breakpoints: (
 
 
   @include themed {
-    background-color: rgba(t($background), 0.4);
+    background-color: rgba(t($background), 0.3);
     color: t($onBackground);
   }
 

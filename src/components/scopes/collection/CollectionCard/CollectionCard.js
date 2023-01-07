@@ -20,7 +20,7 @@ export default function CollectionCard({ collection }) {
       </div>
       <div className={style.content}>
         <div className={style.innerContent}>
-          <h3 className={style.title}>{title}</h3>
+          <h4 className={style.title}>{title}</h4>
           <Link
             href={`${config.routes.collection}/${handle}`}
             className={style.link}
