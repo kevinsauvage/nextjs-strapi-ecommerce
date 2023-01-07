@@ -3,35 +3,41 @@
   gap: var(--space-1);
   position: relative;
   margin-left: auto;
-
-  svg {
-    color: rgb(var(--color-light-4));
-
-    &:hover {
-      color: rgb(var(--color-primary-3));
-    }
-  }
 }
 
 .button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  @include themed {
+    path {
+      fill: t($onBackground);
+    }
+  }
 }
 
 .totalItems {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin-left: var(--space-0);
-}
+  position: absolute;
+  padding: 3px;
+  border-radius: 50%;
+  top: -3px;
+  left: 19px;
+  min-width: 1rem;
+  min-height: 1rem;
 
-.totalItemTitle {
-  color: rgb(var(--color-light-3));
-}
+  @include themed {
 
-.price {
+    background-color: t($onBackground);
+    color: t($background);
+  }
+
+  p {
+    font-size: 10px;
+    line-height: 10px;
+  }
 }

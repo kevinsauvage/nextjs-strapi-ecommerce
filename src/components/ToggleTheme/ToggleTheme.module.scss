@@ -1,0 +1,25 @@
+.toggleTheme {
+    width: 50px;
+    border-radius: 99em;
+    padding: 2px;
+    display: flex;
+    justify-content: flex-start;
+
+    @include themed {
+        border: 2px solid t($onBackground);
+    }
+}
+
+.active {
+    justify-content: flex-end;
+}
+
+.inner {
+    width: 20px;
+    min-height: 20px;
+    border-radius: 50%;
+
+    @include themed {
+        background-color: t($onBackground);
+    }
+}

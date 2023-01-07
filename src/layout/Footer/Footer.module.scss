@@ -1,7 +1,7 @@
 .container {
-  @include themed() {
-    background-color: t($dark);
-    color: t($light);
+  @include themed {
+    background-color: t($background);
+    color: t($onBackground)
   }
 }
 
@@ -44,7 +44,7 @@
   padding: 14px 0;
 
   @include themed() {
-    border-top: 0.1px solid t($light);
+    border-top: 0.1px solid t($onBackground);
   }
 
   .list {

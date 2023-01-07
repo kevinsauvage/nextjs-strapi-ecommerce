@@ -1,8 +1,7 @@
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
-import Image from 'next/image';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { search } from '@/assets/svg';
 import styles from './Navbar.module.scss';
-import searchIcon from '../../../public/search.svg';
 
 function Navbar({ headerMenu, handleOver }) {
   const { toggleSearch } = useGlobalContext();
@@ -29,8 +28,8 @@ function Navbar({ headerMenu, handleOver }) {
             onClick={toggleSearch}
             onKeyDown={toggleSearch}
           >
-            <Image {...searchIcon} alt="search" className={styles.searchIcon} />
-            Search
+            {search}
+            <p>Search</p>
           </div>
         </li>
       </ul>

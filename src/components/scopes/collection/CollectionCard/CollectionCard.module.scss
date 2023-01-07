@@ -1,0 +1,51 @@
+.CollectionCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: $radius;
+
+}
+
+.inner {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-1);
+  @include filter;
+}
+
+.innerContent {
+  width: fit-content;
+
+  color: $color-onBackground
+}
+
+.title {
+  margin-bottom: var(--space-0);
+  text-transform: uppercase;
+}
+
+.link {
+  font-weight: $fontWeightMedium;
+  text-transform: uppercase;
+  @include underline;
+}

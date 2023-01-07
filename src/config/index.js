@@ -82,7 +82,6 @@ config.accountNav = [
   { url: config.routes.addresses, title: 'Addresses' },
   { url: config.routes.createAddress, title: 'Create address' },
   { url: config.routes.orders, title: 'Orders' },
-  { url: config.routes.updateAccount, title: 'Wishlist' },
 ];
 
 if (env === 'production') {

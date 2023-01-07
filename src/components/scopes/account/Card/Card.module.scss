@@ -1,12 +1,17 @@
 .Card {
-  border: 1px solid gainsboro;
-  border-top: 2px solid black;
+
   width: 100%;
   padding: 20px;
   order: 2;
   display: flex;
   flex-direction: column;
+
+  @include themed {
+    border: 0.1px solid rgba(t($onBackground), 0.3);
+    border-top: 2px solid rgba(t($onBackground), 0.6);
+  }
 }
+
 .title {
   margin-bottom: 20px;
 }

@@ -3,8 +3,6 @@
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  background-color: rgb(var(--color-dark-0));
-  color: rgb(var(--color-primary-4));
   padding: 0.5rem;
   border-radius: 0.5rem;
   width: fit-content;
@@ -14,10 +12,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(var(--color-primary-4));
   border-radius: 50%;
 
-  svg {
-    color: rgb(var(--color-primary-0));
-  }
 }

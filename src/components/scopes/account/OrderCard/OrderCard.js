@@ -31,7 +31,7 @@ function OrderCard({ order, displayButton }) {
   return (
     <div className={style.orderCard}>
       <div className={style.header}>
-        <h4>Order {order.name}</h4>
+        <h5>Order {order.name}</h5>
         {displayButton && (
           <Link
             href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}

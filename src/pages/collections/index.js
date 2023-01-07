@@ -1,6 +1,6 @@
 import Page from '@/layout/Page/Page';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
-import CollectionCard from '@/components/CollectionCard/CollectionCard';
+import CollectionCard from '@/components/scopes/collection/CollectionCard/CollectionCard';
 import style from './Collections.module.scss';
 
 function CategoryPage({ collections }) {

@@ -65,6 +65,7 @@ export const getCollections = async (first) => {
     const res = await shopifyStorefrontCall(queriesCollection.getCollections, {
       first,
     });
+
     const collections = res.data?.collections?.edges;
     if (collections) return cleanCollections(collections);
     return null;

@@ -17,8 +17,8 @@
     resize: vertical;
 
     @include themed() {
-        border: 1px solid rgba(t($dark), 0.1);
-        background-color: white;
+        border: 1px solid rgba(t($background), 0.1);
+        background-color: t($onBackground);
     }
 
     &:-webkit-autofill,

@@ -11,7 +11,7 @@
   height: 100%;
 
   @include themed() {
-    background-color: t($light);
+    background-color: t($background);
   }
 }
 
@@ -19,7 +19,7 @@
   font-size: $fontSize--100;
 
   @include themed() {
-    color: rgba(t($dark), 0.8);
+    color: rgba(t($onBackground), 0.8);
   }
 }
 

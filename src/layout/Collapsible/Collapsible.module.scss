@@ -6,13 +6,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 0;
+  padding: 8px;
   height: 40px;
   width: 100%;
   border: none;
   border-bottom: 1px solid rgb(221, 221, 221);
   transition: all 0.2s ease-in-out 0.05s;
+
 }
+
+.last {
+  border-bottom: none;
+}
+
 
 .icon {
   display: flex;
@@ -25,14 +31,18 @@
   & span {
     width: 14px;
     height: 1px;
-    background-color: rgb(var(--color-primary-0));
     display: block;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease-in-out;
+
+    @include themed {
+      background-color: t($onBackground);
+    }
   }
+
   & span:nth-child(2) {
     transform: translate(-50%, -50%) rotate(90deg);
   }
@@ -46,13 +56,13 @@
 }
 
 .open {
-  & > .children {
+  &>.children {
     display: block;
     margin-bottom: 10px;
     animation: open 0.3s ease-in-out forwards;
   }
 
-  & > .header {
+  &>.header {
     transition: none;
     border-bottom: 1px solid transparent;
   }
@@ -66,7 +76,7 @@
 }
 
 .close {
-  & > .children {
+  &>.children {
     animation: close 0.2s ease-in-out forwards;
   }
 }

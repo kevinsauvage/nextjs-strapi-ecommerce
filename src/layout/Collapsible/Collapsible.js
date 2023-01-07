@@ -1,26 +1,26 @@
 import { useState } from 'react';
-import Styles from './Collapsible.module.scss';
+import styles from './Collapsible.module.scss';
 
-export default function Collapsible({ children, title }) {
+export default function Collapsible({ children, title, last }) {
   const [open, setOpen] = useState(false);
 
   return (
     <div
-      className={`${Styles.Collapsible} ${open ? Styles.open : Styles.close}`}
+      className={`${styles.Collapsible} ${open ? styles.open : styles.close} `}
     >
       <button
         type="button"
-        className={Styles.header}
+        className={`${styles.header} ${last && styles.last}`}
         onClick={() => setOpen((prev) => !prev)}
       >
-        <strong className={Styles.title}>{title}</strong>
-        <div className={Styles.icon}>
+        <strong className={styles.title}>{title}</strong>
+        <div className={styles.icon}>
           <span />
           <span />
         </div>
       </button>
       <div
-        className={`${Styles.children} ${open ? Styles.open : Styles.close}`}
+        className={`${styles.children} ${open ? styles.open : styles.close}`}
       >
         {children}
       </div>

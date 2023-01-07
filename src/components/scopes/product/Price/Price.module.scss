@@ -1,11 +1,10 @@
 .Price {
   display: flex;
   align-items: center;
-  color: black;
 }
 
 .compareAtPriceV2 {
-  color: rgb(var(--color-red-0));
+  color: $color-primary;
   margin-left: 8px;
   text-decoration: line-through;
   transform: scale(0.9);

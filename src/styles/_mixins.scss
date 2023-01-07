@@ -188,3 +188,39 @@ $breakpoints: (
 @function t($key) {
   @return map-get($theme-map, $key);
 }
+
+@mixin underline() {
+  position: relative;
+  display: block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    height: 2px;
+    width: 60%;
+    max-width: 40px;
+    background-color: $color-primary;
+  }
+}
+
+@mixin filter() {
+  -webkit-backdrop-filter: contrast(75%) brightness(104%) saturate(187%) grayscale(100%);
+  backdrop-filter: contrast(75%) brightness(104%) saturate(187%) grayscale(100%);
+
+}
+
+@mixin glassmorphism() {
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: $radius;
+
+
+  @include themed {
+    background-color: rgba(t($background), 0.4);
+    color: t($onBackground);
+  }
+
+}

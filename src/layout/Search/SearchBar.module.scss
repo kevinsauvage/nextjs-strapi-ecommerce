@@ -5,12 +5,12 @@
   width: 100%;
   z-index: 9999;
   overflow: auto;
-  top: 100px;
+  top: 83px;
   animation: slide-down 0.2s ease-in-out forwards;
 
   @include themed() {
-    background-color: t($dark);
-    border-top: 0.1px solid rgba(t($light), 0.3);
+    background-color: t($background);
+    border-top: 0.1px solid rgba(t($onBackground), 0.3);
   }
 }
 
@@ -26,10 +26,6 @@
 
 .title {
   padding: var(--space-4) 0 var(--space-1) 0;
-
-  @include themed() {
-    color: t($light);
-  }
 }
 
 .header {
@@ -47,10 +43,6 @@
   font-size: $fontSize-400;
   border: none;
   cursor: pointer;
-
-  @include themed() {
-    color: t($light);
-  }
 }
 
 .input {
@@ -68,7 +60,7 @@
   }
 
   100% {
-    top: 100px;
+    top: 83px;
     opacity: 1;
   }
 }

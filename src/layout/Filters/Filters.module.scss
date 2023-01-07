@@ -1,10 +1,14 @@
 .filters {
   min-width: 260px;
   max-width: 300px;
-  color: rgb(83, 83, 83);
-  margin-right: 20px;
-  border: 1px solid rgb(var(--color-dark-4));
-  padding: 0.5rem;
+  margin-right: var(--space-2);
+
+  @include themed {
+    color: t($onBackground);
+    border: 1px solid t($onBackground);
+  }
+
+
 }
 
 .label {
@@ -26,10 +30,7 @@
 }
 
 .labelText {
-  margin: 0 6px;
+  margin-right: 3px;
   text-transform: capitalize;
   cursor: pointer;
-  &:hover {
-    color: rgb(var(--color-primary-0));
-  }
 }

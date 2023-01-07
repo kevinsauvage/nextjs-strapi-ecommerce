@@ -1,6 +1,9 @@
 .Separator {
   height: 0.1px;
-  background-color: black;
   width: 100%;
   opacity: 0.2;
+
+  @include themed {
+    background-color: t($onBackground);
+  }
 }

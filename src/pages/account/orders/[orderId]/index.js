@@ -45,10 +45,10 @@ function OrderDetail() {
 
   return (
     <Page title={title}>
-      <AccountLayout loading={isLoading} title={title}>
+      <AccountLayout loading={isLoading} title="Order Details">
         <div>
           <div className={styles.top}>
-            <Card title="Order details">
+            <Card>
               <OrderCard order={order} />
             </Card>
             <Card title="Shipping Address">

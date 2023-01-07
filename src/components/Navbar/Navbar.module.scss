@@ -12,9 +12,15 @@
   align-items: center;
   border-bottom: 2px solid transparent;
   cursor: pointer;
-}
 
-.searchIcon {
-  margin-right: 4px;
-  width: 20px;
+  p {
+    font-weight: $fontWeightMedium
+  }
+
+
+  @include themed {
+    path {
+      fill: t($onBackground);
+    }
+  }
 }

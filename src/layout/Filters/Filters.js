@@ -19,49 +19,52 @@ export default function Filters() {
     return res;
   };
 
+  const filters = allFilters
+    .filter((item) => item.type === 'LIST')
+    .filter((item) => item.values.length > 1);
+
   return (
     <div className={styles.filters}>
       {actualFilters.length || selectedFilters.length ? (
         <FilterManager />
       ) : null}
-      {Array.isArray(allFilters)
-        ? allFilters
-            .filter((item) => item.type === 'LIST')
-            .map(
-              (filter) =>
-                filter.values.length > 1 && (
-                  <Collapsible key={filter.label} title={filter.label}>
-                    {filter.values.map((value) => (
-                      <label
-                        key={value.input}
-                        htmlFor={value.id}
-                        className={styles.label}
-                      >
-                        <button
-                          className={styles.button}
-                          type="button"
-                          onClick={() =>
-                            isChecked(value.id)
-                              ? removeFilter(value.id)
-                              : setSelectedFilters(value)
-                          }
-                        >
-                          {isChecked(value.id) ? (
-                            <MdCheckBox size={20} color="purple" />
-                          ) : (
-                            <MdCheckBoxOutlineBlank size={20} />
-                          )}
-                        </button>
-                        <p className={styles.labelText}>
-                          <small>{value.label}</small>
-                        </p>
-                        <small className={styles.count}>({value.count})</small>
-                      </label>
-                    ))}
-                  </Collapsible>
-                )
-            )
-        : null}
+
+      {Array.isArray(filters) &&
+        filters.map((filter, i) => (
+          <Collapsible
+            key={filter.label}
+            title={filter.label}
+            last={i === filters.length - 1}
+          >
+            {filter.values.map((value) => (
+              <label
+                key={value.input}
+                htmlFor={value.id}
+                className={`${styles.label}`}
+              >
+                <button
+                  className={styles.button}
+                  type="button"
+                  onClick={() =>
+                    isChecked(value.id)
+                      ? removeFilter(value.id)
+                      : setSelectedFilters(value)
+                  }
+                >
+                  {isChecked(value.id) ? (
+                    <MdCheckBox size={20} color="purple" />
+                  ) : (
+                    <MdCheckBoxOutlineBlank size={20} />
+                  )}
+                </button>
+                <p className={styles.labelText}>
+                  <small>{value.label}</small>
+                </p>
+                <small className={styles.count}>({value.count})</small>
+              </label>
+            ))}
+          </Collapsible>
+        ))}
     </div>
   );
 }

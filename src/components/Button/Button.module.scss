@@ -11,30 +11,26 @@
 }
 
 .primary {
-  @include themed() {
-    background-color: t($primary);
-    color: t($light);
-  }
+  background-color: $color-primary;
+  color: $color-background;
 }
 
 .secondary {
-  @include themed() {
-    background-color: t($complementary);
-    color: t($light);
-  }
+  background-color: $color-complementary;
+  color: $color-background;
 }
 
 .contrast {
   @include themed() {
-    background-color: t($dark);
-    color: t($light);
+    background-color: t($onBackground);
+    color: t($background);
   }
 }
 
 .outlined {
   @include themed() {
-    border: 2px solid t($dark);
-    background-color: t($light);
-    color: t($dark);
+    border: 2px solid t($onBackground);
+    background-color: t($background);
+    color: t($onBackground);
   }
 }

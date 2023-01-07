@@ -31,6 +31,13 @@ query ($first: Int) {
     edges {
       node {
         ${collectionFragment}
+        metafield( 
+          namespace: "custom"
+          key: "bannerhome"
+      ) {
+          key
+          value
+        }
       }
     }
   }

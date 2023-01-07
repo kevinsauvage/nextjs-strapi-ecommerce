@@ -8,6 +8,7 @@ function Address({
   handleDelete,
   handleSetAsDefault,
   isDefaultAddress,
+  displayButton = true,
   title,
 }) {
   const {
@@ -27,17 +28,23 @@ function Address({
     <div className={style.address}>
       <div className={style.header}>
         <h5>{title}</h5>
-        <div className={style.buttons}>
-          <Link
-            className={style.button}
-            href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
-          >
-            <FaRegEdit />
-          </Link>
-          <button type="button" onClick={handleDelete} className={style.button}>
-            <FaRegTrashAlt />
-          </button>
-        </div>
+        {displayButton ? (
+          <div className={style.buttons}>
+            <Link
+              className={style.button}
+              href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
+            >
+              <FaRegEdit />
+            </Link>
+            <button
+              type="button"
+              onClick={handleDelete}
+              className={style.button}
+            >
+              <FaRegTrashAlt />
+            </button>
+          </div>
+        ) : null}
       </div>
       <p className={`${style.row} ${style.name}`}>{name}</p>
       <p className={style.row}>
@@ -54,7 +61,7 @@ function Address({
         {phone && <p>{phone}</p>}
       </div>
 
-      {!isDefaultAddress && (
+      {!isDefaultAddress && displayButton ? (
         <button
           className={style.setAsDefault}
           type="button"
@@ -62,7 +69,7 @@ function Address({
         >
           Set as default
         </button>
-      )}
+      ) : null}
     </div>
   );
 }

@@ -1,28 +1,43 @@
-import Button from '@/components/Button/Button';
 import config from '@/config/index';
+import Link from 'next/link';
+import { useMemo } from 'react';
 import Container from '../Container/Container';
 import styles from './Banner1.module.scss';
 
-export default function BannerHome() {
+export default function BannerHome({ collections }) {
+  const collection = useMemo(
+    () =>
+      collections.filter(
+        (el) =>
+          el.metafield?.key === 'bannerhome' && el.metafield.value === 'true'
+      )?.[0],
+    [collections]
+  );
+
+  const date = new Date();
+
+  const { title, description, handle, image } = collection || {};
+
   return (
     <section
       className={styles.banner}
-      style={{ backgroundImage: `url(${config.homeBanner.imageUrl})` }}
+      style={{ backgroundImage: `url(${image.src})` }}
     >
       <Container>
         <div className={styles.inner}>
           <div className={styles.container}>
-            {config.homeBanner.upTitle && (
-              <p className={styles.upTitle}>{config.homeBanner.upTitle}</p>
-            )}
-            <h1 className={styles.title}>{config.homeBanner.title}</h1>
-            <p className={styles.subtitle}>{config.homeBanner.subtitle}</p>
-            <Button
-              text={config.homeBanner.buttonText || 'Shop'}
-              primary
-              extraClass={styles.btn}
-              href={config.homeBanner.link}
-            />
+            <p className={styles.upTitle}>
+              <span />
+              Trending {date?.getFullYear()}
+            </p>
+            <h1 className={`${styles.title} big`}>{title}</h1>
+            <p className={styles.subtitle}>{description}</p>
+            <Link
+              href={`${config.routes.collection}/${handle}`}
+              className={styles.link}
+            >
+              Shop now
+            </Link>
           </div>
         </div>
       </Container>

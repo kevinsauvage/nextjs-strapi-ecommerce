@@ -1,22 +1,8 @@
 .ActiveLink {
   font-weight: $fontWeightMedium;
-  position: relative;
 }
 
 .active {
   font-weight: $fontWeightSemiBold;
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0px;
-    bottom: -4px;
-    height: 2px;
-    width: 60%;
-    max-width: 40px;
-
-    @include themed() {
-      background-color: t($primary);
-    }
-  }
+  @include underline
 }

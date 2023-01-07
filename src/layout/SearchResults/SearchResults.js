@@ -4,7 +4,6 @@ import config from '@/config/index';
 import styles from './SearchResults.module.scss';
 
 function SearchResults({ results }) {
-  console.log(results);
   return (
     <div>
       <div className={styles.searchResult}>

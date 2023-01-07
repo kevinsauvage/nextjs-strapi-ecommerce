@@ -23,15 +23,20 @@ $fontSize-600: $fontSize-500 * $ratio;
 // Colors
 $color-primary: #3094ff;
 $color-complementary: #f44e03;
-$color-light: #f5f8f9;
-$color-dark: #07111d;
+$color-background: #f5f8f9;
+$color-onBackground: #07111d;
 
-$dark: "dark";
-$light: 'light';
+$color-background-dark: #07111d;
+$color-onBackground-dark: #f5f8f9;
+
 $primary: 'primary';
 $complementary: 'complementary';
 $link: 'link';
+$background: 'background';
+$onBackground: 'onBackground';
 
 // Fonts
 $sans-serif: 'Poppins', sans-serif;
 $serif: Merriweather, Georgia, 'Times New Roman', serif;
+
+$radius: 4px;

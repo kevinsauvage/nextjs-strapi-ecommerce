@@ -3,4 +3,9 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+
+    @include themed() {
+        background-color: t($background);
+        color: t($onBackground);
+    }
 }

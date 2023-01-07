@@ -48,7 +48,7 @@ export default function ProductDescription({
         type="button"
         text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
         contrast={availableForSale}
-        primary={!availableForSale}
+        outlined={!availableForSale}
         disabled={!availableForSale}
         onClick={handleAddToCart}
       />

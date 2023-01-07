@@ -4,11 +4,9 @@ body {
   font-family: $sans-serif;
   -webkit-text-size-adjust: 100%; //fix for iOS
 
-  @include themed() {
-    background-color: t("light");
-  }
-}
 
+
+}
 
 
 a,
@@ -49,7 +47,7 @@ th {
   text-align: center;
 
   @include themed() {
-    border: 1px solid theme-var t($dark);
+    border: 1px solid theme-var t($onBackground);
   }
 }
 
@@ -57,7 +55,7 @@ table {
   border-collapse: collapse;
 
   @include themed() {
-    background-color: t($dark);
+    background-color: t($onBackground);
   }
 }
 
