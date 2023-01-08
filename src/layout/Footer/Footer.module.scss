@@ -1,17 +1,17 @@
 .container {
   @include themed {
     background-color: t($background);
-    color: t($onBackground)
+    color: t($onBackground);
   }
 }
 
 .top {
-  padding: 60px 0;
+  padding: var(--space-4) 0;
   display: grid;
   grid-template-columns: 1fr 2fr;
 
   .title {
-    margin-bottom: 50px;
+    margin-bottom: var(--space-2);
     text-transform: capitalize;
   }
 
@@ -24,7 +24,6 @@
     .nav {
       display: flex;
       flex-direction: column;
-      gap: 20px;
       width: fit-content;
       flex-wrap: wrap;
     }
@@ -33,6 +32,7 @@
   .navItem {
     display: inline-block;
     margin-right: 30px;
+    margin-bottom: var(--space-1);
   }
 }
 

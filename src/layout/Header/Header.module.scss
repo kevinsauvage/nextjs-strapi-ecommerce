@@ -20,7 +20,7 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: calc(100vh - $header-height);
+  height: 100%;
   z-index: 999999;
   background-color: rgba(black, 0.9);
 }
@@ -43,8 +43,6 @@
 
 .item {
   margin-bottom: 8px;
-
-
 }
 
 .grid {

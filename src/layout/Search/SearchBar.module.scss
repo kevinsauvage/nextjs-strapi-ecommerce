@@ -5,7 +5,7 @@
   top: $header-height;
   bottom: 0;
   width: 100%;
-  height: calc(101vh - $header-height );
+  height: calc(102vh - $header-height);
   z-index: 9999;
   overflow: auto;
   animation: slide-down 0.2s ease-in-out forwards;
@@ -15,7 +15,6 @@
   @include themed() {
     border-top: 0.1px solid rgba(t($onBackground), 0.3);
   }
-
 }
 
 .searchBar {

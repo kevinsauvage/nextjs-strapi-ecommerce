@@ -3,11 +3,7 @@ body {
   position: relative;
   font-family: $sans-serif;
   -webkit-text-size-adjust: 100%; //fix for iOS
-
-
-
 }
-
 
 a,
 button {
@@ -38,24 +34,6 @@ button {
 
   @include themed() {
     outline: 0.125rem solid t($complementary);
-  }
-}
-
-td,
-th {
-  padding: 6px;
-  text-align: center;
-
-  @include themed() {
-    border: 1px solid theme-var t($onBackground);
-  }
-}
-
-table {
-  border-collapse: collapse;
-
-  @include themed() {
-    background-color: t($onBackground);
   }
 }
 

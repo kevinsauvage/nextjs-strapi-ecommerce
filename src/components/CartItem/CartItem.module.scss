@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-  background-color: white;
 }
 
 .list {
@@ -55,7 +54,10 @@
 .delete {
   cursor: pointer;
   svg {
-    color: rgb(37, 37, 37);
+    @include themed {
+      color: t($onBackground);
+      font-size: $fontSize-400;
+    }
   }
 }
 

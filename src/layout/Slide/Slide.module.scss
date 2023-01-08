@@ -8,9 +8,8 @@
   bottom: 0;
   z-index: 9999999999999;
 
-
   @include themed {
-    background-color: rgba(black, 0.8);
+    background-color: rgba(black, 0.9);
   }
 }
 
@@ -28,7 +27,7 @@
 
   @include themed {
     background-color: t($background);
-    border-left: 0.1px solid rgba(t($onBackground), 0.6);
+    border-left: 0.1px solid rgba(t($onBackground), 0.5);
   }
 }
 
@@ -42,7 +41,6 @@
   @include themed {
     background-color: t($background);
     border-bottom: 0.1px solid rgba(t($onBackground), 0.6);
-
   }
 }
 
@@ -58,12 +56,13 @@
 
   @include themed {
     color: t($onBackground);
-
   }
 
-  svg {}
+  svg {
+  }
 
-  svg {}
+  svg {
+  }
 }
 
 .content {

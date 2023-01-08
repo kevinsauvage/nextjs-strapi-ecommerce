@@ -1,11 +1,10 @@
 .cart {
-  max-width: 800px;
   margin: 0 auto;
   padding-bottom: var(--space-2);
-}
-
-.head {
-  border: 1px solid gray;
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: $gapBig;
+  padding: var(--space-2) 0;
 }
 
 .summary {
@@ -13,14 +12,26 @@
 }
 .price {
   text-align: center;
-}
-
-.btns {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
+  padding: var(--space-1);
+  font-weight: $fontWeightMedium;
 }
 
 .table {
   width: 100%;
+
+  td {
+    text-align: center;
+    vertical-align: middle;
+    padding: var(--space-0);
+    @include themed {
+      border: 0.01px solid rgba(t($onBackground), 0.5);
+    }
+  }
+
+  th {
+    font-weight: $fontWeightMedium;
+    font-size: $fontSize-100;
+    text-transform: uppercase;
+    padding-bottom: 3px;
+  }
 }
