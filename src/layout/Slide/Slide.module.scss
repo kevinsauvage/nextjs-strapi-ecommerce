@@ -52,7 +52,7 @@
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: $fontSize-400;
+  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
 
   @include themed {
     color: t($onBackground);

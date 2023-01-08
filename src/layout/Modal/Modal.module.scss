@@ -36,7 +36,6 @@
 
   @include themed {
     background-color: t($background);
-
   }
 }
 
@@ -51,7 +50,7 @@
   path {
     @include themed {
       stroke: t($onBackground);
-      font-size: $fontSize-400
+      @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
     }
   }
 }

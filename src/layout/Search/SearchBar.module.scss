@@ -47,9 +47,10 @@
   position: absolute;
   right: 0;
   top: var(--space-1);
-  font-size: $fontSize-400;
+
   border: none;
   cursor: pointer;
+  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
 }
 
 .input {
@@ -57,7 +58,7 @@
   min-width: 360px;
   height: 3rem;
   padding-left: 1rem;
-  font-size: $fontSize-300;
+  @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
 }
 
 @keyframes slide-down {

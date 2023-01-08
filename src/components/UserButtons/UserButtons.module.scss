@@ -31,13 +31,7 @@
   min-height: 1rem;
 
   @include themed {
-
     background-color: t($onBackground);
     color: t($background);
-  }
-
-  p {
-    font-size: 10px;
-    line-height: 10px;
   }
 }
