@@ -25,7 +25,7 @@ export default function UserButtons() {
         <>
           {bag}
           <div className={styles.totalItems}>
-            <p>{checkout?.linesItem?.length || 0}</p>
+            <p>{checkout?.lineItems?.length || 0}</p>
           </div>
         </>
       ),

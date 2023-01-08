@@ -13,7 +13,7 @@ export default function CollectionCard({ collection }) {
           className={style.image}
           src={image?.src}
           alt={image?.alt || title}
-          quality={70}
+          quality={20}
           fill
           loading="lazy"
         />
