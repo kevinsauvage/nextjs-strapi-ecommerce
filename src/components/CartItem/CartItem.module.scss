@@ -39,7 +39,12 @@
   width: 80px;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid gray;
+
+  @include themed {
+    border-bottom: 1px solid t($onBackground);
+    color: t($onBackground);
+  }
+
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
