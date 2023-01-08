@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import useProductSelection from '@/hooks/useProductSelection';
@@ -24,17 +24,15 @@ export default function ProductCardRow({ product }) {
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } =
     selectedVariant || {};
 
+  console.log(image);
   return (
     <li className={`${styles.ProductCardRow}`}>
       <div className={styles.image}>
-        {image?.sm && (
+        {image?.small && (
           <Image
-            src={image?.sm}
-            alt={image?.alt}
-            layout="responsive"
-            objectFit="cover"
-            width="500"
-            height="750"
+            src={image?.medium}
+            alt={selectedVariant?.title}
+            fill
             blurDataURL={image?.blurDataURL}
             placeholder="blur"
           />
@@ -46,9 +44,13 @@ export default function ProductCardRow({ product }) {
           <Link
             href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
           >
-            <h6 className={styles.title}>{limitStrLength(title, 90)}</h6>
+            <h4 className={styles.title}>{limitStrLength(title, 90)}</h4>
           </Link>
-          <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} />
+          <Price
+            priceV2={priceV2}
+            compareAtPriceV2={compareAtPriceV2}
+            size="L"
+          />
 
           <Options
             styles={styles.options}
@@ -57,20 +59,20 @@ export default function ProductCardRow({ product }) {
             isSelected={isOptionSelected}
             handleClick={handleSetSelectedProductOption}
           />
-        </div>
-
-        <footer className={styles.footer}>
           <QuantityUpdater
             originalQuantity={1}
             onChange={handleChangeInput}
             quantityAvailable={quantityAvailable}
           />
+        </div>
+
+        <footer className={styles.footer}>
           {quantityAvailable > 0 ? (
             <Button
               extraClass={styles.btn}
               type="button"
               text="ADD TO CART"
-              tertiary
+              primary
               disabled={quantityAvailable < 1}
               onClick={handleAddToCart}
             />

@@ -1,5 +1,5 @@
 .option {
-  padding-bottom: var(--space-2);
+  padding-bottom: var(--space-1);
 
   &:last-child {
     margin-bottom: 0;
@@ -8,11 +8,12 @@
 
 .button {
   padding: 5px;
-  min-height: 46px;
-  min-width: 46px;
+  min-height: 40px;
+  min-width: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: $fontSize--100;
 
   @include themed {
     border: 0.1px solid t($onBackground);
@@ -21,7 +22,6 @@
 }
 
 .name {
-  padding-bottom: var(--space-0);
   display: block;
 }
 
@@ -39,33 +39,7 @@
 }
 
 .outOfStock {
-  opacity: 0.4;
+  opacity: 0.2;
   position: relative;
-
-  &::after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    /* Rising diagonal line */
-    background: linear-gradient(to right bottom,
-        white,
-        white 48%,
-        black 49%,
-        black 51%,
-        white 52%,
-        white) !important;
-    /* Falling diagonal line */
-    background: linear-gradient(to right top,
-        white,
-        white 48%,
-        black 49%,
-        black 51%,
-        white 52%,
-        white) !important;
-  }
+  cursor: default;
 }

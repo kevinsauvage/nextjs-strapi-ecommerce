@@ -1,15 +1,19 @@
 .ListDisplay {
   width: 100%;
 }
+
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  gap: var(--space-1);
   flex-direction: column;
   align-content: flex-end;
   align-items: flex-end;
 }
 
 .row {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+
 }
