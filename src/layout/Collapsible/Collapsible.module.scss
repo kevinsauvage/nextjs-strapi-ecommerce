@@ -6,19 +6,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px;
+  padding: var(--space-0);
   height: 40px;
   width: 100%;
   border: none;
-  border-bottom: 1px solid rgb(221, 221, 221);
   transition: all 0.2s ease-in-out 0.05s;
-
+  @include themed {
+    border-bottom: 1px solid t($onBackground);
+  }
 }
 
 .last {
   border-bottom: none;
 }
-
 
 .icon {
   display: flex;
@@ -56,13 +56,13 @@
 }
 
 .open {
-  &>.children {
+  & > .children {
     display: block;
     margin-bottom: 10px;
     animation: open 0.3s ease-in-out forwards;
   }
 
-  &>.header {
+  & > .header {
     transition: none;
     border-bottom: 1px solid transparent;
   }
@@ -76,7 +76,7 @@
 }
 
 .close {
-  &>.children {
+  & > .children {
     animation: close 0.2s ease-in-out forwards;
   }
 }

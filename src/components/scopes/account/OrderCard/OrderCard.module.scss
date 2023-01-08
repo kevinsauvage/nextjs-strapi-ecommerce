@@ -1,20 +1,22 @@
-.orderCard {}
-
+.orderCard {
+}
 
 .header {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-1);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.orderCardDetail {}
+.orderCardDetail {
+}
 
-.orderCardLineItem {}
+.orderCardLineItem {
+}
 
-.orderCardLines {}
+.orderCardLines {
+}
 
 .link {
-  padding: 6px;
   text-decoration: underline;
 }

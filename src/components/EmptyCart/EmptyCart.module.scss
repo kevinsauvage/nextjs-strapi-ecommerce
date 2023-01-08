@@ -5,14 +5,12 @@
   justify-content: center;
   max-width: 500px;
   margin: 0 auto;
-  padding: 100px 0;
+  padding: var(--space-4) 0;
 }
 
 .title {
   margin-bottom: var(--space-1);
 }
-
-
 
 .btn {
   margin-top: var(--space-2);

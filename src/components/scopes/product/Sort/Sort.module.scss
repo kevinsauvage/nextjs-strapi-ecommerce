@@ -9,9 +9,9 @@
 .select {
   border: none;
   background-color: rgb(250, 250, 250);
-  padding: 8px;
+  padding: var(--space-0);
 }
 
 .option {
-  padding: 9px 9px;
+  padding: var(--space-0);
 }

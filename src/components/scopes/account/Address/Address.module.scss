@@ -15,17 +15,10 @@
   text-transform: capitalize;
 }
 
-.tag {
-  width: fit-content;
-  padding: 3px 6px;
-  border-radius: 3px;
-  margin-bottom: 1rem;
-}
-
 .buttons {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: $gapSmall;
 }
 
 .button {
@@ -38,7 +31,6 @@
   color: rgb(var(--color-dark-0));
   border: 1px solid rgb(var(--color-dark-0));
 }
-
 
 .setAsDefault {
   border: none;

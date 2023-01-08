@@ -38,14 +38,13 @@ $boxDimension: 40px;
 }
 
 .btnQuantity {
-  padding: 10px;
+  padding: var(--space-0);
   height: 100%;
   width: $boxDimension;
   border: none;
 
   svg {
     @include themed {
-
       color: t($onBackground);
     }
   }

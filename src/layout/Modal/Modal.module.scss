@@ -27,7 +27,7 @@
 }
 
 .content {
-  padding: 60px;
+  padding: var(--space-4);
   position: relative;
   border-radius: 3px;
   overflow: auto;

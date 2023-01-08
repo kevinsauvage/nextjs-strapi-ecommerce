@@ -9,10 +9,10 @@
 }
 
 .textarea {
-  padding-top: 1rem;
   min-height: 200px;
   width: 100%;
-  padding-left: 1rem;
+  padding-top: var(--space-1);
+  padding-left: var(--space-1);
   border-radius: 1px;
   resize: vertical;
 

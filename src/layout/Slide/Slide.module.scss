@@ -81,7 +81,7 @@
 }
 
 .footer {
-  padding: 20px;
+  padding: var(--space-1);
 
   @include themed {
     border-top: 0.1px solid rgba(t($onBackground), 0.6);

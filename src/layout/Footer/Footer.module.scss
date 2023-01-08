@@ -41,7 +41,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: 14px 0;
+  padding: var(--space-1) 0;
 
   @include themed() {
     border-top: 0.1px solid t($onBackground);

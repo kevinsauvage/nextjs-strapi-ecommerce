@@ -15,14 +15,13 @@
 
 .quickView {
   position: absolute;
-  padding: 4px;
   top: var(--space-0);
   right: var(--space-0);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  padding: 6px;
+  padding: var(--space-0);
   opacity: 0;
 
   @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
