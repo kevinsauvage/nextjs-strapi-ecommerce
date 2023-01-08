@@ -20,8 +20,9 @@
   left: 0;
   right: 0;
   width: 100%;
-  height: calc(100% - $header-height);
+  height: calc(100vh - $header-height);
   z-index: 999999;
+  background-color: rgba(black, 0.9);
 }
 
 .inner {

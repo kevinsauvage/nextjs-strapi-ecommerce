@@ -1,27 +1,16 @@
 import config from '@/config/index';
 import Link from 'next/link';
-import { useMemo } from 'react';
 import Container from '../Container/Container';
 import styles from './Banner1.module.scss';
 
 export default function BannerHome({ collections }) {
-  const collection = useMemo(
-    () =>
-      collections.filter(
-        (el) =>
-          el.metafield?.key === 'bannerhome' && el.metafield.value === 'true'
-      )?.[0],
-    [collections]
-  );
-
   const date = new Date();
-
-  const { title, description, handle, image } = collection || {};
+  const { title, description, handle, image } = collections?.[0] || {};
 
   return (
     <section
       className={styles.banner}
-      style={{ backgroundImage: `url(${image.src})` }}
+      style={{ backgroundImage: `url(${image?.src})` }}
     >
       <Container>
         <div className={styles.inner}>

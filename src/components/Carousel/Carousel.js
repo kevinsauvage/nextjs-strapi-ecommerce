@@ -63,7 +63,7 @@ function Carousel({ children, title, itemToShow = 5 }) {
     <div className={styles.container}>
       {title ? (
         <div className={styles.header}>
-          <h3 className={styles.title}>{title}</h3>
+          <h2 className={styles.title}>{title}</h2>
           <Indicators
             activeIndex={index}
             totalItems={Children.count(children)}

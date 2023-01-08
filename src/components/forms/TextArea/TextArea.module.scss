@@ -16,15 +16,13 @@
     border-radius: 1px;
     resize: vertical;
 
-    @include themed() {
-        border: 1px solid rgba(t($background), 0.1);
-        background-color: t($onBackground);
-    }
+    border: 1px solid rgba($color-onBackground, 0.1);
+    background-color: $color-background;
 
     &:-webkit-autofill,
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
+        -webkit-box-shadow: 0 0 0 30px $color-background inset !important;
     }
 }

@@ -5,8 +5,8 @@ function CollectionGrid({ collections }) {
   return (
     <ul className={styles.CollectionGrid}>
       {Array.isArray(collections) &&
-        collections.map((collection, i) => (
-          <li key={collection.id} className={`${styles[`item${i + 1}`]}`}>
+        collections.map((collection) => (
+          <li key={collection.id} className={styles.item}>
             <CollectionCard collection={collection} />
           </li>
         ))}

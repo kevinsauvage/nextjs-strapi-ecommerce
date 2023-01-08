@@ -1,12 +1,11 @@
 .container {
-  margin: 2rem 1rem;
+  margin: var(--space-2) 0;
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px;
   margin-bottom: var(--space-1);
 }
 
@@ -27,7 +26,7 @@
   }
 
   .CarouselItem {
-    padding: 8px;
+    padding: calc(var(--space-0) / 2);
     flex: 0 0 auto;
   }
 }

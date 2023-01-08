@@ -10,8 +10,9 @@
   overflow: auto;
   animation: slide-down 0.2s ease-in-out forwards;
 
+  background-color: rgba(black, 0.9);
+
   @include themed() {
-    background-color: rgba(t($onBackground), 0.6);
     border-top: 0.1px solid rgba(t($onBackground), 0.3);
   }
 

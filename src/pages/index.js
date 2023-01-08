@@ -9,36 +9,32 @@ import CollectionGrid from '@/components/scopes/collection/CollectionGrid/Collec
 export default function Home({ bestSelling, collections, newArrival }) {
   return (
     <div>
-      <Banner1 collections={collections} />
-      <CollectionGrid collections={collections} />
       <Container>
-        {newArrival &&
-          Array.isArray(newArrival.products) &&
-          newArrival.products.length > 0 && (
-            <Carousel
-              title="Recommended Products"
-              subtitle="Check out our recommended products"
-              itemToShow={4}
-            >
-              {newArrival.products.map((prod) => (
-                <ProductCardDefault product={prod} key={prod.id} />
-              ))}
-            </Carousel>
-          )}
+        <Banner1 collections={collections?.slice(0, 1)} />
+        <CollectionGrid collections={collections?.slice(1)} />
+        {Array.isArray(newArrival?.products) && (
+          <Carousel
+            title="Recommended Products"
+            subtitle="Check out our recommended products"
+            itemToShow={5}
+          >
+            {newArrival.products.map((prod) => (
+              <ProductCardDefault product={prod} key={prod.id} />
+            ))}
+          </Carousel>
+        )}
 
-        {bestSelling &&
-          Array.isArray(bestSelling.products) &&
-          bestSelling.products.length > 0 && (
-            <Carousel
-              title="Best Selling"
-              subtitle="Check out our best selling products"
-              itemToShow={4}
-            >
-              {bestSelling.products.map((prod) => (
-                <ProductCardDefault product={prod} key={prod.id} />
-              ))}
-            </Carousel>
-          )}
+        {Array.isArray(bestSelling?.products) && (
+          <Carousel
+            title="Best Selling"
+            subtitle="Check out our best selling products"
+            itemToShow={5}
+          >
+            {bestSelling.products.map((prod) => (
+              <ProductCardDefault product={prod} key={prod.id} />
+            ))}
+          </Carousel>
+        )}
       </Container>
     </div>
   );
