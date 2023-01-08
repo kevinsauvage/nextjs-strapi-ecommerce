@@ -13,7 +13,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: $fontSize--100;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   @include themed {
     border: 0.1px solid t($onBackground);

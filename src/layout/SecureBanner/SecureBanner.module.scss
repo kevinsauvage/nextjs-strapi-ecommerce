@@ -6,7 +6,7 @@
   padding: 30px 0;
 
   @include themed() {
-    background-color: rgba(t($onBackground), 0.1);
+    background-color: rgba(t($surface), 1);
   }
 }
 
@@ -18,22 +18,18 @@
   text-align: center;
   gap: 8px;
 
-  @include themed() {
-    color: t($background);
+  color: $color-onBackground;
 
-    svg {
-      color: t($onBackground);
-      font-size: 40px;
-    }
+  svg {
+    color: $color-onBackground;
+
+    font-size: 40px;
   }
 }
 
 .text {
-  margin-bottom: 8px;
-
-  @include themed() {
-    color: t($onBackground);
-  }
+  @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+  font-weight: $fontWeightMedium;
 }
 
 .subtitle {

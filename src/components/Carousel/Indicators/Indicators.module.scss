@@ -18,7 +18,7 @@
     }
 
     svg {
-      font-size: $fontSize-400;
+      @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
     }
   }
 }
@@ -31,7 +31,6 @@
 
   @include themed {
     background-color: t($onBackground);
-
   }
 
   &.last {
@@ -43,7 +42,6 @@
 
     @include themed {
       outline: 0.125rem solid t($onBackground);
-
     }
   }
 }

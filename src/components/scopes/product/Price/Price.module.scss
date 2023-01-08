@@ -17,17 +17,13 @@
 }
 
 .medium {
-
   p {
-    font-size: $fontSize-100;
-
+    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
   }
 }
 
 .large {
-
   p {
     font-size: $fontSize-200;
-
   }
 }

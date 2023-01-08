@@ -30,8 +30,8 @@
 
   th {
     font-weight: $fontWeightMedium;
-    font-size: $fontSize-100;
     text-transform: uppercase;
     padding-bottom: 3px;
+    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
   }
 }

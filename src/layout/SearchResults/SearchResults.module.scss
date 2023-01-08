@@ -16,7 +16,7 @@
 }
 
 .type {
-  font-size: $fontSize--100;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   @include themed() {
     color: rgba(t($onBackground), 0.8);
@@ -35,7 +35,8 @@
 
 .name {
   margin-bottom: var(--space-0);
-  @include text-shorten(1)
+  @include text-shorten(1);
 }
 
-.price {}
+.price {
+}

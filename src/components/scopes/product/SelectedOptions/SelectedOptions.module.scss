@@ -1,6 +1,6 @@
 .selectedOptions {
   margin: 10px 0;
-  font-size: var($fontSize--100);
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 }
 
 .option {
@@ -10,9 +10,10 @@
 
 .name {
   margin-right: 8px;
-  font-size: $fontSize--100;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
   text-transform: uppercase;
   font-weight: $fontWeightMedium;
 }
 
-.value {}
+.value {
+}

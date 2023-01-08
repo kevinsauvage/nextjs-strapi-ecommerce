@@ -56,7 +56,7 @@
   svg {
     @include themed {
       color: t($onBackground);
-      font-size: $fontSize-400;
+      @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
     }
   }
 }
