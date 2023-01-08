@@ -39,12 +39,13 @@ export default function ProductCheckoutCard({ lineItem }) {
         <Link
           href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
         >
-          <h6 className={styles.title}>{title}</h6>
+          <h5 className={styles.title}>{title}</h5>
         </Link>
-        <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
+        <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="M" />
         <SelectedOptions options={selectedOptions} />
         <div className={styles.bottom}>
           <QuantityUpdater
+            showTitle={false}
             originalQuantity={quantity}
             quantityAvailable={quantityAvailable}
             onChange={(num) => handleQuantityChange(num, id)}

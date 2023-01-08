@@ -34,7 +34,7 @@
 
 .wrapper {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-3);
   margin: var(--space-2) 0;
 }
 

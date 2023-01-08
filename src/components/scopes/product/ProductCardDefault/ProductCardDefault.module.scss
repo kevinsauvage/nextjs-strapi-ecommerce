@@ -7,43 +7,49 @@
 }
 
 .content {
-  padding: 8px;
-  z-index: 99;
-  position: relative;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  align-items: center;
+  padding: var(--space-0);
 }
 
 .quickView {
-  background-color: rgb(var(--color-primary-0));
-  color: white;
-  text-align: center;
-  padding: 4px;
   position: absolute;
-  opacity: 0;
-  bottom: 0;
-  width: 100%;
-  transition: opacity 0.3s ease-in;
+  padding: 4px;
+  top: var(--space-0);
+  right: var(--space-0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $fontSize-300;
+  border-radius: 50%;
+  padding: 6px;
+
+  @include themed {
+    background-color: rgba(t($background), 0.6);
+    color: t($onBackground);
+    border: 0.1px solid rgba(t($onBackground), 0.6);
+  }
 }
 
 .image {
   position: relative;
   overflow: hidden;
-
-  &:hover .quickView {
-    opacity: 1;
-  }
 }
 
 .title {
-  margin-bottom: 10px;
   white-space: pre-wrap;
+  @include text-shorten(1)
 }
 
 .productType {
   width: fit-content;
   text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+
+  @include themed {
+    color: rgba(t($onBackground), 0.6);
+  }
 }
 
 .description {}

@@ -9,6 +9,7 @@ export default function QuantityUpdater({
   onChange,
   quantityAvailable,
   extraStyles,
+  showTitle = true,
 }) {
   const [quantity, setQuantity] = useState(originalQuantity);
   const input = useRef(null);
@@ -44,12 +45,13 @@ export default function QuantityUpdater({
 
   return (
     <div className={`${styles.quantityContainer} ${extraStyles}`}>
-      <b className={styles.label}>SELECT QUANTITY</b>
+      {showTitle && <b className={styles.label}>SELECT QUANTITY</b>}
       <div className={styles.inputBox}>
         <button
           type="button"
           onClick={removeOne}
           className={styles.btnQuantity}
+          disabled={quantity <= 1}
         >
           <VscRemove />
         </button>
@@ -64,8 +66,14 @@ export default function QuantityUpdater({
           onBlur={handleConfirmInput}
           onKeyDown={(e) => e.key === 'Enter' && input.current.blur()}
           value={quantity}
+          disabled={quantity <= 1 && quantity >= quantityAvailable}
         />
-        <button type="button" onClick={addOne} className={styles.btnQuantity}>
+        <button
+          type="button"
+          onClick={addOne}
+          className={styles.btnQuantity}
+          disabled={quantity >= quantityAvailable}
+        >
           <VscAdd />
         </button>
       </div>

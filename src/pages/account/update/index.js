@@ -72,6 +72,7 @@ function OrderDetail() {
               type="text"
               label="First Name"
               name="firstName"
+              required
             />
             <Input
               input="true"
@@ -79,6 +80,7 @@ function OrderDetail() {
               type="text"
               name="lastName"
               label="Last Name"
+              required
             />
           </Row>
           <Row className={styles.wrapper}>
@@ -88,6 +90,7 @@ function OrderDetail() {
               type="email"
               label="Email Address"
               name="email"
+              required
             />
             <Input
               input="true"

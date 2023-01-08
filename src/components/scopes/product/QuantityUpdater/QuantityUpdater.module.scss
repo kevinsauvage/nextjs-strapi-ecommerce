@@ -1,3 +1,5 @@
+$boxDimension: 40px;
+
 .label {
   padding-bottom: var(--space-0);
   display: block;
@@ -7,16 +9,23 @@
   width: fit-content;
   display: flex;
   align-items: center;
-  border: 1px solid gray;
-  min-height: 46px;
+  min-height: $boxDimension;
+
+  @include themed {
+    border: 1px solid t($onBackground);
+  }
 }
 
 .input {
   text-align: center;
   height: 100%;
-  width: 46px;
+  width: $boxDimension;
   border: none;
   background-color: transparent;
+
+  @include themed {
+    color: t($onBackground);
+  }
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -32,16 +41,13 @@
 .btnQuantity {
   padding: 10px;
   height: 100%;
-  width: 46px;
+  width: $boxDimension;
   border: none;
 
   svg {
-    color: gray;
-  }
+    @include themed {
 
-  &:hover {
-    svg {
-      color: black;
+      color: t($onBackground);
     }
   }
 }

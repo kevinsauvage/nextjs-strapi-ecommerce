@@ -33,10 +33,10 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (checkoutOpen || selectedProduct || loading) {
+    if (checkoutOpen || selectedProduct || loading || searchOpen) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
-  }, [checkoutOpen, selectedProduct, loading]);
+  }, [checkoutOpen, selectedProduct, loading, searchOpen]);
 
   const values = useMemo(
     () => ({

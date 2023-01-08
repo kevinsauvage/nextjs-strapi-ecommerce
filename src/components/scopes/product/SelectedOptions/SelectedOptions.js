@@ -7,7 +7,7 @@ export default function SelectedOptions({ options }) {
       <div className={styles.selectedOptions}>
         {options.map((option) => (
           <div key={option.value} className={styles.option}>
-            <strong className={styles.name}>{option.name}:</strong>
+            <p className={styles.name}>{option.name}:</p>
             <p className={styles.value}>{option.value}</p>
           </div>
         ))}

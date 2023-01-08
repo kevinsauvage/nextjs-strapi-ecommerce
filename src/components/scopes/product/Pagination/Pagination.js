@@ -10,7 +10,7 @@ export default function Pagination({ handleNext, pageInfo }) {
           disabled={!pageInfo?.hasNextPage}
           onClick={handleNext}
           text="Load more"
-          tertiary
+          contrast
         />
       ) : (
         <p className={style.noResult}>No more results</p>

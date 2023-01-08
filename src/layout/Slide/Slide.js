@@ -29,7 +29,7 @@ export default function Slide({ isOpen, handleClose, title, footer, content }) {
         onKeyDown={(e) => e.stopPropagation()}
       >
         <header className={styles.header}>
-          <h5 className={styles.title}>{title}</h5>
+          <h4 className={styles.title}>{title}</h4>
           <button type="button" className={styles.close} onClick={handleClose}>
             <MdClose />
           </button>

@@ -32,9 +32,9 @@ export default function SearchBar() {
 
   return (
     searchOpen && (
-      <div className={styles.container}>
-        <Container>
-          <div className={styles.searchBar}>
+      <div className={styles.container} role="button" tabIndex={0}>
+        <div className={styles.searchBar} role="presentation">
+          <Container>
             <div className={styles.form}>
               <button
                 tabIndex={0}
@@ -61,8 +61,8 @@ export default function SearchBar() {
               </label>
             </div>
             <SearchResults results={search} />
-          </div>
-        </Container>
+          </Container>
+        </div>
       </div>
     )
   );

@@ -16,10 +16,8 @@ export default function Price({ compareAtPriceV2, priceV2, size = 'M' }) {
       }`}
     >
       <p className={styles.currentPrice}>
-        <strong>
-          {priceV2?.amount}
-          {priceV2?.currencyCode}
-        </strong>
+        {priceV2?.amount}
+        {priceV2?.currencyCode}
       </p>
       {isDiscount && (
         <p className={styles.compareAtPriceV2}>

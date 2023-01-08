@@ -9,10 +9,17 @@
   text-decoration: line-through;
   transform: scale(0.9);
   transform-origin: center;
+  font-weight: $fontWeightSemiBold;
 }
 
 .currentPrice {
-  strong {
-    color: rgb(var(--color-dark-0));
+  font-weight: $fontWeightMedium;
+}
+
+.medium {
+
+  p {
+    font-size: $fontSize-100;
+
   }
 }
