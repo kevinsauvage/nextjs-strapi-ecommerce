@@ -24,6 +24,6 @@
 
 .large {
   p {
-    font-size: $fontSize-200;
+    @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
   }
 }

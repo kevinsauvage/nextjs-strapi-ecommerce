@@ -11,7 +11,7 @@ function CartPage() {
   const { checkout, handleQuantityChange, removeFromCheckout } =
     useCheckoutContext();
 
-  if (checkout?.lineItems?.length === 0) return <EmptyCart />;
+  if (!checkout || checkout?.lineItems?.length === 0) return <EmptyCart />;
 
   return (
     <Page title="Your Cart">
