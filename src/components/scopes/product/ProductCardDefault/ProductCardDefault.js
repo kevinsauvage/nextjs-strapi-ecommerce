@@ -3,6 +3,7 @@ import Link from 'next/link';
 import limitStrLength from '@/utils/limitStringLength';
 import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { IoMdEye } from 'react-icons/io';
 import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
@@ -41,12 +42,12 @@ export default function ProductCardDefault({ product = {} }) {
               if (e.key === 'Enter') setSelectedProduct(product);
             }}
           >
-            Quick view
+            <IoMdEye />
           </div>
         </div>
         <div className={styles.content}>
           <div className={styles.productType}>{productType}</div>
-          <p className={styles.title}>{limitStrLength(title, 40)}</p>
+          <h5 className={styles.title}>{limitStrLength(title, 40)}</h5>
           <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} />
         </div>
       </Link>
