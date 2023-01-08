@@ -1,12 +1,32 @@
+$color-background: #f5f8f9;
+$color-background-dark: #07111d;
+
+$color-onBackground: #07111d;
+$color-onBackground-dark: #cacaca;
+
+$color-grey-dark: #e1e1e1;
+$color-grey: #eeefef;
+
+$primary: 'primary';
+$complementary: 'complementary';
+$link: 'link';
+$background: 'background';
+$onBackground: 'onBackground';
+$surface: 'surface';
+
 $themes: (
-  default: (primary: $color-primary,
+  default: (
+    primary: $color-primary,
     complementary: $color-complementary,
     background: $color-background,
     onBackground: $color-onBackground,
+    surface: $color-grey,
   ),
-  dark: (primary: $color-primary,
+  dark: (
+    primary: $color-primary,
     complementary: $color-complementary,
     background: $color-background-dark,
     onBackground: $color-onBackground-dark,
+    surface: $color-grey-dark,
   ),
 );

@@ -2,7 +2,8 @@
   text-align: center;
 
   & a {
-    color: rgb(var(--color-primary-0));
+    color: $color-primary;
     text-decoration: underline;
+    font-size: $fontSize--100;
   }
 }

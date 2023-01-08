@@ -24,6 +24,7 @@
   font-size: $fontSize-300;
   border-radius: 50%;
   padding: 6px;
+  opacity: 0;
 
   @include themed {
     background-color: rgba(t($background), 0.6);
@@ -35,11 +36,18 @@
 .image {
   position: relative;
   overflow: hidden;
+
+  &:hover {
+    .quickView {
+      opacity: 1;
+      transition: 0.3s ease-in-out;
+    }
+  }
 }
 
 .title {
   white-space: pre-wrap;
-  @include text-shorten(1)
+  @include text-shorten(1);
 }
 
 .productType {
@@ -52,4 +60,5 @@
   }
 }
 
-.description {}
+.description {
+}

@@ -66,3 +66,9 @@ b {
 b {
   font-weight: $fontWeightSemiBold;
 }
+
+input,
+textarea,
+select {
+  font-family: $sans-serif;
+}

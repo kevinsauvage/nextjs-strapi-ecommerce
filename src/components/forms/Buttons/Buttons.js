@@ -4,7 +4,7 @@ import styles from './Buttons.module.scss';
 function Buttons({ children, text }) {
   return (
     <div className={styles.buttons}>
-      <Button text={text} type="submit" contrast />
+      <Button text={text} type="submit" primary />
       {children}
     </div>
   );

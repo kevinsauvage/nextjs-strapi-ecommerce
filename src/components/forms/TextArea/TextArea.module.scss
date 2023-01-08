@@ -1,28 +1,32 @@
 .label {
-    width: 100%;
-    padding-bottom: var(--space-2);
-    display: block;
+  width: 100%;
+  padding-bottom: var(--space-2);
+  display: block;
 }
 
 .title {
-    display: flex;
+  display: flex;
 }
 
 .textarea {
-    padding-top: 1rem;
-    min-height: 200px;
-    width: 100%;
-    padding-left: 1rem;
-    border-radius: 1px;
-    resize: vertical;
+  padding-top: 1rem;
+  min-height: 200px;
+  width: 100%;
+  padding-left: 1rem;
+  border-radius: 1px;
+  resize: vertical;
 
-    border: 1px solid rgba($color-onBackground, 0.1);
-    background-color: $color-background;
+  @include themed {
+    background-color: t($surface);
+    border: 1px solid darken(t($surface), 10%);
+  }
 
-    &:-webkit-autofill,
-    &:-webkit-autofill:hover,
-    &:-webkit-autofill:focus,
-    &:-webkit-autofill:active {
-        -webkit-box-shadow: 0 0 0 30px $color-background inset !important;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    @include themed {
+      -webkit-box-shadow: 0 0 0 30px t($surface) inset !important;
     }
+  }
 }
