@@ -69,6 +69,16 @@ totalPrice {
   amount
   currencyCode
 }
+subtotalPrice {
+  amount
+  currencyCode
+}
+shippingLine {
+  price {
+    amount
+    currencyCode
+  }
+}
 orderStatusUrl
 lineItemsSubtotalPrice {
   amount

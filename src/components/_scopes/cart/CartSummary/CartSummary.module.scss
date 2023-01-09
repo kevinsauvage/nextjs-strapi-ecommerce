@@ -26,4 +26,30 @@
 
 .btn {
   width: 100%;
+  margin-top: var(--space-1);
+}
+
+.CartSummaryRow {
+  padding: var(--space-0) 0;
+
+  @include themed {
+    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  &__title {
+    font-weight: $fontWeightMedium;
+    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__children {
+    margin-top: var(--space-0);
+  }
 }

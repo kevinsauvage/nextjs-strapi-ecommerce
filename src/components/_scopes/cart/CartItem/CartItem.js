@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/Button/Button';
 import { toast } from 'react-toastify';
 import config from '@/config/index';
-import { GrClose } from 'react-icons/gr';
+import { close } from '@/assets/svg';
 import styles from './CartItem.module.scss';
 
 export default function CartItem({
@@ -78,7 +78,7 @@ export default function CartItem({
         ) : null}
       </td>
       <td className={styles.item}>
-        <span className={styles.price}>€{totalPrice.toFixed(2)}</span>
+        <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
       </td>
       <td className={styles.item}>
         <div
@@ -88,7 +88,7 @@ export default function CartItem({
           onKeyDown={(e) => e.key === 'Enter' && removeFromCart(lineId)}
           onClick={() => removeFromCart(lineId)}
         >
-          <GrClose />
+          {close}
         </div>
       </td>
     </tr>

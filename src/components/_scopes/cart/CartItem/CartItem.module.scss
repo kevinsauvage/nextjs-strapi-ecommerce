@@ -24,6 +24,12 @@
   text-align: center;
 }
 
+.price {
+  opacity: 0.7;
+}
+.subtotal {
+  font-weight: $fontWeightMedium;
+}
 .content {
   padding: var(--space-0) 0 var(--space-0) 1rem;
   text-align: start;
@@ -58,10 +64,10 @@
 
 .delete {
   cursor: pointer;
-  svg {
+  svg,
+  path {
     @include themed {
-      color: t($onBackground);
-      @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+      stroke: t($onBackground);
     }
   }
 }

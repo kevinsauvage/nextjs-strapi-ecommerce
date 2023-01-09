@@ -37,7 +37,6 @@ $breakpoints: (
 *
 }*/
 @mixin respond-above($breakpoint) {
-
   // If the breakpoint exists in the map.
   @if map-has-key($breakpoints, $breakpoint) {
     // Get the breakpoint value.
@@ -49,9 +48,7 @@ $breakpoints: (
     }
 
     // If the breakpoint doesn't exist in the map.
-  }
-
-  @else {
+  } @else {
     // Log a warning.
     @warn 'Invalid breakpoint: #{$breakpoint}.';
   }
@@ -106,13 +103,11 @@ $breakpoints: (
 }
 
 @mixin fade($type) {
-  @if $type=='hide' {
+  @if $type== 'hide' {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 1s;
-  }
-
-  @else if $type=='show' {
+  } @else if $type== 'show' {
     visibility: visible;
     opacity: 1;
     transition: visibility 1s, opacity 1s;
@@ -146,8 +141,15 @@ $breakpoints: (
       line-height: $min-font-size * 1.618;
 
       @media screen and (min-width: $min-width) {
-        font-size: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
-        line-height: calc(#{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * 1.618 * ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)}));
+        font-size: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)})
+        );
+        line-height: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            1.618 *
+            ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)})
+        );
       }
 
       @media screen and (min-width: $max-width) {
@@ -159,26 +161,24 @@ $breakpoints: (
 }
 
 @mixin spread-map($map: ()) {
-
-  @each $key,
-  $value in $map {
+  @each $key, $value in $map {
     #{$key}: $value;
   }
 }
 
 @mixin themed() {
-
-  @each $theme,
-  $map in $themes {
+  @each $theme, $map in $themes {
     :global(.theme--#{$theme}) & {
       $theme-map: () !global;
 
-      @each $key,
-      $submap in $map {
+      @each $key, $submap in $map {
         $value: map-get(map-get($themes, $theme), $key);
-        $theme-map: map-merge($theme-map,
-          ($key: $value,
-          )) !global;
+        $theme-map: map-merge(
+          $theme-map,
+          (
+            $key: $value,
+          )
+        ) !global;
       }
 
       @content;
@@ -210,16 +210,15 @@ $breakpoints: (
   }
 }
 
-@mixin filter() {}
+@mixin filter() {
+}
 
 @mixin glassmorphism() {
-  will-change: transform;
-  backdrop-filter: url('#myblurfilter');
-  -webkikt-backdrop-filter: url('#myblurfilter');
+  will-change: content;
   border-radius: $radius;
 
   @include themed {
-    background-color: rgba(t($background), 0.3);
+    background-color: rgba(t($background), 0.6);
     color: t($onBackground);
     border: 1px solid rgba(t($background), 0.3);
   }

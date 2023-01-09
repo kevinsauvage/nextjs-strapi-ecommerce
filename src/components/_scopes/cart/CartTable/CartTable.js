@@ -14,7 +14,7 @@ function CartTable() {
           <th>Product</th>
           <th>Price</th>
           <th>Quantity</th>
-          <th>Total</th>
+          <th>Subtotal</th>
           <th colSpan="1" />
         </tr>
       </thead>
