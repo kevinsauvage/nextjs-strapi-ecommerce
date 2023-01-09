@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import Page from '@/layout/Page/Page';
-import Address from '@/components/scopes/account/Address/Address';
+import Address from '@/components/_scopes/account/Address/Address';
 import nextApiCall from '@/utils/apiNext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Section from '@/components/scopes/account/section/Section';
+import Section from '@/components/_scopes/account/section/Section';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -73,7 +73,7 @@ function Addresses() {
   }, [fetchAddresses]);
 
   return (
-    <Page title="Addresses">
+    <PageLayout title="Addresses">
       <AccountLayout loading={isLoading} title="Addresses">
         <Section title="Default Address">
           <Address address={user?.defaultAddress} isDefaultAddress />
@@ -98,7 +98,7 @@ function Addresses() {
           )}
         </Section>
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 

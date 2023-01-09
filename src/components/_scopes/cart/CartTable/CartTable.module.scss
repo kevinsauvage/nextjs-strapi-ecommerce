@@ -1,0 +1,28 @@
+.table {
+  width: 100%;
+  height: fit-content;
+
+  td {
+    text-align: center;
+    vertical-align: middle;
+    padding: var(--space-0) 0;
+    min-width: 100px;
+
+    @include themed {
+      border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    }
+  }
+
+  th {
+    font-weight: $fontWeightMedium;
+    text-transform: uppercase;
+    padding-bottom: var(--space-0);
+
+    &:first-of-type {
+      text-align: start;
+    }
+    @include themed {
+      border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    }
+  }
+}

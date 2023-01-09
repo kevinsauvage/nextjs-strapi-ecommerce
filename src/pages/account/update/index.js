@@ -1,15 +1,15 @@
-import Page from '@/layout/Page/Page';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Form from '@/components/forms/Form/Form';
+import Form from '@/components/_scopes/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import Input from '@/components/forms/Input/Input';
+import Input from '@/components/_scopes/forms/Input/Input';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Buttons from '@/components/forms/Buttons/Buttons';
-import Row from '@/components/forms/Row/Row';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
+import Row from '@/components/_scopes/forms/Row/Row';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -52,7 +52,7 @@ function OrderDetail() {
   };
 
   return (
-    <Page title="Update account Information">
+    <PageLayout title="Update account Information">
       <AccountLayout loading={isLoading || !id} title="Account Details">
         <Form
           onSubmit={handleSubmit}
@@ -125,7 +125,7 @@ function OrderDetail() {
           </Buttons>
         </Form>
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 

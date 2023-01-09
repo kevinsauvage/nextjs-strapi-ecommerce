@@ -1,12 +1,12 @@
-import Page from '@/layout/Page/Page';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
-import CollectionGrid from '@/components/scopes/collection/CollectionGrid/CollectionGrid';
+import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function CategoryPage({ collections }) {
   return (
-    <Page title="Collections">
+    <PageLayout title="Collections">
       <CollectionGrid collections={collections} />
-    </Page>
+    </PageLayout>
   );
 }
 

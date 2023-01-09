@@ -1,11 +1,11 @@
 import { MdOutlineLogout } from 'react-icons/md';
 import { useRouter } from 'next/router';
 import { toast } from 'react-toastify';
-import Loader from '@/components/Loader/Loader';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import Loader from '@/components/_loaders/Loader/Loader';
 import styles from './AccountLayout.module.scss';
 
 function AccountLayout({ children, loading, title }) {

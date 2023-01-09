@@ -6,36 +6,3 @@
   gap: $gapBig;
   padding: var(--space-2) 0;
 }
-
-.summary {
-  text-align: right;
-}
-.price {
-  text-align: center;
-  padding: var(--space-1);
-  font-weight: $fontWeightMedium;
-}
-
-.table {
-  width: 100%;
-
-  td {
-    text-align: center;
-    vertical-align: middle;
-    padding: var(--space-0);
-
-    @include themed {
-      border: 0.01px solid rgba(t($onBackground), 0.5);
-    }
-  }
-
-  th {
-    font-weight: $fontWeightMedium;
-    text-transform: uppercase;
-    padding-bottom: 3px;
-    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
-  }
-}
-.btn {
-  width: 100%;
-}

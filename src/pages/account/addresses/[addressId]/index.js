@@ -1,12 +1,12 @@
-import Page from '@/layout/Page/Page';
 import nextApiCall from '@/utils/apiNext';
-import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
+import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -67,7 +67,7 @@ function AddressUpdate() {
   };
 
   return (
-    <Page title="Update Address">
+    <PageLayout title="Update Address">
       <AccountLayout loading={isLoading} title="Update Address">
         {address && (
           <AddressForm
@@ -77,7 +77,7 @@ function AddressUpdate() {
           />
         )}
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 

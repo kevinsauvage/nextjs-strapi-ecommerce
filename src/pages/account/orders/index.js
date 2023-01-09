@@ -1,6 +1,5 @@
 // import { useState } from 'react';
-import Orders from '@/components/scopes/account/Orders/Orders';
-import Page from '@/layout/Page/Page';
+import Orders from '@/components/_scopes/account/Orders/Orders';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
@@ -8,6 +7,7 @@ import { toast } from 'react-toastify';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 export default function OrdersPage() {
   const { orders, dispatch } = useUserContext();
@@ -39,12 +39,12 @@ export default function OrdersPage() {
   }, [back, dispatch]);
 
   return (
-    <Page title="Orders">
+    <PageLayout title="Orders">
       <AccountLayout title="Orders" loading={isLoading}>
         <div className="orders">
           <Orders orders={orders} />
         </div>
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }

@@ -1,7 +1,7 @@
 import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import nookies from 'nookies';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
-import CollectionPage from '@/layout/CollectionPage/CollectionPage';
+import CollectionPage from '@/components/CollectionPage/CollectionPage';
 
 function CollectionSlugPage(props) {
   return (

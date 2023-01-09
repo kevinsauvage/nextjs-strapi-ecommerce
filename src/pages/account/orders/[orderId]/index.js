@@ -1,13 +1,13 @@
-import LineItemCard from '@/components/scopes/account/LineItemCard/LineItemCard';
-import Page from '@/layout/Page/Page';
+import LineItemCard from '@/components/_scopes/account/LineItemCard/LineItemCard';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Address from '@/components/scopes/account/Address/Address';
-import Card from '@/components/scopes/account/Card/Card';
-import OrderCard from '@/components/scopes/account/OrderCard/OrderCard';
+import Address from '@/components/_scopes/account/Address/Address';
+import Card from '@/components/_scopes/account/Card/Card';
+import OrderCard from '@/components/_scopes/account/OrderCard/OrderCard';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail() {
@@ -44,7 +44,7 @@ function OrderDetail() {
   const title = `Order${name ? `: ${name}` : ''}`;
 
   return (
-    <Page title={title}>
+    <PageLayout title={title}>
       <AccountLayout loading={isLoading} title="Order Details">
         <div>
           <div className={styles.top}>
@@ -70,7 +70,7 @@ function OrderDetail() {
           </Card>
         </div>
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 

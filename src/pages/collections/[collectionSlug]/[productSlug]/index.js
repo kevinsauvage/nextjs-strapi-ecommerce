@@ -1,14 +1,14 @@
 import { useRouter } from 'next/router';
-import Page from '@/layout/Page/Page';
-import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/_scopes/product/ProductCardDefault/ProductCardDefault';
 import Carousel from '@/components/Carousel/Carousel';
 import {
   getProduct,
   getProductRecommendation,
   getProducts,
 } from '@/lib/shopify/product/productApiCall';
-import ProductPresenter from '@/components/scopes/product/ProductPresenter/ProductPresenter';
-import PageLoader from '@/layout/Loader/PageLoader/PageLoader';
+import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
+import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
@@ -17,9 +17,9 @@ function ProductPage({ product, recommendations = [] }) {
 
   return (
     <>
-      <Page title={title} description={description}>
+      <PageLayout title={title} description={description}>
         <ProductPresenter product={product} />
-      </Page>
+      </PageLayout>
       {Array.isArray(recommendations) && recommendations.length > 0 && (
         <Carousel
           title="Recommended Products"

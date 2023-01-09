@@ -1,14 +1,14 @@
-import Page from '@/layout/Page/Page';
 import { getShippingPolicy } from '@/lib/shopify/shop/shopApiCall';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './shipping.module.scss';
 
 function ShippingPage({ shippingPolicy }) {
   return (
-    <Page title="Our shipping policies">
+    <PageLayout title="Our shipping policies">
       <div className={styles.privacy}>
         <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
       </div>
-    </Page>
+    </PageLayout>
   );
 }
 

@@ -1,14 +1,14 @@
 import Link from 'next/link';
-import Input from '@/components/forms/Input/Input';
-import Page from '@/layout/Page/Page';
-import Form from '@/components/forms/Form/Form';
+import Input from '@/components/_scopes/forms/Input/Input';
+import Form from '@/components/_scopes/forms/Form/Form';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Buttons from '@/components/forms/Buttons/Buttons';
-import FormContainer from '@/components/forms/FormContainer/FormContainer';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
+import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
@@ -43,7 +43,7 @@ function RegisterPage() {
   };
 
   return (
-    <Page title="Register your account">
+    <PageLayout title="Register your account">
       <FormContainer>
         <Form onSubmit={onSubmit} title="Register">
           <Input
@@ -70,7 +70,7 @@ function RegisterPage() {
           </Buttons>
         </Form>
       </FormContainer>
-    </Page>
+    </PageLayout>
   );
 }
 

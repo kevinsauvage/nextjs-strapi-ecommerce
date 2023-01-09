@@ -1,10 +1,10 @@
-import Banner1 from '@/layout/BannerHome/Banner1';
-import Container from '@/layout/Container/Container';
+import Container from '@/components/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
 import Carousel from '@/components/Carousel/Carousel';
-import ProductCardDefault from '@/components/scopes/product/ProductCardDefault/ProductCardDefault';
+import ProductCardDefault from '@/components/_scopes/product/ProductCardDefault/ProductCardDefault';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
-import CollectionGrid from '@/components/scopes/collection/CollectionGrid/CollectionGrid';
+import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
+import Banner1 from '@/components/_banners/BannerHome/Banner1';
 
 export default function Home({ bestSelling, collections, newArrival }) {
   return (

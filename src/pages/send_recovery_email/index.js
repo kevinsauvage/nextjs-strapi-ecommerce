@@ -1,13 +1,13 @@
-import Form from '@/components/forms/Form/Form';
-import Input from '@/components/forms/Input/Input';
-import Page from '@/layout/Page/Page';
+import Form from '@/components/_scopes/forms/Form/Form';
+import Input from '@/components/_scopes/forms/Input/Input';
 import config from '@/config/index';
 import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Buttons from '@/components/forms/Buttons/Buttons';
-import FormContainer from '@/components/forms/FormContainer/FormContainer';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
+import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import BackButton from '@/components/BackButton/BackButton';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
@@ -26,7 +26,7 @@ function ResetPassword() {
   };
 
   return (
-    <Page title="Password recovery">
+    <PageLayout title="Password recovery">
       <FormContainer>
         <Form title="Password Recovery" onSubmit={onSubmit}>
           <Input
@@ -43,7 +43,7 @@ function ResetPassword() {
           </Buttons>
         </Form>
       </FormContainer>
-    </Page>
+    </PageLayout>
   );
 }
 

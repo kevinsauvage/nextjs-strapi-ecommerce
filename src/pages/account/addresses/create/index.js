@@ -1,9 +1,9 @@
-import Page from '@/layout/Page/Page';
 import nextApiCall from '@/utils/apiNext';
-import AddressForm from '@/components/scopes/account/AddressForm/AddressForm';
+import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -40,11 +40,11 @@ function Addresses() {
   };
 
   return (
-    <Page title="Create new address">
+    <PageLayout title="Create new address">
       <AccountLayout title="Create address">
         <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 

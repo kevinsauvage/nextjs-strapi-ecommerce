@@ -1,9 +1,9 @@
-import Input from '@/components/forms/Input/Input';
-import Page from '@/layout/Page/Page';
-import Form from '@/components/forms/Form/Form';
-import Buttons from '@/components/forms/Buttons/Buttons';
-import TextArea from '@/components/forms/TextArea/TextArea';
-import FormContainer from '@/components/forms/FormContainer/FormContainer';
+import Input from '@/components/_scopes/forms/Input/Input';
+import Form from '@/components/_scopes/forms/Form/Form';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
+import TextArea from '@/components/_scopes/forms/TextArea/TextArea';
+import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function ContactPage() {
   const onSubmit = async (formData) => {
@@ -12,7 +12,7 @@ function ContactPage() {
   };
 
   return (
-    <Page title="Contact Us">
+    <PageLayout title="Contact Us">
       <FormContainer>
         <Form onSubmit={onSubmit} action="submit" title="Contact Us">
           <Input
@@ -42,7 +42,7 @@ function ContactPage() {
           <Buttons text="SEND MESSAGE" />
         </Form>
       </FormContainer>
-    </Page>
+    </PageLayout>
   );
 }
 

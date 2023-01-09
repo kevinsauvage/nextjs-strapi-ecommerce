@@ -1,10 +1,10 @@
-import Page from '@/layout/Page/Page';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import AccountInfo from '@/components/scopes/account/AccountInfo/AccountInfo';
-import Address from '@/components/scopes/account/Address/Address';
+import AccountInfo from '@/components/_scopes/account/AccountInfo/AccountInfo';
+import Address from '@/components/_scopes/account/Address/Address';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
-import Section from '@/components/scopes/account/section/Section';
+import Section from '@/components/_scopes/account/section/Section';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import styles from './Account.module.scss';
 
 function Account() {
@@ -17,7 +17,7 @@ function Account() {
   }, [user]);
 
   return (
-    <Page title="Account">
+    <PageLayout title="Account">
       <AccountLayout title="My Account" loading={isLoading}>
         <main className={styles.main}>
           <Section title="Account Information">
@@ -28,7 +28,7 @@ function Account() {
           </Section>
         </main>
       </AccountLayout>
-    </Page>
+    </PageLayout>
   );
 }
 
