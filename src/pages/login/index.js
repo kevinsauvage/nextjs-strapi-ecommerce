@@ -16,12 +16,15 @@ const { userFeedback } = config;
 function LoginPage() {
   const { toggleLoading } = useGlobalContext();
 
-  const { push } = useRouter();
+  const { reload } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return toast.error(userFeedback?.missingFields);
     toggleLoading(true);
     const resLogin = await nextApiCall.login({ email, password });
+
+    console.log('🚀 ~ file: index.js:26 ~ onSubmit ~ resLogin', resLogin);
+
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) {
@@ -31,9 +34,7 @@ function LoginPage() {
     }
 
     if (resLogin?.ok) {
-      setTimeout(() => {
-        push(config.routes.account);
-      }, 1000);
+      reload();
       return toast.success(userFeedback.login.success);
     }
     return toast.error(userFeedback.login.error);
