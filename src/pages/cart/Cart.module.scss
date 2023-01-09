@@ -5,4 +5,5 @@
   grid-template-columns: 1fr 360px;
   gap: $gapBig;
   padding: var(--space-2) 0;
+  min-height: 70vh;
 }
