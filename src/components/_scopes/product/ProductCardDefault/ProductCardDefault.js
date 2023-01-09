@@ -26,7 +26,6 @@ export default function ProductCardDefault({ product = {} }) {
             blurDataURL={images?.[0]?.blurDataURL}
             placeholder="blur"
             quality={20}
-            loading="lazy"
           />
           <div
             className={styles.quickView}

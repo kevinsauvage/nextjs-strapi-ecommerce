@@ -15,7 +15,6 @@ export default function CollectionCard({ collection }) {
           alt={image?.alt || title}
           quality={20}
           fill
-          loading="lazy"
         />
       </div>
       <div className={style.content}>
