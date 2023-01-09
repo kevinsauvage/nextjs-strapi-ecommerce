@@ -6,7 +6,7 @@
 }
 
 .top {
-  padding: var(--space-4) 0;
+  padding: var(--space-3) 0;
   display: grid;
   grid-template-columns: 1fr 2fr;
 
@@ -33,6 +33,9 @@
     display: inline-block;
     margin-right: 30px;
     margin-bottom: var(--space-1);
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
