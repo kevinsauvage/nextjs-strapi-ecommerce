@@ -1,11 +1,9 @@
-.forgotPassword {
-  margin-top: var(--space-2);
-  margin-bottom: var(--space-1);
-}
-
-.register,
-.forgotPassword {
+.register {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-0);
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   & a {
@@ -13,15 +11,4 @@
     text-decoration: underline;
     @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
   }
-}
-
-.register {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.buttons {
-  gap: var(--space-2);
-  @include flex-center-vert;
 }

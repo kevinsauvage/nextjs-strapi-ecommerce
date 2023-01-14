@@ -13,7 +13,10 @@ export default withRouter(
         as={as}
         scroll={scroll}
         className={`${styles.ActiveLink}  ${
-          (router.asPath === path || router.pathname === path) && styles.active
+          router.pathname.replace(
+            '[collectionSlug]',
+            router.query.collectionSlug
+          ) === path && styles.active
         }`}
       >
         {children}

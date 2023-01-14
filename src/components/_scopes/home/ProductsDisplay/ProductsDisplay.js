@@ -1,30 +1,40 @@
 import { useState } from 'react';
-import ListDisplay from '@/components/ListDisplay/ListDisplay';
 import ProductCardDefault from '../../product/ProductCardDefault/ProductCardDefault';
+import styles from './ProductsDisplay.module.scss';
 
 function ProductsDisplay({ bestSelling, newArrival }) {
   const [index, setIndex] = useState(0);
   const [products] = useState([bestSelling.products, newArrival.products]);
 
-  const nav = [{ title: 'Best selling' }, { title: 'newArrival' }];
+  const nav = [{ title: 'Best selling' }, { title: 'New Arrival' }];
 
   return (
-    <div>
-      <h2 className="big">OUR TRENDY PRODUCTS</h2>
-      <div>
-        {Array.isArray(nav) &&
-          nav.map((item, i) => (
-            <button key={item.title} type="button" onClick={() => setIndex(i)}>
-              {item.title}
-            </button>
-          ))}
+    <div className={styles.productsDisplay}>
+      <div className={styles.header}>
+        <div className={styles.title}>
+          <p>OUR TRENDY</p> <h2> PRODUCTS</h2>
+        </div>
+        <ul className={styles.nav}>
+          {Array.isArray(nav) &&
+            nav.map((item, i) => (
+              <li key={item.title}>
+                <button
+                  className={`${styles.button} ${i === index && styles.active}`}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                >
+                  {item.title}
+                </button>
+              </li>
+            ))}
+        </ul>
       </div>
-      <ListDisplay layout="grid">
+      <ul className={styles.list}>
         {Array.isArray(products[index]) &&
           products[index].map((product) => (
             <ProductCardDefault key={product.id} product={product} />
           ))}
-      </ListDisplay>
+      </ul>
     </div>
   );
 }

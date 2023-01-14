@@ -26,7 +26,7 @@
 }
 
 .inner {
-  padding: var(--space-2) 0;
+  padding: var(--space-2);
   animation: rotateZ 0.3s linear forwards;
 
   @include themed() {
@@ -42,13 +42,14 @@
 }
 
 .item {
-  margin-bottom: 8px;
+  width: fit-content;
+  padding: var(--space-0) 0;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
+  column-gap: var(--space-1);
 }
 
 @keyframes rotateZ {

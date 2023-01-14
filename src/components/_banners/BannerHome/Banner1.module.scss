@@ -18,6 +18,8 @@
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  border-radius: $radius;
+
   @include flex-column;
   justify-content: center;
   position: relative;

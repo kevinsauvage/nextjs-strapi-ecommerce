@@ -1,19 +1,23 @@
 .Price {
   display: flex;
   align-items: center;
+  gap: var(--space-0);
 }
 
 .compareAtPriceV2 {
   color: $color-primary;
-  margin-left: 8px;
   text-decoration: line-through;
-  transform: scale(0.9);
-  transform-origin: center;
   font-weight: $fontWeightSemiBold;
 }
 
 .currentPrice {
   font-weight: $fontWeightMedium;
+}
+
+.small {
+  p {
+    @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
+  }
 }
 
 .medium {

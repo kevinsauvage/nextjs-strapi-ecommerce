@@ -62,13 +62,12 @@ function LoginPage() {
           />
           <Buttons text="Login">
             <div className={styles.register}>
-              <Link href={config.routes.register}>REGISTER</Link>
+              <Link href={config.routes.register}>REGISTER</Link> or
+              <Link href={config.routes.emailResetPassword}>
+                RESET PASSWORD
+              </Link>
             </div>
           </Buttons>
-          <div className={styles.forgotPassword}>
-            Forget your password ?{' '}
-            <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
-          </div>
         </Form>
       </FormContainer>
     </PageLayout>

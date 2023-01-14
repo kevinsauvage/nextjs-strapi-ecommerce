@@ -10,6 +10,7 @@ import config from '@/config/index';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
 import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
+import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CollectionContext = createContext();
 
@@ -25,6 +26,8 @@ export function CollectionProvider({ children }) {
     allFilters,
     layout,
   } = states;
+
+  const { toggleFilter } = useGlobalContext();
 
   const { query, pathname, push, asPath, href } = useRouter();
 
@@ -80,6 +83,8 @@ export function CollectionProvider({ children }) {
   );
 
   const resetFilters = useCallback(async () => {
+    toggleFilter(false);
+
     dispatch({ type: actions.SET_LOADING, payload: true });
 
     const path = pathname.replace('[collectionSlug]', query.collectionSlug);
@@ -113,9 +118,11 @@ export function CollectionProvider({ children }) {
     query.sort_key,
     setPageInfo,
     setProducts,
+    toggleFilter,
   ]);
 
   const applyFilters = useCallback(async () => {
+    toggleFilter(false);
     const path = pathname.replace('[collectionSlug]', query.collectionSlug);
     const newUrl = new URL(config.baseUrl + path);
 
@@ -163,6 +170,7 @@ export function CollectionProvider({ children }) {
     selectedFilters,
     setPageInfo,
     setProducts,
+    toggleFilter,
   ]);
 
   const handleSort = useCallback(
