@@ -46,28 +46,23 @@
   color: $color-grey;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  text-transform: uppercase;
 
   @include themed {
     background-color: t($onBackground);
     color: t($background);
   }
-}
 
-.addToCart {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-0);
+  p {
+    font-weight: $fontWeightSemiBold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-0);
+  }
 }
 
 .quickView {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--space-0);
-
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
-
   @include themed {
     border-right: 0.1px solid t($background);
   }
