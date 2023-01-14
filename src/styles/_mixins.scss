@@ -215,7 +215,6 @@ $breakpoints: (
 
 @mixin glassmorphism() {
   will-change: content;
-  border-radius: $radius;
 
   @include themed {
     background-color: rgba(t($background), 0.6);

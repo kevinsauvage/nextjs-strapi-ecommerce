@@ -8,6 +8,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 
 export default function OrdersPage() {
   const { orders, dispatch } = useUserContext();
@@ -48,3 +49,5 @@ export default function OrdersPage() {
     </PageLayout>
   );
 }
+
+OrdersPage.getLayout = (page) => <UserProvider>{page}</UserProvider>;

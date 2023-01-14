@@ -1,22 +1,15 @@
 import '../styles/index.scss';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 import RootLayout from '@/layout/RootLayout/RootLayout';
 
-function MyApp({ Component, pageProps, router }) {
+function MyApp({ Component, pageProps }) {
+  const getLayout = Component.getLayout || ((page) => page);
+
   return (
     <GlobalProvider>
       <CheckoutProvider>
-        <RootLayout>
-          {router.pathname.startsWith('/account') ? (
-            <UserProvider>
-              <Component {...pageProps} />
-            </UserProvider>
-          ) : (
-            <Component {...pageProps} />
-          )}
-        </RootLayout>
+        <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
       </CheckoutProvider>
     </GlobalProvider>
   );

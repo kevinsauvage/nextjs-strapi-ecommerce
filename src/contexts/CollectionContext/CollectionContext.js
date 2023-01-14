@@ -23,6 +23,7 @@ export function CollectionProvider({ children }) {
     pageInfo,
     products,
     allFilters,
+    layout,
   } = states;
 
   const { query, pathname, push, asPath } = useRouter();
@@ -200,6 +201,10 @@ export function CollectionProvider({ children }) {
     ]
   );
 
+  const handleSetLayout = useCallback((newLayout) => {
+    dispatch({ type: actions.SET_LAYOUT, payload: newLayout });
+  }, []);
+
   // PAGINATION ==============================================================================================
 
   /* A function that is called when the user clicks on the next button. */
@@ -210,7 +215,7 @@ export function CollectionProvider({ children }) {
     const filters = filteredFilters.map((item) => JSON.parse(item.input));
 
     const data = await filterCollectionForward(
-      query.collectionSlug,
+      query.collectionSlug || 'all',
       10,
       filters,
       query.sort_key,
@@ -280,6 +285,7 @@ export function CollectionProvider({ children }) {
       pageInfo,
       products,
       loading,
+      layout,
       isSelectionDifferent,
       setSelectedFilters,
       setAllFilters,
@@ -290,6 +296,7 @@ export function CollectionProvider({ children }) {
       setProducts,
       handleSort,
       handleNext,
+      handleSetLayout,
     }),
     [
       notAppliedFilters,
@@ -299,6 +306,7 @@ export function CollectionProvider({ children }) {
       pageInfo,
       products,
       loading,
+      layout,
       isSelectionDifferent,
       setSelectedFilters,
       setAllFilters,
@@ -309,6 +317,7 @@ export function CollectionProvider({ children }) {
       setProducts,
       handleSort,
       handleNext,
+      handleSetLayout,
     ]
   );
 

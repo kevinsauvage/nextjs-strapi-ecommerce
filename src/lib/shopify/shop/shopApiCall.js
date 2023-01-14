@@ -100,3 +100,15 @@ export const getMenuFooter = async () => {
     return console.error(err);
   }
 };
+
+export const getMenuCollection = async () => {
+  try {
+    const res = await shopifyStorefrontCall(shopQueries.getMenu, {
+      handle: 'collections-menu',
+    });
+
+    return res?.data?.menu?.items ?? [];
+  } catch (err) {
+    return console.error(err);
+  }
+};

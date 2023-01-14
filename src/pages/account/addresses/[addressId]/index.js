@@ -7,6 +7,7 @@ import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -80,5 +81,7 @@ function AddressUpdate() {
     </PageLayout>
   );
 }
+
+AddressUpdate.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default AddressUpdate;

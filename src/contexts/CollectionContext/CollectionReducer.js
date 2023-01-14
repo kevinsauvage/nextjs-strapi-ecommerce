@@ -7,6 +7,7 @@ export const initialState = {
   selectedFilters: [],
   pageInfo: [],
   products: [],
+  layout: 'grid',
 };
 
 // actions
@@ -18,6 +19,7 @@ export const actions = {
   SET_PAGE_INFO: 'SET_PAGE_INFO',
   SET_PRODUCTS: 'SET_PRODUCTS',
   SET_ALL_FILTERS: 'SET_ALL_FILTERS',
+  SET_LAYOUT: 'SET_LAYOUT',
 };
 
 // Reducer
@@ -51,6 +53,12 @@ export const CollectionReducer = (state = initialState, action) => {
       return {
         ...state,
         allFilters: action.payload,
+      };
+
+    case actions.SET_LAYOUT:
+      return {
+        ...state,
+        layout: action.payload,
       };
 
     default:

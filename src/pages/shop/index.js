@@ -1,21 +1,27 @@
 import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import nookies from 'nookies';
-import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
+import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import CollectionPage from '@/components/CollectionPage/CollectionPage';
+import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 
-function CollectionSlugPage(props) {
-  return (
-    <CollectionProvider>
-      <CollectionPage {...props} />
-    </CollectionProvider>
-  );
+function Shop(props) {
+  return <CollectionPage {...props} />;
 }
 
-export default CollectionSlugPage;
+export default Shop;
+
+Shop.getLayout = function getLayout(page) {
+  return (
+    <CollectionProvider>
+      <CollectionLayout collection={page.props.collection}>
+        {page}
+      </CollectionLayout>
+    </CollectionProvider>
+  );
+};
 
 export async function getServerSideProps(ctx) {
-  const { params, query, req } = ctx;
-  const { collectionSlug } = params || {};
+  const { query, req } = ctx;
   const cookies = nookies.get(ctx);
   const delegateToken = cookies?.shopifyDelegateToken;
   const forwarded = req.headers['x-forwarded-for'];
@@ -26,7 +32,7 @@ export async function getServerSideProps(ctx) {
       : req.socket.remoteAddress;
 
   const data = await filterCollectionForward(
-    collectionSlug,
+    'all',
     16,
     [],
     query.sort_key,

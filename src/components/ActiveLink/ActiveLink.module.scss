@@ -1,8 +1,11 @@
 .ActiveLink {
   font-weight: $fontWeightMedium;
+  padding: var(--space-0) 0;
 }
 
 .active {
   font-weight: $fontWeightSemiBold;
-  @include underline
+  padding: var(--space-0) 0;
+
+  @include underline;
 }

@@ -43,6 +43,19 @@ query ($first: Int) {
   }
 }`;
 
+const getCollectionsMenu = `
+query {
+  collections(first: 250, sortKey: RELEVANCE) {
+    edges {
+      node {
+        handle
+        id
+        title
+      }
+    }
+  }
+}`;
+
 const getCollectionsWithProducts = `
 query ($first: Int){
   collections(first: $first, sortKey: RELEVANCE) {
@@ -77,6 +90,7 @@ const queriesCollection = {
   filterCollectionForward,
   getCollections,
   getCollectionFilters,
+  getCollectionsMenu,
 };
 
 export default queriesCollection;

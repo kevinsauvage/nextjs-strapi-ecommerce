@@ -8,6 +8,7 @@ import Address from '@/components/_scopes/account/Address/Address';
 import Card from '@/components/_scopes/account/Card/Card';
 import OrderCard from '@/components/_scopes/account/OrderCard/OrderCard';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail() {
@@ -73,5 +74,7 @@ function OrderDetail() {
     </PageLayout>
   );
 }
+
+OrderDetail.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default OrderDetail;

@@ -14,9 +14,8 @@
   cursor: pointer;
 
   p {
-    font-weight: $fontWeightMedium
+    font-weight: $fontWeightMedium;
   }
-
 
   @include themed {
     path {

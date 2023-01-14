@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -47,5 +48,7 @@ function Addresses() {
     </PageLayout>
   );
 }
+
+Addresses.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default Addresses;

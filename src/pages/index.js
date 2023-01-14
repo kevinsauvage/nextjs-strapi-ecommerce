@@ -1,10 +1,9 @@
 import Container from '@/components/Container/Container';
 import { getProducts } from '@/lib/shopify/product/productApiCall';
-import Carousel from '@/components/Carousel/Carousel';
-import ProductCardDefault from '@/components/_scopes/product/ProductCardDefault/ProductCardDefault';
 import { getCollections } from '@/lib/shopify/collection/collectionApiCall';
 import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
+import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
 
 export default function Home({ bestSelling, collections, newArrival }) {
   return (
@@ -12,29 +11,7 @@ export default function Home({ bestSelling, collections, newArrival }) {
       <Container>
         <Banner1 collections={collections?.slice(0, 1)} />
         <CollectionGrid collections={collections?.slice(1)} />
-        {Array.isArray(newArrival?.products) && (
-          <Carousel
-            title="Recommended Products"
-            subtitle="Check out our recommended products"
-            itemToShow={5}
-          >
-            {newArrival.products.map((prod) => (
-              <ProductCardDefault product={prod} key={prod.id} />
-            ))}
-          </Carousel>
-        )}
-
-        {Array.isArray(bestSelling?.products) && (
-          <Carousel
-            title="Best Selling"
-            subtitle="Check out our best selling products"
-            itemToShow={5}
-          >
-            {bestSelling.products.map((prod) => (
-              <ProductCardDefault product={prod} key={prod.id} />
-            ))}
-          </Carousel>
-        )}
+        <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
       </Container>
     </div>
   );

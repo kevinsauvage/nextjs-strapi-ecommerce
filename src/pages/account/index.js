@@ -5,6 +5,7 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
 import Section from '@/components/_scopes/account/section/Section';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Account.module.scss';
 
 function Account() {
@@ -31,5 +32,7 @@ function Account() {
     </PageLayout>
   );
 }
+
+Account.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default Account;

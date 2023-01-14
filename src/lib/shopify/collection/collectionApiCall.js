@@ -1,5 +1,9 @@
 import queriesCollection from './collectionQueries';
-import { cleanCollections, cleanProducts } from '../helpers';
+import {
+  cleanCollections,
+  cleanGraphQLResponse,
+  cleanProducts,
+} from '../helpers';
 import shopifyStorefrontCall from '..';
 
 /**
@@ -69,6 +73,18 @@ export const getCollections = async (first) => {
     const collections = res.data?.collections?.edges;
     if (collections) return cleanCollections(collections);
     return null;
+  } catch (e) {
+    return console.error(e);
+  }
+};
+
+export const getCollectionsMenu = async () => {
+  try {
+    const res = await shopifyStorefrontCall(
+      queriesCollection.getCollectionsMenu
+    );
+
+    return cleanGraphQLResponse(res.data);
   } catch (e) {
     return console.error(e);
   }

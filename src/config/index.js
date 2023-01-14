@@ -6,16 +6,6 @@ const config = {
   name: 'Site Name',
 };
 
-config.homeBanner = {
-  upTitle: '',
-  title: 'Choose Your New Look',
-  subtitle: 'See our clothing collections',
-  buttonText: 'SEE COLLECTIONS',
-  imageUrl:
-    'https://res.cloudinary.com/kevincloudname/image/upload/v1668351722/ecom/banner1_qxsejx.jpg',
-  link: '/collections',
-};
-
 config.userFeedback = {
   missingFields: 'Fill in missing required fields',
   passwordLength: 'Your password must be at least 8 characters',
@@ -58,7 +48,7 @@ config.routes = {
   home: '/',
   about: '/about',
   contact: '/contact',
-  collection: '/collections',
+  collection: '/shop',
   product: '/product',
   terms: '/pages/terms',
   privacy: '/pages/privacy',

@@ -10,6 +10,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Row from '@/components/_scopes/forms/Row/Row';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -128,5 +129,7 @@ function OrderDetail() {
     </PageLayout>
   );
 }
+
+OrderDetail.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default OrderDetail;

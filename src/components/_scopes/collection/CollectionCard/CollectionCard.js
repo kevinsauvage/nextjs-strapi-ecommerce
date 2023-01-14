@@ -13,13 +13,12 @@ export default function CollectionCard({ collection }) {
           className={style.image}
           src={image?.src}
           alt={image?.alt || title}
-          quality={20}
           fill
         />
       </div>
       <div className={style.content}>
         <div className={style.innerContent}>
-          <h4 className={style.title}>{title}</h4>
+          <h3 className={style.title}>{title}</h3>
           <Link
             href={`${config.routes.collection}/${handle}`}
             className={style.link}

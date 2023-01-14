@@ -8,6 +8,7 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Section from '@/components/_scopes/account/section/Section';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -101,5 +102,7 @@ function Addresses() {
     </PageLayout>
   );
 }
+
+Addresses.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default Addresses;
