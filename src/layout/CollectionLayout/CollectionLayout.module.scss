@@ -16,3 +16,18 @@
   justify-content: space-between;
   margin-bottom: var(--space-0);
 }
+
+.filterButton {
+  border: none;
+  text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+
+  svg {
+    margin-right: 4px;
+  }
+  path {
+    @include themed {
+      fill: t($onBackground);
+    }
+  }
+}

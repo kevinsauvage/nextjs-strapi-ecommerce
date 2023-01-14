@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import { getMenuCollection } from '@/lib/shopify/shop/shopApiCall';
+import config from '@/config/index';
 import styles from './CollectionNav.module.scss';
 
-function CollectionNav({ title }) {
+function CollectionNav() {
   const [menu, setMenu] = useState([]);
 
   useEffect(() => {
@@ -18,14 +19,15 @@ function CollectionNav({ title }) {
   return (
     <nav className={styles.CollectionNav}>
       <ul className={styles.menu}>
+        <li className={styles.item}>
+          <ActiveLink url={config.routes.collection}>All</ActiveLink>
+        </li>
         {Array.isArray(menu) &&
-          menu
-            .filter((item) => item.title !== title)
-            .map((menuItem) => (
-              <li key={menuItem.id} className={styles.item}>
-                <ActiveLink url={menuItem?.url}>{menuItem?.title}</ActiveLink>
-              </li>
-            ))}
+          menu.map((menuItem) => (
+            <li key={menuItem.id} className={styles.item}>
+              <ActiveLink url={menuItem?.url}>{menuItem?.title}</ActiveLink>
+            </li>
+          ))}
       </ul>
     </nav>
   );

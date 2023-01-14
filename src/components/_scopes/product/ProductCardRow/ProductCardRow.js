@@ -23,7 +23,6 @@ export default function ProductCardRow({ product }) {
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } =
     selectedVariant || {};
 
-  console.log(image);
   return (
     <li className={`${styles.ProductCardRow}`}>
       <div className={styles.image}>

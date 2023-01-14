@@ -1,0 +1,54 @@
+.DropDown {
+  position: relative;
+}
+
+.menu {
+  position: absolute;
+  width: fit-content;
+  z-index: 99999;
+  top: 100%;
+  min-width: 100%;
+  right: 0;
+  border-radius: $radius;
+
+  @include themed {
+    border: 0.1px solid t($onBackground);
+    background-color: t($background);
+  }
+}
+
+.button {
+  border: none;
+  text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+
+  svg {
+    margin-left: 4px;
+  }
+  @include themed {
+    path {
+      fill: t($onBackground);
+    }
+  }
+}
+
+.option {
+  padding: 8px;
+  white-space: nowrap;
+  cursor: pointer;
+
+  @include themed {
+    border-bottom: 0.1px solid t($onBackground);
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &:hover {
+    @include themed {
+      background-color: rgba(t($onBackground), 1);
+      color: t($background);
+    }
+  }
+}

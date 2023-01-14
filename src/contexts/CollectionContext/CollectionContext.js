@@ -26,12 +26,13 @@ export function CollectionProvider({ children }) {
     layout,
   } = states;
 
-  const { query, pathname, push, asPath } = useRouter();
+  const { query, pathname, push, asPath, href } = useRouter();
 
   // Check if there is new filters to apply
   const isSelectionDifferent = useCallback(() => {
     if (notAppliedFilters.length) return true;
     if (selectedFilters.length !== actualFilters.length) return true;
+
     return false;
   }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
 
@@ -127,7 +128,7 @@ export function CollectionProvider({ children }) {
     if (query.sort_key) newUrl.searchParams.set('sort_key', query.sort_key);
 
     if (isSelectionDifferent()) {
-      if (newUrl.pathname === pathname) return;
+      if (newUrl.href === href) return;
     }
     push(newUrl, undefined, { shallow: true });
 
@@ -136,7 +137,7 @@ export function CollectionProvider({ children }) {
     const filters = selectedFilters.map((item) => JSON.parse(item.input));
 
     const data = await filterCollectionForward(
-      query.collectionSlug,
+      query.collectionSlug || 'all',
       10,
       filters,
       query.sort_key,
@@ -153,10 +154,12 @@ export function CollectionProvider({ children }) {
       window.scrollTo(0, 0);
     }
   }, [
+    href,
     isSelectionDifferent,
     pathname,
     push,
-    query,
+    query.collectionSlug,
+    query.sort_key,
     selectedFilters,
     setPageInfo,
     setProducts,
@@ -172,7 +175,7 @@ export function CollectionProvider({ children }) {
       const filters = actualFilters.map((filter) => JSON.parse(filter.input));
 
       const data = await filterCollectionForward(
-        query.collectionSlug,
+        query.collectionSlug || 'all',
         10,
         filters,
         value,

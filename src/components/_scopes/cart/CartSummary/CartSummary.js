@@ -19,7 +19,6 @@ function CartSummaryRow({ title, content, children }) {
 
 function CartSummary() {
   const { checkout } = useCheckoutContext();
-  console.log(checkout);
   return (
     <div className={styles.summary}>
       <h5 className={styles.title}>CART SUMMARY</h5>

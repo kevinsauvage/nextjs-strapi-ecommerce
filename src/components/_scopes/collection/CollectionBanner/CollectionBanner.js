@@ -1,10 +1,11 @@
+import CollectionNav from '../CollectionNav/CollectionNav';
 import styles from './CollectionBanner.module.scss';
 
-function CollectionBanner({ title, description }) {
+function CollectionBanner({ title }) {
   return (
     <div className={styles.CollectionBanner}>
-      <h1 className={styles.title}>{title}</h1>
-      <p className={styles.subtitle}>{description}</p>
+      <h1 className={`${styles.title} big`}>{title}</h1>
+      <CollectionNav title={title} />
     </div>
   );
 }

@@ -1,6 +1,5 @@
-import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
-import Collapsible from '@/components/Collapsible/Collapsible';
+import { useCallback } from 'react';
 import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
@@ -13,11 +12,14 @@ export default function Filters() {
     allFilters,
   } = useCollectionContext();
 
-  const isChecked = (valueId) => {
-    if (!Array.isArray(selectedFilters)) return false;
-    const res = selectedFilters?.some((filter) => filter.id === valueId);
-    return res;
-  };
+  const isChecked = useCallback(
+    (valueId) => {
+      if (!Array.isArray(selectedFilters)) return false;
+      const res = selectedFilters?.some((filter) => filter.id === valueId);
+      return res;
+    },
+    [selectedFilters]
+  );
 
   const filters = allFilters
     .filter((item) => item.type === 'LIST')
@@ -25,25 +27,17 @@ export default function Filters() {
 
   return (
     <div className={styles.filters}>
-      {actualFilters.length || selectedFilters.length ? (
-        <FilterManager />
-      ) : null}
-
       {Array.isArray(filters) &&
-        filters.map((filter, i) => (
-          <Collapsible
-            key={filter.label}
-            title={filter.label}
-            last={i === filters.length - 1}
-          >
-            {filter.values.map((value) => (
-              <label
-                key={value.input}
-                htmlFor={value.id}
-                className={`${styles.label}`}
-              >
+        filters.map((filter) => (
+          <div className={styles.filterContainer} key={filter.label}>
+            <h6 className={styles.label}>{filter.label}</h6>
+            <div className={styles.filter}>
+              {filter.values.map((value) => (
                 <button
-                  className={styles.button}
+                  key={value.label}
+                  className={`${styles.button} ${
+                    isChecked(value.id) && styles.checked
+                  }`}
                   type="button"
                   onClick={() =>
                     isChecked(value.id)
@@ -51,20 +45,15 @@ export default function Filters() {
                       : setSelectedFilters(value)
                   }
                 >
-                  {isChecked(value.id) ? (
-                    <MdCheckBox size={20} color="purple" />
-                  ) : (
-                    <MdCheckBoxOutlineBlank size={20} />
-                  )}
+                  <p className={styles.value}>{value.label}</p>
                 </button>
-                <p className={styles.labelText}>
-                  <small>{value.label}</small>
-                </p>
-                <small className={styles.count}>({value.count})</small>
-              </label>
-            ))}
-          </Collapsible>
+              ))}
+            </div>
+          </div>
         ))}
+      {actualFilters.length || selectedFilters.length ? (
+        <FilterManager />
+      ) : null}
     </div>
   );
 }

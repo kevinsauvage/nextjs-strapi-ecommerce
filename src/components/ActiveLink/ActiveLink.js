@@ -13,7 +13,7 @@ export default withRouter(
         as={as}
         scroll={scroll}
         className={`${styles.ActiveLink}  ${
-          router.asPath === path && styles.active
+          (router.asPath === path || router.pathname === path) && styles.active
         }`}
       >
         {children}

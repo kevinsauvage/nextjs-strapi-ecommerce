@@ -8,7 +8,6 @@ function ProductsDisplay({ bestSelling, newArrival }) {
 
   const nav = [{ title: 'Best selling' }, { title: 'newArrival' }];
 
-  console.log(products);
   return (
     <div>
       <h2 className="big">OUR TRENDY PRODUCTS</h2>

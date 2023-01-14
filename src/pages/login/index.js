@@ -23,8 +23,6 @@ function LoginPage() {
     toggleLoading(true);
     const resLogin = await nextApiCall.login({ email, password });
 
-    console.log('🚀 ~ file: index.js:26 ~ onSubmit ~ resLogin', resLogin);
-
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) {

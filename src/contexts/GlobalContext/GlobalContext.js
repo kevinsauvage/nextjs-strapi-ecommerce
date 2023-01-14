@@ -14,7 +14,8 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
-  const { checkoutOpen, searchOpen, selectedProduct, loading } = states;
+  const { checkoutOpen, searchOpen, selectedProduct, loading, filterOpen } =
+    states;
 
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -33,10 +34,16 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (checkoutOpen || selectedProduct || loading || searchOpen) {
+    if (
+      checkoutOpen ||
+      selectedProduct ||
+      loading ||
+      searchOpen ||
+      filterOpen
+    ) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
-  }, [checkoutOpen, selectedProduct, loading, searchOpen]);
+  }, [checkoutOpen, selectedProduct, loading, searchOpen, filterOpen]);
 
   const values = useMemo(
     () => ({
@@ -44,9 +51,14 @@ export function GlobalProvider({ children }) {
       checkoutOpen,
       selectedProduct,
       loading,
+      filterOpen,
 
       toggleLoading: (state) => {
         dispatch({ type: actions.TOGGLE_LOADING, payload: state });
+      },
+
+      toggleFilter: (state) => {
+        dispatch({ type: actions.TOGGLE_FILTERS, payload: state });
       },
 
       toggleSearch: () => {
@@ -66,7 +78,14 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [searchOpen, checkoutOpen, selectedProduct, loading, resetToggle]
+    [
+      searchOpen,
+      checkoutOpen,
+      selectedProduct,
+      loading,
+      filterOpen,
+      resetToggle,
+    ]
   );
 
   return (

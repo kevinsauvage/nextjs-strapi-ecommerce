@@ -1,5 +1,9 @@
+.CollectionNav {
+  padding-bottom: var(--space-2);
+}
 .menu {
   display: flex;
+  justify-content: center;
   gap: var(--space-1);
 }
 

@@ -1,6 +1,10 @@
+import Dropdown from '@/components/DropDown/DropDown';
+import { useRouter } from 'next/router';
 import styles from './Sort.module.scss';
 
 export default function Sort({ handleChange }) {
+  const { query } = useRouter();
+
   const sortingOptions = [
     { label: 'RELEVANCE', name: 'Relevance' },
     { label: 'BEST_SELLING', name: 'Best selling' },
@@ -8,25 +12,15 @@ export default function Sort({ handleChange }) {
   ];
 
   return (
-    <label className={styles.sort} htmlFor="sort">
-      <p className={styles.label}>Sort By</p>
-      <select
-        id="sort"
-        aria-label="sort"
-        selected={sortingOptions[0].label}
-        onChange={(event) => handleChange(event.target.value)}
-        className={styles.select}
-      >
-        {sortingOptions.map((option) => (
-          <option
-            key={option.name}
-            value={option.label}
-            className={styles.option}
-          >
-            {option.name}
-          </option>
-        ))}
-      </select>
-    </label>
+    <div className={styles.sort}>
+      <p>Sort by </p>
+      <Dropdown
+        options={sortingOptions}
+        changeCallback={handleChange}
+        selected={
+          sortingOptions.filter((item) => item.label === query.sort_key)[0]
+        }
+      />
+    </div>
   );
 }

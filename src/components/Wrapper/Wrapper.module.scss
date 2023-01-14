@@ -1,5 +1,5 @@
-.sort {
+.wrapper {
   display: flex;
   align-items: center;
-  width: fit-content;
+  gap: var(--space-2);
 }

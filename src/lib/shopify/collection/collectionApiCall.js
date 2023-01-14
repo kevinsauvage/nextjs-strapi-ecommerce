@@ -41,6 +41,7 @@ export const filterCollectionForward = async (
       delegateToken,
       ip
     );
+
     const collection = res?.data?.collection;
 
     if (collection) {

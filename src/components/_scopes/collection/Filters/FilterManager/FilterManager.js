@@ -1,5 +1,6 @@
 import { MdOutlineRemove } from 'react-icons/md';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
+import Button from '@/components/Button/Button';
 import styles from './FilterManager.module.scss';
 
 export default function FilterManager() {
@@ -33,17 +34,23 @@ export default function FilterManager() {
         </div>
       </div>
       <div className={styles.buttons}>
-        <button className={styles.button} type="button" onClick={resetFilters}>
-          Reset all
-        </button>
-        <button
-          className={styles.button}
+        <Button
+          extraClass={styles.button}
+          outlined
           type="button"
+          onClick={resetFilters}
+        >
+          Reset all
+        </Button>
+        <Button
+          extraClass={styles.button}
+          type="button"
+          primary
           onClick={applyFilters}
           disabled={!isSelectionDifferent()}
         >
           Apply filters
-        </button>
+        </Button>
       </div>
     </div>
   );

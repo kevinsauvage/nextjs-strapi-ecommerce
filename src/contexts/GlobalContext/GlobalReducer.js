@@ -3,6 +3,7 @@ export const initialState = {
   searchOpen: false,
   selectedProduct: undefined,
   loading: false,
+  filterOpen: false,
 };
 
 export const actions = {
@@ -11,6 +12,7 @@ export const actions = {
   RESET_TOGGLE_STATES: 'RESET_TOGGLE_STATES',
   SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
   TOGGLE_LOADING: 'TOGGLE_LOADING',
+  TOGGLE_FILTERS: 'TOGGLE_FILTERS',
 };
 
 export const GlobalReducer = (state = initialState, action) => {
@@ -27,6 +29,10 @@ export const GlobalReducer = (state = initialState, action) => {
 
     case actions.TOGGLE_LOADING: {
       return { ...state, loading: action.payload };
+    }
+
+    case actions.TOGGLE_FILTERS: {
+      return { ...state, filterOpen: action.payload };
     }
 
     case actions.RESET_TOGGLE_STATES: {
