@@ -38,7 +38,7 @@ export default function OrdersPage() {
       }
     };
     fetchAddresses();
-  }, [back, dispatch]);
+  }, [back, dispatch, showToast]);
 
   return (
     <PageLayout title="Orders">
