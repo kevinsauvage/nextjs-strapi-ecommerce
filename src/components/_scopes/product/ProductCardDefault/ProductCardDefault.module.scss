@@ -21,14 +21,6 @@
   padding: var(--space-0) 0;
 }
 
-.quickView {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
-  border-right: 1px solid white;
-}
-
 .image {
   position: relative;
   overflow: hidden;
@@ -49,19 +41,36 @@
   width: 100%;
   right: 0;
   left: 0;
-  padding: var(--space-0);
   opacity: 0;
   visibility: hidden;
-  background-color: $color-primary;
   color: $color-grey;
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  @include themed {
+    background-color: t($onBackground);
+    color: t($background);
+  }
 }
 
 .addToCart {
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: var(--space-0);
+}
+
+.quickView {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-0);
+
+  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+
+  @include themed {
+    border-right: 0.1px solid t($background);
+  }
 }
 
 .discount {

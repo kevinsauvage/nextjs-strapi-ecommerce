@@ -16,10 +16,8 @@ function ProductPage({ product, recommendations = [] }) {
   const { title, description } = product;
 
   return (
-    <>
-      <PageLayout title={title} description={description}>
-        <ProductPresenter product={product} />
-      </PageLayout>
+    <PageLayout title={title} description={description}>
+      <ProductPresenter product={product} />
       {Array.isArray(recommendations) && recommendations.length > 0 && (
         <Carousel
           title="Recommended Products"
@@ -31,7 +29,7 @@ function ProductPage({ product, recommendations = [] }) {
           ))}
         </Carousel>
       )}
-    </>
+    </PageLayout>
   );
 }
 

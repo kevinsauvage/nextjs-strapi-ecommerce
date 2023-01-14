@@ -3,18 +3,20 @@ import styles from './Toast.module.scss';
 
 export default function Toast({ toasts, toastDispatch }) {
   function renderItem(content) {
-    if (typeof content === 'function') {
-      return content();
-    }
+    if (typeof content === 'function') return content();
     return <p>{content}</p>;
   }
 
   useEffect(() => {
+    let timeOut;
+
     if (toasts.length) {
-      setTimeout(() => {
+      timeOut = setTimeout(() => {
         toastDispatch({ type: 'REMOVE', payload: { id: toasts?.[0].id } });
       }, 5000);
     }
+
+    return () => clearTimeout(timeOut);
   }, [toasts, toastDispatch]);
 
   return (
