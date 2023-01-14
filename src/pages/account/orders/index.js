@@ -3,17 +3,18 @@ import Orders from '@/components/_scopes/account/Orders/Orders';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
 import nextApiCall from '@/utils/apiNext';
-import { toast } from 'react-toastify';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import { useRouter } from 'next/router';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 export default function OrdersPage() {
   const { orders, dispatch } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
   const { back } = useRouter();
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     if (orders) setIsLoading(false);
@@ -26,12 +27,12 @@ export default function OrdersPage() {
         if (res) {
           dispatch({ type: actions.ADD_ORDERS, payload: res });
         } else {
-          toast.error('Something went wrong, please try again later');
+          showToast.error('Something went wrong, please try again later');
 
           back();
         }
       } catch (e) {
-        toast.error('Something went wrong, please try again later');
+        showToast.error('Something went wrong, please try again later');
       } finally {
         setIsLoading(false);
       }

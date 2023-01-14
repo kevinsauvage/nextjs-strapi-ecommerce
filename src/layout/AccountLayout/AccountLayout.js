@@ -6,12 +6,14 @@ import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Loader from '@/components/_loaders/Loader/Loader';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './AccountLayout.module.scss';
 
 function AccountLayout({ children, loading, title }) {
   const { push } = useRouter();
   const { toggleLoading } = useGlobalContext();
   const { userFeedback } = config;
+  const { showToast } = useToastContext();
 
   const logout = async () => {
     toggleLoading(true);
@@ -20,7 +22,7 @@ function AccountLayout({ children, loading, title }) {
     if (res?.ok) {
       return push(config.routes.login);
     }
-    return toast.error(userFeedback.logout.error);
+    return showToast.error(userFeedback.logout.error);
   };
 
   return (

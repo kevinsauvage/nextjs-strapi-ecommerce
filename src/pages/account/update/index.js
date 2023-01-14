@@ -1,7 +1,6 @@
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import Form from '@/components/_scopes/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import Input from '@/components/_scopes/forms/Input/Input';
@@ -11,6 +10,7 @@ import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Row from '@/components/_scopes/forms/Row/Row';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -18,6 +18,7 @@ function OrderDetail() {
   const { user, handleError, dispatch } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { email, firstName, lastName, password, phone, id } = user || {};
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     if (id) setIsLoading(false);
@@ -30,7 +31,7 @@ function OrderDetail() {
       !formData.firstName ||
       !formData.lastName
     ) {
-      return toast.error('Please fill in all required fields');
+      return showToast.error('Please fill in all required fields');
     }
     try {
       toggleLoading(true);
@@ -41,12 +42,12 @@ function OrderDetail() {
       if (customerUserErrors?.length) return handleError(customerUserErrors);
 
       if (customer) {
-        toast.success('Customer information updated successfully');
+        showToast.success('Customer information updated successfully');
         return dispatch({ type: actions.ADD_USER, payload: customer });
       }
-      return toast.error('Something went wrong');
+      return showToast.error('Something went wrong');
     } catch (err) {
-      return toast.error(err.message);
+      return showToast.error(err.message);
     } finally {
       toggleLoading(false);
     }

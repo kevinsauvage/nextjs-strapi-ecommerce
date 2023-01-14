@@ -1,28 +1,29 @@
 import Form from '@/components/_scopes/forms/Form/Form';
 import Input from '@/components/_scopes/forms/Input/Input';
 import config from '@/config/index';
-import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const onSubmit = async (formData) => {
     const { email } = formData;
-    if (!email) return toast.error(config.userFeedback?.missingFields);
+    if (!email) return showToast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
     const recoverRes = await nextApiCall.sendRecoverEmail({ email });
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
     if (errors?.length) {
-      return errors.forEach((element) => toast.error(element.message));
+      return errors.forEach((element) => showToast.error(element.message));
     }
-    return toast.success(config.userFeedback.sendRecoverEmail.success);
+    return showToast.success(config.userFeedback.sendRecoverEmail.success);
   };
 
   return (

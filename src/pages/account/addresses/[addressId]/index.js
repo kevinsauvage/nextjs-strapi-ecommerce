@@ -1,6 +1,5 @@
 import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
-import { toast } from 'react-toastify';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import config from '@/config/index';
@@ -8,6 +7,7 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -15,6 +15,7 @@ function AddressUpdate() {
   const [address, setAddress] = useState(null);
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     async function fetchAddress() {
@@ -22,10 +23,10 @@ function AddressUpdate() {
         if (addressId && query) {
           const res = await nextApiCall.getAddressById(addressId);
           if (res) return setAddress(res);
-          return toast.error('Something went wrong');
+          return showToast.error('Something went wrong');
         }
       } catch (error) {
-        toast.error('Something went wrong');
+        showToast.error('Something went wrong');
         return back();
       } finally {
         setIsLoading(false);
@@ -33,7 +34,7 @@ function AddressUpdate() {
       return null;
     }
     fetchAddress();
-  }, [addressId, push, query, back]);
+  }, [addressId, push, query, back, showToast]);
 
   const handleUpdateAddress = async (formData) => {
     try {
@@ -45,7 +46,7 @@ function AddressUpdate() {
         !formData?.lastName ||
         !formData?.zip
       ) {
-        return toast.error('Missing field');
+        return showToast.error('Missing field');
       }
       toggleLoading(true);
       const { customerAddress, customerUserErrors } =
@@ -53,15 +54,15 @@ function AddressUpdate() {
 
       if (customerAddress) {
         setAddress(customerAddress);
-        toast.success('Address updated successfully');
+        showToast.success('Address updated successfully');
         return push(config.routes.addresses);
       }
       if (customerUserErrors) {
-        return customerUserErrors.map((err) => toast.error(err.message));
+        return customerUserErrors.map((err) => showToast.error(err.message));
       }
-      return toast.error('Something went wrong');
+      return showToast.error('Something went wrong');
     } catch (err) {
-      return toast.error('Something went wrong');
+      return showToast.error('Something went wrong');
     } finally {
       toggleLoading(false);
     }

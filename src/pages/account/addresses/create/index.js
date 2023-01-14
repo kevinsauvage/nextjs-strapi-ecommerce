@@ -1,13 +1,14 @@
 import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
-import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const handleSubmit = async (address) => {
     try {
@@ -19,7 +20,7 @@ function Addresses() {
         !address?.lastName ||
         !address?.zip
       ) {
-        return toast.error('Missing field');
+        return showToast.error('Missing field');
       }
       toggleLoading(true);
 
@@ -27,14 +28,14 @@ function Addresses() {
         await nextApiCall.createAddress({ address });
 
       if (customerAddress) {
-        return toast.success('Address created successfully');
+        return showToast.success('Address created successfully');
       }
       if (customerUserErrors.length) {
-        return customerUserErrors.map((err) => toast.error(err.message));
+        return customerUserErrors.map((err) => showToast.error(err.message));
       }
-      return toast.error('Something went wrong');
+      return showToast.error('Something went wrong');
     } catch (err) {
-      return toast.error('Error creating address, please try again later');
+      return showToast.error('Error creating address, please try again later');
     } finally {
       toggleLoading(false);
     }

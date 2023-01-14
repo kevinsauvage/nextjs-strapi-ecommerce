@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { VscAdd, VscRemove } from 'react-icons/vsc';
-import { toast } from 'react-toastify';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 import styles from './QuantityUpdater.module.scss';
 
@@ -13,6 +13,7 @@ export default function QuantityUpdater({
 }) {
   const [quantity, setQuantity] = useState(originalQuantity);
   const input = useRef(null);
+  const { showToast } = useToastContext();
 
   const addOne = () => {
     if (quantity >= quantityAvailable) return setQuantity(1);
@@ -30,7 +31,7 @@ export default function QuantityUpdater({
   const handleChangeInput = (e) => {
     const num = e.target.value;
     if (Number(num) > quantityAvailable) {
-      return toast.error(
+      return showToast.error(
         `There is Only ${quantityAvailable} variant available`
       );
     }

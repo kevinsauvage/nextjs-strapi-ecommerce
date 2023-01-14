@@ -25,9 +25,27 @@ export default async function handler(req, res) {
             ip
           );
 
+          console.log(
+            '🚀 ~ file: index.js:28 ~ handler ~ getCheckoutRes',
+            getCheckoutRes
+          );
+
           checkout = getCheckoutRes.checkout;
 
-          if (res?.checkout?.orderStatusUrl) {
+          if (!checkout) {
+            const input = {};
+            input.allowPartialAddresses = false;
+
+            const createCheckoutRes = await createCheckout(
+              input,
+              delegateToken,
+              ip
+            );
+
+            checkout = createCheckoutRes?.checkout;
+          }
+
+          if (checkout?.orderStatusUrl) {
             const createCheckoutRes = await createCheckout(
               {},
               delegateToken,

@@ -5,26 +5,30 @@ import {
   useMemo,
   useReducer,
 } from 'react';
-import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
+import { useToastContext } from '../ToastContext/NotificationContext';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { user, addresses, orders } = states || {};
+  const { showToast } = useToastContext();
 
   const { handleSetCheckout } = useCheckoutContext();
 
   /* A function that is called when an error occurs. */
-  const handleError = useCallback((err) => {
-    if (Array.isArray(err)) {
-      return err.forEach((e) => toast.error(e.message));
-    }
-    return false;
-  }, []);
+  const handleError = useCallback(
+    (err) => {
+      if (Array.isArray(err)) {
+        return err.forEach((e) => showToast.error(e.message));
+      }
+      return false;
+    },
+    [showToast]
+  );
 
   const handleSetCheckoutShippingAddress = useCallback(
     async (customer) => {
@@ -83,11 +87,11 @@ export function UserProvider({ children }) {
           handleSetCheckoutShippingAddress(res.customer);
         } else throw new Error();
       } catch (e) {
-        toast.error('Something went wrong, please try again later');
+        showToast.error('Something went wrong, please try again later');
       }
     };
     getCustomer();
-  }, [dispatch, user, handleSetCheckoutShippingAddress]);
+  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast]);
 
   const values = useMemo(
     () => ({

@@ -2,9 +2,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Button from '@/components/Button/Button';
-import { toast } from 'react-toastify';
 import config from '@/config/index';
 import { close } from '@/assets/svg';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './CartItem.module.scss';
 
 export default function CartItem({
@@ -19,6 +19,7 @@ export default function CartItem({
   title,
 }) {
   const [newQuantity, setNewQuantity] = useState(quantity);
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     setNewQuantity(quantity);
@@ -26,7 +27,7 @@ export default function CartItem({
 
   const handleUpdate = () => {
     if (quantity < 1 || !quantity)
-      return toast.error('Quantity must be higher than zero');
+      return showToast.error('Quantity must be higher than zero');
 
     return handleQuantityChange(newQuantity, lineId);
   };

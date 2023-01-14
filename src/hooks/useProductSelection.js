@@ -15,7 +15,7 @@ export default function useProductSelection({ product }) {
   const [availableColors, setAvailableColors] = useState([]);
   const [availableSize, setAvailableSize] = useState([]);
   const { handleResponse } = useCheckoutContext();
-  const { toggleLoading } = useGlobalContext();
+  const { toggleLoading, toggleCheckout } = useGlobalContext();
 
   const handleChangeInput = (num) => setQuantity(num);
 
@@ -37,6 +37,9 @@ export default function useProductSelection({ product }) {
     if (quantity > 0 && variantId) {
       toggleLoading(true);
       const res = await nextApiCall.addToCheckout({ variantId, quantity });
+
+      toggleCheckout();
+
       handleResponse(res);
     }
   };

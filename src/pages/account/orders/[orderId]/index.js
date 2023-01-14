@@ -3,12 +3,12 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import Address from '@/components/_scopes/account/Address/Address';
 import Card from '@/components/_scopes/account/Card/Card';
 import OrderCard from '@/components/_scopes/account/OrderCard/OrderCard';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail() {
@@ -16,6 +16,7 @@ function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [order, setOrder] = useState(null);
   const { orderId } = query;
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     async function fetchOrder() {
@@ -24,21 +25,21 @@ function OrderDetail() {
         const res = await nextApiCall.getOrderById(orderId);
 
         if (res?.error) {
-          toast.error('Something went wrong');
+          showToast.error('Something went wrong');
           back();
           return;
         }
 
         setOrder(res);
       } catch (error) {
-        toast.error('Something went wrong');
+        showToast.error('Something went wrong');
         back();
       } finally {
         setIsLoading(false);
       }
     }
     fetchOrder();
-  }, [orderId, back, query, order]);
+  }, [orderId, back, query, order, showToast]);
 
   const { name, shippingAddress, lineItems } = order || {};
 

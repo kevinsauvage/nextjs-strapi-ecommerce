@@ -2,19 +2,20 @@ import Link from 'next/link';
 import Input from '@/components/_scopes/forms/Input/Input';
 import Form from '@/components/_scopes/forms/Form/Form';
 import config from '@/config/index';
-import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './Register.module.scss';
 
 const { userFeedback } = config;
 
 function RegisterPage() {
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const { push } = useRouter();
 
@@ -22,9 +23,11 @@ function RegisterPage() {
     const { email, password } = formData;
 
     if (!password || password.length < 8) {
-      return toast.error(config.userFeedback.passwordLength);
+      return showToast.error(config.userFeedback.passwordLength);
     }
-    if (!email) return toast.error(userFeedback?.missingFields);
+    if (!email) {
+      return showToast.error(userFeedback?.missingFields);
+    }
 
     toggleLoading(true);
     const registerRes = await nextApiCall.register({ email, password });
@@ -32,14 +35,14 @@ function RegisterPage() {
 
     const userErrors = registerRes?.userErrors;
     if (userErrors?.length) {
-      return userErrors.forEach((element) => toast.error(element.message));
+      return userErrors.forEach((element) => showToast.error(element.message));
     }
 
     if (registerRes?.ok) {
-      toast.success(userFeedback?.register?.success);
+      showToast.success(userFeedback?.register?.success);
       return push(config.routes.account);
     }
-    return toast.error(userFeedback?.register?.error);
+    return showToast.error(userFeedback?.register?.error);
   };
 
   return (

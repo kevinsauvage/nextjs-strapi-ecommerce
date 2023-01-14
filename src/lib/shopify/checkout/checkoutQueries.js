@@ -20,6 +20,7 @@ mutation checkoutLineItemsAdd($checkoutId: ID!, $lineItems: [CheckoutLineItemInp
     }
     checkoutUserErrors {
       message
+      code
     }
   }
 }`;

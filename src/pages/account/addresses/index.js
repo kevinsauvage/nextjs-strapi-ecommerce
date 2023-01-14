@@ -3,29 +3,30 @@ import Address from '@/components/_scopes/account/Address/Address';
 import nextApiCall from '@/utils/apiNext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
-import { toast } from 'react-toastify';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Section from '@/components/_scopes/account/section/Section';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
   const { handleError, dispatch, user, addresses } = useUserContext();
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const fetchAddresses = useCallback(async () => {
     try {
       const res = await nextApiCall.getCustomerAddresses();
       dispatch({ type: actions.ADD_ADDRESSES, payload: res });
     } catch (e) {
-      toast.error('Something went wrong, please try again later');
+      showToast.error('Something went wrong, please try again later');
     } finally {
       setIsLoading(false);
     }
-  }, [dispatch]);
+  }, [dispatch, showToast]);
 
   const handleSetAsDefault = async (id) => {
     try {
@@ -33,12 +34,12 @@ function Addresses() {
       const res = await nextApiCall.updateCustomerDefaultAddress(id);
       const { customer, customerUserErrors } = res || {};
       if (customer?.id) {
-        toast.success('Address correctly set as default address');
+        showToast.success('Address correctly set as default address');
         return dispatch({ type: actions.ADD_USER, payload: customer });
       }
       return handleError(customerUserErrors);
     } catch (error) {
-      return toast.error('Something went wrong, please try again later');
+      return showToast.error('Something went wrong, please try again later');
     } finally {
       toggleLoading(false);
     }
@@ -52,11 +53,11 @@ function Addresses() {
       if (customerUserErrors?.length) return handleError(customerUserErrors);
       if (deletedCustomerAddressId) {
         await fetchAddresses();
-        return toast.success('Address deleted successfully');
+        return showToast.success('Address deleted successfully');
       }
-      return toast.error('Something went wrong, please try again later');
+      return showToast.error('Something went wrong, please try again later');
     } catch (error) {
-      return toast.error('Something went wrong, please try again later');
+      return showToast.error('Something went wrong, please try again later');
     } finally {
       toggleLoading(false);
     }

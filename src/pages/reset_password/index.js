@@ -3,23 +3,24 @@ import Input from '@/components/_scopes/forms/Input/Input';
 import config from '@/config/index';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import nextApiCall from '@/utils/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const onSubmit = async (formData) => {
     const { password } = formData;
 
     if (!password || password.length < 8) {
-      return toast.error(config.userFeedback.passwordLength);
+      return showToast.error(config.userFeedback.passwordLength);
     }
 
     toggleLoading(true);
@@ -32,14 +33,14 @@ function Password({ resetUrl }) {
 
     if (customerUserErrors?.length) {
       return customerUserErrors.forEach((element) =>
-        toast.error(element.message)
+        showToast.error(element.message)
       );
     }
     if (data?.ok) {
-      toast.success(config.userFeedback.resetPassword.success);
+      showToast.success(config.userFeedback.resetPassword.success);
       return push(config.routes.account);
     }
-    return toast.error(config.userFeedback.resetPassword.error);
+    return showToast.error(config.userFeedback.resetPassword.error);
   };
 
   useEffect(() => {

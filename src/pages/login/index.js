@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import Link from 'next/link';
 import Input from '@/components/_scopes/forms/Input/Input';
 import Form from '@/components/_scopes/forms/Form/Form';
@@ -9,33 +8,38 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './Login.module.scss';
 
 const { userFeedback } = config;
 
 function LoginPage() {
   const { toggleLoading } = useGlobalContext();
+  const { showToast } = useToastContext();
 
   const { reload } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
-    if (!email || !password) return toast.error(userFeedback?.missingFields);
+    if (!email || !password)
+      return showToast.error(userFeedback?.missingFields);
     toggleLoading(true);
     const resLogin = await nextApiCall.login({ email, password });
 
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) {
+      console.log(customerUserErrors);
       return customerUserErrors.forEach((element) =>
-        toast.error(element.message)
+        showToast.error(element.message)
       );
     }
 
     if (resLogin?.ok) {
       reload();
-      return toast.success(userFeedback.login.success);
+      return showToast.success(userFeedback.login.success);
     }
-    return toast.error(userFeedback.login.error);
+
+    return showToast.error(userFeedback.login.error);
   };
 
   return (

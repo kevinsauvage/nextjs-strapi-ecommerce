@@ -20,9 +20,14 @@ $fontSize-500: $fontSize-400 * $ratio;
 $fontSize-600: $fontSize-500 * $ratio;
 
 // Colors
-$color-primary: #3094ff;
+$color-primary: #2e28de;
 $color-complementary: #f44e03;
 $color-red: #d6001c;
+
+$color-success: #0d6836;
+$color-info: #85cbe5;
+$color-error: #cd1800;
+$color-warning: #ad5c0b;
 
 // Fonts
 $sans-serif: 'Poppins', sans-serif;

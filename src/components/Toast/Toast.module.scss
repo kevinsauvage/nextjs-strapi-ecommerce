@@ -1,0 +1,60 @@
+.toast {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  max-height: 50px;
+  animation: slideUp 0.3s ease-in-out forwards;
+  z-index: 99999999;
+
+  .toastContainer {
+    width: 100%;
+    position: relative;
+
+    .item {
+      padding: var(--space-0);
+      transition: 0.2s;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 40px;
+      font-weight: $fontWeightMedium;
+
+      &.info {
+        border-top: darken($color-info, 20%) solid 1px;
+        background-color: $color-info;
+        color: lighten($color-info, 70%);
+      }
+
+      &.error {
+        border-top: darken($color-error, 20%) solid 1px;
+        background-color: $color-error;
+        color: lighten($color-error, 70%);
+      }
+
+      &.warning {
+        border-top: darken($color-warning, 20%) solid 1px;
+        background-color: $color-warning;
+        color: lighten($color-warning, 70%);
+      }
+
+      &.success {
+        border-top: darken($color-success, 20%) solid 1px;
+        background-color: $color-success;
+        color: lighten($color-success, 70%);
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    bottom: -100%;
+  }
+  100% {
+    top: unset;
+    bottom: 0;
+  }
+}
