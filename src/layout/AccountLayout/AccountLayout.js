@@ -1,6 +1,5 @@
 import { MdOutlineLogout } from 'react-icons/md';
 import { useRouter } from 'next/router';
-import { toast } from 'react-toastify';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import config from '@/config/index';
 import nextApiCall from '@/utils/apiNext';

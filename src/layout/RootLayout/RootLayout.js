@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { ToastContainer } from 'react-toastify';
 import {
   getMenuFooter,
   getMenuHeader,
@@ -14,7 +13,6 @@ import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
 import SecureBanner from '@/components/_banners/SecureBanner/SecureBanner';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import styles from './RootLayout.module.scss';
-import 'react-toastify/dist/ReactToastify.min.css';
 
 function RootLayout({ children }) {
   const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
@@ -50,7 +48,6 @@ function RootLayout({ children }) {
       {children}
       <SecureBanner />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
-      <ToastContainer position="top-left" newestOnTop theme="dark" />
       <svg xmlns="https://www.w3.org/2000/svg" version="1.1" height="0">
         <filter id="myblurfilter" x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="8" />
