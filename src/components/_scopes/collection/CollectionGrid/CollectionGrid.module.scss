@@ -6,6 +6,7 @@
   gap: var(--space-0);
   grid-auto-flow: row dense;
   grid-template-columns: repeat(5, 1fr);
+  margin-top: var(--space-3);
 }
 
 .item {

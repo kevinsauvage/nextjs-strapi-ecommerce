@@ -64,6 +64,14 @@ query ($handle: String!) {
         title
         type
         url
+        items {
+          id
+          resourceId
+          tags
+          title
+          type
+          url
+        }
       }
     }
   }

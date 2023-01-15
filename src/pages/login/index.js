@@ -9,7 +9,7 @@ import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import styles from './Login.module.scss';
+import Wrapper from '@/components/Wrapper/Wrapper';
 
 const { userFeedback } = config;
 
@@ -65,12 +65,12 @@ function LoginPage() {
             input="true"
           />
           <Buttons text="Login">
-            <div className={styles.register}>
+            <Wrapper gap="6px">
               <Link href={config.routes.register}>REGISTER</Link> or
               <Link href={config.routes.emailResetPassword}>
                 RESET PASSWORD
               </Link>
-            </div>
+            </Wrapper>
           </Buttons>
         </Form>
       </FormContainer>

@@ -21,7 +21,7 @@ export function UserProvider({ children }) {
   const { showToast } = useToastContext();
   const { toggleLoading } = useGlobalContext();
   const { handleSetCheckout } = useCheckoutContext();
-  const { push } = useRouter();
+  const { reload } = useRouter();
 
   /* A function that is called when an error occurs. */
   const handleError = useCallback(
@@ -85,20 +85,22 @@ export function UserProvider({ children }) {
     const res = await nextApiCall.logout();
     toggleLoading(false);
     if (res?.ok) {
-      return push(config.routes.login);
+      return reload();
     }
     return showToast.error(config.userFeedback.logout.error);
-  }, [push, showToast, toggleLoading]);
+  }, [reload, showToast, toggleLoading]);
 
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
+      console.log('get customer call');
       const res = await nextApiCall.getCustomer();
 
       if (res && res?.customer?.id) {
         dispatch({ type: actions.ADD_USER, payload: res.customer });
         handleSetCheckoutShippingAddress(res.customer);
       } else {
+        console.log('logout call');
         logout();
       }
     };

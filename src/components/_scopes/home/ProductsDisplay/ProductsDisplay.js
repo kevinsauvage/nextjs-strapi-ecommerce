@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import SectionTitle from '@/components/SectionTitle/SectionTitle';
 import ProductCardDefault from '../../product/ProductCardDefault/ProductCardDefault';
 import styles from './ProductsDisplay.module.scss';
 
@@ -11,9 +12,7 @@ function ProductsDisplay({ bestSelling, newArrival }) {
   return (
     <div className={styles.productsDisplay}>
       <div className={styles.header}>
-        <div className={styles.title}>
-          <p>OUR TRENDY</p> <h2> PRODUCTS</h2>
-        </div>
+        <SectionTitle first="OUR TRENDY" second="PRODUCTS" />
         <ul className={styles.nav}>
           {Array.isArray(nav) &&
             nav.map((item, i) => (

@@ -1,0 +1,19 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: var(--space-1);
+
+  p {
+    font-weight: $fontWeightLight;
+  }
+
+  h2 {
+    font-weight: $fontWeightBold;
+  }
+  p,
+  h2 {
+    @include fluid-font(320px, 1424px, $fontSize-600, $fontSize-600);
+  }
+}

@@ -15,43 +15,6 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-.bigMenu {
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 999999;
-  background-color: rgba(black, 0.9);
-}
-
-.inner {
-  padding: var(--space-2);
-  animation: rotateZ 0.3s linear forwards;
-
-  @include themed() {
-    background-color: t($background);
-    border-top: 0.1px solid t($onBackground);
-    border-bottom: 0.1px solid t($onBackground);
-  }
-}
-
-.content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.item {
-  width: fit-content;
-  padding: var(--space-0) 0;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  column-gap: var(--space-1);
-}
-
 @keyframes rotateZ {
   0% {
     opacity: 0;

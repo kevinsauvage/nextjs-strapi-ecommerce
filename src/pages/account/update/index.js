@@ -85,7 +85,7 @@ function OrderDetail() {
               required
             />
           </Row>
-          <Row className={styles.wrapper}>
+          <Row>
             <Input
               input="true"
               id="email"

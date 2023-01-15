@@ -191,7 +191,7 @@ $breakpoints: (
   @return map-get($theme-map, $key);
 }
 
-@mixin underline() {
+@mixin underline($color) {
   position: relative;
   display: block;
 
@@ -205,7 +205,7 @@ $breakpoints: (
     max-width: 40px;
 
     @include themed {
-      background-color: t($onBackground);
+      background-color: t($color);
     }
   }
 }

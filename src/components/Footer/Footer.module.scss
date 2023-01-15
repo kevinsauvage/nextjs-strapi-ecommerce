@@ -5,37 +5,24 @@
   }
 }
 
-.top {
-  padding: var(--space-3) 0;
+.title {
+  margin-bottom: var(--space-2);
+  text-transform: capitalize;
+}
+
+.navList {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+}
 
-  .title {
-    margin-bottom: var(--space-2);
-    text-transform: capitalize;
-  }
-
-  .navList {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    justify-items: center;
-    gap: 60px;
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      width: fit-content;
-      flex-wrap: wrap;
-    }
-  }
-
-  .navItem {
-    display: inline-block;
-    margin-right: 30px;
-    margin-bottom: var(--space-1);
-    &:last-child {
-      margin-bottom: 0;
-    }
+.navItem {
+  width: fit-content;
+  margin-bottom: var(--space-1);
+  &:last-child {
+    margin-bottom: 0;
   }
 }
 

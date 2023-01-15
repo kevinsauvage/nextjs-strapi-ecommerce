@@ -5,4 +5,11 @@
   gap: 2rem;
   margin-top: var(--space-1);
   width: fit-content;
+  text-align: center;
+
+  & a {
+    color: $color-primary;
+    text-decoration: underline;
+    @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  }
 }

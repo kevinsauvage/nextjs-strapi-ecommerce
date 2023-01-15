@@ -15,10 +15,11 @@ export default function ProductCardDefault({ product = {} }) {
   }
 
   return (
-    <li className={`${styles.productCardDefault}`}>
-      <Link
-        href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
-      >
+    <Link
+      className={`${styles.productCardDefault}`}
+      href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
+    >
+      <li>
         <div className={styles.image}>
           <Image
             src={images?.[0]?.large}
@@ -30,26 +31,21 @@ export default function ProductCardDefault({ product = {} }) {
             placeholder="blur"
             quality={20}
           />
+
           <div
-            className={styles.menu}
-            role="presentation"
-            onClick={(e) => e.stopPropagation()}
+            className={styles.quickView}
+            role="button"
+            tabIndex="0"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setSelectedProduct(product);
+            }}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') setSelectedProduct(product);
+            }}
           >
-            <div
-              className={styles.quickView}
-              role="button"
-              tabIndex="0"
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setSelectedProduct(product);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') setSelectedProduct(product);
-              }}
-            >
-              <p>Quick view</p>
-            </div>
+            <p>Quick view</p>
           </div>
         </div>
 
@@ -67,7 +63,7 @@ export default function ProductCardDefault({ product = {} }) {
             size="S"
           />
         </div>
-      </Link>
-    </li>
+      </li>
+    </Link>
   );
 }

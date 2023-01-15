@@ -9,7 +9,6 @@ import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import styles from './Register.module.scss';
 
 const { userFeedback } = config;
 
@@ -67,9 +66,7 @@ function RegisterPage() {
             autoComplete="current-password"
           />
           <Buttons text="REGISTER">
-            <div className={styles.alreadyRegistered}>
-              <Link href={config.routes.login}>LOGIN</Link>
-            </div>
+            <Link href={config.routes.login}>LOGIN</Link>
           </Buttons>
         </Form>
       </FormContainer>

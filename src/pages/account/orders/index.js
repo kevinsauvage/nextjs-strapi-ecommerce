@@ -43,9 +43,7 @@ export default function OrdersPage() {
   return (
     <PageLayout title="Orders">
       <AccountLayout title="Orders" loading={isLoading}>
-        <div className="orders">
-          <Orders orders={orders} />
-        </div>
+        <Orders orders={orders} />
       </AccountLayout>
     </PageLayout>
   );
