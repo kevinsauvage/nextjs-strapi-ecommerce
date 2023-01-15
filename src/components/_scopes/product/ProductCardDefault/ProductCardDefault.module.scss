@@ -44,8 +44,9 @@
   opacity: 0;
   visibility: hidden;
   color: $color-grey;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-transform: uppercase;
 
   @include themed {
@@ -63,9 +64,6 @@
 }
 
 .quickView {
-  @include themed {
-    border-right: 0.1px solid t($background);
-  }
 }
 
 .discount {

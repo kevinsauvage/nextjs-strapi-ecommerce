@@ -50,13 +50,6 @@ export default function ProductCardDefault({ product = {} }) {
             >
               <p>Quick view</p>
             </div>
-            <div
-              className={styles.addToCart}
-              role="presentation"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <p> Add to cart</p>
-            </div>
           </div>
         </div>
 

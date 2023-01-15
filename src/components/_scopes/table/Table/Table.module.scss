@@ -5,19 +5,19 @@
   border-collapse: separate;
 
   @include themed {
-    border: 0.01px solid rgba(t($onBackground), 0.3);
+    border: 0.01px solid t($surface);
   }
 }
 
 .tHead {
-  font-weight: $fontWeightMedium;
+  font-weight: $fontWeightSemiBold;
   padding: var(--space-1) var(--space-0);
   text-transform: uppercase;
   text-align: start;
 
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
   @include themed {
-    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    border-bottom: 0.01px solid t($surface);
     background-color: t($surface);
   }
 }
@@ -29,8 +29,10 @@
   text-align: start;
   vertical-align: middle;
   padding: var(--space-0) var(--space-0);
+  font-weight: $fontWeightNormal;
   min-width: 100px;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  height: 100px;
 
   &:last-of-type {
     text-align: right;
@@ -39,6 +41,6 @@
   }
 
   @include themed {
-    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    border-bottom: 0.01px solid t($surface);
   }
 }

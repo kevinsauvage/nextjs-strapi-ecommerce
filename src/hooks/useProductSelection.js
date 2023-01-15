@@ -37,9 +37,8 @@ export default function useProductSelection({ product }) {
     if (quantity > 0 && variantId) {
       toggleLoading(true);
       const res = await nextApiCall.addToCheckout({ variantId, quantity });
-
       toggleCheckout();
-
+      toggleLoading(false);
       handleResponse(res);
     }
   };

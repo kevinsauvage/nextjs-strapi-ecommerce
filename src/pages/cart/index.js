@@ -22,6 +22,17 @@ function CartPage() {
     return <EmptyCart />;
 
   const handleUpdate = async () => {
+    const isQuantityMissing = lineItemsToUpdate.find((item) => !item.quantity);
+    if (isQuantityMissing)
+      return showToast.warning('The quantity should be a positive number');
+
+    const isQuantityNegative = lineItemsToUpdate.find(
+      (item) => item.quantity < 0
+    );
+
+    if (isQuantityNegative)
+      return showToast.warning('The quantity should be a positive number');
+
     const res = await handleQuantityChange(lineItemsToUpdate);
 
     if (res) {
@@ -31,16 +42,19 @@ function CartPage() {
     return showToast.error(userFeedback.updateLines.error);
   };
 
+  const handleSetLineToUpdate = (line) => {
+    setLineItemsToUpdate((prev) => {
+      const currentItems = prev.filter((item) => item.id !== line.id);
+      return [...currentItems, line];
+    });
+  };
+
   return (
     <PageLayout title="Your Cart">
       {!isCheckoutLoading ? (
         <div className={styles.cart}>
           <main>
-            <CartTable
-              handleChange={(line) =>
-                setLineItemsToUpdate((prev) => [...prev, line])
-              }
-            />
+            <CartTable handleChange={handleSetLineToUpdate} />
 
             {lineItemsToUpdate.length > 0 && (
               <Button

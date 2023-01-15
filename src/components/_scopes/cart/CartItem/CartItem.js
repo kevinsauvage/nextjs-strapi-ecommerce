@@ -16,18 +16,6 @@ export default function CartItem({
   lineId,
   title,
 }) {
-  const handleUpdate = (newQuantity) => {
-    let q;
-    if (newQuantity < 0) {
-      q = 0;
-    } else q = newQuantity;
-
-    return handleChange({
-      id: lineId,
-      quantity: parseInt(q, 10),
-    });
-  };
-
   const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
 
   return (
@@ -47,7 +35,7 @@ export default function CartItem({
               className={styles.link}
               href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
             >
-              <h5 className={styles.title}>{title}</h5>
+              <h6 className={styles.title}>{title}</h6>
             </Link>
             <p className={styles.variant}>{variant.title}</p>
           </li>
@@ -62,8 +50,13 @@ export default function CartItem({
           size="4"
           id={inputId}
           defaultValue={quantity}
-          onChange={(e) => handleUpdate(e.target.value)}
           className={styles.input}
+          onChange={(e) =>
+            handleChange({
+              id: lineId,
+              quantity: parseInt(e.target.value, 10),
+            })
+          }
         />
       </TData>
       <TData>
