@@ -63,8 +63,7 @@ function Addresses() {
     }
   };
 
-  const isDefault = (address) =>
-    address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
+  const isDefault = (address) => address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
 
   useEffect(() => {
     if (addresses) setIsLoading(false);
@@ -81,8 +80,7 @@ function Addresses() {
           <Address address={user?.defaultAddress} isDefaultAddress />
         </Section>
         <Section title="Other Addresses">
-          {Array.isArray(addresses) &&
-          addresses.filter((address) => !isDefault(address)).length > 0 ? (
+          {Array.isArray(addresses) && addresses.filter((address) => !isDefault(address)).length > 0 ? (
             <div className={styles.list}>
               {addresses
                 .filter((address) => !isDefault(address))

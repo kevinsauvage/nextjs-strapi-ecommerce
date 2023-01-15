@@ -24,15 +24,10 @@ function Addresses() {
       }
       toggleLoading(true);
 
-      const { customerAddress, customerUserErrors } =
-        await nextApiCall.createAddress({ address });
+      const { customerAddress, customerUserErrors } = await nextApiCall.createAddress({ address });
 
-      if (customerAddress) {
-        return showToast.success('Address created successfully');
-      }
-      if (customerUserErrors.length) {
-        return customerUserErrors.map((err) => showToast.error(err.message));
-      }
+      if (customerAddress) return showToast.success('Address created successfully');
+      if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));
       return showToast.error('Something went wrong');
     } catch (err) {
       return showToast.error('Error creating address, please try again later');

@@ -54,20 +54,12 @@ function OrderDetail() {
               <OrderCard order={order} />
             </Card>
             <Card title="Shipping Address">
-              <Address
-                address={shippingAddress}
-                isAccount
-                displayButton={false}
-              />
+              <Address address={shippingAddress} isAccount displayButton={false} />
             </Card>
           </div>
-
           <Card title="Items">
             <div className={styles.lineItems}>
-              {lineItems &&
-                lineItems.map((item) => (
-                  <LineItemCard key={item.variant?.id} item={item} />
-                ))}
+              {lineItems && lineItems.map((item) => <LineItemCard key={item.variant?.id} item={item} />)}
             </div>
           </Card>
         </div>

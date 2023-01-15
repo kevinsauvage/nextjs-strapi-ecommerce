@@ -25,12 +25,7 @@ function OrderDetail() {
   }, [id]);
 
   const handleSubmit = async (formData) => {
-    if (
-      !formData.password ||
-      !formData.email ||
-      !formData.firstName ||
-      !formData.lastName
-    ) {
+    if (!formData.password || !formData.email || !formData.firstName || !formData.lastName) {
       return showToast.error('Please fill in all required fields');
     }
     try {
@@ -68,50 +63,16 @@ function OrderDetail() {
           }}
         >
           <Row>
-            <Input
-              input="true"
-              id="firstName"
-              type="text"
-              label="First Name"
-              name="firstName"
-              required
-            />
-            <Input
-              input="true"
-              id="lastName"
-              type="text"
-              name="lastName"
-              label="Last Name"
-              required
-            />
+            <Input input="true" id="firstName" type="text" label="First Name" name="firstName" required />
+            <Input input="true" id="lastName" type="text" name="lastName" label="Last Name" required />
           </Row>
           <Row>
-            <Input
-              input="true"
-              id="email"
-              type="email"
-              label="Email Address"
-              name="email"
-              required
-            />
-            <Input
-              input="true"
-              id="password"
-              type="password"
-              name="password"
-              label="Password"
-            />
+            <Input input="true" id="email" type="email" label="Email Address" name="email" required />
+            <Input input="true" id="password" type="password" name="password" label="Password" />
           </Row>
           <Row>
-            <Input
-              input="true"
-              id="phone"
-              type="text"
-              name="phone"
-              label="Phone"
-            />
+            <Input input="true" id="phone" type="text" name="phone" label="Phone" />
           </Row>
-
           <Buttons text="UPDATE INFO">
             <label htmlFor="acceptsMarketing" className={styles.checkbox}>
               <input
