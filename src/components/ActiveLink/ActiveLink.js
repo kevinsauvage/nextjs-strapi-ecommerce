@@ -8,11 +8,12 @@ export default withRouter(({ router, children, as, url, scroll = true, ...rest }
   return (
     <Link
       {...rest}
-      href={path}
+      href={path.toLowerCase()}
       as={as}
       scroll={scroll}
       className={`${styles.ActiveLink}  ${
-        router.pathname.replace('[collectionSlug]', router.query.collectionSlug) === path && styles.active
+        router.pathname.replace('[collectionSlug]', router.query.collectionSlug.toLowerCase()) ===
+          path.toLowerCase() && styles.active
       }`}
     >
       {children}
