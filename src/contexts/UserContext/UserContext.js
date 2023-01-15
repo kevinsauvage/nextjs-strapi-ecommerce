@@ -76,9 +76,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
-      console.log('get customer call');
       const res = await nextApiCall.getCustomer();
-
       if (res && res?.customer?.id) {
         dispatch({ type: actions.ADD_USER, payload: res.customer });
         handleSetCheckoutShippingAddress(res.customer);
