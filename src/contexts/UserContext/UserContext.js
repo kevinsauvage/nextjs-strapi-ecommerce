@@ -88,7 +88,7 @@ export function UserProvider({ children }) {
       return push(config.routes.login);
     }
     return showToast.error(config.userFeedback.logout.error);
-  }, []);
+  }, [push, showToast, toggleLoading]);
 
   useEffect(() => {
     const getCustomer = async () => {
