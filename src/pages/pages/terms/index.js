@@ -17,10 +17,5 @@ export default TermsPage;
 export async function getStaticProps() {
   const shopInfo = await getTermsOfService();
   const { termsOfService } = shopInfo;
-
-  return {
-    props: {
-      termsOfService,
-    },
-  };
+  return { props: { termsOfService } };
 }

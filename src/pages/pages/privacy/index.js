@@ -17,10 +17,5 @@ export default PrivacyPage;
 export async function getStaticProps() {
   const shopInfo = await getPrivacyPolicy();
   const privacyPolicy = shopInfo?.privacyPolicy;
-
-  return {
-    props: {
-      privacyPolicy,
-    },
-  };
+  return { props: { privacyPolicy } };
 }

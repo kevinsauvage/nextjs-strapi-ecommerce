@@ -26,11 +26,7 @@ function middleware(request) {
   }
 
   // Early return if it is a public file such as an image
-  if (
-    pathname.startsWith('/_next') ||
-    pathname.includes('/api/') ||
-    PUBLIC_FILE.test(pathname)
-  ) {
+  if (pathname.startsWith('/_next') || pathname.includes('/api/') || PUBLIC_FILE.test(pathname)) {
     return null;
   }
 
@@ -43,10 +39,7 @@ function middleware(request) {
   }
 
   // Cannot access login or register if already login
-  if (
-    cookieShopify &&
-    (pathname.startsWith('/login') || pathname.startsWith('/logout'))
-  ) {
+  if (cookieShopify && (pathname.startsWith('/login') || pathname.startsWith('/logout'))) {
     return NextResponse.redirect(`${origin}${config.routes.account}`);
   }
 

@@ -17,9 +17,5 @@ export default RefoundPage;
 export async function getStaticProps() {
   const shopInfo = await getRefundPolicy();
   const refundPolicy = shopInfo?.refundPolicy;
-  return {
-    props: {
-      refundPolicy,
-    },
-  };
+  return { props: { refundPolicy } };
 }

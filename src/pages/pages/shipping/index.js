@@ -17,10 +17,5 @@ export default ShippingPage;
 export async function getStaticProps() {
   const shopInfo = await getShippingPolicy();
   const { shippingPolicy } = shopInfo;
-
-  return {
-    props: {
-      shippingPolicy,
-    },
-  };
+  return { props: { shippingPolicy } };
 }

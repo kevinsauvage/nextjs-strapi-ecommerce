@@ -15,30 +15,9 @@ function ContactPage() {
     <PageLayout title="Contact Us">
       <FormContainer>
         <Form onSubmit={onSubmit} action="submit" title="Contact Us">
-          <Input
-            id="email"
-            label="Email address"
-            name="email"
-            placeholder="Email"
-            required
-            input
-          />
-          <Input
-            placeholder="Name"
-            name="name"
-            id="name"
-            label="Name"
-            required
-            input
-          />
-          <TextArea
-            placeholder="Message"
-            name="message"
-            id="message"
-            label="Message"
-            required
-            input
-          />
+          <Input id="email" label="Email address" name="email" placeholder="Email" required input />
+          <Input placeholder="Name" name="name" id="name" label="Name" required input />
+          <TextArea placeholder="Message" name="message" id="message" label="Message" required input />
           <Buttons text="SEND MESSAGE" />
         </Form>
       </FormContainer>

@@ -12,24 +12,14 @@ export const getServerSideProps = async ({ res }) => {
   const staticPaths = fs
     .readdirSync('./src/pages')
     .filter(
-      (staticPage) =>
-        ![
-          'sitemap.xml.js',
-          '404.js',
-          '_app.js',
-          '_document.js',
-          'api',
-        ].includes(staticPage)
+      (staticPage) => !['sitemap.xml.js', '404.js', '_app.js', '_document.js', 'api'].includes(staticPage)
     )
-    .map(
-      (staticPagePath) => `${BASE_URL}/${staticPagePath.replace('.js', '')}`
-    );
+    .map((staticPagePath) => `${BASE_URL}/${staticPagePath.replace('.js', '')}`);
 
   const collections = await getCollections(50);
 
   const dynamicPaths = collections.map(
-    (collection) =>
-      `${BASE_URL}/${config.routes.collection}/${collection.handle}`
+    (collection) => `${BASE_URL}/${config.routes.collection}/${collection.handle}`
   );
 
   const allPaths = [...staticPaths, ...dynamicPaths];

@@ -51,13 +51,10 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
 const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
-const generateDelegateToken = () =>
-  nextApiHelper(`${apiRoute.delegateToken}`, null, 'GET');
-const getCustomer = () =>
-  nextApiHelper(`${apiRoute.customer.index}`, null, 'GET');
+const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`, null, 'GET');
+const getCustomer = () => nextApiHelper(`${apiRoute.customer.index}`, null, 'GET');
 
-const updateCustomer = (payload) =>
-  nextApiHelper(`${apiRoute.customer.index}`, payload, 'PUT');
+const updateCustomer = (payload) => nextApiHelper(`${apiRoute.customer.index}`, payload, 'PUT');
 
 const resetPassword = (password, url) => {
   const apiUrl = `${apiRoute.customer.password}?password=${password}&url=${url}`;
@@ -75,9 +72,7 @@ const addToCheckout = (payload) => {
 };
 
 const removeLinesFromCheckout = (id) => {
-  const apiUrl = `${apiRoute.checkout.lineItems}/id?id=${encodeURIComponent(
-    id
-  )}`;
+  const apiUrl = `${apiRoute.checkout.lineItems}/id?id=${encodeURIComponent(id)}`;
   return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
