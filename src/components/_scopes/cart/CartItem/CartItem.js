@@ -1,10 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Button from '@/components/Button/Button';
 import config from '@/config/index';
 import { close } from '@/assets/svg';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import styles from './CartItem.module.scss';
 
 export default function CartItem({
@@ -12,24 +9,22 @@ export default function CartItem({
   variant,
   inputId,
   quantity,
-  handleQuantityChange,
+  handleChange,
   removeFromCart,
   collection,
   lineId,
   title,
 }) {
-  const [newQuantity, setNewQuantity] = useState(quantity);
-  const { showToast } = useToastContext();
+  const handleUpdate = (newQuantity) => {
+    let q;
+    if (newQuantity < 0) {
+      q = 0;
+    } else q = newQuantity;
 
-  useEffect(() => {
-    setNewQuantity(quantity);
-  }, [quantity]);
-
-  const handleUpdate = () => {
-    if (quantity < 1 || !quantity)
-      return showToast.error('Quantity must be higher than zero');
-
-    return handleQuantityChange(newQuantity, lineId);
+    return handleChange({
+      id: lineId,
+      quantity: parseInt(q, 10),
+    });
   };
 
   const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
@@ -65,18 +60,10 @@ export default function CartItem({
           type="number"
           size="4"
           id={inputId}
-          value={newQuantity}
-          onChange={(e) => setNewQuantity(e.target.value)}
+          defaultValue={quantity}
+          onChange={(e) => handleUpdate(e.target.value)}
           className={styles.input}
         />
-        {newQuantity !== quantity && newQuantity !== 0 && newQuantity !== '' ? (
-          <Button
-            text="Update"
-            onClick={handleUpdate}
-            extraClass={styles.updateBtn}
-            tertiary
-          />
-        ) : null}
       </td>
       <td className={styles.item}>
         <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>

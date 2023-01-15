@@ -25,11 +25,6 @@ export default async function handler(req, res) {
             ip
           );
 
-          console.log(
-            '🚀 ~ file: index.js:28 ~ handler ~ getCheckoutRes',
-            getCheckoutRes
-          );
-
           checkout = getCheckoutRes.checkout;
 
           if (!checkout) {

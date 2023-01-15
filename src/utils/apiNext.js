@@ -81,11 +81,9 @@ const removeLinesFromCheckout = (id) => {
   return nextApiHelper(apiUrl, null, 'DELETE');
 };
 
-const checkoutLineItemsUpdate = (payload, id) => {
-  const apiUrl = `${apiRoute.checkout.lineItems}/id?id=${encodeURIComponent(
-    id
-  )}`;
-  return nextApiHelper(apiUrl, payload, 'PUT');
+const checkoutLineItemsUpdate = (payload) => {
+  const apiUrl = `${apiRoute.checkout.lineItems}`;
+  return nextApiHelper(apiUrl, { lineItems: payload }, 'PUT');
 };
 
 const checkoutUpdateShippingAddress = (payload) => {

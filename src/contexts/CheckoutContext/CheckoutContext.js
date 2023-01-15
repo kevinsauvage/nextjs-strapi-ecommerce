@@ -43,10 +43,20 @@ export function CheckoutProvider({ children }) {
 
   /* A callback function that is used to update the quantity of a line item in the checkout. */
   const handleQuantityChange = useCallback(
-    async (quantity, id) => {
-      toggleLoading(true);
-      const res = await nextApiCall.checkoutLineItemsUpdate({ quantity }, id);
-      handleResponse(res);
+    async (payload) => {
+      try {
+        toggleLoading(true);
+
+        const res = await nextApiCall.checkoutLineItemsUpdate(payload);
+
+        handleResponse(res);
+        if (res?.checkout) return true;
+        return false;
+      } catch (err) {
+        return console.error(err);
+      } finally {
+        toggleLoading(false);
+      }
     },
     [toggleLoading, handleResponse]
   );

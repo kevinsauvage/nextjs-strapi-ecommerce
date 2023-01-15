@@ -48,7 +48,9 @@ export default function ProductCheckoutCard({ lineItem }) {
             showTitle={false}
             originalQuantity={quantity}
             quantityAvailable={quantityAvailable}
-            onChange={(num) => handleQuantityChange(num, id)}
+            onChange={(num) =>
+              handleQuantityChange([{ id, quantity: parseInt(num, 10) }])
+            }
           />
           <button
             className={styles.remove}

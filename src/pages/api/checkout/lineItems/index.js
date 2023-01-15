@@ -1,5 +1,8 @@
 import { getInfoFromRequest } from '@/helpers/index';
-import { addLinesToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
+import {
+  addLinesToCheckout,
+  updateLines,
+} from '@/lib/shopify/checkout/checkoutApiCall';
 
 export default async function handler(req, res) {
   try {
@@ -35,6 +38,25 @@ export default async function handler(req, res) {
         );
 
         return res.status(200).json(addLineResponse);
+      }
+
+      case 'PUT': {
+        const { lineItems } = body || {};
+
+        console.log('🚀 ~ file: index.js:44 ~ handler ~ body', body);
+
+        if (!lineItems) {
+          return res.status(400).json({ message: 'Missing body' });
+        }
+
+        const updateLinesRes = await updateLines(
+          checkoutId,
+          lineItems,
+          delegateToken,
+          ip
+        );
+
+        return res.status(200).json(updateLinesRes);
       }
 
       default: {
