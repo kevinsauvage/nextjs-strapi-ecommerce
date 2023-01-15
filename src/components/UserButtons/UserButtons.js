@@ -14,7 +14,6 @@ export default function UserButtons() {
 
   const data = [
     { item: <ToggleTheme />, id: 0 },
-
     {
       item: user,
       id: 1,

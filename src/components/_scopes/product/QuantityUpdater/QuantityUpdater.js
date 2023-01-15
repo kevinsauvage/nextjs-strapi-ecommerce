@@ -31,9 +31,7 @@ export default function QuantityUpdater({
   const handleChangeInput = (e) => {
     const num = e.target.value;
     if (Number(num) > quantityAvailable) {
-      return showToast.error(
-        `There is Only ${quantityAvailable} variant available`
-      );
+      return showToast.error(`There is Only ${quantityAvailable} variant available`);
     }
     if (Number(num) !== Number(originalQuantity)) return setQuantity(num);
     return false;
@@ -48,12 +46,7 @@ export default function QuantityUpdater({
     <div className={`${styles.quantityContainer} ${extraStyles}`}>
       {showTitle && <b className={styles.label}>SELECT QUANTITY</b>}
       <div className={styles.inputBox}>
-        <button
-          type="button"
-          onClick={removeOne}
-          className={styles.btnQuantity}
-          disabled={quantity <= 1}
-        >
+        <button type="button" onClick={removeOne} className={styles.btnQuantity} disabled={quantity <= 1}>
           <VscRemove />
         </button>
         <input

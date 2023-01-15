@@ -43,37 +43,6 @@ query ($first: Int) {
   }
 }`;
 
-const getCollectionsMenu = `
-query {
-  collections(first: 250, sortKey: RELEVANCE) {
-    edges {
-      node {
-        handle
-        id
-        title
-      }
-    }
-  }
-}`;
-
-const getCollectionsWithProducts = `
-query ($first: Int){
-  collections(first: $first, sortKey: RELEVANCE) {
-    edges {
-      node {
-        ${collectionFragment}
-        products(first: 20, sortKey: BEST_SELLING) {
-          edges {
-            node {
-              ${productFragment}
-            }
-          }
-        }
-      }
-    }
-  }
-}`;
-
 const getCollectionFilters = `
 query Search($handle: String!) {
   collection(handle: $handle) {
@@ -86,11 +55,9 @@ query Search($handle: String!) {
 }`;
 
 const queriesCollection = {
-  getCollectionsWithProducts,
   filterCollectionForward,
   getCollections,
   getCollectionFilters,
-  getCollectionsMenu,
 };
 
 export default queriesCollection;

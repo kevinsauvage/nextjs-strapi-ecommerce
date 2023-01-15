@@ -1,7 +1,4 @@
-import {
-  resetCustomerPassword,
-  sendRecoverEmail,
-} from '@/lib/shopify/customer/customerApiCall';
+import { resetCustomerPassword, sendRecoverEmail } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 
 import { getInfoFromRequest } from '@/helpers/index';
@@ -16,19 +13,10 @@ export default async function handler(req, res) {
         const { password, url } = query;
 
         if (!password || password.length < 8 || !url) {
-          return res.status(400).json({
-            name: 'Bad Request',
-            message: 'Password and URL required',
-          });
+          return res.status(400).json({ name: 'Bad Request', message: 'Password and URL required' });
         }
 
-        const resetRes = await resetCustomerPassword(
-          password,
-          url,
-          delegateToken,
-          ip
-        );
-
+        const resetRes = await resetCustomerPassword(password, url, delegateToken, ip);
         const accessToken = resetRes?.customerAccessToken?.accessToken;
         const customerUserErrors = resetRes?.customerUserErrors;
 
@@ -43,10 +31,7 @@ export default async function handler(req, res) {
         const { email } = body;
 
         if (!email) {
-          return res.status(400).json({
-            name: 'Missing email in body',
-            message: 'Email is required',
-          });
+          return res.status(400).json({ name: 'Missing email in body', message: 'Email is required' });
         }
 
         const emailRes = await sendRecoverEmail(email, delegateToken, ip);

@@ -1,6 +1,5 @@
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-// import Address from '../../account/Address/Address';
 import styles from './CartSummary.module.scss';
 
 function CartSummaryRow({ title, content, children }) {
@@ -10,9 +9,7 @@ function CartSummaryRow({ title, content, children }) {
         <p className={styles.CartSummaryRow__title}>{title}</p>
         <p className={styles.CartSummaryRow__content}>{content}</p>
       </div>
-      {children && (
-        <div className={styles.CartSummaryRow__children}>{children}</div>
-      )}
+      {children && <div className={styles.CartSummaryRow__children}>{children}</div>}
     </div>
   );
 }
@@ -26,13 +23,7 @@ function CartSummary() {
         title="Subtotal"
         content={`${checkout?.totalPrice?.amount} ${checkout?.currencyCode}`}
       />
-      <CartSummaryRow
-        title="Total products"
-        content={checkout?.lineItems?.length || 0}
-      />
-      {/*       <CartSummaryRow title="Shipping address">
-        <Address displayButton={false} address={checkout.shippingAddress} />
-      </CartSummaryRow> */}
+      <CartSummaryRow title="Total products" content={checkout?.lineItems?.length || 0} />
       <CheckoutBtn
         extraClass={styles.btn}
         amount={checkout?.totalPrice?.amount}

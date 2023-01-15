@@ -22,11 +22,7 @@ export default function Toast({ toasts, toastDispatch }) {
   return (
     <div className={styles.toast}>
       <div className={styles.toastContainer}>
-        <div
-          className={`${styles.item} ${
-            toasts?.[0]?.type ? styles[toasts?.[0].type] : ''
-          }`}
-        >
+        <div className={`${styles.item} ${toasts?.[0]?.type ? styles[toasts?.[0].type] : ''}`}>
           {renderItem(toasts?.[0]?.content)}
         </div>
       </div>

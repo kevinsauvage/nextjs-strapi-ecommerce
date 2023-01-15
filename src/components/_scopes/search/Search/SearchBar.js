@@ -36,12 +36,7 @@ export default function SearchBar() {
         <div className={styles.searchBar} role="presentation">
           <Container>
             <div className={styles.form}>
-              <button
-                tabIndex={0}
-                type="button"
-                className={styles.buttonClose}
-                onClick={() => resetToggle()}
-              >
+              <button tabIndex={0} type="button" className={styles.buttonClose} onClick={() => resetToggle()}>
                 <MdClose />
               </button>
               <p className={styles.title}>WHAT ARE YOU LOOKING FOR?</p>

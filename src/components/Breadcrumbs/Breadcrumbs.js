@@ -10,9 +10,7 @@ export default function Breadcrumbs() {
   function generateBreadcrumbs() {
     const asPathWithoutQuery = router.asPath.split('?')[0];
 
-    const asPathNestedRoutes = asPathWithoutQuery
-      .split('/')
-      .filter((v) => v.length > 0);
+    const asPathNestedRoutes = asPathWithoutQuery.split('/').filter((v) => v.length > 0);
 
     const crumbList = asPathNestedRoutes.map((subpath, idx) => {
       const href = `/${asPathNestedRoutes.slice(0, idx + 1).join('/')}`;

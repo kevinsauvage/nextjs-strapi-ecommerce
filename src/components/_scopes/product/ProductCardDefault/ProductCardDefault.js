@@ -50,18 +50,14 @@ export default function ProductCardDefault({ product = {} }) {
         </div>
 
         <div className={styles.content}>
-          {priceV2.amount !== compareAtPriceV2.amount && (
+          {priceV2?.amount !== compareAtPriceV2?.amount && (
             <div className={styles.discount}>
-              <p>{isWhatPercentOf(priceV2.amount, compareAtPriceV2.amount)}%</p>
+              <p>{isWhatPercentOf(priceV2?.amount, compareAtPriceV2?.amount)}%</p>
             </div>
           )}
           <div className={styles.productType}>{productType}</div>
           <h6 className={styles.title}>{title}</h6>
-          <Price
-            compareAtPriceV2={compareAtPriceV2}
-            priceV2={priceV2}
-            size="S"
-          />
+          <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
         </div>
       </li>
     </Link>

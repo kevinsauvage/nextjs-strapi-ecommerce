@@ -1,11 +1,6 @@
 import styles from './Option.module.scss';
 
-export default function Option({
-  option,
-  handleClick,
-  isSelected,
-  isOptionOutOfStock,
-}) {
+export default function Option({ option, handleClick, isSelected, isOptionOutOfStock }) {
   return (
     Array.isArray(option.values) &&
     option.values.length > 1 && (
@@ -18,14 +13,8 @@ export default function Option({
                 type="button"
                 className={
                   `${styles.button} ` +
-                  `${
-                    isSelected(option.name, value) ? styles.selectedOption : ''
-                  } ` +
-                  `${
-                    isOptionOutOfStock(option.name, value)
-                      ? styles.outOfStock
-                      : ''
-                  }`
+                  `${isSelected(option.name, value) ? styles.selectedOption : ''} ` +
+                  `${isOptionOutOfStock(option.name, value) ? styles.outOfStock : ''}`
                 }
                 onClick={() => handleClick(value, option.name)}
               >

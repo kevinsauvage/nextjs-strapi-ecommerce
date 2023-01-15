@@ -13,9 +13,7 @@ export default Shop;
 Shop.getLayout = function getLayout(page) {
   return (
     <CollectionProvider>
-      <CollectionLayout collection={page.props.collection}>
-        {page}
-      </CollectionLayout>
+      <CollectionLayout collection={page.props.collection}>{page}</CollectionLayout>
     </CollectionProvider>
   );
 };
@@ -25,11 +23,7 @@ export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx);
   const delegateToken = cookies?.shopifyDelegateToken;
   const forwarded = req.headers['x-forwarded-for'];
-
-  const ip =
-    typeof forwarded === 'string'
-      ? forwarded.split(/, /)[0]
-      : req.socket.remoteAddress;
+  const ip = typeof forwarded === 'string' ? forwarded.split(/, /)[0] : req.socket.remoteAddress;
 
   const data = await filterCollectionForward(
     'all',

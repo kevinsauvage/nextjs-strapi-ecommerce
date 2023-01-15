@@ -16,22 +16,16 @@ const { userFeedback } = config;
 function LoginPage() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
-
   const { reload } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
-    if (!email || !password)
-      return showToast.error(userFeedback?.missingFields);
+    if (!email || !password) return showToast.error(userFeedback?.missingFields);
     toggleLoading(true);
     const resLogin = await nextApiCall.login({ email, password });
-
     toggleLoading(false);
     const customerUserErrors = resLogin?.customerUserErrors;
     if (customerUserErrors?.length) {
-      console.log(customerUserErrors);
-      return customerUserErrors.forEach((element) =>
-        showToast.error(element.message)
-      );
+      return customerUserErrors.forEach((element) => showToast.error(element.message));
     }
 
     if (resLogin?.ok) {
@@ -67,9 +61,7 @@ function LoginPage() {
           <Buttons text="Login">
             <Wrapper gap="6px">
               <Link href={config.routes.register}>REGISTER</Link> or
-              <Link href={config.routes.emailResetPassword}>
-                RESET PASSWORD
-              </Link>
+              <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
             </Wrapper>
           </Buttons>
         </Form>

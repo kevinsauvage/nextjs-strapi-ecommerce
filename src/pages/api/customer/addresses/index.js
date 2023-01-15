@@ -1,7 +1,4 @@
-import {
-  getCustomerAddresses,
-  createAddress,
-} from '@/lib/shopify/customer/customerApiCall';
+import { getCustomerAddresses, createAddress } from '@/lib/shopify/customer/customerApiCall';
 import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
@@ -10,8 +7,7 @@ export default async function handler(req, res) {
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
 
-    if (!token)
-      return res.status(404).json({ message: 'Missing customer token cookie' });
+    if (!token) return res.status(404).json({ message: 'Missing customer token cookie' });
 
     switch (method) {
       case 'GET': {
@@ -22,18 +18,8 @@ export default async function handler(req, res) {
 
       case 'POST': {
         const { address } = req.body;
-
-        if (!address) {
-          return res.status(400).send({ message: 'Missing query parameter' });
-        }
-
-        const createdAddress = await createAddress(
-          address,
-          token,
-          delegateToken,
-          ip
-        );
-
+        if (!address) return res.status(400).send({ message: 'Missing query parameter' });
+        const createdAddress = await createAddress(address, token, delegateToken, ip);
         if (createdAddress) return res.status(200).json(createdAddress);
         return res.status(500).json('Something went wrong');
       }

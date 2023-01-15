@@ -63,11 +63,7 @@ export default function CartItem({
         <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
       </TData>
       <TData>
-        <Button
-          contrast
-          className={styles.button}
-          onClick={() => removeFromCart(lineId)}
-        >
+        <Button contrast className={styles.button} onClick={() => removeFromCart(lineId)}>
           Remove
         </Button>
       </TData>

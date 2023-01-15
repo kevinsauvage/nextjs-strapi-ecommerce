@@ -2,12 +2,7 @@ import { useState } from 'react';
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
 import style from './Indicators.module.scss';
 
-export default function Indicators({
-  itemsToShow,
-  totalItems,
-  handleClick,
-  activeIndex,
-}) {
+export default function Indicators({ itemsToShow, totalItems, handleClick, activeIndex }) {
   const [total] = useState(Math.ceil(totalItems / itemsToShow));
 
   return (

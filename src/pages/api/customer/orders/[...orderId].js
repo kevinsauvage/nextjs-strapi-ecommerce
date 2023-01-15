@@ -7,13 +7,11 @@ export default async function handler(req, res) {
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
 
-    if (!token)
-      return res.status(404).json({ error: 'Missing customer token cookie' });
+    if (!token) return res.status(404).json({ error: 'Missing customer token cookie' });
 
     const orderId = query?.id;
 
-    if (!orderId)
-      return res.status(404).json({ error: 'Missing orderId param' });
+    if (!orderId) return res.status(404).json({ error: 'Missing orderId param' });
 
     switch (method) {
       case 'GET': {

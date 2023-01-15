@@ -4,13 +4,8 @@ import Button from '@/components/Button/Button';
 import styles from './FilterManager.module.scss';
 
 export default function FilterManager() {
-  const {
-    applyFilters,
-    selectedFilters,
-    removeFilter,
-    resetFilters,
-    isSelectionDifferent,
-  } = useCollectionContext();
+  const { applyFilters, selectedFilters, removeFilter, resetFilters, isSelectionDifferent } =
+    useCollectionContext();
 
   return (
     <div className={styles.FilterManager}>
@@ -34,12 +29,7 @@ export default function FilterManager() {
         </div>
       </div>
       <div className={styles.buttons}>
-        <Button
-          extraClass={styles.button}
-          outlined
-          type="button"
-          onClick={resetFilters}
-        >
+        <Button extraClass={styles.button} outlined type="button" onClick={resetFilters}>
           Reset all
         </Button>
         <Button

@@ -12,8 +12,7 @@ function ProductsList({ products, loading, layout }) {
       {Array.isArray(products) && products.length > 0 ? (
         <ListDisplay layout={layout}>
           {products.map((product) => {
-            if (layout === 'grid')
-              return <ProductCardDefault key={product.id} product={product} />;
+            if (layout === 'grid') return <ProductCardDefault key={product.id} product={product} />;
             return <ProductCardRow key={product.id} product={product} />;
           })}
         </ListDisplay>

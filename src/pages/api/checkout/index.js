@@ -16,53 +16,37 @@ export default async function handler(req, res) {
 
     switch (method) {
       case 'GET': {
-        let checkout;
+        const input = {};
+        input.allowPartialAddresses = false;
 
         if (checkoutId) {
-          const getCheckoutRes = await getCheckoutById(
-            checkoutId,
-            delegateToken,
-            ip
-          );
+          const getCheckoutRes = await getCheckoutById(checkoutId, delegateToken, ip);
 
-          checkout = getCheckoutRes.checkout;
-
-          if (!checkout) {
-            const input = {};
-            input.allowPartialAddresses = false;
-
-            const createCheckoutRes = await createCheckout(
-              input,
-              delegateToken,
-              ip
-            );
-
-            checkout = createCheckoutRes?.checkout;
+          if (getCheckoutRes?.orderStatusUrl || !getCheckoutRes?.id) {
+            const createCheckoutRes = await createCheckout({}, delegateToken, ip);
+            setCookie({ res }, checkoutCookiesName, createCheckoutRes?.id, {
+              httpOnly: true,
+              secure: process.env.NODE_ENV !== 'development',
+              sameSite: 'strict',
+              maxAge: expiresIn,
+              path: '/',
+            });
+            return res.status(200).json(createCheckoutRes);
           }
 
-          if (checkout?.orderStatusUrl) {
-            const createCheckoutRes = await createCheckout(
-              {},
-              delegateToken,
-              ip
-            );
-            checkout = createCheckoutRes?.checkout;
-          }
-        } else {
-          const input = {};
-          input.allowPartialAddresses = false;
-
-          const createCheckoutRes = await createCheckout(
-            input,
-            delegateToken,
-            ip
-          );
-
-          checkout = createCheckoutRes?.checkout;
+          setCookie({ res }, checkoutCookiesName, getCheckoutRes?.id, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV !== 'development',
+            sameSite: 'strict',
+            maxAge: expiresIn,
+            path: '/',
+          });
+          return res?.status(200).json(getCheckoutRes);
         }
 
-        if (checkout?.id) {
-          setCookie({ res }, checkoutCookiesName, checkout.id, {
+        const createCheckoutRes = await createCheckout(input, delegateToken, ip);
+        if (createCheckoutRes?.id) {
+          setCookie({ res }, checkoutCookiesName, createCheckoutRes?.id, {
             httpOnly: true,
             secure: process.env.NODE_ENV !== 'development',
             sameSite: 'strict',
@@ -70,24 +54,16 @@ export default async function handler(req, res) {
             path: '/',
           });
         }
-
-        return res.status(200).json({ checkout });
+        return res.status(200).json(createCheckoutRes);
       }
 
       case 'PUT': {
         const { shippingAddress } = body;
 
         if (!shippingAddress || !checkoutId) {
-          return res
-            .status(500)
-            .send({ message: 'Missing shipping address or checkout id' });
+          return res.status(500).send({ message: 'Missing shipping address or checkout id' });
         }
-        const resUpdate = await updateCheckoutShippingAddress(
-          shippingAddress,
-          checkoutId,
-          delegateToken,
-          ip
-        );
+        const resUpdate = await updateCheckoutShippingAddress(shippingAddress, checkoutId, delegateToken, ip);
 
         return res.json(resUpdate);
       }

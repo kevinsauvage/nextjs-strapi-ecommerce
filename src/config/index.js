@@ -30,8 +30,7 @@ config.userFeedback = {
   },
   removeLinesFromCheckout: {
     success: 'Item correctly removed from the cart',
-    error:
-      'Something went wrong removing the item from the cart, please try again',
+    error: 'Something went wrong removing the item from the cart, please try again',
   },
   addLinesToCheckout: {
     success: 'Item correctly added to the cart',
@@ -39,8 +38,7 @@ config.userFeedback = {
   },
   updateLines: {
     success: 'Item correctly updated in the cart',
-    error:
-      'Something went wrong updating the item in the cart, please try again',
+    error: 'Something went wrong updating the item in the cart, please try again',
   },
 };
 

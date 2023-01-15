@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
 import config from '@/config/index';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
@@ -40,33 +34,21 @@ export function CollectionProvider({ children }) {
   }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
 
   const setPageInfo = useCallback((payload) => {
-    dispatch({
-      type: actions.SET_PAGE_INFO,
-      payload,
-    });
+    dispatch({ type: actions.SET_PAGE_INFO, payload });
   }, []);
 
   const setProducts = useCallback((payload) => {
-    dispatch({
-      type: actions.SET_PRODUCTS,
-      payload,
-    });
+    dispatch({ type: actions.SET_PRODUCTS, payload });
   }, []);
 
   const setAllFilters = useCallback((payload) => {
-    dispatch({
-      type: actions.SET_ALL_FILTERS,
-      payload,
-    });
+    dispatch({ type: actions.SET_ALL_FILTERS, payload });
   }, []);
 
   const setSelectedFilters = useCallback(
     (payload) => {
       const newFilters = [...selectedFilters, payload];
-      dispatch({
-        type: actions.SET_SELECTED_FILTERS,
-        payload: newFilters,
-      });
+      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: newFilters });
     },
     [selectedFilters]
   );
@@ -74,10 +56,7 @@ export function CollectionProvider({ children }) {
   const removeFilter = useCallback(
     (filterId) => {
       const newFilters = selectedFilters.filter((f) => f.id !== filterId);
-      dispatch({
-        type: actions.SET_SELECTED_FILTERS,
-        payload: newFilters,
-      });
+      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: newFilters });
     },
     [selectedFilters]
   );
@@ -93,13 +72,7 @@ export function CollectionProvider({ children }) {
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
     push(newUrl, undefined, { shallow: true });
 
-    const data = await filterCollectionForward(
-      query.collectionSlug,
-      10,
-      [],
-      query.sort_key,
-      null
-    );
+    const data = await filterCollectionForward(query.collectionSlug, 10, [], query.sort_key, null);
 
     dispatch({ type: actions.SET_LOADING, payload: false });
 
@@ -111,15 +84,7 @@ export function CollectionProvider({ children }) {
       window.scrollTo(0, 0);
     }
     return null;
-  }, [
-    pathname,
-    push,
-    query.collectionSlug,
-    query.sort_key,
-    setPageInfo,
-    setProducts,
-    toggleFilter,
-  ]);
+  }, [pathname, push, query.collectionSlug, query.sort_key, setPageInfo, setProducts, toggleFilter]);
 
   const applyFilters = useCallback(async () => {
     toggleFilter(false);
@@ -182,13 +147,7 @@ export function CollectionProvider({ children }) {
 
       const filters = actualFilters.map((filter) => JSON.parse(filter.input));
 
-      const data = await filterCollectionForward(
-        query.collectionSlug || 'all',
-        10,
-        filters,
-        value,
-        null
-      );
+      const data = await filterCollectionForward(query.collectionSlug || 'all', 10, filters, value, null);
 
       dispatch({ type: actions.SET_LOADING, payload: false });
 
@@ -202,14 +161,7 @@ export function CollectionProvider({ children }) {
       }
       return null;
     },
-    [
-      actualFilters,
-      asPath,
-      push,
-      query.collectionSlug,
-      setPageInfo,
-      setProducts,
-    ]
+    [actualFilters, asPath, push, query.collectionSlug, setPageInfo, setProducts]
   );
 
   const handleSetLayout = useCallback((newLayout) => {
@@ -241,14 +193,7 @@ export function CollectionProvider({ children }) {
       if (newProducts) setProducts([...products, ...newProducts]);
       if (newPageInfo) setPageInfo(newPageInfo);
     }
-  }, [
-    allFilters,
-    pageInfo.endCursor,
-    products,
-    query,
-    setPageInfo,
-    setProducts,
-  ]);
+  }, [allFilters, pageInfo.endCursor, products, query, setPageInfo, setProducts]);
 
   // EFFECTS ==================================================================================================
 
@@ -280,9 +225,7 @@ export function CollectionProvider({ children }) {
   }, [allFilters, query]);
 
   useEffect(() => {
-    const result = selectedFilters.filter((obj) =>
-      actualFilters.every((s) => s.id !== obj.id)
-    );
+    const result = selectedFilters.filter((obj) => actualFilters.every((s) => s.id !== obj.id));
 
     dispatch({ type: actions.SET_NOT_APPLIED_FILTERS, payload: result });
   }, [actualFilters, selectedFilters]);
@@ -332,9 +275,5 @@ export function CollectionProvider({ children }) {
     ]
   );
 
-  return (
-    <CollectionContext.Provider value={values}>
-      {children}
-    </CollectionContext.Provider>
-  );
+  return <CollectionContext.Provider value={values}>{children}</CollectionContext.Provider>;
 }

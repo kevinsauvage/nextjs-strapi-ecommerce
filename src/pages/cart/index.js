@@ -13,26 +13,17 @@ import styles from './Cart.module.scss';
 const { userFeedback } = config;
 
 function CartPage() {
-  const { checkout, handleQuantityChange, isCheckoutLoading } =
-    useCheckoutContext();
+  const { checkout, handleQuantityChange, isCheckoutLoading } = useCheckoutContext();
   const { showToast } = useToastContext();
   const [lineItemsToUpdate, setLineItemsToUpdate] = useState([]);
 
-  if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading)
-    return <EmptyCart />;
+  if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading) return <EmptyCart />;
 
   const handleUpdate = async () => {
     const isQuantityMissing = lineItemsToUpdate.find((item) => !item.quantity);
-    if (isQuantityMissing)
-      return showToast.warning('The quantity should be a positive number');
-
-    const isQuantityNegative = lineItemsToUpdate.find(
-      (item) => item.quantity < 0
-    );
-
-    if (isQuantityNegative)
-      return showToast.warning('The quantity should be a positive number');
-
+    if (isQuantityMissing) return showToast.warning('The quantity should be a positive number');
+    const isQuantityNegative = lineItemsToUpdate.find((item) => item.quantity < 0);
+    if (isQuantityNegative) return showToast.warning('The quantity should be a positive number');
     const res = await handleQuantityChange(lineItemsToUpdate);
 
     if (res) {

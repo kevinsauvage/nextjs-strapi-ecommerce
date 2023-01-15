@@ -12,13 +12,7 @@ export default function EmptyCart() {
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Your cart is empty</h2>
-      <Image
-        src="/emptyCart.svg"
-        width="200"
-        height="200"
-        alt="Empty cart"
-        className={styles.image}
-      />
+      <Image src="/emptyCart.svg" width="200" height="200" alt="Empty cart" className={styles.image} />
       <Button
         text="CONTINUE SHOPPING"
         primary

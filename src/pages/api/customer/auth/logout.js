@@ -6,13 +6,9 @@ const logout = async (req, res) => {
   try {
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
 
-    if (shopifyToken) {
-      await deleteAccessToken(shopifyToken?.token, delegateToken, ip);
-    }
+    if (shopifyToken) await deleteAccessToken(shopifyToken?.token, delegateToken, ip);
 
-    destroyCookie({ res }, 'shopifyToken', {
-      path: '/',
-    });
+    destroyCookie({ res }, 'shopifyToken', { path: '/' });
 
     return res.status(200).send({ ok: true });
   } catch (error) {

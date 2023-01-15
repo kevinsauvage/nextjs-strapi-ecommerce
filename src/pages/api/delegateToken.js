@@ -17,9 +17,7 @@ const getToken = async (req, res) => {
         });
 
         if (!response) {
-          return res.status(500).json({
-            error: 'Could not get delegate access token',
-          });
+          return res.status(500).json({ error: 'Could not get delegate access token' });
         }
 
         const delegateToken = response?.delegateAccessToken?.accessToken;
@@ -30,9 +28,7 @@ const getToken = async (req, res) => {
         }
 
         if (!delegateToken) {
-          return res.status(500).json({
-            error: 'Could not get delegate access token',
-          });
+          return res.status(500).json({ error: 'Could not get delegate access token' });
         }
 
         setCookie({ res }, 'shopifyDelegateToken', delegateToken, {

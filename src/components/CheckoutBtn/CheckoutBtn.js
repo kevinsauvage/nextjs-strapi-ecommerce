@@ -10,11 +10,6 @@ export default function CheckoutBtn({ extraClass, url }) {
   const redirectToCheckout = async () => router.push(checkoutUrl);
 
   return (
-    <Button
-      primary
-      onClick={() => redirectToCheckout()}
-      text="Proceed to checkout"
-      extraClass={extraClass}
-    />
+    <Button primary onClick={() => redirectToCheckout()} text="Proceed to checkout" extraClass={extraClass} />
   );
 }

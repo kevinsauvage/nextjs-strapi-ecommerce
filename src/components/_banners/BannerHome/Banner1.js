@@ -8,10 +8,7 @@ export default function BannerHome({ collections }) {
 
   return (
     <section className={styles.banner}>
-      <div
-        className={styles.inner}
-        style={{ backgroundImage: `url(${image?.src})` }}
-      >
+      <div className={styles.inner} style={{ backgroundImage: `url(${image?.src})` }}>
         <div className={styles.container}>
           <div className={styles.content}>
             <p className={styles.upTitle}>
@@ -20,10 +17,7 @@ export default function BannerHome({ collections }) {
             </p>
             <h1 className={`${styles.title} big`}>{title}</h1>
             <p className={styles.subtitle}>{description}</p>
-            <Link
-              href={`${config.routes.collection}/${handle}`}
-              className={styles.link}
-            >
+            <Link href={`${config.routes.collection}/${handle}`} className={styles.link}>
               Shop now
             </Link>
           </div>

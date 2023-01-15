@@ -10,11 +10,7 @@ export default function Price({ compareAtPriceV2, priceV2, size = 'M' }) {
   };
 
   return (
-    <div
-      className={`${styles.Price} ${isDiscount ? styles.PriceDiscount : ''} ${
-        sizeStyles[size]
-      }`}
-    >
+    <div className={`${styles.Price} ${isDiscount ? styles.PriceDiscount : ''} ${sizeStyles[size]}`}>
       {isDiscount && (
         <p className={styles.compareAtPriceV2}>
           {compareAtPriceV2.amount}

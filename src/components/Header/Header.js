@@ -34,9 +34,7 @@ function Header({ headerMenu }) {
           </div>
         </Container>
       </header>
-      {activeItems?.length > 0 && (
-        <BigMenu data={activeItems} handleClose={handleClose} />
-      )}
+      {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
     </div>
   );
 }

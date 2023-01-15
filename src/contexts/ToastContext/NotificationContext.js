@@ -1,11 +1,4 @@
-import React, {
-  createContext,
-  useReducer,
-  useContext,
-  useMemo,
-  useEffect,
-  useState,
-} from 'react';
+import { createContext, useReducer, useContext, useMemo, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Toast from '@/components/Toast/Toast';
 
@@ -93,10 +86,7 @@ export function ToastProvider({ children }) {
 
       {mounted &&
         toasts.length > 0 &&
-        createPortal(
-          <Toast toasts={toasts} toastDispatch={toastDispatch} />,
-          document?.body
-        )}
+        createPortal(<Toast toasts={toasts} toastDispatch={toastDispatch} />, document?.body)}
     </ToastContext.Provider>
   );
 }

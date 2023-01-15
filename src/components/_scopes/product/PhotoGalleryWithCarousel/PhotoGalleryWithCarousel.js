@@ -4,10 +4,7 @@ import CarouselVertical from '@/components/CarouselVertical/Carousel';
 import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import styles from './PhotoGalleryWithCarousel.module.scss';
 
-export default function PhotoGalleryWithCarousel({
-  selectedVariant,
-  images = [],
-}) {
+export default function PhotoGalleryWithCarousel({ selectedVariant, images = [] }) {
   const [selected, setSelected] = useState(undefined);
   const [loaded, setLoaded] = useState(false);
 
@@ -27,11 +24,7 @@ export default function PhotoGalleryWithCarousel({
           <Image
             className={styles.image}
             src={selected?.large || selectedVariant?.image?.large}
-            alt={
-              selected?.altText ||
-              selectedVariant?.image?.altText ||
-              selectedVariant?.title
-            }
+            alt={selected?.altText || selectedVariant?.image?.altText || selectedVariant?.title}
             width={selected?.width || selectedVariant?.image?.width}
             height={selected?.height || selectedVariant?.image?.height}
             quality={50}
@@ -44,10 +37,7 @@ export default function PhotoGalleryWithCarousel({
           <button
             key={image.src}
             type="button"
-            className={
-              `${styles.item} ` +
-              `${image.src === selected?.src ? styles.selected : ''}`
-            }
+            className={`${styles.item} ${image.src === selected?.src ? styles.selected : ''}`}
             onClick={() => setSelected(image)}
           >
             <Image

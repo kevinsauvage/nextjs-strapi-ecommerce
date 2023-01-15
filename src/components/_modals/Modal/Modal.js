@@ -12,12 +12,7 @@ export default function Modal({ children, handleClose }) {
     >
       <div className={styles.inner}>
         <div className={styles.header}>
-          <button
-            tabIndex="0"
-            className={styles.close}
-            type="button"
-            onClick={handleClose && handleClose}
-          >
+          <button tabIndex="0" className={styles.close} type="button" onClick={handleClose && handleClose}>
             <GrClose />
           </button>
         </div>

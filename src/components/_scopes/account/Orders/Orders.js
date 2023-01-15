@@ -44,12 +44,7 @@ export default function Orders({ orders }) {
               <TData>{order.financialStatus}</TData>
               <TData>{`${order.totalPrice?.amount} ${order.totalPrice?.currencyCode}`}</TData>
               <TData>
-                <Button
-                  contrast
-                  href={`${config.routes.orders}/${encodeURIComponent(
-                    order?.id
-                  )}`}
-                >
+                <Button contrast href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}>
                   View Order
                 </Button>
               </TData>

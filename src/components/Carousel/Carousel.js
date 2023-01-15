@@ -12,9 +12,7 @@ function Carousel({ children, title, itemToShow = 5 }) {
   const carouselRef = useRef(null);
   const { asPath } = useRouter();
   const [index, setIndex] = useState(0);
-  const [maxIndex] = useState(
-    Math.ceil(Children.count(children) / itemToShow - 1)
-  );
+  const [maxIndex] = useState(Math.ceil(Children.count(children) / itemToShow - 1));
 
   useEffect(() => {
     setTranslatePosition(0);
@@ -46,8 +44,7 @@ function Carousel({ children, title, itemToShow = 5 }) {
     }
 
     if (newPosition > translatePosition) {
-      if (newPosition > maxTranslatePosition)
-        setTranslatePosition(maxTranslatePosition);
+      if (newPosition > maxTranslatePosition) setTranslatePosition(maxTranslatePosition);
       else setTranslatePosition(newPosition);
     }
   }, [carouselWidth, index, maxTranslatePosition, translatePosition]);
@@ -81,10 +78,7 @@ function Carousel({ children, title, itemToShow = 5 }) {
           }}
         >
           {Children.map(children, (child) => (
-            <div
-              className={styles.CarouselItem}
-              style={{ width: `${itemDimension}%` }}
-            >
+            <div className={styles.CarouselItem} style={{ width: `${itemDimension}%` }}>
               {cloneElement(child)}
             </div>
           ))}

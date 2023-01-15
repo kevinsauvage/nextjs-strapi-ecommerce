@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import config from '@/config/index';
 import { useRouter } from 'next/router';
@@ -23,12 +17,9 @@ export function UserProvider({ children }) {
   const { handleSetCheckout } = useCheckoutContext();
   const { reload } = useRouter();
 
-  /* A function that is called when an error occurs. */
   const handleError = useCallback(
     (err) => {
-      if (Array.isArray(err)) {
-        return err.forEach((e) => showToast.error(e.message));
-      }
+      if (Array.isArray(err)) return err.forEach((e) => showToast.error(e.message));
       return false;
     },
     [showToast]
@@ -68,14 +59,8 @@ export function UserProvider({ children }) {
         shippingAddress: payload,
       });
 
-      if (res?.checkout) {
-        handleSetCheckout(res.checkout);
-      } else {
-        console.error(
-          "Couldn't associate default address to checkout res>>>",
-          res
-        );
-      }
+      if (res?.id) handleSetCheckout(res);
+      else console.error("Couldn't associate default address to checkout res>>>", res);
     },
     [handleSetCheckout]
   );
@@ -84,9 +69,7 @@ export function UserProvider({ children }) {
     toggleLoading(true);
     const res = await nextApiCall.logout();
     toggleLoading(false);
-    if (res?.ok) {
-      return reload();
-    }
+    if (res?.ok) return reload();
     return showToast.error(config.userFeedback.logout.error);
   }, [reload, showToast, toggleLoading]);
 
@@ -100,7 +83,6 @@ export function UserProvider({ children }) {
         dispatch({ type: actions.ADD_USER, payload: res.customer });
         handleSetCheckoutShippingAddress(res.customer);
       } else {
-        console.log('logout call');
         logout();
       }
     };
@@ -109,12 +91,9 @@ export function UserProvider({ children }) {
 
   const values = useMemo(
     () => ({
-      // States
       user,
       addresses,
       orders,
-
-      // Functions
       handleError,
       dispatch,
       logout,

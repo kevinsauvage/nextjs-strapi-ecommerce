@@ -12,14 +12,7 @@ export default function ProductCheckoutCard({ lineItem }) {
 
   const { variant, quantity, id, title } = lineItem || {};
 
-  const {
-    image,
-    compareAtPriceV2,
-    priceV2,
-    product,
-    quantityAvailable,
-    selectedOptions,
-  } = variant || {};
+  const { image, compareAtPriceV2, priceV2, product, quantityAvailable, selectedOptions } = variant || {};
 
   const collection = product?.collections?.nodes?.[0];
 
@@ -36,9 +29,7 @@ export default function ProductCheckoutCard({ lineItem }) {
         />
       </div>
       <div className={styles.body}>
-        <Link
-          href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
-        >
+        <Link href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}>
           <h5 className={styles.title}>{title}</h5>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="M" />
@@ -48,15 +39,9 @@ export default function ProductCheckoutCard({ lineItem }) {
             showTitle={false}
             originalQuantity={quantity}
             quantityAvailable={quantityAvailable}
-            onChange={(num) =>
-              handleQuantityChange([{ id, quantity: parseInt(num, 10) }])
-            }
+            onChange={(num) => handleQuantityChange([{ id, quantity: parseInt(num, 10) }])}
           />
-          <button
-            className={styles.remove}
-            type="button"
-            onClick={() => removeFromCheckout(id)}
-          >
+          <button className={styles.remove} type="button" onClick={() => removeFromCheckout(id)}>
             Remove
           </button>
         </div>

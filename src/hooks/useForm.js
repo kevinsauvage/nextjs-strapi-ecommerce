@@ -13,7 +13,6 @@ const useForm = (onSubmit, initialState) => {
 
     if (type === 'checkbox') {
       setFormData({ ...formData, [name]: !formData[name] });
-
       return;
     }
 
@@ -27,10 +26,7 @@ const useForm = (onSubmit, initialState) => {
     setLoading(false);
   };
 
-  const handleReset = useCallback(
-    () => setFormData(initialState),
-    [initialState]
-  );
+  const handleReset = useCallback(() => setFormData(initialState), [initialState]);
 
   return {
     formData,

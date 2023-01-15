@@ -1,11 +1,5 @@
 import { useRouter } from 'next/router';
-import {
-  createContext,
-  useCallback,
-  useEffect,
-  useMemo,
-  useReducer,
-} from 'react';
+import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import { GlobalReducer, initialState, actions } from './GlobalReducer';
 
@@ -14,8 +8,7 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
-  const { checkoutOpen, searchOpen, selectedProduct, loading, filterOpen } =
-    states;
+  const { checkoutOpen, searchOpen, selectedProduct, loading, filterOpen } = states;
 
   const resetToggle = useCallback(() => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
@@ -35,13 +28,7 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (
-      checkoutOpen ||
-      selectedProduct ||
-      loading ||
-      searchOpen ||
-      filterOpen
-    ) {
+    if (checkoutOpen || selectedProduct || loading || searchOpen || filterOpen) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
   }, [checkoutOpen, selectedProduct, loading, searchOpen, filterOpen]);
@@ -79,19 +66,8 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [
-      searchOpen,
-      checkoutOpen,
-      selectedProduct,
-      loading,
-      filterOpen,
-      resetToggle,
-    ]
+    [searchOpen, checkoutOpen, selectedProduct, loading, filterOpen, resetToggle]
   );
 
-  return (
-    <GlobalStoreContext.Provider value={values}>
-      {children}
-    </GlobalStoreContext.Provider>
-  );
+  return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;
 }

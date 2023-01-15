@@ -4,13 +4,8 @@ import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
 export default function Filters() {
-  const {
-    selectedFilters,
-    setSelectedFilters,
-    removeFilter,
-    actualFilters,
-    allFilters,
-  } = useCollectionContext();
+  const { selectedFilters, setSelectedFilters, removeFilter, actualFilters, allFilters } =
+    useCollectionContext();
 
   const isChecked = useCallback(
     (valueId) => {
@@ -21,9 +16,7 @@ export default function Filters() {
     [selectedFilters]
   );
 
-  const filters = allFilters
-    .filter((item) => item.type === 'LIST')
-    .filter((item) => item.values.length > 1);
+  const filters = allFilters.filter((item) => item.type === 'LIST').filter((item) => item.values.length > 1);
 
   return (
     <div className={styles.filters}>
@@ -35,15 +28,9 @@ export default function Filters() {
               {filter.values.map((value) => (
                 <button
                   key={value.label}
-                  className={`${styles.button} ${
-                    isChecked(value.id) && styles.checked
-                  }`}
+                  className={`${styles.button} ${isChecked(value.id) && styles.checked}`}
                   type="button"
-                  onClick={() =>
-                    isChecked(value.id)
-                      ? removeFilter(value.id)
-                      : setSelectedFilters(value)
-                  }
+                  onClick={() => (isChecked(value.id) ? removeFilter(value.id) : setSelectedFilters(value))}
                 >
                   <p className={styles.value}>{value.label}</p>
                 </button>
@@ -51,9 +38,7 @@ export default function Filters() {
             </div>
           </div>
         ))}
-      {actualFilters.length || selectedFilters.length ? (
-        <FilterManager />
-      ) : null}
+      {actualFilters.length || selectedFilters.length ? <FilterManager /> : null}
     </div>
   );
 }

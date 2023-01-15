@@ -21,9 +21,12 @@ export default function OrdersPage() {
   }, [orders]);
 
   useEffect(() => {
-    const fetchAddresses = async () => {
+    const fetchOrders = async () => {
       try {
         const res = await nextApiCall.getCustomerOrders();
+
+        console.log('🚀 ~ file: index.js:28 ~ fetchOrders ~ res', res);
+
         if (res) {
           dispatch({ type: actions.ADD_ORDERS, payload: res });
         } else {
@@ -37,7 +40,7 @@ export default function OrdersPage() {
         setIsLoading(false);
       }
     };
-    fetchAddresses();
+    fetchOrders();
   }, [back, dispatch, showToast]);
 
   return (

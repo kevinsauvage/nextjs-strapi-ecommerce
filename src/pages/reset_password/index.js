@@ -19,9 +19,7 @@ function Password({ resetUrl }) {
   const onSubmit = async (formData) => {
     const { password } = formData;
 
-    if (!password || password.length < 8) {
-      return showToast.error(config.userFeedback.passwordLength);
-    }
+    if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
 
     toggleLoading(true);
 
@@ -31,11 +29,9 @@ function Password({ resetUrl }) {
 
     const customerUserErrors = data?.customerUserErrors;
 
-    if (customerUserErrors?.length) {
-      return customerUserErrors.forEach((element) =>
-        showToast.error(element.message)
-      );
-    }
+    if (customerUserErrors?.length)
+      return customerUserErrors.forEach((element) => showToast.error(element.message));
+
     if (data?.ok) {
       showToast.success(config.userFeedback.resetPassword.success);
       return push(config.routes.account);
@@ -44,9 +40,7 @@ function Password({ resetUrl }) {
   };
 
   useEffect(() => {
-    if (query.reset_url) {
-      push(config.routes.resetPassword, undefined, { shallow: true });
-    }
+    if (query.reset_url) push(config.routes.resetPassword, undefined, { shallow: true });
   }, [push, query]);
 
   useEffect(() => {

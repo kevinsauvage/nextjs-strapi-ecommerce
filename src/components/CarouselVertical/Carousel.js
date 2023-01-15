@@ -12,9 +12,7 @@ function CarouselVertical({ children, itemToShow = 5, showButtons }) {
   const carouselRef = useRef(null);
   const { asPath } = useRouter();
   const [index, setIndex] = useState(0);
-  const [maxIndex] = useState(
-    Math.ceil(Children.count(children) / itemToShow - 1)
-  );
+  const [maxIndex] = useState(Math.ceil(Children.count(children) / itemToShow - 1));
 
   useEffect(() => {
     setTranslatePosition(0);
@@ -47,8 +45,7 @@ function CarouselVertical({ children, itemToShow = 5, showButtons }) {
     }
 
     if (newPosition > translatePosition) {
-      if (newPosition > maxTranslatePosition)
-        setTranslatePosition(maxTranslatePosition);
+      if (newPosition > maxTranslatePosition) setTranslatePosition(maxTranslatePosition);
       else setTranslatePosition(newPosition);
     }
   }, [carouselHeight, index, maxTranslatePosition, translatePosition]);
@@ -80,10 +77,7 @@ function CarouselVertical({ children, itemToShow = 5, showButtons }) {
         }}
       >
         {Children.map(children, (child) => (
-          <div
-            className={styles.CarouselItem}
-            style={{ height: `${itemDimension}%` }}
-          >
+          <div className={styles.CarouselItem} style={{ height: `${itemDimension}%` }}>
             {cloneElement(child)}
           </div>
         ))}

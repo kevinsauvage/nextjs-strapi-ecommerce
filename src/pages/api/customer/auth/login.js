@@ -14,39 +14,22 @@ const login = async (req, res) => {
 
         if (!email || !password) throw new Error('Access token Missing');
 
-        const data = await loginCustomer(
-          { email, password },
-          delegateToken,
-          ip
-        );
+        const data = await loginCustomer({ email, password }, delegateToken, ip);
 
         if (!data) return res.status(403).json({ error: 'Login call failed' });
 
         const { customerAccessToken, customerUserErrors } = data || {};
 
-        if (customerUserErrors?.length) {
-          return res.status(201).json({
-            ok: true,
-            customerUserErrors,
-          });
-        }
+        if (customerUserErrors?.length) return res.status(201).json({ ok: true, customerUserErrors });
 
         const { accessToken } = customerAccessToken || {};
 
         if (accessToken && checkoutId) {
           handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
-
-          if (checkoutId) {
-            associateCustomerToCheckout(
-              checkoutId,
-              accessToken,
-              delegateToken,
-              ip
-            );
-          }
-
+          if (checkoutId) associateCustomerToCheckout(checkoutId, accessToken, delegateToken, ip);
           return res.status(200).json({ ok: true });
         }
+
         return res.status(500).send({ error: 'Internal Server Error' });
       }
 

@@ -1,12 +1,6 @@
 import Option from './Option/Option';
 
-export default function Options({
-  options,
-  isOptionOutOfStock,
-  isSelected,
-  handleClick,
-  styles,
-}) {
+export default function Options({ options, isOptionOutOfStock, isSelected, handleClick, styles }) {
   return (
     <div className={styles}>
       {Array.isArray(options) &&

@@ -20,8 +20,7 @@ export default function ProductCardRow({ product }) {
 
   const { title, handle, options } = product;
 
-  const { quantityAvailable, image, compareAtPriceV2, priceV2 } =
-    selectedVariant || {};
+  const { quantityAvailable, image, compareAtPriceV2, priceV2 } = selectedVariant || {};
 
   return (
     <li className={`${styles.ProductCardRow}`}>
@@ -39,16 +38,10 @@ export default function ProductCardRow({ product }) {
 
       <div className={styles.content}>
         <div>
-          <Link
-            href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
-          >
+          <Link href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}>
             <h4 className={styles.title}>{title}</h4>
           </Link>
-          <Price
-            priceV2={priceV2}
-            compareAtPriceV2={compareAtPriceV2}
-            size="L"
-          />
+          <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} size="L" />
 
           <Options
             styles={styles.options}

@@ -17,16 +17,9 @@ function CartFooter() {
     <footer className={styles.footer}>
       <div className={styles.subtotal}>
         <p className={styles.subtotalTitle}>Subtotal</p>
-        <p
-          className={styles.amount}
-        >{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
+        <p className={styles.amount}>{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
       </div>
-      <Button
-        text="View cart"
-        extraClass={styles.btn}
-        contrast
-        onClick={() => router.push('/cart')}
-      />
+      <Button text="View cart" extraClass={styles.btn} contrast onClick={() => router.push('/cart')} />
       <CheckoutBtn
         extraClass={styles.btn}
         amount={checkout?.totalPrice?.amount}
@@ -64,17 +57,9 @@ export default function Cart() {
       title="Cart"
       headerRight={checkout?.length}
       content={
-        Array.isArray(checkout?.lineItems) && checkout?.lineItems.length > 0 ? (
-          <CartContent />
-        ) : (
-          <EmptyCart />
-        )
+        Array.isArray(checkout?.lineItems) && checkout?.lineItems.length > 0 ? <CartContent /> : <EmptyCart />
       }
-      footer={
-        Array.isArray(checkout?.lineItems) && checkout?.lineItems.length ? (
-          <CartFooter />
-        ) : null
-      }
+      footer={Array.isArray(checkout?.lineItems) && checkout?.lineItems.length ? <CartFooter /> : null}
     />
   );
 }

@@ -26,12 +26,8 @@ export default function Button({
 
   if (href) {
     return (
-      <Link
-        href={href}
-        className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
-      >
+      <Link href={href} className={`${styles.button} ${extraClass || ''} ${getStyle()} `}>
         {children}
-
         {text}
       </Link>
     );

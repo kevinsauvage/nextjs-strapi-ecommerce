@@ -21,21 +21,15 @@ function RegisterPage() {
   const onSubmit = async (formData) => {
     const { email, password } = formData;
 
-    if (!password || password.length < 8) {
-      return showToast.error(config.userFeedback.passwordLength);
-    }
-    if (!email) {
-      return showToast.error(userFeedback?.missingFields);
-    }
+    if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
+    if (!email) return showToast.error(userFeedback?.missingFields);
 
     toggleLoading(true);
     const registerRes = await nextApiCall.register({ email, password });
     toggleLoading(false);
 
     const userErrors = registerRes?.userErrors;
-    if (userErrors?.length) {
-      return userErrors.forEach((element) => showToast.error(element.message));
-    }
+    if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
 
     if (registerRes?.ok) {
       showToast.success(userFeedback?.register?.success);

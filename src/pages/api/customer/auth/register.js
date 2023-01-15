@@ -1,7 +1,4 @@
-import {
-  registerCustomer,
-  loginCustomer,
-} from '@/lib/shopify/customer/customerApiCall';
+import { registerCustomer, loginCustomer } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getInfoFromRequest } from '@/helpers/index';
@@ -17,11 +14,7 @@ const register = async (req, res) => {
 
         if (!email || !password) throw new Error('Access token Missing');
 
-        const data = await registerCustomer(
-          { email, password },
-          delegateToken,
-          ip
-        );
+        const data = await registerCustomer({ email, password }, delegateToken, ip);
 
         if (!data) {
           const error = new Error();
@@ -32,33 +25,17 @@ const register = async (req, res) => {
 
         const { userErrors } = data || {};
 
-        if (userErrors.length) {
-          return res.status(200).json({
-            userErrors,
-          });
-        }
+        if (userErrors.length) return res.status(200).json({ userErrors });
 
-        const dataLogin = await loginCustomer(
-          { email, password },
-          delegateToken,
-          ip
-        );
+        const dataLogin = await loginCustomer({ email, password }, delegateToken, ip);
 
         const accessToken = dataLogin?.customerAccessToken?.accessToken;
 
-        if (!accessToken)
-          return res.status(403).send({ message: 'Login failed' });
+        if (!accessToken) return res.status(403).send({ message: 'Login failed' });
 
         handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
 
-        if (checkoutId) {
-          associateCustomerToCheckout(
-            checkoutId,
-            accessToken,
-            delegateToken,
-            ip
-          );
-        }
+        if (checkoutId) associateCustomerToCheckout(checkoutId, accessToken, delegateToken, ip);
 
         return res.status(200).json({ ok: true });
       }

@@ -44,13 +44,8 @@ function OrderCard({ order, displayButton }) {
       </div>
       <div className={style.orderCardDetail}>
         <AccountRow title="Financial Status" content={financialStatus} />
-        {!displayButton && (
-          <AccountRow title="Fulfillment Status" content={fulfillmentStatus} />
-        )}
-        <AccountRow
-          title="Total"
-          content={`${totalPrice?.amount} ${totalPrice?.currencyCode}`}
-        />
+        {!displayButton && <AccountRow title="Fulfillment Status" content={fulfillmentStatus} />}
+        <AccountRow title="Total" content={`${totalPrice?.amount} ${totalPrice?.currencyCode}`} />
         <AccountRow title="Email" content={email} />
         {phone && <AccountRow title="Phone" content={phone} />}
         <AccountRow title="ProcessedAt" content={getDate(processedAt)} />

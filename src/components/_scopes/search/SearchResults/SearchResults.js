@@ -19,9 +19,7 @@ function SearchResults({ results }) {
             </div>
             <div className={styles.details}>
               <strong className={styles.type}>{item?.productType}</strong>
-              <Link
-                href={`${config.routes.collection}/${item?.collections?.[0].handle}/${item?.handle}`}
-              >
+              <Link href={`${config.routes.collection}/${item?.collections?.[0].handle}/${item?.handle}`}>
                 <p className={styles.name}>{item?.title}</p>
               </Link>
 

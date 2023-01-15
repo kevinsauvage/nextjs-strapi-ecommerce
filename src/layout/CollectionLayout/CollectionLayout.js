@@ -31,11 +31,7 @@ function CollectionLayout({ children, collection }) {
             <LayoutButtons handleChange={handleSetLayout} selected={layout} />
             <Wrapper>
               <Sort handleChange={handleSort} />
-              <button
-                className={styles.filterButton}
-                type="button"
-                onClick={() => toggleFilter(true)}
-              >
+              <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
                 {filter} Filter
               </button>
             </Wrapper>

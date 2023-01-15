@@ -14,21 +14,9 @@ export default async function handler(req, res) {
     switch (method) {
       case 'PUT': {
         const { addressId } = req.body;
-
-        if (!addressId) {
-          return res.status(400).send({ message: 'Missing query parameter' });
-        }
-
-        const updateResponse = await updateDefaultAddress(
-          token,
-          addressId,
-          delegateToken,
-          ip
-        );
-
-        if (updateResponse) {
-          return res.status(200).json(updateResponse);
-        }
+        if (!addressId) return res.status(400).send({ message: 'Missing query parameter' });
+        const updateResponse = await updateDefaultAddress(token, addressId, delegateToken, ip);
+        if (updateResponse) return res.status(200).json(updateResponse);
         return res.status(500).json('Something went wrong');
       }
 

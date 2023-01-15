@@ -1,55 +1,19 @@
-import {
-  updateLines,
-  removeLinesFromCheckout,
-} from '@/lib/shopify/checkout/checkoutApiCall';
+import { removeLinesFromCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
-    const { method, body, query } = req;
+    const { method, query } = req;
     const { delegateToken, ip, checkoutId } = getInfoFromRequest(req);
 
-    if (!checkoutId) {
-      return res
-        .status(400)
-        .json({ message: 'Missing checkout ID in cookies' });
-    }
+    if (!checkoutId) return res.status(400).json({ message: 'Missing checkout ID in cookies' });
     const lineId = decodeURIComponent(query.id);
 
-    if (!lineId) {
-      return res.status(400).json({ message: 'Missing line id URL parameter' });
-    }
+    if (!lineId) return res.status(400).json({ message: 'Missing line id URL parameter' });
 
     switch (method) {
-      case 'PUT': {
-        const { quantity } = body || {};
-
-        if (!quantity) {
-          return res.status(400).json({ message: 'Missing query parameter' });
-        }
-
-        const lineItemsToUpdate = [
-          { id: lineId, quantity: parseInt(quantity, 10) },
-        ];
-
-        const updateLinesRes = await updateLines(
-          checkoutId,
-          lineItemsToUpdate,
-          delegateToken,
-          ip
-        );
-
-        return res.status(200).json(updateLinesRes);
-      }
-
       case 'DELETE': {
-        const removeLinesRes = await removeLinesFromCheckout(
-          checkoutId,
-          [lineId],
-          delegateToken,
-          ip
-        );
-
+        const removeLinesRes = await removeLinesFromCheckout(checkoutId, [lineId], delegateToken, ip);
         return res.status(200).json(removeLinesRes);
       }
 

@@ -1,8 +1,4 @@
-import {
-  getUser,
-  refreshToken,
-  updateUserInfo,
-} from '@/lib/shopify/customer/customerApiCall';
+import { getUser, refreshToken, updateUserInfo } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetShopifyTokenCookies } from '@/helpers/cookies';
 import { getInfoFromRequest } from '@/helpers/index';
 
@@ -29,7 +25,6 @@ export default async function handler(req, res) {
 
           if (accessToken) {
             token = accessToken;
-
             handleSetShopifyTokenCookies(res, 'shopifyToken', accessToken);
           }
         }
@@ -42,20 +37,11 @@ export default async function handler(req, res) {
 
       case 'PUT': {
         const {
-          body: {
-            email,
-            password,
-            firstName,
-            lastName,
-            phone,
-            acceptsMarketing = true,
-          },
+          body: { email, password, firstName, lastName, phone, acceptsMarketing = true },
         } = req;
 
         if (!email || !password || !firstName || !lastName) {
-          return res
-            .status(400)
-            .json({ error: 'Bad request', message: 'Missing body parameter' });
+          return res.status(400).json({ error: 'Bad request', message: 'Missing body parameter' });
         }
 
         const customerInput = {
@@ -68,33 +54,18 @@ export default async function handler(req, res) {
 
         if (phone) customerInput.phone = phone;
 
-        const data = await updateUserInfo(
-          token,
-          customerInput,
-          delegateToken,
-          ip
-        );
+        const data = await updateUserInfo(token, customerInput, delegateToken, ip);
 
         if (!data) {
           return res.status(404).sent({ message: 'Could not update user' });
         }
 
-        const { customerAccessToken, customerUserErrors, customer } =
-          data || {};
+        const { customerAccessToken, customerUserErrors, customer } = data || {};
 
-        if (customerUserErrors?.length) {
-          return res.status(201).json({
-            ok: true,
-            customerUserErrors,
-          });
-        }
+        if (customerUserErrors?.length) return res.status(201).json({ ok: true, customerUserErrors });
 
         if (customerAccessToken) {
-          handleSetShopifyTokenCookies(
-            res,
-            'shopifyToken',
-            customerAccessToken?.accessToken
-          );
+          handleSetShopifyTokenCookies(res, 'shopifyToken', customerAccessToken?.accessToken);
         }
 
         return res.status(200).json({ customer, ok: true });

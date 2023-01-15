@@ -4,13 +4,7 @@ import styles from './BackButtons.module.scss';
 function BackButton() {
   const { back } = useRouter();
   return (
-    <div
-      className={styles.back}
-      onClick={() => back()}
-      role="button"
-      tabIndex={0}
-      onKeyDown={() => back()}
-    >
+    <div className={styles.back} onClick={() => back()} role="button" tabIndex={0} onKeyDown={() => back()}>
       <strong>BACK</strong>
     </div>
   );

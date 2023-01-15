@@ -2,18 +2,8 @@ import { Children, cloneElement, isValidElement } from 'react';
 import useForm from '@/hooks/useForm';
 import styles from './Form.module.scss';
 
-export default function Form({
-  children,
-  onSubmit,
-  initialValues,
-  title,
-  buttonText,
-  ...rest
-}) {
-  const { formData, handleInputChange, handleSubmit } = useForm(
-    onSubmit,
-    initialValues
-  );
+export default function Form({ children, onSubmit, initialValues, title, buttonText, ...rest }) {
+  const { formData, handleInputChange, handleSubmit } = useForm(onSubmit, initialValues);
 
   const iterateOverChildren = (childrenArray) =>
     Children.map(childrenArray, (child) => {
