@@ -5,6 +5,7 @@ import ProductCheckoutCard from '@/components/_scopes/product/ProductCheckoutCar
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import EmptyCart from '@/components/_scopes/cart/EmptyCart/EmptyCart';
+import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import styles from './Cart.module.scss';
 import Slide from '../Slide/Slide';
 
@@ -37,7 +38,9 @@ function CartFooter() {
 }
 
 function CartContent() {
-  const { checkout } = useCheckoutContext();
+  const { checkout, isCheckoutLoading } = useCheckoutContext();
+
+  if (isCheckoutLoading) return <BlockLoader />;
 
   return (
     <div className={styles.cart}>

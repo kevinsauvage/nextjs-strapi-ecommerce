@@ -1,7 +1,7 @@
 // initial state
 export const initialState = {
   checkout: undefined,
-  isCheckoutLoading: false,
+  isCheckoutLoading: true,
 };
 
 // actions

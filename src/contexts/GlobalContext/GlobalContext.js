@@ -23,6 +23,7 @@ export function GlobalProvider({ children }) {
 
   const handleRender = useCallback(async () => {
     await nextApiCall.generateDelegateToken();
+    dispatch({ type: actions.TOGGLE_LOADING, payload: false });
   }, []);
 
   useEffect(() => {

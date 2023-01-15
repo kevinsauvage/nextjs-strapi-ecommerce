@@ -2,13 +2,13 @@
   border: none;
   height: 50px;
   padding: 0 var(--space-2);
-  min-width: 230px;
   letter-spacing: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .primary {

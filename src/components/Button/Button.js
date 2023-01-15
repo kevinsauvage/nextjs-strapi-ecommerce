@@ -30,6 +30,8 @@ export default function Button({
         href={href}
         className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
       >
+        {children}
+
         {text}
       </Link>
     );

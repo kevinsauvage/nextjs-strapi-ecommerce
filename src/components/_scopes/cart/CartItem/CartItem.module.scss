@@ -72,8 +72,9 @@
   }
 }
 
-.updateBtn {
-  padding: 5px 8px;
-  width: 100%;
-  margin-top: 20px;
+.button {
+  white-space: nowrap;
+  text-decoration: underline;
+  border: none;
+  background-color: transparent;
 }

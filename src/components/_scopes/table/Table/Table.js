@@ -1,41 +1,27 @@
 import styles from './Table.module.scss';
 
-export function Body({ items }) {
-  return (
-    <tbody>
-      <tr className={styles.container}>
-        {items.map((item) => (
-          <td key={item.value} {...item.args} className={styles.itemBody}>
-            {item.value}
-          </td>
-        ))}
-      </tr>
-    </tbody>
-  );
+export function Body({ children }) {
+  return <tbody className={styles.body}>{children}</tbody>;
 }
 
-export function Head({ items }) {
-  return (
-    <thead className={styles.head}>
-      <tr>
-        {items.map((item) => (
-          <th key={item.value} {...item.args}>
-            {item.value}
-          </th>
-        ))}
-      </tr>
-    </thead>
-  );
+export function Head({ children }) {
+  return <thead className={styles.head}>{children}</thead>;
 }
 
-function Table({ head, body, foot }) {
-  return (
-    <table className={styles.table}>
-      {head}
-      {body}
-      {foot && foot}
-    </table>
-  );
+export function Row({ children }) {
+  return <tr className={styles.row}>{children}</tr>;
+}
+
+export function THead({ children }) {
+  return <th className={styles.tHead}>{children}</th>;
+}
+
+export function TData({ children }) {
+  return <td className={styles.tData}>{children}</td>;
+}
+
+function Table({ children }) {
+  return <table className={styles.table}>{children}</table>;
 }
 
 export default Table;

@@ -1,48 +1,23 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import { useState } from 'react';
-import Button from '@/components/Button/Button';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import config from '@/config/index';
 import CartItem from '../CartItem/CartItem';
-import styles from './CartTable.module.scss';
+import Table, { Body, Head, Row, THead } from '../../table/Table/Table';
 
-const { userFeedback } = config;
-
-function CartTable() {
-  const { checkout, handleQuantityChange, removeFromCheckout } =
-    useCheckoutContext();
-
-  const { showToast } = useToastContext();
-
-  const [lineItemsToUpdate, setLineItemsToUpdate] = useState([]);
-
-  console.log(lineItemsToUpdate);
-
-  const handleUpdate = async () => {
-    const res = await handleQuantityChange(lineItemsToUpdate);
-
-    console.log('🚀 ~ file: CartTable.js:25 ~ handleUpdate ~ res', res);
-
-    if (res) {
-      setLineItemsToUpdate([]);
-      return showToast.success(userFeedback.updateLines.success);
-    }
-    return showToast.error(userFeedback.updateLines.error);
-  };
+function CartTable({ handleChange }) {
+  const { checkout, removeFromCheckout } = useCheckoutContext();
 
   return (
-    <table className={styles.table}>
-      <thead className={styles.head}>
-        <tr>
-          <th>Product</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Subtotal</th>
-          <th colSpan="1" />
-        </tr>
-      </thead>
-      <tbody>
+    <Table>
+      <Head>
+        <Row>
+          <THead>Product</THead>
+          <THead>Price</THead>
+          <THead>Quantity</THead>
+          <THead>Subtotal</THead>
+          <THead>Remove</THead>
+        </Row>
+      </Head>
+      <Body>
         {checkout.lineItems.map((item) => (
           <CartItem
             key={item?.id}
@@ -53,28 +28,11 @@ function CartTable() {
             title={item?.title}
             removeFromCart={removeFromCheckout}
             lineId={item.id}
-            handleChange={(line) =>
-              setLineItemsToUpdate((prev) => [...prev, line])
-            }
+            handleChange={handleChange}
           />
         ))}
-      </tbody>
-      <tfoot>
-        <tr>
-          <td colSpan={4} />
-          <td>
-            <Button
-              extraClass={styles.button}
-              contrast
-              onClick={handleUpdate}
-              disabled={!lineItemsToUpdate.length}
-            >
-              Update
-            </Button>
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+      </Body>
+    </Table>
   );
 }
 

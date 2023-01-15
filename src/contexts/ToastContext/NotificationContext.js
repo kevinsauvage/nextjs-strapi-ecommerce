@@ -92,7 +92,7 @@ export function ToastProvider({ children }) {
       {children}
 
       {mounted &&
-        toasts.length &&
+        toasts.length > 0 &&
         createPortal(
           <Toast toasts={toasts} toastDispatch={toastDispatch} />,
           document?.body

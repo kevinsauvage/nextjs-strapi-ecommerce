@@ -1,8 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import config from '@/config/index';
-import { close } from '@/assets/svg';
+import Button from '@/components/Button/Button';
 import styles from './CartItem.module.scss';
+import { Row, TData } from '../../table/Table/Table';
 
 export default function CartItem({
   product,
@@ -30,8 +31,8 @@ export default function CartItem({
   const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
 
   return (
-    <tr className={styles.container}>
-      <td className={styles.item}>
+    <Row>
+      <TData>
         <ul className={styles.list}>
           <li className={styles.image}>
             <Image
@@ -51,11 +52,11 @@ export default function CartItem({
             <p className={styles.variant}>{variant.title}</p>
           </li>
         </ul>
-      </td>
-      <td className={styles.item}>
+      </TData>
+      <TData>
         <span className={styles.price}>€{variant.priceV2.amount}</span>
-      </td>
-      <td className={styles.item}>
+      </TData>
+      <TData>
         <input
           type="number"
           size="4"
@@ -64,21 +65,19 @@ export default function CartItem({
           onChange={(e) => handleUpdate(e.target.value)}
           className={styles.input}
         />
-      </td>
-      <td className={styles.item}>
+      </TData>
+      <TData>
         <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
-      </td>
-      <td className={styles.item}>
-        <div
-          role="button"
-          tabIndex="0"
-          className={styles.delete}
-          onKeyDown={(e) => e.key === 'Enter' && removeFromCart(lineId)}
+      </TData>
+      <TData>
+        <Button
+          contrast
+          className={styles.button}
           onClick={() => removeFromCart(lineId)}
         >
-          {close}
-        </div>
-      </td>
-    </tr>
+          Remove
+        </Button>
+      </TData>
+    </Row>
   );
 }

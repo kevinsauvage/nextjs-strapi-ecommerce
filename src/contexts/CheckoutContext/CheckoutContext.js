@@ -7,7 +7,6 @@ import {
 } from 'react';
 import nextApiCall from '@/utils/apiNext';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
-import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CheckoutContext = createContext();
 
@@ -16,58 +15,53 @@ const storageCheckoutKey = 'checkoutId';
 export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
-  const { toggleLoading } = useGlobalContext();
 
   const handleSetCheckout = (payload) => {
     dispatch({ type: actions.ADD_CHECKOUT, payload });
   };
 
+  const toggleCheckoutLoading = useCallback((payload) => {
+    dispatch({ type: actions.IS_CHECKOUT_LOADING, payload });
+  }, []);
+
   /* A callback function that is used to handle the response of the API call. */
   const handleResponse = useCallback(
     (res) => {
-      toggleLoading(false);
+      toggleCheckoutLoading(false);
       if (res?.checkout?.id) handleSetCheckout(res.checkout);
     },
-    [toggleLoading]
+    [toggleCheckoutLoading]
   );
 
   /* A callback function that is used to remove a line item from the checkout. */
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
-      toggleLoading(true);
+      toggleCheckoutLoading(true);
       const res = await nextApiCall.removeLinesFromCheckout(lineItemId);
       handleResponse(res);
     },
-    [toggleLoading, handleResponse]
+    [toggleCheckoutLoading, handleResponse]
   );
 
   /* A callback function that is used to update the quantity of a line item in the checkout. */
   const handleQuantityChange = useCallback(
     async (payload) => {
-      try {
-        toggleLoading(true);
-
-        const res = await nextApiCall.checkoutLineItemsUpdate(payload);
-
-        handleResponse(res);
-        if (res?.checkout) return true;
-        return false;
-      } catch (err) {
-        return console.error(err);
-      } finally {
-        toggleLoading(false);
-      }
+      toggleCheckoutLoading(true);
+      const res = await nextApiCall.checkoutLineItemsUpdate(payload);
+      handleResponse(res);
+      if (res?.checkout) return true;
+      return false;
     },
-    [toggleLoading, handleResponse]
+    [toggleCheckoutLoading, handleResponse]
   );
 
   /* A callback function that is used to render the checkout. */
   const handleRender = useCallback(async () => {
     if (!checkout?.id) {
       const checkoutRes = await nextApiCall.getCheckout();
-      if (checkoutRes) handleResponse(checkoutRes);
+      handleResponse(checkoutRes);
     }
-  }, [handleResponse, checkout]);
+  }, [checkout?.id, handleResponse]);
 
   useEffect(() => {
     handleRender();
@@ -77,14 +71,13 @@ export function CheckoutProvider({ children }) {
     () => ({
       // States
       checkout,
-      isCheckoutLoading,
       storageCheckoutKey,
+      isCheckoutLoading,
 
       // Functions
       removeFromCheckout,
       handleQuantityChange,
       handleResponse,
-      toggleLoading,
       handleSetCheckout,
     }),
     [
@@ -93,7 +86,6 @@ export function CheckoutProvider({ children }) {
       removeFromCheckout,
       handleQuantityChange,
       handleResponse,
-      toggleLoading,
     ]
   );
 

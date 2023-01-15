@@ -1,0 +1,44 @@
+.table {
+  width: 100%;
+  height: fit-content;
+  border-spacing: 0px;
+  border-collapse: separate;
+
+  @include themed {
+    border: 0.01px solid rgba(t($onBackground), 0.3);
+  }
+}
+
+.tHead {
+  font-weight: $fontWeightMedium;
+  padding: var(--space-1) var(--space-0);
+  text-transform: uppercase;
+  text-align: start;
+
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  @include themed {
+    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+    background-color: t($surface);
+  }
+}
+
+.row {
+}
+
+.tData {
+  text-align: start;
+  vertical-align: middle;
+  padding: var(--space-0) var(--space-0);
+  min-width: 100px;
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+
+  &:last-of-type {
+    text-align: right;
+    margin-left: 100%;
+    width: 10%;
+  }
+
+  @include themed {
+    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
+  }
+}

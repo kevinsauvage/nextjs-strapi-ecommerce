@@ -81,7 +81,8 @@ function Addresses() {
           <Address address={user?.defaultAddress} isDefaultAddress />
         </Section>
         <Section title="Other Addresses">
-          {Array.isArray(addresses) && addresses.length > 0 ? (
+          {Array.isArray(addresses) &&
+          addresses.filter((address) => !isDefault(address)).length > 0 ? (
             <div className={styles.list}>
               {addresses
                 .filter((address) => !isDefault(address))
