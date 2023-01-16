@@ -18,15 +18,10 @@ function Password({ resetUrl }) {
 
   const onSubmit = async (formData) => {
     const { password } = formData;
-
     if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
-
     toggleLoading(true);
-
     const data = await nextApiCall.resetPassword(password, resetUrl);
-
     toggleLoading(false);
-
     const customerUserErrors = data?.customerUserErrors;
 
     if (customerUserErrors?.length)

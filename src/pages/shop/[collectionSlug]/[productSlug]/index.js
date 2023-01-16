@@ -30,11 +30,7 @@ export default ProductPage;
 export async function getStaticProps({ params }) {
   const product = (await getProduct(params.productSlug)) || null;
   const recommendations = (await getProductRecommendation(product?.id)) || null;
-
-  return {
-    props: { product, recommendations },
-    revalidate: 10, // In seconds
-  };
+  return { props: { product, recommendations }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {

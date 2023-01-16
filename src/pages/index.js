@@ -21,13 +21,5 @@ export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 12);
   const newArrival = await getProducts('CREATED_AT', 12);
   const collections = await getCollections(5);
-
-  return {
-    props: {
-      bestSelling,
-      collections,
-      newArrival,
-    },
-    revalidate: 60,
-  };
+  return { props: { bestSelling, collections, newArrival }, revalidate: 60 };
 }

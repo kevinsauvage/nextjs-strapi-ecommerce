@@ -15,7 +15,7 @@ import styles from './Update.module.scss';
 
 function OrderDetail() {
   const [isLoading, setIsLoading] = useState(true);
-  const { user, handleError, dispatch } = useUserContext();
+  const { user, dispatch } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { email, firstName, lastName, password, phone, id } = user || {};
   const { showToast } = useToastContext();
@@ -34,7 +34,8 @@ function OrderDetail() {
 
       const { customer, customerUserErrors } = updateResponse || {};
 
-      if (customerUserErrors?.length) return handleError(customerUserErrors);
+      if (customerUserErrors?.length)
+        return customerUserErrors.forEach((element) => showToast.error(element.message));
 
       if (customer) {
         showToast.success('Customer information updated successfully');

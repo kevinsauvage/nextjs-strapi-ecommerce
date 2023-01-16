@@ -13,7 +13,7 @@ import styles from './Addresses.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
-  const { handleError, dispatch, user, addresses } = useUserContext();
+  const { dispatch, user, addresses } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
@@ -37,7 +37,7 @@ function Addresses() {
         showToast.success('Address correctly set as default address');
         return dispatch({ type: actions.ADD_USER, payload: customer });
       }
-      return handleError(customerUserErrors);
+      return customerUserErrors.forEach((element) => showToast.error(element.message));
     } catch (error) {
       return showToast.error('Something went wrong, please try again later');
     } finally {
@@ -50,7 +50,9 @@ function Addresses() {
       toggleLoading(true);
       const res = await nextApiCall.deleteAddress(id);
       const { customerUserErrors, deletedCustomerAddressId } = res || {};
-      if (customerUserErrors?.length) return handleError(customerUserErrors);
+      if (customerUserErrors?.length)
+        return customerUserErrors.forEach((element) => showToast.error(element.message));
+
       if (deletedCustomerAddressId) {
         await fetchAddresses();
         return showToast.success('Address deleted successfully');

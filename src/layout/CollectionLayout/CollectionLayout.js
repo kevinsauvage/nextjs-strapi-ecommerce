@@ -8,13 +8,25 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Slide from '@/components/_slides/Slide/Slide';
 import Filters from '@/components/_scopes/collection/Filters/Filters';
 import { filter } from '@/assets/svg';
+import { useEffect } from 'react';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
-function CollectionLayout({ children, collection }) {
-  const { handleSort, handleSetLayout, layout } = useCollectionContext();
+function CollectionLayout({
+  children,
+  collection: { products: initialProducts, title, description },
+  pageInfo: initialPageInfo,
+  filters,
+}) {
+  const { handleSort, handleSetLayout, layout, setPageInfo, setProducts, setAllFilters } =
+    useCollectionContext();
   const { filterOpen, toggleFilter } = useGlobalContext();
-  const { title, description } = collection || {};
+
+  useEffect(() => {
+    if (initialProducts) setProducts(initialProducts);
+    if (initialPageInfo) setPageInfo(initialPageInfo);
+    if (filters) setAllFilters(filters);
+  }, [filters, initialPageInfo, initialProducts, setAllFilters, setPageInfo, setProducts]);
 
   return (
     <PageLayout title={title} description={description}>

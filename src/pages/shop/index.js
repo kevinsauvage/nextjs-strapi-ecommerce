@@ -4,11 +4,9 @@ import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import CollectionPage from '@/components/CollectionPage/CollectionPage';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 
-function Shop(props) {
+export default function Shop(props) {
   return <CollectionPage {...props} />;
 }
-
-export default Shop;
 
 Shop.getLayout = function getLayout(page) {
   return (
@@ -24,24 +22,8 @@ export async function getServerSideProps(ctx) {
   const delegateToken = cookies?.shopifyDelegateToken;
   const forwarded = req.headers['x-forwarded-for'];
   const ip = typeof forwarded === 'string' ? forwarded.split(/, /)[0] : req.socket.remoteAddress;
+  const { startCursor, sort_key: sortKey } = query;
+  const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
 
-  const data = await filterCollectionForward(
-    'all',
-    16,
-    [],
-    query.sort_key,
-    query.startCursor,
-    delegateToken,
-    ip
-  );
-
-  const { collection = [], pageInfo = [], collectionFilters = [] } = data || {};
-
-  return {
-    props: {
-      collection,
-      pageInfo,
-      filters: collectionFilters,
-    },
-  };
+  return { props: { ...data } };
 }

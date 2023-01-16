@@ -20,9 +20,7 @@ function ResetPassword() {
     const recoverRes = await nextApiCall.sendRecoverEmail({ email });
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
-    if (errors?.length) {
-      return errors.forEach((element) => showToast.error(element.message));
-    }
+    if (errors?.length) return errors.forEach((element) => showToast.error(element.message));
     return showToast.success(config.userFeedback.sendRecoverEmail.success);
   };
 

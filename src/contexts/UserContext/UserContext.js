@@ -17,11 +17,6 @@ export function UserProvider({ children }) {
   const { handleSetCheckout } = useCheckoutContext();
   const { reload } = useRouter();
 
-  const handleError = useCallback(
-    (err) => Array.isArray(err) ?? err.forEach((e) => showToast.error(e.message)),
-    [showToast]
-  );
-
   const handleSetCheckoutShippingAddress = useCallback(
     async (customer) => {
       const { defaultAddress } = customer || {};
@@ -78,11 +73,10 @@ export function UserProvider({ children }) {
       user,
       addresses,
       orders,
-      handleError,
       dispatch,
       logout,
     }),
-    [user, handleError, dispatch, addresses, orders, logout]
+    [user, dispatch, addresses, orders, logout]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
