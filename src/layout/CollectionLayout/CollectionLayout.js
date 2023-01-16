@@ -16,7 +16,7 @@ function CollectionLayout({
   children,
   collection: { products: initialProducts, title, description },
   pageInfo: initialPageInfo,
-  filters,
+  collectionFilters,
 }) {
   const { handleSort, handleSetLayout, layout, setPageInfo, setProducts, setAllFilters } =
     useCollectionContext();
@@ -25,8 +25,8 @@ function CollectionLayout({
   useEffect(() => {
     if (initialProducts) setProducts(initialProducts);
     if (initialPageInfo) setPageInfo(initialPageInfo);
-    if (filters) setAllFilters(filters);
-  }, [filters, initialPageInfo, initialProducts, setAllFilters, setPageInfo, setProducts]);
+    if (collectionFilters) setAllFilters(collectionFilters);
+  }, [collectionFilters, initialPageInfo, initialProducts, setAllFilters, setPageInfo, setProducts]);
 
   return (
     <PageLayout title={title} description={description}>

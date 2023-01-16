@@ -11,7 +11,7 @@ export default function CollectionSlugPage(props) {
 CollectionSlugPage.getLayout = function getLayout(page) {
   return (
     <CollectionProvider>
-      <CollectionLayout collection={page.props.collection}>{page}</CollectionLayout>;
+      <CollectionLayout {...page.props}>{page}</CollectionLayout>;
     </CollectionProvider>
   );
 };
@@ -23,9 +23,7 @@ export async function getServerSideProps(ctx) {
   const delegateToken = cookies?.shopifyDelegateToken;
   const forwarded = req.headers['x-forwarded-for'];
   const ip = typeof forwarded === 'string' ? forwarded.split(/, /)[0] : req.socket.remoteAddress;
-  const { sort_key: sortKey, start } = query;
-  const data =
-    (await filterCollectionForward(collectionSlug, 16, [], sortKey, start, delegateToken, ip)) || {};
-
+  const { startCursor, sort_key: sortKey } = query;
+  const data = await filterCollectionForward(collectionSlug, 16, [], sortKey, startCursor, delegateToken, ip);
   return { props: { ...data } };
 }

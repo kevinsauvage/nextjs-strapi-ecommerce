@@ -11,7 +11,7 @@ export default function Shop(props) {
 Shop.getLayout = function getLayout(page) {
   return (
     <CollectionProvider>
-      <CollectionLayout collection={page.props.collection}>{page}</CollectionLayout>
+      <CollectionLayout {...page.props}>{page}</CollectionLayout>
     </CollectionProvider>
   );
 };
