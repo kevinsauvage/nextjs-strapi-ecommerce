@@ -30,7 +30,11 @@ export default function Filters() {
                   key={value.label}
                   className={`${styles.button} ${isChecked(value.id) && styles.checked}`}
                   type="button"
-                  onClick={() => (isChecked(value.id) ? removeFilter(value.id) : setSelectedFilters(value))}
+                  onClick={() =>
+                    isChecked(value.id)
+                      ? removeFilter(value.id)
+                      : setSelectedFilters([...selectedFilters, value])
+                  }
                 >
                   <p className={styles.value}>{value.label}</p>
                 </button>

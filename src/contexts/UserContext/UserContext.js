@@ -28,6 +28,7 @@ export function UserProvider({ children }) {
   const handleSetCheckoutShippingAddress = useCallback(
     async (customer) => {
       if (!customer.defaultAddress) return;
+
       const {
         defaultAddress: {
           address1,
@@ -43,7 +44,7 @@ export function UserProvider({ children }) {
         },
       } = customer || {};
 
-      const payload = {
+      const shippingAddress = {
         address1,
         address2,
         city,
@@ -55,10 +56,8 @@ export function UserProvider({ children }) {
         province,
         zip,
       };
-      const res = await nextApiCall.checkoutUpdateShippingAddress({
-        shippingAddress: payload,
-      });
 
+      const res = await nextApiCall.checkoutUpdateShippingAddress({ shippingAddress });
       if (res?.id) handleSetCheckout(res);
       else console.error("Couldn't associate default address to checkout res>>>", res);
     },

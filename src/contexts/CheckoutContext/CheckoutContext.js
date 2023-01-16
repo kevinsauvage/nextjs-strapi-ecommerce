@@ -10,20 +10,21 @@ export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
 
-  const handleSetCheckout = (payload) => dispatch({ type: actions.ADD_CHECKOUT, payload });
+  const handleSetCheckout = useCallback((payload) => dispatch({ type: actions.ADD_CHECKOUT, payload }), []);
 
-  const toggleCheckoutLoading = useCallback((payload) => {
-    dispatch({ type: actions.IS_CHECKOUT_LOADING, payload });
-  }, []);
+  const toggleCheckoutLoading = useCallback(
+    (payload) => dispatch({ type: actions.IS_CHECKOUT_LOADING, payload }),
+    []
+  );
 
   const removeFromCheckout = useCallback(
     async (lineItemId) => {
       toggleCheckoutLoading(true);
       const res = await nextApiCall.removeLinesFromCheckout(lineItemId);
-      if (res?.id) dispatch({ type: actions.ADD_CHECKOUT, payload: res });
+      if (res?.id) handleSetCheckout(res);
       toggleCheckoutLoading(false);
     },
-    [toggleCheckoutLoading]
+    [handleSetCheckout, toggleCheckoutLoading]
   );
 
   const handleQuantityChange = useCallback(
@@ -31,28 +32,24 @@ export function CheckoutProvider({ children }) {
       toggleCheckoutLoading(true);
       const res = await nextApiCall.checkoutLineItemsUpdate(payload);
       if (res?.id) {
-        dispatch({ type: actions.ADD_CHECKOUT, payload: res });
+        handleSetCheckout(res);
         return true;
       }
       toggleCheckoutLoading(false);
-
       return false;
     },
-    [toggleCheckoutLoading]
+    [handleSetCheckout, toggleCheckoutLoading]
   );
 
   useEffect(() => {
     const handleRender = async () => {
       if (!checkout?.id) {
-        const checkoutRes = await nextApiCall.getCheckout();
-
-        if (checkoutRes.id) {
-          dispatch({ type: actions.ADD_CHECKOUT, payload: checkoutRes });
-        }
+        const res = await nextApiCall.getCheckout();
+        if (res?.id) handleSetCheckout(res);
       }
     };
     handleRender();
-  }, [checkout?.id]);
+  }, [checkout?.id, handleSetCheckout]);
 
   const values = useMemo(
     () => ({
@@ -64,7 +61,7 @@ export function CheckoutProvider({ children }) {
       handleQuantityChange,
       handleSetCheckout,
     }),
-    [checkout, isCheckoutLoading, removeFromCheckout, handleQuantityChange]
+    [checkout, isCheckoutLoading, removeFromCheckout, handleQuantityChange, handleSetCheckout]
   );
 
   return <CheckoutContext.Provider value={values}>{children}</CheckoutContext.Provider>;

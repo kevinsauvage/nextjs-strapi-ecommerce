@@ -24,23 +24,20 @@ export function CollectionProvider({ children }) {
   const { toggleFilter } = useGlobalContext();
   const { query, pathname, push, asPath, href } = useRouter();
 
+  const setPageInfo = useCallback((payload) => dispatch({ type: actions.SET_PAGE_INFO, payload }), []);
+  const setProducts = useCallback((payload) => dispatch({ type: actions.SET_PRODUCTS, payload }), []);
+  const setAllFilters = useCallback((payload) => dispatch({ type: actions.SET_ALL_FILTERS, payload }), []);
+  const handleSetLayout = useCallback((data) => dispatch({ type: actions.SET_LAYOUT, payload: data }), []);
+  const setSelectedFilters = useCallback(
+    (payload) => dispatch({ type: actions.SET_SELECTED_FILTERS, payload }),
+    []
+  );
+
   const isSelectionDifferent = useCallback(() => {
     if (notAppliedFilters.length) return true;
     if (selectedFilters.length !== actualFilters.length) return true;
     return false;
   }, [actualFilters.length, notAppliedFilters.length, selectedFilters.length]);
-
-  const setPageInfo = useCallback((payload) => dispatch({ type: actions.SET_PAGE_INFO, payload }), []);
-  const setProducts = useCallback((payload) => dispatch({ type: actions.SET_PRODUCTS, payload }), []);
-  const setAllFilters = useCallback((payload) => dispatch({ type: actions.SET_ALL_FILTERS, payload }), []);
-  const handleSetLayout = useCallback((data) => dispatch({ type: actions.SET_LAYOUT, payload: data }), []);
-
-  const setSelectedFilters = useCallback(
-    (payload) => {
-      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [...selectedFilters, payload] });
-    },
-    [selectedFilters]
-  );
 
   const removeFilter = useCallback(
     (filterId) => setSelectedFilters(selectedFilters.filter((f) => f.id !== filterId)),
@@ -134,17 +131,15 @@ export function CollectionProvider({ children }) {
   }, [allFilters, handleGetData, handleSetFilterState, pageInfo.endCursor, query]);
 
   useEffect(() => {
-    dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
-  }, [query.collectionSlug]);
+    setSelectedFilters([]);
+  }, [query.collectionSlug, setSelectedFilters]);
 
   useEffect(() => {
     if (query?.filter) {
       const filteredFilters = getFiltersFromQuery(allFilters, query);
-      if (Array.isArray(filteredFilters)) {
-        dispatch({ type: actions.SET_SELECTED_FILTERS, payload: filteredFilters });
-      }
+      if (Array.isArray(filteredFilters)) setSelectedFilters(filteredFilters);
     }
-  }, [query, allFilters]);
+  }, [query, allFilters, setSelectedFilters]);
 
   useEffect(() => {
     const values = getFiltersFromQuery(allFilters, query);
@@ -158,7 +153,6 @@ export function CollectionProvider({ children }) {
 
   const values = useMemo(
     () => ({
-      notAppliedFilters,
       selectedFilters,
       actualFilters,
       allFilters,
@@ -179,7 +173,6 @@ export function CollectionProvider({ children }) {
       handleSetLayout,
     }),
     [
-      notAppliedFilters,
       selectedFilters,
       actualFilters,
       allFilters,

@@ -10,9 +10,7 @@ export function GlobalProvider({ children }) {
   const router = useRouter();
   const { checkoutOpen, searchOpen, selectedProduct, loading, filterOpen } = states;
 
-  const resetToggle = useCallback(() => {
-    dispatch({ type: actions.RESET_TOGGLE_STATES });
-  }, []);
+  const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
 
   const handleRender = useCallback(async () => {
     await nextApiCall.generateDelegateToken();
