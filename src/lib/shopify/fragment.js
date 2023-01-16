@@ -88,6 +88,7 @@ lineItemsSubtotalPrice {
 shippingAddress {
   ${addressFragment}
 }
+
 lineItems(first: 100) {
   edges {
     node {

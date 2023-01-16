@@ -18,44 +18,31 @@ export function UserProvider({ children }) {
   const { reload } = useRouter();
 
   const handleError = useCallback(
-    (err) => {
-      if (Array.isArray(err)) return err.forEach((e) => showToast.error(e.message));
-      return false;
-    },
+    (err) => Array.isArray(err) ?? err.forEach((e) => showToast.error(e.message)),
     [showToast]
   );
 
   const handleSetCheckoutShippingAddress = useCallback(
     async (customer) => {
-      if (!customer.defaultAddress) return;
+      const { defaultAddress } = customer || {};
+      if (!defaultAddress) return;
 
-      const {
-        defaultAddress: {
-          address1,
-          address2,
-          city,
-          company,
-          country,
-          firstName,
-          lastName,
-          phone,
-          province,
-          zip,
-        },
-      } = customer || {};
+      const whitelist = [
+        'address1',
+        'address2',
+        'city',
+        'country',
+        'firstName',
+        'lastName',
+        'phone',
+        'zip',
+        'company',
+        'province',
+      ];
 
-      const shippingAddress = {
-        address1,
-        address2,
-        city,
-        company,
-        country,
-        firstName,
-        lastName,
-        phone,
-        province,
-        zip,
-      };
+      const shippingAddress = Object.keys(defaultAddress)
+        .filter((key) => whitelist.includes(key))
+        .reduce((obj, key) => ({ ...obj, [key]: defaultAddress[key] }), {});
 
       const res = await nextApiCall.checkoutUpdateShippingAddress({ shippingAddress });
       if (res?.id) handleSetCheckout(res);
