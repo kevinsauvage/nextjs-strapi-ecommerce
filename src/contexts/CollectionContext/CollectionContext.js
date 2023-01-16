@@ -43,11 +43,8 @@ export function CollectionProvider({ children }) {
   );
 
   const removeFilter = useCallback(
-    (filterId) => {
-      const newFilters = selectedFilters.filter((f) => f.id !== filterId);
-      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: newFilters });
-    },
-    [selectedFilters]
+    (filterId) => setSelectedFilters(selectedFilters.filter((f) => f.id !== filterId)),
+    [selectedFilters, setSelectedFilters]
   );
 
   const handleGetData = useCallback(
@@ -95,9 +92,8 @@ export function CollectionProvider({ children }) {
     toggleFilter(false);
     const path = pathname.replace('[collectionSlug]', query.collectionSlug);
     const newUrl = new URL(config.baseUrl + path);
-    if (selectedFilters.length > 0) {
+    if (selectedFilters.length > 0)
       selectedFilters.forEach((item) => newUrl.searchParams.append('filter', item.id));
-    } else newUrl.searchParams.delete('filter');
     if (query.sort_key) newUrl.searchParams.set('sort_key', query.sort_key);
     if (isSelectionDifferent() && newUrl.href === href) return;
     push(newUrl, undefined, { shallow: true });
