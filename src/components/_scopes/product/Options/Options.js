@@ -1,7 +1,7 @@
 import Option from './Option/Option';
 
 export default function Options({ options, isOptionOutOfStock, isSelected, handleClick, styles }) {
-  return (
+  return Array.isArray(options) ? (
     <div className={styles}>
       {Array.isArray(options) &&
         options.map((option) => (
@@ -19,5 +19,5 @@ export default function Options({ options, isOptionOutOfStock, isSelected, handl
           />
         ))}
     </div>
-  );
+  ) : null;
 }

@@ -8,14 +8,18 @@ export const associateCustomerToCheckout = async (
   delegateAccessToken,
   ip
 ) => {
-  const res = await shopifyStorefrontCall(
-    checkoutQueries.queryAddCustomerToCheckout,
-    { checkoutId, customerAccessToken },
-    delegateAccessToken,
-    ip
-  );
+  try {
+    const res = await shopifyStorefrontCall(
+      checkoutQueries.queryAddCustomerToCheckout,
+      { checkoutId, customerAccessToken },
+      delegateAccessToken,
+      ip
+    );
 
-  return cleanGraphQLResponse(res?.data?.checkoutCustomerAssociateV2?.checkout);
+    return cleanGraphQLResponse(res?.data?.checkoutCustomerAssociateV2?.checkout);
+  } catch (error) {
+    return console.error(error);
+  }
 };
 
 export const createCheckout = async (input, delegateAccessToken, ip) => {
@@ -26,9 +30,10 @@ export const createCheckout = async (input, delegateAccessToken, ip) => {
       delegateAccessToken,
       ip
     );
+
     return cleanGraphQLResponse(res?.data?.checkoutCreate?.checkout);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -41,8 +46,8 @@ export const getCheckoutById = async (id, delegateAccessToken, ip) => {
       ip
     );
     return cleanGraphQLResponse(res?.data?.node);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -55,8 +60,8 @@ export const addLinesToCheckout = async (checkoutId, lineItems, delegateAccessTo
       ip
     );
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsAdd?.checkout);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -70,8 +75,8 @@ export const removeLinesFromCheckout = async (checkoutId, lineItemIds, delegateA
     );
 
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsRemove?.checkout);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -85,8 +90,8 @@ export const updateLines = async (checkoutId, lineItems, delegateAccessToken, ip
     );
 
     return cleanGraphQLResponse(res?.data?.checkoutLineItemsUpdate?.checkout);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -100,7 +105,7 @@ export const updateCheckoutShippingAddress = async (shippingAddress, checkoutId,
     );
 
     return cleanGraphQLResponse(res?.data?.checkoutShippingAddressUpdateV2?.checkout);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };

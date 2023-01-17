@@ -5,8 +5,10 @@ function ToggleTheme() {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const element = document.querySelector('html');
-    if (!element.classList.contains('theme--default')) {
+    const isDarkTheme = window.localStorage.getItem('isDarkTheme');
+    if (isDarkTheme) {
+      const element = document.querySelector('html');
+      element.classList.add('theme--dark');
       setIsActive(true);
     }
   }, []);
@@ -16,9 +18,11 @@ function ToggleTheme() {
     if (!isActive) {
       element.classList.remove('theme--default');
       element.classList.add('theme--dark');
+      window.localStorage.setItem('isDarkTheme', null);
     } else {
       element.classList.remove('theme--dark');
       element.classList.add('theme--default');
+      window.localStorage.removeItem('isDarkTheme');
     }
     setIsActive((prev) => !prev);
   };

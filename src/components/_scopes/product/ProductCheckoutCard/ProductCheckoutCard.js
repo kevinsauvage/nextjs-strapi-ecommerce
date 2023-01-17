@@ -1,19 +1,16 @@
+import Link from 'next/link';
 import Image from 'next/legacy/image';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
-import Link from 'next/link';
 import SelectedOptions from '@/components/_scopes/product/SelectedOptions/SelectedOptions';
-import config from '@/config/index';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import config from '@/config/index';
 import Price from '../Price/Price';
 import styles from './ProductCheckoutCard.module.scss';
 
 export default function ProductCheckoutCard({ lineItem }) {
   const { handleQuantityChange, removeFromCheckout } = useCheckoutContext();
-
   const { variant, quantity, id, title } = lineItem || {};
-
   const { image, compareAtPriceV2, priceV2, product, quantityAvailable, selectedOptions } = variant || {};
-
   const collection = product?.collections?.nodes?.[0];
 
   return (

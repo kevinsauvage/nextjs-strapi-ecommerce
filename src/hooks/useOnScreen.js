@@ -9,9 +9,7 @@ export default function useOnScreen(ref) {
       observer = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting));
       observer.observe(ref.current);
     }
-    return () => {
-      observer?.disconnect();
-    };
+    return () => observer?.disconnect();
   }, [ref]);
 
   return isIntersecting;

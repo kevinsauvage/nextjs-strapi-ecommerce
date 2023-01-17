@@ -6,36 +6,37 @@ import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
-  const { title, images, handle, variants, productType } = product;
+  const { title, images, handle, variants, productType, collections } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { setSelectedProduct } = useGlobalContext() || {};
 
-  function isWhatPercentOf(x, y) {
-    return (((x - y) / y) * 100.0).toFixed(0);
-  }
+  const isWhatPercentOf = (x, y) => (((x - y) / y) * 100.0).toFixed(0);
 
   return (
     <Link
       className={`${styles.productCardDefault}`}
-      href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}
+      href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
+      aria-label={`View product details for ${title}`}
     >
       <li>
         <div className={styles.image}>
           <Image
             src={images?.[0]?.large}
-            alt={images?.[0]?.alt || product?.title}
+            alt={images?.[0]?.alt || title}
             layout="responsive"
             width={500}
             height={750}
             blurDataURL={images?.[0]?.blurDataURL}
             placeholder="blur"
             quality={20}
+            aria-label={`Image of ${title}`}
           />
 
           <div
             className={styles.quickView}
             role="button"
             tabIndex="0"
+            aria-label="Quick view"
             onClick={(e) => {
               e.stopPropagation();
               e.preventDefault();

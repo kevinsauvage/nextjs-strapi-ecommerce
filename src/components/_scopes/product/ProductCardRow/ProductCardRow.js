@@ -17,9 +17,7 @@ export default function ProductCardRow({ product }) {
     handleChangeInput,
     isOptionOutOfStock,
   } = useProductSelection({ product });
-
-  const { title, handle, options } = product;
-
+  const { title, handle, options, collections } = product;
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } = selectedVariant || {};
 
   return (
@@ -35,14 +33,12 @@ export default function ProductCardRow({ product }) {
           />
         )}
       </div>
-
       <div className={styles.content}>
         <div>
-          <Link href={`${config.routes.collection}/${product?.collections?.[0]?.handle}/${handle}`}>
+          <Link href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}>
             <h4 className={styles.title}>{title}</h4>
           </Link>
           <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} size="L" />
-
           <Options
             styles={styles.options}
             options={options}
@@ -56,7 +52,6 @@ export default function ProductCardRow({ product }) {
             quantityAvailable={quantityAvailable}
           />
         </div>
-
         <footer className={styles.footer}>
           {quantityAvailable > 0 ? (
             <Button

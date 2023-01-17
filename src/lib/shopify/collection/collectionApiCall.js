@@ -38,8 +38,8 @@ export const filterCollectionForward = async (
       };
     }
     return null;
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -48,8 +48,8 @@ export const getCollections = async (first) => {
     const res = await shopifyStorefrontCall(queriesCollection.getCollections, { first });
 
     return cleanGraphQLResponse(res?.data?.collections);
-  } catch (e) {
-    return console.error(e);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -62,7 +62,7 @@ export const getCollectionFilters = async (handle, delegateToken, ip) => {
       ip
     );
     return res?.data?.collection?.products?.filters;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };

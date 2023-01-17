@@ -7,8 +7,8 @@ export const registerCustomer = async (input, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(customerQueries.queryRegister, { input }, delegateToken, ip);
     return res?.data?.customerCreate;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -16,8 +16,8 @@ export const loginCustomer = async (input, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(customerQueries.queryLogin, { input }, delegateToken, ip);
     return res?.data?.customerAccessTokenCreate;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -31,8 +31,8 @@ export const deleteAccessToken = async (customerAccessToken, delegateToken, ip) 
     );
     const response = res?.data?.customerAccessTokenDelete;
     return response;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -45,8 +45,8 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
       ip
     );
     return res?.data?.customerRecover;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -59,8 +59,8 @@ export const resetCustomerPassword = async (password, resetUrl, delegateToken, i
       ip
     );
     return res?.data?.customerResetByUrl;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -69,8 +69,8 @@ export const getUser = async (token, delegateToken, ip) => {
     const res = await shopifyStorefrontCall(customerQueries.queryCustomer, { token }, delegateToken, ip);
     const response = { response: cleanGraphQLResponse(res?.data), errors: res?.errors };
     return response;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -83,8 +83,8 @@ export const updateUserInfo = async (customerAccessToken, customer, delegateToke
       ip
     );
     return cleanGraphQLResponse(res?.data?.customerUpdate);
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -97,8 +97,8 @@ export const getUserOrders = async (token, delegateToken, ip) => {
       ip
     );
     return cleanGraphQLResponse(res?.data?.customer?.orders);
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -106,8 +106,8 @@ export const getOrderById = async (id, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(customerQueries.getOrderById, { id }, delegateToken, ip);
     return cleanGraphQLResponse(res?.data?.node);
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -115,8 +115,8 @@ export const refreshToken = async (token, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(customerQueries.queryRefreshToken, { token }, delegateToken, ip);
     return res?.data?.customerAccessTokenRenew;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -124,8 +124,8 @@ export const getDelegateToken = async (input) => {
   try {
     const res = await shopifyAdminApiCall(customerQueries.queryDelegateAccessToken, { input });
     return res?.data?.delegateAccessTokenCreate;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -138,8 +138,8 @@ export const createAddress = async (address, customerAccessToken, delegateToken,
       ip
     );
     return res?.data?.customerAddressCreate;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -153,8 +153,8 @@ export const deleteAddressById = async (customerAccessToken, id, delegateToken, 
     );
     const response = cleanGraphQLResponse(res?.data?.customerAddressDelete);
     return response;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -167,8 +167,8 @@ export const updateAddress = async (address, customerAccessToken, id, delegateTo
       ip
     );
     return res?.data?.customerAddressUpdate;
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 
@@ -181,8 +181,8 @@ export const updateDefaultAddress = async (customerAccessToken, addressId, deleg
       ip
     );
     return cleanGraphQLResponse(res?.data?.customerDefaultAddressUpdate);
-  } catch (err) {
-    return console.error(err);
+  } catch (error) {
+    return console.error(error);
   }
 };
 

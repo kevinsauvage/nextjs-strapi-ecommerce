@@ -14,8 +14,8 @@ export default function ProductPresenter({ product }) {
     isOptionOutOfStock,
     totalPrice,
   } = useProductSelection({ product });
-
   const { descriptionHtml } = product || {};
+
   return (
     <>
       <div className={styles.container}>

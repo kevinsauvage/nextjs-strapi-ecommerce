@@ -108,7 +108,7 @@ id
 title
 availableForSale
 descriptionHtml
-images(first: 6) {
+images(first: 20) {
   edges {
     node {
       ${imageFragment}

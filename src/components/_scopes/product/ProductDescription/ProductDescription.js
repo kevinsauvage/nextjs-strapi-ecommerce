@@ -14,7 +14,6 @@ export default function ProductDescription({
   totalPrice,
 }) {
   const { productType, variants, options, title } = product || {};
-
   const { quantityAvailable, availableForSale, priceV2 } = selected || {};
 
   return (

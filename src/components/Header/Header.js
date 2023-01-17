@@ -10,14 +10,10 @@ import BigMenu from '../BigMenu/BigMenu';
 function Header({ headerMenu }) {
   const headerContainerRef = useRef(null);
   const [activeItems, setActiveItems] = useState([]);
+  const { asPath } = useRouter();
 
-  const handleOver = (items) => {
-    setActiveItems(items);
-  };
-
+  const handleOver = (items) => setActiveItems(items);
   const handleClose = () => setActiveItems([]);
-
-  const { asPath } = useRouter() || {};
 
   useEffect(() => {
     handleClose();
