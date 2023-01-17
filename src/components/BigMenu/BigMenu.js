@@ -20,21 +20,17 @@ function BigMenu({ data, handleClose }) {
     ));
 
   return (
-    <div className={styles.bigMenu}>
-      <div className={styles.inner}>
+    <div className={styles.bigMenu} role="button" tabIndex={0} onClick={handleClose} onKeyDown={handleClose}>
+      <div
+        className={styles.inner}
+        role="presentation"
+        onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
         <Container>
           <div className={styles.content}>{renderItems(data)}</div>
         </Container>
       </div>
-      <div
-        role="button"
-        tabIndex="0"
-        className={styles.bottom}
-        onMouseOver={() => handleClose()}
-        onFocus={() => handleClose()}
-        onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && handleClose()}
-        aria-label="Close Menu"
-      />
     </div>
   );
 }

@@ -26,7 +26,7 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (checkoutOpen || selectedProduct || loading || searchOpen || filterOpen) {
+    if (checkoutOpen || selectedProduct || loading || filterOpen) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
   }, [checkoutOpen, selectedProduct, loading, searchOpen, filterOpen]);
@@ -39,17 +39,17 @@ export function GlobalProvider({ children }) {
       loading,
       filterOpen,
 
-      toggleLoading: (state) => {
-        dispatch({ type: actions.TOGGLE_LOADING, payload: state });
+      toggleLoading: (payload) => {
+        dispatch({ type: actions.TOGGLE_LOADING, payload });
       },
 
-      toggleFilter: (state) => {
-        dispatch({ type: actions.TOGGLE_FILTERS, payload: state });
+      toggleFilter: (payload) => {
+        dispatch({ type: actions.TOGGLE_FILTERS, payload });
       },
 
-      toggleSearch: () => {
+      toggleSearch: (payload) => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
-        dispatch({ type: actions.TOGGLE_SEARCH });
+        dispatch({ type: actions.TOGGLE_SEARCH, payload });
       },
 
       toggleCheckout: () => {
@@ -57,9 +57,9 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.TOGGLE_CHECKOUT });
       },
 
-      setSelectedProduct: (product) => {
+      setSelectedProduct: (payload) => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
-        dispatch({ type: actions.SET_SELECTED_PRODUCT, payload: product });
+        dispatch({ type: actions.SET_SELECTED_PRODUCT, payload });
       },
 
       resetToggle,

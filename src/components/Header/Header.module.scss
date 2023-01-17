@@ -2,8 +2,9 @@
   width: 100%;
   align-items: center;
   padding: 0 var(--space-1);
-  z-index: 99999;
+  z-index: 999999999999999999;
   position: relative;
+  opacity: 1;
 }
 
 .headerInner {
@@ -13,20 +14,4 @@
   display: grid;
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr;
-}
-
-@keyframes rotateZ {
-  0% {
-    opacity: 0;
-    transform: translateZ(290px);
-  }
-
-  80% {
-    transform: translateZ(10px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateZ(0);
-  }
 }

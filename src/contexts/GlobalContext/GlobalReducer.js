@@ -18,7 +18,7 @@ export const actions = {
 export const GlobalReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.TOGGLE_SEARCH: {
-      return { ...state, searchOpen: !state.searchOpen };
+      return { ...state, searchOpen: action.payload };
     }
     case actions.TOGGLE_CHECKOUT: {
       return { ...state, checkoutOpen: !state.checkoutOpen };

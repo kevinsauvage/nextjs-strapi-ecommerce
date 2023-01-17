@@ -4,15 +4,21 @@ import Navbar from '@/components/Navbar/Navbar';
 import Logo from '@/components/Logo/Logo';
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import styles from './Header.module.scss';
 import BigMenu from '../BigMenu/BigMenu';
+import SearchBar from '../_scopes/search/Search/SearchBar';
 
 function Header({ headerMenu }) {
   const headerContainerRef = useRef(null);
   const [activeItems, setActiveItems] = useState([]);
   const { asPath } = useRouter();
+  const { toggleSearch } = useGlobalContext();
 
-  const handleOver = (items) => setActiveItems(items);
+  const handleOver = (items) => {
+    toggleSearch(false);
+    setActiveItems(items);
+  };
   const handleClose = () => setActiveItems([]);
 
   useEffect(() => {
@@ -31,6 +37,7 @@ function Header({ headerMenu }) {
         </Container>
       </header>
       {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
+      <SearchBar />
     </div>
   );
 }

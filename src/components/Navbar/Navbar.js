@@ -27,6 +27,8 @@ function Navbar({ headerMenu, handleOver }) {
             className={styles.item}
             onClick={toggleSearch}
             onKeyDown={toggleSearch}
+            onMouseOver={() => toggleSearch(true)}
+            onFocus={() => toggleSearch(true)}
           >
             {search}
             <p>Search</p>

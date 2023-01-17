@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { getMenuFooter, getMenuHeader, getShop } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
-import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
@@ -34,7 +33,6 @@ function RootLayout({ children }) {
       <Cart />
       {loading && <PageLoader />}
       <Header headerMenu={menuHeader} />
-      <SearchBar />
       {selectedProduct ? (
         <ModalProduct handleClose={() => setSelectedProduct(false)} product={selectedProduct} />
       ) : null}

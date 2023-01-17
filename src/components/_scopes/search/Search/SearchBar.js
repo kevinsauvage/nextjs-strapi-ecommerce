@@ -8,7 +8,7 @@ import styles from './SearchBar.module.scss';
 import SearchResults from '../SearchResults/SearchResults';
 
 export default function SearchBar() {
-  const { searchOpen, resetToggle } = useGlobalContext();
+  const { searchOpen, toggleSearch } = useGlobalContext();
   const [search, setSearch] = useState([]);
   const [query, setQuery] = useState('');
 
@@ -32,11 +32,27 @@ export default function SearchBar() {
 
   return (
     searchOpen && (
-      <div className={styles.container} role="button" tabIndex={0}>
-        <div className={styles.searchBar} role="presentation">
+      <div
+        className={styles.container}
+        role="button"
+        tabIndex={0}
+        onClick={() => toggleSearch(false)}
+        onKeyDown={() => toggleSearch(false)}
+      >
+        <div
+          className={styles.searchBar}
+          role="presentation"
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
+        >
           <Container>
             <div className={styles.form}>
-              <button tabIndex={0} type="button" className={styles.buttonClose} onClick={() => resetToggle()}>
+              <button
+                tabIndex={0}
+                type="button"
+                className={styles.buttonClose}
+                onClick={() => toggleSearch(false)}
+              >
                 <MdClose />
               </button>
               <p className={styles.title}>WHAT ARE YOU LOOKING FOR?</p>
