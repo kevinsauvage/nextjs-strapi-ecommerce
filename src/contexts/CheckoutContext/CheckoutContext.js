@@ -59,9 +59,8 @@ export function CheckoutProvider({ children }) {
       isCheckoutLoading,
       removeFromCheckout,
       handleQuantityChange,
-      handleSetCheckout,
     }),
-    [checkout, isCheckoutLoading, removeFromCheckout, handleQuantityChange, handleSetCheckout]
+    [checkout, isCheckoutLoading, removeFromCheckout, handleQuantityChange]
   );
 
   return <CheckoutContext.Provider value={values}>{children}</CheckoutContext.Provider>;

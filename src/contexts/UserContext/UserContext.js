@@ -17,8 +17,13 @@ export function UserProvider({ children }) {
   const { handleSetCheckout } = useCheckoutContext();
   const { reload } = useRouter();
 
+  const setUser = useCallback((payload) => {
+    if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
+  }, []);
+
   const handleSetCheckoutShippingAddress = useCallback(
     async (customer) => {
+      if (!customer?.id) return;
       const { defaultAddress } = customer || {};
       if (!defaultAddress) return;
 
@@ -58,15 +63,12 @@ export function UserProvider({ children }) {
     const getCustomer = async () => {
       if (user?.id) return;
       const res = await nextApiCall.getCustomer();
-      if (res && res?.customer?.id) {
-        dispatch({ type: actions.ADD_USER, payload: res.customer });
-        handleSetCheckoutShippingAddress(res.customer);
-      } else {
-        logout();
-      }
+      setUser(res?.customer);
+      handleSetCheckoutShippingAddress(res?.customer);
+      if (!res || !res.customer?.id) console.log('get customer failed');
     };
     getCustomer();
-  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, logout]);
+  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, logout, setUser]);
 
   const values = useMemo(
     () => ({

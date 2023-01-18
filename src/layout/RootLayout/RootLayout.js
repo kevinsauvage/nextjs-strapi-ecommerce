@@ -16,13 +16,14 @@ function RootLayout({ children }) {
   const [shopInfo, setShopInfo] = useState();
 
   useEffect(() => {
+    console.time('Function #1');
+
     const fetchData = async () => {
-      const header = await getMenuHeader();
-      const footer = await getMenuFooter();
-      const shop = await getShop();
+      const [header, footer, shop] = await Promise.all([getMenuHeader(), getMenuFooter(), getShop()]);
       setMenuFooter(footer);
       setMenuHeader(header);
       setShopInfo(shop);
+      console.timeEnd('Function #1');
     };
 
     fetchData();

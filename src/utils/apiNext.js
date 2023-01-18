@@ -22,13 +22,6 @@ const apiRoute = {
   },
 };
 
-/**
- * It's a wrapper for the fetch API that allows you to make requests to your Next.js API routes
- * @param url - The url of the API endpoint
- * @param [body] - The body of the request.
- * @param [method=POST] - The HTTP method to use. Defaults to POST.
- * @returns The return value is the response from the server.
- */
 const nextApiHelper = async (url, body = {}, method = 'POST') => {
   try {
     const object = {
@@ -42,7 +35,7 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
 
     const res = await fetch(url, object);
 
-    return res ? res.json() : undefined;
+    return res && res.json();
   } catch (err) {
     return console.error(err);
   }
