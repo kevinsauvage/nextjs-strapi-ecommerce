@@ -13,13 +13,17 @@ function Header({ headerMenu }) {
   const headerContainerRef = useRef(null);
   const [activeItems, setActiveItems] = useState([]);
   const { asPath } = useRouter();
-  const { toggleSearch } = useGlobalContext();
+  const { toggleSearch, searchOpen } = useGlobalContext();
 
   const handleOver = (items) => {
     toggleSearch(false);
     setActiveItems(items);
   };
   const handleClose = () => setActiveItems([]);
+
+  useEffect(() => {
+    if (searchOpen) setActiveItems([]);
+  }, [searchOpen]);
 
   useEffect(() => {
     handleClose();
