@@ -16,9 +16,9 @@ export default function QuantityUpdater({
   const { showToast } = useToastContext();
 
   const addOne = () => {
-    if (quantity >= quantityAvailable) return setQuantity(1);
+    if (quantity >= quantityAvailable) return;
     onChange(Number(quantity + 1));
-    return setQuantity((prev) => Number(prev) + 1);
+    setQuantity((prev) => Number(prev) + 1);
   };
 
   const removeOne = () => {
@@ -30,6 +30,7 @@ export default function QuantityUpdater({
 
   const handleChangeInput = (e) => {
     const num = e.target.value;
+    console.log('change');
     if (Number(num) > quantityAvailable) {
       return showToast.error(`There is Only ${quantityAvailable} variant available`);
     }
@@ -66,7 +67,7 @@ export default function QuantityUpdater({
           type="button"
           onClick={addOne}
           className={styles.btnQuantity}
-          disabled={quantity >= quantityAvailable}
+          disabled={quantity > quantityAvailable}
         >
           <VscAdd />
         </button>

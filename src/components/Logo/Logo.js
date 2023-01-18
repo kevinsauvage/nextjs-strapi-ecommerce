@@ -4,7 +4,7 @@ import styles from './Logo.module.scss';
 
 export default function Logo() {
   return (
-    <Link href="/" className={styles.Logo}>
+    <Link href="/" className={styles.Logo} aria-label="Link to home page">
       {logo}
     </Link>
   );

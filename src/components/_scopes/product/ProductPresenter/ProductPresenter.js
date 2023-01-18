@@ -13,6 +13,7 @@ export default function ProductPresenter({ product }) {
     handleChangeInput,
     isOptionOutOfStock,
     totalPrice,
+    quantity,
   } = useProductSelection({ product });
   const { descriptionHtml } = product || {};
 
@@ -22,6 +23,7 @@ export default function ProductPresenter({ product }) {
         <PhotoGallery images={product.images} alt={product.title} />
         <ProductDescription
           product={product}
+          quantity={quantity}
           isOptionOutOfStock={isOptionOutOfStock}
           handleChangeInput={handleChangeInput}
           handleAddToCart={handleAddToCart}

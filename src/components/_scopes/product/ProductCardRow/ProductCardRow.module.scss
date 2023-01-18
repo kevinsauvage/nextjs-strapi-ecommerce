@@ -5,10 +5,14 @@
   display: flex;
   width: 100%;
   min-height: 320px;
+  @include themed {
+    background-color: lighten(t($background), 6%);
+    color: t($onBackground);
+  }
 }
 
 .content {
-  padding: 0 var(--space-0);
+  padding: var(--space-1);
   z-index: 99;
   width: 100%;
   position: relative;
@@ -28,17 +32,17 @@
     height: 100%;
     display: block;
   }
-
-
 }
 
 .btn {
   margin-left: 8px;
 }
 
-.title {}
+.title {
+}
 
-.description {}
+.description {
+}
 
 .footer {
   display: flex;

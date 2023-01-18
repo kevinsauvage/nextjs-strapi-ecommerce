@@ -4,17 +4,17 @@ import styles from './Footer.module.scss';
 
 function Footer({ menuFooter, shopInfo }) {
   return (
-    <footer className={styles.container}>
-      <Container>
+    <Container extraClass={styles.container}>
+      <footer className={styles.footer}>
+        <div>
+          <b className={styles.title}>About</b>
+          <p className={styles.navItem}>{shopInfo?.description}</p>
+        </div>
         <ul className={styles.navList}>
-          <div>
-            <h4 className={styles.title}>About</h4>
-            <p className={styles.navItem}>{shopInfo?.description}</p>
-          </div>
           {Array.isArray(menuFooter) &&
             menuFooter.map((item) => (
               <li key={item.id}>
-                <h4 className={styles.title}>{item.title}</h4>
+                <b className={styles.title}>{item.title}</b>
                 <ul className={styles.nav}>
                   {item?.items?.map((el) => (
                     <li className={styles.navItem} key={el.id}>
@@ -25,11 +25,11 @@ function Footer({ menuFooter, shopInfo }) {
               </li>
             ))}
         </ul>
-        <div className={styles.bottom}>
-          <p>Copyright © 2022 All rights reserved.</p>
-        </div>
-      </Container>
-    </footer>
+      </footer>
+      <div className={styles.bottom}>
+        <p>Copyright © 2022 All rights reserved.</p>
+      </div>
+    </Container>
   );
 }
 

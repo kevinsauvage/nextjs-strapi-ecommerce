@@ -6,6 +6,7 @@ export default function LayoutButtons({ handleChange, selected }) {
     <div className={styles.LayoutButtons}>
       <button
         type="button"
+        aria-label="Grid layout"
         className={`${styles.button} ${styles.buttonGrid} ${styles[selected]}`}
         onClick={() => handleChange('grid')}
       >
@@ -13,6 +14,7 @@ export default function LayoutButtons({ handleChange, selected }) {
       </button>
       <button
         type="button"
+        aria-label="Row layout"
         className={`${styles.button} ${styles.buttonRow} ${styles[selected]}`}
         onClick={() => handleChange('row')}
       >

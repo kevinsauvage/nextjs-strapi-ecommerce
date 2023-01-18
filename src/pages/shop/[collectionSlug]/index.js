@@ -18,6 +18,8 @@ CollectionSlugPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey, collectionSlug } = getInfoFromCtx(ctx);
+  console.time('getServerSideProps #1');
   const data = await filterCollectionForward(collectionSlug, 16, [], sortKey, startCursor, delegateToken, ip);
+  console.timeEnd('getServerSideProps #1');
   return { props: { ...data } };
 }

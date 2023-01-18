@@ -36,15 +36,16 @@ export default function ProductCardRow({ product }) {
       <div className={styles.content}>
         <div>
           <Link href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}>
-            <h4 className={styles.title}>{title}</h4>
+            <b className={styles.title}>{title}</b>
           </Link>
-          <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} size="L" />
+          <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} size="M" />
           <Options
             styles={styles.options}
             options={options}
             isOptionOutOfStock={isOptionOutOfStock}
             isSelected={isOptionSelected}
             handleClick={handleSetSelectedProductOption}
+            size="M"
           />
           <QuantityUpdater
             originalQuantity={1}

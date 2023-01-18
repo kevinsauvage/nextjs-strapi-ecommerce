@@ -1,3 +1,5 @@
+$boxDimension: 36px;
+
 .option {
   padding-bottom: var(--space-1);
 
@@ -8,8 +10,8 @@
 
 .button {
   padding: 5px;
-  min-height: 40px;
-  min-width: 40px;
+  min-height: $boxDimension;
+  min-width: $boxDimension;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,6 +25,7 @@
 
 .name {
   display: block;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 }
 
 .list {

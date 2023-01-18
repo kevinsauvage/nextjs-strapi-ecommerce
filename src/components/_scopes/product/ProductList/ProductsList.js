@@ -1,19 +1,27 @@
 import ListDisplay from '@/components/ListDisplay/ListDisplay';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
+import dynamic from 'next/dynamic';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
-import ProductCardRow from '../ProductCardRow/ProductCardRow';
 
-function ProductsList({ products, loading, layout }) {
+function ProductsList({ products, loading, layout, loader }) {
+  const getProductCardRow = (product) => {
+    const ProductCardRow = dynamic(() => import('../ProductCardRow/ProductCardRow'), {
+      loading: () => loader,
+    });
+    return <ProductCardRow product={product} />;
+  };
+
   return (
     <>
       {loading && <PageLoader />}
       {Array.isArray(products) && products.length > 0 && (
         <ListDisplay layout={layout}>
-          {products.map((product) => {
-            if (layout === 'grid') return <ProductCardDefault key={product.id} product={product} />;
-            return <ProductCardRow key={product.id} product={product} />;
-          })}
+          {products.map((product) => (
+            <li key={product.id}>
+              {layout === 'grid' ? <ProductCardDefault product={product} /> : getProductCardRow(product)}
+            </li>
+          ))}
         </ListDisplay>
       )}
       {Array.isArray(products) && products.length === 0 && !loading && (

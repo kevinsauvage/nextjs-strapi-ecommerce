@@ -12,9 +12,12 @@ export default function ProductDescription({
   selected,
   product,
   totalPrice,
+  quantity,
 }) {
   const { productType, variants, options, title } = product || {};
   const { quantityAvailable, availableForSale, priceV2 } = selected || {};
+
+  console.log('🚀 ~ file: ProductDescription.js:19 ~ selected', selected);
 
   return (
     <div className={styles.ProductDescription}>
@@ -47,7 +50,7 @@ export default function ProductDescription({
         type="button"
         text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
         primary
-        disabled={!availableForSale}
+        disabled={!availableForSale || quantityAvailable <= quantity}
         onClick={handleAddToCart}
       />
     </div>
