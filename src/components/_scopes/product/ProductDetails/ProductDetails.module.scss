@@ -1,14 +1,20 @@
 .ProductDetails {
-  background-color: rgb(var(--color-light-2));
   margin-top: var(--space-4);
   padding: var(--space-2);
 
   @include themed {
-    background-color: lighten(t($background), 5%);
+    background-color: lighten(t($background), 2%);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
   }
-
 }
 
-.title {}
+.title {
+  padding-bottom: var(--space-1);
+}
 
-.description {}
+.description {
+  padding-top: var(--space-2);
+  @include themed {
+    border-top: 1px solid rgba(t($onBackground), 0.1);
+  }
+}

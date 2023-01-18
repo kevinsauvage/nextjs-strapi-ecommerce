@@ -20,8 +20,8 @@
 
   @include themed() {
     background-color: t($background);
-    border-top: 0.1px solid rgba(t($onBackground), 0.5);
-    border-bottom: 0.1px solid rgba(t($onBackground), 0.5);
+    border-top: 0.1px solid rgba(t($onBackground), 0.2);
+    border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
     background-color: t($background);
   }
 }
