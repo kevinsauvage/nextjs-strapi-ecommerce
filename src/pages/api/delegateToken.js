@@ -1,52 +1,41 @@
 import { getDelegateToken } from '@/lib/shopify/customer/customerApiCall';
-import { setCookie } from 'nookies';
+import { setDelegateTokenCookie } from '@/helpers/cookies';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
-
 const expiresIn = 24 * 60 * 60;
 
 const getToken = async (req, res) => {
+  if (!req || !res) {
+    return res.status(500).json({ error: 'Missing required parameters' });
+  }
+
+  if (!delegateAccessScope) {
+    return res.status(500).json({ error: 'Missing required environment variable: SHOPIFY_SCOPE' });
+  }
+
+  if (!expiresIn) {
+    return res.status(500).json({ error: 'Missing required environment variable: TOKEN_EXPIRES_IN' });
+  }
+
+  if (req.method !== 'GET') {
+    return res.status(405).json({ error: 'Method not allowed' });
+  }
+
   try {
-    const { method } = req;
+    const { delegateAccessToken, userErrors } = await getDelegateToken({
+      delegateAccessScope: delegateAccessScope.split(','),
+      expiresIn,
+    });
+    if (userErrors.length > 0) console.error(userErrors);
 
-    switch (method) {
-      case 'GET': {
-        const response = await getDelegateToken({
-          delegateAccessScope: delegateAccessScope.split(','),
-          expiresIn,
-        });
-
-        if (!response) {
-          return res.status(500).json({ error: 'Could not get delegate access token' });
-        }
-
-        const delegateToken = response?.delegateAccessToken?.accessToken;
-        const errors = response?.userErrors;
-
-        if (errors.length > 0) {
-          console.error(errors);
-        }
-
-        if (!delegateToken) {
-          return res.status(500).json({ error: 'Could not get delegate access token' });
-        }
-
-        setCookie({ res }, 'shopifyDelegateToken', delegateToken, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV !== 'development',
-          sameSite: 'strict',
-          maxAge: expiresIn,
-          path: '/',
-        });
-
-        return res.status(200).json({ ok: true });
-      }
-      default: {
-        return res.status(500).json({ message: 'Method not allowed' });
-      }
+    if (!delegateAccessToken) {
+      return res.status(500).json({ error: 'Could not get delegate access token' });
     }
+    console.log('Setting delegate access token SUCCESS');
+    setDelegateTokenCookie(res, delegateAccessToken);
+    return res.status(200).json({ ok: true });
   } catch (error) {
-    return res.status(500).json({ error: error.message, stack: error.stack });
+    return res.status(500).json({ error: error.message });
   }
 };
 

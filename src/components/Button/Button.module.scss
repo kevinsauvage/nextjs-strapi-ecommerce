@@ -1,19 +1,32 @@
 .button {
-  border: none;
-  height: 50px;
-  padding: 0 var(--space-2);
   letter-spacing: 2px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in;
-  text-transform: uppercase;
   white-space: nowrap;
+  padding: 14px 50px;
+  border-radius: 1px;
+  transition: 600ms;
+  transform: translateY(0);
+  text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+
+  @include themed {
+    box-shadow: rgba(t($onBackground), 0.5) 0px 2px 8px;
+  }
 }
 
 .primary {
   background-color: $color-primary;
   color: $color-background;
+  border: 2px solid $color-primary;
+
+  &:hover {
+    background-color: $color-background;
+    color: $color-primary;
+    border: 2px solid $color-primary;
+  }
 }
 
 .secondary {
@@ -25,6 +38,12 @@
   @include themed() {
     background-color: t($onBackground);
     color: t($background);
+
+    &:hover {
+      border: 2px solid t($onBackground);
+      background-color: t($background);
+      color: t($onBackground);
+    }
   }
 }
 
@@ -33,5 +52,11 @@
     border: 2px solid t($onBackground);
     background-color: t($background);
     color: t($onBackground);
+
+    &:hover {
+      border: 2px solid t($onBackground);
+      background-color: t($background);
+      color: t($onBackground);
+    }
   }
 }

@@ -20,22 +20,42 @@ function RegisterPage() {
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
+    try {
+      // check for password length
+      if (!password || password.length < 8) {
+        throw new Error(config.userFeedback.passwordLength);
+      }
 
-    if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
-    if (!email) return showToast.error(userFeedback?.missingFields);
+      // check for email
+      if (!email) {
+        throw new Error(userFeedback?.missingFields);
+      }
 
-    toggleLoading(true);
-    const registerRes = await nextApiCall.register({ email, password });
-    toggleLoading(false);
+      // toggle loading state
+      toggleLoading(true);
 
-    const userErrors = registerRes?.userErrors;
-    if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
+      // perform registration call
+      const registerRes = await nextApiCall.register({ email, password });
 
-    if (registerRes?.ok) {
-      showToast.success(userFeedback?.register?.success);
-      return push(config.routes.account);
+      // check for errors
+      const userErrors = registerRes?.userErrors;
+      if (userErrors?.length) {
+        userErrors.forEach((element) => showToast.error(element.message));
+        return;
+      }
+
+      // check if registration was successful
+      if (registerRes?.ok) {
+        showToast.success(userFeedback?.register?.success);
+        push(config.routes.account);
+      } else {
+        throw new Error(userFeedback?.register?.error);
+      }
+    } catch (error) {
+      showToast.error(error.message);
+    } finally {
+      toggleLoading(false);
     }
-    return showToast.error(userFeedback?.register?.error);
   };
 
   return (

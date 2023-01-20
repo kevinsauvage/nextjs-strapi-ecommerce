@@ -4,7 +4,9 @@
   padding: 0 var(--space-1);
   z-index: 999999;
   position: relative;
-  opacity: 1;
+  @include themed {
+    background-color: t($background);
+  }
 }
 
 .headerInner {

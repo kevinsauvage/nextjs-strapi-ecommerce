@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getMenuFooter, getMenuHeader, getShop } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
@@ -8,6 +8,8 @@ import Footer from '@/components/Footer/Footer';
 import SecureBanner from '@/components/_banners/SecureBanner/SecureBanner';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import dynamic from 'next/dynamic';
+import SearchBar from '@/components/_scopes/search/Search/SearchBar';
+import BigMenu from '@/components/BigMenu/BigMenu';
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {
@@ -15,6 +17,22 @@ function RootLayout({ children }) {
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
+  const [activeItems, setActiveItems] = useState([]);
+  const { toggleSearch, searchOpen } = useGlobalContext();
+
+  const handleOver = useCallback(
+    (items) => {
+      toggleSearch(false);
+      setActiveItems(items);
+    },
+    [toggleSearch]
+  );
+
+  const handleClose = useCallback(() => setActiveItems([]), []);
+
+  useEffect(() => {
+    if (searchOpen) setActiveItems([]);
+  }, [searchOpen]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,9 +56,11 @@ function RootLayout({ children }) {
 
   return (
     <div className={styles.RootLayout}>
+      <Header headerMenu={menuHeader} handleOver={handleOver} handleClose={handleClose} />
       <Cart />
       {loading && <PageLoader />}
-      <Header headerMenu={menuHeader} />
+      <SearchBar />
+      {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
       {selectedProduct && getProductModal()}
       {children}
       <SecureBanner />

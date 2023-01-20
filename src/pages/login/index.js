@@ -19,21 +19,35 @@ function LoginPage() {
   const { reload } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
-    if (!email || !password) return showToast.error(userFeedback?.missingFields);
+    // check if email and password fields are filled
+    if (!email || !password) {
+      return showToast.error(userFeedback?.missingFields);
+    }
+
+    // toggle loading state
     toggleLoading(true);
-    const resLogin = await nextApiCall.login({ email, password });
-    toggleLoading(false);
-    const customerUserErrors = resLogin?.customerUserErrors;
-    if (customerUserErrors?.length) {
-      return customerUserErrors.forEach((element) => showToast.error(element.message));
-    }
 
-    if (resLogin?.ok) {
-      reload();
-      return showToast.success(userFeedback.login.success);
-    }
+    try {
+      // perform login call
+      const resLogin = await nextApiCall.login({ email, password });
 
-    return showToast.error(userFeedback.login.error);
+      // check for errors
+      const customerUserErrors = resLogin?.customerUserErrors;
+      if (customerUserErrors?.length) {
+        return customerUserErrors.forEach((element) => showToast.error(element.message));
+      }
+
+      // check if login was successful
+      if (resLogin?.ok) {
+        reload();
+        return showToast.success(userFeedback.login.success);
+      }
+      throw new Error(userFeedback.login.error);
+    } catch (error) {
+      return showToast.error(error.message);
+    } finally {
+      toggleLoading(false);
+    }
   };
 
   return (
