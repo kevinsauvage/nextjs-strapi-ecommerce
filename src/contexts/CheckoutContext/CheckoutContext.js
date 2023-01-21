@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import nextApiCall from '@/utils/apiNext';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
+import { useToastContext } from '../ToastContext/NotificationContext';
 
 export const CheckoutContext = createContext();
 
@@ -9,7 +10,7 @@ export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
   const { toggleLoading, toggleCheckout } = useGlobalContext();
-
+  const { showToast } = useToastContext();
   const handleSetCheckout = useCallback((payload) => dispatch({ type: actions.ADD_CHECKOUT, payload }), []);
 
   const toggleCheckoutLoading = useCallback(
@@ -57,15 +58,17 @@ export function CheckoutProvider({ children }) {
         toggleCheckoutLoading(true);
         toggleLoading(true);
         const res = await nextApiCall.addToCheckout({ variantId, quantity });
+
         if (res?.id) {
           dispatch({ type: actions.ADD_CHECKOUT, payload: res });
           toggleCheckout(true);
-        } else alert('could not add the product variant to the checkout');
+        } else showToast.error('Could not add the product variant to the checkout');
+
         toggleCheckoutLoading(false);
         toggleLoading(false);
       }
     },
-    [toggleCheckout, toggleCheckoutLoading, toggleLoading]
+    [showToast, toggleCheckout, toggleCheckoutLoading, toggleLoading]
   );
 
   const values = useMemo(
