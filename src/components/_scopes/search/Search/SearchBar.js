@@ -39,39 +39,41 @@ export default function SearchBar() {
         onClick={() => toggleSearch(false)}
         onKeyDown={() => toggleSearch(false)}
       >
-        <div
-          className={styles.searchBar}
-          role="presentation"
-          onClick={(e) => e.stopPropagation()}
-          onKeyDown={(e) => e.stopPropagation()}
-        >
+        <div className={styles.inner}>
           <Container>
-            <div className={styles.form}>
-              <button
-                tabIndex={0}
-                type="button"
-                className={styles.buttonClose}
-                onClick={() => toggleSearch(false)}
-              >
-                <MdClose />
-              </button>
-              <p className={styles.title}>WHAT ARE YOU LOOKING FOR?</p>
-              <label className={styles.header}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  placeholder="Search"
-                  value={query}
-                  onChange={handleChange}
-                  aria-label="Search"
-                  autoComplete="off"
-                  autoCorrect="off"
-                  autoCapitalize="off"
-                  spellCheck="false"
-                />
-              </label>
+            <div
+              className={styles.searchBar}
+              role="presentation"
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
+              <div className={styles.form}>
+                <button
+                  tabIndex={0}
+                  type="button"
+                  className={styles.buttonClose}
+                  onClick={() => toggleSearch(false)}
+                >
+                  <MdClose />
+                </button>
+                <h5 className={styles.title}>WHAT ARE YOU LOOKING FOR?</h5>
+                <label className={styles.header}>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    placeholder="Search"
+                    value={query}
+                    onChange={handleChange}
+                    aria-label="Search"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    autoCapitalize="off"
+                    spellCheck="false"
+                  />
+                </label>
+              </div>
+              <SearchResults results={search} />
             </div>
-            <SearchResults results={search} />
           </Container>
         </div>
       </div>

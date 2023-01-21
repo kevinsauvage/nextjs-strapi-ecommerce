@@ -7,11 +7,15 @@ export default function CollectionCard({ collection }) {
 
   return (
     <div className={style.CollectionCard} style={{ backgroundImage: `url(${image?.src})` }}>
-      <div className={style.content}>
-        <h3 className={style.title}>{title}</h3>
-        <Link href={`${config.routes.collection}/${handle}`} className={style.link}>
-          Shop now
-        </Link>
+      <div className={style.inner}>
+        <div className={style.content}>
+          <h3 className={style.title}>
+            {title} <span>COLLECTION</span>
+          </h3>
+          <Link href={`${config.routes.collection}/${handle}`} className={style.link}>
+            Shop now
+          </Link>
+        </div>
       </div>
     </div>
   );

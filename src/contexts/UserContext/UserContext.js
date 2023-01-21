@@ -65,7 +65,7 @@ export function UserProvider({ children }) {
       const res = await nextApiCall.getCustomer();
       setUser(res?.customer);
       handleSetCheckoutShippingAddress(res?.customer);
-      if (!res || !res.customer?.id) console.log('get customer failed');
+      if (!res || !res.customer?.id) console.error('get customer failed');
     };
     getCustomer();
   }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, logout, setUser]);

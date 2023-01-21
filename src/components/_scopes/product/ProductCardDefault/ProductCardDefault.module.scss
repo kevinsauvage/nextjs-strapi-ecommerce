@@ -1,10 +1,11 @@
 .productCardDefault {
-  cursor: pointer;
+  position: relative;
   overflow: hidden;
   height: 100%;
+  max-width: 330px;
   width: 100%;
-  max-width: 280px;
-  position: relative;
+  cursor: pointer;
+  @include boxShadow(1);
 
   &:hover,
   &:focus,
@@ -13,22 +14,38 @@
     .quickView {
       opacity: 1;
       visibility: visible;
+      animation: slideUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal forwards;
     }
   }
 }
 
 .content {
   display: flex;
+  position: relative;
   flex-direction: column;
-  padding: var(--space-0) 0;
+  z-index: 999;
+
+  @include themed {
+    background-color: t($background);
+  }
+}
+
+.contentInner {
+  padding: var(--space-0);
+
+  @include themed {
+    background-color: rgba(t($onBackground), 0.06);
+  }
 }
 
 .image {
   position: relative;
-  overflow: hidden;
+  width: 100%;
 
   img {
     transition: 0.2s all ease-in-out;
+    height: 100%;
+    width: 100%;
 
     &:hover {
       transform: scale(1.1);
@@ -38,29 +55,35 @@
 
 .quickView {
   position: absolute;
-  z-index: 99999;
-  bottom: 0;
+  overflow: hidden;
   width: 100%;
   right: 0;
   left: 0;
-  opacity: 0;
-  visibility: hidden;
-  color: $color-grey;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: uppercase;
+  bottom: 0;
+  z-index: 99;
   text-decoration: underline;
-  transition: 0.3s all ease-in-out;
-  padding: var(--space-0);
+  transform: translateY(100%);
 
   @include themed {
-    background-color: t($background);
+    background-color: rgba(t($background), 1);
     color: t($onBackground);
   }
 
   p {
     font-weight: $fontWeightSemiBold;
+  }
+}
+
+.quickViewInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--space-0);
+
+  @include themed {
+    background-color: rgba(t($onBackground), 0.06);
   }
 }
 
@@ -76,18 +99,29 @@
 
 .title {
   white-space: pre-wrap;
+  font-weight: $fontWeightNormal;
+
   @include text-shorten(1);
 }
 
 .productType {
   width: fit-content;
-  font-weight: $fontWeightSemiBold;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
+  font-weight: $fontWeightNormal;
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
 
   @include themed {
     color: rgba(t($onBackground), 0.6);
   }
 }
 
-.description {
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

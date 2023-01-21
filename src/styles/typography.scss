@@ -6,6 +6,7 @@ h5,
 h6 {
   font-style: normal;
   font-weight: $fontWeightSemiBold;
+  text-shadow: $textShadow-200;
 }
 
 h1 {
@@ -59,8 +60,13 @@ a,
 button,
 p,
 b {
-  line-height: 24px;
   @include fluid-font(320px, 1024px, $fontSize--100, $fontSize-100);
+}
+
+a,
+button,
+[role='button'] {
+  text-shadow: $textShadow-100;
 }
 
 b {

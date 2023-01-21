@@ -30,11 +30,7 @@ function ProductsDisplay({ bestSelling, newArrival }) {
       </div>
       <ul className={styles.list}>
         {Array.isArray(products[index]) &&
-          products[index].map((product) => (
-            <li key={product.id}>
-              <ProductCardDefault product={product} />
-            </li>
-          ))}
+          products[index].map((product) => <ProductCardDefault product={product} key={product.id} />)}
       </ul>
     </div>
   );

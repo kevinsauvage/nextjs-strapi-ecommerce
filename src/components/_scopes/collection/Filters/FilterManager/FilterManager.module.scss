@@ -1,27 +1,3 @@
-.actualFilters,
-.notAppliedFilters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-
-.title {
-  margin-bottom: 0.5rem;
-  color: black;
-}
-
-.filter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2px;
-  width: fit-content;
-  gap: 0.5rem;
-  border-radius: 3px;
-  border: 1px solid black;
-  cursor: pointer;
-}
-
 .buttons {
   margin: var(--space-1) 0;
   width: 100%;

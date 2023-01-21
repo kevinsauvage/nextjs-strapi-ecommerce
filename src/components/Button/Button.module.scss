@@ -12,9 +12,7 @@
   text-transform: uppercase;
   font-weight: $fontWeightSemiBold;
 
-  @include themed {
-    box-shadow: rgba(t($onBackground), 0.5) 0px 2px 8px;
-  }
+  @include boxShadow(2);
 }
 
 .primary {

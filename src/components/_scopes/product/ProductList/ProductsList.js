@@ -9,7 +9,7 @@ function ProductsList({ products, loading, layout, loader }) {
     const ProductCardRow = dynamic(() => import('../ProductCardRow/ProductCardRow'), {
       loading: () => loader,
     });
-    return <ProductCardRow product={product} />;
+    return <ProductCardRow product={product} key={product.id} />;
   };
 
   return (
@@ -17,11 +17,13 @@ function ProductsList({ products, loading, layout, loader }) {
       {loading && <PageLoader />}
       {Array.isArray(products) && products.length > 0 && (
         <ListDisplay layout={layout}>
-          {products.map((product) => (
-            <li key={product.id}>
-              {layout === 'grid' ? <ProductCardDefault product={product} /> : getProductCardRow(product)}
-            </li>
-          ))}
+          {products.map((product) =>
+            layout === 'grid' ? (
+              <ProductCardDefault product={product} key={product.id} />
+            ) : (
+              getProductCardRow(product)
+            )
+          )}
         </ListDisplay>
       )}
       {Array.isArray(products) && products.length === 0 && !loading && (

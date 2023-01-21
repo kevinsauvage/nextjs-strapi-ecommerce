@@ -2,8 +2,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 0.1px solid gainsboro;
-  padding: 3px 0;
+  padding: 1px 0;
+  @include themed {
+    border-bottom: 0.1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .title {
