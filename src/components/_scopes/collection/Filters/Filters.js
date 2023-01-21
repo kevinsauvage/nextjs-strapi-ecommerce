@@ -1,11 +1,11 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import { useCallback } from 'react';
+import { actions } from '@/contexts/CollectionContext/CollectionReducer';
 import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
 export default function Filters() {
-  const { selectedFilters, setSelectedFilters, removeFilter, actualFilters, allFilters } =
-    useCollectionContext();
+  const { selectedFilters, allFilters, dispatch } = useCollectionContext();
 
   const isChecked = useCallback(
     (valueId) => {
@@ -32,8 +32,11 @@ export default function Filters() {
                   type="button"
                   onClick={() =>
                     isChecked(value.id)
-                      ? removeFilter(value.id)
-                      : setSelectedFilters([...selectedFilters, value])
+                      ? dispatch({
+                          type: actions.SET_SELECTED_FILTERS,
+                          payload: selectedFilters.filter((f) => f.id !== value.id),
+                        })
+                      : dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [...selectedFilters, value] })
                   }
                 >
                   <p className={styles.value}>{value.label}</p>
@@ -42,7 +45,7 @@ export default function Filters() {
             </div>
           </div>
         ))}
-      {actualFilters.length || selectedFilters.length ? <FilterManager /> : null}
+      <FilterManager />
     </div>
   );
 }
