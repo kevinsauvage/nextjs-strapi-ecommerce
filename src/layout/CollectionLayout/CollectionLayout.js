@@ -8,25 +8,14 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Slide from '@/components/_slides/Slide/Slide';
 import Filters from '@/components/_scopes/collection/Filters/Filters';
 import { filter } from '@/assets/svg';
-import { useEffect } from 'react';
+import { actions } from '@/contexts/CollectionContext/CollectionReducer';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
-function CollectionLayout({
-  children,
-  collection: { products: initialProducts, title, description },
-  pageInfo: initialPageInfo,
-  collectionFilters,
-}) {
-  const { handleSort, handleSetLayout, layout, setPageInfo, setProducts, setAllFilters } =
-    useCollectionContext();
+function CollectionLayout({ children, collection }) {
+  const { handleSort, layout, dispatch: collectionDispatch } = useCollectionContext();
   const { filterOpen, toggleFilter } = useGlobalContext();
-
-  useEffect(() => {
-    if (initialProducts) setProducts(initialProducts);
-    if (initialPageInfo) setPageInfo(initialPageInfo);
-    if (collectionFilters) setAllFilters(collectionFilters);
-  }, [collectionFilters, initialPageInfo, initialProducts, setAllFilters, setPageInfo, setProducts]);
+  const { title, description } = collection || {};
 
   return (
     <PageLayout title={title} description={description}>
@@ -40,7 +29,10 @@ function CollectionLayout({
         <CollectionBanner title={title} description={description} />
         <main className={styles.main}>
           <div className={styles.header}>
-            <LayoutButtons handleChange={handleSetLayout} selected={layout} />
+            <LayoutButtons
+              handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
+              selected={layout}
+            />
             <Wrapper>
               <Sort handleChange={handleSort} />
               <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>

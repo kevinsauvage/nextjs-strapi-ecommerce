@@ -8,16 +8,22 @@ import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CollectionContext = createContext();
 
-export function CollectionProvider({ children }) {
+export function CollectionProvider({
+  children,
+  collection: { products: initialProducts },
+  pageInfo: initialPageInfo,
+  collectionFilters,
+}) {
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout } = states;
   const { toggleFilter } = useGlobalContext();
   const { query, pathname, push, to, asPath } = useRouter();
 
-  const setPageInfo = useCallback((payload) => dispatch({ type: actions.SET_PAGE_INFO, payload }), []);
-  const setProducts = useCallback((payload) => dispatch({ type: actions.SET_PRODUCTS, payload }), []);
-  const setAllFilters = useCallback((payload) => dispatch({ type: actions.SET_ALL_FILTERS, payload }), []);
-  const handleSetLayout = useCallback((data) => dispatch({ type: actions.SET_LAYOUT, payload: data }), []);
+  useEffect(() => {
+    if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
+    if (initialPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: initialPageInfo });
+    if (collectionFilters) dispatch({ type: actions.SET_ALL_FILTERS, payload: collectionFilters });
+  }, [collectionFilters, initialPageInfo, initialProducts]);
 
   const getFormattedFilter = useCallback(() => {
     const filteredFilters = getFiltersFromQuery(allFilters, query);
@@ -41,11 +47,16 @@ export function CollectionProvider({ children }) {
         pageInfo: newPageInfo,
       } = data || {};
 
-      if (newPageInfo) setPageInfo(newPageInfo);
-      if (newProducts) setProducts(concat ? [...products, ...newProducts] : newProducts);
+      if (newPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: newPageInfo });
+      if (newProducts) {
+        dispatch({
+          type: actions.SET_PRODUCTS,
+          payload: concat ? [...products, ...newProducts] : newProducts,
+        });
+      }
       if (!concat) window.scrollTo(0, 0);
     },
-    [products, setPageInfo, setProducts]
+    [products]
   );
 
   const resetFilters = useCallback(async () => {
@@ -119,14 +130,10 @@ export function CollectionProvider({ children }) {
       loading,
       layout,
       dispatch,
-      setAllFilters,
       applyFilters,
       resetFilters,
-      setPageInfo,
-      setProducts,
       handleSort,
       handleNext,
-      handleSetLayout,
     }),
     [
       selectedFilters,
@@ -135,14 +142,10 @@ export function CollectionProvider({ children }) {
       products,
       loading,
       layout,
-      setAllFilters,
       applyFilters,
       resetFilters,
-      setPageInfo,
-      setProducts,
       handleSort,
       handleNext,
-      handleSetLayout,
     ]
   );
 

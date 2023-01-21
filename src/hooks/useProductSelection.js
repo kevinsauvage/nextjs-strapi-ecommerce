@@ -1,8 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import nextApiCall from '@/utils/apiNext';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import { actions } from '@/contexts/CheckoutContext/CheckoutReducer';
 
 export default function useProductSelection({ product }) {
   const [selectedProductOption, setSelectedProductOption] = useState([]);
@@ -11,8 +8,7 @@ export default function useProductSelection({ product }) {
   const [totalPrice, setTotalPrice] = useState();
   const [availableColors, setAvailableColors] = useState([]);
   const [availableSize, setAvailableSize] = useState([]);
-  const { dispatch } = useCheckoutContext();
-  const { toggleLoading, toggleCheckout } = useGlobalContext();
+  const { handleAddToCheckout } = useCheckoutContext();
 
   const handleChangeInput = (num) => setQuantity(num);
 
@@ -22,18 +18,6 @@ export default function useProductSelection({ product }) {
       setTotalPrice(amount.toFixed(2));
     }
   }, [quantity, selectedVariant, selectedVariant?.id]);
-
-  const handleAddToCart = async () => {
-    const variantId = selectedVariant?.id;
-    if (quantity > 0 && variantId) {
-      toggleLoading(true);
-      const res = await nextApiCall.addToCheckout({ variantId, quantity });
-
-      toggleCheckout();
-      toggleLoading(false);
-      if (res?.id) dispatch({ type: actions.ADD_CHECKOUT, payload: res });
-    }
-  };
 
   const handleSetSelectedProductOption = useCallback(
     (productOption) => {
@@ -80,6 +64,10 @@ export default function useProductSelection({ product }) {
     },
     [availableColors, availableSize]
   );
+
+  const handleAddToCart = useCallback(() => {
+    handleAddToCheckout(selectedVariant.id, quantity);
+  }, [handleAddToCheckout, quantity, selectedVariant.id]);
 
   useEffect(() => {
     setSelectedVariant({});
