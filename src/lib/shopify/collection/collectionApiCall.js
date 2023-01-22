@@ -53,6 +53,16 @@ export const getCollections = async (first) => {
   }
 };
 
+export const getSitemap = async (first) => {
+  try {
+    const res = await shopifyStorefrontCall(queriesCollection.getSitemap, { first });
+
+    return cleanGraphQLResponse(res?.data?.collections);
+  } catch (error) {
+    return console.error(error);
+  }
+};
+
 export const getCollectionFilters = async (handle, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(

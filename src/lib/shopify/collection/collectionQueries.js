@@ -1,9 +1,4 @@
-import {
-  collectionFragment,
-  filterFragment,
-  pageInfoFragment,
-  productFragment,
-} from '../fragment';
+import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from '../fragment';
 
 const filterCollectionForward = `
 query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
@@ -31,7 +26,32 @@ query ($first: Int) {
     edges {
       node {
         ${collectionFragment}
-        metafield( 
+        metafield(
+          namespace: "custom"
+          key: "bannerhome"
+      ) {
+          key
+          value
+        }
+      }
+    }
+  }
+}`;
+
+const getSitemap = `
+query ($first: Int) {
+  collections(first: $first, sortKey: RELEVANCE) {
+    edges {
+      node {
+        handle
+        products(first: 200, sortKey: BEST_SELLING) {
+          edges {
+            node {
+              handle
+            }
+          }
+        }
+        metafield(
           namespace: "custom"
           key: "bannerhome"
       ) {
@@ -58,6 +78,7 @@ const queriesCollection = {
   filterCollectionForward,
   getCollections,
   getCollectionFilters,
+  getSitemap,
 };
 
 export default queriesCollection;
