@@ -27,7 +27,8 @@ export default function ProductCardRow({ product }) {
           <Image
             src={image?.medium}
             alt={selectedVariant?.title}
-            fill
+            width={800}
+            height={800}
             blurDataURL={image?.blurDataURL}
             placeholder="blur"
           />

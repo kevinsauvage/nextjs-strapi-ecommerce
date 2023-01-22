@@ -202,16 +202,11 @@ $breakpoints: (
     height: 2px;
     width: 60%;
     max-width: 40px;
-
-    @include themed {
-      background-color: t($color);
-    }
+    background-color: $color;
   }
 }
 
 @mixin glassmorphism() {
-  will-change: content;
-
   @include themed {
     background-color: rgba(t($background), 0.6);
     color: t($onBackground);
@@ -220,15 +215,15 @@ $breakpoints: (
 }
 
 @mixin boxShadow($level) {
-  @if $level == 1 {
+  @if $level ==1 {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.08);
-  } @else if $level == 2 {
+  } @else if $level ==2 {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 0 4px rgba(0, 0, 0, 0.12);
-  } @else if $level == 3 {
+  } @else if $level ==3 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 10px rgba(0, 0, 0, 0.14);
-  } @else if $level == 4 {
+  } @else if $level ==4 {
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
-  } @else if $level == 5 {
+  } @else if $level ==5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
   }
 }

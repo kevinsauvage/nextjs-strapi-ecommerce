@@ -7,8 +7,8 @@ export default function BannerHome({ collections }) {
   const { title, description, handle, image } = collections?.[0] || {};
 
   return (
-    <section className={styles.banner}>
-      <div className={styles.inner} style={{ backgroundImage: `url(${image?.src})` }}>
+    <section className={styles.banner} style={{ backgroundImage: `url(${image?.src})` }}>
+      <div className={styles.inner}>
         <div className={styles.container}>
           <div className={styles.content}>
             <p className={styles.upTitle}>

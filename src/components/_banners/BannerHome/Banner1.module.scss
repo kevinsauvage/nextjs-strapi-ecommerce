@@ -5,14 +5,14 @@
   height: 85vh;
   margin-bottom: var(--space-5);
   @include boxShadow(2);
-}
-
-.inner {
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  margin-top: 4px;
+}
 
+.inner {
   @include flex-column;
   justify-content: center;
   position: relative;
@@ -26,8 +26,6 @@
   margin-left: 100px;
   width: fit-content;
   height: fit-content;
-
-  @include glassmorphism;
 }
 
 .content {
@@ -36,6 +34,7 @@
   width: fit-content;
   height: fit-content;
   @include boxShadow(2);
+  @include glassmorphism;
 }
 
 .upTitle {

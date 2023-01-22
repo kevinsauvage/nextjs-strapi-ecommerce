@@ -4,7 +4,6 @@
   height: 100%;
   display: flex;
   width: 100%;
-  min-height: 320px;
   @include themed {
     background-color: lighten(t($background), 6%);
     color: t($onBackground);
