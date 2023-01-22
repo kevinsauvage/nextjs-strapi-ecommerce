@@ -21,16 +21,16 @@ export default function CartItem({
   return (
     <Row>
       <TData>
-        <ul className={styles.list}>
-          <li className={styles.image}>
+        <div className={styles.list}>
+          <div className={styles.image}>
             <Image
               src={variant.image.small}
               alt={variant.image.alt || variant.title}
-              width={variant.image.width}
-              height={variant.image.height}
+              width={600}
+              height={600}
             />
-          </li>
-          <li className={styles.content}>
+          </div>
+          <div className={styles.content}>
             <Link
               className={styles.link}
               href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
@@ -38,8 +38,8 @@ export default function CartItem({
               <h6 className={styles.title}>{title}</h6>
             </Link>
             <p className={styles.variant}>{variant.title}</p>
-          </li>
-        </ul>
+          </div>
+        </div>
       </TData>
       <TData>
         <span className={styles.price}>€{variant.priceV2.amount}</span>

@@ -27,7 +27,7 @@ export default function ProductCheckoutCard({ lineItem }) {
       </div>
       <div className={styles.body}>
         <Link href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}>
-          <h5 className={styles.title}>{title}</h5>
+          <b className={styles.title}>{title}</b>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="M" />
         <SelectedOptions options={selectedOptions} />
