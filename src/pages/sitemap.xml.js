@@ -2,9 +2,7 @@ import * as fs from 'fs';
 import config from '@/config/index';
 import { getSitemap } from '@/lib/shopify/collection/collectionApiCall';
 
-function Sitemap() {
-  return {};
-}
+const Sitemap = () => {};
 
 export const getServerSideProps = async ({ res }) => {
   const BASE_URL = config.baseUrl;
@@ -18,10 +16,10 @@ export const getServerSideProps = async ({ res }) => {
     .filter((page) => !EXCLUDE_PAGES.includes(page))
     .map((page) => `${BASE_URL}/${page.replace('.js', '')}`);
 
-  // Get all dynamic paths
+  // Get list of collections
   const collections = await getSitemap(100);
 
-  // Get all product paths
+  // Get all dynamic paths
   const dynamicPaths = collections?.reduce((acc, collection) => {
     acc.push(`${BASE_URL}${config.routes.collection}/${collection.handle}`);
     collection.products.forEach((product) =>
@@ -56,9 +54,7 @@ export const getServerSideProps = async ({ res }) => {
   res.write(sitemap);
   res.end();
 
-  return {
-    props: {},
-  };
+  return { props: {} };
 };
 
 export default Sitemap;
