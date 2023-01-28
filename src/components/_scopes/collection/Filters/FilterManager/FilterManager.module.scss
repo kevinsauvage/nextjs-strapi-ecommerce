@@ -5,6 +5,9 @@
 
 .button {
   width: 100%;
+  small {
+    margin-left: 4px;
+  }
 
   &:first-of-type {
     margin-bottom: var(--space-1);

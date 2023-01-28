@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import config from '@/config/index';
 import { getFiltersFromQuery } from '@/lib/shopify/helpers';
 import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
+import { numberOfDifferences } from '@/helpers/array';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 
@@ -108,6 +109,11 @@ export function CollectionProvider({
     handleSetFilterState(data, true);
   }, [getFormattedFilter, handleGetData, handleSetFilterState, pageInfo.endCursor, query.sort_key]);
 
+  const isSelectionDifferent = useCallback(() => {
+    const filteredFilters = getFiltersFromQuery(allFilters, query);
+    return numberOfDifferences(filteredFilters, selectedFilters);
+  }, [allFilters, query, selectedFilters]);
+
   useEffect(() => {
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
   }, [query.collectionSlug]);
@@ -134,6 +140,7 @@ export function CollectionProvider({
       resetFilters,
       handleSort,
       handleNext,
+      isSelectionDifferent,
     }),
     [
       selectedFilters,
@@ -146,6 +153,7 @@ export function CollectionProvider({
       resetFilters,
       handleSort,
       handleNext,
+      isSelectionDifferent,
     ]
   );
 

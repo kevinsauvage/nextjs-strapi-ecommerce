@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useCallback, useEffect, useState } from 'react';
-import { getMenuFooter, getMenuHeader, getShop } from '@/lib/shopify/shop/shopApiCall';
+import { getMenuFooter, getShop } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
 import Header from '@/components/Header/Header';
@@ -12,9 +12,8 @@ import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import BigMenu from '@/components/BigMenu/BigMenu';
 import styles from './RootLayout.module.scss';
 
-function RootLayout({ children }) {
+function RootLayout({ children, headerMenu }) {
   const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
-  const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
   const [activeItems, setActiveItems] = useState([]);
@@ -36,9 +35,8 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [header, footer, shop] = await Promise.all([getMenuHeader(), getMenuFooter(), getShop()]);
+      const [footer, shop] = await Promise.all([getMenuFooter(), getShop()]);
       setMenuFooter(footer);
-      setMenuHeader(header);
       setShopInfo(shop);
     };
 
@@ -56,7 +54,7 @@ function RootLayout({ children }) {
 
   return (
     <div className={styles.RootLayout}>
-      <Header headerMenu={menuHeader} handleOver={handleOver} handleClose={handleClose} />
+      <Header headerMenu={headerMenu} handleOver={handleOver} handleClose={handleClose} />
       <Cart />
       {loading && <PageLoader />}
       <SearchBar />

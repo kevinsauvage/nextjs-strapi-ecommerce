@@ -23,7 +23,7 @@ export default function Filters() {
       {Array.isArray(filters) &&
         filters.map((filter) => (
           <div className={styles.filterContainer} key={filter.label}>
-            <h6 className={styles.label}>{filter.label}</h6>
+            <b className={styles.label}>{filter.label}</b>
             <div className={styles.filter}>
               {filter.values.map((value) => (
                 <button
