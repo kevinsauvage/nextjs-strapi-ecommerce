@@ -62,6 +62,7 @@
   height: 3rem;
   padding-left: var(--space-1);
   @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+  border-radius: $radius;
 }
 
 @keyframes slide-top {
