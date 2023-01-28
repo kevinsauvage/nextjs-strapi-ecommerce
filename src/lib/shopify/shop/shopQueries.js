@@ -77,9 +77,30 @@ query ($handle: String!) {
   }
 }`;
 
+const getHome = `
+{
+  page(handle: "home") {
+    bodySummary
+    handle
+    id
+
+    data: metafield(namespace: "custom", key: "data") {
+      value
+      type
+    }
+    data2: metafield(namespace: "custom", key: "something") {
+      value
+      type
+    }
+
+  }
+}
+`;
+
 const shopQueries = {
   getShop,
   getMenu,
+  getHome,
   getPrivacyPolicy,
   getRefundPolicy,
   getShippingPolicy,

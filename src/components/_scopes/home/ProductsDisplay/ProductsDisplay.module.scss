@@ -1,5 +1,5 @@
 .productsDisplay {
-  margin: var(--space-5) 100px;
+  margin-bottom: var(--space-6);
 }
 
 .header {
@@ -16,7 +16,7 @@
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: var(--space-2);
   flex-direction: column;
   align-content: flex-end;
@@ -24,12 +24,11 @@
 }
 
 .button {
-  border: none;
-  font-weight: $fontWeightMedium;
-  padding: var(--space-0) 0;
-  width: fit-content;
   position: relative;
   display: block;
+  width: fit-content;
+  border: none;
+  font-weight: $fontWeightMedium;
   text-transform: uppercase;
 
   &::after {

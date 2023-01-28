@@ -73,3 +73,13 @@ export const getMenuCollection = async () => {
     return console.error(error);
   }
 };
+
+export const getHomePage = async () => {
+  try {
+    const res = await shopifyStorefrontCall(shopQueries.getHome);
+    const value = res?.data?.page?.data?.value;
+    return value ? JSON.parse(value) : undefined;
+  } catch (error) {
+    return console.error(error);
+  }
+};

@@ -26,12 +26,12 @@ query ($first: Int) {
     edges {
       node {
         ${collectionFragment}
-        metafield(
-          namespace: "custom"
-          key: "bannerhome"
-      ) {
-          key
+        isBannerHome: metafield(namespace: "custom", key: "bannerhome") {
           value
+        }
+        isMegaMenu: metafield(namespace: "custom", key: "megamenu") {
+          value
+          type
         }
       }
     }
@@ -50,13 +50,6 @@ query ($first: Int) {
               handle
             }
           }
-        }
-        metafield(
-          namespace: "custom"
-          key: "bannerhome"
-      ) {
-          key
-          value
         }
       }
     }

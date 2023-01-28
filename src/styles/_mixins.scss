@@ -210,7 +210,6 @@ $breakpoints: (
   @include themed {
     background-color: rgba(t($background), 0.6);
     color: t($onBackground);
-    border: 1px solid rgba(t($background), 0.3);
   }
 }
 

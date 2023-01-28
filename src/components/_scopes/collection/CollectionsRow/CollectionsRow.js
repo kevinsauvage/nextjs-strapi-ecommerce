@@ -1,0 +1,25 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import config from '@/config/index';
+import SectionTitle from '@/components/SectionTitle/SectionTitle';
+import styles from './CollectionsRow.module.scss';
+
+function CollectionsRow({ collections }) {
+  return (
+    <div className={styles.CollectionsRow}>
+      <SectionTitle first="Shop By" second="Category" />
+      <ul className={styles.list}>
+        {collections.map((collection) => (
+          <li key={collection.title} className={styles.card}>
+            <Link href={`${config.routes.collection}/${collection.handle}`} className={styles.link}>
+              <Image src={collection.image.url} alt={collection.image.alt} width={300} height={300} />
+              <b>{collection.title}</b>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default CollectionsRow;

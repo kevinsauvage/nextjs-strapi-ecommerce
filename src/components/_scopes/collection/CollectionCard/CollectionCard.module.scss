@@ -1,28 +1,48 @@
 .CollectionCard {
   position: relative;
+  display: flex;
+  align-items: flex-end;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-position: top;
+  background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
   color: $color-background;
-}
+  border-radius: $radius;
+  transition: all 0.2s ease-in-out;
 
-.inner {
-  backdrop-filter: sepia(30%);
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
+  &::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: rgba($color-onBackground, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    background-size: 110%;
+
+    &::after {
+      background-color: rgba($color-onBackground, 0.8);
+    }
+  }
 }
 
 .content {
+  position: relative;
+  z-index: 999;
   width: 100%;
   height: fit-content;
-  min-width: 160px;
-  max-width: 200px;
+  width: fit-content;
   padding: var(--space-1);
+  margin-bottom: var(--space-1);
+  margin-left: var(--space-1);
 }
 
 .title {
@@ -36,9 +56,11 @@
 }
 
 .link {
-  font-weight: $fontWeightSemiBold;
-  text-transform: uppercase;
-  width: fit-content;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-  @include underline($color-background);
+  a {
+    font-weight: $fontWeightSemiBold;
+    text-transform: uppercase;
+    width: fit-content;
+    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+    @include underline($color-background);
+  }
 }

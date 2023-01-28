@@ -1,0 +1,34 @@
+.CollectionsRow {
+  margin-bottom: var(--space-6);
+}
+
+.list {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  b {
+    @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+  }
+}
+
+.link {
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: $radius;
+    @include boxShadow(1);
+  }
+}

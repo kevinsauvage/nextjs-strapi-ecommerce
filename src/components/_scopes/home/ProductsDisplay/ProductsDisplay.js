@@ -12,7 +12,7 @@ function ProductsDisplay({ bestSelling, newArrival }) {
   return (
     <div className={styles.productsDisplay}>
       <div className={styles.header}>
-        <SectionTitle first="OUR TRENDY" second="PRODUCTS" />
+        <SectionTitle first="OUR SELECTION OF" second="PRODUCTS" />
         <ul className={styles.nav}>
           {Array.isArray(nav) &&
             nav.map((item, i) => (
