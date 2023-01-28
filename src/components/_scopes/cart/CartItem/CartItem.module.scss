@@ -37,7 +37,8 @@
 }
 
 .title {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-0);
+  display: block;
 }
 
 .input {

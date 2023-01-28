@@ -55,7 +55,6 @@ export function CheckoutProvider({ children }) {
   const handleAddToCheckout = useCallback(
     async (variantId, quantity) => {
       if (quantity > 0 && variantId) {
-        toggleCheckoutLoading(true);
         toggleLoading(true);
         const res = await nextApiCall.addToCheckout({ variantId, quantity });
 
@@ -64,11 +63,10 @@ export function CheckoutProvider({ children }) {
           toggleCheckout(true);
         } else showToast.error('Could not add the product variant to the checkout');
 
-        toggleCheckoutLoading(false);
         toggleLoading(false);
       }
     },
-    [showToast, toggleCheckout, toggleCheckoutLoading, toggleLoading]
+    [showToast, toggleCheckout, toggleLoading]
   );
 
   const values = useMemo(

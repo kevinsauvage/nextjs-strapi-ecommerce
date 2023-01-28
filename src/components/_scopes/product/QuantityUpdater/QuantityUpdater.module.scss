@@ -1,5 +1,4 @@
 $boxDimension: 36px;
-
 .label {
   display: block;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
@@ -10,6 +9,7 @@ $boxDimension: 36px;
   display: flex;
   align-items: center;
   min-height: $boxDimension;
+  border-radius: $radius;
 
   @include themed {
     border: 1px solid t($onBackground);

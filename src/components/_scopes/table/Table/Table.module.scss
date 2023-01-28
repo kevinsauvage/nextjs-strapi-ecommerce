@@ -3,6 +3,8 @@
   height: fit-content;
   border-spacing: 0px;
   border-collapse: separate;
+  border-radius: $radius;
+  overflow: hidden;
 
   @include themed {
     border: 0.01px solid rgba(t($onBackground), 0.2);

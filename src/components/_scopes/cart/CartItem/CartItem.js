@@ -35,7 +35,7 @@ export default function CartItem({
               className={styles.link}
               href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
             >
-              <h6 className={styles.title}>{title}</h6>
+              <b className={styles.title}>{title}</b>
             </Link>
             <p className={styles.variant}>{variant.title}</p>
           </div>

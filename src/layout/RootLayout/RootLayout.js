@@ -56,12 +56,12 @@ function RootLayout({ children }) {
 
   return (
     <div className={styles.RootLayout}>
+      {loading && <PageLoader />}
+      {selectedProduct && getProductModal()}
       <Header headerMenu={menuHeader} handleOver={handleOver} handleClose={handleClose} />
       <Cart />
-      {loading && <PageLoader />}
       <SearchBar />
       {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
-      {selectedProduct && getProductModal()}
       {children}
       <SecureBanner />
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />

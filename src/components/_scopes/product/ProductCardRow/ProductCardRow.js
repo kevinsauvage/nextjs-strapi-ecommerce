@@ -17,6 +17,7 @@ export default function ProductCardRow({ product }) {
     handleChangeInput,
     isOptionOutOfStock,
   } = useProductSelection({ product });
+
   const { title, handle, options, collections } = product;
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } = selectedVariant || {};
 
