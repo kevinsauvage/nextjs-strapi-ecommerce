@@ -30,35 +30,13 @@
   border: none;
   font-weight: $fontWeightMedium;
   text-transform: uppercase;
-
-  &::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    transition: width 0.3s;
-
-    @include themed {
-      background: t($onBackground);
-    }
-  }
-
-  &:hover::after {
-    width: 70%;
-  }
+  padding: 0;
 }
 
 .active {
   font-weight: $fontWeightBold;
 
-  &::after {
-    content: '';
-    display: block;
-    width: 70%;
-    height: 2px;
-
-    @include themed {
-      background: t($onBackground);
-    }
+  @include themed {
+    @include underline(t($onBackground));
   }
 }

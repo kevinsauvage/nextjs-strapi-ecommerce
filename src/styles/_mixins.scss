@@ -200,16 +200,17 @@ $breakpoints: (
     left: 0px;
     bottom: 0px;
     height: 2px;
-    width: 60%;
     max-width: 40px;
     background-color: $color;
+    border-radius: $radius;
+    animation: border 0.3s ease-in-out forwards;
   }
-}
 
-@mixin glassmorphism() {
-  @include themed {
-    background-color: rgba(t($background), 0.6);
-    color: t($onBackground);
+  &:hover {
+    &::after {
+      width: 100%;
+      max-width: 1000px;
+    }
   }
 }
 
@@ -224,5 +225,16 @@ $breakpoints: (
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
   } @else if $level ==5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
+  }
+}
+
+@keyframes border {
+  0% {
+    opacity: 0;
+    width: 0%;
+  }
+  100% {
+    opacity: 1;
+    width: 100%;
   }
 }

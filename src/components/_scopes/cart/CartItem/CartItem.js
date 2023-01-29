@@ -1,14 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import config from '@/config/index';
-import Button from '@/components/Button/Button';
 import styles from './CartItem.module.scss';
 import { Row, TData } from '../../table/Table/Table';
+import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
 
 export default function CartItem({
   product,
   variant,
-  inputId,
   quantity,
   handleChange,
   removeFromCart,
@@ -45,16 +44,13 @@ export default function CartItem({
         <span className={styles.price}>€{variant.priceV2.amount}</span>
       </TData>
       <TData>
-        <input
-          type="number"
-          size="4"
-          id={inputId}
-          defaultValue={quantity}
-          className={styles.input}
-          onChange={(e) =>
+        <QuantityUpdater
+          showTitle={false}
+          originalQuantity={quantity}
+          onChange={(newQuantity) =>
             handleChange({
               id: lineId,
-              quantity: parseInt(e.target.value, 10),
+              quantity: newQuantity,
             })
           }
         />
@@ -63,9 +59,9 @@ export default function CartItem({
         <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
       </TData>
       <TData>
-        <Button contrast className={styles.button} onClick={() => removeFromCart(lineId)}>
+        <button type="button" className={styles.button} onClick={() => removeFromCart(lineId)}>
           Remove
-        </Button>
+        </button>
       </TData>
     </Row>
   );

@@ -12,6 +12,7 @@
   border-radius: $radius;
   height: 600px;
   @include boxShadow(2);
+  color: $color-onBackground;
 }
 
 .inner {
@@ -31,12 +32,8 @@
 }
 
 .content {
-  padding: var(--space-3);
   width: fit-content;
   height: fit-content;
-  border-radius: $radius;
-  @include boxShadow(2);
-  @include glassmorphism;
 }
 
 .upTitle {
@@ -52,10 +49,7 @@
     position: relative;
     z-index: 99;
     border-radius: $radius;
-
-    @include themed {
-      background-color: t($onBackground);
-    }
+    background-color: $color-onBackground;
   }
 }
 
@@ -73,10 +67,7 @@
 .link {
   font-weight: $fontWeightMedium;
   text-transform: uppercase;
-
+  width: fit-content;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
-
-  @include themed {
-    @include underline(t($onBackground));
-  }
+  @include underline($color-onBackground);
 }

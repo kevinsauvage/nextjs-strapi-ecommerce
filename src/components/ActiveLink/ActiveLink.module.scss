@@ -1,36 +1,27 @@
 .ActiveLink {
   font-weight: $fontWeightMedium;
-  padding: var(--space-0) 0;
   width: fit-content;
 
   &::after {
     content: '';
-    display: block;
-    width: 0;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
     height: 2px;
-    transition: width 0.3s;
-
-    @include themed {
-      background: t($onBackground);
-    }
+    background-color: transparent;
   }
 
-  &:hover::after {
-    width: 70%;
+  &:hover {
+    @include themed {
+      @include underline(t($onBackground));
+    }
   }
 }
 
 .active {
   font-weight: $fontWeightBold;
 
-  &::after {
-    content: '';
-    display: block;
-    width: 70%;
-    height: 2px;
-
-    @include themed {
-      background: t($onBackground);
-    }
+  @include themed {
+    @include underline(t($onBackground));
   }
 }

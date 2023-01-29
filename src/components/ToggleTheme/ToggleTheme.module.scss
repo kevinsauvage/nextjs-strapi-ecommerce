@@ -1,25 +1,82 @@
+$width: 60px;
+$padding: 3px;
+$innerSize: 24px;
+
 .toggleTheme {
-    width: 50px;
-    border-radius: 99em;
-    padding: 2px;
-    display: flex;
-    justify-content: flex-start;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  width: $width;
+  padding: $padding;
+  border-radius: 99em;
+  transition: all 0.3s ease-in-out;
 
-    @include themed {
-        border: 2px solid t($onBackground);
-    }
-}
-
-.active {
-    justify-content: flex-end;
+  @include themed {
+    background-color: t($onBackground);
+  }
 }
 
 .inner {
-    width: 20px;
-    min-height: 20px;
-    border-radius: 50%;
+  width: $innerSize;
+  min-height: $innerSize;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
 
+  @include themed {
+    background-color: t($background);
+  }
+}
+
+.moon,
+.sun {
+  position: absolute;
+  width: calc($innerSize - 7px);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.moon {
+  right: calc(($padding * 2));
+
+  path {
     @include themed {
-        background-color: t($onBackground);
+      fill: t($onBackground);
+      stroke: t($background);
     }
+  }
+}
+
+.sun {
+  left: calc(($padding * 2));
+
+  path {
+    @include themed {
+      fill: t($background);
+      stroke: t($onBackground);
+    }
+  }
+}
+
+.active {
+  .inner {
+    transform: translateX(calc(($width - $innerSize) - ($padding * 2)));
+  }
+
+  .sun {
+    path {
+      @include themed {
+        stroke: t($background);
+        fill: t($onBackground);
+      }
+    }
+  }
+
+  .moon {
+    path {
+      @include themed {
+        stroke: t($onBackground);
+        fill: t($background);
+      }
+    }
+  }
 }

@@ -15,7 +15,7 @@ function CartSummaryRow({ title, content, children }) {
 }
 
 function CartSummary() {
-  const { checkout } = useCheckoutContext();
+  const { checkout, getTotalItems } = useCheckoutContext();
   return (
     <div className={styles.summary}>
       <h5 className={styles.title}>CART SUMMARY</h5>
@@ -23,7 +23,7 @@ function CartSummary() {
         title="Subtotal"
         content={`${checkout?.totalPrice?.amount} ${checkout?.currencyCode}`}
       />
-      <CartSummaryRow title="Total products" content={checkout?.lineItems?.length || 0} />
+      <CartSummaryRow title="Total products" content={getTotalItems() || 0} />
       <CheckoutBtn
         extraClass={styles.btn}
         amount={checkout?.totalPrice?.amount}

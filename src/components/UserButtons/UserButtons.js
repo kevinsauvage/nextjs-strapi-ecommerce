@@ -8,7 +8,7 @@ import ToggleTheme from '../ToggleTheme/ToggleTheme';
 
 export default function UserButtons() {
   const { toggleCheckout } = useGlobalContext();
-  const { checkout } = useCheckoutContext();
+  const { getTotalItems } = useCheckoutContext();
 
   const router = useRouter();
 
@@ -25,7 +25,7 @@ export default function UserButtons() {
         <>
           {bag}
           <div className={styles.totalItems}>
-            <p>{checkout?.lineItems?.length || 0}</p>
+            <p>{getTotalItems() || 0}</p>
           </div>
         </>
       ),

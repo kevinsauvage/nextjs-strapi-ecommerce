@@ -5,7 +5,6 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
-import SecureBanner from '@/components/_banners/SecureBanner/SecureBanner';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import dynamic from 'next/dynamic';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
@@ -63,7 +62,7 @@ function RootLayout({ children }) {
       <SearchBar />
       {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
       {children}
-      <SecureBanner />
+      {/*    <SecureBanner /> */}
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
     </div>
   );

@@ -9,6 +9,7 @@ export const CheckoutContext = createContext();
 export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
+
   const { toggleLoading, toggleCheckout } = useGlobalContext();
   const { showToast } = useToastContext();
   const handleSetCheckout = useCallback((payload) => dispatch({ type: actions.ADD_CHECKOUT, payload }), []);
@@ -69,6 +70,11 @@ export function CheckoutProvider({ children }) {
     [showToast, toggleCheckout, toggleLoading]
   );
 
+  const getTotalItems = useCallback(
+    () => checkout?.lineItems?.reduce((acc, item) => acc + item.quantity, 0),
+    [checkout?.lineItems]
+  );
+
   const values = useMemo(
     () => ({
       checkout,
@@ -78,6 +84,7 @@ export function CheckoutProvider({ children }) {
       handleQuantityChange,
       handleSetCheckout,
       handleAddToCheckout,
+      getTotalItems,
     }),
     [
       checkout,
@@ -86,6 +93,7 @@ export function CheckoutProvider({ children }) {
       handleQuantityChange,
       handleSetCheckout,
       handleAddToCheckout,
+      getTotalItems,
     ]
   );
 
