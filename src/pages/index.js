@@ -3,9 +3,9 @@ import { getProducts } from '@/lib/shopify/product/productApiCall';
 import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
 import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
-import { getHomePage } from '@/lib/shopify/shop/shopApiCall';
 import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
 import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
+import { getPage } from '@/lib/shopify/shop/shopApiCall';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
   console.log('🚀 ~ file: index.js:12 ~ Home ~ homeData', homeData);
@@ -27,7 +27,7 @@ export default function Home({ bestSelling, newArrival, homeData }) {
 export async function getStaticProps() {
   const bestSelling = await getProducts('BEST_SELLING', 16);
   const newArrival = await getProducts('CREATED_AT', 16);
-  const homeData = await getHomePage();
+  const homeData = await getPage('Home');
 
   return { props: { bestSelling, newArrival, homeData }, revalidate: 60 };
 }

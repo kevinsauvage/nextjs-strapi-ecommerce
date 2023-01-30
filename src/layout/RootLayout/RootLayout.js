@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useCallback, useEffect, useState } from 'react';
-import { getMenuFooter, getMenuHeader, getShop } from '@/lib/shopify/shop/shopApiCall';
+import { getMenuFooter, getMenuHeader, getShop, getPage } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
 import Header from '@/components/Header/Header';
@@ -9,6 +9,7 @@ import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import dynamic from 'next/dynamic';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import BigMenu from '@/components/BigMenu/BigMenu';
+
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {
@@ -16,6 +17,7 @@ function RootLayout({ children }) {
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
+  const [bigMenu, setBigMenu] = useState();
   const [activeItems, setActiveItems] = useState([]);
   const { toggleSearch, searchOpen } = useGlobalContext();
 
@@ -35,14 +37,27 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [header, footer, shop] = await Promise.all([getMenuHeader(), getMenuFooter(), getShop()]);
-      setMenuFooter(footer);
+      const [header] = await Promise.all([getMenuHeader()]);
+
       setMenuHeader(header);
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [footer, shop, menuCross] = await Promise.all([getMenuFooter(), getShop(), getPage('bigMenu')]);
+
+      setBigMenu(menuCross);
+      setMenuFooter(footer);
       setShopInfo(shop);
     };
 
     fetchData();
   }, []);
+
+  console.log('🚀 ~ file: RootLayout.js:40 ~ fetchData ~ bigMenu', bigMenu);
 
   const loader = <PageLoader />;
 
@@ -60,9 +75,10 @@ function RootLayout({ children }) {
       <Header headerMenu={menuHeader} handleOver={handleOver} handleClose={handleClose} />
       <Cart />
       <SearchBar />
-      {activeItems?.length > 0 && <BigMenu data={activeItems} handleClose={handleClose} />}
+      {activeItems?.length > 0 && (
+        <BigMenu data={activeItems} collections={bigMenu?.collections} handleClose={handleClose} />
+      )}
       {children}
-      {/*    <SecureBanner /> */}
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
     </div>
   );

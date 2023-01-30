@@ -74,9 +74,9 @@ export const getMenuCollection = async () => {
   }
 };
 
-export const getHomePage = async () => {
+export const getPage = async (handle) => {
   try {
-    const res = await shopifyStorefrontCall(shopQueries.getHome);
+    const res = await shopifyStorefrontCall(shopQueries.getPage, { handle });
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   } catch (error) {

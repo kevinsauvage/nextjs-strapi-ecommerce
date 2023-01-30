@@ -77,22 +77,16 @@ query ($handle: String!) {
   }
 }`;
 
-const getHome = `
-{
-  page(handle: "home") {
+const getPage = `
+query ($handle: String!) {
+  page(handle: $handle) {
     bodySummary
     handle
     id
-
     data: metafield(namespace: "custom", key: "data") {
       value
       type
     }
-    data2: metafield(namespace: "custom", key: "something") {
-      value
-      type
-    }
-
   }
 }
 `;
@@ -100,7 +94,7 @@ const getHome = `
 const shopQueries = {
   getShop,
   getMenu,
-  getHome,
+  getPage,
   getPrivacyPolicy,
   getRefundPolicy,
   getShippingPolicy,

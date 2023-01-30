@@ -1,23 +1,25 @@
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Container from '../Container/Container';
+import CollectionCard from '../_scopes/collection/CollectionCard/CollectionCard';
 import styles from './BigMenu.module.scss';
 
-function BigMenu({ data, handleClose }) {
-  const renderItems = (items) =>
-    items.map((item) => (
-      <div className={styles.container} key={item.id}>
-        {item.items ? (
-          <div className={styles.nested}>
-            <h4 className={styles.title}>{item.title}</h4>
-            {renderItems(item.items)}
-          </div>
-        ) : (
-          <li key={item.id} className={styles.item}>
+function BigMenu({ data, handleClose, collections }) {
+  const renderItems = (items) => (
+    <ul>
+      {items.map((item) => (
+        <li key={item.id}>
+          {item.items ? (
+            <>
+              <h4 className={styles.title}>{item.title}</h4>
+              {renderItems(item.items)}
+            </>
+          ) : (
             <ActiveLink url={item.url}>{item.title}</ActiveLink>
-          </li>
-        )}
-      </div>
-    ));
+          )}
+        </li>
+      ))}
+    </ul>
+  );
 
   return (
     <div className={styles.bigMenu} role="button" tabIndex={0} onClick={handleClose} onKeyDown={handleClose}>
@@ -28,7 +30,17 @@ function BigMenu({ data, handleClose }) {
         onKeyDown={(e) => e.stopPropagation()}
       >
         <Container>
-          <div className={styles.content}>{renderItems(data)}</div>
+          <div className={styles.content}>
+            <div className={styles.navigation}>{renderItems(data)}</div>
+            <div className={styles.collections}>
+              {collections &&
+                collections?.map((collection) => (
+                  <li key={collection.title} className={styles.card}>
+                    <CollectionCard collection={collection} />
+                  </li>
+                ))}
+            </div>
+          </div>
         </Container>
       </div>
     </div>
