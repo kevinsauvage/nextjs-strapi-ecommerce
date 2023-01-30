@@ -1,19 +1,24 @@
 .card {
   overflow: hidden;
   display: flex;
-  min-height: 160px;
-  height: 160px;
   margin: var(--space-1) 0;
+  border-radius: $radius;
+  @include boxShadow(1);
+  @include themed {
+    border: 1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .image {
   position: relative;
   overflow: hidden;
-  max-width: 125px;
   width: 100%;
-  height: 100%;
+  max-width: 150px;
+
   img {
     border-radius: $radius;
+    width: 100%;
+    height: 100%;
   }
 }
 
@@ -22,6 +27,7 @@
   flex-direction: column;
   width: 100%;
   padding: 0 var(--space-0);
+  padding: var(--space-0);
 }
 
 .title {
@@ -48,6 +54,7 @@
 .remove {
   border: none;
   text-decoration: underline;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 }
 
 .bottom {

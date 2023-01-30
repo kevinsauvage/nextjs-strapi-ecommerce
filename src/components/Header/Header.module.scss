@@ -6,6 +6,7 @@
   position: relative;
   @include themed {
     background-color: t($background);
+    border-bottom: 1px solid rgba(t($onBackground), 0.1);
   }
 }
 

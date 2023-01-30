@@ -11,7 +11,6 @@
 .name {
   margin-right: 8px;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  text-transform: uppercase;
   font-weight: $fontWeightMedium;
 }
 

@@ -1,5 +1,5 @@
 $width: 60px;
-$padding: 3px;
+$padding: 2px;
 $innerSize: 24px;
 
 .toggleTheme {
@@ -36,7 +36,7 @@ $innerSize: 24px;
 }
 
 .moon {
-  right: calc(($padding * 2));
+  right: calc(($padding * 2) + 1px);
 
   path {
     @include themed {
@@ -47,7 +47,7 @@ $innerSize: 24px;
 }
 
 .sun {
-  left: calc(($padding * 2));
+  left: calc(($padding * 2) + 1px);
 
   path {
     @include themed {

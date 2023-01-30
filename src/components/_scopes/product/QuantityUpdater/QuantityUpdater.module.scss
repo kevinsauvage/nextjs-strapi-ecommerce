@@ -12,7 +12,7 @@ $boxDimension: 36px;
   border-radius: $radius;
 
   @include themed {
-    border: 1px solid t($onBackground);
+    border: 1px solid rgba(t($onBackground), 0.1);
   }
 }
 

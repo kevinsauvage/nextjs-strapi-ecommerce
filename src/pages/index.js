@@ -15,7 +15,7 @@ export default function Home({ bestSelling, newArrival, homeData }) {
       <Container>
         <Banner1 data={banner} />
         {categories && <CollectionsRow collections={categories} />}
-        <CollectionGrid collections={featuredCollections} />
+        {featuredCollections && <CollectionGrid collections={featuredCollections} />}
         <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
       </Container>
     </div>

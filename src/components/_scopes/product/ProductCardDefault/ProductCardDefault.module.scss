@@ -7,6 +7,9 @@
   cursor: pointer;
   @include boxShadow(1);
   border-radius: $radius;
+  @include themed {
+    border: 1px solid rgba(t($onBackground), 0.1);
+  }
 
   &:hover,
   &:focus,
@@ -25,7 +28,9 @@
   position: relative;
   flex-direction: column;
   z-index: 999;
-
+  @include themed {
+    border-top: 1px solid rgba(t($onBackground), 0.1);
+  }
   @include themed {
     background-color: t($background);
   }

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import SelectedOptions from '@/components/_scopes/product/SelectedOptions/SelectedOptions';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
@@ -18,11 +18,11 @@ export default function ProductCheckoutCard({ lineItem }) {
       <div className={styles.image}>
         <Image
           src={image?.small}
-          layout="fill"
-          objectFit="cover"
           blurDataURL={image?.blurDataURL}
           placeholder="blur"
           alt={image?.alt}
+          width="200"
+          height="200"
         />
       </div>
       <div className={styles.body}>
