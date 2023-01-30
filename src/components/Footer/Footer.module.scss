@@ -20,7 +20,7 @@
 }
 
 .title {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
   text-transform: capitalize;
   @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
   display: block;

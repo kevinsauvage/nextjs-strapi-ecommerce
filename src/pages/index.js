@@ -4,11 +4,12 @@ import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/Colle
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
 import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
 import { getHomePage } from '@/lib/shopify/shop/shopApiCall';
-import CollectionsRow from '@/components/_scopes/collection/CollectionsRow/CollectionsRow';
+import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
+import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
   console.log('🚀 ~ file: index.js:12 ~ Home ~ homeData', homeData);
-  const { banner, categories, featuredCollections } = homeData || {};
+  const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
     <div>
@@ -17,6 +18,7 @@ export default function Home({ bestSelling, newArrival, homeData }) {
         {categories && <CollectionsRow collections={categories} />}
         {featuredCollections && <CollectionGrid collections={featuredCollections} />}
         <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
+        {bigCardCollections && <CollectionBigBanner collections={bigCardCollections} />}
       </Container>
     </div>
   );
