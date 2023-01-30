@@ -65,9 +65,16 @@
 }
 
 .link {
-  font-weight: $fontWeightMedium;
-  text-transform: uppercase;
+  background-color: $color-onBackground;
   width: fit-content;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
-  @include underline($color-onBackground);
+  border-radius: $radius;
+  padding: var(--space-0) var(--space-1);
+  display: block;
+  color: $color-background;
+
+  span {
+    font-weight: $fontWeightNormal;
+    width: fit-content;
+    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  }
 }

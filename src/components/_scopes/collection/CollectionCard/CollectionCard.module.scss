@@ -41,8 +41,8 @@
   height: fit-content;
   width: fit-content;
   padding: var(--space-1);
-  margin-bottom: var(--space-1);
-  margin-left: var(--space-1);
+  margin-bottom: var(--space-0);
+  margin-left: var(--space-0);
 }
 
 .title {
@@ -57,13 +57,19 @@
 
 .subtitle {
   margin-bottom: var(--space-1);
+  max-width: 200px;
 }
+
 .link {
-  a {
-    font-weight: $fontWeightSemiBold;
-    text-transform: uppercase;
+  background-color: $color-onBackground;
+  width: fit-content;
+  border-radius: $radius;
+  padding: var(--space-0) var(--space-1);
+  display: block;
+
+  span {
+    font-weight: $fontWeightNormal;
     width: fit-content;
     @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-    @include underline($color-background);
   }
 }

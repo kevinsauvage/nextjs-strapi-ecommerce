@@ -30,45 +30,7 @@ query products($query: String) {
   products(first: 9, query: $query) {
     edges {
       node {
-        handle
-        id
-        title
-        availableForSale
-        descriptionHtml
-        description
-        images(first: 2) {
-          edges {
-            node {
-              src
-              altText
-              sm:  url(transform: { maxHeight: 325, maxWidth: 200, crop: CENTER, preferredContentType: WEBP })
-              blurDataURL: url(transform: {maxHeight: 7, maxWidth: 5, crop: CENTER})
-              width
-              height
-            }
-          }
-        }
-        priceRange {
-          maxVariantPrice {
-            amount
-            currencyCode
-          }
-          minVariantPrice {
-            amount
-            currencyCode
-          }
-        }
-        productType
-        tags
-        title
-        totalInventory
-        collections(first: 1) {
-          edges {
-            node {
-              handle
-            }
-          }
-        } 
+        ${productFragment}
       }
     }
   }

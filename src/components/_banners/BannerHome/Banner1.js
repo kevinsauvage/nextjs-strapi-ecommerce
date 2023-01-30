@@ -17,7 +17,7 @@ export default function BannerHome({ data }) {
             <h1 className={`${styles.title} big`}>{title}</h1>
             <p className={styles.subtitle}>{description}</p>
             <Link href={`${config.routes.collection}/${handle}`} className={styles.link}>
-              Shop now
+              <span>Shop now</span>
             </Link>
           </div>
         </div>

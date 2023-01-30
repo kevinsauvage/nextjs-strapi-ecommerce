@@ -27,6 +27,10 @@
   position: relative;
   height: 270px;
   object-fit: cover;
+
+  img {
+    border-radius: $radius;
+  }
 }
 
 .details {

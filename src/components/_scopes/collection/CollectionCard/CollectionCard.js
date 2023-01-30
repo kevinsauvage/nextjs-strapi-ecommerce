@@ -10,9 +10,9 @@ export default function CollectionCard({ collection }) {
       <div className={style.content}>
         <h3 className={style.title}>{title} COLLECTION</h3>
         {subtitle && <p className={style.subtitle}>{subtitle}</p>}
-        <div className={style.link}>
-          <Link href={`${config.routes.collection}/${handle}`}>Shop now</Link>
-        </div>
+        <Link className={style.link} href={`${config.routes.collection}/${handle}`}>
+          <span>Shop now</span>
+        </Link>
       </div>
     </div>
   );

@@ -198,19 +198,12 @@ $breakpoints: (
     content: '';
     position: absolute;
     left: 0px;
-    bottom: 0px;
-    height: 2px;
+    bottom: 1px;
+    height: 1px;
     max-width: 40px;
     background-color: $color;
     border-radius: $radius;
-    animation: border 0.3s ease-in-out forwards;
-  }
-
-  &:hover {
-    &::after {
-      width: 100%;
-      max-width: 1000px;
-    }
+    width: 60%;
   }
 }
 
@@ -225,16 +218,5 @@ $breakpoints: (
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
   } @else if $level ==5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
-  }
-}
-
-@keyframes border {
-  0% {
-    opacity: 0;
-    width: 0%;
-  }
-  100% {
-    opacity: 1;
-    width: 100%;
   }
 }
