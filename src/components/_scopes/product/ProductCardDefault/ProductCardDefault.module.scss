@@ -7,6 +7,7 @@
   cursor: pointer;
   @include boxShadow(1);
   border-radius: $radius;
+
   @include themed {
     border: 1px solid rgba(t($onBackground), 0.1);
   }
@@ -31,16 +32,13 @@
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);
   }
-  @include themed {
-    background-color: t($background);
-  }
 }
 
 .contentInner {
   padding: var(--space-0);
 
   @include themed {
-    background-color: rgba(t($onBackground), 0.06);
+    background-color: rgba(t($background), 1);
   }
 }
 
@@ -87,10 +85,6 @@
   width: 100%;
   height: 100%;
   padding: var(--space-0);
-
-  @include themed {
-    background-color: rgba(t($onBackground), 0.06);
-  }
 }
 
 .discount {
