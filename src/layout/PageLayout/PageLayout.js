@@ -10,7 +10,7 @@ export default function PageLayout({ children, title, description }) {
   return (
     <div className={`${styles.page}`}>
       <Head>
-        <title>{siteTitle}</title>
+        <title key="title">{siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Head>
       <Container>

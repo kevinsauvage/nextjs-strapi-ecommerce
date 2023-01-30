@@ -5,7 +5,9 @@ function CollectionBigBanner({ collections }) {
   return (
     <ul className={styles.CollectionBigBanner}>
       {collections.map((collection) => (
-        <CollectionCard key={collection.handle} collection={collection} />
+        <li key={collection.handle} className={styles.item}>
+          <CollectionCard collection={collection} />
+        </li>
       ))}
     </ul>
   );
