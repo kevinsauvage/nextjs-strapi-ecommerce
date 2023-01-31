@@ -1,7 +1,6 @@
 import { useRef, useState } from 'react';
 import { VscAdd, VscRemove } from 'react-icons/vsc';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-
 import styles from './QuantityUpdater.module.scss';
 
 export default function QuantityUpdater({
@@ -30,11 +29,11 @@ export default function QuantityUpdater({
 
   const handleChangeInput = (e) => {
     const num = e.target.value;
-    console.log('change');
     if (Number(num) > quantityAvailable) {
+      setQuantity(quantityAvailable);
       return showToast.error(`There is Only ${quantityAvailable} variant available`);
     }
-    if (Number(num) !== Number(originalQuantity)) return setQuantity(num);
+    if (Number(num) <= Number(originalQuantity)) return setQuantity(num);
     return false;
   };
 
@@ -67,7 +66,7 @@ export default function QuantityUpdater({
           type="button"
           onClick={addOne}
           className={styles.btnQuantity}
-          disabled={quantity > quantityAvailable}
+          disabled={quantity >= quantityAvailable}
         >
           <VscAdd />
         </button>

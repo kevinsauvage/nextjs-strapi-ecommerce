@@ -47,6 +47,7 @@ export default function CartItem({
         <QuantityUpdater
           showTitle={false}
           originalQuantity={quantity}
+          quantityAvailable={variant?.quantityAvailable}
           onChange={(newQuantity) =>
             handleChange({
               id: lineId,
