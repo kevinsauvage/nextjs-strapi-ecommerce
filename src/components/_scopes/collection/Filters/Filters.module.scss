@@ -17,9 +17,9 @@
 }
 
 .button {
-  padding: var(--space-0);
-  min-height: 40px;
-  min-width: 40px;
+  border-radius: $radius;
+  min-height: 36px;
+  min-width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
