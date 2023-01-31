@@ -9,7 +9,6 @@ import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import dynamic from 'next/dynamic';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import BigMenu from '@/components/BigMenu/BigMenu';
-
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {
@@ -56,8 +55,6 @@ function RootLayout({ children }) {
 
     fetchData();
   }, []);
-
-  console.log('🚀 ~ file: RootLayout.js:40 ~ fetchData ~ bigMenu', bigMenu);
 
   const loader = <PageLoader />;
 

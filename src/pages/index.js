@@ -8,7 +8,6 @@ import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/C
 import { getPage } from '@/lib/shopify/shop/shopApiCall';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
-  console.log('🚀 ~ file: index.js:12 ~ Home ~ homeData', homeData);
   const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
