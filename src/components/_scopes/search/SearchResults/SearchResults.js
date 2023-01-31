@@ -2,8 +2,6 @@ import styles from './SearchResults.module.scss';
 import ProductCardDefault from '../../product/ProductCardDefault/ProductCardDefault';
 
 function SearchResults({ results }) {
-  console.log('🚀 ~ file: SearchResults.js:8 ~ SearchResults ~ results', results);
-
   return (
     <div>
       <div className={styles.searchResult}>

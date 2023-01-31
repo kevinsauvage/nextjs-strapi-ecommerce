@@ -1,13 +1,13 @@
 import { getShippingPolicy } from '@/lib/shopify/shop/shopApiCall';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import SectionTitle from '@/components/SectionTitle/SectionTitle';
 import styles from './shipping.module.scss';
 
 function ShippingPage({ shippingPolicy }) {
   return (
     <PageLayout title="Our shipping policies">
       <div className={styles.privacy}>
-        <SectionTitle second="Shipping policy" />
+        <h1>Shipping policy</h1>
+
         <div className={styles.content} dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
       </div>
     </PageLayout>
