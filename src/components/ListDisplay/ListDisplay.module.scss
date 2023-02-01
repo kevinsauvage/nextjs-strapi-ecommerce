@@ -6,9 +6,12 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: var(--space-1);
-  flex-direction: column;
-  align-content: flex-end;
-  align-items: flex-end;
+  justify-items: center;
+
+  @include respond('mobile') {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--space-0);
+  }
 }
 
 .row {

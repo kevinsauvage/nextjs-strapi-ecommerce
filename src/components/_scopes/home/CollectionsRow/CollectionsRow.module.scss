@@ -17,12 +17,15 @@
 
   @include respond('mobile') {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-0);
   }
 }
 
 .card {
   position: relative;
   width: 100%;
+  height: fit-content;
+  margin-bottom: var(--space-1);
 
   b {
     @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
@@ -35,5 +38,6 @@
     height: 100%;
     border-radius: $radius;
     @include boxShadow(1);
+    object-fit: cover;
   }
 }

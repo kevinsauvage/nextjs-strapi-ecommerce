@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
+import ListDisplay from '@/components/ListDisplay/ListDisplay';
 import ProductCardDefault from '../../product/ProductCardDefault/ProductCardDefault';
 import styles from './ProductsDisplay.module.scss';
 
@@ -28,10 +29,10 @@ function ProductsDisplay({ bestSelling, newArrival }) {
             ))}
         </ul>
       </div>
-      <ul className={styles.list}>
+      <ListDisplay layout="grid">
         {Array.isArray(products[index]) &&
           products[index].map((product) => <ProductCardDefault product={product} key={product.id} />)}
-      </ul>
+      </ListDisplay>
     </div>
   );
 }
