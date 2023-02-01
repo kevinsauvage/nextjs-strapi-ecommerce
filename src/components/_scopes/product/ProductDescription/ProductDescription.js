@@ -39,7 +39,7 @@ export default function ProductDescription({
           extraClass={styles.btn}
           type="button"
           primary
-          disabled={!availableForSale || quantityAvailable <= quantity}
+          disabled={!availableForSale || quantityAvailable < quantity}
           onClick={handleAddToCart}
         >
           {availableForSale ? `ADD TO CART (${priceV2?.currencyCode} ${totalPrice})` : 'SOLD OUT'}
