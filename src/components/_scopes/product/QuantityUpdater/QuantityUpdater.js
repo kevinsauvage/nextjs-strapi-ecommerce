@@ -17,8 +17,8 @@ export default function QuantityUpdater({
   const { asPath } = useRouter();
 
   useEffect(() => {
-    setQuantity(1);
-  }, [asPath]);
+    setQuantity(originalQuantity);
+  }, [asPath, originalQuantity]);
 
   console.log('🚀 ~ file: QuantityUpdater.js:23 ~ asPath', asPath);
 
