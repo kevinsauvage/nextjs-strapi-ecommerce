@@ -30,27 +30,21 @@ export default function ProductDescription({
       />
       <div className={styles.wrapper}>
         <QuantityUpdater
+          showTitle={false}
           originalQuantity={1}
           onChange={handleChangeInput}
           quantityAvailable={quantityAvailable}
         />
-        <div>
-          <b className={styles.totalPriceTitle}>TOTAL PRICE</b>
-          <p className={styles.totalPrice}>
-            <strong>
-              {totalPrice} {priceV2?.currencyCode}
-            </strong>
-          </p>
-        </div>
+        <Button
+          extraClass={styles.btn}
+          type="button"
+          primary
+          disabled={!availableForSale || quantityAvailable <= quantity}
+          onClick={handleAddToCart}
+        >
+          {availableForSale ? `ADD TO CART (${priceV2?.currencyCode} ${totalPrice})` : 'SOLD OUT'}
+        </Button>
       </div>
-      <Button
-        extraClass={styles.btn}
-        type="button"
-        text={availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
-        primary
-        disabled={!availableForSale || quantityAvailable <= quantity}
-        onClick={handleAddToCart}
-      />
     </div>
   );
 }

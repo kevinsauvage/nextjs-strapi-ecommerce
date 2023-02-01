@@ -5,6 +5,11 @@
   grid-auto-rows: 260px;
   gap: var(--space-1);
   margin-bottom: var(--space-6);
+
+  @include respond('tablet') {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .item {

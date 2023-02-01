@@ -15,6 +15,7 @@ $boxDimension: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: $radius;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   @include themed {

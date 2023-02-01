@@ -33,15 +33,6 @@
 
 .wrapper {
   display: flex;
-  gap: var(--space-3);
+  gap: var(--space-1);
   margin: var(--space-2) 0;
-}
-
-.totalPriceTitle {
-  margin-bottom: var(--space-1);
-  display: block;
-}
-
-.totalPrice {
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
 }

@@ -16,7 +16,7 @@
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
   gap: var(--space-1);
   flex-direction: column;
   align-content: flex-end;

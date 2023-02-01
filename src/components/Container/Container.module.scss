@@ -8,4 +8,8 @@
   justify-content: inherit;
   align-items: inherit;
   flex-direction: inherit;
+
+  @include respond('tablet') {
+    padding: 0 1rem;
+  }
 }

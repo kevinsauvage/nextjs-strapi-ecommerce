@@ -7,7 +7,7 @@ function Footer({ menuFooter, shopInfo }) {
     <>
       <footer className={styles.footer}>
         <Container extraClass={styles.container}>
-          <div>
+          <div className={styles.about}>
             <b className={styles.title}>About</b>
             <p className={styles.navItem}>{shopInfo?.description}</p>
           </div>

@@ -11,7 +11,8 @@ $boxDimension: 36px;
   align-items: center;
   min-height: $boxDimension;
   border-radius: $radius;
-  height: 0%;
+  height: 100%;
+  width: 100%;
 
   @include themed {
     border: 1px solid rgba(t($onBackground), 0.1);
@@ -20,7 +21,6 @@ $boxDimension: 36px;
 
 .input {
   display: block;
-
   text-align: center;
   height: 100%;
   width: $boxDimension;

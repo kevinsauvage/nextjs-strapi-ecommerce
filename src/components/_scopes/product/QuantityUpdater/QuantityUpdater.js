@@ -1,6 +1,7 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { VscAdd, VscRemove } from 'react-icons/vsc';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { useRouter } from 'next/router';
 import styles from './QuantityUpdater.module.scss';
 
 export default function QuantityUpdater({
@@ -13,6 +14,13 @@ export default function QuantityUpdater({
   const [quantity, setQuantity] = useState(originalQuantity);
   const input = useRef(null);
   const { showToast } = useToastContext();
+  const { asPath } = useRouter();
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [asPath]);
+
+  console.log('🚀 ~ file: QuantityUpdater.js:23 ~ asPath', asPath);
 
   const addOne = () => {
     if (quantity >= quantityAvailable) return;
