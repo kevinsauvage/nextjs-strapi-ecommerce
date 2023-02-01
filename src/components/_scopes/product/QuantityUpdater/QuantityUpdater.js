@@ -20,8 +20,6 @@ export default function QuantityUpdater({
     setQuantity(originalQuantity);
   }, [asPath, originalQuantity]);
 
-  console.log('🚀 ~ file: QuantityUpdater.js:23 ~ asPath', asPath);
-
   const addOne = () => {
     if (quantity >= quantityAvailable) return;
     onChange(Number(quantity + 1));

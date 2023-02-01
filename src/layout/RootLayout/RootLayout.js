@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useCallback, useEffect, useState } from 'react';
-import { getMenuFooter, getMenuHeader, getShop, getPage } from '@/lib/shopify/shop/shopApiCall';
+import { getMenu, getShop, getPage } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Cart from '@/components/_slides/Cart/Cart';
 import Header from '@/components/Header/Header';
@@ -36,7 +36,7 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [header] = await Promise.all([getMenuHeader()]);
+      const [header] = await Promise.all([getMenu('main-menu')]);
 
       setMenuHeader(header);
     };
@@ -46,7 +46,7 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [footer, shop, menuCross] = await Promise.all([getMenuFooter(), getShop(), getPage('bigMenu')]);
+      const [footer, shop, menuCross] = await Promise.all([getMenu('footer'), getShop(), getPage('bigMenu')]);
 
       setBigMenu(menuCross);
       setMenuFooter(footer);

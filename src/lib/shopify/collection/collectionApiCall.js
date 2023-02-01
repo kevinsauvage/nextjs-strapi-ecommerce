@@ -14,13 +14,7 @@ export const filterCollectionForward = async (
   try {
     const res = await shopifyStorefrontCall(
       queriesCollection.filterCollectionForward,
-      {
-        handle,
-        first,
-        filters,
-        sort,
-        after,
-      },
+      { handle, first, filters, sort, after },
       delegateToken,
       ip
     );
@@ -31,11 +25,7 @@ export const filterCollectionForward = async (
       const products = cleanGraphQLResponse(collection?.products);
       const pageInfo = collection?.products?.pageInfo;
       const collectionFilters = collection?.products?.filters;
-      return {
-        collection: { ...collection, products },
-        pageInfo,
-        collectionFilters,
-      };
+      return { collection: { ...collection, products }, pageInfo, collectionFilters };
     }
     return null;
   } catch (error) {
@@ -46,7 +36,6 @@ export const filterCollectionForward = async (
 export const getCollections = async (first) => {
   try {
     const res = await shopifyStorefrontCall(queriesCollection.getCollections, { first });
-
     return cleanGraphQLResponse(res?.data?.collections);
   } catch (error) {
     return console.error(error);
@@ -56,22 +45,7 @@ export const getCollections = async (first) => {
 export const getSitemap = async (first) => {
   try {
     const res = await shopifyStorefrontCall(queriesCollection.getSitemap, { first });
-
     return cleanGraphQLResponse(res?.data?.collections);
-  } catch (error) {
-    return console.error(error);
-  }
-};
-
-export const getCollectionFilters = async (handle, delegateToken, ip) => {
-  try {
-    const res = await shopifyStorefrontCall(
-      queriesCollection.getCollectionFilters,
-      { handle },
-      delegateToken,
-      ip
-    );
-    return res?.data?.collection?.products?.filters;
   } catch (error) {
     return console.error(error);
   }

@@ -46,28 +46,9 @@ export const getTermsOfService = async () => {
   }
 };
 
-export const getMenuHeader = async () => {
+export const getMenu = async (handle) => {
   try {
-    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle: 'main-menu' });
-    return res?.data?.menu?.items ?? [];
-  } catch (error) {
-    return console.error(error);
-  }
-};
-
-export const getMenuFooter = async () => {
-  try {
-    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle: 'footer' });
-    return res?.data?.menu?.items ?? [];
-  } catch (error) {
-    return console.error(error);
-  }
-};
-
-export const getMenuCollection = async () => {
-  try {
-    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle: 'collections-menu' });
-
+    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle });
     return res?.data?.menu?.items ?? [];
   } catch (error) {
     return console.error(error);

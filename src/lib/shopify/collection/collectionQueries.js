@@ -56,22 +56,6 @@ query ($first: Int) {
   }
 }`;
 
-const getCollectionFilters = `
-query Search($handle: String!) {
-  collection(handle: $handle) {
-    products(first: 0) {
-      filters {
-        ${filterFragment}
-      }
-    }
-  }
-}`;
-
-const queriesCollection = {
-  filterCollectionForward,
-  getCollections,
-  getCollectionFilters,
-  getSitemap,
-};
+const queriesCollection = { filterCollectionForward, getCollections, getSitemap };
 
 export default queriesCollection;

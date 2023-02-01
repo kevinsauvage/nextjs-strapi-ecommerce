@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
-import { getMenuCollection } from '@/lib/shopify/shop/shopApiCall';
+import { getMenu } from '@/lib/shopify/shop/shopApiCall';
 import styles from './CollectionNav.module.scss';
 
 function CollectionNav() {
   const [menu, setMenu] = useState([]);
 
   useEffect(() => {
-    const getMenu = async () => {
-      const res = await getMenuCollection();
+    const fetchMenu = async () => {
+      const res = await getMenu('collections-menu');
       setMenu(res);
     };
 
-    getMenu();
+    fetchMenu();
   }, []);
 
   return (

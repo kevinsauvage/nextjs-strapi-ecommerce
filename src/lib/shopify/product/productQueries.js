@@ -36,11 +36,6 @@ query products($query: String) {
   }
 }`;
 
-const productQueries = {
-  queryProductRecommendations,
-  queryProduct,
-  queryProducts,
-  searchProducts,
-};
+const productQueries = { queryProductRecommendations, queryProduct, queryProducts, searchProducts };
 
 export default productQueries;
