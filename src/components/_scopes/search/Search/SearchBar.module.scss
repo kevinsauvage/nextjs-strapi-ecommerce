@@ -42,7 +42,15 @@
   border-radius: $radius;
 
   @include themed() {
-    background-color: t($background);
+    background-color: rgba(t($onBackground), 0.04);
+    color: rgba(t($onBackground), 0.9);
+
+    &::placeholder {
+      color: rgba(t($onBackground), 0.6);
+    }
+    @include placeholder {
+      color: rgba(t($onBackground), 0.3);
+    }
   }
 
   &:focus {

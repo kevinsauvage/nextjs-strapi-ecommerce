@@ -54,28 +54,6 @@ $breakpoints: (
   }
 }
 
-@mixin input-placeholder {
-  &.placeholder {
-    @content;
-  }
-
-  &:-moz-placeholder {
-    @content;
-  }
-
-  &::-moz-placeholder {
-    @content;
-  }
-
-  &:-ms-input-placeholder {
-    @content;
-  }
-
-  &::-webkit-input-placeholder {
-    @content;
-  }
-}
-
 @mixin flex-column {
   display: flex;
   flex-direction: column;
@@ -218,5 +196,20 @@ $breakpoints: (
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
   } @else if $level ==5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
   }
 }

@@ -31,6 +31,7 @@
   z-index: 999;
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);
+    background-color: rgba(t($background), 1);
   }
 }
 
@@ -38,7 +39,7 @@
   padding: var(--space-0);
 
   @include themed {
-    background-color: rgba(t($background), 1);
+    background-color: rgba(t($onBackground), 0.03);
   }
 }
 

@@ -5,7 +5,7 @@
   border-radius: $radius;
   @include boxShadow(1);
   @include themed {
-    border: 1px solid rgba(t($onBackground), 0.1);
+    background-color: rgba(t($onBackground), 0.03);
   }
 }
 

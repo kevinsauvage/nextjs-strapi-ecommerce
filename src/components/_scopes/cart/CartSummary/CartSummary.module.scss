@@ -9,7 +9,8 @@
   top: var(--space-2);
 
   @include themed {
-    border: 0.01px solid rgba(t($onBackground), 0.3);
+    background-color: rgba(t($onBackground), 0.03);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
   }
 }
 

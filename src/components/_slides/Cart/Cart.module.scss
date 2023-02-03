@@ -2,9 +2,22 @@
   width: 100%;
   margin-top: 10px;
 }
+.buttons {
+  padding: var(--space-1);
+}
+.footer {
+  @include themed {
+    border-top: 0.1px solid rgba(t($onBackground), 0.2);
+  }
+}
 
 .subtotal {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: var(--space-0) var(--space-1);
+
+  @include themed {
+    border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
+  }
 }

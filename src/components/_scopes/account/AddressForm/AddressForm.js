@@ -29,27 +29,81 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
         <div className={styles.info}>
           <h4 className={styles.title}>Contact Information</h4>
           <Row>
-            <Input input="true" type="text" id="firstName" name="firstName" label="First Name" required />
-            <Input input="true" type="text" id="lastName" name="lastName" label="Last Name" required />
+            <Input
+              placeholder="First name"
+              input="true"
+              type="text"
+              id="firstName"
+              name="firstName"
+              label="First Name"
+              required
+            />
+            <Input
+              placeholder="Last name"
+              input="true"
+              type="text"
+              id="lastName"
+              name="lastName"
+              label="Last Name"
+              required
+            />
           </Row>
           <Row>
-            <Input input="true" type="text" id="company" name="company" label="Company" />
-            <Input input="true" type="text" id="phone" name="phone" label="Phone" />
+            <Input
+              placeholder="Company"
+              input="true"
+              type="text"
+              id="company"
+              name="company"
+              label="Company"
+            />
+            <Input placeholder="Phone" input="true" type="text" id="phone" name="phone" label="Phone" />
           </Row>
         </div>
         <div>
           <h4 className={styles.title}>Address</h4>
           <Row>
-            <Input input="true" type="text" id="address1" name="address1" label="Address1" required />
-            <Input input="true" type="text" id="address2" name="address2" label="Address2" />
+            <Input
+              placeholder="Address 1"
+              input="true"
+              type="text"
+              id="address1"
+              name="address1"
+              label="Address1"
+              required
+            />
+            <Input
+              placeholder="Address 2"
+              input="true"
+              type="text"
+              id="address2"
+              name="address2"
+              label="Address2"
+            />
           </Row>
           <Row>
-            <Input input="true" type="text" id="city" name="city" label="City" required />
-            <Input input="true" type="text" id="province" name="province" label="Province" required />
+            <Input placeholder="City" input="true" type="text" id="city" name="city" label="City" required />
+            <Input
+              placeholder="Province"
+              input="true"
+              type="text"
+              id="province"
+              name="province"
+              label="Province"
+              required
+            />
           </Row>
           <Row>
-            <Input input="true" type="text" id="country" name="country" label="Country" required />
-            <Input input="true" type="text" id="zip" name="zip" label="Zip" required />
+            <Input
+              placeholder="Country"
+              input="true"
+              type="text"
+              id="country"
+              name="country"
+              label="Country"
+              required
+            />
+            <Input placeholder="Zip" input="true" type="text" id="zip" name="zip" label="Zip" required />
           </Row>
         </div>
       </div>

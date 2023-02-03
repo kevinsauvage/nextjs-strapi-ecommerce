@@ -5,7 +5,7 @@
   border-radius: $radius;
 
   @include themed {
-    background-color: lighten(t($background), 2%);
+    background-color: t($background);
     border: 0.1px solid rgba(t($onBackground), 0.1);
   }
 }

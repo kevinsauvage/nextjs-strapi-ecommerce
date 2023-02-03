@@ -7,7 +7,7 @@
   width: 100%;
 
   @include themed {
-    background-color: lighten(t($background), 2%);
+    background-color: rgba(t($onBackground), 0.03);
     border: 0.1px solid rgba(t($onBackground), 0.1);
   }
 }
