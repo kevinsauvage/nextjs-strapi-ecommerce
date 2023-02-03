@@ -20,7 +20,6 @@
   @include themed {
     &:focus-visible {
       outline-offset: 0.125rem;
-
       outline: 0.1rem solid rgba(t($onBackground), 0.3);
     }
     background-color: rgba(t($onBackground), 0.03);
