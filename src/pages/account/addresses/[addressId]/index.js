@@ -8,6 +8,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -16,6 +17,7 @@ function AddressUpdate() {
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
   const { showToast } = useToastContext();
+  const { user } = useUserContext();
 
   useEffect(() => {
     async function fetchAddress() {
@@ -49,12 +51,15 @@ function AddressUpdate() {
         return showToast.error('Missing field');
       }
       toggleLoading(true);
-      const { customerAddress, customerUserErrors } =
-        await nextApiCall.updateAddress({ address: formData }, addressId);
+      const { customerAddress, customerUserErrors } = await nextApiCall.updateAddress(
+        { address: formData },
+        addressId
+      );
 
       if (customerAddress) {
         setAddress(customerAddress);
         showToast.success('Address updated successfully');
+        if (user.defaultAddress.id === addressId) return push(config.routes.account);
         return push(config.routes.addresses);
       }
       if (customerUserErrors) {
@@ -72,11 +77,7 @@ function AddressUpdate() {
     <PageLayout title="Update Address">
       <AccountLayout loading={isLoading} title="Update Address">
         {address && (
-          <AddressForm
-            buttonText="Update Address"
-            initialValues={address}
-            onSubmit={handleUpdateAddress}
-          />
+          <AddressForm buttonText="Update Address" initialValues={address} onSubmit={handleUpdateAddress} />
         )}
       </AccountLayout>
     </PageLayout>

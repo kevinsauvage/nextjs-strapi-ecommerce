@@ -51,14 +51,14 @@ function ToggleTheme() {
           stroke="white"
           strokeWidth="11.5421"
           strokeLinecap="round"
-          stroke-linejoin="round"
+          strokeLinejoin="round"
         />
         <path
           d="M139.888 139.888L138.887 138.887M138.887 31.0072L139.888 30.0069L138.887 31.0072ZM30.0069 139.888L31.0072 138.887L30.0069 139.888ZM84.9473 8.61558V8V8.61558ZM84.9473 161.895V161.279V161.895ZM8.61558 84.9473H8H8.61558ZM161.895 84.9473H161.279H161.895ZM31.0072 31.0072L30.0069 30.0069L31.0072 31.0072Z"
           stroke="white"
           strokeWidth="15.3895"
           strokeLinecap="round"
-          stroke-linejoin="round"
+          strokeLinejoin="round"
         />
       </svg>
       <svg
@@ -74,7 +74,7 @@ function ToggleTheme() {
           stroke="white"
           strokeWidth="11.5421"
           strokeLinecap="round"
-          stroke-linejoin="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

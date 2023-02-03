@@ -2,17 +2,21 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 400px;
+  padding: var(--space-2);
+  border-radius: $radius;
+  width: 100%;
+
+  @include themed {
+    background-color: lighten(t($background), 2%);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.name {
-  text-transform: capitalize;
+  margin-bottom: var(--space-1);
 }
 
 .buttons {

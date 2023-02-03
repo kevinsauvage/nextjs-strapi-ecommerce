@@ -25,9 +25,6 @@
   }
 }
 
-.row {
-}
-
 .tData {
   text-align: start;
   vertical-align: middle;
@@ -35,13 +32,7 @@
   font-weight: $fontWeightNormal;
   min-width: 100px;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-  height: 100px;
-
-  &:last-of-type {
-    text-align: right;
-    margin-left: 100%;
-    width: 10%;
-  }
+  height: 80px;
 
   @include themed {
     border-bottom: 0.01px solid rgba(t($onBackground), 0.2);

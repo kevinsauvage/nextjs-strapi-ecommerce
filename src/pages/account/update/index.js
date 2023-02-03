@@ -11,6 +11,8 @@ import Row from '@/components/_scopes/forms/Row/Row';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import config from '@/config/index';
+import { useRouter } from 'next/router';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -19,6 +21,7 @@ function OrderDetail() {
   const { toggleLoading } = useGlobalContext();
   const { email, firstName, lastName, password, phone, id } = user || {};
   const { showToast } = useToastContext();
+  const { push } = useRouter();
 
   useEffect(() => {
     if (id) setIsLoading(false);
@@ -39,7 +42,8 @@ function OrderDetail() {
 
       if (customer) {
         showToast.success('Customer information updated successfully');
-        return dispatch({ type: actions.ADD_USER, payload: customer });
+        dispatch({ type: actions.ADD_USER, payload: customer });
+        return push(config.routes.account);
       }
       return showToast.error('Something went wrong');
     } catch (err) {

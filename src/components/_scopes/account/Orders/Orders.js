@@ -1,7 +1,8 @@
-import Button from '@/components/Button/Button';
+import Link from 'next/link';
 import config from '@/config/index';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import Table, { Body, Head, Row, TData, THead } from '../../table/Table/Table';
+import styles from './Orders.module.scss';
 
 export default function Orders({ orders }) {
   const { loading } = useUserContext();
@@ -44,9 +45,12 @@ export default function Orders({ orders }) {
               <TData>{order.financialStatus}</TData>
               <TData>{`${order.totalPrice?.amount} ${order.totalPrice?.currencyCode}`}</TData>
               <TData>
-                <Button contrast href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}>
+                <Link
+                  className={styles.link}
+                  href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}
+                >
                   View Order
-                </Button>
+                </Link>
               </TData>
             </Row>
           ))}

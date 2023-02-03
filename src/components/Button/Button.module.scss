@@ -12,6 +12,8 @@
   text-transform: uppercase;
   font-weight: $fontWeightSemiBold;
   border-radius: $radius;
+  border: 2px solid transparent;
+
   @include boxShadow(2);
 }
 

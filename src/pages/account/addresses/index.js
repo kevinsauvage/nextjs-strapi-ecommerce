@@ -5,10 +5,11 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Section from '@/components/_scopes/account/section/Section';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import Button from '@/components/Button/Button';
+import config from '@/config/index';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -78,28 +79,26 @@ function Addresses() {
   return (
     <PageLayout title="Addresses">
       <AccountLayout loading={isLoading} title="Addresses">
-        <Section title="Default Address">
-          <Address address={user?.defaultAddress} isDefaultAddress />
-        </Section>
-        <Section title="Other Addresses">
-          {Array.isArray(addresses) && addresses.filter((address) => !isDefault(address)).length > 0 ? (
-            <div className={styles.list}>
-              {addresses
-                .filter((address) => !isDefault(address))
-                .map((item, i) => (
-                  <Address
-                    key={item.id}
-                    title={`Address ${i + 1}`}
-                    handleSetAsDefault={handleSetAsDefault}
-                    address={item}
-                    handleDelete={() => handleDelete(item.id)}
-                  />
-                ))}
-            </div>
-          ) : (
-            <p className={styles.noAddresses}>There is no addresses to show</p>
-          )}
-        </Section>
+        {Array.isArray(addresses) && addresses.filter((address) => !isDefault(address)).length > 0 ? (
+          <div className={styles.list}>
+            {addresses
+              .filter((address) => !isDefault(address))
+              .map((item, i) => (
+                <Address
+                  key={item.id}
+                  title={`Address ${i + 1}`}
+                  handleSetAsDefault={handleSetAsDefault}
+                  address={item}
+                  handleDelete={() => handleDelete(item.id)}
+                />
+              ))}
+          </div>
+        ) : (
+          <p className={styles.noAddresses}>There is no addresses to show</p>
+        )}
+        <Button extraClass={styles.btn} contrast href={config.routes.createAddress}>
+          Add new address
+        </Button>
       </AccountLayout>
     </PageLayout>
   );

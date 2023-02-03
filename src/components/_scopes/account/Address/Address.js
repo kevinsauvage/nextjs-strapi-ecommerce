@@ -16,7 +16,7 @@ function Address({
   return (
     <div className={style.address}>
       <div className={style.header}>
-        <h5>{title}</h5>
+        <h5 className={style.title}>{title}</h5>
         {displayButton ? (
           <div className={style.buttons}>
             <Link className={style.button} href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}>

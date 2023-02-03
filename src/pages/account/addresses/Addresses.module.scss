@@ -3,3 +3,9 @@
   grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: var(--space-4);
 }
+
+.btn {
+  width: fit-content;
+  margin: var(--space-3) auto;
+  margin-bottom: 0;
+}

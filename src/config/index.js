@@ -66,9 +66,7 @@ config.routes = {
 
 config.accountNav = [
   { url: config.routes.account, title: 'Dashboard' },
-  { url: config.routes.updateAccount, title: 'Account details' },
   { url: config.routes.addresses, title: 'Addresses' },
-  { url: config.routes.createAddress, title: 'Create address' },
   { url: config.routes.orders, title: 'Orders' },
 ];
 
