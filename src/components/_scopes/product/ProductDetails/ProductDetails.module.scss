@@ -2,9 +2,8 @@
   margin-top: var(--space-4);
   padding: var(--space-2);
   border-radius: $radius;
-
   @include themed {
-    background-color: lighten(t($background), 2%);
+    background-color: rgba(t($onBackground), 0.03);
     border: 0.1px solid rgba(t($onBackground), 0.1);
   }
 }
