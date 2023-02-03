@@ -32,14 +32,6 @@ button {
   outline: none;
 }
 
-*:focus-visible {
-  outline-offset: 0.125rem;
-
-  @include themed() {
-    outline: 0.125rem solid t($complementary);
-  }
-}
-
 .Toastify__toast,
 .Toastify__toast-container {
   z-index: 99999999999999 !important;
