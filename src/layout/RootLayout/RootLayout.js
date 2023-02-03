@@ -67,11 +67,11 @@ function RootLayout({ children }) {
 
   return (
     <div className={styles.RootLayout}>
+      <SearchBar />
       {loading && <PageLoader />}
       {selectedProduct && getProductModal()}
       <Header headerMenu={menuHeader} handleOver={handleOver} handleClose={handleClose} />
       <Cart />
-      <SearchBar />
       {activeItems?.length > 0 && (
         <BigMenu data={activeItems} collections={bigMenu?.collections} handleClose={handleClose} />
       )}

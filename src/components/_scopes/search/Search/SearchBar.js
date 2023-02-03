@@ -1,82 +1,57 @@
-import { useCallback, useEffect, useState } from 'react';
-import { MdClose } from 'react-icons/md';
+import { useEffect, useRef, useState } from 'react';
 import Container from '@/components/Container/Container';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import nextApiCall from '@/utils/apiNext';
-import useDebounce from '@/hooks/useDebounce';
+import config from '@/config/index';
+import { useRouter } from 'next/router';
 import styles from './SearchBar.module.scss';
-import SearchResults from '../SearchResults/SearchResults';
 
 export default function SearchBar() {
-  const { searchOpen, toggleSearch } = useGlobalContext();
-  const [search, setSearch] = useState([]);
   const [query, setQuery] = useState('');
+  const { searchOpen } = useGlobalContext();
+  const { push } = useRouter();
+  const input = useRef();
 
   const handleChange = (event) => {
     const value = event?.target?.value;
     setQuery(value);
   };
 
-  const handleSearch = useCallback(async (value) => {
-    if (!value || value?.length < 3) return;
-    const response = await nextApiCall.searchProducts(value);
-    setSearch(response);
-  }, []);
-
-  const debouncedSearchTerm = useDebounce(query, 400);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!query?.trim()) return;
+    push({
+      pathname: config.routes.search,
+      query: { query },
+    });
+  };
 
   useEffect(() => {
-    if (debouncedSearchTerm) handleSearch(debouncedSearchTerm);
-    else setSearch([]);
-  }, [debouncedSearchTerm, handleSearch]);
+    if (searchOpen) input.current.focus();
+  }, [searchOpen]);
 
   return (
-    searchOpen && (
-      <div
-        className={styles.container}
-        role="button"
-        tabIndex={0}
-        onClick={() => toggleSearch(false)}
-        onKeyDown={() => toggleSearch(false)}
-      >
-        <div className={styles.inner}>
-          <Container>
-            <div
-              className={styles.searchBar}
-              role="presentation"
-              onClick={(e) => e.stopPropagation()}
-              onKeyDown={(e) => e.stopPropagation()}
-            >
-              <div className={styles.form}>
-                <button
-                  tabIndex={0}
-                  type="button"
-                  className={styles.buttonClose}
-                  onClick={() => toggleSearch(false)}
-                >
-                  <MdClose />
-                </button>
-                <h5 className={styles.title}>WHAT ARE YOU LOOKING FOR?</h5>
-                <label className={styles.header}>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    placeholder="Search"
-                    value={query}
-                    onChange={handleChange}
-                    aria-label="Search"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck="false"
-                  />
-                </label>
-              </div>
-              <SearchResults results={search} />
-            </div>
-          </Container>
+    <div className={`${styles.container} ${searchOpen && styles.expanded}`}>
+      <Container>
+        <div className={styles.searchBar}>
+          <form className={styles.form} onSubmit={handleSubmit}>
+            <label className={styles.header}>
+              <input
+                ref={input}
+                className={styles.input}
+                type="text"
+                placeholder="Search"
+                value={query}
+                onChange={handleChange}
+                aria-label="Search"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+              />
+            </label>
+          </form>
         </div>
-      </div>
-    )
+      </Container>
+    </div>
   );
 }

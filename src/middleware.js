@@ -24,7 +24,6 @@ function middleware(request) {
     url.pathname = '/api/auth';
     return NextResponse.rewrite(url);
   }
-
   // Early return if it is a public file such as an image
   if (pathname.startsWith('/_next') || pathname.includes('/api/') || PUBLIC_FILE.test(pathname)) {
     return null;

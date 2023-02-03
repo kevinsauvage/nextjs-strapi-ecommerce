@@ -26,8 +26,8 @@ query products($first: Int, $sortKey: ProductSortKeys) {
 }`;
 
 const searchProducts = `
-query products($query: String) {
-  products(first: 9, query: $query) {
+query products($query: String, $first: Int) {
+  products(first: $first, query: $query) {
     edges {
       node {
         ${productFragment}

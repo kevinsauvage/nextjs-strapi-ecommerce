@@ -13,7 +13,7 @@ const shopifyStorefrontCall = async (query, variables, delegateToken, ip) => {
 
     const body = JSON.stringify({ query, variables });
 
-    const response = await fetch(`https://${domain}/api/2022-10/graphql.json`, {
+    const response = await fetch(`https://${domain}/api/2023-01/graphql.json`, {
       method: 'POST',
       headers,
       body,

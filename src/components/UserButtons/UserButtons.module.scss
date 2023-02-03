@@ -5,6 +5,20 @@
   margin-left: auto;
 }
 
+.search {
+  padding: var(--space-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  @include themed {
+    background-color: t($onBackground);
+    path {
+      fill: t($background) !important;
+    }
+  }
+}
+
 .button {
   position: relative;
   display: flex;
@@ -21,12 +35,15 @@
   }
 }
 
+.cart {
+  position: relative;
+}
 .totalItems {
   position: absolute;
   padding: 3px;
   border-radius: 50%;
   top: -3px;
-  left: 19px;
+  right: -8px;
   min-width: 1rem;
   min-height: 1rem;
 

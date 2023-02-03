@@ -1,19 +1,28 @@
+/* eslint-disable react/no-array-index-key */
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
-import { bag, user } from '@/assets/svg';
+import { bag, user, search } from '@/assets/svg';
+
 import styles from './UserButtons.module.scss';
-import ToggleTheme from '../ToggleTheme/ToggleTheme';
+// import ToggleTheme from '../ToggleTheme/ToggleTheme';
 
 export default function UserButtons() {
-  const { toggleCheckout } = useGlobalContext();
+  const { toggleCheckout, toggleSearch, searchOpen } = useGlobalContext();
   const { getTotalItems } = useCheckoutContext();
 
   const router = useRouter();
 
   const data = [
-    { item: <ToggleTheme />, id: 0, name: 'Toggle themes' },
+    // { item: <ToggleTheme />, id: 0, name: 'Toggle themes' },
+    {
+      item: <div className={styles.search}> {search}</div>,
+      id: 0,
+      name: 'Toggle themes',
+      onClick: () => toggleSearch(!searchOpen),
+    },
+
     {
       item: user,
       id: 1,
@@ -22,12 +31,12 @@ export default function UserButtons() {
     },
     {
       item: (
-        <>
+        <div className={styles.cart}>
           {bag}
           <div className={styles.totalItems}>
             <p>{getTotalItems() || 0}</p>
           </div>
-        </>
+        </div>
       ),
       id: 2,
       onClick: toggleCheckout,
@@ -37,11 +46,11 @@ export default function UserButtons() {
 
   return (
     <div className={styles.container}>
-      {data.map((el) => (
+      {data.map((el, i) => (
         <button
           aria-label="el.name"
           type="button"
-          key={el.id}
+          key={i}
           onClick={() => el.onClick && el.onClick()}
           className={styles.button}
         >

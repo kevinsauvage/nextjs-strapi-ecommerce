@@ -48,6 +48,7 @@ config.routes = {
   contact: '/contact',
   collection: '/shop',
   product: '/product',
+  search: '/search',
   terms: '/pages/terms',
   privacy: '/pages/privacy',
   refound: '/pages/refound',

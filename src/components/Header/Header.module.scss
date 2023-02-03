@@ -3,6 +3,9 @@
   align-items: center;
   z-index: 999999;
   position: relative;
+  height: $header-height;
+  display: flex;
+  justify-content: space-between;
 
   @include themed {
     background-color: t($background);
@@ -10,11 +13,11 @@
   }
 }
 
-.headerInner {
+.left {
   width: 100%;
-  height: $header-height;
+  height: 100%;
   position: relative;
-  display: grid;
+  display: flex;
   align-items: center;
-  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--space-1);
 }

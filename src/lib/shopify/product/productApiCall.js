@@ -29,14 +29,18 @@ export const getProducts = async (sortKey, first) => {
   }
 };
 
-export const searchProducts = async (query, delegateToken, ip) => {
+export const searchProducts = async (query = '', delegateToken, ip, first = 250) => {
   try {
     const res = await shopifyStorefrontCall(
       productQueries.searchProducts,
-      { query: `title:${query}` },
+      {
+        query: `title:${query}* OR description:${query}* OR product_type:${query}* OR tag=${query}*`,
+        first,
+      },
       delegateToken,
       ip
     );
+
     return cleanGraphQLResponse(res?.data?.products);
   } catch (error) {
     return console.error(error);
