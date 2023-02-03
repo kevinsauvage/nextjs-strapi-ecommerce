@@ -32,15 +32,15 @@ export default function ProductCheckoutCard({ lineItem }) {
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="M" />
         <SelectedOptions options={selectedOptions} />
         <div className={styles.bottom}>
+          <button className={styles.remove} type="button" onClick={() => removeFromCheckout(id)}>
+            Remove
+          </button>
           <QuantityUpdater
             showTitle={false}
             originalQuantity={quantity}
             quantityAvailable={quantityAvailable}
             onChange={(num) => handleQuantityChange([{ id, quantity: parseInt(num, 10) }])}
           />
-          <button className={styles.remove} type="button" onClick={() => removeFromCheckout(id)}>
-            Remove
-          </button>
         </div>
       </div>
     </div>
