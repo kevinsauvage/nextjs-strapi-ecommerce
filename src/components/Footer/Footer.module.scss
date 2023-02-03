@@ -3,11 +3,6 @@
   justify-content: space-between;
   gap: var(--space-5);
 
-  @include themed {
-    background-color: t($background);
-    color: t($onBackground);
-  }
-
   @include respond('tablet') {
     flex-direction: column;
     gap: var(--space-4);
@@ -15,13 +10,12 @@
 }
 
 .footer {
-  padding: var(--space-3) 0;
-
   @include themed {
-    background-color: t($background);
+    background-color: rgba(t($onBackground), 0.03);
     color: t($onBackground);
-    border-top: 1px solid rgba(t($onBackground), 0.1);
   }
+
+  padding: var(--space-3) 0;
 }
 
 .about {
@@ -69,5 +63,7 @@
 
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);
+    background-color: rgba(t($onBackground), 0.03);
+    color: t($onBackground);
   }
 }

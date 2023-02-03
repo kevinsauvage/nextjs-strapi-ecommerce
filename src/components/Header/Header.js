@@ -14,15 +14,17 @@ function Header({ headerMenu, handleClose, handleOver }) {
   }, [asPath, handleClose]);
 
   return (
-    <Container>
-      <header className={`${styles.header}`}>
-        <div className={styles.left}>
-          <Logo />
-          <Navbar headerMenu={headerMenu} handleOver={handleOver} />
+    <header className={`${styles.header}`}>
+      <Container>
+        <div className={styles.inner}>
+          <div className={styles.left}>
+            <Logo />
+            <Navbar headerMenu={headerMenu} handleOver={handleOver} />
+          </div>
+          <UserButtons />
         </div>
-        <UserButtons />
-      </header>
-    </Container>
+      </Container>
+    </header>
   );
 }
 
