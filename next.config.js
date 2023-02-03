@@ -2,9 +2,6 @@
 const path = require('path');
 
 const nextConfig = {
-  basePath: '/',
-
-  reactStrictMode: false,
   async redirects() {
     return [
       {
