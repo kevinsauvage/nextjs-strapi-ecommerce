@@ -2,10 +2,23 @@
   display: flex;
   position: relative;
   width: 100%;
+  border-radius: $radius;
+
+  @include themed {
+    background-color: lighten(t($background), 2%);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .image {
   position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: $radius;
+  }
 }
 
 .details {

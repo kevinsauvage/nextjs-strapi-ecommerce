@@ -4,7 +4,6 @@ import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Address from '@/components/_scopes/account/Address/Address';
-import Card from '@/components/_scopes/account/Card/Card';
 import OrderCard from '@/components/_scopes/account/OrderCard/OrderCard';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
@@ -50,18 +49,13 @@ function OrderDetail() {
       <AccountLayout loading={isLoading} title="Order Details">
         <div>
           <div className={styles.top}>
-            <Card>
-              <OrderCard order={order} />
-            </Card>
-            <Card title="Shipping Address">
-              <Address address={shippingAddress} isAccount displayButton={false} />
-            </Card>
+            <OrderCard order={order} />
+            <Address title="Shipping Address" address={shippingAddress} isAccount displayButton={false} />
           </div>
-          <Card title="Items">
-            <div className={styles.lineItems}>
-              {lineItems && lineItems.map((item) => <LineItemCard key={item.variant?.id} item={item} />)}
-            </div>
-          </Card>
+
+          <div className={styles.lineItems}>
+            {lineItems && lineItems.map((item) => <LineItemCard key={item.variant?.id} item={item} />)}
+          </div>
         </div>
       </AccountLayout>
     </PageLayout>

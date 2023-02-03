@@ -18,7 +18,7 @@ function LineItemCard({ item }) {
           blurDataURL={image?.blurDataURL}
           quality={20}
           height={150}
-          width={100}
+          width={150}
         />
       </div>
       <div className={styles.details}>

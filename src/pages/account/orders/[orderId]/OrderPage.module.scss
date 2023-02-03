@@ -2,6 +2,14 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1rem;
+  padding: var(--space-2);
+  border-radius: $radius;
+  width: 100%;
+
+  @include themed {
+    background-color: lighten(t($background), 2%);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .top {

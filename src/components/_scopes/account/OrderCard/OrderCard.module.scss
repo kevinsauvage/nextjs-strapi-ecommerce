@@ -1,4 +1,12 @@
 .orderCard {
+  padding: var(--space-2);
+  border-radius: $radius;
+  width: 100%;
+
+  @include themed {
+    background-color: lighten(t($background), 2%);
+    border: 0.1px solid rgba(t($onBackground), 0.1);
+  }
 }
 
 .header {
@@ -6,15 +14,6 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.orderCardDetail {
-}
-
-.orderCardLineItem {
-}
-
-.orderCardLines {
 }
 
 .link {
