@@ -15,6 +15,9 @@
 
 .list {
   margin-bottom: var(--space-2);
+  li {
+    @include text-shorten(1);
+  }
 }
 
 .type {
