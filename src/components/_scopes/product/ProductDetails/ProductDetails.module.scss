@@ -13,7 +13,7 @@
 }
 
 .description {
-  padding-top: var(--space-2);
+  padding-top: var(--space-1);
 
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);

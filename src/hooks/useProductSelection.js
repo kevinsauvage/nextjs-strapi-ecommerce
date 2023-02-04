@@ -6,18 +6,9 @@ export default function useProductSelection({ product }) {
   const [selectedVariant, setSelectedVariant] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState();
-  const [availableColors, setAvailableColors] = useState([]);
-  const [availableSize, setAvailableSize] = useState([]);
   const { handleAddToCheckout } = useCheckoutContext();
 
   const handleChangeInput = (num) => setQuantity(num);
-
-  useEffect(() => {
-    if (quantity && selectedVariant?.id) {
-      const amount = Number(selectedVariant?.priceV2?.amount) * quantity;
-      setTotalPrice(amount.toFixed(2));
-    }
-  }, [quantity, selectedVariant, selectedVariant?.id]);
 
   const handleSetSelectedProductOption = useCallback(
     (productOption) => {
@@ -58,11 +49,18 @@ export default function useProductSelection({ product }) {
 
   const isOptionOutOfStock = useCallback(
     (optionName, optionValue) => {
-      if (optionName === 'Color') return !availableColors?.includes(optionValue);
-      if (optionName === 'Size') return !availableSize?.includes(optionValue);
-      return false;
+      const dif = product?.variants?.filter((variant) => {
+        const selection = selectedProductOption.map((option) => {
+          if (option.name === optionName) return { name: optionName, value: optionValue };
+          return option;
+        });
+
+        return !getDifference(variant.selectedOptions, selection);
+      }, {});
+      if (dif?.length) return false;
+      return true;
     },
-    [availableColors, availableSize]
+    [product?.variants, selectedProductOption]
   );
 
   const handleAddToCart = useCallback(() => {
@@ -73,6 +71,7 @@ export default function useProductSelection({ product }) {
     setSelectedVariant({});
   }, [selectedProductOption, product, setSelectedVariant]);
 
+  // Initialize the selected product option
   useEffect(() => {
     if (product?.variants?.length) {
       const options =
@@ -80,8 +79,9 @@ export default function useProductSelection({ product }) {
         product?.variants?.[0]?.selectedOptions;
       setSelectedProductOption(options);
     }
-  }, [product, setSelectedVariant]);
+  }, [product]);
 
+  // Get variant from the options selected by the user
   useEffect(() => {
     if (product?.id && selectedProductOption?.length) {
       const dif = product?.variants?.filter(
@@ -93,46 +93,11 @@ export default function useProductSelection({ product }) {
   }, [selectedProductOption, product, setSelectedVariant]);
 
   useEffect(() => {
-    if (product?.id && selectedProductOption?.length) {
-      const colors = [];
-      const sizes = [];
-      product.variants
-        .filter((variant) => variant.availableForSale)
-        .forEach((variant) => {
-          variant.selectedOptions.forEach((option) => {
-            selectedProductOption
-              .filter((opt) => opt.name === 'Color')
-              .forEach((opt) => {
-                if (option.value === opt.value)
-                  sizes.push(variant.selectedOptions.filter((o) => o.name === 'Size')?.[0]?.value);
-              });
-            selectedProductOption
-              .filter((opt) => opt.name === 'Size')
-              .forEach((opt) => {
-                if (option.value === opt.value)
-                  colors.push(variant.selectedOptions.filter((o) => o.name === 'Color')[0].value);
-              });
-          });
-        });
-      setAvailableSize(sizes);
-      setAvailableColors(colors);
+    if (quantity && selectedVariant?.id) {
+      const amount = Number(selectedVariant?.priceV2?.amount) * quantity;
+      setTotalPrice(amount.toFixed(2));
     }
-  }, [selectedProductOption, product, setSelectedVariant]);
-
-  useEffect(() => {
-    if (product?.variants && !availableColors?.length) {
-      const sizes = [];
-      product?.variants
-        .filter((variant) => variant.quantityAvailable)
-        .forEach((variant) => {
-          const colorOption = variant.selectedOptions.filter((option) => option.name === 'Size');
-          if (colorOption?.[0]?.value) sizes.push(colorOption[0].value);
-        });
-      const unique = [...new Set(sizes)];
-      setAvailableSize(unique);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [product?.variants]);
+  }, [quantity, selectedVariant, selectedVariant?.id]);
 
   return {
     isOptionSelected,
@@ -143,7 +108,6 @@ export default function useProductSelection({ product }) {
     quantity,
     selectedProductOption,
     selectedVariant,
-    availableColors,
     totalPrice,
   };
 }

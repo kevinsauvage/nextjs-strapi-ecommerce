@@ -13,6 +13,10 @@
   }
 }
 
+.list {
+  margin-bottom: var(--space-2);
+}
+
 .type {
   color: white;
   background-color: green;
@@ -24,7 +28,6 @@
 
 .title {
   position: relative;
-  margin-bottom: var(--space-2);
 }
 
 .btn {

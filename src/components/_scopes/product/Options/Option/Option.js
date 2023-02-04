@@ -16,7 +16,7 @@ export default function Option({ option, handleClick, isSelected, isOptionOutOfS
                   `${isSelected(option.name, value) ? styles.selectedOption : ''} ` +
                   `${isOptionOutOfStock(option.name, value) ? styles.outOfStock : ''}`
                 }
-                onClick={() => handleClick(value, option.name)}
+                onClick={() => !isOptionOutOfStock(option.name, value) && handleClick(value, option.name)}
               >
                 {value}
               </button>

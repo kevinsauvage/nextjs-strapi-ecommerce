@@ -31,6 +31,9 @@ id
 availableForSale
 quantityAvailable
 title
+sku
+weight
+weightUnit
 compareAtPriceV2 {
   amount
   currencyCode

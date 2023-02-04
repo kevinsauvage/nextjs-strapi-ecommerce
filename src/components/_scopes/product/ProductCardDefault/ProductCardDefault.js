@@ -9,6 +9,7 @@ import Price from '../Price/Price';
 export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants, productType, collections } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
+
   const { setSelectedProduct } = useGlobalContext() || {};
   const cardRef = useRef();
 
@@ -52,7 +53,7 @@ export default function ProductCardDefault({ product = {} }) {
             </div>
           </div>
         </div>
-        {priceV2?.amount !== compareAtPriceV2?.amount && (
+        {compareAtPriceV2 && priceV2?.amount !== compareAtPriceV2?.amount && (
           <div className={styles.discount}>
             <p>{isWhatPercentOf(priceV2?.amount, compareAtPriceV2?.amount)}%</p>
           </div>

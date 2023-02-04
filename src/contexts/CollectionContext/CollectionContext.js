@@ -9,12 +9,8 @@ import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CollectionContext = createContext();
 
-export function CollectionProvider({
-  children,
-  collection: { products: initialProducts },
-  pageInfo: initialPageInfo,
-  collectionFilters,
-}) {
+export function CollectionProvider({ children, collection, pageInfo: initialPageInfo, collectionFilters }) {
+  const { products: initialProducts } = collection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout } = states;
   const { toggleFilter } = useGlobalContext();

@@ -13,7 +13,7 @@ export default function Price({ compareAtPriceV2, priceV2, size = 'M' }) {
     <div className={`${styles.Price} ${isDiscount ? styles.PriceDiscount : ''} ${sizeStyles[size]}`}>
       {isDiscount && (
         <p className={styles.compareAtPriceV2}>
-          {compareAtPriceV2.amount} {compareAtPriceV2.currencyCode}
+          {compareAtPriceV2?.amount} {compareAtPriceV2?.currencyCode}
         </p>
       )}
       <p className={styles.currentPrice}>

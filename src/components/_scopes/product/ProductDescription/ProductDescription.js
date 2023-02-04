@@ -15,12 +15,51 @@ export default function ProductDescription({
   quantity,
 }) {
   const { productType, variants, options, title } = product || {};
-  const { quantityAvailable, availableForSale, priceV2 } = selected || {};
+
+  const {
+    quantityAvailable,
+    availableForSale,
+    priceV2,
+    sku,
+    title: variantTitle,
+    weight,
+    weightUnit,
+  } = selected || {};
 
   return (
     <div className={styles.ProductDescription}>
-      <span className={styles.type}>{productType}</span>
       <h1 className={styles.title}>{title}</h1>
+      <ul className={styles.list}>
+        <li>
+          <b>Sku: </b>
+          <small>{sku}</small>
+        </li>
+        {productType && (
+          <li>
+            <b>Product type: </b>
+            <small>{productType}</small>
+          </li>
+        )}
+        <li>
+          <b>Available: </b>
+          <small>{quantityAvailable || 0}</small>
+        </li>
+        <li>
+          <b>Selected variant: </b>
+          <small>{variantTitle}</small>
+        </li>
+        <li>
+          <b>Unit price: </b>
+          <small>{`${priceV2?.amount} ${priceV2?.currencyCode}`}</small>
+        </li>
+        {weight && (
+          <li>
+            <b>Weight: </b>
+            <small>{`${weight} ${weightUnit?.toLowerCase()}`}</small>
+          </li>
+        )}
+      </ul>
+
       <Options
         options={options}
         isOptionOutOfStock={isOptionOutOfStock}

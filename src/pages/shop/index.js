@@ -19,5 +19,6 @@ Shop.getLayout = function getLayout(page) {
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey } = getInfoFromCtx(ctx);
   const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
+
   return { props: { ...data } };
 }

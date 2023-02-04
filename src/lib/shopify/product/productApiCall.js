@@ -14,6 +14,7 @@ export const getProductRecommendation = async (productId) => {
 export const getProduct = async (handle) => {
   try {
     const res = await shopifyStorefrontCall(productQueries.queryProduct, { handle });
+
     return cleanGraphQLResponse(res.data.product);
   } catch (error) {
     return console.error(error);
