@@ -2,8 +2,21 @@ import { Children, cloneElement, isValidElement } from 'react';
 import useForm from '@/hooks/useForm';
 import styles from './Form.module.scss';
 
-export default function Form({ children, onSubmit, initialValues, title, buttonText, ...rest }) {
-  const { formData, handleInputChange, handleSubmit } = useForm(onSubmit, initialValues);
+export default function Form({
+  children,
+  onSubmit,
+  initialValues,
+  title,
+  buttonText,
+  requiredFields,
+  ...rest
+}) {
+  const {
+    formData,
+    handleInputChange,
+    handleSubmit,
+    missing = [],
+  } = useForm(onSubmit, initialValues, requiredFields);
 
   const iterateOverChildren = (childrenArray) =>
     Children.map(childrenArray, (child) => {
@@ -19,6 +32,7 @@ export default function Form({ children, onSubmit, initialValues, title, buttonT
         objectProps = {
           ...child.props,
           onChange: handleInputChange,
+          missing: missing.includes(child.props.name) || '',
           value: initialValues ? value : null,
           children: iterateOverChildren(child.props.children),
         };
@@ -28,6 +42,7 @@ export default function Form({ children, onSubmit, initialValues, title, buttonT
         objectProps = {
           ...child.props,
           onChange: handleInputChange,
+          missing: missing.includes(child.props.name) || '',
           checked: value || null,
           children: iterateOverChildren(child.props.children),
         };

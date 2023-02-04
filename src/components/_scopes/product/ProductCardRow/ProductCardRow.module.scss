@@ -5,7 +5,7 @@
   display: flex;
   width: 100%;
   @include themed {
-    background-color: lighten(t($background), 6%);
+    background-color: lighten(t($background-2), 6%);
     color: t($onBackground);
   }
 }

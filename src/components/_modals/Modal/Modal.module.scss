@@ -35,7 +35,7 @@
   height: 100%;
 
   @include themed {
-    background-color: t($background);
+    background-color: t($background-1);
   }
 }
 

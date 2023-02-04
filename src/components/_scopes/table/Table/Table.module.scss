@@ -20,8 +20,7 @@
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
   @include themed {
     border-bottom: 0.01px solid rgba(t($onBackground), 0.2);
-    background-color: rgba(t($onBackground), 0.03);
-
+    background-color: t($background-1);
     color: t($onBackground);
   }
 }

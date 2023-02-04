@@ -25,7 +25,7 @@
   overflow-x: auto;
 
   @include themed {
-    background-color: t($background);
+    background-color: t($background-3);
     border-left: 0.1px solid rgba(t($onBackground), 0.5);
   }
 }
@@ -38,7 +38,7 @@
   padding: 0 30px;
 
   @include themed {
-    background-color: t($background);
+    background-color: t($background-1);
     border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
   }
 }

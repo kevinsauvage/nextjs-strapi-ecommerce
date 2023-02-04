@@ -27,15 +27,15 @@ function ResetPassword() {
   return (
     <PageLayout title="Password recovery">
       <FormContainer>
-        <Form title="Password Recovery" onSubmit={onSubmit}>
+        <Form title="Password Recovery" onSubmit={onSubmit} requiredFields={['email']}>
           <Input
             id="email"
             label="Email address"
             name="email"
             type="email"
             placeholder="Email"
-            required
-            input
+            required="true"
+            input="true"
           />
           <Buttons text="SEND EMAIL">
             <BackButton />

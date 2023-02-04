@@ -61,14 +61,16 @@ function RegisterPage() {
   return (
     <PageLayout title="Register your account">
       <FormContainer>
-        <Form onSubmit={onSubmit} title="Register">
+        <Form autoComplete="off" onSubmit={onSubmit} title="Register" requiredFields={['email', 'password']}>
           <Input
             id="email"
             label="Email address"
             name="email"
-            type="email"
+            type="text"
             input="true"
             placeholder="Email"
+            autoComplete="off"
+            required="true"
           />
           <Input
             placeholder="Password"
@@ -77,7 +79,8 @@ function RegisterPage() {
             id="password"
             label="Password"
             input="true"
-            autoComplete="current-password"
+            autoComplete="off"
+            required="true"
           />
           <Buttons text="REGISTER">
             <Link href={config.routes.login}>LOGIN</Link>

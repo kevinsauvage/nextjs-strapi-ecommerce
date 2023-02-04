@@ -3,11 +3,12 @@
   flex-direction: column;
   justify-content: space-between;
   padding: var(--space-2);
+  padding-bottom: var(--space-1);
   border-radius: $radius;
   width: 100%;
 
   @include themed {
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-1);
     border: 0.1px solid rgba(t($onBackground), 0.1);
   }
 }
@@ -40,6 +41,7 @@
   border: none;
   text-decoration: underline;
   width: fit-content;
-  margin-top: var(--space-2);
+  margin-top: var(--space-0);
   padding: 0;
+  align-self: flex-end;
 }

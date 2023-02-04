@@ -13,7 +13,7 @@
 
   @include themed {
     border: 0.1px solid t($onBackground);
-    background-color: t($background);
+    background-color: t($background-2);
   }
 }
 
@@ -48,7 +48,7 @@
   &:hover {
     @include themed {
       background-color: rgba(t($onBackground), 1);
-      color: t($background);
+      color: t($background-2);
     }
   }
 }

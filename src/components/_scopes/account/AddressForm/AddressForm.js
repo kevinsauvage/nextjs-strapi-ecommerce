@@ -24,6 +24,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
         zip,
       }}
       title={title}
+      requiredFields={['firstName', 'lastName', 'address1', 'province', 'country', 'zip', 'city']}
     >
       <div>
         <div className={styles.info}>
@@ -36,7 +37,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
               id="firstName"
               name="firstName"
               label="First Name"
-              required
+              required="true"
             />
             <Input
               placeholder="Last name"
@@ -45,7 +46,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
               id="lastName"
               name="lastName"
               label="Last Name"
-              required
+              required="true"
             />
           </Row>
           <Row>
@@ -70,7 +71,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
               id="address1"
               name="address1"
               label="Address1"
-              required
+              required="true"
             />
             <Input
               placeholder="Address 2"
@@ -82,7 +83,15 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
             />
           </Row>
           <Row>
-            <Input placeholder="City" input="true" type="text" id="city" name="city" label="City" required />
+            <Input
+              placeholder="City"
+              input="true"
+              type="text"
+              id="city"
+              name="city"
+              label="City"
+              required="true"
+            />
             <Input
               placeholder="Province"
               input="true"
@@ -90,7 +99,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
               id="province"
               name="province"
               label="Province"
-              required
+              required="true"
             />
           </Row>
           <Row>
@@ -101,9 +110,17 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
               id="country"
               name="country"
               label="Country"
-              required
+              required="true"
             />
-            <Input placeholder="Zip" input="true" type="text" id="zip" name="zip" label="Zip" required />
+            <Input
+              placeholder="Zip"
+              input="true"
+              type="text"
+              id="zip"
+              name="zip"
+              label="Zip"
+              required="true"
+            />
           </Row>
         </div>
       </div>

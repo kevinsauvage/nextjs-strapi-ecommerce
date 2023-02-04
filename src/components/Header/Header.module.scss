@@ -6,7 +6,7 @@
   height: $header-height;
 
   @include themed {
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-1);
     border-bottom: 1px solid rgba(t($onBackground), 0.1);
   }
 }

@@ -3,9 +3,8 @@
   display: flex;
   margin: var(--space-1) 0;
   border-radius: $radius;
-  @include boxShadow(1);
   @include themed {
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-2);
   }
 }
 

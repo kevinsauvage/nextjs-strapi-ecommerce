@@ -34,7 +34,7 @@
 .checked {
   @include themed {
     background-color: t($onBackground);
-    color: t($background);
+    color: t($background-1);
   }
 }
 

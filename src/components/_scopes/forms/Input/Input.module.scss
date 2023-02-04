@@ -7,6 +7,15 @@
   &:last-of-type {
     padding: 0;
   }
+
+  &.missing {
+    b {
+      color: red;
+    }
+    input {
+      border: 1px solid red;
+    }
+  }
 }
 
 .title {
@@ -31,7 +40,7 @@
       outline-offset: 0.125rem;
       outline: 0.1rem solid rgba(t($onBackground), 0.3);
     }
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-3);
     color: t($onBackground);
 
     @include placeholder {

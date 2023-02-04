@@ -130,6 +130,11 @@ const getOrderById = (orderId) => {
   return nextApiHelper(apiUrl, null, 'GET');
 };
 
+export const sendMail = async (body) => {
+  const apiUrl = `/api/email`;
+  return nextApiHelper(apiUrl, body, 'POST');
+};
+
 const nextApiCall = {
   login,
   logout,

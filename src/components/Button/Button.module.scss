@@ -19,11 +19,11 @@
 
 .primary {
   background-color: $color-primary;
-  color: $color-background;
+  color: $color-background-2;
   border: 2px solid $color-primary;
 
   &:hover {
-    background-color: $color-background;
+    background-color: $color-background-2;
     color: $color-primary;
     border: 2px solid $color-primary;
   }
@@ -31,17 +31,17 @@
 
 .secondary {
   background-color: $color-complementary;
-  color: $color-background;
+  color: $color-background-2;
 }
 
 .contrast {
   @include themed() {
     background-color: t($onBackground);
-    color: t($background);
+    color: t($background-2);
 
     &:hover {
       border: 2px solid t($onBackground);
-      background-color: t($background);
+      background-color: t($background-2);
       color: t($onBackground);
     }
   }
@@ -50,12 +50,12 @@
 .outlined {
   @include themed() {
     border: 2px solid t($onBackground);
-    background-color: t($background);
+    background-color: t($background-2);
     color: t($onBackground);
 
     &:hover {
       border: 2px solid t($onBackground);
-      background-color: t($background);
+      background-color: t($background-2);
       color: t($onBackground);
     }
   }

@@ -45,7 +45,7 @@ function Password({ resetUrl }) {
   return (
     <PageLayout title="Password recovery">
       <FormContainer>
-        <Form title="Reset Password" onSubmit={onSubmit}>
+        <Form title="Reset Password" onSubmit={onSubmit} requiredFields={['password']}>
           <Input
             id="password"
             label="New password"
@@ -53,6 +53,7 @@ function Password({ resetUrl }) {
             type="password"
             placeholder="New password"
             input="true"
+            required="true"
           />
           <Buttons text="RESET PASSWORD">
             <BackButton />

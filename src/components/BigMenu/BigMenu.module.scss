@@ -18,7 +18,7 @@ $gap: var(--space-4);
   z-index: 99;
 
   @include themed() {
-    background-color: t($background);
+    background-color: t($background-1);
     border-top: 0.1px solid rgba(t($onBackground), 0.2);
     border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
   }

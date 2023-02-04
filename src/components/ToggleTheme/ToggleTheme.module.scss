@@ -23,7 +23,7 @@ $innerSize: 24px;
   transition: all 0.3s ease-in-out;
 
   @include themed {
-    background-color: t($background);
+    background-color: t($background-2);
   }
 }
 
@@ -41,7 +41,7 @@ $innerSize: 24px;
   path {
     @include themed {
       fill: t($onBackground);
-      stroke: t($background);
+      stroke: t($background-2);
     }
   }
 }
@@ -51,7 +51,7 @@ $innerSize: 24px;
 
   path {
     @include themed {
-      fill: t($background);
+      fill: t($background-2);
       stroke: t($onBackground);
     }
   }
@@ -65,7 +65,7 @@ $innerSize: 24px;
   .sun {
     path {
       @include themed {
-        stroke: t($background);
+        stroke: t($background-2);
         fill: t($onBackground);
       }
     }
@@ -75,7 +75,7 @@ $innerSize: 24px;
     path {
       @include themed {
         stroke: t($onBackground);
-        fill: t($background);
+        fill: t($background-2);
       }
     }
   }

@@ -5,7 +5,7 @@
   flex-direction: column;
 
   @include themed() {
-    background-color: t($background);
+    background-color: t($background-2);
     color: t($onBackground);
   }
 }

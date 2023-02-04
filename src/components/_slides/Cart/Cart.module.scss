@@ -4,9 +4,11 @@
 }
 .buttons {
   padding: var(--space-1);
+  padding-top: 0;
 }
 .footer {
   @include themed {
+    background-color: t($background-1);
     border-top: 0.1px solid rgba(t($onBackground), 0.2);
   }
 }

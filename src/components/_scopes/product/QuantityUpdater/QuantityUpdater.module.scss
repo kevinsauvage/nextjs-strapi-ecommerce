@@ -16,6 +16,7 @@ $boxDimension: 36px;
 
   @include themed {
     border: 1px solid rgba(t($onBackground), 0.1);
+    background-color: t($background-3);
   }
 }
 

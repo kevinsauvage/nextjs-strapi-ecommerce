@@ -1,14 +1,14 @@
 import styles from './TextArea.module.scss';
 
-export default function TextArea({ id, label, required, ...rest }) {
+export default function TextArea({ id, label, required, missing, ...rest }) {
   return (
-    <label htmlFor={id} className={styles.label}>
+    <label htmlFor={id} className={`${styles.label} ${missing && styles.missing}`}>
       <b className={styles.title}>
         {label}
         {required ? <span className={styles.required}>*</span> : ''}
       </b>
 
-      <textarea className={styles.textarea} type="text" required={required} {...rest} />
+      <textarea className={styles.textarea} type="text" {...rest} />
     </label>
   );
 }

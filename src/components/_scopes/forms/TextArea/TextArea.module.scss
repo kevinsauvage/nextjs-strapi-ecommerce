@@ -1,7 +1,15 @@
 .label {
   width: 100%;
-  padding-bottom: var(--space-2);
   display: block;
+
+  &.missing {
+    b {
+      color: red;
+    }
+    textarea {
+      border: 1px solid red;
+    }
+  }
 }
 
 .title {
@@ -19,11 +27,12 @@
   border: none;
 
   @include themed {
+    border: 1px solid rgba(t($onBackground), 0.1);
     &:focus-visible {
       outline-offset: 0.125rem;
       outline: 0.1rem solid rgba(t($onBackground), 0.3);
     }
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-3);
     color: t($onBackground);
 
     @include placeholder {

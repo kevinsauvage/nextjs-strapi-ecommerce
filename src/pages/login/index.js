@@ -53,24 +53,24 @@ function LoginPage() {
   return (
     <PageLayout title="User Login">
       <FormContainer>
-        <Form onSubmit={onSubmit} title="Login">
+        <Form onSubmit={onSubmit} title="Login" requiredFields={['email', 'password']}>
           <Input
             id="email"
             label="Email address"
             type="email"
             name="email"
             placeholder="Email"
-            required
             input="true"
+            required="true"
           />
           <Input
-            placeholder="Password"
             type="password"
             name="password"
             id="password"
             label="Password"
-            required
+            placeholder="Password"
             input="true"
+            required="true"
           />
           <Buttons text="Login">
             <Wrapper gap="6px">

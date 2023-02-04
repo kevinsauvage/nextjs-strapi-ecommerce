@@ -11,7 +11,7 @@
 
 .footer {
   @include themed {
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-1);
     color: t($onBackground);
   }
 
@@ -63,7 +63,7 @@
 
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: t($background-1);
     color: t($onBackground);
   }
 }

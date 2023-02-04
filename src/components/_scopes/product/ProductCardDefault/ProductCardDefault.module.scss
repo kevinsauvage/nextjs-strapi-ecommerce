@@ -32,7 +32,7 @@
   z-index: 999;
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);
-    background-color: rgba(t($background), 1);
+    background-color: rgba(t($background-2), 1);
   }
 }
 
@@ -40,7 +40,7 @@
   padding: var(--space-0);
 
   @include themed {
-    background-color: rgba(t($onBackground), 0.03);
+    background-color: rgba(t($background-3), 1);
   }
 }
 
@@ -71,7 +71,7 @@
   transform: translateY(100%);
 
   @include themed {
-    background-color: rgba(t($background), 1);
+    background-color: rgba(t($background-3), 1);
     color: t($onBackground);
   }
 
@@ -96,7 +96,7 @@
   background-color: $color-red;
   z-index: 999;
   padding: 2px 6px;
-  color: $color-background;
+  color: $color-background-2;
   border-radius: $radius;
 }
 

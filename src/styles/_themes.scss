@@ -1,32 +1,38 @@
-$color-background: #f5f8f9;
-$color-background-dark: #070a1d;
+// Light them
+$color-background-1: #e6e6e6;
+$color-background-2: lighten($color-background-1, 6%);
+$color-background-3: lighten($color-background-1, 12%);
+$color-onBackground: darken($color-background-1, 75%);
 
-$color-onBackground: #07111d;
-$color-onBackground-dark: #dbdbdb;
+// Dark theme
+$color-background-dark-1: #0f0f10;
+$color-background-dark-2: lighten($color-background-dark-1, 5%);
+$color-background-dark-3: lighten($color-background-dark-1, 10%);
+$color-onBackground-dark: lighten($color-background-dark-1, 75%);
 
-$color-grey-dark: #e1e1e1;
-$color-grey: #e2e2e2;
-
+// Helper variable
 $primary: 'primary';
 $complementary: 'complementary';
-$link: 'link';
-$background: 'background';
+$background-1: 'background-1';
+$background-2: 'background-2';
+$background-3: 'background-3';
 $onBackground: 'onBackground';
-$surface: 'surface';
 
 $themes: (
   default: (
     primary: $color-primary,
     complementary: $color-complementary,
-    background: $color-background,
+    background-1: $color-background-1,
+    background-2: $color-background-2,
+    background-3: $color-background-3,
     onBackground: $color-onBackground,
-    surface: $color-grey,
   ),
   dark: (
     primary: $color-primary,
     complementary: $color-complementary,
-    background: $color-background-dark,
+    background-1: $color-background-dark-1,
+    background-2: $color-background-dark-2,
+    background-3: $color-background-dark-3,
     onBackground: $color-onBackground-dark,
-    surface: $color-grey-dark,
   ),
 );

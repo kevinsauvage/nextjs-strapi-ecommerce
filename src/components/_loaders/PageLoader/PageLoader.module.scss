@@ -13,6 +13,6 @@
   -webkit-backdrop-filter: blur(12px);
 
   @include themed {
-    background: rgba(t($background), 0.5);
+    background: rgba(t($background-1), 0.5);
   }
 }

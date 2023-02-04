@@ -14,7 +14,7 @@
   @include themed {
     background-color: t($onBackground);
     path {
-      fill: t($background) !important;
+      fill: t($background-2) !important;
     }
   }
 }
@@ -49,7 +49,7 @@
 
   @include themed {
     background-color: t($onBackground);
-    color: t($background);
+    color: t($background-2);
   }
 
   p {

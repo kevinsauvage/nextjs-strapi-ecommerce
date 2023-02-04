@@ -1,14 +1,16 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const useForm = (onSubmit, initialState) => {
-  const [formData, setFormData] = useState(undefined);
+const useForm = (onSubmit, initialState, requiredFields) => {
+  const [formData, setFormData] = useState({});
   const [loading, setLoading] = useState(false);
+  const [missing, setMissing] = useState([]);
 
   useEffect(() => {
-    setFormData(initialState);
+    if (initialState) setFormData(initialState);
   }, [initialState]);
 
   const handleInputChange = (e) => {
+    setMissing([]);
     const { type, name, value } = e.target;
 
     if (type === 'checkbox') {
@@ -22,6 +24,16 @@ const useForm = (onSubmit, initialState) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
+    const missingItems = [];
+
+    requiredFields.forEach((requiredField) => {
+      if (!formData[requiredField]) missingItems.push(requiredField);
+    });
+
+    setMissing(missingItems);
+    if (missingItems.length) return;
+
     await onSubmit?.(formData);
     setLoading(false);
   };
@@ -35,6 +47,7 @@ const useForm = (onSubmit, initialState) => {
     handleReset,
     setFormData,
     loading,
+    missing,
   };
 };
 
