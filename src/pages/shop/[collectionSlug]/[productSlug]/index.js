@@ -5,6 +5,7 @@ import { getProduct, getProductRecommendation, getProducts } from '@/lib/shopify
 import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
@@ -15,11 +16,17 @@ function ProductPage({ product, recommendations = [] }) {
     <PageLayout title={title} description={description}>
       <ProductPresenter product={product} />
       {Array.isArray(recommendations) && recommendations.length > 0 && (
-        <Carousel title="Recommended Products" subtitle="Check out the products you may like" itemToShow={5}>
-          {recommendations.map((prod) => (
-            <ProductCardDefault product={prod} key={prod.id} />
-          ))}
-        </Carousel>
+        <div className={styles.carousel}>
+          <Carousel
+            title="Recommended Products"
+            subtitle="Check out the products you may like"
+            itemToShow={4}
+          >
+            {recommendations.map((prod) => (
+              <ProductCardDefault product={prod} key={prod.id} />
+            ))}
+          </Carousel>
+        </div>
       )}
     </PageLayout>
   );

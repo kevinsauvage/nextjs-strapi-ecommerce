@@ -1,15 +1,17 @@
 .container {
-  margin: var(--space-4) 0;
+  display: flex;
+  position: sticky;
+  top: 20px;
 }
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-1);
+  padding: 0 var(--space-1) 0 0;
 }
 .title {
   text-transform: uppercase;
+  @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
 }
 
 .Carousel {
@@ -27,7 +29,24 @@
   }
 
   .CarouselItem {
-    padding: calc(var(--space-0) / 2);
     flex: 0 0 auto;
+  }
+}
+
+.button {
+  position: relative;
+  z-index: 99;
+  border: none;
+  width: 30px;
+  @include themed {
+    background-color: t($background-3);
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      background-color: t($background-1);
+    }
+  }
+  svg {
+    font-size: 30px;
   }
 }

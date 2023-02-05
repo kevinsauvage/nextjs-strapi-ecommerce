@@ -49,13 +49,14 @@ export default function ProductCardRow({ product }) {
             handleClick={handleSetSelectedProductOption}
             size="M"
           />
+        </div>
+        <footer className={styles.footer}>
           <QuantityUpdater
             originalQuantity={1}
             onChange={handleChangeInput}
             quantityAvailable={quantityAvailable}
+            showTitle={false}
           />
-        </div>
-        <footer className={styles.footer}>
           {quantityAvailable > 0 ? (
             <Button
               extraClass={styles.btn}

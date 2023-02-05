@@ -1,10 +1,11 @@
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter } from 'next/router';
+import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
 import styles from './Carousel.module.scss';
 import Indicators from './Indicators/Indicators';
 
-function Carousel({ children, title, itemToShow = 5 }) {
+function Carousel({ children, title, itemToShow = 4, showButtons }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -57,10 +58,10 @@ function Carousel({ children, title, itemToShow = 5 }) {
   const handlers = useSwipeable({ ...handlersObject });
 
   return (
-    <div className={styles.container}>
+    <>
       {title ? (
         <div className={styles.header}>
-          <h2 className={styles.title}>{title}</h2>
+          <b className={styles.title}>{title}</b>
           <Indicators
             activeIndex={index}
             totalItems={Children.count(children)}
@@ -69,22 +70,52 @@ function Carousel({ children, title, itemToShow = 5 }) {
           />
         </div>
       ) : null}
-      <div {...handlers} className={`${styles.Carousel}`}>
-        <div
-          ref={carouselRef}
-          className={styles.inner}
-          style={{
-            transform: `translateX(-${translatePosition}px)`,
-          }}
-        >
-          {Children.map(children, (child) => (
-            <div className={styles.CarouselItem} style={{ width: `${itemDimension}%` }}>
-              {cloneElement(child)}
-            </div>
-          ))}
+
+      <div className={styles.container}>
+        {showButtons && (
+          <button
+            className={`${styles.button}`}
+            type="button"
+            disabled={translatePosition === 0}
+            onClick={() => handleChangeIndex(index - 1)}
+          >
+            <IoIosArrowDropleft />
+          </button>
+        )}
+        <div {...handlers} className={`${styles.Carousel}`}>
+          <div
+            ref={carouselRef}
+            className={styles.inner}
+            style={{
+              transform: `translateX(-${translatePosition}px)`,
+            }}
+          >
+            {Children.map(children, (child, i) => (
+              <div
+                className={`${styles.CarouselItem} ${
+                  itemToShow * (index + 1) >= i + 1 && itemToShow * (index + 1) <= i + itemToShow
+                    ? styles.active
+                    : ''
+                }`}
+                style={{ width: `${itemDimension}%` }}
+              >
+                {cloneElement(child)}
+              </div>
+            ))}
+          </div>
         </div>
+        {showButtons && (
+          <button
+            className={`${styles.button}`}
+            type="button"
+            disabled={translatePosition === maxTranslatePosition}
+            onClick={() => handleChangeIndex(index + 1)}
+          >
+            <IoIosArrowDropright />
+          </button>
+        )}
       </div>
-    </div>
+    </>
   );
 }
 

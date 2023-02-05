@@ -1,4 +1,4 @@
-import Image from 'next/legacy/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
@@ -26,7 +26,6 @@ export default function ProductCardDefault({ product = {} }) {
           <Image
             src={images?.[0]?.large}
             alt={images?.[0]?.alt || title}
-            layout="responsive"
             width={800}
             height={800}
             blurDataURL={images?.[0]?.blurDataURL}

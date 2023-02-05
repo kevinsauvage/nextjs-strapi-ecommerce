@@ -1,56 +1,48 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import CarouselVertical from '@/components/CarouselVertical/Carousel';
-import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
+import Carousel from '@/components/Carousel/Carousel';
 import styles from './PhotoGalleryWithCarousel.module.scss';
 
-export default function PhotoGalleryWithCarousel({ selectedVariant, images = [] }) {
-  const [selected, setSelected] = useState(undefined);
-  const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    setSelected(undefined);
-  }, [selectedVariant]);
-
-  useEffect(() => {
-    setLoaded(false);
-  }, [selected?.src, selectedVariant?.image?.src]);
-
+export default function PhotoGalleryWithCarousel({
+  selectedVariant,
+  variants = [],
+  handleSetSelectedProductOption,
+}) {
   return (
     <div className={styles.container}>
       {selectedVariant?.id && (
         <div className={styles.selectedImage}>
-          {!loaded && <AbsoluteLoader />}
           <Image
             className={styles.image}
-            src={selected?.large || selectedVariant?.image?.large}
-            alt={selected?.altText || selectedVariant?.image?.altText || selectedVariant?.title}
-            width={selected?.width || selectedVariant?.image?.width}
-            height={selected?.height || selectedVariant?.image?.height}
+            src={selectedVariant?.image?.large}
+            alt={selectedVariant?.image?.altText || selectedVariant?.title}
+            width={selectedVariant?.image?.width}
+            height={selectedVariant?.image?.height}
             quality={50}
-            onLoadingComplete={() => setLoaded(true)}
+            priority
           />
         </div>
       )}
-      <CarouselVertical itemToShow={4} showButtons>
-        {images.map((image) => (
+      <Carousel itemToShow={5} showButtons>
+        {variants.map((variant) => (
           <button
-            key={image.src}
+            key={variant.id}
             type="button"
-            className={`${styles.item} ${image.src === selected?.src ? styles.selected : ''}`}
-            onClick={() => setSelected(image)}
+            className={`${styles.item} ${
+              variant?.image?.src === selectedVariant?.image?.src ? styles.selected : ''
+            }`}
+            onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
           >
             <Image
-              src={image?.small}
-              alt={image?.altText || selectedVariant?.title}
-              width={image?.width}
-              height={image?.height}
+              src={variant?.image?.small}
+              alt={variant?.image?.altText || selectedVariant?.title}
+              width={variant?.image?.width}
+              height={variant?.image?.height}
               quality={10}
               className={styles.image}
             />
           </button>
         ))}
-      </CarouselVertical>
+      </Carousel>
     </div>
   );
 }

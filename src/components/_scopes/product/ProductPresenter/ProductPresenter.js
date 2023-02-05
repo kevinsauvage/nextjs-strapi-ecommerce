@@ -1,8 +1,8 @@
 import useProductSelection from '@/hooks/useProductSelection';
-import PhotoGallery from '@/components/_scopes/product/PhotoGallery/PhotoGallery';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 import ProductDetails from '../ProductDetails/ProductDetails';
+import PhotoGalleryWithCarousel from '../PhotoGalleryWithCarousel/PhotoGalleryWithCarousel';
 
 export default function ProductPresenter({ product }) {
   const {
@@ -20,7 +20,11 @@ export default function ProductPresenter({ product }) {
   return (
     <>
       <div className={styles.container}>
-        <PhotoGallery images={product.images} alt={product.title} />
+        <PhotoGalleryWithCarousel
+          handleSetSelectedProductOption={handleSetSelectedProductOption}
+          selectedVariant={selectedVariant}
+          variants={product?.variants}
+        />
         <ProductDescription
           product={product}
           quantity={quantity}

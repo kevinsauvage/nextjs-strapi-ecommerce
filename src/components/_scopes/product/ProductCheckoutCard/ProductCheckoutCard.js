@@ -16,14 +16,7 @@ export default function ProductCheckoutCard({ lineItem }) {
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <Image
-          src={image?.small}
-          blurDataURL={image?.blurDataURL}
-          placeholder="blur"
-          alt={image?.alt}
-          width="200"
-          height="200"
-        />
+        <Image src={image?.small} alt={image?.alt} width="200" height="200" />
       </div>
       <div className={styles.body}>
         <Link href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}>

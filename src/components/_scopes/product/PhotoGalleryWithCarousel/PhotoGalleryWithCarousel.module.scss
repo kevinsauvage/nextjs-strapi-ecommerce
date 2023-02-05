@@ -2,20 +2,21 @@ $maxHeight: 600px;
 
 .container {
   width: 100%;
-  display: flex;
-  flex-direction: row-reverse;
-  height: 550px;
 }
 
 .selectedImage {
   position: relative;
   display: block;
-  height: 100%;
   width: 100%;
+}
+.image {
+  width: 100%;
+  height: 100%;
 
-  .image {
+  img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
   }
 }
 
@@ -26,13 +27,23 @@ $maxHeight: 600px;
   cursor: pointer;
   border: none;
   display: block;
+  padding: 0px;
+
+  @include themed {
+    border-right: 2px solid t($background-1);
+  }
 
   .image {
     width: 100%;
     height: 100%;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 }
 
 .selected {
-  border: 2px solid rgb(0, 0, 0);
 }
