@@ -24,7 +24,7 @@ export default function ProductCardDefault({ product = {} }) {
       >
         <div className={styles.image}>
           <Image
-            src={images?.[0]?.large}
+            src={images?.[0]?.medium}
             alt={images?.[0]?.alt || title}
             width={800}
             height={800}

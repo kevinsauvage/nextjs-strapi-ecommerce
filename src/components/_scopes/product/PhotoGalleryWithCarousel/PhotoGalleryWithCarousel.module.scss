@@ -2,6 +2,10 @@ $maxHeight: 600px;
 
 .container {
   width: 100%;
+
+  @include themed {
+    background-color: t($background-1);
+  }
 }
 
 .selectedImage {
