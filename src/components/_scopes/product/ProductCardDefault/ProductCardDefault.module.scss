@@ -47,6 +47,7 @@
 .image {
   position: relative;
   width: 100%;
+  display: flex;
 
   img {
     transition: 0.2s all ease-in-out;

@@ -5,7 +5,7 @@ import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
 import styles from './Carousel.module.scss';
 import Indicators from './Indicators/Indicators';
 
-function Carousel({ children, title, itemToShow = 4, showButtons }) {
+function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -90,14 +90,10 @@ function Carousel({ children, title, itemToShow = 4, showButtons }) {
               transform: `translateX(-${translatePosition}px)`,
             }}
           >
-            {Children.map(children, (child, i) => (
+            {Children.map(children, (child) => (
               <div
-                className={`${styles.CarouselItem} ${
-                  itemToShow * (index + 1) >= i + 1 && itemToShow * (index + 1) <= i + itemToShow
-                    ? styles.active
-                    : ''
-                }`}
-                style={{ width: `${itemDimension}%` }}
+                className={`${styles.CarouselItem}`}
+                style={{ width: `${itemDimension}%`, padding: `${spacing}px` }}
               >
                 {cloneElement(child)}
               </div>

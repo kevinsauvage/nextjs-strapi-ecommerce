@@ -22,7 +22,7 @@ export default function PhotoGalleryWithCarousel({
           />
         </div>
       )}
-      <Carousel itemToShow={5} showButtons>
+      <Carousel itemToShow={5} showButtons spacing={0}>
         {variants.map((variant) => (
           <button
             key={variant.id}
