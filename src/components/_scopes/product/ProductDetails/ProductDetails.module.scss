@@ -14,6 +14,9 @@
 
 .description {
   padding-top: var(--space-1);
+  img {
+    display: none;
+  }
 
   @include themed {
     border-top: 1px solid rgba(t($onBackground), 0.1);

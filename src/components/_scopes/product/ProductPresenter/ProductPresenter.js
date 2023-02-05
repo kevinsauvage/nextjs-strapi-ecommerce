@@ -20,11 +20,7 @@ export default function ProductPresenter({ product }) {
   return (
     <>
       <div className={styles.container}>
-        <PhotoGalleryWithCarousel
-          handleSetSelectedProductOption={handleSetSelectedProductOption}
-          selectedVariant={selectedVariant}
-          variants={product?.variants}
-        />
+        <PhotoGalleryWithCarousel images={product?.images} />
         <ProductDescription
           product={product}
           quantity={quantity}

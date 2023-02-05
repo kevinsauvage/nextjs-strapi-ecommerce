@@ -2,6 +2,7 @@ $maxHeight: 600px;
 
 .container {
   width: 100%;
+  height: fit-content;
 
   @include themed {
     background-color: t($background-1);
