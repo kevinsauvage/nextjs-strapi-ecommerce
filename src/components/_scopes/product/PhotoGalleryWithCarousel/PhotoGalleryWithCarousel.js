@@ -17,6 +17,8 @@ export default function PhotoGalleryWithCarousel({
             alt={selectedVariant?.image?.altText || selectedVariant?.title}
             width={selectedVariant?.image?.width}
             height={selectedVariant?.image?.height}
+            blurDataURL={selectedVariant?.image?.blurDataURL}
+            placeholder="blur"
             quality={50}
             priority
           />

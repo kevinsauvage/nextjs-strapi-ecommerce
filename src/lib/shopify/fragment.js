@@ -3,7 +3,7 @@ src
 altText
 small:  url(transform: { maxHeight: 200, maxWidth: 200, crop: CENTER, preferredContentType: WEBP })
 medium:  url(transform: { maxHeight: 500, maxWidth: 500, crop: CENTER, preferredContentType: WEBP })
-large:  url(transform: { maxHeight: 800, maxWidth: 800, crop: CENTER, preferredContentType: WEBP })
+large:  url(transform: { maxHeight: 600, maxWidth: 600, crop: CENTER, preferredContentType: WEBP })
 blurDataURL: url(transform: {maxHeight: 4, maxWidth: 4, crop: CENTER,  preferredContentType: WEBP})
 width
 height`;
