@@ -4,7 +4,7 @@ import ProductDescription from '../ProductDescription/ProductDescription';
 import ProductDetails from '../ProductDetails/ProductDetails';
 import PhotoGalleryWithCarousel from '../PhotoGalleryWithCarousel/PhotoGalleryWithCarousel';
 
-export default function ProductPresenter({ product }) {
+export default function ProductPresenter({ product, isModal }) {
   const {
     isOptionSelected,
     handleSetSelectedProductOption,
@@ -34,7 +34,7 @@ export default function ProductPresenter({ product }) {
           totalPrice={totalPrice}
         />
       </div>
-      <ProductDetails html={descriptionHtml} />
+      {!isModal && <ProductDetails html={descriptionHtml} />}
     </>
   );
 }

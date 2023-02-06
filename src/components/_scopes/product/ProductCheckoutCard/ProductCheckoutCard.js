@@ -16,7 +16,7 @@ export default function ProductCheckoutCard({ lineItem }) {
   return (
     <div className={styles.card}>
       <div className={styles.image}>
-        <Image src={image?.small} alt={image?.alt} width="200" height="200" />
+        <Image src={image?.src} alt={image?.alt} width={image?.width} height={image?.height} />
       </div>
       <div className={styles.body}>
         <Link href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}>

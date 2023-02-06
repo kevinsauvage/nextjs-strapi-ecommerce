@@ -38,15 +38,17 @@
   z-index: 99;
   border: none;
   width: 30px;
+
   @include themed {
     background-color: t($background-3);
     transition: all 0.2s ease-in-out;
+    border: 0.1px solid rgba(t($onBackground), 0.3);
 
     &:hover {
       background-color: t($background-1);
     }
   }
   svg {
-    font-size: 30px;
+    font-size: 40px;
   }
 }

@@ -9,19 +9,17 @@ export default function PhotoGalleryWithCarousel({ images }) {
   return (
     <div className={styles.container}>
       {selected?.src && (
-        <div className={styles.selectedImage}>
-          <Image
-            className={styles.image}
-            src={selected?.large}
-            alt={selected?.altText}
-            width={selected?.width}
-            height={selected?.height}
-            blurDataURL={selected?.blurDataURL}
-            placeholder="blur"
-            quality={50}
-            priority
-          />
-        </div>
+        <Image
+          className={styles.image}
+          src={selected?.large}
+          alt={selected?.altText}
+          width={selected?.width}
+          height={selected?.height}
+          blurDataURL={selected?.blurDataURL}
+          placeholder="blur"
+          quality={50}
+          priority
+        />
       )}
       {images.length > 1 && (
         <Carousel itemToShow={8} showButtons spacing={0}>
@@ -39,6 +37,8 @@ export default function PhotoGalleryWithCarousel({ images }) {
                   alt={variant?.altText}
                   width={variant?.width}
                   height={variant?.height}
+                  blurDataURL={variant?.blurDataURL}
+                  placeholder="blur"
                   quality={10}
                   className={styles.image}
                 />

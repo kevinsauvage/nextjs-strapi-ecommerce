@@ -73,7 +73,15 @@ export default function ProductDescription({
               } `}
               onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
             >
-              <Image src={image.small} width={image.width} height={image.height} alt="variant image" />
+              <Image
+                src={image.small}
+                width={image.width}
+                height={image.height}
+                alt="variant image"
+                quality={10}
+                blurDataURL={image?.blurDataURL}
+                placeholder="blur"
+              />
             </button>
           );
         })}

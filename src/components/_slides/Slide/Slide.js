@@ -18,7 +18,7 @@ export default function Slide({ isOpen, handleClose, title, footer, content }) {
     <div
       role="button"
       tabIndex="0"
-      className={styles.slide}
+      className={`${styles.slide} fadeIn`}
       onClick={handleClose}
       onKeyDown={(event) => event.key === 'Escape' && handleClose}
     >

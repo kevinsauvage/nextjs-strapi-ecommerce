@@ -1,0 +1,54 @@
+.ModalProduct {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 999999999;
+  overflow-y: auto;
+
+  @include themed {
+    background-color: t($background-1);
+  }
+}
+
+.Container {
+  height: unset;
+  padding: var(--space-5) 100px;
+}
+
+.close {
+  position: absolute;
+  border: none;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  padding: var(--space-2);
+  transition: 0.3s;
+
+  @include themed {
+    background-color: t($background-3);
+    border-left: 1px solid t($onBackground);
+    border-bottom: 1px solid t($onBackground);
+
+    svg,
+    path {
+      stroke: t($onBackground);
+    }
+
+    &:hover {
+      background-color: t($onBackground);
+
+      svg,
+      path {
+        stroke: t($background-3);
+      }
+    }
+  }
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}

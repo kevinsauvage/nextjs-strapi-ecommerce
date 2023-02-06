@@ -3,7 +3,7 @@ import styles from './PageLoader.module.scss';
 
 export default function PageLoader({ position }) {
   return (
-    <div className={styles.loader} style={{ position }}>
+    <div className={`${styles.loader} fadeIn`} style={{ position }}>
       <Loader />
     </div>
   );

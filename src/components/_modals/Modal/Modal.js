@@ -5,17 +5,15 @@ export default function Modal({ children, handleClose }) {
   return (
     <div
       tabIndex="0"
-      className={styles.modal}
+      className={`${styles.modal} fadeIn`}
       onClick={handleClose}
       role="button"
       onKeyDown={(e) => e.key === 'Enter' && handleClose(e)}
     >
       <div className={styles.inner}>
-        <div className={styles.header}>
-          <button tabIndex="0" className={styles.close} type="button" onClick={handleClose && handleClose}>
-            <GrClose />
-          </button>
-        </div>
+        <button tabIndex="0" className={styles.close} type="button" onClick={handleClose && handleClose}>
+          <GrClose />
+        </button>
         <div
           className={styles.content}
           role="presentation"

@@ -7,7 +7,7 @@ import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
-  const { title, images, handle, variants, productType, collections } = product;
+  const { title, images, handle, variants, collections } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
 
   const { setSelectedProduct } = useGlobalContext() || {};
@@ -19,6 +19,7 @@ export default function ProductCardDefault({ product = {} }) {
     <li className={`${styles.productCardDefault}`}>
       <Link
         ref={cardRef}
+        className={styles.link}
         href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
         aria-label={`View product details for ${title}`}
       >
@@ -33,24 +34,6 @@ export default function ProductCardDefault({ product = {} }) {
             quality={20}
             aria-label={`Image of ${title}`}
           />
-          <div
-            className={styles.quickView}
-            role="button"
-            tabIndex="0"
-            aria-label="Quick view"
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              setSelectedProduct(product);
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') setSelectedProduct(product);
-            }}
-          >
-            <div className={styles.quickViewInner}>
-              <p>Quick view</p>
-            </div>
-          </div>
         </div>
         {compareAtPriceV2 && priceV2?.amount !== compareAtPriceV2?.amount && (
           <div className={styles.discount}>
@@ -60,9 +43,24 @@ export default function ProductCardDefault({ product = {} }) {
 
         <div className={styles.content}>
           <div className={styles.contentInner}>
-            <div className={styles.productType}>{productType}</div>
             <b className={styles.title}>{title}</b>
             <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
+            <div
+              className={styles.quickView}
+              role="button"
+              tabIndex="0"
+              aria-label="Quick view"
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                setSelectedProduct(product);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') setSelectedProduct(product);
+              }}
+            >
+              <p>Quick view</p>
+            </div>
           </div>
         </div>
       </Link>
