@@ -7,9 +7,6 @@ import Indicators from './Indicators/Indicators';
 
 function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
-
-  console.log('🚀 ~ file: Carousel.js:11 ~ Carousel ~ maxTranslatePosition', maxTranslatePosition);
-
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [itemDimension] = useState(100 / itemToShow);
@@ -25,8 +22,6 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
   useEffect(() => {
     if (carouselRef?.current) {
       const width = carouselRef?.current?.getBoundingClientRect().width;
-
-      console.log('🚀 ~ file: Carousel.js:26 ~ useEffect ~ width', width);
 
       const totalWidth = (width / 100) * itemDimension;
       const position = totalWidth * Children.count(children) - width;
@@ -110,7 +105,7 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
           <button
             className={`${styles.button}`}
             type="button"
-            disabled={translatePosition === maxTranslatePosition || maxTranslatePosition < carouselWidth}
+            disabled={translatePosition === maxTranslatePosition}
             onClick={() => handleChangeIndex(index + 1)}
           >
             <IoIosArrowDropright />
