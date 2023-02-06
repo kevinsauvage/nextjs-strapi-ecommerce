@@ -1,10 +1,14 @@
 import Image from 'next/image';
 import Carousel from '@/components/Carousel/Carousel';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './PhotoGalleryWithCarousel.module.scss';
 
 export default function PhotoGalleryWithCarousel({ images }) {
-  const [selected, setSelected] = useState(images[0]);
+  const [selected, setSelected] = useState({});
+
+  useEffect(() => {
+    setSelected(images[0]);
+  }, [images]);
 
   return (
     <div className={styles.container}>

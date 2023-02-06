@@ -23,9 +23,7 @@ function ProductPage({ product, recommendations = [] }) {
             itemToShow={4}
           >
             {recommendations.map((prod) => (
-              <li key={prod.id}>
-                <ProductCardDefault product={prod} />
-              </li>
+              <ProductCardDefault product={prod} key={prod.id} />
             ))}
           </Carousel>
         </div>
