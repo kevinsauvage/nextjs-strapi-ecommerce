@@ -77,6 +77,8 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
           <button
             className={`${styles.button}`}
             type="button"
+            name="previous"
+            aria-label="Previous"
             disabled={translatePosition === 0}
             onClick={() => handleChangeIndex(index - 1)}
           >
@@ -105,6 +107,8 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
           <button
             className={`${styles.button}`}
             type="button"
+            name="next"
+            aria-label="next"
             disabled={translatePosition === maxTranslatePosition}
             onClick={() => handleChangeIndex(index + 1)}
           >
