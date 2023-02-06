@@ -45,6 +45,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
   gap: 3px;
+  margin: var(--space-1) 0;
 }
 
 .variantButton {

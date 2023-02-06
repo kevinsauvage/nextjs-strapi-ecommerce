@@ -26,7 +26,9 @@ $boxDimension: 36px;
 
 .name {
   display: block;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
+  margin-bottom: 4px;
+  width: fit-content;
 }
 
 .list {
