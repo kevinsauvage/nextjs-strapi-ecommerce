@@ -65,24 +65,25 @@ export default function ProductDescription({
         {product?.variants.map((variant) => {
           const { image } = variant;
           return (
-            <button
-              type="button"
-              key={variant.id}
-              className={`${styles.variantButton} ${
-                selected?.image?.src === image?.src ? styles.selectedVariant : ''
-              } `}
-              onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
-            >
-              <Image
-                src={image.small}
-                width={image.width}
-                height={image.height}
-                alt="variant image"
-                quality={10}
-                blurDataURL={image?.blurDataURL}
-                placeholder="blur"
-              />
-            </button>
+            <li key={variant.id}>
+              <button
+                type="button"
+                className={`${styles.variantButton} ${
+                  selected?.image?.src === image?.src ? styles.selectedVariant : ''
+                } `}
+                onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
+              >
+                <Image
+                  src={image.small}
+                  width={image.width}
+                  height={image.height}
+                  alt="variant image"
+                  quality={10}
+                  blurDataURL={image?.blurDataURL}
+                  placeholder="blur"
+                />
+              </button>
+            </li>
           );
         })}
       </ul>

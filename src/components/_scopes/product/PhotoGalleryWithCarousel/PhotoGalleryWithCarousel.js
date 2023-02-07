@@ -33,6 +33,8 @@ export default function PhotoGalleryWithCarousel({ images }) {
               <button
                 key={variant.src}
                 type="button"
+                aria-label={variant?.title}
+                name={variant?.title}
                 className={`${styles.item} ${variant?.image?.src === selected?.src ? styles.selected : ''}`}
                 onClick={() => setSelected(variant)}
               >
