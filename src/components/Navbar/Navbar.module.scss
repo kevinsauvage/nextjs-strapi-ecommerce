@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   @include respond('tablet') {
     display: none;
   }
@@ -15,14 +16,9 @@
   align-items: center;
   border-bottom: 2px solid transparent;
   cursor: pointer;
+  color: var(--light);
 
   p {
     font-weight: $fontWeightMedium;
-  }
-
-  @include themed {
-    path {
-      fill: t($onBackground);
-    }
   }
 }

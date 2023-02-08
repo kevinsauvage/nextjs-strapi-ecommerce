@@ -7,10 +7,9 @@
   padding-top: 0;
 }
 .footer {
-  @include themed {
-    background-color: t($background-1);
-    border-top: 0.1px solid rgba(t($onBackground), 0.2);
-  }
+  background-color: var(--dark);
+  color: var(--light);
+  border-top: 0.1px solid rgba(var(--dark), 0.2);
 }
 
 .subtotal {
@@ -18,8 +17,5 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-0) var(--space-1);
-
-  @include themed {
-    border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
-  }
+  border-bottom: 0.1px solid rgba(var(--dark), 0.2);
 }

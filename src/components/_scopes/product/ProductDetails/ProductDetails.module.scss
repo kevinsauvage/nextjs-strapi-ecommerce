@@ -2,10 +2,8 @@
   margin-top: var(--space-4);
   padding: var(--space-2);
   border-radius: $radius;
-  @include themed {
-    background-color: t($background-1);
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  background-color: var(--light);
+  border: 0.1px solid rgba(var(--dark), 0.1);
 }
 
 .title {
@@ -18,7 +16,5 @@
     display: none;
   }
 
-  @include themed {
-    border-top: 1px solid rgba(t($onBackground), 0.1);
-  }
+  border-top: 1px solid rgba(var(--dark), 0.1);
 }

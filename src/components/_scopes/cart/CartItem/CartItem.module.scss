@@ -49,11 +49,8 @@
   width: 80px;
   background-color: transparent;
   border: none;
-
-  @include themed {
-    border-bottom: 1px solid t($onBackground);
-    color: t($onBackground);
-  }
+  border-bottom: 1px solid var(--dark);
+  color: var(--dark);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -70,9 +67,7 @@
   cursor: pointer;
   svg,
   path {
-    @include themed {
-      stroke: t($onBackground);
-    }
+    stroke: var(--dark);
   }
 }
 

@@ -3,10 +3,7 @@ $maxHeight: 600px;
 .container {
   width: 100%;
   height: fit-content;
-
-  @include themed {
-    background-color: t($background-1);
-  }
+  background-color: var(--light);
 }
 
 .selectedImage {
@@ -35,10 +32,7 @@ $maxHeight: 600px;
   border: none;
   display: block;
   padding: 0px;
-
-  @include themed {
-    border-right: 2px solid t($background-1);
-  }
+  border-right: 2px solid var(--light);
 
   .image {
     width: 100%;

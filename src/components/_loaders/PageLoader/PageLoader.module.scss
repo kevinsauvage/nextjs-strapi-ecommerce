@@ -11,8 +11,5 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-
-  @include themed {
-    background: rgba(t($background-1), 0.5);
-  }
+  background: rgba(var(--dark), 0.5);
 }

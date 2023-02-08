@@ -4,34 +4,17 @@
   align-items: flex-end;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
-  color: $color-background-2;
+  background-size: 100%;
+  color: var(--dark);
   border-radius: $radius;
   transition: all 0.2s ease-in-out;
   min-height: 260px;
-
-  &::after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background-color: rgba($color-onBackground, 0.2);
-    transition: all 0.3s ease-in-out;
-  }
+  @include gradient-overlay(var(--RGB-light));
 
   &:hover {
     background-size: 110%;
-
-    &::after {
-      background-color: rgba($color-onBackground, 0.8);
-    }
   }
 }
 
@@ -62,11 +45,13 @@
 }
 
 .link {
-  background-color: $color-onBackground;
+  background-color: var(--dark);
+  border: 0.1px solid rgba(var(--RGB-onBackground-100), 0.2);
   width: fit-content;
   border-radius: $radius;
   padding: var(--space-0) var(--space-1);
   display: block;
+  color: var(--light);
 
   span {
     font-weight: $fontWeightNormal;

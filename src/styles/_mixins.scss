@@ -14,46 +14,6 @@
   }
 }
 
-$breakpoints: (
-  // 400px
-  'xs': 25em,
-  // 544px
-  'sm': 34em,
-  // 768px
-  'md': 48em,
-  // 960px
-  'lg': 60em,
-  // 1280px
-  'xl': 80em,
-  // 1440px,
-  'xxl': 90em
-);
-
-/* 
-* @include respond-above(md) {
-*    font-size: 18px;
-*    line-height: 26px;
-*    font-weight: 600;
-*
-}*/
-@mixin respond-above($breakpoint) {
-  // If the breakpoint exists in the map.
-  @if map-has-key($breakpoints, $breakpoint) {
-    // Get the breakpoint value.
-    $breakpoint-value: map-get($breakpoints, $breakpoint);
-
-    // Write the media query.
-    @media (min-width: $breakpoint-value) {
-      @content;
-    }
-
-    // If the breakpoint doesn't exist in the map.
-  } @else {
-    // Log a warning.
-    @warn 'Invalid breakpoint: #{$breakpoint}.';
-  }
-}
-
 @mixin flex-column {
   display: flex;
   flex-direction: column;
@@ -137,37 +97,6 @@ $breakpoints: (
   }
 }
 
-@mixin spread-map($map: ()) {
-  @each $key, $value in $map {
-    #{$key}: $value;
-  }
-}
-
-@mixin themed() {
-  @each $theme, $map in $themes {
-    :global(.theme--#{$theme}) & {
-      $theme-map: () !global;
-
-      @each $key, $submap in $map {
-        $value: map-get(map-get($themes, $theme), $key);
-        $theme-map: map-merge(
-          $theme-map,
-          (
-            $key: $value,
-          )
-        ) !global;
-      }
-
-      @content;
-      $theme-map: null !global;
-    }
-  }
-}
-
-@function t($key) {
-  @return map-get($theme-map, $key);
-}
-
 @mixin underline($color) {
   position: relative;
   display: block;
@@ -212,4 +141,40 @@ $breakpoints: (
   &:-ms-input-placeholder {
     @content;
   }
+}
+
+@mixin overlay($bgColor: #000000, $bgOpacity: 0.6) {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(($bgColor), $bgOpacity);
+    z-index: 0;
+  }
+}
+
+@mixin gradient-overlay($bgColor: #000000, $deg: 0deg) {
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    background: rgba($bgColor, 0.6);
+    background: linear-gradient(
+      $deg,
+      rgba($bgColor, 0.9) 0%,
+      rgba($bgColor, 0.4) 50%,
+      rgba($bgColor, 0) 100%
+    );
+  }
+}
+
+@mixin borderLight($color, $opacity: 0.5) {
+  border: 0.1px solid rgba($color, $opacity);
 }

@@ -7,10 +7,7 @@
   right: 0;
   z-index: 999999999;
   overflow-y: auto;
-
-  @include themed {
-    background-color: t($background-1);
-  }
+  background-color: var(--light);
 }
 
 .Container {
@@ -27,20 +24,22 @@
   height: 80px;
   width: 80px;
   transition: 0.3s;
+  background-color: var(--complementary);
+  border-left: 1px solid var(--dark);
+  border-bottom: 1px solid var(--dark);
 
-  @include themed {
-    background-color: t($background-3);
-    border-left: 2px solid t($onBackground);
-    border-bottom: 2px solid t($onBackground);
+  svg,
+  path {
+    stroke: var(--dark);
+  }
 
+  &:hover {
+    background-color: var(--dark);
+
+    @include boxShadow(2);
     svg,
     path {
-      stroke: t($onBackground);
-    }
-
-    &:hover {
-      background-color: t($background-2);
-      @include boxShadow(2);
+      stroke: var(--light);
     }
   }
 

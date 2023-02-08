@@ -17,11 +17,8 @@ $boxDimension: 36px;
   align-items: center;
   border-radius: $radius;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-
-  @include themed {
-    border: 2px solid rgba(t($onBackground), 0.2);
-    color: t($onBackground);
-  }
+  border: 1px solid var(--primary);
+  color: var(--dark);
 }
 
 .name {
@@ -38,10 +35,8 @@ $boxDimension: 36px;
 }
 
 .selectedOption {
-  @include themed {
-    border: 2px solid t($onBackground);
-    color: t($onBackground);
-  }
+  border: 1px solid var(--dark);
+  color: var(--dark);
 }
 
 .outOfStock {

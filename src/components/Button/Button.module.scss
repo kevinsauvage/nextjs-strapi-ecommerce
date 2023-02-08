@@ -18,45 +18,33 @@
 }
 
 .primary {
-  background-color: $color-primary;
-  color: $color-background-2;
-  border: 2px solid $color-primary;
+  background-color: var(--primary);
+  color: var(--light);
+  border: 2px solid var(--primary);
 
   &:hover {
-    background-color: $color-background-2;
-    color: $color-primary;
-    border: 2px solid $color-primary;
+    border: 2px solid var(--dark);
   }
 }
 
-.secondary {
-  background-color: $color-complementary;
-  color: $color-background-2;
-}
-
 .contrast {
-  @include themed() {
-    background-color: t($onBackground);
-    color: t($background-2);
+  background-color: var(--dark);
+  color: var(--light);
+  border: 1px solid var(--primary);
 
-    &:hover {
-      border: 2px solid t($onBackground);
-      background-color: t($background-2);
-      color: t($onBackground);
-    }
+  &:hover {
+    background-color: var(--primary);
   }
 }
 
 .outlined {
-  @include themed() {
-    border: 2px solid t($onBackground);
-    background-color: t($background-2);
-    color: t($onBackground);
+  border: 2px solid var(--dark);
+  background-color: var(--dark);
+  color: var(--light);
 
-    &:hover {
-      border: 2px solid t($onBackground);
-      background-color: t($background-2);
-      color: t($onBackground);
-    }
+  &:hover {
+    border: 2px solid var(--dark);
+    background-color: var(--dark);
+    color: var(--dark);
   }
 }

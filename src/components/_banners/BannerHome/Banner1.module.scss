@@ -3,16 +3,15 @@
   width: 100%;
   height: 45vw;
   max-height: 700px;
-  overflow: hidden;
   margin-bottom: var(--space-6);
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
   background-position: top;
   background-repeat: no-repeat;
   background-size: cover;
   object-fit: cover;
+  overflow: hidden;
   border-radius: $radius;
-  @include boxShadow(2);
-  color: $color-onBackground;
+  color: var(--dark);
 
   @include respond('tablet') {
     height: 66vw;
@@ -25,6 +24,8 @@
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: $radius;
+  @include gradient-overlay(var(--RGB-light), 90deg);
 }
 
 .container {
@@ -57,7 +58,7 @@
     position: relative;
     z-index: 99;
     border-radius: $radius;
-    background-color: $color-onBackground;
+    background-color: var(--dark);
   }
 }
 
@@ -73,12 +74,12 @@
 }
 
 .link {
-  background-color: $color-onBackground;
+  background-color: var(--dark);
   width: fit-content;
   border-radius: $radius;
   padding: var(--space-0) var(--space-1);
   display: block;
-  color: $color-background-2;
+  color: var(--light);
 
   span {
     font-weight: $fontWeightNormal;

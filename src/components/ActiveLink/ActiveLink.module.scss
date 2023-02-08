@@ -12,16 +12,11 @@
   }
 
   &:hover {
-    @include themed {
-      @include underline(t($onBackground));
-    }
+    @include underline(var(--light));
   }
 }
 
 .active {
   font-weight: $fontWeightBold;
-
-  @include themed {
-    @include underline(t($onBackground));
-  }
+  @include underline(var(--light));
 }

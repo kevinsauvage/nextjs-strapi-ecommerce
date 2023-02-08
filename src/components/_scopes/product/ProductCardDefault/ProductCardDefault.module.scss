@@ -6,11 +6,8 @@
   width: 100%;
   cursor: pointer;
   border-radius: $radius;
-
-  @include themed {
-    border: 1px solid rgba(t($onBackground), 0.1);
-    background-color: rgba(t($background-3), 1);
-  }
+  border: 1px solid rgba(var(--dark), 0.1);
+  background-color: rgba(var(--complementary), 1);
 
   &:hover,
   &:focus,
@@ -33,21 +30,15 @@
   flex-direction: column;
   z-index: 999;
   height: 100%;
-
-  @include themed {
-    border-top: 1px solid rgba(t($onBackground), 0.1);
-    background-color: rgba(t($background-2), 1);
-  }
+  border-top: 1px solid rgba(var(--dark), 0.1);
+  background-color: var(--dark);
 }
 
 .contentInner {
-  padding: var(--space-1);
-  padding-top: var(--space-0);
+  padding: var(--space-0);
   height: 100%;
-
-  @include themed {
-    background-color: rgba(t($background-3), 1);
-  }
+  background-color: var(--dark);
+  color: var(--light);
 }
 
 .image {
@@ -68,25 +59,20 @@
   align-items: center;
   justify-content: flex-end;
   text-decoration: underline;
-
-  @include themed {
-    background-color: rgba(t($background-3), 1);
-    color: t($onBackground);
-  }
-
-  p {
-    @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
-  }
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
+  border: none;
+  margin-left: auto;
+  color: var(--light);
 }
 
 .discount {
   position: absolute;
   left: var(--space-0);
   top: var(--space-0);
-  background-color: $color-red;
+  background-color: var(--danger);
   z-index: 999;
   padding: 2px 6px;
-  color: $color-background-2;
+  color: var(--dark);
   border-radius: $radius;
 }
 

@@ -45,22 +45,18 @@ export default function ProductCardDefault({ product = {} }) {
           <div className={styles.contentInner}>
             <b className={styles.title}>{title}</b>
             <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
-            <div
+            <button
               className={styles.quickView}
-              role="button"
-              tabIndex="0"
+              type="button"
               aria-label="Quick view"
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 setSelectedProduct(product);
               }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') setSelectedProduct(product);
-              }}
             >
-              <p>Quick view</p>
-            </div>
+              Quick view
+            </button>
           </div>
         </div>
       </Link>

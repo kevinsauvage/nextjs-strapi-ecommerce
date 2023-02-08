@@ -44,6 +44,7 @@
 .variantList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+  grid-template-rows: 60px;
   gap: 3px;
   margin: var(--space-1) 0;
 }
@@ -55,9 +56,7 @@
   border-radius: $radius;
   overflow: hidden;
   max-width: 80px;
-  @include themed {
-    border: 2px solid rgba(t($onBackground), 0.2);
-  }
+  border: 1px solid var(--primary);
 
   img {
     width: 100%;
@@ -67,10 +66,6 @@
   }
 
   &.selectedVariant {
-    padding: 2px;
-
-    @include themed {
-      border: 2px solid t($onBackground) !important;
-    }
+    border: 2px solid var(--dark) !important;
   }
 }

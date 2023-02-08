@@ -1,21 +1,17 @@
 .container {
   display: flex;
-  gap: var(--space-1);
+  gap: var(--space-0);
   position: relative;
   margin-left: auto;
 }
 
 .search {
-  padding: var(--space-1);
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  @include themed {
-    background-color: t($onBackground);
-    path {
-      fill: t($background-2) !important;
-    }
+
+  path {
+    fill: var(--light);
   }
 }
 
@@ -28,32 +24,40 @@
   background-color: transparent;
   cursor: pointer;
 
-  @include themed {
-    path {
-      fill: t($onBackground);
-    }
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+  path {
+    fill: var(--light);
   }
 }
 
 .cart {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
 .totalItems {
   position: absolute;
   padding: 3px;
   border-radius: 50%;
-  top: -3px;
-  right: -8px;
+  top: -5px;
+  right: -9px;
   min-width: 1rem;
   min-height: 1rem;
-
-  @include themed {
-    background-color: t($onBackground);
-    color: t($background-2);
-  }
+  background-color: var(--complementary);
+  color: var(--dark);
+  @include borderLight(var(--RBG-primary), 1);
 
   p {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 10px;
     line-height: 10px;
+    color: var(--light);
   }
 }

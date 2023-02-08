@@ -3,9 +3,6 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-
-  @include themed() {
-    background-color: t($background-2);
-    color: t($onBackground);
-  }
+  background-color: var(--light);
+  color: var(--dark);
 }

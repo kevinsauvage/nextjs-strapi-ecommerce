@@ -2,11 +2,9 @@
   width: 100%;
   transition: all 0.2s ease-in-out 0.05s;
 
-  @include themed {
-    border-bottom: 1px solid t($onBackground);
-    &:last-of-type {
-      border: none;
-    }
+  border-bottom: 1px solid var(--dark);
+  &:last-of-type {
+    border: none;
   }
 }
 
@@ -41,10 +39,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease-in-out;
-
-    @include themed {
-      background-color: t($onBackground);
-    }
+    background-color: var(--dark);
   }
 
   & span:nth-child(2) {

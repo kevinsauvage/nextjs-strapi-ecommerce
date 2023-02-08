@@ -13,11 +13,8 @@ $boxDimension: 36px;
   border-radius: $radius;
   height: 100%;
   width: 100%;
-
-  @include themed {
-    border: 1px solid rgba(t($onBackground), 0.1);
-    background-color: t($background-3);
-  }
+  border: 1px solid var(--onBackground-600);
+  background-color: var(--complementary);
 }
 
 .input {
@@ -27,10 +24,7 @@ $boxDimension: 36px;
   width: $boxDimension;
   border: none;
   background-color: transparent;
-
-  @include themed {
-    color: t($onBackground);
-  }
+  color: var(--dark);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -51,17 +45,15 @@ $boxDimension: 36px;
   align-items: center;
   justify-content: center;
 
-  @include themed {
-    &:first-of-type {
-      border-right: 1px solid rgba(t($onBackground), 0.1);
-    }
+  &:first-of-type {
+    border-right: 1px solid var(--onBackground-600);
+  }
 
-    &:last-of-type {
-      border-left: 1px solid rgba(t($onBackground), 0.1);
-    }
+  &:last-of-type {
+    border-left: 1px solid var(--onBackground-600);
+  }
 
-    svg {
-      color: t($onBackground);
-    }
+  svg {
+    color: var(--dark);
   }
 }

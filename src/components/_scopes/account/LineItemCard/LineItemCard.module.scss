@@ -3,11 +3,8 @@
   position: relative;
   width: 100%;
   border-radius: $radius;
-
-  @include themed {
-    background-color: t($background-2);
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  background-color: var(--dark);
+  border: 0.1px solid rgba(var(--dark), 0.1);
 }
 
 .image {

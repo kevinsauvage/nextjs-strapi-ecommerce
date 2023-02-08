@@ -4,10 +4,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 30px 0;
-
-  @include themed {
-    background-color: rgba(t($onBackground), 0.06);
-  }
 }
 
 .item {
@@ -18,10 +14,10 @@
   text-align: center;
   gap: 8px;
 
-  color: $color-onBackground;
+  color: var(--bg-600);
 
   svg {
-    color: $color-onBackground;
+    color: var(--bg-600);
 
     font-size: 40px;
   }
@@ -33,7 +29,5 @@
 }
 
 .subtitle {
-  @include themed() {
-    color: t($complementary);
-  }
+  color: var(--primary);
 }

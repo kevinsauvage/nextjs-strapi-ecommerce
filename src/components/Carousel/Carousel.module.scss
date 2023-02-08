@@ -39,14 +39,12 @@
   border: none;
   width: 30px;
 
-  @include themed {
-    background-color: t($background-3);
-    transition: all 0.2s ease-in-out;
-    border: 0.1px solid rgba(t($onBackground), 0.3);
+  background-color: var(--complementary);
+  transition: all 0.2s ease-in-out;
+  border: 0.1px solid rgba(var(--dark), 0.3);
 
-    &:hover {
-      background-color: t($background-1);
-    }
+  &:hover {
+    background-color: var(--light);
   }
   svg {
     font-size: 40px;

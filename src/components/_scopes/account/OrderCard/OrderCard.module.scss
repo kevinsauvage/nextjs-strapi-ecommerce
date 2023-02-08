@@ -2,11 +2,8 @@
   padding: var(--space-2);
   border-radius: $radius;
   width: 100%;
-
-  @include themed {
-    background-color: t($background-1);
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  background-color: var(--complementary);
+  border: 0.1px solid var(--bg-500);
 }
 
 .header {

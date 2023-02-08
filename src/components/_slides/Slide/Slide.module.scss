@@ -6,16 +6,14 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999999999999;
-
-  @include themed {
-    background-color: rgba(black, 0.9);
-  }
+  z-index: 99999;
+  @include overlay(black, 0.9);
 }
 
 .outer {
   position: fixed;
   right: 0px;
+  z-index: 999999;
   animation: slide-top 600ms cubic-bezier(0.25, 1, 0.5, 1) 0s 1 normal both;
   max-width: 500px;
   width: 100%;
@@ -23,11 +21,8 @@
   display: flex;
   flex-direction: column;
   overflow-x: auto;
-
-  @include themed {
-    background-color: t($background-3);
-    border-left: 0.1px solid rgba(t($onBackground), 0.5);
-  }
+  background-color: var(--light);
+  border-left: 0.1px solid rgba(var(--dark), 0.5);
 }
 
 .header {
@@ -35,32 +30,32 @@
   align-items: center;
   justify-content: space-between;
   min-height: $header-height;
-  padding: 0 30px;
-
-  @include themed {
-    background-color: t($background-1);
-    border-bottom: 0.1px solid rgba(t($onBackground), 0.2);
-  }
+  background-color: var(--dark);
+  color: var(--light);
+  border-bottom: 0.1px solid rgba(var(--RGB-dark), 0.2);
 }
 
 .title {
   text-transform: uppercase;
+  margin-left: var(--space-1);
 }
 
 .close {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+  color: var(--light);
+  height: $header-height;
+  width: $header-height;
 
-  @include themed {
-    color: t($onBackground);
+  &:hover {
+    transition: 0.3s ease;
+    background-color: var(--dark);
   }
 
   svg {
-  }
-
-  svg {
+    width: 30px;
+    height: 30px;
   }
 }
 

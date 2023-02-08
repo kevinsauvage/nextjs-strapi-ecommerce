@@ -27,10 +27,7 @@
   min-height: 16px;
   border-radius: 50%;
   margin-right: 14px;
-
-  @include themed {
-    background-color: t($onBackground);
-  }
+  background-color: var(--dark);
 
   &.last {
     margin-right: 0px;
@@ -38,9 +35,6 @@
 
   &.active {
     outline-offset: 0.2rem;
-
-    @include themed {
-      outline: 0.125rem solid t($onBackground);
-    }
+    outline: 0.125rem solid var(--dark);
   }
 }

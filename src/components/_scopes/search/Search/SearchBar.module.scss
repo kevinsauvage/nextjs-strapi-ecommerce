@@ -5,10 +5,7 @@
   transition: max-height 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
   overflow: hidden;
   height: 300px;
-
-  @include themed {
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  border: 0.1px solid rgba(var(--dark), 0.1);
 }
 
 .expanded {
@@ -40,17 +37,14 @@
   border: none;
   font-size: 60px;
   border-radius: $radius;
+  background-color: rgba(var(--dark), 0.04);
+  color: rgba(var(--dark), 0.9);
 
-  @include themed() {
-    background-color: rgba(t($onBackground), 0.04);
-    color: rgba(t($onBackground), 0.9);
-
-    &::placeholder {
-      color: rgba(t($onBackground), 0.6);
-    }
-    @include placeholder {
-      color: rgba(t($onBackground), 0.3);
-    }
+  &::placeholder {
+    color: rgba(var(--dark), 0.6);
+  }
+  @include placeholder {
+    color: rgba(var(--dark), 0.3);
   }
 
   &:focus {

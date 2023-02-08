@@ -11,8 +11,14 @@ function CollectionsRow({ collections }) {
       <ul className={styles.list}>
         {collections.map((collection) => (
           <li key={collection.title} className={styles.card}>
-            <Link href={`${config.routes.collection}/${collection.handle}`} className={styles.link}>
-              <Image src={collection.image.url} alt={collection.image.alt} width={300} height={300} />
+            <Link href={`${config.routes.collection}/${collection.handle}`}>
+              <Image
+                className={styles.image}
+                src={collection.image.url}
+                alt={collection.image.alt}
+                width={300}
+                height={300}
+              />
               <b>{collection.title}</b>
             </Link>
           </li>

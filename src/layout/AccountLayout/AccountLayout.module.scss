@@ -22,11 +22,8 @@
   border-radius: 3px;
   padding: 3px 8px;
   background: transparent;
-
-  @include themed() {
-    color: t($onBackground);
-    border: 2px solid t($onBackground);
-  }
+  color: var(--dark);
+  border: 2px solid var(--dark);
 }
 
 .main {

@@ -5,13 +5,9 @@
   position: sticky;
   position: -webkit-sticky;
   border-radius: $radius;
-
   top: var(--space-2);
-
-  @include themed {
-    background-color: t($background-1);
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  background-color: var(--complementary);
+  border: 0.01px solid var(--dark);
 }
 
 .title {
@@ -24,10 +20,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  @include themed {
-    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
-  }
+  border-bottom: 0.01px solid var(--dark);
 }
 
 .btn {
@@ -37,12 +30,9 @@
 
 .CartSummaryRow {
   padding: var(--space-0) 0;
-
-  @include themed {
-    border-bottom: 0.01px solid rgba(t($onBackground), 0.3);
-    &:last-of-type {
-      border-bottom: none;
-    }
+  border-bottom: 0.01px solid var(--primary);
+  &:last-of-type {
+    border-bottom: none;
   }
   &__title {
     font-weight: $fontWeightMedium;

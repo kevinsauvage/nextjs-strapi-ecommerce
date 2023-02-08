@@ -11,10 +11,8 @@
   right: 0;
   border-radius: $radius;
 
-  @include themed {
-    border: 0.1px solid t($onBackground);
-    background-color: t($background-2);
-  }
+  border: 0.1px solid var(--dark);
+  background-color: var(--dark);
 }
 
 .button {
@@ -25,10 +23,9 @@
   svg {
     margin-left: 4px;
   }
-  @include themed {
-    path {
-      fill: t($onBackground);
-    }
+
+  path {
+    fill: var(--dark);
   }
 }
 
@@ -37,18 +34,14 @@
   white-space: nowrap;
   cursor: pointer;
 
-  @include themed {
-    border-bottom: 0.1px solid t($onBackground);
-  }
+  border-bottom: 0.1px solid var(--dark);
 
   &:last-of-type {
     border-bottom: none;
   }
 
   &:hover {
-    @include themed {
-      background-color: rgba(t($onBackground), 1);
-      color: t($background-2);
-    }
+    background-color: rgba(var(--dark), 1);
+    color: var(--dark);
   }
 }

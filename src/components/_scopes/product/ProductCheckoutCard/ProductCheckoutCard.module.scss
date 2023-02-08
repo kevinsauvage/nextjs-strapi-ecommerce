@@ -3,9 +3,8 @@
   display: flex;
   margin: var(--space-1) 0;
   border-radius: $radius;
-  @include themed {
-    background-color: t($background-2);
-  }
+  background-color: var(--dark);
+  color: var(--light);
 }
 
 .image {

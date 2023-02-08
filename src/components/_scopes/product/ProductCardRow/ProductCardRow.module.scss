@@ -4,10 +4,8 @@
   height: 100%;
   display: flex;
   width: 100%;
-  @include themed {
-    background-color: lighten(t($background-2), 6%);
-    color: t($onBackground);
-  }
+  background-color: var(--dark);
+  color: var(--dark);
 }
 
 .content {

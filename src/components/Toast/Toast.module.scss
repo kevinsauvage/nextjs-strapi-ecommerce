@@ -7,6 +7,7 @@
   max-height: 50px;
   animation: slideUp 0.3s ease-in-out forwards;
   z-index: 9999999999999999999;
+  color: var(--light);
 
   .toastContainer {
     width: 100%;
@@ -23,27 +24,19 @@
       font-weight: $fontWeightMedium;
 
       &.info {
-        border-top: darken($color-info, 20%) solid 1px;
-        background-color: $color-info;
-        color: lighten($color-info, 70%);
+        background-color: var(--RGB-dark);
       }
 
       &.error {
-        border-top: darken($color-error, 20%) solid 1px;
-        background-color: $color-error;
-        color: lighten($color-error, 70%);
+        background-color: var(--danger);
       }
 
       &.warning {
-        border-top: darken($color-warning, 20%) solid 1px;
-        background-color: $color-warning;
-        color: lighten($color-warning, 70%);
+        background-color: var(--warning);
       }
 
       &.success {
-        border-top: darken($color-success, 20%) solid 1px;
-        background-color: $color-success;
-        color: lighten($color-success, 70%);
+        background-color: var(--success);
       }
     }
   }

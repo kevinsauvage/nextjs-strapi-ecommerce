@@ -58,6 +58,7 @@ function OrderDetail() {
       <AccountLayout loading={isLoading || !id} title="Account Details">
         <Form
           onSubmit={handleSubmit}
+          requiredFields={['firstName', 'lastName', 'email']}
           initialValues={{
             acceptsMarketing: true,
             email,
@@ -68,11 +69,18 @@ function OrderDetail() {
           }}
         >
           <Row>
-            <Input input="true" id="firstName" type="text" label="First Name" name="firstName" required />
-            <Input input="true" id="lastName" type="text" name="lastName" label="Last Name" required />
+            <Input
+              input="true"
+              id="firstName"
+              type="text"
+              label="First Name"
+              name="firstName"
+              required="true"
+            />
+            <Input input="true" id="lastName" type="text" name="lastName" label="Last Name" required="true" />
           </Row>
           <Row>
-            <Input input="true" id="email" type="email" label="Email Address" name="email" required />
+            <Input input="true" id="email" type="email" label="Email Address" name="email" required="true" />
             <Input input="true" id="password" type="password" name="password" label="Password" />
           </Row>
           <Row>

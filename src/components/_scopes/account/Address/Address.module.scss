@@ -3,14 +3,11 @@
   flex-direction: column;
   justify-content: space-between;
   padding: var(--space-2);
-  padding-bottom: var(--space-1);
   border-radius: $radius;
   width: 100%;
-
-  @include themed {
-    background-color: t($background-1);
-    border: 0.1px solid rgba(t($onBackground), 0.1);
-  }
+  background-color: var(--dark);
+  color: var(--light);
+  border: 0.1px solid var(--bg-500);
 }
 
 .header {
@@ -24,17 +21,6 @@
   display: flex;
   align-items: center;
   gap: $gapSmall;
-}
-
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  width: fit-content;
-  background-color: rgb(var(--color-light-4));
-  color: rgb(var(--color-dark-0));
-  border: 1px solid rgb(var(--color-dark-0));
 }
 
 .setAsDefault {

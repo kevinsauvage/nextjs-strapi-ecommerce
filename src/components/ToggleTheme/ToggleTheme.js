@@ -16,12 +16,12 @@ function ToggleTheme() {
   const handleClick = () => {
     const element = document.querySelector('html');
     if (!isActive) {
-      element.classList.remove('theme--default');
+      element.classList.remove('theme--light');
       element.classList.add('theme--dark');
       window.localStorage.setItem('isDarkTheme', null);
     } else {
       element.classList.remove('theme--dark');
-      element.classList.add('theme--default');
+      element.classList.add('theme--light');
       window.localStorage.removeItem('isDarkTheme');
     }
     setIsActive((prev) => !prev);
