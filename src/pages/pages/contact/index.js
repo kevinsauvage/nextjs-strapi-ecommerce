@@ -37,6 +37,7 @@ function ContactPage() {
           onSubmit={onSubmit}
           action="submit"
           title="Contact Us"
+          initialValues={[{ email: '', name: '', message: '' }]}
           requiredFields={['email', 'name', 'message']}
         >
           <Input

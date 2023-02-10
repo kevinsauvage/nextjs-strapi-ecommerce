@@ -178,3 +178,50 @@
 @mixin borderLight($color, $opacity: 0.5) {
   border: 0.1px solid rgba($color, $opacity);
 }
+
+@mixin button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  padding: 14px 40px;
+  border-radius: $radius;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+  transition: all 0.3s ease-in;
+  border: 2px solid transparent;
+  @include boxShadow(2);
+}
+
+@mixin button-primary {
+  @include button;
+  background-color: var(--primary-500);
+  color: var(--onSurface-dark);
+
+  &:hover {
+    background-color: var(--primary-700);
+  }
+}
+
+@mixin button-secondary {
+  @include button;
+  background-color: var(--complementary-500);
+  border: 2px solid var(--complementary-600);
+  color: var(--onSurface-dark);
+
+  &:hover {
+    background-color: var(--complementary-700);
+  }
+}
+
+@mixin button-outlined {
+  @include button;
+  border: 2px solid var(--complementary-500);
+  background-color: transparent;
+  color: var(--onSurface-dark);
+
+  &:hover {
+    border: 2px solid var(--complementary-700);
+  }
+}

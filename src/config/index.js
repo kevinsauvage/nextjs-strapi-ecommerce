@@ -55,6 +55,7 @@ config.routes = {
   shipping: '/pages/shipping',
   login: '/login',
   register: '/register',
+  cart: '/cart',
   account: '/account',
   emailResetPassword: '/send_recovery_email',
   resetPassword: '/reset_password',

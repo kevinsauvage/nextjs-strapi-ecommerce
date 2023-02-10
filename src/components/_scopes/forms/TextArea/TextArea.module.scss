@@ -20,7 +20,7 @@
 .textarea {
   min-height: 200px;
   width: 100%;
-  padding-top: var(--space-1);
+  padding-top: var(--space-0);
   padding-left: var(--space-1);
   resize: vertical;
   border-radius: $radius;
@@ -28,9 +28,9 @@
   background-color: var(--surface-200);
   color: var(--onSurface-medium);
 
+  &:focus,
   &:focus-visible {
-    outline-offset: 0.125rem;
-    outline: 0.1rem solid rgba(var(--surface-900), 0.3);
+    outline: 1px solid var(--primary-500);
   }
 
   @include placeholder {

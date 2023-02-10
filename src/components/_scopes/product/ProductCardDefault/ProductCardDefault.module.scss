@@ -5,15 +5,12 @@
   max-width: 330px;
   width: 100%;
   cursor: pointer;
-  border-radius: $radius;
-  border: 1px solid var(--surface-200);
-  background-color: rgba(var(--complementary), 1);
+  background-color: var(--surface-100);
 
   &:hover,
   &:focus,
   &:active,
   &:focus-within {
-    @include boxShadow(1);
     img {
       transform: scale(1.1);
     }
@@ -31,11 +28,10 @@
   z-index: 999;
   height: 100%;
   border-top: 1px solid rgba(var(--surface-900), 0.1);
-  background-color: var(--surface-900);
+  background-color: var(--surface-100);
 }
 
 .contentInner {
-  padding: var(--space-0);
   height: 100%;
   background-color: var(--surface-200);
 }
@@ -44,6 +40,7 @@
   position: relative;
   width: 100%;
   display: flex;
+  overflow: hidden;
 
   img {
     transition: 0.2s all ease-in-out;

@@ -45,16 +45,7 @@
 }
 
 .link {
-  background-color: var(--complementary-500);
   width: fit-content;
-  border-radius: $radius;
-  padding: var(--space-0) var(--space-1);
-  display: block;
-  color: var(--onSurface-dark);
-
-  span {
-    font-weight: $fontWeightNormal;
-    width: fit-content;
-    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-  }
+  @include button-secondary;
+  padding: 10px 20px;
 }

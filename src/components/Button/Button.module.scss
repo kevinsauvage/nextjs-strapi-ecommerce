@@ -1,58 +1,15 @@
 .button {
-  letter-spacing: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease-in;
-  white-space: nowrap;
-  padding: 14px 50px;
-  border-radius: 1px;
-  transition: 600ms;
-  transform: translateY(0);
-  text-transform: uppercase;
-  font-weight: $fontWeightSemiBold;
-  border-radius: $radius;
-  border: 2px solid transparent;
-
-  @include boxShadow(2);
+  @include button;
 }
 
 .primary {
-  background-color: var(--primary-500);
-  color: var(--onSurface-dark);
-
-  &:hover {
-    background-color: var(--primary-700);
-  }
+  @include button-primary;
 }
 
 .secondary {
-  background-color: var(--complementary-500);
-  color: var(--onSurface-dark);
-
-  &:hover {
-    background-color: var(--complementary-700);
-  }
-}
-
-.contrast {
-  background-color: var(--surface-dark);
-  color: var(--surface-100);
-  border: 1px solid var(--primary);
-
-  &:hover {
-    background-color: var(--primary);
-  }
+  @include button-secondary;
 }
 
 .outlined {
-  border: 2px solid var(--surface-900);
-  background-color: var(--surface-900);
-  color: var(--surface-100);
-
-  &:hover {
-    border: 2px solid var(--surface-900);
-    background-color: var(--surface-900);
-    color: var(--surface-900);
-  }
+  @include button-outlined;
 }

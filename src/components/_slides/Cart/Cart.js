@@ -1,26 +1,27 @@
-import { useRouter } from 'next/router';
-import Button from '@/components/Button/Button';
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import ProductCheckoutCard from '@/components/_scopes/product/ProductCheckoutCard/ProductCheckoutCard';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import EmptyCart from '@/components/_scopes/cart/EmptyCart/EmptyCart';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
+import Link from 'next/link';
+import config from 'src/config';
 import styles from './Cart.module.scss';
 import Slide from '../Slide/Slide';
 
 function CartFooter() {
-  const router = useRouter();
   const { checkout } = useCheckoutContext();
 
   return (
     <footer className={styles.footer}>
+      <div className={styles.link}>
+        <Link href={config.routes.cart}>View Cart</Link>
+      </div>
       <div className={styles.subtotal}>
         <p className={styles.subtotalTitle}>Subtotal</p>
         <p className={styles.amount}>{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
       </div>
       <div className={styles.buttons}>
-        <Button text="View cart" extraClass={styles.btn} secondary onClick={() => router.push('/cart')} />
         <CheckoutBtn
           extraClass={styles.btn}
           amount={checkout?.totalPrice?.amount}

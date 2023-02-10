@@ -19,7 +19,6 @@ export default function Button({
   const getStyle = () => {
     if (primary) return styles.primary;
     if (secondary) return styles.secondary;
-    if (contrast) return styles.contrast;
     if (outlined) return styles.outlined;
     return '';
   };
