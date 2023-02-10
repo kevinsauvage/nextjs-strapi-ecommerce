@@ -21,22 +21,29 @@
       justify-content: center;
       align-items: center;
       min-height: 40px;
-      font-weight: $fontWeightMedium;
+
+      p {
+        font-weight: $fontWeightMedium;
+      }
 
       &.info {
-        background-color: var(--RGB-surface-900);
+        background-color: var(--primary-300);
+        color: var(--primary-600);
       }
 
       &.error {
-        background-color: var(--danger);
+        background-color: var(--danger-600);
+        color: var(--danger-100);
       }
 
       &.warning {
-        background-color: var(--warning);
+        background-color: var(--warning-300);
+        color: var(--warning-600);
       }
 
       &.success {
-        background-color: var(--success);
+        background-color: var(--success-300);
+        color: var(--success-600);
       }
     }
   }
