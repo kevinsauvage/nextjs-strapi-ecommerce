@@ -4,10 +4,10 @@
 
   &.missing {
     b {
-      color: red;
+      color: var(--danger-500);
     }
     textarea {
-      border: 1px solid red;
+      border: 1px solid var(--danger-500);
     }
   }
 }
