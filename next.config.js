@@ -20,6 +20,7 @@ const nextConfig = {
         @import "_variables.scss";
         @import "_mixins.scss";
         @import "_responsive.scss";
+        @import "_themes.scss";
         `,
   },
   experimental: {

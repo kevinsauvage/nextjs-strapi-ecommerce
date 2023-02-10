@@ -50,7 +50,7 @@ function CartPage() {
             {lineItemsToUpdate.length > 0 && (
               <Button
                 extraClass={styles.button}
-                contrast
+                secondary
                 onClick={handleUpdate}
                 disabled={!lineItemsToUpdate.length}
               >

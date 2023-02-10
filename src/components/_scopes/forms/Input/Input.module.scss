@@ -34,15 +34,15 @@
   resize: vertical;
   padding-left: var(--space-1);
   border: 1px solid rgba(var(--RGB-primary), 0.1);
-  background-color: rgba(var(--RGB-complementary), 0.3);
-  color: var(--dark);
+  background-color: var(--surface-200);
+  color: var(--onSurface-medium);
 
   @include placeholder {
-    color: rgba(var(--dark), 0.3);
+    color: rgba(var(--surface-900), 0.3);
   }
 
   &:focus-visible {
     outline-offset: 0.125rem;
-    outline: 0.1rem solid rgba(var(--dark), 0.3);
+    outline: 0.1rem solid rgba(var(--surface-900), 0.3);
   }
 }

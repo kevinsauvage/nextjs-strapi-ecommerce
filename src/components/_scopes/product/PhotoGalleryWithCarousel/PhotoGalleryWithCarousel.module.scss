@@ -3,7 +3,7 @@ $maxHeight: 600px;
 .container {
   width: 100%;
   height: fit-content;
-  background-color: var(--light);
+  background-color: var(--surface-100);
 }
 
 .selectedImage {
@@ -32,7 +32,7 @@ $maxHeight: 600px;
   border: none;
   display: block;
   padding: 0px;
-  border-right: 2px solid var(--light);
+  border-right: 2px solid var(--surface-100);
 
   .image {
     width: 100%;

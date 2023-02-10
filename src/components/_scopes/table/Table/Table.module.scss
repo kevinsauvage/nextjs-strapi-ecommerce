@@ -5,28 +5,28 @@
   border-collapse: separate;
   border-radius: $radius;
   overflow: hidden;
-  border: 0.01px solid var(--light);
+  border: 0.01px solid var(--surface-200);
 }
 
 .tHead {
   font-weight: $fontWeightSemiBold;
-  padding: var(--space-1) var(--space-0);
+  padding: var(--space-1);
   text-transform: uppercase;
   text-align: start;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-  border-bottom: 0.01px solid var(--light);
-  background-color: var(--dark);
-  color: var(--light);
+  border-bottom: 0.01px solid var(--surface-200);
+  background-color: var(--surface-300);
+  color: var(--onSurface-hight);
 }
 
 .tData {
   text-align: start;
   vertical-align: middle;
-  padding: var(--space-0) var(--space-0);
+  padding: var(--space-0) var(--space-1);
   height: 80px;
   font-weight: $fontWeightNormal;
   min-width: 100px;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
   background-color: rgba(var(--RGB-complementary), 0.5);
-  border-bottom: 0.01px solid var(--light);
+  border-bottom: 0.01px solid var(--surface-200);
 }

@@ -6,11 +6,11 @@
 }
 
 .noResult {
-  width: 100%;
+  width: fit-content;
   text-align: center;
-  margin: var(--space-2) 0;
+  margin: var(--space-2) auto;
   padding: 8px;
-  background-color: rgb(var(--RGB-dark));
-  color: rgb(var(--RGB-light));
+  background-color: rgb(var(--RGB-surface-900));
+  color: rgb(var(--RGB-surface-100));
   border-radius: 3px;
 }

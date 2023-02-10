@@ -1,6 +1,8 @@
 .selectedOptions {
   margin: var(--space-0) 0;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  p {
+    font-size: 12px;
+  }
 }
 
 .option {
@@ -10,7 +12,6 @@
 
 .name {
   margin-right: 8px;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
   font-weight: $fontWeightMedium;
 }
 

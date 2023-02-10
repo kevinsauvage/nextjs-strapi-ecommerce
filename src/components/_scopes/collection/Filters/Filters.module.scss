@@ -1,6 +1,6 @@
 .filters {
   padding: var(--space-2);
-  color: var(--dark);
+  color: var(--surface-900);
 }
 .filter {
   display: flex;
@@ -21,13 +21,13 @@
   justify-content: center;
   align-items: center;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  border: 0.1px solid var(--dark);
-  color: var(--dark);
+  border: 0.1px solid var(--surface-900);
+  color: var(--surface-900);
 }
 
 .checked {
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: var(--surface-900);
+  color: var(--surface-100);
 }
 
 .label {

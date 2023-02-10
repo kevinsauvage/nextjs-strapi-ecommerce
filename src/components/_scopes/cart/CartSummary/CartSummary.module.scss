@@ -6,8 +6,7 @@
   position: -webkit-sticky;
   border-radius: $radius;
   top: var(--space-2);
-  background-color: var(--complementary);
-  border: 0.01px solid var(--dark);
+  border: 0.01px solid var(--surface-400);
 }
 
 .title {
@@ -20,7 +19,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border-bottom: 0.01px solid var(--dark);
+  border-bottom: 0.01px solid var(--surface-900);
 }
 
 .btn {

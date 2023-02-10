@@ -7,7 +7,7 @@
   right: 0;
   z-index: 999999999;
   overflow-y: auto;
-  background-color: var(--light);
+  background-color: var(--surface-100);
 }
 
 .Container {
@@ -25,21 +25,21 @@
   width: 80px;
   transition: 0.3s;
   background-color: var(--complementary);
-  border-left: 1px solid var(--dark);
-  border-bottom: 1px solid var(--dark);
+  border-left: 1px solid var(--surface-900);
+  border-bottom: 1px solid var(--surface-900);
 
   svg,
   path {
-    stroke: var(--dark);
+    stroke: var(--surface-900);
   }
 
   &:hover {
-    background-color: var(--dark);
+    background-color: var(--surface-900);
 
     @include boxShadow(2);
     svg,
     path {
-      stroke: var(--light);
+      stroke: var(--surface-100);
     }
   }
 

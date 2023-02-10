@@ -2,7 +2,7 @@
   width: 100%;
   transition: all 0.2s ease-in-out 0.05s;
 
-  border-bottom: 1px solid var(--dark);
+  border-bottom: 1px solid var(--surface-900);
   &:last-of-type {
     border: none;
   }
@@ -39,7 +39,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
     transition: all 0.3s ease-in-out;
-    background-color: var(--dark);
+    background-color: var(--surface-900);
   }
 
   & span:nth-child(2) {

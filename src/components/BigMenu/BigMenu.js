@@ -10,7 +10,7 @@ function BigMenu({ data, handleClose, collections }) {
         <li key={item.id}>
           {item.items ? (
             <>
-              <h4 className={styles.title}>{item.title}</h4>
+              <h5 className={styles.title}>{item.title}</h5>
               {renderItems(item.items)}
             </>
           ) : (

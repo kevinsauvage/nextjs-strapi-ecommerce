@@ -7,9 +7,9 @@
   padding-top: 0;
 }
 .footer {
-  background-color: var(--dark);
-  color: var(--light);
-  border-top: 0.1px solid rgba(var(--dark), 0.2);
+  color: var(--onSurface-dark);
+  background-color: var(--surface-dark);
+  border-top: 0.1px solid var(--surface-300);
 }
 
 .subtotal {
@@ -17,5 +17,5 @@
   align-items: center;
   justify-content: space-between;
   padding: var(--space-0) var(--space-1);
-  border-bottom: 0.1px solid rgba(var(--dark), 0.2);
+  border-bottom: 0.1px solid var(--surface-300);
 }

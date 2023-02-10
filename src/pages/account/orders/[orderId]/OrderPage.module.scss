@@ -5,8 +5,9 @@
   padding: var(--space-2);
   border-radius: $radius;
   width: 100%;
-  background-color: var(--complementary);
-  border: 0.1px solid var(--bg-500);
+  background-color: var(--surface-200);
+  color: var(--onSurface-medium);
+  border: 0.1px solid var(--surface-300);
 }
 
 .top {

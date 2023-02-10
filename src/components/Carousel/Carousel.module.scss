@@ -41,10 +41,10 @@
 
   background-color: var(--complementary);
   transition: all 0.2s ease-in-out;
-  border: 0.1px solid rgba(var(--dark), 0.3);
+  border: 0.1px solid rgba(var(--surface-900), 0.3);
 
   &:hover {
-    background-color: var(--light);
+    background-color: var(--surface-100);
   }
   svg {
     font-size: 40px;

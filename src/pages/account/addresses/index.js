@@ -96,7 +96,7 @@ function Addresses() {
         ) : (
           <p className={styles.noAddresses}>There is no addresses to show</p>
         )}
-        <Button extraClass={styles.btn} contrast href={config.routes.createAddress}>
+        <Button extraClass={styles.btn} primary href={config.routes.createAddress}>
           Add new address
         </Button>
       </AccountLayout>

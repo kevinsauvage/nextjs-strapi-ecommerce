@@ -49,8 +49,8 @@
   width: 80px;
   background-color: transparent;
   border: none;
-  border-bottom: 1px solid var(--dark);
-  color: var(--dark);
+  border-bottom: 1px solid var(--surface-900);
+  color: var(--surface-900);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -67,7 +67,7 @@
   cursor: pointer;
   svg,
   path {
-    stroke: var(--dark);
+    stroke: var(--surface-900);
   }
 }
 

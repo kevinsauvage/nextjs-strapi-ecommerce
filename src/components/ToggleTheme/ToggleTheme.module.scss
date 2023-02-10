@@ -13,7 +13,7 @@ $height: 34px;
   padding: 8.7px;
   border-radius: 99em;
   transition: all 0.3s ease;
-  background-color: var(--primary-700);
+  background-color: var(--complementary-600);
   @include borderLight(var(--RBG-rimary), 0.6);
 }
 
@@ -26,8 +26,8 @@ $height: 34px;
   min-height: $innerSize;
   border-radius: 50%;
   transition: all 0.3s ease;
-  background-color: var(--dark);
-  @include borderLight(var(--RBG-rimary), 1);
+  background-color: var(--surface-dark);
+  @include borderLight(var(--RBG-primary-100), 1);
   z-index: 0;
 }
 
@@ -37,32 +37,33 @@ $height: 34px;
 }
 .moon {
   path {
-    fill: var(--primary-700);
-    stroke: var(--light);
+    fill: var(--surface-dark);
+    stroke: var(--surface-100);
   }
 }
 
 .sun {
   path {
-    fill: var(--primary-700);
-    stroke: var(--light);
+    fill: var(--complementary-600);
+    stroke: var(--surface-100);
   }
 }
 
 .active {
   .inner {
-    transform: translateY(-50%) translateX(100%);
+    transform: translateY(-50%) translateX(102%);
   }
 
   .sun {
     path {
-      stroke: var(--light);
+      stroke: var(--onSurface-dark);
     }
   }
 
   .moon {
     path {
-      stroke: var(--dark);
+      stroke: var(--onSurface-dark);
+      fill: var(--complementary-600);
     }
   }
 }

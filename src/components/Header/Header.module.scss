@@ -4,8 +4,8 @@
   z-index: 9999;
   position: relative;
   height: $header-height;
-  background-color: var(--dark);
-  border-bottom: 0.1px solid rgba(var(--RGB-light), 0.1);
+  background-color: var(--surface-dark);
+  border-bottom: 0.1px solid rgba(var(--RGB-surface-100), 0.1);
 }
 
 .inner {

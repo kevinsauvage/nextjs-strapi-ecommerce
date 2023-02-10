@@ -1,13 +1,16 @@
 .AccountLayout {
   position: relative;
-  padding: var(--space-5) 0;
+  padding-bottom: var(--space-4);
 }
 
 .banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-3);
+  margin: var(--space-2) 0;
+  background-color: var(--surface-200);
+  padding: var(--space-2);
+  border-radius: $radius;
 }
 
 .title {
@@ -22,8 +25,8 @@
   border-radius: 3px;
   padding: 3px 8px;
   background: transparent;
-  color: var(--dark);
-  border: 2px solid var(--dark);
+  color: var(--complementary-500);
+  border: 2px solid var(--complementary-500);
 }
 
 .main {

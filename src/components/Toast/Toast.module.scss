@@ -7,7 +7,7 @@
   max-height: 50px;
   animation: slideUp 0.3s ease-in-out forwards;
   z-index: 9999999999999999999;
-  color: var(--light);
+  color: var(--surface-100);
 
   .toastContainer {
     width: 100%;
@@ -24,7 +24,7 @@
       font-weight: $fontWeightMedium;
 
       &.info {
-        background-color: var(--RGB-dark);
+        background-color: var(--RGB-surface-900);
       }
 
       &.error {

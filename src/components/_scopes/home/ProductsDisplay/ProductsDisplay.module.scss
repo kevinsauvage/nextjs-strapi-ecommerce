@@ -26,5 +26,5 @@
 
 .active {
   font-weight: $fontWeightBold;
-  @include underline(var(--dark));
+  @include underline(var(--surface-900));
 }

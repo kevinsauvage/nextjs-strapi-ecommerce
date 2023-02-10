@@ -20,7 +20,7 @@ function CartFooter() {
         <p className={styles.amount}>{`${checkout?.currencyCode} ${checkout?.totalPrice?.amount}`}</p>
       </div>
       <div className={styles.buttons}>
-        <Button text="View cart" extraClass={styles.btn} contrast onClick={() => router.push('/cart')} />
+        <Button text="View cart" extraClass={styles.btn} secondary onClick={() => router.push('/cart')} />
         <CheckoutBtn
           extraClass={styles.btn}
           amount={checkout?.totalPrice?.amount}

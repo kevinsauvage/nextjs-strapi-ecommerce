@@ -1,5 +1,7 @@
 $boxDimension: 36px;
 
+.quantityContainer {
+}
 .label {
   display: block;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
@@ -13,8 +15,8 @@ $boxDimension: 36px;
   border-radius: $radius;
   height: 100%;
   width: 100%;
-  border: 1px solid var(--onBackground-600);
-  background-color: var(--complementary);
+  border: 1px solid var(--surface-500);
+  background-color: var(--surface-200);
 }
 
 .input {
@@ -24,7 +26,9 @@ $boxDimension: 36px;
   width: $boxDimension;
   border: none;
   background-color: transparent;
-  color: var(--dark);
+  border-right: 1px solid var(--surface-500);
+  border-left: 1px solid var(--surface-500);
+  color: var(--onBackground-medium);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -54,6 +58,6 @@ $boxDimension: 36px;
   }
 
   svg {
-    color: var(--dark);
+    color: var(--surface-900);
   }
 }

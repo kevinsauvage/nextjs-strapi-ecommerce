@@ -3,8 +3,9 @@
   position: relative;
   width: 100%;
   border-radius: $radius;
-  background-color: var(--dark);
-  border: 0.1px solid rgba(var(--dark), 0.1);
+  background-color: var(--surface-300);
+  color: var(--onSurface-medium);
+  border: 0.1px solid var(--surface-400);
 }
 
 .image {

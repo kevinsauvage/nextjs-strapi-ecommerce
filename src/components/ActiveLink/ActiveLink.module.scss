@@ -12,11 +12,11 @@
   }
 
   &:hover {
-    @include underline(var(--light));
+    @include underline(var(--surface-100));
   }
 }
 
 .active {
   font-weight: $fontWeightBold;
-  @include underline(var(--light));
+  @include underline(var(--surface-100));
 }

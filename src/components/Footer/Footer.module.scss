@@ -10,10 +10,9 @@
 }
 
 .footer {
-  background-color: var(--dark);
-  color: var(--dark);
+  background-color: var(--surface-dark);
   padding: var(--space-3) 0;
-  color: var(--light);
+  color: var(--onSurface-dark);
 }
 
 .about {
@@ -58,7 +57,8 @@
   justify-content: space-between;
   width: 100%;
   padding: var(--space-0) 0;
-  border-top: 0.1px solid rgba(var(--RGB-onPrimary), 0.3);
-  background-color: var(--dark);
-  color: var(--light);
+  border-top: 0.1px solid rgba(var(--RGB-surface-100), 0.3);
+  background-color: var(--surface-dark);
+
+  color: var(--onSurface-dark);
 }

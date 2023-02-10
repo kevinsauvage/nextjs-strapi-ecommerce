@@ -18,18 +18,26 @@
 }
 
 .primary {
-  background-color: var(--primary);
-  color: var(--light);
-  border: 2px solid var(--primary);
+  background-color: var(--primary-500);
+  color: var(--onSurface-dark);
 
   &:hover {
-    border: 2px solid var(--dark);
+    background-color: var(--primary-700);
+  }
+}
+
+.secondary {
+  background-color: var(--complementary-500);
+  color: var(--onSurface-dark);
+
+  &:hover {
+    background-color: var(--complementary-700);
   }
 }
 
 .contrast {
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: var(--surface-dark);
+  color: var(--surface-100);
   border: 1px solid var(--primary);
 
   &:hover {
@@ -38,13 +46,13 @@
 }
 
 .outlined {
-  border: 2px solid var(--dark);
-  background-color: var(--dark);
-  color: var(--light);
+  border: 2px solid var(--surface-900);
+  background-color: var(--surface-900);
+  color: var(--surface-100);
 
   &:hover {
-    border: 2px solid var(--dark);
-    background-color: var(--dark);
-    color: var(--dark);
+    border: 2px solid var(--surface-900);
+    background-color: var(--surface-900);
+    color: var(--surface-900);
   }
 }

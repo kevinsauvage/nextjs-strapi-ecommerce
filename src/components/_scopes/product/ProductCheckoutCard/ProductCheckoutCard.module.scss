@@ -3,15 +3,15 @@
   display: flex;
   margin: var(--space-1) 0;
   border-radius: $radius;
-  background-color: var(--dark);
-  color: var(--light);
+  background-color: var(--surface-300);
+  padding: var(--space-0);
 }
 
 .image {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 150px;
+  max-width: 110px;
 
   img {
     border-radius: $radius;
@@ -25,7 +25,6 @@
   flex-direction: column;
   width: 100%;
   padding: 0 var(--space-0);
-  padding: var(--space-0);
 }
 
 .title {
@@ -38,6 +37,7 @@
 
 .variantTitle {
   margin-bottom: 12px;
+  font-size: 14px;
 }
 
 .quantity {
