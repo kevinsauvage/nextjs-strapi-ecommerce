@@ -5,7 +5,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import EmptyCart from '@/components/_scopes/cart/EmptyCart/EmptyCart';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import Link from 'next/link';
-import config from 'src/config';
+import config from '@/config/index';
 import styles from './Cart.module.scss';
 import Slide from '../Slide/Slide';
 
