@@ -21,9 +21,8 @@ export const getServerSideProps = async ({ res }) => {
 
   // Get all dynamic paths
   const dynamicPaths = collections?.reduce((acc, collection) => {
-    acc.push(`${BASE_URL}${config.routes.collection}/${collection.handle}`);
     collection.products.forEach((product) =>
-      acc.push(`${BASE_URL}${config.routes.collection}/${collection.handle}/${product.handle}`)
+      acc.push(`${BASE_URL}${product.productType}/${collection.handle}/${product.handle}`)
     );
     return acc;
   }, []);
