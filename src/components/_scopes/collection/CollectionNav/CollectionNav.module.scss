@@ -1,8 +1,9 @@
+.CollectionNav {
+  background-color: var(--surface-900);
+}
 .menu {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
-  gap: var(--space-2);
 
   @include respond('mobile') {
     gap: var(--space-1);
@@ -12,6 +13,29 @@
 .item {
   display: flex;
   align-items: center;
-  text-transform: uppercase;
   width: fit-content;
+  height: 100%;
+  height: 50px;
+  padding-right: var(--space-2);
+
+  a {
+    font-size: 13px;
+    color: var(--onSurface-dark);
+  }
+}
+
+.active {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 4px;
+    width: 100%;
+    background-color: var(--complementary-500);
+    border-radius: 4px;
+  }
 }

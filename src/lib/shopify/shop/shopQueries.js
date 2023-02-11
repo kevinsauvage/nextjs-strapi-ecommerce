@@ -91,6 +91,17 @@ query ($handle: String!) {
 }
 `;
 
+const getMetaObject = `
+query ($handle: MetaobjectHandleInput) {
+  metaobject(handle: $handle) {
+    fields {
+      key
+      value
+    }
+  }
+}
+`;
+
 const shopQueries = {
   getShop,
   getMenu,
@@ -99,6 +110,7 @@ const shopQueries = {
   getRefundPolicy,
   getShippingPolicy,
   getTermsOfService,
+  getMetaObject,
 };
 
 export default shopQueries;

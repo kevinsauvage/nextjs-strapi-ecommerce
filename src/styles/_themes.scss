@@ -3,7 +3,7 @@ $primary: #1383d3;
 $warning: #ffd752;
 $success: #52a86e;
 $error: #ee2d2d;
-$surface: #c8c8c8;
+$surface: #bebebe;
 $complementary: complement($primary);
 $surfaceDark: #121212;
 
@@ -68,15 +68,15 @@ $colors-light: (
   danger-800: darken($error, 20%),
   danger-900: darken($error, 30%),
   // Surface colors
-  surface-100: lighten($surface, 20%),
-  surface-200: lighten($surface, 15%),
+  surface-100: lighten($surface, 25%),
+  surface-200: lighten($surface, 20%),
   surface-300: lighten($surface, 10%),
   surface-400: lighten($surface, 5%),
   surface-500: $surface,
   surface-600: darken($surface, 5%),
   surface-700: darken($surface, 10%),
   surface-800: darken($surface, 15%),
-  surface-900: darken($surface, 20%),
+  surface-900: darken($surface, 35%),
   // Always dark
   surface-dark: $surfaceDark,
   // On surface
@@ -84,76 +84,6 @@ $colors-light: (
   onSurface-hight: #111111,
   onSurface-medium: #1e1e1e,
   onSurface-disabled: #272727
-);
-
-$colors-dark: (
-  // Primary colors
-  primary-100: lighten($primary-dark, 30%),
-  primary-200: lighten($primary-dark, 20%),
-  primary-300: lighten($primary-dark, 10%),
-  primary-400: lighten($primary-dark, 5%),
-  primary-500: $primary-dark,
-  primary-600: darken($primary-dark, 5%),
-  primary-700: darken($primary-dark, 10%),
-  primary-800: darken($primary-dark, 20%),
-  primary-900: darken($primary-dark, 30%),
-  // Complementary colors
-  complementary-100: lighten($complementary-dark, 30%),
-  complementary-200: lighten($complementary-dark, 20%),
-  complementary-300: lighten($complementary-dark, 10%),
-  complementary-400: lighten($complementary-dark, 5%),
-  complementary-500: $complementary-dark,
-  complementary-600: darken($complementary-dark, 5%),
-  complementary-700: darken($complementary-dark, 10%),
-  complementary-800: darken($complementary-dark, 20%),
-  complementary-900: darken($complementary-dark, 30%),
-  // Warning colors
-  warning-100: lighten($warning-dark, 30%),
-  warning-200: lighten($warning-dark, 20%),
-  warning-300: lighten($warning-dark, 10%),
-  warning-400: lighten($warning-dark, 5%),
-  warning-500: $warning-dark,
-  warning-600: darken($warning-dark, 5%),
-  warning-700: darken($warning-dark, 10%),
-  warning-800: darken($warning-dark, 20%),
-  warning-900: darken($warning-dark, 30%),
-  // Success colors
-  success-100: lighten($success-dark, 30%),
-  success-200: lighten($success-dark, 20%),
-  success-300: lighten($success-dark, 10%),
-  success-400: lighten($success-dark, 5%),
-  success-500: $success-dark,
-  success-600: darken($success-dark, 5%),
-  success-700: darken($success-dark, 10%),
-  success-800: darken($success-dark, 20%),
-  success-900: darken($success-dark, 30%),
-  // Error colors
-  danger-100: lighten($error-dark, 30%),
-  danger-200: lighten($error-dark, 20%),
-  danger-300: lighten($error-dark, 10%),
-  danger-400: lighten($error-dark, 5%),
-  danger-500: $error-dark,
-  danger-600: darken($error-dark, 5%),
-  danger-700: darken($error-dark, 10%),
-  danger-800: darken($error-dark, 20%),
-  danger-900: darken($error-dark, 30%),
-  // Surface colors
-  surface-100: darken($surface-dark, 20%),
-  surface-200: darken($surface-dark, 15%),
-  surface-300: darken($surface-dark, 10%),
-  surface-400: darken($surface-dark, 5%),
-  surface-500: $surface-dark,
-  surface-600: lighten($surface-dark, 5%),
-  surface-700: lighten($surface-dark, 10%),
-  surface-800: lighten($surface-dark, 15%),
-  surface-900: lighten($surface-dark, 30%),
-  // Always dark
-  surface-dark: $surfaceDark-dark,
-  // On surface colors
-  onSurface-dark: #efefef,
-  onSurface-hight: #f9f9f9,
-  onSurface-medium: #bbbbbb,
-  onSurface-disabled: #888888
 );
 
 @function hexToRGB($hex) {
@@ -179,8 +109,4 @@ $colors-dark: (
 
 .theme-light {
   @include generate_colors($colors-light);
-}
-
-.theme-dark {
-  @include generate_colors($colors-dark);
 }

@@ -1,31 +1,25 @@
-import { useEffect, useState } from 'react';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
-import { getMenu } from '@/lib/shopify/shop/shopApiCall';
+import Container from '@/components/Container/Container';
 import styles from './CollectionNav.module.scss';
 
-function CollectionNav() {
-  const [menu, setMenu] = useState([]);
-
-  useEffect(() => {
-    const fetchMenu = async () => {
-      const res = await getMenu('collections-menu');
-      setMenu(res);
-    };
-
-    fetchMenu();
-  }, []);
-
+function CollectionNav({ items }) {
   return (
-    <nav className={styles.CollectionNav}>
-      <ul className={styles.menu}>
-        {Array.isArray(menu) &&
-          menu.map((menuItem) => (
-            <li key={menuItem.id} className={styles.item}>
-              <ActiveLink url={menuItem?.url}>{menuItem?.title}</ActiveLink>
-            </li>
-          ))}
-      </ul>
-    </nav>
+    <div className={styles.CollectionNav}>
+      <Container>
+        <nav className={styles.nav}>
+          <ul className={styles.menu}>
+            {Array.isArray(items) &&
+              items.map((menuItem) => (
+                <li key={menuItem.id} className={styles.item}>
+                  <ActiveLink activeStyle={styles.active} url={menuItem?.url}>
+                    {menuItem?.title}
+                  </ActiveLink>
+                </li>
+              ))}
+          </ul>
+        </nav>
+      </Container>
+    </div>
   );
 }
 

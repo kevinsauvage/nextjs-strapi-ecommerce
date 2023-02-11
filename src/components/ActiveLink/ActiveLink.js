@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import styles from './ActiveLink.module.scss';
 
-export default withRouter(({ router, children, as, url, scroll = true, ...rest }) => {
+export default withRouter(({ router, children, as, url, scroll = true, activeStyle, ...rest }) => {
   const path = url.includes('http') ? new URL(url)?.pathname : url;
 
   return (
@@ -11,10 +11,7 @@ export default withRouter(({ router, children, as, url, scroll = true, ...rest }
       href={path.toLowerCase()}
       as={as}
       scroll={scroll}
-      className={`${styles.ActiveLink}  ${
-        router.pathname.replace('[collectionSlug]', router.query.collectionSlug?.toLowerCase()) ===
-          path?.toLowerCase() && styles.active
-      }`}
+      className={`${styles.ActiveLink}  ${router.asPath === path?.toLowerCase() && activeStyle}`}
     >
       {children}
     </Link>

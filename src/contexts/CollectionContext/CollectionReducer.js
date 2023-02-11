@@ -6,6 +6,7 @@ export const initialState = {
   pageInfo: [],
   products: [],
   layout: 'grid',
+  collectionNav: [],
 };
 
 // actions
@@ -16,6 +17,7 @@ export const actions = {
   SET_PRODUCTS: 'SET_PRODUCTS',
   SET_ALL_FILTERS: 'SET_ALL_FILTERS',
   SET_LAYOUT: 'SET_LAYOUT',
+  SET_COLLECTION_NAVIGATION: 'SET_COLLECTION_NAVIGATION',
 };
 
 // Reducer
@@ -49,6 +51,11 @@ export const CollectionReducer = (state = initialState, action) => {
       return {
         ...state,
         layout: action.payload,
+      };
+    case actions.SET_COLLECTION_NAVIGATION:
+      return {
+        ...state,
+        collectionNav: action.payload,
       };
 
     default:

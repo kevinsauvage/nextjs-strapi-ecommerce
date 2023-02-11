@@ -9,10 +9,18 @@ import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CollectionContext = createContext();
 
-export function CollectionProvider({ children, collection, pageInfo: initialPageInfo, collectionFilters }) {
-  const { products: initialProducts } = collection || {};
+export function CollectionProvider({
+  children,
+  collection,
+  pageInfo: initialPageInfo,
+  collectionFilters,
+  menu,
+}) {
+  console.log('🚀 ~ file: CollectionContext.js:15 ~ CollectionProvider ~ menu', menu);
+
+  const { products: initialProducts, title } = collection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
-  const { loading, selectedFilters, pageInfo, products, allFilters, layout } = states;
+  const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;
   const { toggleFilter } = useGlobalContext();
   const { query, pathname, push, to, asPath } = useRouter();
 
@@ -123,6 +131,12 @@ export function CollectionProvider({ children, collection, pageInfo: initialPage
     } else dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
   }, [query, allFilters]);
 
+  useEffect(() => {
+    if (menu) {
+      dispatch({ type: actions.SET_COLLECTION_NAVIGATION, payload: menu });
+    } else push('/');
+  }, [menu, push]);
+
   const values = useMemo(
     () => ({
       selectedFilters,
@@ -137,6 +151,8 @@ export function CollectionProvider({ children, collection, pageInfo: initialPage
       handleSort,
       handleNext,
       isSelectionDifferent,
+      collectionNav,
+      title,
     }),
     [
       selectedFilters,
@@ -150,6 +166,8 @@ export function CollectionProvider({ children, collection, pageInfo: initialPage
       handleSort,
       handleNext,
       isSelectionDifferent,
+      collectionNav,
+      title,
     ]
   );
 

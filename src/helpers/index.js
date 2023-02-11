@@ -30,6 +30,7 @@ export const getInfoFromCtx = (ctx) => {
     sortKey: ctx.query.sort_key,
     collectionSlug: ctx.query.collectionSlug,
     ip: getIpAddressFromCtx(ctx),
+    query: ctx.query,
   };
 };
 

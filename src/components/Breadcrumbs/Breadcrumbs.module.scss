@@ -1,9 +1,10 @@
 .breadcrumbs {
+  padding: var(--space-1) 0;
+  background-color: var(--surface-200);
+}
+.list {
   display: flex;
   align-items: center;
-  width: fit-content;
-  padding: var(--space-0);
-  padding-left: 0;
 }
 
 .item {

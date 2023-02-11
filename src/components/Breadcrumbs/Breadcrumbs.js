@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
+import Container from '../Container/Container';
 import styles from './Breadcrumbs.module.scss';
 import Crumbs from './Crumbs';
 
-export default function Breadcrumbs() {
+export default function Breadcrumbs({ lastElement }) {
   const router = useRouter();
 
   const filterCrumb = ['pages', 'reset'];
@@ -30,15 +31,23 @@ export default function Breadcrumbs() {
 
   return (
     breadcrumbs.length > 1 && (
-      <nav>
-        <ol className={styles.breadcrumbs}>
-          {breadcrumbs.map((crumb, idx) => (
-            <li key={crumb.href} className={styles.item}>
-              <Crumbs {...crumb} last={idx === breadcrumbs.length - 1} />
-            </li>
-          ))}
-        </ol>
-      </nav>
+      <div className={styles.breadcrumbs}>
+        <Container>
+          <nav>
+            <ol className={styles.list}>
+              {breadcrumbs.map((crumb, idx) => (
+                <li key={crumb.href} className={styles.item}>
+                  {lastElement && idx === breadcrumbs.length - 1 ? (
+                    <p>{lastElement}</p>
+                  ) : (
+                    <Crumbs {...crumb} last={idx === breadcrumbs.length - 1} />
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </Container>
+      </div>
     )
   );
 }

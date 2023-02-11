@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   text-transform: capitalize;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
+  font-size: 12px;
 }
 
 .arrow {

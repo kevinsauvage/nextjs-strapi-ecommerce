@@ -5,7 +5,6 @@ import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
 import { bag, user, search } from '@/assets/svg';
 import styles from './UserButtons.module.scss';
-import ToggleTheme from '../ToggleTheme/ToggleTheme';
 
 export default function UserButtons() {
   const { toggleCheckout, toggleSearch, searchOpen } = useGlobalContext();
@@ -14,7 +13,6 @@ export default function UserButtons() {
   const router = useRouter();
 
   const data = [
-    { item: <ToggleTheme />, id: 0, name: 'Toggle themes' },
     {
       item: <div className={styles.search}> {search}</div>,
       id: 0,
