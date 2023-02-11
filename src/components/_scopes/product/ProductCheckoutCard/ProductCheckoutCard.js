@@ -3,7 +3,6 @@ import Image from 'next/image';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import SelectedOptions from '@/components/_scopes/product/SelectedOptions/SelectedOptions';
 import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
-import config from '@/config/index';
 import Price from '../Price/Price';
 import styles from './ProductCheckoutCard.module.scss';
 
@@ -12,6 +11,7 @@ export default function ProductCheckoutCard({ lineItem }) {
   const { variant, quantity, id, title } = lineItem || {};
   const { image, compareAtPriceV2, priceV2, product, quantityAvailable, selectedOptions } = variant || {};
   const collection = product?.collections?.nodes?.[0];
+  const { productType } = product;
 
   return (
     <div className={styles.card}>
@@ -19,7 +19,7 @@ export default function ProductCheckoutCard({ lineItem }) {
         <Image src={image?.src} alt={image?.alt} width={image?.width} height={image?.height} />
       </div>
       <div className={styles.body}>
-        <Link href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}>
+        <Link href={`${productType}/${collection?.handle}/${product?.handle}`}>
           <b className={styles.title}>{title}</b>
         </Link>
         <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="M" />

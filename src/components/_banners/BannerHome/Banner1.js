@@ -1,4 +1,3 @@
-import config from '@/config/index';
 import Link from 'next/link';
 import styles from './Banner1.module.scss';
 
@@ -16,7 +15,7 @@ export default function BannerHome({ data }) {
             </p>
             <h1 className={`${styles.title} big`}>{title}</h1>
             <p className={styles.subtitle}>{description}</p>
-            <Link href={`${config.routes.collection}/${handle}`} className={styles.link}>
+            <Link href={`${handle}`} className={styles.link}>
               <p>Shop now</p>
             </Link>
           </div>

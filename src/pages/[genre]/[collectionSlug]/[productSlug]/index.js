@@ -5,6 +5,7 @@ import { getProduct, getProductRecommendation, getProducts } from '@/lib/shopify
 import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
@@ -13,22 +14,25 @@ function ProductPage({ product, recommendations = [] }) {
   const { title, description } = product;
 
   return (
-    <PageLayout title={title} description={description}>
-      <ProductPresenter product={product} />
-      {Array.isArray(recommendations) && recommendations.length > 0 && (
-        <div className={styles.carousel}>
-          <Carousel
-            title="Recommended Products"
-            subtitle="Check out the products you may like"
-            itemToShow={4}
-          >
-            {recommendations.map((prod) => (
-              <ProductCardDefault product={prod} key={prod.id} />
-            ))}
-          </Carousel>
-        </div>
-      )}
-    </PageLayout>
+    <>
+      <Breadcrumbs lastElement={title} />
+      <PageLayout title={title} description={description}>
+        <ProductPresenter product={product} />
+        {Array.isArray(recommendations) && recommendations.length > 0 && (
+          <div className={styles.carousel}>
+            <Carousel
+              title="Recommended Products"
+              subtitle="Check out the products you may like"
+              itemToShow={4}
+            >
+              {recommendations.map((prod) => (
+                <ProductCardDefault product={prod} key={prod.id} />
+              ))}
+            </Carousel>
+          </div>
+        )}
+      </PageLayout>
+    </>
   );
 }
 
@@ -43,8 +47,14 @@ export async function getStaticProps({ params }) {
 export async function getStaticPaths() {
   const data = await getProducts('BEST_SELLING', 200);
   const paths = data.products.map((product) => ({
-    params: { productSlug: product.handle, collectionSlug: product?.collections?.[0]?.handle },
+    params: {
+      genre: product.productType,
+      productSlug: product.handle,
+      collectionSlug: product?.collections?.[0]?.handle,
+    },
   }));
+
+  console.log('🚀 ~ file: index.js:53 ~ paths ~ paths', paths);
 
   return { paths, fallback: true };
 }

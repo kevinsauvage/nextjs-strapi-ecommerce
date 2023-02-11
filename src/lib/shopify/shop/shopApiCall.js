@@ -68,8 +68,6 @@ export const getMetaObject = async (handle) => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMetaObject, { handle });
 
-    console.log('🚀 ~ file: shopApiCall.js:71 ~ getMetaObject ~ res', res);
-
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   } catch (error) {

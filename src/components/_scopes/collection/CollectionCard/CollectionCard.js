@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import config from '@/config/index';
 import style from './CollectionCard.module.scss';
 
 export default function CollectionCard({ collection }) {
@@ -11,7 +10,7 @@ export default function CollectionCard({ collection }) {
       <div className={style.content}>
         <h3 className={style.title}>{title} COLLECTION</h3>
         {subtitle && <p className={style.subtitle}>{subtitle}</p>}
-        <Link className={style.link} href={`${config.routes.collection}/${handle}`}>
+        <Link className={style.link} href={`${handle}`}>
           <span>Shop now</span>
         </Link>
       </div>

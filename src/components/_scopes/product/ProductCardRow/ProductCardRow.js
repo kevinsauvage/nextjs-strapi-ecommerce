@@ -3,7 +3,6 @@ import Link from 'next/link';
 import useProductSelection from '@/hooks/useProductSelection';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
-import config from '@/config/index';
 import Price from '../Price/Price';
 import styles from './ProductCardRow.module.scss';
 import Options from '../Options/Options';
@@ -18,7 +17,7 @@ export default function ProductCardRow({ product }) {
     isOptionOutOfStock,
   } = useProductSelection({ product });
 
-  const { title, handle, options, collections } = product;
+  const { title, handle, options, collections, productType } = product;
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } = selectedVariant || {};
 
   return (
@@ -37,7 +36,7 @@ export default function ProductCardRow({ product }) {
       </div>
       <div className={styles.content}>
         <div>
-          <Link href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}>
+          <Link href={`/${productType}/${collections?.[0]?.handle}/${handle}`}>
             <b className={styles.title}>{title}</b>
           </Link>
           <Price priceV2={priceV2} compareAtPriceV2={compareAtPriceV2} size="M" />

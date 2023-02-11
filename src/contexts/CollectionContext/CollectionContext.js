@@ -16,8 +16,6 @@ export function CollectionProvider({
   collectionFilters,
   menu,
 }) {
-  console.log('🚀 ~ file: CollectionContext.js:15 ~ CollectionProvider ~ menu', menu);
-
   const { products: initialProducts, title } = collection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;

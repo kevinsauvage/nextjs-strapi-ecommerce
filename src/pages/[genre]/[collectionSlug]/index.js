@@ -1,15 +1,11 @@
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
-import { filterCollectionForward, getCollections } from '@/lib/shopify/collection/collectionApiCall';
+import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 import { getInfoFromCtx } from '@/helpers/index';
 import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
 import { getMenu } from '@/lib/shopify/shop/shopApiCall';
 
 export default function CollectionSlugPage(props) {
-  getCollections(20).then((collections) => {
-    console.log(collections);
-  });
-
   return <CollectionPage {...props} />;
 }
 

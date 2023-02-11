@@ -1,14 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useRef } from 'react';
+import { useRouter } from 'next/router';
 import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
-  const { title, images, handle, variants, collections } = product;
+  const { title, images, handle, variants, collections, productType } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
+  const { query } = useRouter();
 
   const { setSelectedProduct } = useGlobalContext() || {};
   const cardRef = useRef();
@@ -20,7 +21,7 @@ export default function ProductCardDefault({ product = {} }) {
       <Link
         ref={cardRef}
         className={styles.link}
-        href={`${config.routes.collection}/${collections?.[0]?.handle}/${handle}`}
+        href={`/${productType}/${query?.collectionSlug || collections?.[0]?.handle}/${handle}`}
         aria-label={`View product details for ${title}`}
       >
         <div className={styles.image}>

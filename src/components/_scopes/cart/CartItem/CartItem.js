@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import config from '@/config/index';
 import styles from './CartItem.module.scss';
 import { Row, TData } from '../../table/Table/Table';
 import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
@@ -32,7 +31,7 @@ export default function CartItem({
           <div className={styles.content}>
             <Link
               className={styles.link}
-              href={`${config.routes.collection}/${collection?.handle}/${product?.handle}`}
+              href={`/${product?.productType}/${collection?.handle}/${product?.handle}`}
             >
               <b className={styles.title}>{title}</b>
             </Link>

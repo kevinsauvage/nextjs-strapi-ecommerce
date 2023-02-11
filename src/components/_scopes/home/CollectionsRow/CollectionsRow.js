@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import config from '@/config/index';
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
 import styles from './CollectionsRow.module.scss';
 
@@ -11,7 +10,7 @@ function CollectionsRow({ collections }) {
       <ul className={styles.list}>
         {collections.map((collection) => (
           <li key={collection.title} className={styles.card}>
-            <Link href={`${config.routes.collection}/${collection.handle}`}>
+            <Link href={`${collection.handle}`}>
               <Image
                 className={styles.image}
                 src={collection.image.url}
