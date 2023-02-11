@@ -1,8 +1,10 @@
 .CollectionBanner {
   width: 100%;
-  border-radius: $radius;
-  padding: var(--space-0);
   margin-bottom: var(--space-0);
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .inner {
   width: 100%;

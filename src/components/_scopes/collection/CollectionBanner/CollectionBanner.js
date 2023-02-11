@@ -4,7 +4,7 @@ function CollectionBanner({ title }) {
   return (
     <div className={styles.CollectionBanner}>
       <div className={styles.inner}>
-        <h1 className={`${styles.title} big`}>{title}</h1>
+        <h1 className={`${styles.title}`}>{title}</h1>
       </div>
     </div>
   );
