@@ -1,8 +1,9 @@
 .breadcrumbs {
-  background-color: var(--surface-200);
+  background-color: var(--surface-100);
+  border-bottom: 1px solid var(--surface-400);
 }
 .list {
-  height: 50px;
+  height: 44px;
   display: flex;
   align-items: center;
 }
