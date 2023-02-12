@@ -11,9 +11,10 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  margin: var(--space-1);
-  max-width: 300px;
+  max-width: 240px;
   margin: 0 auto;
+  margin-top: var(--space-4);
+  text-align: center;
 
   img {
     width: 100%;

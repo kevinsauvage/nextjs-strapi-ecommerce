@@ -22,30 +22,32 @@ function CollectionLayout({ children, collection }) {
 
   return (
     <>
-      <CollectionNav items={collectionNav} />
-      <Breadcrumbs lastElement={title} />
-      <CollectionBanner title={title} description={description} />
-      <div className={styles.header}>
-        <Container>
-          <LayoutButtons
-            handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
-            selected={layout}
-          />
-          <Wrapper>
-            <Sort handleChange={handleSort} />
-            <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
-              {filter} Filter
-            </button>
-          </Wrapper>
-        </Container>
-      </div>
       <PageLayout title={title} description={description}>
-        <div className={styles.CollectionLayout}>
-          <main className={styles.main}>
-            <section className={styles.children}>{children}</section>
-            <Pagination />
-          </main>
+        <CollectionNav items={collectionNav} />
+        <Breadcrumbs lastElement={title} />
+        <CollectionBanner title={title} description={description} />
+        <div className={styles.header}>
+          <Container>
+            <LayoutButtons
+              handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
+              selected={layout}
+            />
+            <Wrapper>
+              <Sort handleChange={handleSort} />
+              <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
+                {filter} Filter
+              </button>
+            </Wrapper>
+          </Container>
         </div>
+        <Container>
+          <div className={styles.CollectionLayout}>
+            <main className={styles.main}>
+              <section className={styles.children}>{children}</section>
+              <Pagination />
+            </main>
+          </div>
+        </Container>
       </PageLayout>
 
       <Slide

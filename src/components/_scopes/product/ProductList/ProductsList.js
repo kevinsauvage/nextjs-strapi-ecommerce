@@ -30,9 +30,14 @@ function ProductsList({ products, loading, layout, loader }) {
       )}
       {Array.isArray(products) && products.length === 0 && !loading && (
         <div className={styles.noResults}>
-          <Image src={notFound.src} width={notFound.width} height={notFound.height} />
+          <Image
+            alt="No products were found."
+            src={notFound.src}
+            width={notFound.width}
+            height={notFound.height}
+          />
           <b>Result Not Found</b>
-          <p>Whoops... No products was found</p>
+          <p>Whoops... No products were found.</p>
         </div>
       )}
     </>
