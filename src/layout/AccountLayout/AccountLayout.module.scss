@@ -10,6 +10,7 @@
   margin-bottom: var(--space-2);
   background-color: var(--surface-200);
   min-height: 160px;
+  border-bottom: 1px solid var(--surface-300);
 }
 
 .title {
@@ -32,26 +33,33 @@
   display: flex;
   gap: var(--space-2);
   width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: $radius;
 }
 
 .nav {
   min-width: 230px;
+  border-radius: $radius;
 }
 
 .list {
   position: sticky;
   display: block;
   top: 2rem;
+  border: 1px solid var(--surface-300);
+  border-bottom: none;
 }
 
 .listItem {
-  height: 50px;
   width: 100%;
   text-transform: uppercase;
 
   a {
     width: 100%;
     justify-content: flex-start;
+    padding: var(--space-1) var(--space-2);
+    border-bottom: 1px solid var(--surface-300);
   }
 
   .active {
@@ -61,6 +69,7 @@
 
 .children {
   width: 100%;
+  border-radius: $radius;
 }
 
 .loading {

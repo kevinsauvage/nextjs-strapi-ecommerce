@@ -4,7 +4,7 @@ import { getMetaObject } from '@/lib/shopify/shop/shopApiCall';
 import styles from './PageLayout.module.scss';
 
 export default function PageLayout({ children, title, description }) {
-  const siteTitle = `${config.name} | ${title}`;
+  const siteTitle = `${title} | ${config.name}`;
 
   getMetaObject({ handle: 'test', type: 'test' });
   return (

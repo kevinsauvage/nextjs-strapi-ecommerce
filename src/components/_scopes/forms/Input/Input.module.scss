@@ -4,10 +4,6 @@
   display: block;
   position: relative;
 
-  &:last-of-type {
-    padding: 0;
-  }
-
   &.missing {
     b {
       color: var(--danger-500);
