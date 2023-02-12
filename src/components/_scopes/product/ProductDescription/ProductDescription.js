@@ -62,30 +62,31 @@ export default function ProductDescription({
       </ul>
 
       <ul className={styles.variantList}>
-        {product?.variants.map((variant) => {
-          const { image } = variant;
-          return (
-            <li key={variant.id}>
-              <button
-                type="button"
-                className={`${styles.variantButton} ${
-                  selected?.image?.src === image?.src ? styles.selectedVariant : ''
-                } `}
-                onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
-              >
-                <Image
-                  src={image.small}
-                  width={image.width}
-                  height={image.height}
-                  alt="variant image"
-                  quality={10}
-                  blurDataURL={image?.blurDataURL}
-                  placeholder="blur"
-                />
-              </button>
-            </li>
-          );
-        })}
+        {Array.isArray(product?.variants) &&
+          product?.variants.map((variant) => {
+            const { image } = variant;
+            return (
+              <li key={variant.id}>
+                <button
+                  type="button"
+                  className={`${styles.variantButton} ${
+                    selected?.image?.src === image?.src ? styles.selectedVariant : ''
+                  } `}
+                  onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
+                >
+                  <Image
+                    src={image.small}
+                    width={image.width}
+                    height={image.height}
+                    alt="variant image"
+                    quality={10}
+                    blurDataURL={image?.blurDataURL}
+                    placeholder="blur"
+                  />
+                </button>
+              </li>
+            );
+          })}
       </ul>
 
       <Options

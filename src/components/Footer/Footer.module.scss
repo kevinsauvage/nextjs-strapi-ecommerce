@@ -10,7 +10,7 @@
 }
 
 .footer {
-  background-color: var(--surface-dark);
+  background-color: var(--surface-dark-100);
   padding: var(--space-3) 0;
   color: var(--onSurface-dark);
 }
@@ -58,7 +58,7 @@
   width: 100%;
   padding: var(--space-0) 0;
   border-top: 0.1px solid rgba(var(--RGB-surface-100), 0.3);
-  background-color: var(--surface-dark);
+  background-color: var(--surface-dark-100);
 
   color: var(--onSurface-dark);
 }

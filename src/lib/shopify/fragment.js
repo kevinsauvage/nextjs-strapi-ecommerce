@@ -153,6 +153,42 @@ variants(first: 8) {
   }
 }`;
 
+export const productFragmentLight = `
+handle
+id
+title
+availableForSale
+productType
+totalInventory
+
+images(first: 2) {
+  edges {
+    node {
+      ${imageFragment}
+    }
+  }
+}
+
+priceRange {
+  maxVariantPrice {
+    amount
+    currencyCode
+  }
+  minVariantPrice {
+    amount
+    currencyCode
+  }
+}
+
+collections(first: 1) {
+  edges {
+    node {
+      handle
+    }
+  }
+}
+`;
+
 export const customerFragment = `
 id
 firstName

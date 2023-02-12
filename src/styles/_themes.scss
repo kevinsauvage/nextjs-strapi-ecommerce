@@ -78,7 +78,9 @@ $colors-light: (
   surface-800: darken($surface, 15%),
   surface-900: darken($surface, 35%),
   // Always dark
-  surface-dark: $surfaceDark,
+  surface-dark-100: $surfaceDark,
+  surface-dark-200: lighten($surfaceDark, 10%),
+  surface-dark-300: lighten($surfaceDark, 20%),
   // On surface
   onSurface-dark: #efefef,
   onSurface-hight: #111111,

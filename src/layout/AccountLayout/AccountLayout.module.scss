@@ -46,9 +46,18 @@
 }
 
 .listItem {
-  width: fit-content;
   height: 50px;
+  width: 100%;
   text-transform: uppercase;
+
+  a {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .active {
+    background-color: var(--surface-200);
+  }
 }
 
 .children {

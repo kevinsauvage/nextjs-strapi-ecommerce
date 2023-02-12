@@ -1,4 +1,4 @@
-import { collectionFragment, filterFragment, pageInfoFragment, productFragment } from '../fragment';
+import { collectionFragment, filterFragment, pageInfoFragment, productFragmentLight } from '../fragment';
 
 const filterCollectionForward = `
 query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: ProductCollectionSortKeys, $after: String) {
@@ -13,7 +13,7 @@ query Search($handle: String!, $first: Int!, $filters: [ProductFilter!], $sort: 
       }
       edges {
         node {
-          ${productFragment}
+          ${productFragmentLight}
         }
       }
     }

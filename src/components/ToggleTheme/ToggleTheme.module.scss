@@ -26,7 +26,7 @@ $height: 34px;
   min-height: $innerSize;
   border-radius: 50%;
   transition: all 0.3s ease;
-  background-color: var(--surface-dark);
+  background-color: var(--surface-dark-100);
   @include borderLight(var(--RBG-primary-100), 1);
   z-index: 0;
 }
@@ -37,7 +37,7 @@ $height: 34px;
 }
 .moon {
   path {
-    fill: var(--surface-dark);
+    fill: var(--surface-dark-100);
     stroke: var(--surface-100);
   }
 }

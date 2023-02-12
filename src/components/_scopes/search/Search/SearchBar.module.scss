@@ -6,6 +6,9 @@
   overflow: hidden;
   height: 300px;
   border: 0.1px solid rgba(var(--surface-900), 0.1);
+  background-color: var(--surface-200);
+  display: flex;
+  align-items: center;
 }
 
 .expanded {
@@ -16,7 +19,10 @@
 .searchBar {
   display: flex;
   align-items: center;
-  height: 100%;
+  width: 100%;
+
+  background-color: var(--surface-100);
+  border: 1px solid var(--surface-300);
 }
 
 .form {
@@ -37,7 +43,6 @@
   border: none;
   font-size: 60px;
   border-radius: $radius;
-  background-color: var(--surface-200);
   color: var(--surface-700);
 
   @include placeholder {

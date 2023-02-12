@@ -43,7 +43,7 @@ function RootLayout({ children }) {
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
       {loading && <PageLoader />}
       {selectedProduct && (
-        <ModalProduct handleClose={() => setSelectedProduct(false)} product={selectedProduct} />
+        <ModalProduct handleClose={() => setSelectedProduct(false)} selectedProduct={selectedProduct} />
       )}
     </div>
   );

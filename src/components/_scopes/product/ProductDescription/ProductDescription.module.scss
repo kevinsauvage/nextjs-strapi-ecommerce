@@ -42,9 +42,8 @@
 }
 
 .variantList {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-  grid-template-rows: 60px;
+  display: flex;
+  align-items: center;
   gap: 3px;
   margin: var(--space-1) 0;
 }
@@ -56,7 +55,7 @@
   border-radius: $radius;
   overflow: hidden;
   max-width: 80px;
-  border: 1px solid var(--primary);
+  border: 2px solid var(--primary);
 
   img {
     width: 100%;

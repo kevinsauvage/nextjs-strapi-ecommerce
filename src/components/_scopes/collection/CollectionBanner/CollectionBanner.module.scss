@@ -8,13 +8,19 @@
 }
 .inner {
   width: 100%;
-  padding: var(--space-4) 0;
+  padding: var(--space-1) var(--space-6);
   border-radius: $radius;
   text-align: center;
 }
 .title {
   margin-bottom: var(--space-0);
   color: var(--onSurface-medium);
+  font-weight: $fontWeightSemiBold;
+}
+
+.description {
+  max-width: 900px;
+  margin: 0 auto;
 }
 .subtitle {
   max-width: 600px;

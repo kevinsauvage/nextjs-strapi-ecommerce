@@ -22,7 +22,7 @@ function AccountLayout({ children, loading, title }) {
           <ul className={styles.list}>
             {config?.accountNav?.map((item) => (
               <li className={styles.listItem} key={item.title}>
-                <ActiveLink url={item.url} scroll={false}>
+                <ActiveLink url={item.url} activeStyle={styles.active} scroll={false}>
                   {item.title}
                 </ActiveLink>
               </li>

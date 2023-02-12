@@ -7,7 +7,7 @@ export default function PhotoGalleryWithCarousel({ images }) {
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
-    setSelected(images[0]);
+    setSelected(images?.[0]);
   }, [images]);
 
   return (
@@ -25,7 +25,7 @@ export default function PhotoGalleryWithCarousel({ images }) {
           priority
         />
       )}
-      {images.length > 1 && (
+      {images?.length > 1 && (
         <Carousel itemToShow={8} showButtons spacing={0}>
           {images
             .filter((image) => image.width > 200)

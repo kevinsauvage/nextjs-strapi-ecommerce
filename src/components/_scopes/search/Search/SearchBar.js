@@ -31,8 +31,8 @@ export default function SearchBar() {
 
   return (
     <div className={`${styles.container} ${searchOpen && styles.expanded}`}>
-      <Container>
-        <div className={styles.searchBar}>
+      <div className={styles.searchBar}>
+        <Container>
           <form className={styles.form} onSubmit={handleSubmit}>
             <label className={styles.header}>
               <input
@@ -50,8 +50,8 @@ export default function SearchBar() {
               />
             </label>
           </form>
-        </div>
-      </Container>
+        </Container>
+      </div>
     </div>
   );
 }
