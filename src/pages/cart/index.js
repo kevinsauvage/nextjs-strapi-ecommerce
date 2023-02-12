@@ -8,6 +8,7 @@ import { useState } from 'react';
 import config from '@/config/index';
 import Button from '@/components/Button/Button';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
+import Container from '@/components/Container/Container';
 import styles from './Cart.module.scss';
 
 const { userFeedback } = config;
@@ -42,29 +43,31 @@ function CartPage() {
 
   return (
     <PageLayout title="Your Cart">
-      {!isCheckoutLoading ? (
-        <div className={styles.cart}>
-          <main>
-            <CartTable handleChange={handleSetLineToUpdate} />
+      <Container>
+        {!isCheckoutLoading ? (
+          <div className={styles.cart}>
+            <main>
+              <CartTable handleChange={handleSetLineToUpdate} />
 
-            {lineItemsToUpdate.length > 0 && (
-              <Button
-                extraClass={styles.button}
-                secondary
-                onClick={handleUpdate}
-                disabled={!lineItemsToUpdate.length}
-              >
-                Update
-              </Button>
-            )}
-          </main>
-          <aside>
-            <CartSummary />
-          </aside>
-        </div>
-      ) : (
-        <BlockLoader />
-      )}
+              {lineItemsToUpdate.length > 0 && (
+                <Button
+                  extraClass={styles.button}
+                  secondary
+                  onClick={handleUpdate}
+                  disabled={!lineItemsToUpdate.length}
+                >
+                  Update
+                </Button>
+              )}
+            </main>
+            <aside>
+              <CartSummary />
+            </aside>
+          </div>
+        ) : (
+          <BlockLoader />
+        )}
+      </Container>
     </PageLayout>
   );
 }

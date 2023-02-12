@@ -8,7 +8,8 @@
 }
 .inner {
   width: 100%;
-  padding: var(--space-1) var(--space-6);
+  padding: var(--space-1) var(--space-2) var(--space-2) var(--space-2);
+
   border-radius: $radius;
   text-align: center;
 }
