@@ -7,7 +7,7 @@ import { bag, user, search } from '@/assets/svg';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
-  const { toggleCheckout, toggleSearch, searchOpen } = useGlobalContext();
+  const { toggleSearch, searchOpen } = useGlobalContext();
   const { getTotalItems } = useCheckoutContext();
 
   const router = useRouter();
@@ -36,7 +36,7 @@ export default function UserButtons() {
         </div>
       ),
       id: 2,
-      onClick: toggleCheckout,
+      onClick: () => router.push(config.routes.cart),
       name: 'Toggle Checkout',
     },
   ];
@@ -45,7 +45,7 @@ export default function UserButtons() {
     <div className={styles.container}>
       {data.map((el, i) => (
         <button
-          aria-label="el.name"
+          aria-label={el.name}
           type="button"
           key={i}
           onClick={() => el.onClick && el.onClick()}

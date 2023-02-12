@@ -1,0 +1,33 @@
+.slide {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: -100vw;
+  background-color: rgba(var(--RGB-surface-dark), 0.5);
+  z-index: 9999;
+  overflow: auto;
+  opacity: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.inner {
+  max-width: 460px;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  transform: translateX(100%);
+  background-color: var(--surface-100);
+  overflow: auto;
+}
+
+.open {
+  right: 0;
+  opacity: 1;
+}
+
+.openInner {
+  transform: translateX(0%);
+  transition: all 0.3s ease;
+}

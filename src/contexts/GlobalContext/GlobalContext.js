@@ -8,7 +8,7 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
-  const { checkoutOpen, searchOpen, selectedProduct, loading, filterOpen } = states;
+  const { searchOpen, selectedProduct, loading, filterOpen } = states;
 
   const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
 
@@ -26,15 +26,14 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (checkoutOpen || selectedProduct || loading || filterOpen) {
+    if (selectedProduct || loading || filterOpen) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
-  }, [checkoutOpen, selectedProduct, loading, searchOpen, filterOpen]);
+  }, [selectedProduct, loading, searchOpen, filterOpen]);
 
   const values = useMemo(
     () => ({
       searchOpen,
-      checkoutOpen,
       selectedProduct,
       loading,
       filterOpen,
@@ -52,11 +51,6 @@ export function GlobalProvider({ children }) {
         dispatch({ type: actions.TOGGLE_SEARCH, payload });
       },
 
-      toggleCheckout: () => {
-        dispatch({ type: actions.RESET_TOGGLE_STATES });
-        dispatch({ type: actions.TOGGLE_CHECKOUT });
-      },
-
       setSelectedProduct: (payload) => {
         dispatch({ type: actions.RESET_TOGGLE_STATES });
         dispatch({ type: actions.SET_SELECTED_PRODUCT, payload });
@@ -64,7 +58,7 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [searchOpen, checkoutOpen, selectedProduct, loading, filterOpen, resetToggle]
+    [searchOpen, selectedProduct, loading, filterOpen, resetToggle]
   );
 
   return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;

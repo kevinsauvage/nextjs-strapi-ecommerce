@@ -10,7 +10,7 @@ export function CheckoutProvider({ children }) {
   const [states, dispatch] = useReducer(CheckoutReducer, initialState);
   const { checkout, isCheckoutLoading } = states;
 
-  const { toggleLoading, toggleCheckout } = useGlobalContext();
+  const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
   const handleSetCheckout = useCallback((payload) => dispatch({ type: actions.ADD_CHECKOUT, payload }), []);
 
@@ -61,13 +61,13 @@ export function CheckoutProvider({ children }) {
 
         if (res?.id) {
           dispatch({ type: actions.ADD_CHECKOUT, payload: res });
-          toggleCheckout(true);
+          showToast.success('Product added successfully');
         } else showToast.error('Could not add the product variant to the checkout');
 
         toggleLoading(false);
       }
     },
-    [showToast, toggleCheckout, toggleLoading]
+    [showToast, toggleLoading]
   );
 
   const getTotalItems = useCallback(

@@ -2,7 +2,6 @@
 import { useEffect, useState } from 'react';
 import { getMenu, getShop } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Cart from '@/components/_slides/Cart/Cart';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
@@ -40,7 +39,6 @@ function RootLayout({ children }) {
     <div className={styles.RootLayout}>
       <SearchBar />
       <Header headerMenu={menuHeader} />
-      <Cart />
       {children}
       <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
       {loading && <PageLoader />}

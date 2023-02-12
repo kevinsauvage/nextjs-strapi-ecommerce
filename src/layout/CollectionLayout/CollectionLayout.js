@@ -5,12 +5,12 @@ import useCollectionContext from '@/contexts/CollectionContext/useCollectionCont
 import CollectionBanner from '@/components/_scopes/collection/CollectionBanner/CollectionBanner';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Slide from '@/components/_slides/Slide/Slide';
 import Filters from '@/components/_scopes/collection/Filters/Filters';
 import { filter } from '@/assets/svg';
 import { actions } from '@/contexts/CollectionContext/CollectionReducer';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import CollectionNav from '@/components/_scopes/collection/CollectionNav/CollectionNav';
+import Slide from '@/components/Slide/Slide';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
