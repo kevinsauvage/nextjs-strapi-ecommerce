@@ -187,6 +187,20 @@ collections(first: 1) {
     }
   }
 }
+variants(first: 1) {
+  edges {
+    node {
+      compareAtPriceV2 {
+        amount
+        currencyCode
+      }
+      priceV2 {
+        amount
+        currencyCode
+      }
+    }
+  }
+}
 `;
 
 export const customerFragment = `

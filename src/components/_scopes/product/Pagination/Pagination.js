@@ -13,7 +13,7 @@ export default function Pagination() {
           disabled={!pageInfo?.hasNextPage}
           onClick={handleNext}
           text="Load more"
-          contrast
+          primary
         />
       )}
     </div>
