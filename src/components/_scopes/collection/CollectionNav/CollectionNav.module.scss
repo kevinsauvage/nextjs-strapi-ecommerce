@@ -1,5 +1,5 @@
 .CollectionNav {
-  background-color: var(--surface-900);
+  background-color: rgba(var(--RGB-surface-dark), 0.8);
   height: 50px;
 }
 .menu {
@@ -22,6 +22,7 @@
   a {
     font-size: 13px;
     color: var(--onSurface-dark);
+    font-weight: $fontWeightNormal;
   }
 }
 

@@ -11,6 +11,7 @@ import { actions } from '@/contexts/CollectionContext/CollectionReducer';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import CollectionNav from '@/components/_scopes/collection/CollectionNav/CollectionNav';
 import Slide from '@/components/Slide/Slide';
+import Container from '@/components/Container/Container';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
@@ -23,34 +24,36 @@ function CollectionLayout({ children, collection }) {
     <>
       <CollectionNav items={collectionNav} />
       <Breadcrumbs lastElement={title} />
-
+      <CollectionBanner title={title} description={description} />
+      <div className={styles.header}>
+        <Container>
+          <LayoutButtons
+            handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
+            selected={layout}
+          />
+          <Wrapper>
+            <Sort handleChange={handleSort} />
+            <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
+              {filter} Filter
+            </button>
+          </Wrapper>
+        </Container>
+      </div>
       <PageLayout title={title} description={description}>
-        <Slide
-          handleClose={() => toggleFilter(false)}
-          isOpen={filterOpen}
-          content={<Filters />}
-          title="Filters"
-        />
         <div className={styles.CollectionLayout}>
-          <CollectionBanner title={title} description={description} />
           <main className={styles.main}>
-            <div className={styles.header}>
-              <LayoutButtons
-                handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
-                selected={layout}
-              />
-              <Wrapper>
-                <Sort handleChange={handleSort} />
-                <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
-                  {filter} Filter
-                </button>
-              </Wrapper>
-            </div>
             <section className={styles.children}>{children}</section>
             <Pagination />
           </main>
         </div>
       </PageLayout>
+
+      <Slide
+        handleClose={() => toggleFilter(false)}
+        isOpen={filterOpen}
+        content={<Filters />}
+        title="Filters"
+      />
     </>
   );
 }

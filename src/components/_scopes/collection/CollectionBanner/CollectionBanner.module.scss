@@ -1,10 +1,10 @@
 .CollectionBanner {
   width: 100%;
-  margin-bottom: var(--space-0);
-  height: 200px;
+  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--surface-200);
 }
 .inner {
   width: 100%;
@@ -14,6 +14,7 @@
 }
 .title {
   margin-bottom: var(--space-0);
+  color: var(--onSurface-medium);
 }
 .subtitle {
   max-width: 600px;

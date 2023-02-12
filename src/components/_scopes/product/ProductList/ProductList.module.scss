@@ -5,3 +5,24 @@
   margin-top: 30px;
   z-index: 9999;
 }
+
+.noResults {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: var(--space-1);
+  max-width: 300px;
+  margin: 0 auto;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  b {
+    font-size: 18px;
+    margin-top: var(--space-1);
+    margin-bottom: var(--space-0);
+  }
+}

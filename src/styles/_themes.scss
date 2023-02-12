@@ -5,7 +5,7 @@ $success: #52a86e;
 $error: #ee2d2d;
 $surface: #bebebe;
 $complementary: complement($primary);
-$surfaceDark: #121212;
+$surfaceDark: #2b2b2b;
 
 // Dark colors
 $primary-dark: #0e79a3;
@@ -82,7 +82,7 @@ $colors-light: (
   // On surface
   onSurface-dark: #efefef,
   onSurface-hight: #111111,
-  onSurface-medium: #1e1e1e,
+  onSurface-medium: #212121,
   onSurface-disabled: #272727
 );
 

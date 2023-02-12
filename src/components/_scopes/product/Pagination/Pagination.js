@@ -7,7 +7,7 @@ export default function Pagination() {
 
   return (
     <div className={style.Pagination}>
-      {pageInfo?.hasNextPage ? (
+      {pageInfo?.hasNextPage && (
         <Button
           type="button"
           disabled={!pageInfo?.hasNextPage}
@@ -15,8 +15,6 @@ export default function Pagination() {
           text="Load more"
           contrast
         />
-      ) : (
-        <p className={style.noResult}>No more results</p>
       )}
     </div>
   );

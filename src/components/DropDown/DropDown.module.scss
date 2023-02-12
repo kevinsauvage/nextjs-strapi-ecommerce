@@ -4,15 +4,14 @@
 
 .menu {
   position: absolute;
-  width: fit-content;
   z-index: 99999;
   top: 100%;
-  min-width: 100%;
+  min-width: 190px;
   right: 0;
-  border-radius: $radius;
-
+  border-radius: 3px;
   border: 0.1px solid var(--surface-900);
-  background-color: var(--surface-900);
+  background-color: var(--surface-200);
+  overflow: hidden;
 }
 
 .button {
@@ -33,15 +32,18 @@
   padding: 8px;
   white-space: nowrap;
   cursor: pointer;
-
   border-bottom: 0.1px solid var(--surface-900);
+
+  p {
+    font-size: 12px;
+  }
 
   &:last-of-type {
     border-bottom: none;
   }
 
   &:hover {
-    background-color: rgba(var(--surface-900), 1);
-    color: var(--surface-900);
+    background-color: var(--surface-300);
+    color: var(--onSurface-hight);
   }
 }

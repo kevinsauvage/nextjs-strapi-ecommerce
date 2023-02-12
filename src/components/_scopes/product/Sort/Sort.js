@@ -13,7 +13,7 @@ export default function Sort({ handleChange }) {
 
   return (
     <div className={styles.sort}>
-      <p>Sort by </p>
+      <small>Sort by </small>
       <Dropdown
         options={sortingOptions}
         changeCallback={handleChange}
