@@ -46,9 +46,9 @@ export const getTermsOfService = async () => {
   }
 };
 
-export const getMenu = async (handle) => {
+export const getMenu = async (handle, delegateToken, ip) => {
   try {
-    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle });
+    const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle }, delegateToken, ip);
     return res?.data?.menu?.items ?? [];
   } catch (error) {
     return console.error(error);
@@ -67,6 +67,8 @@ export const getPage = async (handle) => {
 export const getMetaObject = async (handle) => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMetaObject, { handle });
+
+    console.log('🚀 ~ file: shopApiCall.js:71 ~ getMetaObject ~ res', res);
 
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;

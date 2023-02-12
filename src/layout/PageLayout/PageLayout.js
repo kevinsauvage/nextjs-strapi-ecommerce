@@ -1,12 +1,10 @@
 import Head from 'next/head';
 import config from '@/config/index';
-import { getMetaObject } from '@/lib/shopify/shop/shopApiCall';
 import styles from './PageLayout.module.scss';
 
 export default function PageLayout({ children, title, description }) {
   const siteTitle = `${title} | ${config.name}`;
 
-  getMetaObject({ handle: 'test', type: 'test' });
   return (
     <div className={`${styles.page}`}>
       <Head>

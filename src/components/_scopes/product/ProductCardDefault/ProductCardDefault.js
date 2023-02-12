@@ -7,13 +7,9 @@ import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
 export default function ProductCardDefault({ product = {} }) {
-  const { title, images, handle, variants, collections, productType, priceRange } = product;
-
-  console.log('🚀 ~ file: ProductCardDefault.js:12 ~ ProductCardDefault ~ priceRange', priceRange);
-
+  const { title, images, handle, variants, collections, productType } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { query } = useRouter();
-
   const { setSelectedProduct } = useGlobalContext() || {};
   const cardRef = useRef();
 
