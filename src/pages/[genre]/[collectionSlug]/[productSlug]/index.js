@@ -6,6 +6,7 @@ import ProductPresenter from '@/components/_scopes/product/ProductPresenter/Prod
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Container from '@/components/Container/Container';
 import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
@@ -16,22 +17,24 @@ function ProductPage({ product, recommendations = [] }) {
   return (
     <>
       <Breadcrumbs lastElement={title} />
-      <PageLayout title={title} description={description}>
-        <ProductPresenter product={product} />
-        {Array.isArray(recommendations) && recommendations.length > 0 && (
-          <div className={styles.carousel}>
-            <Carousel
-              title="Recommended Products"
-              subtitle="Check out the products you may like"
-              itemToShow={4}
-            >
-              {recommendations.map((prod) => (
-                <ProductCardDefault product={prod} key={prod.id} />
-              ))}
-            </Carousel>
-          </div>
-        )}
-      </PageLayout>
+      <Container>
+        <PageLayout title={title} description={description}>
+          <ProductPresenter product={product} />
+          {Array.isArray(recommendations) && recommendations.length > 0 && (
+            <div className={styles.carousel}>
+              <Carousel
+                title="Recommended Products"
+                subtitle="Check out the products you may like"
+                itemToShow={4}
+              >
+                {recommendations.map((prod) => (
+                  <ProductCardDefault product={prod} key={prod.id} />
+                ))}
+              </Carousel>
+            </div>
+          )}
+        </PageLayout>
+      </Container>
     </>
   );
 }
