@@ -7,7 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
 import styles from './AccountLayout.module.scss';
 
-function AccountLayout({ children, loading, title }) {
+function AccountLayout({ children, loading }) {
   const { logout } = useUserContext();
 
   return (
@@ -16,7 +16,7 @@ function AccountLayout({ children, loading, title }) {
 
       <div className={styles.banner}>
         <Container>
-          <h1 className={styles.title}>{title}</h1>
+          <h1 className={styles.title}>My Account</h1>
           <button type="button" className={styles.logOut} onClick={logout}>
             <p>Logout</p>
             <MdOutlineLogout />
