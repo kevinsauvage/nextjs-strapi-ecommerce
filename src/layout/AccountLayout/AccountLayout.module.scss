@@ -60,10 +60,12 @@
     justify-content: flex-start;
     padding: var(--space-1) var(--space-2);
     border-bottom: 1px solid var(--surface-300);
+    border-left: 3px solid transparent;
   }
 
   .active {
     background-color: var(--surface-200);
+    border-left: 3px solid var(--complementary-500);
   }
 }
 
