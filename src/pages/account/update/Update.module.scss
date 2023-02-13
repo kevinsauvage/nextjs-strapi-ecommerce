@@ -14,3 +14,10 @@
     margin-left: 1rem;
   }
 }
+
+.form {
+  border: 1px solid var(--surface-300);
+  padding: var(--space-2);
+  border-radius: $radius;
+  background-color: rgba(var(--RGB-surface-200), 0.3);
+}

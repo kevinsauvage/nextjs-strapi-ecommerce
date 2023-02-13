@@ -79,19 +79,18 @@ function Addresses() {
   return (
     <PageLayout title="Addresses">
       <AccountLayout loading={isLoading} title="Addresses">
-        {Array.isArray(addresses) && addresses.filter((address) => !isDefault(address)).length > 0 ? (
+        {Array.isArray(addresses) && addresses.length > 0 ? (
           <div className={styles.list}>
-            {addresses
-              .filter((address) => !isDefault(address))
-              .map((item, i) => (
-                <Address
-                  key={item.id}
-                  title={`Address ${i + 1}`}
-                  handleSetAsDefault={handleSetAsDefault}
-                  address={item}
-                  handleDelete={() => handleDelete(item.id)}
-                />
-              ))}
+            {addresses.map((item, i) => (
+              <Address
+                key={item.id}
+                title={`Address ${i + 1}`}
+                handleSetAsDefault={handleSetAsDefault}
+                address={item}
+                isDefault={isDefault(item)}
+                handleDelete={() => handleDelete(item.id)}
+              />
+            ))}
           </div>
         ) : (
           <p className={styles.noAddresses}>There is no addresses to show</p>

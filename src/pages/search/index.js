@@ -4,6 +4,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import nextApiCall from '@/utils/apiNext';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
+import Container from '@/components/Container/Container';
 import styles from './search.module.scss';
 
 function Search() {
@@ -28,10 +29,12 @@ function Search() {
   return (
     <PageLayout title="Search page">
       {loading && <PageLoader />}
-      <div className={styles.header}>
-        <h1>Search results for: {searchTerm?.toUpperCase()}</h1>
-      </div>
-      <ProductsList layout="grid" products={search} />
+      <Container>
+        <div className={styles.header}>
+          <h1>Search results for: {searchTerm?.toUpperCase()}</h1>
+        </div>
+        <ProductsList layout="grid" products={search} />
+      </Container>
     </PageLayout>
   );
 }

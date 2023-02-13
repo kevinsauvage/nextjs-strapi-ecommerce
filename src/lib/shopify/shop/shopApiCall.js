@@ -49,6 +49,12 @@ export const getTermsOfService = async () => {
 export const getMenu = async (handle, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMenu, { handle }, delegateToken, ip);
+
+    if (res?.errors) {
+      console.error(res.errors);
+    }
+    console.log('🚀 ~ file: shopApiCall.js:53 ~ getMenu ~ res', res);
+
     return res?.data?.menu?.items ?? [];
   } catch (error) {
     return console.error(error);

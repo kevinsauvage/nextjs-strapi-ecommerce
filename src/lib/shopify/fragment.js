@@ -210,6 +210,8 @@ lastName
 acceptsMarketing
 email
 phone
+numberOfOrders
+updatedAt
 defaultAddress {
  ${addressFragment}
 }`;

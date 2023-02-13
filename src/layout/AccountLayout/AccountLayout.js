@@ -9,7 +9,6 @@ function AccountLayout({ children, loading }) {
   return (
     <div className={styles.AccountLayout}>
       <Breadcrumbs />
-
       <div className={styles.banner}>
         <Container>
           <h1 className={styles.title}>My Account</h1>

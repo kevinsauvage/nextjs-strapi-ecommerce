@@ -20,7 +20,12 @@ Shop.getLayout = function getLayout(page) {
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey, query } = getInfoFromCtx(ctx);
   const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
-  const menu = await getMenu(`collections-${query.genre}`, delegateToken, ip);
+  const menuSlug = `collections-${query?.genre}`;
+
+  const menu = await getMenu(menuSlug, delegateToken, ip);
+
+  console.log('🚀 ~ file: index.js:25 ~ getServerSideProps ~ query?.genre', query?.genre);
+  console.log('🚀 ~ file: index.js:26 ~ getServerSideProps ~ menu', menu);
 
   if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;

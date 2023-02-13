@@ -1,6 +1,5 @@
 .address {
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   padding: var(--space-2);
   border-radius: $radius;
@@ -10,11 +9,11 @@
   border: 0.1px solid var(--surface-300);
 }
 
-.header {
+.side {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  margin-bottom: var(--space-1);
+  align-items: flex-end;
 }
 
 .buttons {
@@ -38,4 +37,10 @@
   margin-top: var(--space-0);
   padding: 0;
   align-self: flex-end;
+}
+
+.defaultText {
+  color: var(--complementary-600);
+  margin-top: var(--space-1);
+  text-align: end;
 }
