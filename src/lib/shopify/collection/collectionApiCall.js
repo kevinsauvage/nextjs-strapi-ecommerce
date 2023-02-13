@@ -12,7 +12,6 @@ export const filterCollectionForward = async (
   ip
 ) => {
   try {
-    console.time('time1', handle);
     const res = await shopifyStorefrontCall(
       queriesCollection.filterCollectionForward,
       { handle, first, filters, sort, after },
@@ -20,7 +19,6 @@ export const filterCollectionForward = async (
       ip
     );
 
-    console.timeEnd('time1', handle);
     const collection = res?.data?.collection;
 
     if (collection) {

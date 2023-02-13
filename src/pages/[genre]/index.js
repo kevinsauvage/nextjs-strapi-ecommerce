@@ -22,7 +22,7 @@ export async function getServerSideProps(ctx) {
   const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
   const menu = await getMenu(`collections-${query.genre}`, delegateToken, ip);
 
-  if (menu) {
+  if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;
 
     return {
