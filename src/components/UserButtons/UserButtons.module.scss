@@ -1,6 +1,5 @@
 .container {
   display: flex;
-  gap: var(--space-0);
   position: relative;
   margin-left: auto;
 }
@@ -23,7 +22,14 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  width: $header-height;
+  margin: 0;
+  padding: 0;
 
+  &:hover {
+    border-right: 0.01px solid var(--surface-dark-300);
+    border-left: 0.01px solid var(--surface-dark-300);
+  }
   svg {
     width: 18px;
     height: 18px;

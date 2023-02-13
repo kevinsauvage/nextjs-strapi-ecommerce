@@ -8,6 +8,8 @@ import FilterManager from './FilterManager/FilterManager';
 export default function Filters() {
   const { selectedFilters, allFilters, dispatch } = useCollectionContext();
 
+  console.log('🚀 ~ file: Filters.js:11 ~ Filters ~ allFilters', allFilters);
+
   const isChecked = useCallback(
     (valueId) => {
       if (!Array.isArray(selectedFilters)) return false;
@@ -18,8 +20,6 @@ export default function Filters() {
   );
 
   const filters = allFilters.filter((item) => item.type === 'LIST').filter((item) => item.values.length > 1);
-
-  console.log('🚀 ~ file: Filters.js:21 ~ Filters ~ filters', filters);
 
   const getValues = (id, values) => {
     if (id.includes('color')) return extractUniqueColorNames(values);
