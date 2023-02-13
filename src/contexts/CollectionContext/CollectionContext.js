@@ -20,7 +20,7 @@ export function CollectionProvider({
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;
   const { toggleFilter } = useGlobalContext();
-  const { query, pathname, push, to, asPath } = useRouter();
+  const { query, push, to, asPath } = useRouter();
 
   useEffect(() => {
     if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
@@ -73,8 +73,7 @@ export function CollectionProvider({
 
   const applyFilters = useCallback(async () => {
     toggleFilter(false);
-    const path = pathname.replace('[collectionSlug]', query.collectionSlug);
-    const newUrl = new URL(config.baseUrl + path);
+    const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
     if (selectedFilters.length > 0)
       selectedFilters.forEach((item) => newUrl.searchParams.append('filter', item.id));
     if (query.sort_key) newUrl.searchParams.set('sort_key', query.sort_key);
@@ -83,16 +82,7 @@ export function CollectionProvider({
     const filters = selectedFilters.map((item) => JSON.parse(item.input));
     const data = await handleGetData(15, filters, query.sort_key, null);
     handleSetFilterState(data);
-  }, [
-    handleGetData,
-    handleSetFilterState,
-    pathname,
-    push,
-    query.collectionSlug,
-    query.sort_key,
-    selectedFilters,
-    toggleFilter,
-  ]);
+  }, [asPath, handleGetData, handleSetFilterState, push, query.sort_key, selectedFilters, toggleFilter]);
 
   const handleSort = useCallback(
     async (value) => {

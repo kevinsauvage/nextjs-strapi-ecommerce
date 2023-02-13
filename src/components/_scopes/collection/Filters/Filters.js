@@ -1,6 +1,7 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import { useCallback } from 'react';
 import { actions } from '@/contexts/CollectionContext/CollectionReducer';
+import { extractUniqueColorNames } from 'src/lib/shopify/helpers';
 import styles from './Filters.module.scss';
 import FilterManager from './FilterManager/FilterManager';
 
@@ -10,13 +11,20 @@ export default function Filters() {
   const isChecked = useCallback(
     (valueId) => {
       if (!Array.isArray(selectedFilters)) return false;
-      const res = selectedFilters?.some((filter) => filter.id === valueId);
+      const res = selectedFilters?.some((filter) => JSON.stringify(filter.id) === JSON.stringify(valueId));
       return res;
     },
     [selectedFilters]
   );
 
   const filters = allFilters.filter((item) => item.type === 'LIST').filter((item) => item.values.length > 1);
+
+  console.log('🚀 ~ file: Filters.js:21 ~ Filters ~ filters', filters);
+
+  const getValues = (id, values) => {
+    if (id.includes('color')) return extractUniqueColorNames(values);
+    return values;
+  };
 
   return (
     <div className={styles.filters}>
@@ -25,7 +33,7 @@ export default function Filters() {
           <div className={styles.filterContainer} key={filter.label}>
             <b className={styles.label}>{filter.label}</b>
             <div className={styles.filter}>
-              {filter.values.map((value) => (
+              {getValues(filter.id, filter.values).map((value) => (
                 <button
                   key={value.label}
                   className={`${styles.button} ${isChecked(value.id) && styles.checked}`}

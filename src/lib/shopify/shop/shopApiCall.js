@@ -53,7 +53,6 @@ export const getMenu = async (handle, delegateToken, ip) => {
     if (res?.errors) {
       console.error(res.errors);
     }
-    console.log('🚀 ~ file: shopApiCall.js:53 ~ getMenu ~ res', res);
 
     return res?.data?.menu?.items ?? [];
   } catch (error) {
