@@ -54,6 +54,7 @@ config.routes = {
   refound: '/pages/refound',
   shipping: '/pages/shipping',
   login: '/login',
+  logout: '/logout',
   register: '/register',
   cart: '/cart',
   account: '/account',
@@ -69,8 +70,9 @@ config.routes = {
 config.accountNav = [
   { url: config.routes.account, title: 'Account overview' },
   { url: config.routes.addresses, title: 'Address book' },
-  { url: config.routes.orders, title: 'My Orders' },
+  { url: config.routes.orders, title: 'My orders' },
   { url: config.routes.updateAccount, title: 'My details' },
+  { url: config.routes.logout, title: 'Sign out ' },
 ];
 
 if (env === 'production') {

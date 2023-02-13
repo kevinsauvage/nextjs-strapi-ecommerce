@@ -38,7 +38,7 @@ function middleware(request) {
   }
 
   // Cannot access login or register if already login
-  if (cookieShopify && (pathname.startsWith('/login') || pathname.startsWith('/logout'))) {
+  if (cookieShopify && (pathname.startsWith('/login') || pathname.startsWith('/register'))) {
     return NextResponse.redirect(`${origin}${config.routes.account}`);
   }
 

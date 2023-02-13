@@ -29,6 +29,9 @@ export const deleteAccessToken = async (customerAccessToken, delegateToken, ip) 
       delegateToken,
       ip
     );
+
+    console.log('🚀 ~ file: customerApiCall.js:33 ~ deleteAccessToken ~ res', res);
+
     const response = res?.data?.customerAccessTokenDelete;
     return response;
   } catch (error) {

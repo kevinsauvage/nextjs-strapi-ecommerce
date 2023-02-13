@@ -6,7 +6,7 @@
 .banner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: var(--space-2);
   background-color: var(--surface-200);
   min-height: 160px;
@@ -15,18 +15,6 @@
 
 .title {
   text-transform: uppercase;
-}
-
-.logOut {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-0);
-  border-radius: 3px;
-  padding: 3px 8px;
-  background: transparent;
-  color: var(--complementary-500);
-  border: 2px solid var(--complementary-500);
 }
 
 .main {

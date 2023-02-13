@@ -1,6 +1,5 @@
 const apiRoute = {
   login: '/api/customer/auth/login',
-  logout: '/api/customer/auth/logout',
   register: '/api/customer/auth/register',
   delegateToken: '/api/delegateToken',
 
@@ -41,7 +40,6 @@ const nextApiHelper = async (url, body = {}, method = 'POST') => {
   }
 };
 
-const logout = () => nextApiHelper(`${apiRoute.logout}`);
 const register = (payload) => nextApiHelper(`${apiRoute.register}`, payload);
 const login = (payload) => nextApiHelper(`${apiRoute.login}`, payload);
 const generateDelegateToken = () => nextApiHelper(`${apiRoute.delegateToken}`, null, 'GET');
@@ -137,7 +135,6 @@ export const sendMail = async (body) => {
 
 const nextApiCall = {
   login,
-  logout,
   register,
   generateDelegateToken,
   getCustomer,

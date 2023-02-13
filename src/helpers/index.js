@@ -31,6 +31,7 @@ export const getInfoFromCtx = (ctx) => {
     collectionSlug: ctx.query.collectionSlug,
     ip: getIpAddressFromCtx(ctx),
     query: ctx.query,
+    shopifyToken: cookies.shopifyToken ? JSON.parse(cookies.shopifyToken) : null,
   };
 };
 

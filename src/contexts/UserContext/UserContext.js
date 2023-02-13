@@ -1,11 +1,8 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import nextApiCall from '@/utils/apiNext';
-import config from '@/config/index';
-import { useRouter } from 'next/router';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
-import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const UserContext = createContext();
 
@@ -13,9 +10,7 @@ export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { user, addresses, orders } = states || {};
   const { showToast } = useToastContext();
-  const { toggleLoading } = useGlobalContext();
   const { handleSetCheckout } = useCheckoutContext();
-  const { reload } = useRouter();
 
   const setUser = useCallback((payload) => {
     if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
@@ -51,14 +46,6 @@ export function UserProvider({ children }) {
     [handleSetCheckout]
   );
 
-  const logout = useCallback(async () => {
-    toggleLoading(true);
-    const res = await nextApiCall.logout();
-    toggleLoading(false);
-    if (res?.ok) return reload();
-    return showToast.error(config.userFeedback.logout.error);
-  }, [reload, showToast, toggleLoading]);
-
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
@@ -68,7 +55,7 @@ export function UserProvider({ children }) {
       if (!res || !res.customer?.id) console.error('get customer failed');
     };
     getCustomer();
-  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, logout, setUser]);
+  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, setUser]);
 
   const values = useMemo(
     () => ({
@@ -76,9 +63,8 @@ export function UserProvider({ children }) {
       addresses,
       orders,
       dispatch,
-      logout,
     }),
-    [user, dispatch, addresses, orders, logout]
+    [user, addresses, orders]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
