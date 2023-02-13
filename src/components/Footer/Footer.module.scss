@@ -1,7 +1,6 @@
 .container {
   display: flex;
-  justify-content: space-between;
-  gap: var(--space-5);
+  gap: var(--space-6);
 
   @include respond('tablet') {
     flex-direction: column;
@@ -15,20 +14,15 @@
   color: var(--onSurface-dark);
 }
 
-.about {
-  width: 100%;
-  max-width: 400px;
-
-  @include respond('tablet') {
-    max-width: unset;
-  }
-}
-
 .title {
   margin-bottom: var(--space-1);
   text-transform: capitalize;
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+  @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
   display: block;
+}
+
+.about {
+  max-width: 40%;
 }
 
 .navList {
@@ -46,6 +40,11 @@
   margin-bottom: var(--space-1);
   min-width: 130px;
 
+  a {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -59,6 +58,5 @@
   padding: var(--space-0) 0;
   border-top: 0.1px solid rgba(var(--RGB-surface-100), 0.3);
   background-color: var(--surface-dark-100);
-
   color: var(--onSurface-dark);
 }

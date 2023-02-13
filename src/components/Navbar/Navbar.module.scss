@@ -19,11 +19,20 @@
   cursor: pointer;
   height: 100%;
   color: var(--onSurface-dark);
+  border-right: 0.1px solid var(--surface-900);
+
+  &:first-child {
+    border-left: 0.1px solid var(--surface-900);
+  }
 
   a {
     padding: 0 var(--space-1);
-    min-width: 100px;
+    min-width: 110px;
     font-weight: $fontWeightSemiBold;
+
+    &:hover {
+      background-color: var(--surface-900);
+    }
   }
 }
 
