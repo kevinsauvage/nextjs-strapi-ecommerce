@@ -124,9 +124,12 @@ export const refreshToken = async (token, delegateToken, ip) => {
 export const getDelegateToken = async (input) => {
   try {
     const res = await shopifyAdminApiCall(customerQueries.queryDelegateAccessToken, { input });
+
+    console.log('🚀 ~ file: customerApiCall.js:128 ~ getDelegateToken ~ res', res);
+
     return res?.data?.delegateAccessTokenCreate;
   } catch (error) {
-    return console.error(error);
+    return console.error('getDelegateToken: ', error);
   }
 };
 

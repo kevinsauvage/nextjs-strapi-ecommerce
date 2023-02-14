@@ -1,12 +1,11 @@
 import { useRouter } from 'next/router';
-import ProductCardDefault from '@/components/_scopes/product/ProductCardDefault/ProductCardDefault';
-import Carousel from '@/components/Carousel/Carousel';
 import { getProduct, getProductRecommendation, getProducts } from '@/lib/shopify/product/productApiCall';
 import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
+import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
@@ -22,15 +21,8 @@ function ProductPage({ product, recommendations = [] }) {
           <ProductPresenter product={product} />
           {Array.isArray(recommendations) && recommendations.length > 0 && (
             <div className={styles.carousel}>
-              <Carousel
-                title="Recommended Products"
-                subtitle="Check out the products you may like"
-                itemToShow={4}
-              >
-                {recommendations.map((prod) => (
-                  <ProductCardDefault product={prod} key={prod.id} />
-                ))}
-              </Carousel>
+              <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+              <ProductsList products={recommendations} layout="grid" />
             </div>
           )}
         </PageLayout>

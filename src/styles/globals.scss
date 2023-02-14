@@ -22,8 +22,8 @@ button {
 
   &:disabled,
   &[disabled='disabled'] {
-    opacity: 0.4;
     cursor: unset !important;
+    opacity: 0.5;
   }
 }
 

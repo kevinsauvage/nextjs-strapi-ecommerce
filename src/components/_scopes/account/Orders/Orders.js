@@ -2,6 +2,8 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import OrderCard from '../OrderCard/OrderCard';
 
 export default function Orders({ orders }) {
+  console.log('🚀 ~ file: Orders.js:6 ~ Orders ~ orders', orders);
+
   const { loading } = useUserContext();
 
   if (!orders?.length && !loading)
@@ -11,5 +13,7 @@ export default function Orders({ orders }) {
       </div>
     );
 
-  return Array.isArray(orders) && orders.map((order) => <OrderCard key={order.id} order={order} />);
+  return (
+    Array.isArray(orders) && orders.map((order) => <OrderCard key={order.id} order={order} displayButton />)
+  );
 }

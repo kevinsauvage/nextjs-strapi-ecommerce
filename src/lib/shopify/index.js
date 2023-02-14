@@ -36,13 +36,14 @@ export const shopifyAdminApiCall = async (query, variables) => {
       body: JSON.stringify({ query, variables }),
     });
     const res = await response.json();
+
     if (res.errors) {
-      console.error(res.errors);
+      console.error('shopifyAdminApiCall error: ', res.errors);
     }
     return res;
   } catch (error) {
     // TODO HANDLE ERRORS
-    return console.error(error);
+    return console.error('shopifyAdminApiCall error: ', error);
   }
 };
 

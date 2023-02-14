@@ -69,9 +69,30 @@ export const getPage = async (handle) => {
     return console.error(error);
   }
 };
-export const getMetaObject = async (handle) => {
+export const getMetaObject = async (handle, delegateToken, ip) => {
   try {
-    const res = await shopifyStorefrontCall(shopQueries.getMetaObject, { handle });
+    const res = await shopifyStorefrontCall(shopQueries.getMetaObject, { handle }, delegateToken, ip);
+
+    console.log('🚀 ~ file: shopApiCall.js:76 ~ getMetaObject ~ res', res);
+
+    const value = res?.data?.page?.data?.value;
+    return value ? JSON.parse(value) : undefined;
+  } catch (error) {
+    return console.error(error);
+  }
+};
+
+export const getMetaObjects = async (handle, sortKey, first = 100, delegateToken, ip) => {
+  try {
+    const res = await shopifyStorefrontCall(
+      shopQueries.queryMetaObjects,
+      { handle, sortKey, first },
+      delegateToken,
+      ip
+    );
+
+    console.log('🚀 ~ file: shopApiCall.js:91 ~ getMetaObjects ~ res', res);
+
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   } catch (error) {

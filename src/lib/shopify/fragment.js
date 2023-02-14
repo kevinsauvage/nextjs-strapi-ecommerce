@@ -226,6 +226,7 @@ email
 financialStatus
 orderNumber
 phone
+statusUrl
 processedAt
 totalRefunded {
   amount
@@ -238,6 +239,13 @@ totalShippingPrice {
 totalPrice {
   amount
   currencyCode
+}
+successfulFulfillments(first: 100) {
+  trackingCompany
+  trackingInfo(first: 100) {
+    number
+    url
+  }
 }
 cancelReason
 canceledAt

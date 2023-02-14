@@ -1,12 +1,13 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useEffect, useState } from 'react';
-import { getMenu, getShop } from '@/lib/shopify/shop/shopApiCall';
+import { getMenu, getShop, getMetaObject } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
+
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {
@@ -21,7 +22,7 @@ function RootLayout({ children }) {
 
       setMenuHeader(header);
     };
-
+    getMetaObject({ type: 'navigation', handle: 'main' });
     fetchData();
   }, []);
 

@@ -2,7 +2,7 @@ import { productFragment } from '../fragment';
 
 const queryProductRecommendations = `
 query productRecommendations($productId: ID!) {
-  productRecommendations (productId: $productId) {
+  productRecommendations(productId: $productId) {
     ${productFragment}
   }
 }`;

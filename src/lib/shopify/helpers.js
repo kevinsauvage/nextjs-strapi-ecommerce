@@ -16,17 +16,23 @@ export const cleanGraphQLResponse = (data) => {
 };
 
 export const getFiltersFromQuery = (filters, query) => {
-  if (!query.filter) return [];
+  if (!query?.filter) return [];
+  let queryFilters = [];
+  if (Array.isArray(query.filter)) queryFilters = query.filter;
+  else if (query.filter && query.filter.length) queryFilters = [query.filter];
+
   const newFilters = filters.reduce((acc, filter) => {
     filter.values.forEach((value) => {
-      if (query.filter.indexOf(value.id) !== -1) {
-        acc.push(value);
-      }
+      queryFilters.forEach((queryFilter) => {
+        if (queryFilter === value.id) acc.push(value);
+      });
     });
     return acc;
   }, []);
+  console.log(newFilters);
   return newFilters;
 };
+
 const colors = [
   'black',
   'blue',

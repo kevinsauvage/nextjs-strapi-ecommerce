@@ -102,6 +102,33 @@ query ($handle: MetaobjectHandleInput) {
 }
 `;
 
+const queryMetaObjects = `
+query getMetaObjects(
+  $type: String!,
+  $sortKey: String,
+  $first: Int,
+  $reverse: Boolean
+){
+  metaobjects(
+    type: $type,
+    sortKey: $sortKey,
+    first: $first,
+  ) {
+    edges {
+      node {
+        id
+        fields {
+          key
+          value
+        }
+        handle
+        updatedAt
+        type
+      }
+    }
+  }
+}`;
+
 const shopQueries = {
   getShop,
   getMenu,
@@ -111,6 +138,7 @@ const shopQueries = {
   getShippingPolicy,
   getTermsOfService,
   getMetaObject,
+  queryMetaObjects,
 };
 
 export default shopQueries;

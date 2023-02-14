@@ -12,13 +12,23 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import CollectionNav from '@/components/_scopes/collection/CollectionNav/CollectionNav';
 import Slide from '@/components/Slide/Slide';
 import Container from '@/components/Container/Container';
+import FilterManager from '@/components/_scopes/collection/Filters/FilterManager/FilterManager';
+import { getFiltersFromQuery } from '@/lib/shopify/helpers';
+import { useRouter } from 'next/router';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
 function CollectionLayout({ children, collection }) {
-  const { handleSort, layout, dispatch: collectionDispatch, collectionNav } = useCollectionContext();
+  const {
+    handleSort,
+    layout,
+    dispatch: collectionDispatch,
+    collectionNav,
+    allFilters,
+  } = useCollectionContext();
   const { filterOpen, toggleFilter } = useGlobalContext();
   const { title, description } = collection || {};
+  const { query } = useRouter();
 
   return (
     <>
@@ -35,7 +45,12 @@ function CollectionLayout({ children, collection }) {
             <Wrapper>
               <Sort handleChange={handleSort} />
               <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
-                {filter} Filter
+                {filter} Filter{' '}
+                <small>
+                  {getFiltersFromQuery(allFilters, query).length
+                    ? `(${getFiltersFromQuery(allFilters, query).length.toString()})`
+                    : null}
+                </small>
               </button>
             </Wrapper>
           </Container>
@@ -55,6 +70,7 @@ function CollectionLayout({ children, collection }) {
         isOpen={filterOpen}
         content={<Filters />}
         title="Filters"
+        footer={<FilterManager />}
       />
     </>
   );

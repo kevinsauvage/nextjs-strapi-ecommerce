@@ -199,7 +199,7 @@
   background-color: var(--primary-500);
   color: var(--onSurface-dark);
 
-  &:hover {
+  &:hover:enabled {
     background-color: var(--primary-700);
   }
 }
@@ -210,18 +210,19 @@
   border: 2px solid var(--complementary-600);
   color: var(--onSurface-dark);
 
-  &:hover {
+  &:hover:enabled {
     background-color: var(--complementary-700);
   }
 }
 
 @mixin button-outlined {
   @include button;
-  border: 2px solid var(--complementary-500);
+  border: 2px solid var(--surface-dark-100);
   background-color: transparent;
-  color: var(--onSurface-dark);
+  color: var(--surface-dark-100);
 
-  &:hover {
-    border: 2px solid var(--complementary-700);
+  &:hover:enabled {
+    background-color: var(--surface-dark-100);
+    color: var(--onSurface-dark);
   }
 }

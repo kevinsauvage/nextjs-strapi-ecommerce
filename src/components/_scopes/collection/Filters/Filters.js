@@ -2,22 +2,30 @@ import useCollectionContext from '@/contexts/CollectionContext/useCollectionCont
 import { useCallback } from 'react';
 import { actions } from '@/contexts/CollectionContext/CollectionReducer';
 import { extractUniqueColorNames } from '@/lib/shopify/helpers';
+import { useRouter } from 'next/router';
 import styles from './Filters.module.scss';
-import FilterManager from './FilterManager/FilterManager';
 
 export default function Filters() {
   const { selectedFilters, allFilters, dispatch } = useCollectionContext();
+  const { query } = useRouter();
 
-  console.log('🚀 ~ file: Filters.js:11 ~ Filters ~ allFilters', allFilters);
-
-  const isChecked = useCallback(
+  const isAlreadyApplied = useCallback(
     (valueId) => {
-      if (!Array.isArray(selectedFilters)) return false;
-      const res = selectedFilters?.some((filter) => JSON.stringify(filter.id) === JSON.stringify(valueId));
+      const res = selectedFilters.some((filter) => filter.id === valueId);
       return res;
     },
     [selectedFilters]
   );
+
+  const isSelected = (valueId) => {
+    let items;
+    if (Array.isArray(query.filter)) items = query.filter;
+    else if (query.filter && query.filter.length) items = query.filter;
+    else items = [];
+    const actualSelection = selectedFilters.filter((filter) => !items.includes(filter.id));
+    const res = actualSelection?.some((filter) => JSON.stringify(filter.id) === JSON.stringify(valueId));
+    return res;
+  };
 
   const filters = allFilters.filter((item) => item.type === 'LIST').filter((item) => item.values.length > 1);
 
@@ -36,10 +44,12 @@ export default function Filters() {
               {getValues(filter.id, filter.values).map((value) => (
                 <button
                   key={value.label}
-                  className={`${styles.button} ${isChecked(value.id) && styles.checked}`}
+                  className={`${styles.button} ${isAlreadyApplied(value.id) && styles.checked} ${
+                    isSelected(value.id) && styles.selected
+                  }`}
                   type="button"
                   onClick={() =>
-                    isChecked(value.id)
+                    isAlreadyApplied(value.id) || isSelected(value.id)
                       ? dispatch({
                           type: actions.SET_SELECTED_FILTERS,
                           payload: selectedFilters.filter((f) => f.id !== value.id),
@@ -53,7 +63,6 @@ export default function Filters() {
             </div>
           </div>
         ))}
-      <FilterManager />
     </div>
   );
 }
