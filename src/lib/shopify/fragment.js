@@ -267,9 +267,17 @@ shippingAddress {
   provinceCode
   zip
 }`;
+export const pageInfoFragment = `
+hasNextPage
+hasPreviousPage
+endCursor
+startCursor`;
 
 export const customerOrdersFragment = `
-orders(first: 10) {
+orders(first: $first, after: $after) {
+  pageInfo {
+    ${pageInfoFragment}
+  }
   edges {
     node {
         ${orderFragment}
@@ -300,9 +308,3 @@ values {
   count
   input
 }`;
-
-export const pageInfoFragment = `
-hasNextPage
-hasPreviousPage
-endCursor
-startCursor`;

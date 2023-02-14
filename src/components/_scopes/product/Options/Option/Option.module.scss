@@ -17,7 +17,7 @@ $boxDimension: 36px;
   align-items: center;
   border-radius: $radius;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  border: 2px solid var(--surface-900);
+  border: 2px solid var(--surface-800);
   color: var(--surface-900);
 }
 
@@ -35,9 +35,9 @@ $boxDimension: 36px;
 }
 
 .selectedOption {
-  border: 2px solid var(--primary-500);
-  background-color: rgba(var(--RGB-primary-100), 0.2);
-  color: var(--primary-800);
+  border: 2px solid var(--surface-dark-100);
+  color: var(--surface-dark-100);
+  font-weight: 600;
 }
 
 .outOfStock {

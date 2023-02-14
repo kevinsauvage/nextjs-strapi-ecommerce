@@ -8,7 +8,7 @@ export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const { user, addresses, orders } = states || {};
+  const { user, addresses, orders, ordersPageInfo } = states || {};
   const { showToast } = useToastContext();
   const { handleSetCheckout } = useCheckoutContext();
 
@@ -63,8 +63,9 @@ export function UserProvider({ children }) {
       addresses,
       orders,
       dispatch,
+      ordersPageInfo,
     }),
-    [user, addresses, orders]
+    [user, addresses, orders, ordersPageInfo]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

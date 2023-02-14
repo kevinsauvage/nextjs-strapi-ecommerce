@@ -3,7 +3,8 @@ import { getInfoFromRequest } from '@/helpers/index';
 
 export default async function handler(req, res) {
   try {
-    const { method } = req;
+    const { method, query } = req;
+
     const { shopifyToken, delegateToken, ip } = getInfoFromRequest(req);
     const token = shopifyToken?.token;
 
@@ -11,7 +12,8 @@ export default async function handler(req, res) {
 
     switch (method) {
       case 'GET': {
-        const response = await getUserOrders(token, delegateToken, ip);
+        const response = await getUserOrders(token, delegateToken, ip, query.first, query.after);
+
         if (response) return res.status(200).json(response);
         return res.status(500).json({ message: 'Something went wrong' });
       }

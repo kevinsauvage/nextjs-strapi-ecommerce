@@ -51,7 +51,7 @@ query customer ($token: String!) {
 }`;
 
 const queryCustomerOrders = `
-query customer ($token: String!) {
+query customer ($token: String!,$first: Int, $after:  String) {
   customer(customerAccessToken: $token) {
     ${customerOrdersFragment}
   }

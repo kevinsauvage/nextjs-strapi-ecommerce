@@ -89,15 +89,17 @@ export const updateUserInfo = async (customerAccessToken, customer, delegateToke
   }
 };
 
-export const getUserOrders = async (token, delegateToken, ip) => {
+export const getUserOrders = async (token, delegateToken, ip, first = 5, after = null) => {
   try {
     const res = await shopifyStorefrontCall(
       customerQueries.queryCustomerOrders,
-      { token },
+      { token, after: after || null, first: Number(first) },
       delegateToken,
       ip
     );
-    return cleanGraphQLResponse(res?.data?.customer?.orders);
+
+    const pageInfo = res?.data?.customer?.orders?.pageInfo;
+    return { orders: cleanGraphQLResponse(res?.data?.customer?.orders), pageInfo };
   } catch (error) {
     return console.error(error);
   }
@@ -124,8 +126,6 @@ export const refreshToken = async (token, delegateToken, ip) => {
 export const getDelegateToken = async (input) => {
   try {
     const res = await shopifyAdminApiCall(customerQueries.queryDelegateAccessToken, { input });
-
-    console.log('🚀 ~ file: customerApiCall.js:128 ~ getDelegateToken ~ res', res);
 
     return res?.data?.delegateAccessTokenCreate;
   } catch (error) {

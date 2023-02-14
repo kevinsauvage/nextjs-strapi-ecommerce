@@ -118,9 +118,9 @@ const updateAddress = (payload, addressId) => {
   return nextApiHelper(apiUrl, payload, 'PUT');
 };
 
-const getCustomerOrders = () => {
+const getCustomerOrders = (first, after) => {
   const apiUrl = `${apiRoute.customer.orders}`;
-  return nextApiHelper(apiUrl, null, 'GET');
+  return nextApiHelper(`${apiUrl}?first=${first}&after=${after}`, null, 'GET');
 };
 
 const getOrderById = (orderId) => {

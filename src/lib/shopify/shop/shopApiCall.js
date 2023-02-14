@@ -73,8 +73,6 @@ export const getMetaObject = async (handle, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(shopQueries.getMetaObject, { handle }, delegateToken, ip);
 
-    console.log('🚀 ~ file: shopApiCall.js:76 ~ getMetaObject ~ res', res);
-
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;
   } catch (error) {
@@ -90,8 +88,6 @@ export const getMetaObjects = async (handle, sortKey, first = 100, delegateToken
       delegateToken,
       ip
     );
-
-    console.log('🚀 ~ file: shopApiCall.js:91 ~ getMetaObjects ~ res', res);
 
     const value = res?.data?.page?.data?.value;
     return value ? JSON.parse(value) : undefined;

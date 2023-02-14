@@ -55,7 +55,7 @@
   border-radius: $radius;
   overflow: hidden;
   max-width: 80px;
-  border: 2px solid var(--primary);
+  border: 2px solid var(--surface-800);
 
   img {
     width: 100%;
@@ -65,6 +65,6 @@
   }
 
   &.selectedVariant {
-    border: 2px solid var(--surface-900) !important;
+    border: 2px solid var(--surface-dark-100) !important;
   }
 }

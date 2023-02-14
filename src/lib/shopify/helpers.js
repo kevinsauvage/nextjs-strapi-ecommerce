@@ -29,7 +29,6 @@ export const getFiltersFromQuery = (filters, query) => {
     });
     return acc;
   }, []);
-  console.log(newFilters);
   return newFilters;
 };
 

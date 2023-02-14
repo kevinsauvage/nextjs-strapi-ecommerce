@@ -1,20 +1,42 @@
 .CollectionBanner {
   width: 100%;
-  min-height: 200px;
   display: flex;
   align-items: center;
   justify-content: center;
   background-color: var(--surface-200);
+  overflow: hidden;
 }
 .inner {
+  position: relative;
   width: 100%;
-  padding: var(--space-1) var(--space-2) var(--space-2) var(--space-2);
-
+  max-height: 250px;
+  padding: 0 var(--space-2);
   border-radius: $radius;
   text-align: center;
+  transition: max-height 0.2s ease;
 }
+
+.close {
+  max-height: 30px;
+}
+
+.button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--surface-900);
+  color: var(--onSurface-dark);
+  border: none;
+}
+
 .title {
   margin-bottom: var(--space-0);
+  margin-top: var(--space-2);
   color: var(--onSurface-medium);
   font-weight: $fontWeightSemiBold;
 }
@@ -22,6 +44,7 @@
 .description {
   max-width: 900px;
   margin: 0 auto;
+  margin-bottom: var(--space-2);
 }
 .subtitle {
   max-width: 600px;

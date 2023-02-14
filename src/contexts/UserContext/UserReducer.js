@@ -2,7 +2,8 @@ export const initialState = {
   user: undefined,
   loading: false,
   addresses: undefined,
-  orders: undefined,
+  orders: [],
+  ordersPageInfo: {},
 };
 
 export const actions = {
@@ -11,6 +12,7 @@ export const actions = {
   CHANGE_LOADING: 'CHANGE_LOADING',
   ADD_ADDRESSES: 'ADD_ADDRESSES',
   ADD_ORDERS: 'ADD_ORDERS',
+  ADD_ORDERS_PAGEINFO: 'ADD_ORDERS_PAGEINFO',
 };
 
 export const UserReducer = (state = initialState, action) => {
@@ -32,9 +34,11 @@ export const UserReducer = (state = initialState, action) => {
     }
 
     case actions.ADD_ORDERS: {
-      return { ...state, orders: action.payload };
+      return { ...state, orders: [...state.orders, ...action.payload] };
     }
-
+    case actions.ADD_ORDERS_PAGEINFO: {
+      return { ...state, ordersPageInfo: action.payload };
+    }
     default:
       return state;
   }
