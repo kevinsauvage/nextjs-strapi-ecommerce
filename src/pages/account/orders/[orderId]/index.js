@@ -1,6 +1,5 @@
 import LineItemCard from '@/components/_scopes/account/LineItemCard/LineItemCard';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Address from '@/components/_scopes/account/Address/Address';
@@ -8,6 +7,7 @@ import OrderCard from '@/components/_scopes/account/OrderCard/OrderCard';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { getOrderById } from '@/lib/shopify/customer/customerApiCall';
 import styles from './OrderPage.module.scss';
 
 function OrderDetail() {
@@ -20,22 +20,17 @@ function OrderDetail() {
   useEffect(() => {
     async function fetchOrder() {
       if (!orderId || !query || order) return;
-      try {
-        const res = await nextApiCall.getOrderById(orderId);
 
-        if (res?.error) {
-          showToast.error('Something went wrong');
-          back();
-          return;
-        }
+      const res = await getOrderById(orderId);
+      setIsLoading(false);
 
-        setOrder(res);
-      } catch (error) {
+      if (res?.error) {
         showToast.error('Something went wrong');
         back();
-      } finally {
-        setIsLoading(false);
+        return;
       }
+
+      setOrder(res);
     }
     fetchOrder();
   }, [orderId, back, query, order, showToast]);

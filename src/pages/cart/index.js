@@ -5,13 +5,10 @@ import EmptyCart from '@/components/_scopes/cart/EmptyCart/EmptyCart';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { useState } from 'react';
-import config from '@/config/index';
 import Button from '@/components/Button/Button';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import Container from '@/components/Container/Container';
 import styles from './Cart.module.scss';
-
-const { userFeedback } = config;
 
 function CartPage() {
   const { checkout, handleQuantityChange, isCheckoutLoading } = useCheckoutContext();
@@ -20,18 +17,14 @@ function CartPage() {
 
   if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading) return <EmptyCart />;
 
+  const successCallback = () => setLineItemsToUpdate([]);
+
   const handleUpdate = async () => {
     const isQuantityMissing = lineItemsToUpdate.find((item) => !item.quantity);
     if (isQuantityMissing) return showToast.warning('The quantity should be a positive number');
     const isQuantityNegative = lineItemsToUpdate.find((item) => item.quantity < 0);
     if (isQuantityNegative) return showToast.warning('The quantity should be a positive number');
-    const res = await handleQuantityChange(lineItemsToUpdate);
-
-    if (res) {
-      setLineItemsToUpdate([]);
-      return showToast.success(userFeedback.updateLines.success);
-    }
-    return showToast.error(userFeedback.updateLines.error);
+    return handleQuantityChange(lineItemsToUpdate, successCallback);
   };
 
   const handleSetLineToUpdate = (line) => {

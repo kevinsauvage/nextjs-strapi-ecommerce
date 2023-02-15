@@ -1,10 +1,11 @@
-import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { createAddress } from '@/lib/shopify/customer/customerApiCall';
+import config from '@/config/index';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -24,7 +25,9 @@ function Addresses() {
       }
       toggleLoading(true);
 
-      const { customerAddress, customerUserErrors } = await nextApiCall.createAddress({ address });
+      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+      const { customerAddress, customerUserErrors } = (await createAddress(address, shopifyToken)) || {};
 
       if (customerAddress) return showToast.success('Address created successfully');
       if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));

@@ -1,4 +1,3 @@
-import nextApiCall from '@/utils/apiNext';
 import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -8,7 +7,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import useUserContext from '@/contexts/UserContext/useUserContext';
+import { getCustomerAddressById, updateAddress } from '@/lib/shopify/customer/customerApiCall';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -17,21 +16,16 @@ function AddressUpdate() {
   const { toggleLoading } = useGlobalContext();
   const { addressId } = query;
   const { showToast } = useToastContext();
-  const { user } = useUserContext();
 
   useEffect(() => {
     async function fetchAddress() {
-      try {
-        if (addressId && query) {
-          const res = await nextApiCall.getAddressById(addressId);
-          if (res) return setAddress(res);
-          return showToast.error('Something went wrong');
-        }
-      } catch (error) {
+      if (addressId && query) {
+        const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+        const res = await getCustomerAddressById(shopifyToken, addressId);
+        setIsLoading(false);
+        if (res) return setAddress(res);
         showToast.error('Something went wrong');
         return back();
-      } finally {
-        setIsLoading(false);
       }
       return null;
     }
@@ -39,38 +33,29 @@ function AddressUpdate() {
   }, [addressId, push, query, back, showToast]);
 
   const handleUpdateAddress = async (formData) => {
-    try {
-      if (
-        !formData?.address1 ||
-        !formData?.city ||
-        !formData?.country ||
-        !formData?.firstName ||
-        !formData?.lastName ||
-        !formData?.zip
-      ) {
-        return showToast.error('Missing field');
-      }
-      toggleLoading(true);
-      const { customerAddress, customerUserErrors } = await nextApiCall.updateAddress(
-        { address: formData },
-        addressId
-      );
-
-      if (customerAddress) {
-        setAddress(customerAddress);
-        showToast.success('Address updated successfully');
-        if (user.defaultAddress.id === addressId) return push(config.routes.account);
-        return push(config.routes.addresses);
-      }
-      if (customerUserErrors) {
-        return customerUserErrors.map((err) => showToast.error(err.message));
-      }
-      return showToast.error('Something went wrong');
-    } catch (err) {
-      return showToast.error('Something went wrong');
-    } finally {
-      toggleLoading(false);
+    if (
+      !formData?.address1 ||
+      !formData?.city ||
+      !formData?.country ||
+      !formData?.firstName ||
+      !formData?.lastName ||
+      !formData?.zip
+    ) {
+      return showToast.error('Missing field');
     }
+    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+    toggleLoading(true);
+    const { customerAddress, customerUserErrors } = await updateAddress(formData, shopifyToken, addressId);
+    toggleLoading(false);
+
+    if (customerAddress) {
+      setAddress(customerAddress);
+      showToast.success('Address updated successfully');
+      return push(config.routes.addresses);
+    }
+    if (customerUserErrors) return customerUserErrors.map((err) => showToast.error(err.message));
+    return showToast.error('Something went wrong');
   };
 
   return (

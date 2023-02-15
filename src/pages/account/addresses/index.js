@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import Address from '@/components/_scopes/account/Address/Address';
-import nextApiCall from '@/utils/apiNext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
@@ -10,6 +9,11 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Button from '@/components/Button/Button';
 import config from '@/config/index';
+import {
+  getCustomerAddresses,
+  deleteAddressById,
+  updateDefaultAddress,
+} from '@/lib/shopify/customer/customerApiCall';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -19,21 +23,27 @@ function Addresses() {
   const { showToast } = useToastContext();
 
   const fetchAddresses = useCallback(async () => {
-    try {
-      const res = await nextApiCall.getCustomerAddresses();
+    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+    const res = await getCustomerAddresses(shopifyToken);
+    setIsLoading(false);
+
+    if (Array.isArray(res)) {
+      console.log(res);
       dispatch({ type: actions.ADD_ADDRESSES, payload: res });
-    } catch (e) {
+    } else {
       showToast.error('Something went wrong, please try again later');
-    } finally {
-      setIsLoading(false);
     }
   }, [dispatch, showToast]);
 
   const handleSetAsDefault = async (id) => {
     try {
       toggleLoading(true);
-      const res = await nextApiCall.updateCustomerDefaultAddress(id);
+      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+      const res = await updateDefaultAddress(shopifyToken, id);
       const { customer, customerUserErrors } = res || {};
+
       if (customer?.id) {
         showToast.success('Address correctly set as default address');
         return dispatch({ type: actions.ADD_USER, payload: customer });
@@ -49,8 +59,11 @@ function Addresses() {
   const handleDelete = async (id) => {
     try {
       toggleLoading(true);
-      const res = await nextApiCall.deleteAddress(id);
-      const { customerUserErrors, deletedCustomerAddressId } = res || {};
+      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+      const deleteRes = await deleteAddressById(shopifyToken, id);
+
+      const { customerUserErrors, deletedCustomerAddressId } = deleteRes || {};
       if (customerUserErrors?.length)
         return customerUserErrors.forEach((element) => showToast.error(element.message));
 

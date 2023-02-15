@@ -2,57 +2,67 @@ import Link from 'next/link';
 import Input from '@/components/_scopes/forms/Input/Input';
 import Form from '@/components/_scopes/forms/Form/Form';
 import config from '@/config/index';
-import nextApiCall from '@/utils/apiNext';
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { loginCustomer, registerCustomer } from '@/lib/shopify/customer/customerApiCall';
+import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
+import { useEffect } from 'react';
 
 const { userFeedback } = config;
 
 function RegisterPage() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
-
   const { push } = useRouter();
+
+  useEffect(() => {
+    const token = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+    if (token) {
+      push(config.routes.account);
+    }
+  }, [push]);
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
     try {
-      // check for password length
-      if (!password || password.length < 8) {
-        throw new Error(config.userFeedback.passwordLength);
-      }
-
-      // check for email
-      if (!email) {
-        throw new Error(userFeedback?.missingFields);
-      }
-
-      // toggle loading state
+      if (!password || password.length < 8) throw new Error(config.userFeedback.passwordLength);
+      if (!email) throw new Error(userFeedback?.missingFields);
       toggleLoading(true);
 
-      // perform registration call
-      const registerRes = await nextApiCall.register({ email, password });
-
-      // check for errors
+      // Register the user
+      const registerRes = await registerCustomer({ email, password });
+      if (!registerRes) throw new Error(userFeedback?.register.error);
       const userErrors = registerRes?.userErrors;
-      if (userErrors?.length) {
-        userErrors.forEach((element) => showToast.error(element.message));
-        return;
+      if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
+      showToast.success(userFeedback?.register?.success);
+
+      // Login the user
+      const dataLogin = await loginCustomer({ email, password });
+
+      const accessToken = dataLogin?.customerAccessToken?.accessToken;
+      if (!accessToken) {
+        console.error('login failed after registration');
+        return push(config.routes.login);
       }
 
-      // check if registration was successful
-      if (registerRes?.ok) {
-        showToast.success(userFeedback?.register?.success);
-        push(config.routes.account);
+      window.localStorage.setItem(config.localStorageKeys.shopifyToken, accessToken);
+
+      // Associate user to checkout
+      const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
+      if (checkoutId) {
+        const assosiateRes = await associateCustomerToCheckout(checkoutId, accessToken);
+        if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
       } else {
-        throw new Error(userFeedback?.register?.error);
+        console.warn('Checkout id not fount');
       }
+
+      return push(config.routes.account);
     } catch (error) {
-      showToast.error(error.message);
+      return showToast.error(error.message);
     } finally {
       toggleLoading(false);
     }

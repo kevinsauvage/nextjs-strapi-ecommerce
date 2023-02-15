@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import nextApiCall from '@/utils/apiNext';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import Container from '@/components/Container/Container';
+import { searchProducts } from '@/lib/shopify/product/productApiCall';
 import styles from './search.module.scss';
 
 function Search() {
@@ -17,9 +17,9 @@ function Search() {
   const handleSearch = useCallback(async () => {
     if (!searchTerm || !searchTerm?.trim()) return;
     setLoading(true);
-    const response = await nextApiCall.searchProducts(searchTerm);
+    const searchResponse = await searchProducts(`${searchTerm}*`);
     setLoading(false);
-    setSearch(response);
+    setSearch(searchResponse);
   }, [searchTerm]);
 
   useEffect(() => {

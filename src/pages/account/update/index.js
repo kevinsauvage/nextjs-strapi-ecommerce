@@ -1,5 +1,4 @@
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import nextApiCall from '@/utils/apiNext';
 import { useEffect, useState } from 'react';
 import Form from '@/components/_scopes/forms/Form/Form';
 import useUserContext from '@/contexts/UserContext/useUserContext';
@@ -12,7 +11,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
-import { useRouter } from 'next/router';
+import { updateUserInfo } from '@/lib/shopify/customer/customerApiCall';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -21,7 +20,6 @@ function OrderDetail() {
   const { toggleLoading } = useGlobalContext();
   const { email, firstName, lastName, password, phone, id } = user || {};
   const { showToast } = useToastContext();
-  const { push } = useRouter();
 
   useEffect(() => {
     if (id) setIsLoading(false);
@@ -31,26 +29,32 @@ function OrderDetail() {
     if (!formData.password || !formData.email || !formData.firstName || !formData.lastName) {
       return showToast.error('Please fill in all required fields');
     }
-    try {
-      toggleLoading(true);
-      const updateResponse = await nextApiCall.updateCustomer(formData);
 
-      const { customer, customerUserErrors } = updateResponse || {};
+    const customerInput = {
+      email: formData.email || '',
+      password: formData.password || '',
+      firstName: formData.firstName || '',
+      lastName: formData.lastName || '',
+      acceptsMarketing: true,
+    };
 
-      if (customerUserErrors?.length)
-        return customerUserErrors.forEach((element) => showToast.error(element.message));
+    if (phone) customerInput.phone = phone;
 
-      if (customer) {
-        showToast.success('Customer information updated successfully');
-        dispatch({ type: actions.ADD_USER, payload: customer });
-        return push(config.routes.account);
-      }
-      return showToast.error('Something went wrong');
-    } catch (err) {
-      return showToast.error(err.message);
-    } finally {
-      toggleLoading(false);
+    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+    toggleLoading(true);
+    const updateResponse = await updateUserInfo(shopifyToken, customerInput);
+    toggleLoading(false);
+
+    const { customerUserErrors, customer } = updateResponse || {};
+
+    if (customerUserErrors?.length)
+      return customerUserErrors.forEach((element) => showToast.error(element.message));
+
+    if (customer) {
+      showToast.success('Customer information updated successfully');
+      return dispatch({ type: actions.ADD_USER, payload: customer });
     }
+    return showToast.error('Something went wrong');
   };
 
   return (

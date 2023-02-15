@@ -22,6 +22,11 @@ export const loginCustomer = async (input, delegateToken, ip) => {
 };
 
 export const deleteAccessToken = async (customerAccessToken, delegateToken, ip) => {
+  console.log(
+    '🚀 ~ file: customerApiCall.js:26 ~ deleteAccessToken ~ customerAccessToken',
+    customerAccessToken
+  );
+
   try {
     const res = await shopifyStorefrontCall(
       customerQueries.customerAccessTokenDelete,
@@ -29,6 +34,8 @@ export const deleteAccessToken = async (customerAccessToken, delegateToken, ip) 
       delegateToken,
       ip
     );
+
+    console.log('🚀 ~ file: customerApiCall.js:33 ~ deleteAccessToken ~ res', res);
 
     const response = res?.data?.customerAccessTokenDelete;
     return response;
@@ -45,7 +52,10 @@ export const sendRecoverEmail = async (email, delegateToken, ip) => {
       delegateToken,
       ip
     );
-    return res?.data?.customerRecover;
+
+    console.log('🚀 ~ file: customerApiCall.js:49 ~ sendRecoverEmail ~ res', res);
+
+    return res;
   } catch (error) {
     return console.error(error);
   }
@@ -89,7 +99,7 @@ export const updateUserInfo = async (customerAccessToken, customer, delegateToke
   }
 };
 
-export const getUserOrders = async (token, delegateToken, ip, first = 5, after = null) => {
+export const getUserOrders = async (token, first = 5, after = null, delegateToken, ip) => {
   try {
     const res = await shopifyStorefrontCall(
       customerQueries.queryCustomerOrders,

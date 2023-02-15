@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
-import nextApiCall from '@/utils/apiNext';
+import { generateDelegateToken } from '@/helpers/apiNext';
 import { GlobalReducer, initialState, actions } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
@@ -13,7 +13,9 @@ export function GlobalProvider({ children }) {
   const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
 
   const handleRender = useCallback(async () => {
-    const res = await nextApiCall.generateDelegateToken();
+    console.time('handleRender global context');
+    const res = await generateDelegateToken();
+    console.timeEnd('handleRender global context');
     if (!res?.ok) console.error("Couldn't  set delegate token");
   }, []);
 

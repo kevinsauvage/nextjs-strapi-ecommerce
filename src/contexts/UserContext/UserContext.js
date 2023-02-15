@@ -1,10 +1,16 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
-import nextApiCall from '@/utils/apiNext';
+import config from '@/config/index';
+import { getUser } from '@/lib/shopify/customer/customerApiCall';
+import { updateCheckoutShippingAddress } from '@/lib/shopify/checkout/checkoutApiCall';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
 
 export const UserContext = createContext();
+
+const {
+  localStorageKeys: { checkoutIdSorageKey },
+} = config;
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
@@ -21,6 +27,12 @@ export function UserProvider({ children }) {
       if (!customer?.id) return;
       const { defaultAddress } = customer || {};
       if (!defaultAddress) return;
+      const checkoutIdStorage = window.localStorage.getItem(checkoutIdSorageKey);
+
+      if (!checkoutIdStorage) {
+        console.error('Missing checkout id storage');
+        return;
+      }
 
       const whitelist = [
         'address1',
@@ -39,9 +51,10 @@ export function UserProvider({ children }) {
         .filter((key) => whitelist.includes(key))
         .reduce((obj, key) => ({ ...obj, [key]: defaultAddress[key] }), {});
 
-      const res = await nextApiCall.checkoutUpdateShippingAddress({ shippingAddress });
-      if (res?.id) handleSetCheckout(res);
-      else console.error("Couldn't associate default address to checkout res>>>", res);
+      const resUpdate = await updateCheckoutShippingAddress(shippingAddress, checkoutIdStorage);
+
+      if (resUpdate?.id) handleSetCheckout(resUpdate);
+      else console.error("Couldn't associate default address to checkout res>>>", resUpdate);
     },
     [handleSetCheckout]
   );
@@ -49,10 +62,25 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
-      const res = await nextApiCall.getCustomer();
-      setUser(res?.customer);
-      handleSetCheckoutShippingAddress(res?.customer);
-      if (!res || !res.customer?.id) console.error('get customer failed');
+      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+
+      if (!shopifyToken) {
+        console.error('Missing shopify token to getCustomer');
+        return;
+      }
+
+      console.time('handleRender user context');
+
+      const userRes = (await getUser(shopifyToken)) || {};
+      const customer = userRes?.response?.customer;
+
+      console.timeEnd('handleRender user context');
+      if (customer?.id) {
+        setUser(customer);
+        handleSetCheckoutShippingAddress(customer);
+        return;
+      }
+      console.error('no customer found in getCustomer()');
     };
     getCustomer();
   }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, setUser]);

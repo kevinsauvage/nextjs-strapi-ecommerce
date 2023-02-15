@@ -4,7 +4,7 @@ import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import TextArea from '@/components/_scopes/forms/TextArea/TextArea';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import { sendMail } from '@/utils/apiNext';
+import { sendMail } from '@/helpers/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 

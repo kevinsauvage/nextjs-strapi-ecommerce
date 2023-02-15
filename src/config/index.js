@@ -75,6 +75,11 @@ config.accountNav = [
   { url: config.routes.logout, title: 'Sign out ' },
 ];
 
+config.localStorageKeys = {
+  checkoutIdSorageKey: 'shopifyCheckoutId',
+  shopifyToken: 'shopifyToken',
+};
+
 if (env === 'production') {
   config.baseUrl = 'https://www.ecomtestshopi.xyz';
 }
