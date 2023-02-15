@@ -28,6 +28,6 @@
   font-weight: $fontWeightNormal;
   min-width: 100px;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
-  background-color: rgba(var(--RGB-complementary), 0.5);
   border-bottom: 1px solid var(--surface-300);
+  background-color: var(--surface-100);
 }
