@@ -22,6 +22,8 @@ export async function getServerSideProps(ctx) {
   const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
   const menuSlug = `collections-${query?.genre}`;
 
+  console.log(process.env.SHOPIFY_SCOPE);
+
   console.log('🚀 ~ file: index.js:26 ~ getServerSideProps ~ menuSlug', menuSlug);
 
   const menu = await getMenu(menuSlug, delegateToken, ip);
