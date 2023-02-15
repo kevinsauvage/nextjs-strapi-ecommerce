@@ -57,9 +57,17 @@ function OrderDetail() {
     return showToast.error('Something went wrong');
   };
 
+  const description =
+    'On this page, you can modify personal information, communication preferences, and billing details. Keeping your account up-to-date is important for security and an easy experience. Manage your account easily with this page.';
+
   return (
-    <PageLayout title="Update account Information">
-      <AccountLayout loading={isLoading || !id} title="Account Details">
+    <PageLayout title="Update account Information" description={description}>
+      <AccountLayout
+        loading={isLoading || !id}
+        title="Account Details"
+        titleBannerChildren="Update Account Details"
+        descriptionBannerChildren={description}
+      >
         <div className={styles.form}>
           <Form
             onSubmit={handleSubmit}

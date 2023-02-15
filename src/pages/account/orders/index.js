@@ -47,9 +47,12 @@ export default function OrdersPage() {
     if (!orders?.length) fetchOrders();
   }, [fetchOrders, orders?.length]);
 
+  const description =
+    'This page shows all of your previous orders in one place. You can see the order number, date, items purchased, and order status. This makes it easy to keep track of your orders and track their progress. You can use this page to view and manage your orders whenever you need to.';
+
   return (
-    <PageLayout title="Orders">
-      <AccountLayout title="Orders">
+    <PageLayout title="Orders" description={description}>
+      <AccountLayout title="Orders" titleBannerChildren="My orders" descriptionBannerChildren={description}>
         {!isLoading && !orders?.length ? (
           <div>
             <p>You didn&apos;t make any orders yet.</p>

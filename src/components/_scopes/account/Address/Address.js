@@ -37,13 +37,13 @@ function Address({ address, handleDelete, handleSetAsDefault, isDefault, display
           </div>
         ) : null}
 
-        {!isDefault && displayButton ? (
+        {!isDefault && displayButton && (
           <button className={style.setAsDefault} type="button" onClick={() => handleSetAsDefault(id)}>
             Set as default
           </button>
-        ) : (
-          <p className={style.defaultText}>This is your default delivery address</p>
         )}
+
+        {isDefault && <p className={style.defaultText}>Default address</p>}
       </div>
     </div>
   );

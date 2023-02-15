@@ -7,7 +7,13 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from './AccountLayout.module.scss';
 
-function AccountLayout({ children, loading }) {
+function AccountLayout({
+  children,
+  loading,
+  titleBannerChildren,
+  descriptionBannerChildren,
+  otherBannerChildrenContenct,
+}) {
   const { push } = useRouter();
 
   useEffect(() => {
@@ -42,7 +48,18 @@ function AccountLayout({ children, loading }) {
                 <Loader />
               </div>
             ) : (
-              children
+              <>
+                {titleBannerChildren && (
+                  <div className={styles.bannerChildren}>
+                    <h2>{titleBannerChildren}</h2>
+                    {descriptionBannerChildren && (
+                      <p className={styles.bannerChildrenDescription}>{descriptionBannerChildren}</p>
+                    )}
+                    {otherBannerChildrenContenct && otherBannerChildrenContenct}
+                  </div>
+                )}
+                {children}
+              </>
             )}
           </section>
         </main>

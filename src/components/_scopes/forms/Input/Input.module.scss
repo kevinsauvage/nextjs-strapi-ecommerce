@@ -34,7 +34,7 @@
   color: var(--onSurface-medium);
 
   @include placeholder {
-    color: rgba(var(--surface-900), 0.3);
+    color: var(--surface-700);
   }
   &:focus,
   &:focus-visible {

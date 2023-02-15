@@ -88,9 +88,22 @@ function Addresses() {
     fetchAddresses();
   }, [fetchAddresses]);
 
+  const description =
+    'This page shows all of the addresses you have saved in your account. You can view and modify your addresses, including adding new ones, deleting old ones, and editing existing ones. This makes it easy to manage and update all of your addresses in one place. You can use this page to make sure all of your saved addresses are accurate and up-to-date.';
+
   return (
-    <PageLayout title="Addresses">
-      <AccountLayout loading={isLoading} title="Addresses">
+    <PageLayout title="Addresses" description={description}>
+      <AccountLayout
+        loading={isLoading}
+        title="Addresses"
+        titleBannerChildren="My address book"
+        descriptionBannerChildren={description}
+        otherBannerChildrenContenct={
+          <Button extraClass={styles.btn} primary href={config.routes.createAddress}>
+            Add new address
+          </Button>
+        }
+      >
         {Array.isArray(addresses) && addresses.length > 0 ? (
           <div className={styles.list}>
             {addresses.map((item, i) => (
@@ -107,9 +120,6 @@ function Addresses() {
         ) : (
           <p className={styles.noAddresses}>There is no addresses to show</p>
         )}
-        <Button extraClass={styles.btn} primary href={config.routes.createAddress}>
-          Add new address
-        </Button>
       </AccountLayout>
     </PageLayout>
   );

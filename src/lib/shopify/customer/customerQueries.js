@@ -40,13 +40,6 @@ const queryCustomer = `
 query customer ($token: String!) {
   customer(customerAccessToken: $token) {
     ${customerFragment}
-    orders(first: 1, sortKey: PROCESSED_AT) {
-      edges {
-        node {
-            ${orderFragment}
-        }
-      }
-    }
   }
 }`;
 

@@ -3,9 +3,8 @@
   border-radius: $radius;
   width: 100%;
   color: var(--onSurface-medium);
-  border: 0.1px solid var(--surface-300);
   margin-bottom: var(--space-1);
-
+  background-color: var(--surface-100);
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -18,6 +17,25 @@
   justify-content: space-between;
 }
 
+.trackContainer {
+  display: flex;
+}
+
+.noTrackingUrl {
+  background-color: var(--surface-300);
+  border: 1px solid var(--surface-500);
+  padding: 4px;
+  p {
+    font-size: 12px;
+  }
+}
+
 .link {
   text-decoration: underline;
+}
+
+.trackButton {
+  padding: 2px 4px;
+  width: fit-content;
+  border: 2px solid var(--surface-dark-100);
 }

@@ -1,9 +1,7 @@
 import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import { useEffect, useState } from 'react';
-import { GrClose } from 'react-icons/gr';
 import { getProduct } from '@/lib/shopify/product/productApiCall';
-import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
-import styles from './ModalProduct.module.scss';
+import Modal from '../Modal/Modal';
 
 export default function ModalProduct({ handleClose, selectedProduct }) {
   const [product, setProduct] = useState([]);
@@ -20,19 +18,8 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
   }, [selectedProduct]);
 
   return (
-    <div className={styles.ModalProduct}>
-      {loading ? (
-        <AbsoluteLoader />
-      ) : (
-        <div className={styles.Container}>
-          <div className={styles.header}>
-            <button className={styles.close} type="button" onClick={() => handleClose()}>
-              <GrClose />
-            </button>
-          </div>
-          <ProductPresenter product={product} isModal />
-        </div>
-      )}
-    </div>
+    <Modal loading={loading} handleClose={handleClose}>
+      <ProductPresenter product={product} isModal />
+    </Modal>
   );
 }

@@ -1,6 +1,7 @@
 .checkbox {
   display: flex;
   align-items: center;
+  margin: var(--space-2) 0;
 
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
 
@@ -15,9 +16,18 @@
   }
 }
 
+.banner {
+  background-color: var(--surface-100);
+  padding: var(--space-2);
+  margin-bottom: var(--space-2);
+
+  h2 {
+    margin-bottom: var(--space-1);
+  }
+}
+
 .form {
-  border: 1px solid var(--surface-300);
   padding: var(--space-2);
   border-radius: $radius;
-  background-color: rgba(var(--RGB-surface-200), 0.3);
+  background-color: var(--surface-100);
 }

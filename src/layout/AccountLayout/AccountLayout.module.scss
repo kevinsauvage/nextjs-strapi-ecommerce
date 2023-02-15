@@ -1,6 +1,7 @@
 .AccountLayout {
   position: relative;
-  padding-bottom: var(--space-4);
+  padding-bottom: var(--space-6);
+  background-color: var(--surface-400);
 }
 
 .banner {
@@ -8,8 +9,9 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: var(--space-2);
-  background-color: var(--surface-200);
+  margin-bottom: var(--space-6);
+  background-color: var(--surface-dark-200);
+  color: var(--onSurface-dark);
   min-height: 160px;
   border-bottom: 1px solid var(--surface-300);
 }
@@ -25,6 +27,7 @@
   max-width: 900px;
   margin: 0 auto;
   border-radius: $radius;
+  min-height: 50vh;
 }
 
 .nav {
@@ -36,13 +39,13 @@
   position: sticky;
   display: block;
   top: 2rem;
-  border: 1px solid var(--surface-300);
   border-bottom: none;
 }
 
 .listItem {
   width: 100%;
   text-transform: uppercase;
+  background-color: var(--surface-100);
 
   a {
     width: 100%;
@@ -53,7 +56,8 @@
   }
 
   .active {
-    background-color: var(--surface-200);
+    background-color: var(--surface-dark-200);
+    color: var(--onSurface-dark);
     border-left: 3px solid var(--complementary-500);
   }
 }
@@ -61,6 +65,21 @@
 .children {
   width: 100%;
   border-radius: $radius;
+}
+
+.bannerChildren {
+  background-color: var(--surface-100);
+  padding: var(--space-2);
+  margin-bottom: var(--space-1);
+
+  h2 {
+    margin-bottom: var(--space-1);
+  }
+}
+
+.bannerChildrenDescription {
+  margin-bottom: var(--space-2);
+  font-weight: 500;
 }
 
 .loading {

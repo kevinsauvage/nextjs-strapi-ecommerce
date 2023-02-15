@@ -1,20 +1,26 @@
-import config from '@/config/index';
 import Link from 'next/link';
 import style from './OrderCard.module.scss';
 import AccountRow from '../AccountRow/AccountRow';
 
-function OrderCard({ order, displayButton }) {
+function OrderCard({ order }) {
+  console.log('🚀 ~ file: OrderCard.js:6 ~ OrderCard ~ order', order);
+
   const {
     financialStatus,
-    totalPrice,
     email,
     processedAt,
     canceledAt,
-    totalRefunded,
     cancelReason,
     phone,
     fulfillmentStatus,
+    totalRefundedV2,
+    totalPriceV2,
+    successfulFulfillments,
   } = order || {};
+
+  const successfulFulfillment = successfulFulfillments?.[0];
+  const trackingUrl = successfulFulfillment?.trackingInfo?.[0]?.url;
+  const trackingNumber = successfulFulfillment?.trackingInfo?.[0]?.number;
 
   const getDate = (timestamp) => {
     const options = {
@@ -28,39 +34,55 @@ function OrderCard({ order, displayButton }) {
     return date.toLocaleDateString('en-US', options);
   };
 
+  function formatStatus(status) {
+    return status
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (match) => match.toUpperCase());
+  }
+
   return (
-    <div className={style.orderCard}>
+    <li className={style.orderCard}>
       <div className={style.header}>
         <h5>Order {order.name}</h5>
-        {displayButton && (
-          <Link
-            href={`${config.routes.orders}/${encodeURIComponent(order?.id)}`}
-            type="button"
-            className={style.link}
-          >
-            See order details
-          </Link>
+        {successfulFulfillment && (
+          <div className={style.trackContainer}>
+            {trackingUrl ? (
+              <Link className={style.trackButton} href={trackingUrl}>
+                <p>Track order</p>
+              </Link>
+            ) : (
+              <div className={style.noTrackingUrl}>
+                <p>
+                  Tracking Company: <span>{successfulFulfillment?.trackingCompany}</span>
+                </p>
+                <p>Tracking number: {trackingNumber}</p>
+              </div>
+            )}
+          </div>
         )}
       </div>
       <div className={style.orderCardDetail}>
-        <AccountRow title="Financial Status" content={financialStatus} />
-        {!displayButton && <AccountRow title="Fulfillment Status" content={fulfillmentStatus} />}
-        <AccountRow title="Total" content={`${totalPrice?.amount} ${totalPrice?.currencyCode}`} />
+        <AccountRow title="Total price" content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} />
+        {parseInt(totalRefundedV2?.amount, 10) > 0 ? (
+          <AccountRow
+            title="Total refounded"
+            content={`${totalRefundedV2?.amount} ${totalRefundedV2?.currencyCode}`}
+          />
+        ) : null}
+        <AccountRow title="Financial Status" content={formatStatus(financialStatus)} />
+        <AccountRow title="Fulfillment Status" content={formatStatus(fulfillmentStatus)} />
         <AccountRow title="Email" content={email} />
         {phone && <AccountRow title="Phone" content={phone} />}
         <AccountRow title="ProcessedAt" content={getDate(processedAt)} />
         {canceledAt ? (
           <>
-            <AccountRow
-              title="Total Refunded"
-              content={`${totalRefunded.amount} ${totalRefunded.currencyCode}`}
-            />
             <AccountRow title="Cancel Reason" content={cancelReason} />
-            <AccountRow title="Canceled At" content={canceledAt} />
+            <AccountRow title="Canceled At" content={getDate(canceledAt)} />
           </>
         ) : null}
       </div>
-    </div>
+    </li>
   );
 }
 

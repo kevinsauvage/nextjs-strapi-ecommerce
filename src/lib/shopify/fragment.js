@@ -228,18 +228,31 @@ orderNumber
 phone
 statusUrl
 processedAt
-totalRefunded {
+
+totalPriceV2 {
+ amount
+ currencyCode
+}
+
+totalRefundedV2 {
   amount
   currencyCode
 }
-totalShippingPrice {
+
+totalShippingPriceV2 {
   amount
   currencyCode
 }
-totalPrice {
+
+subtotalPriceV2 {
   amount
   currencyCode
 }
+totalTaxV2 {
+  amount
+  currencyCode
+}
+
 successfulFulfillments(first: 100) {
   trackingCompany
   trackingInfo(first: 100) {
@@ -280,7 +293,7 @@ orders(first: $first, after: $after) {
   }
   edges {
     node {
-        ${orderFragment}
+      ${orderFragment}
     }
   }
 }`;
