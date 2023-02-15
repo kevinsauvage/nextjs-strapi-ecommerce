@@ -1,10 +1,12 @@
 .ProductDescription {
   display: flex;
   flex-direction: column;
-  padding: 0 var(--space-2);
+  padding-right: var(--space-2);
   position: sticky;
   top: 20px;
   height: 100%;
+  max-width: 500px;
+  width: 50%;
 
   &.Separator + .Separator {
     display: none;
@@ -31,19 +33,16 @@
   position: relative;
 }
 
-.btn {
-  width: 100%;
-}
-
 .wrapper {
   display: flex;
   gap: var(--space-1);
-  margin: var(--space-2) 0;
+  margin-top: var(--space-2);
 }
 
 .variantList {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 3px;
   margin: var(--space-1) 0;
 }

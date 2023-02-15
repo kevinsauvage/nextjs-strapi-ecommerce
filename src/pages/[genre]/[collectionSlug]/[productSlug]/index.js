@@ -16,7 +16,7 @@ function ProductPage({ product, recommendations = [] }) {
   return (
     <>
       <Breadcrumbs lastElement={title} />
-      <Container>
+      <Container extraClass={styles.container}>
         <PageLayout title={title} description={description}>
           <ProductPresenter product={product} />
           {Array.isArray(recommendations) && recommendations.length > 0 && (

@@ -104,7 +104,6 @@ export default function ProductDescription({
           quantityAvailable={quantityAvailable}
         />
         <Button
-          extraClass={styles.btn}
           type="button"
           primary
           disabled={!availableForSale || quantityAvailable < quantity}

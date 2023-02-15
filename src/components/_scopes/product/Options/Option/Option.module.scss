@@ -37,12 +37,4 @@ $boxDimension: 36px;
 .selectedOption {
   border: 2px solid var(--surface-dark-100);
   color: var(--surface-dark-100);
-  font-weight: 600;
-}
-
-.outOfStock {
-  border: 1px solid var(--surface-100);
-
-  position: relative;
-  cursor: default;
 }

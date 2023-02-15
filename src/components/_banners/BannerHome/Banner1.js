@@ -6,7 +6,7 @@ export default function BannerHome({ data }) {
   const { title, description, upTitle, handle, image } = data || {};
 
   return (
-    <Container>
+    <Container extraClass={styles.outer}>
       <section className={styles.banner} style={{ backgroundImage: `url(${image?.url})` }}>
         <div className={styles.inner}>
           <div className={styles.container}>
