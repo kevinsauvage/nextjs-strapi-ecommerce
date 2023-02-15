@@ -5,8 +5,8 @@
   border-collapse: separate;
   border-radius: $radius;
   overflow: hidden;
-  border: 1px solid var(--surface-300);
   border-bottom: none;
+  background-color: var(--surface-100);
 }
 
 .tHead {
@@ -16,8 +16,8 @@
   text-align: start;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
   border-bottom: 1px solid var(--surface-300);
-  background-color: var(--surface-300);
-  color: var(--onSurface-hight);
+  background-color: var(--surface-dark-200);
+  color: var(--onSurface-dark);
 }
 
 .tData {

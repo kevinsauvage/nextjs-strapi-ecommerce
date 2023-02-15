@@ -35,7 +35,7 @@ function AccountLayout({
             <ul className={styles.list}>
               {config?.accountNav?.map((item) => (
                 <li className={styles.listItem} key={item.title}>
-                  <ActiveLink url={item.url} activeStyle={styles.active} scroll={false}>
+                  <ActiveLink url={item.url} activeStyle={styles.active} scroll>
                     {item.title}
                   </ActiveLink>
                 </li>
@@ -55,7 +55,9 @@ function AccountLayout({
                     {descriptionBannerChildren && (
                       <p className={styles.bannerChildrenDescription}>{descriptionBannerChildren}</p>
                     )}
-                    {otherBannerChildrenContenct && otherBannerChildrenContenct}
+                    {otherBannerChildrenContenct && (
+                      <div className={styles.bannerChildrenOther}>{otherBannerChildrenContenct}</div>
+                    )}
                   </div>
                 )}
                 {children}

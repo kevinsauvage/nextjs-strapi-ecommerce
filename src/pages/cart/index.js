@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Button from '@/components/Button/Button';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import Container from '@/components/Container/Container';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import styles from './Cart.module.scss';
 
 function CartPage() {
@@ -15,7 +16,15 @@ function CartPage() {
   const { showToast } = useToastContext();
   const [lineItemsToUpdate, setLineItemsToUpdate] = useState([]);
 
-  if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading) return <EmptyCart />;
+  if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading)
+    return (
+      <PageLayout title="Your Cart">
+        <Breadcrumbs />
+        <div className={styles.emptyCart}>
+          <EmptyCart />
+        </div>
+      </PageLayout>
+    );
 
   const successCallback = () => setLineItemsToUpdate([]);
 
@@ -36,6 +45,7 @@ function CartPage() {
 
   return (
     <PageLayout title="Your Cart">
+      <Breadcrumbs />
       <Container>
         {!isCheckoutLoading ? (
           <div className={styles.cart}>

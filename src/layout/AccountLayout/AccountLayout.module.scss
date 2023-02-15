@@ -1,7 +1,6 @@
 .AccountLayout {
   position: relative;
-  padding-bottom: var(--space-6);
-  background-color: var(--surface-400);
+  min-height: calc(100vh - $header-height);
 }
 
 .banner {
@@ -9,7 +8,6 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-bottom: var(--space-6);
   background-color: var(--surface-dark-200);
   color: var(--onSurface-dark);
   min-height: 160px;
@@ -28,6 +26,7 @@
   margin: 0 auto;
   border-radius: $radius;
   min-height: 50vh;
+  padding: var(--space-5) 0;
 }
 
 .nav {
@@ -78,8 +77,11 @@
 }
 
 .bannerChildrenDescription {
-  margin-bottom: var(--space-2);
   font-weight: 500;
+}
+
+.bannerChildrenOther {
+  margin-top: var(--space-2);
 }
 
 .loading {

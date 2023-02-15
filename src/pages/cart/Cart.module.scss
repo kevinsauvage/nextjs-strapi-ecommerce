@@ -1,13 +1,13 @@
 .cart {
   margin: 0 auto;
-  padding-bottom: var(--space-2);
   display: grid;
   grid-template-columns: 1fr 360px;
   gap: var(--space-2);
-  padding: var(--space-2) 0;
-  min-height: 70vh;
 }
-
+.emptyCart,
+.cart {
+  padding: var(--space-5) 0;
+}
 .button {
   margin-left: auto;
   margin-top: var(--space-1);
