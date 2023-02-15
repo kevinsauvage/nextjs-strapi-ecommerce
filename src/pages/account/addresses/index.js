@@ -29,7 +29,6 @@ function Addresses() {
     setIsLoading(false);
 
     if (Array.isArray(res)) {
-      console.log(res);
       dispatch({ type: actions.ADD_ADDRESSES, payload: res });
     } else {
       showToast.error('Something went wrong, please try again later');

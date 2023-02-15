@@ -19,8 +19,6 @@ function ResetPassword() {
     toggleLoading(true);
     const recoverRes = await sendRecoverEmail(email);
 
-    console.log('🚀 ~ file: index.js:22 ~ onSubmit ~ recoverRes', recoverRes);
-
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
     if (errors?.length) return errors.forEach((element) => showToast.error(element.message));
