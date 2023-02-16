@@ -7,7 +7,6 @@ import Footer from '@/components/Footer/Footer';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
-
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {

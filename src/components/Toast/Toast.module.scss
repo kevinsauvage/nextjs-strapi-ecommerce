@@ -1,9 +1,12 @@
 .toast {
   position: fixed;
-  bottom: 0;
+  bottom: 10px;
   right: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translate(-50%, -10px);
+  transition: all 0.3s ease-in;
+  width: 80%;
+  max-width: 600px;
   max-height: 50px;
   animation: slideUp 0.3s ease-in-out forwards;
   z-index: 9999999999999999999;
@@ -21,29 +24,34 @@
       justify-content: center;
       align-items: center;
       min-height: 40px;
+      border-radius: 10px;
 
       p {
-        font-weight: $fontWeightMedium;
+        font-weight: 500;
       }
 
       &.info {
-        background-color: var(--primary-300);
-        color: var(--primary-600);
+        background-color: var(--primary-600);
+        color: white;
+        border: 1px solid var(--primary-800);
       }
 
       &.error {
         background-color: var(--danger-600);
-        color: var(--danger-100);
+        color: white;
+        border: 1px solid var(--danger-800);
       }
 
       &.warning {
-        background-color: var(--warning-300);
-        color: var(--warning-600);
+        background-color: var(--warning-600);
+        color: white;
+        border: 1px solid var(--warning-800);
       }
 
       &.success {
-        background-color: var(--success-300);
-        color: var(--success-600);
+        background-color: var(--success-600);
+        color: white;
+        border: 1px solid var(--success-800);
       }
     }
   }
