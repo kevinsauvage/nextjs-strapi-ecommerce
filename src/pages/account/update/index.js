@@ -45,8 +45,6 @@ function OrderDetail() {
     toggleLoading(true);
     const updateResponse = await updateUserInfo(shopifyToken, customerInput);
 
-    console.log('🚀 ~ file: index.js:48 ~ handleSubmit ~ updateResponse', updateResponse);
-
     toggleLoading(false);
 
     const { customerUserErrors, customer, customerAccessToken } = updateResponse || {};

@@ -85,8 +85,6 @@ export const updateUserInfo = async (customerAccessToken, customer, delegateToke
       ip
     );
 
-    console.log('🚀 ~ file: customerApiCall.js:88 ~ updateUserInfo ~ res', res);
-
     return cleanGraphQLResponse(res?.data?.customerUpdate);
   } catch (error) {
     return console.error(error);
