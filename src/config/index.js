@@ -77,7 +77,10 @@ config.accountNav = [
 
 config.localStorageKeys = {
   checkoutIdSorageKey: 'shopifyCheckoutId',
-  shopifyToken: 'shopifyToken',
+};
+
+config.cookies = {
+  shopifyToken: 'shopify-access-token',
 };
 
 if (env === 'production') {

@@ -24,7 +24,7 @@
   padding-left: var(--space-1);
   resize: vertical;
   border-radius: $radius;
-  border: none;
+  border: 1px solid var(--surface-300);
   background-color: var(--surface-200);
   color: var(--onSurface-medium);
 

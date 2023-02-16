@@ -1,4 +1,4 @@
-const nextApiHelper = async (url, body = {}, method = 'POST') => {
+export const nextApiHelper = async (url, body = {}, method = 'POST') => {
   try {
     const object = {
       method,

@@ -12,6 +12,7 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
 import { updateUserInfo } from '@/lib/shopify/customer/customerApiCall';
+import { getCookieFront } from '@/helpers/cookies';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -40,7 +41,7 @@ function OrderDetail() {
 
     if (phone) customerInput.phone = phone;
 
-    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+    const shopifyToken = getCookieFront(config.cookies.shopifyToken);
     toggleLoading(true);
     const updateResponse = await updateUserInfo(shopifyToken, customerInput);
     toggleLoading(false);

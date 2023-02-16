@@ -10,7 +10,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { loginCustomer, registerCustomer } from '@/lib/shopify/customer/customerApiCall';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
-import { useEffect } from 'react';
+import { setCookieFront } from '@/helpers/cookies';
 
 const { userFeedback } = config;
 
@@ -18,13 +18,6 @@ function RegisterPage() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
   const { push } = useRouter();
-
-  useEffect(() => {
-    const token = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
-    if (token) {
-      push(config.routes.account);
-    }
-  }, [push]);
 
   const onSubmit = async (formData) => {
     const { email, password } = formData;
@@ -48,8 +41,7 @@ function RegisterPage() {
         console.error('login failed after registration');
         return push(config.routes.login);
       }
-
-      window.localStorage.setItem(config.localStorageKeys.shopifyToken, accessToken);
+      setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
 
       // Associate user to checkout
       const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
@@ -77,7 +69,6 @@ function RegisterPage() {
             label="Email address"
             name="email"
             type="text"
-            input="true"
             placeholder="Email"
             autoComplete="off"
             required="true"
@@ -88,7 +79,6 @@ function RegisterPage() {
             name="password"
             id="password"
             label="Password"
-            input="true"
             autoComplete="off"
             required="true"
           />

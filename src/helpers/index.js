@@ -1,18 +1,6 @@
-import nookies, { parseCookies } from 'nookies';
-
-const checkoutCookiesName = 'shopifyCheckoutId';
-
-export const getIpFromRequest = (req) => req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-
-export const getInfoFromRequest = (req) => {
-  const parsedCookies = parseCookies({ req });
-  const delegateToken = parsedCookies?.shopifyDelegateToken;
-  const ip = getIpFromRequest(req);
-  const shopifyTokenCookie = parsedCookies?.shopifyToken;
-  const checkoutId = parsedCookies?.[checkoutCookiesName];
-  const shopifyToken = shopifyTokenCookie ? JSON.parse(shopifyTokenCookie) : null;
-  return { shopifyToken, delegateToken, ip, checkoutId };
-};
+/* eslint-disable import/prefer-default-export */
+import nookies from 'nookies';
+import config from '@/config/index';
 
 const getIpAddressFromCtx = (ctx) => {
   const forwarded = ctx.req.headers['x-forwarded-for'];
@@ -31,6 +19,6 @@ export const getInfoFromCtx = (ctx) => {
     collectionSlug: ctx.query.collectionSlug,
     ip: getIpAddressFromCtx(ctx),
     query: ctx.query,
-    shopifyToken: cookies.shopifyToken ? JSON.parse(cookies.shopifyToken) : null,
+    shopifyToken: cookies?.[config?.cookies.shopifyToken],
   };
 };

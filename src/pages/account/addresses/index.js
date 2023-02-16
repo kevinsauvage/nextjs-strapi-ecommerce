@@ -14,6 +14,7 @@ import {
   deleteAddressById,
   updateDefaultAddress,
 } from '@/lib/shopify/customer/customerApiCall';
+import { getCookieFront } from '@/helpers/cookies';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -23,7 +24,7 @@ function Addresses() {
   const { showToast } = useToastContext();
 
   const fetchAddresses = useCallback(async () => {
-    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+    const shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
     const res = await getCustomerAddresses(shopifyToken);
     setIsLoading(false);
@@ -38,7 +39,7 @@ function Addresses() {
   const handleSetAsDefault = async (id) => {
     try {
       toggleLoading(true);
-      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
       const res = await updateDefaultAddress(shopifyToken, id);
       const { customer, customerUserErrors } = res || {};
@@ -58,7 +59,7 @@ function Addresses() {
   const handleDelete = async (id) => {
     try {
       toggleLoading(true);
-      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
       const deleteRes = await deleteAddressById(shopifyToken, id);
 

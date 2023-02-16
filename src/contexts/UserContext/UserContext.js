@@ -2,6 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import config from '@/config/index';
 import { getUser } from '@/lib/shopify/customer/customerApiCall';
 import { updateCheckoutShippingAddress } from '@/lib/shopify/checkout/checkoutApiCall';
+import { getCookieFront } from '@/helpers/cookies';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
@@ -62,7 +63,7 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
-      const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
         console.error('Missing shopify token to getCustomer');
@@ -72,6 +73,7 @@ export function UserProvider({ children }) {
       console.time('handleRender user context');
 
       const userRes = (await getUser(shopifyToken)) || {};
+
       const customer = userRes?.response?.customer;
 
       console.timeEnd('handleRender user context');

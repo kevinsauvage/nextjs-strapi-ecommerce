@@ -10,7 +10,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
-import { useEffect } from 'react';
+import { setCookieFront } from '@/helpers/cookies';
 
 const { userFeedback } = config;
 
@@ -18,13 +18,6 @@ function LoginPage() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
   const { push } = useRouter();
-
-  useEffect(() => {
-    const token = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
-    if (token) {
-      push(config.routes.account);
-    }
-  }, [push]);
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return showToast.error(userFeedback?.missingFields);
@@ -40,8 +33,7 @@ function LoginPage() {
 
     const accessToken = resLogin?.customerAccessToken?.accessToken;
     if (!accessToken) return showToast.error(userFeedback.login.error);
-    window.localStorage.setItem(config.localStorageKeys.shopifyToken, accessToken);
-
+    setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
     showToast.success(userFeedback.login.success);
     return push(config.routes.account);
   };
@@ -56,16 +48,16 @@ function LoginPage() {
             type="email"
             name="email"
             placeholder="Email"
-            input="true"
             required="true"
+            autoComplete="username"
           />
           <Input
             type="password"
             name="password"
             id="password"
             label="Password"
+            autoComplete="current-password"
             placeholder="Password"
-            input="true"
             required="true"
           />
           <Buttons text="Login">

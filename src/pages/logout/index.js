@@ -1,25 +1,36 @@
+import { getInfoFromCtx } from '@/helpers/index';
 import { deleteAccessToken } from '@/lib/shopify/customer/customerApiCall';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import config from '@/config/index';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import nookies from 'nookies';
 
-function Index() {
-  const { push } = useRouter();
+const index = () => <PageLoader />;
 
-  const handleLogout = useCallback(async () => {
-    const token = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
-    const res = await deleteAccessToken(token);
-    console.log(res, 'logged out');
-    window.localStorage.removeItem(config.localStorageKeys.shopifyToken);
-    push(config.routes.login);
-  }, [push]);
+export const getServerSideProps = async (ctx) => {
+  const { delegateToken, ip, shopifyToken } = getInfoFromCtx(ctx);
 
-  useEffect(() => {
-    handleLogout();
-  }, [handleLogout]);
+  if (shopifyToken) {
+    const res = await deleteAccessToken(shopifyToken, delegateToken, ip);
 
-  return <PageLoader />;
-}
+    if (res?.deletedCustomerAccessTokenId) {
+      nookies.set(ctx, config.cookies.shopifyToken, 'delete', { maxAge: 0, path: '/' });
 
-export default Index;
+      return {
+        redirect: { permanent: false, destination: config.routes.login },
+        props: {},
+      };
+    }
+
+    return {
+      redirect: { permanent: false, destination: config.routes.account },
+      props: {},
+    };
+  }
+
+  return {
+    redirect: { permanent: false, destination: config.routes.login },
+    props: {},
+  };
+};
+
+export default index;

@@ -8,6 +8,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { getCustomerAddressById, updateAddress } from '@/lib/shopify/customer/customerApiCall';
+import { getCookieFront } from '@/helpers/cookies';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -20,7 +21,7 @@ function AddressUpdate() {
   useEffect(() => {
     async function fetchAddress() {
       if (addressId && query) {
-        const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+        const shopifyToken = getCookieFront(config.cookies.shopifyToken);
         const res = await getCustomerAddressById(shopifyToken, addressId);
         setIsLoading(false);
         if (res) return setAddress(res);
@@ -43,7 +44,7 @@ function AddressUpdate() {
     ) {
       return showToast.error('Missing field');
     }
-    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.shopifyToken);
+    const shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
     toggleLoading(true);
     const { customerAddress, customerUserErrors } = await updateAddress(formData, shopifyToken, addressId);

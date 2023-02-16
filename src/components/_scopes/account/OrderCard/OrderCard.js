@@ -3,8 +3,6 @@ import style from './OrderCard.module.scss';
 import AccountRow from '../AccountRow/AccountRow';
 
 function OrderCard({ order }) {
-  console.log('🚀 ~ file: OrderCard.js:6 ~ OrderCard ~ order', order);
-
   const {
     financialStatus,
     email,

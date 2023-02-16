@@ -3,8 +3,6 @@ import config from '@/config/index';
 import Loader from '@/components/_loaders/Loader/Loader';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import styles from './AccountLayout.module.scss';
 
 function AccountLayout({
@@ -14,13 +12,6 @@ function AccountLayout({
   descriptionBannerChildren,
   otherBannerChildrenContenct,
 }) {
-  const { push } = useRouter();
-
-  useEffect(() => {
-    const shopifyToken = window.localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
-    if (!shopifyToken) push(config.routes.login);
-  }, [push]);
-
   return (
     <div className={styles.AccountLayout}>
       <Breadcrumbs />

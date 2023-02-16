@@ -8,7 +8,7 @@ export default function Form({
   initialValues,
   title,
   buttonText,
-  requiredFields,
+  requiredFields = [],
   ...rest
 }) {
   const {
@@ -18,47 +18,37 @@ export default function Form({
     missing = [],
   } = useForm(onSubmit, initialValues, requiredFields);
 
-  const iterateOverChildren = (childrenArray) =>
-    Children.map(childrenArray, (child) => {
-      if (!isValidElement(child)) return child;
-      const value = formData?.[child.props.name];
+  const renderChild = (child) => {
+    if (!isValidElement(child)) {
+      return child;
+    }
 
-      let objectProps = {
-        ...child.props,
-        children: iterateOverChildren(child.props.children),
-      };
+    const { name, type } = child.props;
+    const value = formData[name];
+    const isRequired = requiredFields.includes(name);
 
-      if (child.props.input) {
-        objectProps = {
-          ...child.props,
-          onChange: handleInputChange,
-          missing: missing.includes(child.props.name) || '',
-          value: initialValues ? value : null,
-          children: iterateOverChildren(child.props.children),
-        };
-      }
+    const inputProps = {
+      ...child.props,
+      onChange: handleInputChange,
+      value: value ?? '',
+      required: isRequired,
+      'aria-invalid': missing.includes(child.props.name) || false,
+      ariaInvalid: missing.includes(child.props.name) || false,
+    };
 
-      if (child.props.checkbox) {
-        objectProps = {
-          ...child.props,
-          onChange: handleInputChange,
-          missing: missing.includes(child.props.name) || '',
-          checked: value || null,
-          children: iterateOverChildren(child.props.children),
-        };
-      }
+    if (type === 'checkbox') {
+      inputProps.checked = !!value;
+    }
 
-      const result = cloneElement(child, objectProps);
+    return cloneElement(child, inputProps);
+  };
 
-      return result;
-    });
+  const renderChildren = (el) => Children.map(el, (child) => renderChild(child));
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit || null} {...rest}>
+    <form className={styles.form} onSubmit={handleSubmit} {...rest}>
       {title && <h1 className={styles.title}>{title}</h1>}
-      <div className={styles.border}>
-        <div className={styles.children}>{iterateOverChildren(children)}</div>
-      </div>
+      <div className={styles.children}>{renderChildren(children)}</div>
     </form>
   );
 }
