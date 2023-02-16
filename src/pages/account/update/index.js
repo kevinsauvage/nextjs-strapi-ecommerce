@@ -83,32 +83,11 @@ function OrderDetail() {
             }}
           >
             <Row>
-              <Input
-                input="true"
-                id="firstName"
-                type="text"
-                label="First Name"
-                name="firstName"
-                required="true"
-              />
-              <Input
-                input="true"
-                id="lastName"
-                type="text"
-                name="lastName"
-                label="Last Name"
-                required="true"
-              />
+              <Input id="firstName" type="text" label="First Name" name="firstName" required="true" />
+              <Input id="lastName" type="text" name="lastName" label="Last Name" required="true" />
             </Row>
             <Row>
-              <Input
-                input="true"
-                id="email"
-                type="email"
-                label="Email Address"
-                name="email"
-                required="true"
-              />
+              <Input id="email" type="email" label="Email Address" name="email" required="true" />
               <Input input="true" id="password" type="password" name="password" label="Password" />
             </Row>
             <Row>

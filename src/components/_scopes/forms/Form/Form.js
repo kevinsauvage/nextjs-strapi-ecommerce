@@ -18,37 +18,32 @@ export default function Form({
     missing = [],
   } = useForm(onSubmit, initialValues, requiredFields);
 
-  const renderChild = (child) => {
-    if (!isValidElement(child)) {
-      return child;
-    }
+  const iterateOverChildren = (childrenArray) =>
+    Children.map(childrenArray, (child) => {
+      if (!isValidElement(child)) return child;
 
-    const { name, type } = child.props;
-    const value = formData[name];
-    const isRequired = requiredFields.includes(name);
+      const value = formData?.[child.props.name];
+      const childProps = {
+        ...child.props,
+        onChange: handleInputChange,
+        value,
+        'aria-invalid': missing.includes(child.props.name) || false,
+        ariaInvalid: missing.includes(child.props.name) || false,
+      };
+      if (requiredFields.includes(child.props.name)) {
+        childProps.required = true;
+      }
 
-    const inputProps = {
-      ...child.props,
-      onChange: handleInputChange,
-      value: value ?? '',
-      required: isRequired,
-      'aria-invalid': missing.includes(child.props.name) || false,
-      ariaInvalid: missing.includes(child.props.name) || false,
-    };
-
-    if (type === 'checkbox') {
-      inputProps.checked = !!value;
-    }
-
-    return cloneElement(child, inputProps);
-  };
-
-  const renderChildren = (el) => Children.map(el, (child) => renderChild(child));
+      if (child.props.children) {
+        childProps.children = iterateOverChildren(child.props.children);
+      }
+      return cloneElement(child, childProps);
+    });
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} {...rest}>
       {title && <h1 className={styles.title}>{title}</h1>}
-      <div className={styles.children}>{renderChildren(children)}</div>
+      <div className={styles.children}>{iterateOverChildren(children)}</div>
     </form>
   );
 }

@@ -1,44 +1,43 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
-const useForm = (onSubmit, initialState, requiredFields) => {
-  const [formData, setFormData] = useState({});
+const useForm = (onSubmit, initialValues, requiredFields) => {
   const [loading, setLoading] = useState(false);
   const [missing, setMissing] = useState([]);
 
-  useEffect(() => {
-    if (initialState) setFormData(initialState);
-  }, [initialState]);
-
-  const handleInputChange = (e) => {
-    setMissing([]);
-    const { type, name, value } = e.target;
-
-    if (type === 'checkbox') {
-      setFormData({ ...formData, [name]: !formData[name] });
-      return;
-    }
-
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const missingItems = [];
-
-    requiredFields.forEach((requiredField) => {
-      if (!formData[requiredField]) missingItems.push(requiredField);
+  const [formData, setFormData] = useState(() => {
+    const initialFormData = {};
+    Object.keys(initialValues).forEach((key) => {
+      initialFormData[key] = initialValues[key] || '';
     });
+    return initialFormData;
+  });
 
-    setMissing(missingItems);
-    if (missingItems.length) return;
+  const handleInputChange = useCallback((e) => {
+    setMissing([]);
+    const { type, name, value, checked } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === 'checkbox' ? checked : value,
+    }));
+  }, []);
 
-    await onSubmit?.(formData);
-    setLoading(false);
-  };
+  const handleSubmit = useCallback(
+    async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      const missingItems = requiredFields.filter((field) => !formData[field]);
+      setMissing(missingItems);
 
-  const handleReset = useCallback(() => setFormData(initialState), [initialState]);
+      if (missingItems.length === 0) {
+        await onSubmit?.(formData);
+      }
+
+      setLoading(false);
+    },
+    [formData, onSubmit, requiredFields]
+  );
+
+  const handleReset = useCallback(() => setFormData(initialValues || {}), [initialValues]);
 
   return {
     formData,
