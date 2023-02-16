@@ -10,25 +10,17 @@ export const getServerSideProps = async (ctx) => {
   const { delegateToken, ip, shopifyToken } = getInfoFromCtx(ctx);
 
   if (shopifyToken) {
-    const res = await deleteAccessToken(shopifyToken, delegateToken, ip);
-
-    if (res?.deletedCustomerAccessTokenId) {
-      nookies.set(ctx, config.cookies.shopifyToken, 'delete', { maxAge: 0, path: '/' });
-
-      return {
-        redirect: { permanent: false, destination: config.routes.login },
-        props: {},
-      };
-    }
+    nookies.set(ctx, config.cookies.shopifyToken, 'delete', { maxAge: 0, path: '/' });
+    await deleteAccessToken(shopifyToken, delegateToken, ip);
 
     return {
-      redirect: { permanent: false, destination: config.routes.account },
+      redirect: { permanent: false, destination: config.routes.login },
       props: {},
     };
   }
 
   return {
-    redirect: { permanent: false, destination: config.routes.login },
+    redirect: { permanent: false, destination: config.routes.account },
     props: {},
   };
 };

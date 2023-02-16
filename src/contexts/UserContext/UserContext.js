@@ -3,6 +3,7 @@ import config from '@/config/index';
 import { getUser } from '@/lib/shopify/customer/customerApiCall';
 import { updateCheckoutShippingAddress } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getCookieFront } from '@/helpers/cookies';
+import { useRouter } from 'next/router';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
@@ -18,7 +19,7 @@ export function UserProvider({ children }) {
   const { user, addresses, orders, ordersPageInfo } = states || {};
   const { showToast } = useToastContext();
   const { handleSetCheckout } = useCheckoutContext();
-
+  const { push } = useRouter();
   const setUser = useCallback((payload) => {
     if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
   }, []);
@@ -82,10 +83,10 @@ export function UserProvider({ children }) {
         handleSetCheckoutShippingAddress(customer);
         return;
       }
-      console.error('no customer found in getCustomer()');
+      push(config.routes.logout);
     };
     getCustomer();
-  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, setUser]);
+  }, [dispatch, user, handleSetCheckoutShippingAddress, showToast, setUser, push]);
 
   const values = useMemo(
     () => ({

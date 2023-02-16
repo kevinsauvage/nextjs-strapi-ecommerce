@@ -26,7 +26,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
       title={title}
       requiredFields={['firstName', 'lastName', 'address1', 'province', 'country', 'zip', 'city']}
     >
-      <div>
+      <div className={styles.form}>
         <div className={styles.info}>
           <h4 className={styles.title}>Contact Information</h4>
           <Row>

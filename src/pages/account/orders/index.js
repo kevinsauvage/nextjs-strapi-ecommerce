@@ -4,7 +4,6 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useCallback, useEffect, useState } from 'react';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
-import { useRouter } from 'next/router';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
@@ -18,8 +17,8 @@ import styles from './Orders.module.scss';
 export default function OrdersPage() {
   const { orders, dispatch, ordersPageInfo: pageInfo } = useUserContext();
   const [isLoading, setIsLoading] = useState(true);
-  const { back } = useRouter();
   const { showToast } = useToastContext();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     if (orders) setIsLoading(false);
@@ -37,11 +36,10 @@ export default function OrdersPage() {
         dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: res?.pageInfo });
       } else {
         showToast.error('Something went wrong, please try again later');
-
-        back();
+        setError(true);
       }
     },
-    [back, dispatch, showToast]
+    [dispatch, showToast]
   );
 
   useEffect(() => {
@@ -59,7 +57,7 @@ export default function OrdersPage() {
             <p>You didn&apos;t make any orders yet.</p>
           </div>
         ) : null}
-        <Orders orders={orders} />
+        {error ? <p>Error</p> : <Orders orders={orders} />}
         {isLoading ? (
           <div className={styles.loader}>
             <Loader />

@@ -12,7 +12,7 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
 import { updateUserInfo } from '@/lib/shopify/customer/customerApiCall';
-import { getCookieFront } from '@/helpers/cookies';
+import { getCookieFront, setCookieFront } from '@/helpers/cookies';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -44,14 +44,18 @@ function OrderDetail() {
     const shopifyToken = getCookieFront(config.cookies.shopifyToken);
     toggleLoading(true);
     const updateResponse = await updateUserInfo(shopifyToken, customerInput);
+
+    console.log('🚀 ~ file: index.js:48 ~ handleSubmit ~ updateResponse', updateResponse);
+
     toggleLoading(false);
 
-    const { customerUserErrors, customer } = updateResponse || {};
+    const { customerUserErrors, customer, customerAccessToken } = updateResponse || {};
 
     if (customerUserErrors?.length)
       return customerUserErrors.forEach((element) => showToast.error(element.message));
 
     if (customer) {
+      setCookieFront(config.cookies.shopifyToken, customerAccessToken.accessToken, 1, false);
       showToast.success('Customer information updated successfully');
       return dispatch({ type: actions.ADD_USER, payload: customer });
     }

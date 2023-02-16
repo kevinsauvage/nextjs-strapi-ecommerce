@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useForm = (onSubmit, initialValues, requiredFields) => {
+const useForm = (onSubmit, initialValues = {}, requiredFields) => {
   const [loading, setLoading] = useState(false);
   const [missing, setMissing] = useState([]);
 

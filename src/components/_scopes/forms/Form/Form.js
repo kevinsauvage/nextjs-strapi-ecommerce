@@ -30,6 +30,10 @@ export default function Form({
         'aria-invalid': missing.includes(child.props.name) || false,
         ariaInvalid: missing.includes(child.props.name) || false,
       };
+
+      if (child.props.type === 'checkbox') {
+        childProps.checked = !!value;
+      }
       if (requiredFields.includes(child.props.name)) {
         childProps.required = true;
       }
