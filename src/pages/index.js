@@ -7,8 +7,6 @@ import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/C
 import getClient from '@/shopify/index';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
-  // console.log('🚀 ~ file: index.js:11 ~ Home ~ homeData2', homeData2);
-
   const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
