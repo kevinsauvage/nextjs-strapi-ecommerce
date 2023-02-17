@@ -11,7 +11,7 @@ import Button from '@/components/Button/Button';
 import Loader from '@/components/_loaders/Loader/Loader';
 import { getUserOrders } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
-import { getCookieFront } from '@/helpers/cookies';
+import { handleGetTokenCookies } from '@/helpers/cookies';
 import styles from './Orders.module.scss';
 
 export default function OrdersPage() {
@@ -26,7 +26,7 @@ export default function OrdersPage() {
 
   const fetchOrders = useCallback(
     async (endCursor) => {
-      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setIsLoading(true);
       const res = await getUserOrders(shopifyToken, 5, endCursor || '');
       setIsLoading(false);

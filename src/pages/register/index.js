@@ -10,7 +10,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { loginCustomer, registerCustomer } from '@/lib/shopify/customer/customerApiCall';
 import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
-import { setCookieFront } from '@/helpers/cookies';
+import { handleSetTokenCookies } from '@/helpers/cookies';
 
 const { userFeedback } = config;
 
@@ -41,7 +41,7 @@ function RegisterPage() {
         console.error('login failed after registration');
         return push(config.routes.login);
       }
-      setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
+      handleSetTokenCookies(accessToken);
 
       // Associate user to checkout
       const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);

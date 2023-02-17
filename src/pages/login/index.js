@@ -10,7 +10,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
-import { setCookieFront } from '@/helpers/cookies';
+import { handleSetTokenCookies } from '@/helpers/cookies';
 
 const { userFeedback } = config;
 
@@ -33,7 +33,7 @@ function LoginPage() {
 
     const accessToken = resLogin?.customerAccessToken?.accessToken;
     if (!accessToken) return showToast.error(userFeedback.login.error);
-    setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
+    handleSetTokenCookies(accessToken);
     showToast.success(userFeedback.login.success);
     return push(config.routes.account);
   };

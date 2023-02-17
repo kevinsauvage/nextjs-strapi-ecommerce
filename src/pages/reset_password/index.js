@@ -10,7 +10,7 @@ import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { resetCustomerPassword } from '@/lib/shopify/customer/customerApiCall';
-import { setCookieFront } from '@/helpers/cookies';
+import { handleSetTokenCookies } from '@/helpers/cookies';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
@@ -31,7 +31,7 @@ function Password({ resetUrl }) {
 
     if (accessToken) {
       showToast.success(config.userFeedback.resetPassword.success);
-      setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
+      handleSetTokenCookies(accessToken);
       return push(config.routes.account);
     }
 

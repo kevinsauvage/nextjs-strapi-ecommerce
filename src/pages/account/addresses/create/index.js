@@ -6,7 +6,7 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { createAddress } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
-import { getCookieFront } from '@/helpers/cookies';
+import { handleGetTokenCookies } from '@/helpers/cookies';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -26,7 +26,7 @@ function Addresses() {
       }
       toggleLoading(true);
 
-      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       const { customerAddress, customerUserErrors } = (await createAddress(address, shopifyToken)) || {};
 

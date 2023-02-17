@@ -81,6 +81,7 @@ config.localStorageKeys = {
 
 config.cookies = {
   shopifyToken: 'shopify-access-token',
+  shopifyTokenExpire: 'shopify-access-token-expire',
 };
 
 if (env === 'production') {

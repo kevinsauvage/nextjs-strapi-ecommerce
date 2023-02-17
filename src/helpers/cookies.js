@@ -1,4 +1,6 @@
-/* eslint-disable import/prefer-default-export */
+import config from '@/config/index';
+import { refreshToken } from '@/lib/shopify/customer/customerApiCall';
+
 const { setCookie } = require('nookies');
 
 const COOKIE_EXPIRATION_TIME = 24 * 60 * 60; // 1 day in seconds
@@ -70,4 +72,43 @@ export const setCookieFront = (cName, cValue, expDays = 1, secure = true, sameSi
   } catch (error) {
     console.error(`Failed to set cookie: ${error}`);
   }
+};
+
+export const handleSetTokenCookies = (accessToken) => {
+  const maxAgeInDays = 1;
+  const date = new Date();
+  date.setDate(date.getDate() + maxAgeInDays);
+  setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
+  setCookieFront(config.cookies.shopifyTokenExpire, JSON.stringify(date), 1, false);
+};
+
+export const handleGetTokenCookies = async () => {
+  let shopifyToken = getCookieFront(config.cookies.shopifyToken);
+
+  const shopifyTokenExpire = getCookieFront(config.cookies.shopifyTokenExpire);
+
+  const data = new Date();
+  const secondsNow = Math.abs(data.getTime());
+
+  const expiresDate = new Date(JSON.parse(shopifyTokenExpire));
+  const expiresInSeconds = Math.abs(expiresDate.getTime());
+
+  const needRefresh = expiresInSeconds < secondsNow - 60 * 60 * 1000;
+
+  if (needRefresh) {
+    const res = await refreshToken(shopifyToken);
+
+    console.log('🚀 ~ file: cookies.js:101 ~ handleGetTokenCookies ~ REFRESH TOKEN RESPONSE', res);
+
+    const token = res?.customerAccessToken?.accessToken;
+
+    if (token) {
+      shopifyToken = token;
+      handleSetTokenCookies(token);
+    } else {
+      window.href = config.routes.login;
+    }
+  }
+
+  return shopifyToken;
 };

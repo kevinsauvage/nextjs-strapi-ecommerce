@@ -4,6 +4,7 @@ import { getUser } from '@/lib/shopify/customer/customerApiCall';
 import { updateCheckoutShippingAddress } from '@/lib/shopify/checkout/checkoutApiCall';
 import { getCookieFront } from '@/helpers/cookies';
 import { useRouter } from 'next/router';
+import { handleGetTokenCookies } from 'src/helpers/cookies';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
@@ -20,6 +21,7 @@ export function UserProvider({ children }) {
   const { showToast } = useToastContext();
   const { handleSetCheckout } = useCheckoutContext();
   const { push } = useRouter();
+
   const setUser = useCallback((payload) => {
     if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
   }, []);
@@ -64,7 +66,8 @@ export function UserProvider({ children }) {
   useEffect(() => {
     const getCustomer = async () => {
       if (user?.id) return;
-      const shopifyToken = getCookieFront(config.cookies.shopifyToken);
+
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
         console.error('Missing shopify token to getCustomer');
