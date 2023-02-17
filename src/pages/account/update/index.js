@@ -11,9 +11,8 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
-import { updateUserInfo } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetTokenCookies, handleGetTokenCookies } from '@/helpers/cookies';
-
+import getClient from '@/shopify/index';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -44,7 +43,7 @@ function OrderDetail() {
 
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
     toggleLoading(true);
-    const updateResponse = await updateUserInfo(shopifyToken, customerInput);
+    const updateResponse = await getClient().customer.updateUserInfo(shopifyToken, customerInput);
 
     toggleLoading(false);
 

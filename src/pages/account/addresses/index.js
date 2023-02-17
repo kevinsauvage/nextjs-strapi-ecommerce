@@ -9,13 +9,9 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Button from '@/components/Button/Button';
 import config from '@/config/index';
-import {
-  getCustomerAddresses,
-  deleteAddressById,
-  updateDefaultAddress,
-} from '@/lib/shopify/customer/customerApiCall';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 
+import getClient from '@/shopify/index';
 import styles from './Addresses.module.scss';
 
 function Addresses() {
@@ -27,7 +23,7 @@ function Addresses() {
   const fetchAddresses = useCallback(async () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-    const res = await getCustomerAddresses(shopifyToken);
+    const res = await getClient().customer.getCustomerAddresses(shopifyToken);
     setIsLoading(false);
 
     if (Array.isArray(res)) {
@@ -42,7 +38,7 @@ function Addresses() {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const res = await updateDefaultAddress(shopifyToken, id);
+      const res = await getClient().customer.updateDefaultAddress(shopifyToken, id);
       const { customer, customerUserErrors } = res || {};
 
       if (customer?.id) {
@@ -62,7 +58,7 @@ function Addresses() {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const deleteRes = await deleteAddressById(shopifyToken, id);
+      const deleteRes = await getClient().customer.deleteAddressById(shopifyToken, id);
 
       const { customerUserErrors, deletedCustomerAddressId } = deleteRes || {};
       if (customerUserErrors?.length)

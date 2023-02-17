@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import { getProduct, getProductRecommendation, getProducts } from '@/lib/shopify/product/productApiCall';
 import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
+import getClient from '@/shopify/index';
 import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
@@ -34,13 +34,13 @@ function ProductPage({ product, recommendations = [] }) {
 export default ProductPage;
 
 export async function getStaticProps({ params }) {
-  const product = (await getProduct(params.productSlug)) || null;
-  const recommendations = (await getProductRecommendation(product?.id)) || null;
+  const product = (await getClient().product.getProduct(params.productSlug)) || null;
+  const recommendations = (await getClient().product.getProductRecommendation(product?.id)) || null;
   return { props: { product, recommendations }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {
-  const data = await getProducts('BEST_SELLING', 200);
+  const data = await getClient().product.getProducts('BEST_SELLING', 200);
   const paths = data.products.map((product) => ({
     params: {
       genre: product.productType,

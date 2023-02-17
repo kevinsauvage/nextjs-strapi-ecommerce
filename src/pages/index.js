@@ -1,13 +1,14 @@
 import Container from '@/components/Container/Container';
-import { getProducts } from '@/lib/shopify/product/productApiCall';
 import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
 import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
 import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
 import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
-import { getPage } from '@/lib/shopify/shop/shopApiCall';
+import getClient from '@/shopify/index';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
+  // console.log('🚀 ~ file: index.js:11 ~ Home ~ homeData2', homeData2);
+
   const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
@@ -24,9 +25,10 @@ export default function Home({ bestSelling, newArrival, homeData }) {
 }
 
 export async function getStaticProps() {
-  const bestSelling = await getProducts('BEST_SELLING', 16);
-  const newArrival = await getProducts('CREATED_AT', 16);
-  const homeData = await getPage('Home');
+  const bestSelling = await getClient().product.getProducts('BEST_SELLING', 16);
+  const newArrival = await getClient().product.getProducts('CREATED_AT', 16);
+  const homeData = await getClient().shop.getPage('Home');
+  const homeData2 = await getClient().shop.getMetaObject({ type: 'page_data', handle: 'page-data-home' });
 
-  return { props: { bestSelling, newArrival, homeData }, revalidate: 60 };
+  return { props: { bestSelling, newArrival, homeData, homeData2: homeData2 || null }, revalidate: 60 };
 }

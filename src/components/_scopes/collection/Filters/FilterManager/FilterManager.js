@@ -1,7 +1,7 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import Button from '@/components/Button/Button';
-import { getFiltersFromQuery } from '@/lib/shopify/helpers';
 import { useRouter } from 'next/router';
+import { getFiltersFromQuery } from '@/helpers/index';
 import styles from './FilterManager.module.scss';
 
 export default function FilterManager() {

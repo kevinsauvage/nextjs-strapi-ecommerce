@@ -4,9 +4,9 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { createAddress } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -28,7 +28,8 @@ function Addresses() {
 
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const { customerAddress, customerUserErrors } = (await createAddress(address, shopifyToken)) || {};
+      const { customerAddress, customerUserErrors } =
+        (await getClient().customer.createAddress(address, shopifyToken)) || {};
 
       if (customerAddress) return showToast.success('Address created successfully');
       if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));

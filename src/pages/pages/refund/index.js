@@ -1,5 +1,5 @@
-import { getRefundPolicy } from '@/lib/shopify/shop/shopApiCall';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 import styles from './refund.module.scss';
 
 function RefoundPage({ refundPolicy }) {
@@ -16,7 +16,7 @@ function RefoundPage({ refundPolicy }) {
 export default RefoundPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getRefundPolicy();
+  const shopInfo = await getClient().shop.getRefundPolicy();
   const refundPolicy = shopInfo?.refundPolicy;
   return { props: { refundPolicy } };
 }

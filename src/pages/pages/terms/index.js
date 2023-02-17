@@ -1,5 +1,5 @@
-import { getTermsOfService } from '@/lib/shopify/shop/shopApiCall';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 import styles from './Terms.module.scss';
 
 function TermsPage({ termsOfService }) {
@@ -16,7 +16,7 @@ function TermsPage({ termsOfService }) {
 export default TermsPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getTermsOfService();
+  const shopInfo = await getClient().shop.getTermsOfService();
   const { termsOfService } = shopInfo;
   return { props: { termsOfService } };
 }

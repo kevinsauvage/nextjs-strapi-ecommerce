@@ -9,9 +9,9 @@ import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Button from '@/components/Button/Button';
 import Loader from '@/components/_loaders/Loader/Loader';
-import { getUserOrders } from '@/lib/shopify/customer/customerApiCall';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 import styles from './Orders.module.scss';
 
 export default function OrdersPage() {
@@ -28,7 +28,7 @@ export default function OrdersPage() {
     async (endCursor) => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setIsLoading(true);
-      const res = await getUserOrders(shopifyToken, 5, endCursor || '');
+      const res = await getClient().customer.getUserOrders(shopifyToken, 5, endCursor || '');
       setIsLoading(false);
 
       if (res?.orders) {

@@ -7,8 +7,8 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { getCustomerAddressById, updateAddress } from '@/lib/shopify/customer/customerApiCall';
 import { handleGetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -22,7 +22,7 @@ function AddressUpdate() {
     async function fetchAddress() {
       if (addressId && query) {
         const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-        const res = await getCustomerAddressById(shopifyToken, addressId);
+        const res = await getClient().customer.getCustomerAddressById(shopifyToken, addressId);
         setIsLoading(false);
         if (res) return setAddress(res);
         showToast.error('Something went wrong');
@@ -47,7 +47,11 @@ function AddressUpdate() {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
     toggleLoading(true);
-    const { customerAddress, customerUserErrors } = await updateAddress(formData, shopifyToken, addressId);
+    const { customerAddress, customerUserErrors } = await getClient().customer.updateAddress(
+      formData,
+      shopifyToken,
+      addressId
+    );
     toggleLoading(false);
 
     if (customerAddress) {

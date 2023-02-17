@@ -1,5 +1,5 @@
-import { getDelegateToken } from '@/lib/shopify/customer/customerApiCall';
 import { setCookie } from 'nookies';
+import getClient from '@/shopify/index';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
 
@@ -11,7 +11,7 @@ const getToken = async (req, res) => {
 
     switch (method) {
       case 'GET': {
-        const response = await getDelegateToken({
+        const response = await getClient().admin.getDelegateToken({
           delegateAccessScope: delegateAccessScope.split(','),
           expiresIn,
         });

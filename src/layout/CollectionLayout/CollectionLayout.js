@@ -13,8 +13,8 @@ import CollectionNav from '@/components/_scopes/collection/CollectionNav/Collect
 import Slide from '@/components/Slide/Slide';
 import Container from '@/components/Container/Container';
 import FilterManager from '@/components/_scopes/collection/Filters/FilterManager/FilterManager';
-import { getFiltersFromQuery } from '@/lib/shopify/helpers';
 import { useRouter } from 'next/router';
+import { getFiltersFromQuery } from '@/helpers/index';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 

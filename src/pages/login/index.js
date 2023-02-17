@@ -9,8 +9,8 @@ import FormContainer from '@/components/_scopes/forms/FormContainer/FormContaine
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Wrapper from '@/components/Wrapper/Wrapper';
-import { loginCustomer } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 
 const { userFeedback } = config;
 
@@ -23,7 +23,8 @@ function LoginPage() {
     if (!email || !password) return showToast.error(userFeedback?.missingFields);
 
     toggleLoading(true);
-    const resLogin = await loginCustomer({ email, password });
+    const resLogin = await getClient().customer.loginCustomer({ email, password });
+
     toggleLoading(false);
 
     const customerUserErrors = resLogin?.customerUserErrors;

@@ -19,19 +19,13 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": [
-    "react",
-    "import"
-  ],
+  "plugins": ["react", "import"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": [
       1,
       {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
+        "extensions": [".js", ".jsx"]
       }
     ],
     "react/prop-types": 0,
@@ -54,74 +48,30 @@
     "jsx-a11y/label-has-associated-control": [
       2,
       {
-        "labelComponents": [
-          "CustomInputLabel"
-        ],
-        "labelAttributes": [
-          "label"
-        ],
-        "controlComponents": [
-          "CustomInput"
-        ],
+        "labelComponents": ["CustomInputLabel"],
+        "labelAttributes": ["label"],
+        "controlComponents": ["CustomInput"],
         "depth": 3
       }
     ]
   },
-  "ignorePatterns": [
-    "node_modules/",
-    ".next/"
-  ],
+  "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {
     "import/resolver": {
       "alias": [
-        [
-          "@/components",
-          "./src/components"
-        ],
-        [
-          "@/contexts",
-          "./src/contexts"
-        ],
-        [
-          "@/config",
-          "./src/config"
-        ],
-        [
-          "@/hooks",
-          "./src/hooks"
-        ],
-        [
-          "@/assets",
-          "./src/assets"
-        ],
-        [
-          "@/data",
-          "./src/data"
-        ],
-        [
-          "@/styles",
-          "./src/styles"
-        ],
-        [
-          "@/lib",
-          "./src/lib"
-        ],
-        [
-          "@/helpers",
-          "./src/helpers"
-        ],
-        [
-          "@/utils",
-          "./src/utils"
-        ],
-        [
-          "@/layout",
-          "./src/layout"
-        ],
-        [
-          "@/modals",
-          "./src/modals"
-        ]
+        ["@/components", "./src/components"],
+        ["@/contexts", "./src/contexts"],
+        ["@/config", "./src/config"],
+        ["@/hooks", "./src/hooks"],
+        ["@/assets", "./src/assets"],
+        ["@/data", "./src/data"],
+        ["@/styles", "./src/styles"],
+        ["@/lib", "./src/lib"],
+        ["@/helpers", "./src/helpers"],
+        ["@/utils", "./src/utils"],
+        ["@/layout", "./src/layout"],
+        ["@/modals", "./src/modals"],
+        ["@/shopify", "./src/shopify"]
       ]
     }
   },

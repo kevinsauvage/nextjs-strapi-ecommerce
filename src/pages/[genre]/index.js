@@ -1,9 +1,8 @@
-import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 import { getInfoFromCtx } from '@/helpers/index';
 import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
-import { getMenu } from '@/lib/shopify/shop/shopApiCall';
+import getClient from '@/shopify/index';
 
 export default function Shop(props) {
   return <CollectionPage {...props} />;
@@ -19,10 +18,19 @@ Shop.getLayout = function getLayout(page) {
 
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey, query } = getInfoFromCtx(ctx);
-  const data = (await filterCollectionForward('all', 16, [], sortKey, startCursor, delegateToken, ip)) || {};
+  const data =
+    (await getClient().collection.filterCollectionForward(
+      'all',
+      16,
+      [],
+      sortKey,
+      startCursor,
+      delegateToken,
+      ip
+    )) || {};
   const menuSlug = `collections-${query?.genre}`;
 
-  const menu = await getMenu(menuSlug, delegateToken, ip);
+  const menu = await getClient().shop.getMenu(menuSlug, delegateToken, ip);
 
   if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;

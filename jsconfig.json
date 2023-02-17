@@ -13,7 +13,8 @@
       "@/helpers/*": ["/src/helpers/*"],
       "@/utils/*": ["/src/utils/*"],
       "@/layout/*": ["/src/layout/*"],
-      "@/modals/*": ["/src/modals/*"]
+      "@/modals/*": ["/src/modals/*"],
+      "@/shopify/*": ["/src/shopify/*"]
     }
   }
 }

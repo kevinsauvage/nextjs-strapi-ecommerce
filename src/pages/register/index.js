@@ -8,9 +8,8 @@ import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { loginCustomer, registerCustomer } from '@/lib/shopify/customer/customerApiCall';
-import { associateCustomerToCheckout } from '@/lib/shopify/checkout/checkoutApiCall';
 import { handleSetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 
 const { userFeedback } = config;
 
@@ -27,14 +26,14 @@ function RegisterPage() {
       toggleLoading(true);
 
       // Register the user
-      const registerRes = await registerCustomer({ email, password });
+      const registerRes = await getClient().customer.registerCustomer({ email, password });
       if (!registerRes) throw new Error(userFeedback?.register.error);
       const userErrors = registerRes?.userErrors;
       if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
       showToast.success(userFeedback?.register?.success);
 
       // Login the user
-      const dataLogin = await loginCustomer({ email, password });
+      const dataLogin = await getClient().customer.loginCustomer({ email, password });
 
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
       if (!accessToken) {
@@ -46,7 +45,7 @@ function RegisterPage() {
       // Associate user to checkout
       const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
       if (checkoutId) {
-        const assosiateRes = await associateCustomerToCheckout(checkoutId, accessToken);
+        const assosiateRes = await getClient().checkout.associateCustomerToCheckout(checkoutId, accessToken);
         if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
       } else {
         console.warn('Checkout id not fount');

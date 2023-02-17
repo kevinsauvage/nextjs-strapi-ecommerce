@@ -6,8 +6,8 @@ export default function BannerHome({ data }) {
   const { title, description, upTitle, handle, image } = data || {};
 
   return (
-    <Container extraClass={styles.outer}>
-      <section className={styles.banner} style={{ backgroundImage: `url(${image?.url})` }}>
+    <section className={styles.banner} style={{ backgroundImage: `url(${image?.url})` }}>
+      <Container extraClass={styles.outer}>
         <div className={styles.inner}>
           <div className={styles.container}>
             <div className={styles.content}>
@@ -23,7 +23,7 @@ export default function BannerHome({ data }) {
             </div>
           </div>
         </div>
-      </section>
-    </Container>
+      </Container>
+    </section>
   );
 }

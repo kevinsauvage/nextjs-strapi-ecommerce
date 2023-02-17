@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 import config from '@/config/index';
-import { getSitemap } from '@/lib/shopify/collection/collectionApiCall';
+import getClient from '@/shopify/index';
 
 const Sitemap = () => {};
 
@@ -17,7 +17,7 @@ export const getServerSideProps = async ({ res }) => {
     .map((page) => `${BASE_URL}/${page.replace('.js', '')}`);
 
   // Get list of collections
-  const collections = await getSitemap(100);
+  const collections = await getClient().collection.getSitemap(100);
 
   // Get all dynamic paths
   const dynamicPaths = collections?.reduce((acc, collection) => {

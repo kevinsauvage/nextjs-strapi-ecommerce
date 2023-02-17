@@ -1,12 +1,12 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useEffect, useState } from 'react';
-import { getMenu, getShop, getMetaObject } from '@/lib/shopify/shop/shopApiCall';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
+import getClient from '@/shopify/index';
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {
@@ -17,17 +17,19 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [header] = await Promise.all([getMenu('main-menu')]);
+      const [header] = await Promise.all([getClient().shop.getMenu('main-menu')]);
 
       setMenuHeader(header);
     };
-    getMetaObject({ type: 'navigation', handle: 'main' });
     fetchData();
   }, []);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [footer, shop] = await Promise.all([getMenu('footer'), getShop()]);
+      const [footer, shop] = await Promise.all([
+        getClient().shop.getMenu('footer'),
+        getClient().shop.getShop(),
+      ]);
       setMenuFooter(footer);
       setShopInfo(shop);
     };

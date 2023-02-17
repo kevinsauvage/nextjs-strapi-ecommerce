@@ -7,7 +7,7 @@ import FormContainer from '@/components/_scopes/forms/FormContainer/FormContaine
 import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { sendRecoverEmail } from '@/lib/shopify/customer/customerApiCall';
+import getClient from '@/shopify/index';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
@@ -17,7 +17,7 @@ function ResetPassword() {
     const { email } = formData;
     if (!email) return showToast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
-    const recoverRes = await sendRecoverEmail(email);
+    const recoverRes = await getClient().customer.sendRecoverEmail(email);
 
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;

@@ -9,8 +9,8 @@ import FormContainer from '@/components/_scopes/forms/FormContainer/FormContaine
 import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { resetCustomerPassword } from '@/lib/shopify/customer/customerApiCall';
 import { handleSetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
@@ -22,7 +22,7 @@ function Password({ resetUrl }) {
     if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
     toggleLoading(true);
 
-    const resetRes = await resetCustomerPassword(password, resetUrl);
+    const resetRes = await getClient().customer.resetCustomerPassword(password, resetUrl);
 
     toggleLoading(false);
 

@@ -1,5 +1,5 @@
-import { getShippingPolicy } from '@/lib/shopify/shop/shopApiCall';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 import styles from './shipping.module.scss';
 
 function ShippingPage({ shippingPolicy }) {
@@ -17,7 +17,7 @@ function ShippingPage({ shippingPolicy }) {
 export default ShippingPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getShippingPolicy();
+  const shopInfo = await getClient().shop.getShippingPolicy();
   const { shippingPolicy } = shopInfo;
   return { props: { shippingPolicy } };
 }

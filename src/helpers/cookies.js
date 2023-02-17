@@ -1,5 +1,5 @@
 import config from '@/config/index';
-import { refreshToken } from '@/lib/shopify/customer/customerApiCall';
+import getClient from '@/shopify/index';
 
 const { setCookie } = require('nookies');
 
@@ -96,9 +96,7 @@ export const handleGetTokenCookies = async () => {
   const needRefresh = expiresInSeconds < secondsNow - 60 * 60 * 1000;
 
   if (needRefresh) {
-    const res = await refreshToken(shopifyToken);
-
-    console.log('🚀 ~ file: cookies.js:101 ~ handleGetTokenCookies ~ REFRESH TOKEN RESPONSE', res);
+    const res = await getClient().customer.refreshToken(shopifyToken);
 
     const token = res?.customerAccessToken?.accessToken;
 

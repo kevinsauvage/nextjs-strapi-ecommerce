@@ -1,8 +1,8 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import { useCallback } from 'react';
 import { actions } from '@/contexts/CollectionContext/CollectionReducer';
-import { extractUniqueColorNames } from '@/lib/shopify/helpers';
 import { useRouter } from 'next/router';
+import { extractUniqueColorNames } from '@/helpers/index';
 import styles from './Filters.module.scss';
 
 export default function Filters() {

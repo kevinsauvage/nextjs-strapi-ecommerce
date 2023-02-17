@@ -1,10 +1,8 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import config from '@/config/index';
-import { getUser } from '@/lib/shopify/customer/customerApiCall';
-import { updateCheckoutShippingAddress } from '@/lib/shopify/checkout/checkoutApiCall';
-import { getCookieFront } from '@/helpers/cookies';
 import { useRouter } from 'next/router';
-import { handleGetTokenCookies } from 'src/helpers/cookies';
+import { handleGetTokenCookies } from '@/helpers/cookies';
+import getClient from '@/shopify/index';
 import { UserReducer, initialState, actions } from './UserReducer';
 import useCheckoutContext from '../CheckoutContext/useCheckoutContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
@@ -55,7 +53,10 @@ export function UserProvider({ children }) {
         .filter((key) => whitelist.includes(key))
         .reduce((obj, key) => ({ ...obj, [key]: defaultAddress[key] }), {});
 
-      const resUpdate = await updateCheckoutShippingAddress(shippingAddress, checkoutIdStorage);
+      const resUpdate = await getClient().checkout.updateCheckoutShippingAddress(
+        shippingAddress,
+        checkoutIdStorage
+      );
 
       if (resUpdate?.id) handleSetCheckout(resUpdate);
       else console.error("Couldn't associate default address to checkout res>>>", resUpdate);
@@ -76,7 +77,7 @@ export function UserProvider({ children }) {
 
       console.time('handleRender user context');
 
-      const userRes = (await getUser(shopifyToken)) || {};
+      const userRes = (await getClient().customer.getUser(shopifyToken)) || {};
 
       const customer = userRes?.response?.customer;
 

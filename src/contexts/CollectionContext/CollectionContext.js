@@ -1,9 +1,9 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
 import config from '@/config/index';
-import { getFiltersFromQuery } from '@/lib/shopify/helpers';
-import { filterCollectionForward } from '@/lib/shopify/collection/collectionApiCall';
 import { numberOfDifferences } from '@/helpers/array';
+import { getFiltersFromQuery } from '@/helpers/index';
+import getClient from '@/shopify/index';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 
@@ -36,7 +36,13 @@ export function CollectionProvider({
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
       dispatch({ type: actions.SET_LOADING, payload: true });
-      const data = await filterCollectionForward(query.collectionSlug || 'all', first, filters, sort, after);
+      const data = await getClient().collection.filterCollectionForward(
+        query.collectionSlug || 'all',
+        first,
+        filters,
+        sort,
+        after
+      );
       dispatch({ type: actions.SET_LOADING, payload: false });
       return data;
     },

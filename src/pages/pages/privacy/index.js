@@ -1,5 +1,5 @@
-import { getPrivacyPolicy } from '@/lib/shopify/shop/shopApiCall';
 import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 import styles from './Privacy.module.scss';
 
 function PrivacyPage({ privacyPolicy }) {
@@ -16,7 +16,7 @@ function PrivacyPage({ privacyPolicy }) {
 export default PrivacyPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getPrivacyPolicy();
+  const shopInfo = await getClient().shop.getPrivacyPolicy();
   const privacyPolicy = shopInfo?.privacyPolicy;
   return { props: { privacyPolicy } };
 }

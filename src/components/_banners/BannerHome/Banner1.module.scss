@@ -7,10 +7,10 @@
   height: 45vw;
   max-height: 600px;
   margin-bottom: var(--space-6);
-  background-position: top;
+  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
-  object-fit: cover;
+  background-attachment: fixed;
   overflow: hidden;
   border-radius: $radius;
   @include overlay(var(--RGB-surface-100), 0.4);

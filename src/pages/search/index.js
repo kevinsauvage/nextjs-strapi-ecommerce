@@ -4,7 +4,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import Container from '@/components/Container/Container';
-import { searchProducts } from '@/lib/shopify/product/productApiCall';
+import getClient from '@/shopify/index';
 import styles from './search.module.scss';
 
 function Search() {
@@ -17,7 +17,7 @@ function Search() {
   const handleSearch = useCallback(async () => {
     if (!searchTerm || !searchTerm?.trim()) return;
     setLoading(true);
-    const searchResponse = await searchProducts(`${searchTerm}*`);
+    const searchResponse = await getClient().product.searchProducts(`${searchTerm}*`);
     setLoading(false);
     setSearch(searchResponse);
   }, [searchTerm]);

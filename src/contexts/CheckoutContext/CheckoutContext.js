@@ -1,12 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
-import {
-  createCheckout,
-  getCheckoutById,
-  addLinesToCheckout,
-  updateLines,
-  removeLinesFromCheckout,
-} from '@/lib/shopify/checkout/checkoutApiCall';
 import config from '@/config/index';
+import getClient from '@/shopify/index';
 import { CheckoutReducer, initialState, actions } from './CheckoutReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
@@ -31,10 +25,13 @@ export function CheckoutProvider({ children }) {
       if (!lineItemId) return console.error('Missing line item to delete');
 
       const checkoutIdStorage = window.localStorage.getItem(checkoutIdSorageKey);
+
       if (!checkoutIdStorage) return console.error('Missing checkout id storage');
 
       toggleLoading(true);
-      const removeLinesRes = await removeLinesFromCheckout(checkoutIdStorage, [lineItemId]);
+      const removeLinesRes = await getClient().checkout.removeLinesFromCheckout(checkoutIdStorage, [
+        lineItemId,
+      ]);
       toggleLoading(false);
 
       if (removeLinesRes?.id) {
@@ -57,7 +54,7 @@ export function CheckoutProvider({ children }) {
 
       toggleLoading(true);
 
-      const updateLinesRes = await updateLines(checkoutIdStorage, lineItems);
+      const updateLinesRes = await getClient().checkout.updateLines(checkoutIdStorage, lineItems);
 
       toggleLoading(false);
 
@@ -83,7 +80,10 @@ export function CheckoutProvider({ children }) {
       if (quantity > 0 && variantId) {
         toggleLoading(true);
         const lineItemsToAdd = [{ variantId, quantity: parseInt(quantity, 10) }];
-        const addLineResponse = await addLinesToCheckout(checkoutIdStorage, lineItemsToAdd);
+        const addLineResponse = await getClient().checkout.addLinesToCheckout(
+          checkoutIdStorage,
+          lineItemsToAdd
+        );
 
         if (addLineResponse?.id) {
           dispatch({ type: actions.ADD_CHECKOUT, payload: addLineResponse });
@@ -105,15 +105,15 @@ export function CheckoutProvider({ children }) {
     const handleRender = async () => {
       if (!checkout?.id) {
         const checkoutIdStorage = window.localStorage.getItem(checkoutIdSorageKey);
-        console.time('handleRender checkoutContext:');
 
         if (checkoutIdStorage) {
-          const getCheckoutRes = await getCheckoutById(checkoutIdStorage);
+          console.time('handleRender checkoutContext:');
+          const getCheckoutRes = await getClient().checkout.getCheckoutById(checkoutIdStorage);
           console.timeEnd('handleRender checkoutContext:');
 
           // Checkout already paid, create a new checkout
           if (getCheckoutRes?.orderStatusUrl || !getCheckoutRes?.id) {
-            const createCheckoutRes = await createCheckout({});
+            const createCheckoutRes = await getClient().checkout.createCheckout({});
             if (createCheckoutRes.id) {
               window.localStorage.setItem(checkoutIdSorageKey, createCheckoutRes.id);
               handleSetCheckout(createCheckoutRes);
@@ -128,7 +128,7 @@ export function CheckoutProvider({ children }) {
         }
 
         if (!checkoutIdStorage) {
-          const createCheckoutRes = await createCheckout({});
+          const createCheckoutRes = await getClient().checkout.createCheckout({});
           if (createCheckoutRes.id) {
             window.localStorage.setItem(checkoutIdSorageKey, createCheckoutRes.id);
             handleSetCheckout(createCheckoutRes);
