@@ -22,7 +22,7 @@ function AddressUpdate() {
     async function fetchAddress() {
       if (addressId && query) {
         const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-        const res = await getClient().customer.getCustomerAddressById(shopifyToken, addressId);
+        const res = await getClient().customer.queryCustomerAddressById(shopifyToken, addressId);
         setIsLoading(false);
         if (res) return setAddress(res);
         showToast.error('Something went wrong');
@@ -47,7 +47,7 @@ function AddressUpdate() {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
     toggleLoading(true);
-    const { customerAddress, customerUserErrors } = await getClient().customer.updateAddress(
+    const { customerAddress, customerUserErrors } = await getClient().customer.customerAddressUpdate(
       formData,
       shopifyToken,
       addressId

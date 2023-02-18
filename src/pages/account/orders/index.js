@@ -28,7 +28,7 @@ export default function OrdersPage() {
     async (endCursor) => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setIsLoading(true);
-      const res = await getClient().customer.getUserOrders(shopifyToken, 5, endCursor || '');
+      const res = await getClient().customer.queryCustomerOrders(shopifyToken, 5, endCursor || '');
       setIsLoading(false);
 
       if (res?.orders) {

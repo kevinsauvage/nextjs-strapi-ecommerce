@@ -140,10 +140,6 @@ export function CartProvider({ children }) {
   );
 
   useEffect(() => {
-    console.log(cart);
-  }, [cart]);
-
-  useEffect(() => {
     const handleRender = async () => {
       if (!cart?.id) {
         const cartId = window.localStorage.getItem(cartIdStorageKey);

@@ -26,14 +26,14 @@ function RegisterPage() {
       toggleLoading(true);
 
       // Register the user
-      const registerRes = await getClient().customer.registerCustomer({ email, password });
+      const registerRes = await getClient().customer.customerCreate({ email, password });
       if (!registerRes) throw new Error(userFeedback?.register.error);
       const userErrors = registerRes?.userErrors;
       if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
       showToast.success(userFeedback?.register?.success);
 
       // Login the user
-      const dataLogin = await getClient().customer.loginCustomer({ email, password });
+      const dataLogin = await getClient().customer.customerAccessTokenCreate({ email, password });
 
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
       if (!accessToken) {

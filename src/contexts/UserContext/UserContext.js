@@ -31,7 +31,7 @@ export function UserProvider({ children }) {
         return;
       }
 
-      const userRes = (await getClient().customer.getUser(shopifyToken)) || {};
+      const userRes = (await getClient().customer.queryCustomer(shopifyToken)) || {};
       const customer = userRes?.response?.customer;
 
       if (customer?.id) {
