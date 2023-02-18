@@ -1,14 +1,14 @@
 /* eslint-disable react/no-array-index-key */
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import config from '@/config/index';
 import { bag, user, search } from '@/assets/svg';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
   const { toggleSearch, searchOpen } = useGlobalContext();
-  const { getTotalItems } = useCheckoutContext();
+  const { getTotalItems } = useCartContext();
 
   const router = useRouter();
 

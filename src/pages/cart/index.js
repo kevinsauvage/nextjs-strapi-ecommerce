@@ -1,4 +1,3 @@
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
 import CartSummary from '@/components/_scopes/cart/CartSummary/CartSummary';
 import CartTable from '@/components/_scopes/cart/CartTable/CartTable';
 import EmptyCart from '@/components/_scopes/cart/EmptyCart/EmptyCart';
@@ -9,14 +8,16 @@ import Button from '@/components/Button/Button';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import Container from '@/components/Container/Container';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './Cart.module.scss';
 
 function CartPage() {
-  const { checkout, handleQuantityChange, isCheckoutLoading } = useCheckoutContext();
   const { showToast } = useToastContext();
   const [lineItemsToUpdate, setLineItemsToUpdate] = useState([]);
 
-  if ((!checkout || checkout?.lineItems?.length === 0) && !isCheckoutLoading)
+  const { cart, isCartLoading, handleQuantityChange } = useCartContext();
+
+  if ((!cart || cart?.lines?.length === 0) && !isCartLoading)
     return (
       <PageLayout title="Your Cart">
         <Breadcrumbs />
@@ -47,7 +48,7 @@ function CartPage() {
     <PageLayout title="Your Cart">
       <Breadcrumbs />
       <Container>
-        {!isCheckoutLoading ? (
+        {!isCartLoading ? (
           <div className={styles.cart}>
             <main>
               <CartTable handleChange={handleSetLineToUpdate} />

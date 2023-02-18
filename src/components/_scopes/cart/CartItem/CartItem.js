@@ -4,52 +4,49 @@ import styles from './CartItem.module.scss';
 import { Row, TData } from '../../table/Table/Table';
 import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
 
-export default function CartItem({
-  product,
-  variant,
-  quantity,
-  handleChange,
-  removeFromCart,
-  collection,
-  lineId,
-  title,
-}) {
-  const totalPrice = Number(variant?.priceV2?.amount) * Number(quantity);
+export default function CartItem({ handleChange, removeFromCart, item }) {
+  const { merchandise, quantity, id } = item || {};
+  const {
+    priceV2,
+    product,
+    title: variantTitle,
+    image,
+    quantityAvailable,
+    id: merchandiseId,
+  } = merchandise || {};
+  const { title, handle, collections } = product || {};
+
+  const totalPrice = Number(priceV2?.amount) * Number(quantity);
 
   return (
     <Row>
       <TData>
         <div className={styles.list}>
           <div className={styles.image}>
-            <Image
-              src={variant.image.small}
-              alt={variant.image.alt || variant.title}
-              width={600}
-              height={600}
-            />
+            <Image src={image.small} alt={image.alt || variantTitle} width={600} height={600} />
           </div>
           <div className={styles.content}>
             <Link
               className={styles.link}
-              href={`/${product?.productType}/${collection?.handle}/${product?.handle}`}
+              href={`/${product?.productType}/${collections?.[0]?.handle}/${handle}`}
             >
               <b className={styles.title}>{title}</b>
             </Link>
-            <p className={styles.variant}>{variant.title}</p>
+            <p className={styles.variant}>{variantTitle}</p>
           </div>
         </div>
       </TData>
       <TData>
-        <span className={styles.price}>€{variant.priceV2.amount}</span>
+        <span className={styles.price}>€{priceV2.amount}</span>
       </TData>
       <TData>
         <QuantityUpdater
           showTitle={false}
           originalQuantity={quantity}
-          quantityAvailable={variant?.quantityAvailable}
+          quantityAvailable={quantityAvailable}
           onChange={(newQuantity) =>
             handleChange({
-              id: lineId,
+              id,
               quantity: newQuantity,
             })
           }
@@ -59,7 +56,7 @@ export default function CartItem({
         <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
       </TData>
       <TData>
-        <button type="button" className={styles.button} onClick={() => removeFromCart(lineId)}>
+        <button type="button" className={styles.button} onClick={() => removeFromCart(id)}>
           Remove
         </button>
       </TData>

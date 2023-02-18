@@ -1,5 +1,5 @@
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './CartSummary.module.scss';
 
 function CartSummaryRow({ title, content, children }) {
@@ -15,21 +15,21 @@ function CartSummaryRow({ title, content, children }) {
 }
 
 function CartSummary() {
-  const { checkout, getTotalItems } = useCheckoutContext();
+  const { cart, getTotalItems } = useCartContext();
   return (
     <div className={styles.summary}>
       <h5 className={styles.title}>CART SUMMARY</h5>
       <CartSummaryRow
-        title="Subtotal"
-        content={`${checkout?.totalPrice?.amount} ${checkout?.currencyCode}`}
+        title="Total Amount"
+        content={`${cart?.cost?.totalAmount?.amount} ${cart?.cost?.totalAmount?.currencyCode}`}
+      />
+
+      <CartSummaryRow
+        title="Subtotal Amout"
+        content={`${cart?.cost?.subtotalAmount?.amount} ${cart?.cost?.subtotalAmount?.currencyCode}`}
       />
       <CartSummaryRow title="Total products" content={getTotalItems() || 0} />
-      <CheckoutBtn
-        extraClass={styles.btn}
-        amount={checkout?.totalPrice?.amount}
-        currencyCode={checkout?.currencyCode}
-        url={checkout?.webUrl}
-      />
+      <CheckoutBtn extraClass={styles.btn} checkoutUrl={cart?.checkoutUrl} />
     </div>
   );
 }

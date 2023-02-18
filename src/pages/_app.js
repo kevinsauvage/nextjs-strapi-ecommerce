@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
-import { CheckoutProvider } from '@/contexts/CheckoutContext/CheckoutContext';
 import RootLayout from '@/layout/RootLayout/RootLayout';
+import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { ToastProvider } from '@/contexts/ToastContext/NotificationContext';
+import { CartProvider } from '@/contexts/CartContext/CartContext';
 import config from '@/config/index';
 import '../styles/index.scss';
 
@@ -13,12 +13,12 @@ function MyApp({ Component, pageProps }) {
   return (
     <GlobalProvider>
       <ToastProvider>
-        <CheckoutProvider>
+        <CartProvider>
           <Head>
             <title>{siteTitle}</title>
           </Head>
           <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
-        </CheckoutProvider>
+        </CartProvider>
       </ToastProvider>
     </GlobalProvider>
   );

@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 import CartItem from '../CartItem/CartItem';
 import Table, { Body, Head, Row, THead } from '../../table/Table/Table';
 
 function CartTable({ handleChange }) {
-  const { checkout, removeFromCheckout } = useCheckoutContext();
-
+  const { cart, removeFromCart } = useCartContext();
   return (
     <Table>
       <Head>
@@ -18,16 +17,17 @@ function CartTable({ handleChange }) {
         </Row>
       </Head>
       <Body>
-        {checkout.lineItems.map((item) => (
+        {cart?.lines.map((item) => (
           <CartItem
             key={item?.id}
-            product={item.variant.product}
-            collection={item.variant.product?.collections?.nodes?.[0]}
+            product={item.variant?.product}
+            collection={item.variant?.product?.collections?.nodes?.[0]}
             variant={item.variant}
             quantity={item?.quantity}
             title={item?.title}
-            removeFromCart={removeFromCheckout}
+            removeFromCart={removeFromCart}
             lineId={item.id}
+            item={item}
             handleChange={handleChange}
           />
         ))}

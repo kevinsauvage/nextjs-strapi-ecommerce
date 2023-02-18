@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import useCheckoutContext from '@/contexts/CheckoutContext/useCheckoutContext';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 
 export default function useProductSelection({ product }) {
   const [selectedProductOption, setSelectedProductOption] = useState([]);
   const [selectedVariant, setSelectedVariant] = useState({});
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState();
-  const { handleAddToCheckout } = useCheckoutContext();
+
+  const { handleAddToCart: handleAddToCartContext } = useCartContext();
 
   const handleChangeInput = (num) => setQuantity(num);
 
@@ -64,8 +65,8 @@ export default function useProductSelection({ product }) {
   );
 
   const handleAddToCart = useCallback(() => {
-    handleAddToCheckout(selectedVariant.id, quantity);
-  }, [handleAddToCheckout, quantity, selectedVariant?.id]);
+    handleAddToCartContext(selectedVariant.id, quantity);
+  }, [handleAddToCartContext, quantity, selectedVariant.id]);
 
   useEffect(() => {
     setSelectedVariant({});

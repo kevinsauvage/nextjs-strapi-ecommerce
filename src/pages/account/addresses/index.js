@@ -10,7 +10,6 @@ import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Button from '@/components/Button/Button';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
-
 import getClient from '@/shopify/index';
 import styles from './Addresses.module.scss';
 
@@ -22,22 +21,16 @@ function Addresses() {
 
   const fetchAddresses = useCallback(async () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-
     const res = await getClient().customer.getCustomerAddresses(shopifyToken);
     setIsLoading(false);
-
-    if (Array.isArray(res)) {
-      dispatch({ type: actions.ADD_ADDRESSES, payload: res });
-    } else {
-      showToast.error('Something went wrong, please try again later');
-    }
+    if (Array.isArray(res)) dispatch({ type: actions.ADD_ADDRESSES, payload: res });
+    else showToast.error('Something went wrong, please try again later');
   }, [dispatch, showToast]);
 
   const handleSetAsDefault = async (id) => {
     try {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-
       const res = await getClient().customer.updateDefaultAddress(shopifyToken, id);
       const { customer, customerUserErrors } = res || {};
 
@@ -45,6 +38,7 @@ function Addresses() {
         showToast.success('Address correctly set as default address');
         return dispatch({ type: actions.ADD_USER, payload: customer });
       }
+
       return customerUserErrors.forEach((element) => showToast.error(element.message));
     } catch (error) {
       return showToast.error('Something went wrong, please try again later');
@@ -57,10 +51,9 @@ function Addresses() {
     try {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-
       const deleteRes = await getClient().customer.deleteAddressById(shopifyToken, id);
-
       const { customerUserErrors, deletedCustomerAddressId } = deleteRes || {};
+
       if (customerUserErrors?.length)
         return customerUserErrors.forEach((element) => showToast.error(element.message));
 
@@ -68,6 +61,7 @@ function Addresses() {
         await fetchAddresses();
         return showToast.success('Address deleted successfully');
       }
+
       return showToast.error('Something went wrong, please try again later');
     } catch (error) {
       return showToast.error('Something went wrong, please try again later');
