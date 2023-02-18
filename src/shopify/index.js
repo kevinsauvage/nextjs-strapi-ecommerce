@@ -16,4 +16,5 @@ const getClient = (delegateToken, buyerIp) => {
   };
   return new ShopifyClient(config);
 };
+
 export default getClient;

@@ -42,7 +42,7 @@ function middleware(request) {
     return NextResponse.redirect(`${origin}${config.routes.account}`);
   }
 
-  return NextResponse.next();
+  return null;
 }
 
 export default middleware;
