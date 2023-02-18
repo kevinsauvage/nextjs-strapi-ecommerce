@@ -8,10 +8,11 @@ import styles from './Account.module.scss';
 function Account() {
   const { user } = useUserContext();
   const { firstName, lastName } = user || {};
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (user?.id) setIsLoading(false);
+    else setIsLoading(true);
   }, [user]);
 
   return (

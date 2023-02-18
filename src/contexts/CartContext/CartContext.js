@@ -121,15 +121,13 @@ export function CartProvider({ children }) {
       if (!customer) return console.error('Missing customer');
       if (!token) return console.error('Missing token');
 
+      // TODO: ADD SHIPPING ADDRESS
       const buyerInput = {
         customerAccessToken: token,
         email: customer.email,
       };
 
-      toggleLoading(true);
       const updateResponse = await getClient().cart.updateCartBuyerIdentity(buyerInput, cartId);
-
-      toggleLoading(false);
 
       const newCart = updateResponse?.cart;
 
@@ -138,7 +136,7 @@ export function CartProvider({ children }) {
       }
       return null;
     },
-    [handleSetCart, toggleLoading]
+    [handleSetCart]
   );
 
   useEffect(() => {

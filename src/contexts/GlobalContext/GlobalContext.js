@@ -13,9 +13,7 @@ export function GlobalProvider({ children }) {
   const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
 
   const handleRender = useCallback(async () => {
-    console.time('handleRender global context');
     const res = await generateDelegateToken();
-    console.timeEnd('handleRender global context');
     if (!res?.ok) console.error("Couldn't  set delegate token");
   }, []);
 
