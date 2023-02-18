@@ -6,14 +6,7 @@ import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
 
 export default function CartItem({ handleChange, removeFromCart, item }) {
   const { merchandise, quantity, id } = item || {};
-  const {
-    priceV2,
-    product,
-    title: variantTitle,
-    image,
-    quantityAvailable,
-    id: merchandiseId,
-  } = merchandise || {};
+  const { priceV2, product, title: variantTitle, image, quantityAvailable } = merchandise || {};
   const { title, handle, collections } = product || {};
 
   const totalPrice = Number(priceV2?.amount) * Number(quantity);
