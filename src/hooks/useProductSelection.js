@@ -25,7 +25,7 @@ export default function useProductSelection({ product }) {
     [selectedProductOption]
   );
 
-  const getDifference = (array1, array2) => {
+  const getDifference = useCallback((array1, array2) => {
     const difference = array1?.filter(
       (object1) =>
         !array2?.some((object2) => object1.name === object2.name && object1.value === object2.value)
@@ -33,7 +33,7 @@ export default function useProductSelection({ product }) {
 
     if (difference?.length) return true;
     return false;
-  };
+  }, []);
 
   const isOptionSelected = useCallback(
     (optionName, optionValue) => {
@@ -60,7 +60,7 @@ export default function useProductSelection({ product }) {
       if (dif?.length) return false;
       return true;
     },
-    [product?.variants, selectedProductOption]
+    [getDifference, product?.variants, selectedProductOption]
   );
 
   const handleAddToCart = useCallback(() => {
@@ -90,7 +90,7 @@ export default function useProductSelection({ product }) {
       );
       setSelectedVariant(...dif);
     }
-  }, [selectedProductOption, product, setSelectedVariant]);
+  }, [selectedProductOption, product, setSelectedVariant, getDifference]);
 
   useEffect(() => {
     if (quantity && selectedVariant?.id) {
