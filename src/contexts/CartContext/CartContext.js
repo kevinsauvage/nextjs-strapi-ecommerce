@@ -146,21 +146,8 @@ export function CartProvider({ children }) {
 
         if (cartId) {
           const getCartResponse = await getClient().cart.cartQuery(cartId);
-
-          // Cart already paid, create a new cart
-          if (getCartResponse?.orderStatusUrl || !getCartResponse?.id) {
-            const createCartRes = await getClient().cart.createCart({});
-            if (createCartRes?.id) {
-              window.localStorage.setItem(cartIdStorageKey, createCartRes?.id);
-              handleSetCart(createCartRes);
-              return;
-            }
-            console.error('Create cart failed');
-          } else {
-            handleSetCart(getCartResponse);
-            return;
-          }
-          console.warn('Cart already paid, creating new cart');
+          if (getCartResponse?.id) handleSetCart(getCartResponse);
+          return;
         }
 
         if (!cartId) {
@@ -169,9 +156,7 @@ export function CartProvider({ children }) {
           if (createCartRes?.id) {
             window.localStorage.setItem(cartIdStorageKey, createCartRes.id);
             handleSetCart(createCartRes);
-            return;
           }
-          console.error('Create cart failed');
         }
       }
     };
