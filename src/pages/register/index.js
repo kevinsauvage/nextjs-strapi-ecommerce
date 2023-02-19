@@ -19,14 +19,17 @@ function RegisterPage() {
   const { push } = useRouter();
 
   const onSubmit = async (formData) => {
-    const { email, password } = formData;
+    const { email, password, firstName, lastName, passwordConfirmation } = formData;
     try {
       if (!password || password.length < 8) throw new Error(config.userFeedback.passwordLength);
+      if (password !== passwordConfirmation) throw new Error(config.userFeedback.passwordDifferent);
       if (!email) throw new Error(userFeedback?.missingFields);
       toggleLoading(true);
 
       // Register the user
-      const registerRes = await getClient().customer.customerCreate({ input: { email, password } });
+      const registerRes = await getClient().customer.customerCreate({
+        input: { email, password, firstName, lastName },
+      });
       if (!registerRes) throw new Error(userFeedback?.register.error);
       const userErrors = registerRes?.userErrors;
       if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
@@ -62,7 +65,12 @@ function RegisterPage() {
   return (
     <PageLayout title="Register your account">
       <FormContainer>
-        <Form autoComplete="off" onSubmit={onSubmit} title="Register" requiredFields={['email', 'password']}>
+        <Form
+          autoComplete="off"
+          onSubmit={onSubmit}
+          title="Register"
+          requiredFields={['email', 'password', 'passwordConfirmation']}
+        >
           <Input
             id="email"
             label="Email address"
@@ -72,6 +80,7 @@ function RegisterPage() {
             autoComplete="off"
             required="true"
           />
+
           <Input
             placeholder="Password"
             type="password"
@@ -80,6 +89,31 @@ function RegisterPage() {
             label="Password"
             autoComplete="off"
             required="true"
+          />
+          <Input
+            placeholder="Password Confirmation"
+            type="password"
+            name="passwordConfirmation"
+            id="passwordConfirmation"
+            label="Password Confirmation"
+            autoComplete="off"
+            required="true"
+          />
+          <Input
+            placeholder="First name"
+            type="text"
+            name="firstName"
+            id="firstName"
+            label="First name"
+            autoComplete="off"
+          />
+          <Input
+            placeholder="Last name"
+            type="text"
+            name="lastName"
+            id="lastName"
+            label="Last name"
+            autoComplete="off"
           />
           <Buttons text="REGISTER">
             <Link href={config.routes.login}>LOGIN</Link>

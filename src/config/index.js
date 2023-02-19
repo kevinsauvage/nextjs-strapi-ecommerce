@@ -9,6 +9,7 @@ const config = {
 config.userFeedback = {
   missingFields: 'Fill in missing required fields',
   passwordLength: 'Your password must be at least 8 characters',
+  passwordDifferent: 'The password are different.',
   register: {
     success: 'You were successfully registered',
     error: 'There was an error trying to register',
