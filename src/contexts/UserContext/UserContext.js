@@ -32,12 +32,10 @@ export function UserProvider({ children }) {
       }
 
       const userRes = (await getClient().customer.queryCustomer({ customerAccessToken: shopifyToken })) || {};
-      const customer = userRes?.response?.customer;
 
-      if (customer?.id) {
-        setUser(customer);
-
-        updateCartBuyerIdentity(customer, shopifyToken);
+      if (userRes?.id) {
+        setUser(userRes);
+        updateCartBuyerIdentity(userRes, shopifyToken);
 
         return;
       }
