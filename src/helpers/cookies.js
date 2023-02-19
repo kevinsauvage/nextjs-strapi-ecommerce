@@ -96,7 +96,7 @@ export const handleGetTokenCookies = async () => {
   const needRefresh = expiresInSeconds < secondsNow - 60 * 60 * 1000;
 
   if (needRefresh) {
-    const res = await getClient().customer.customerAccessTokenRenew(shopifyToken);
+    const res = await getClient().customer.customerAccessTokenRenew({ customerAccessToken: shopifyToken });
 
     const token = res?.customerAccessToken?.accessToken;
 

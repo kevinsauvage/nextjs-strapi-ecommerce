@@ -18,16 +18,14 @@ CollectionSlugPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } = getInfoFromCtx(ctx);
-  const data = await getClient().collection.filterCollectionForward(
-    collectionSlug,
-    16,
-    [],
-    sortKey,
-    startCursor,
-    delegateToken,
-    ip
-  );
-  const menu = await getClient().shop.getMenu(`collections-${query.genre}`, delegateToken, ip);
+  const data = await getClient(delegateToken, ip).collection.collection({
+    handle: collectionSlug,
+    filters: [],
+    first: 16,
+    after: startCursor,
+    sort: sortKey,
+  });
+  const menu = await getClient(delegateToken, ip).shop.getMenu({ handle: `collections-${query.genre}` });
 
   return { props: { ...data, menu } };
 }

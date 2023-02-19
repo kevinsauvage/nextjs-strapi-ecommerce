@@ -66,7 +66,7 @@ export default function useProductSelection({ product }) {
 
   const handleAddToCart = useCallback(() => {
     handleAddToCartContext(selectedVariant.id, quantity);
-  }, [handleAddToCartContext, quantity, selectedVariant.id]);
+  }, [handleAddToCartContext, quantity, selectedVariant?.id]);
 
   useEffect(() => {
     setSelectedVariant({});

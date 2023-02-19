@@ -16,7 +16,7 @@ export default function PhotoGalleryWithCarousel({ images }) {
         <Image
           className={styles.image}
           src={selected?.large}
-          alt={selected?.altText}
+          alt={selected?.altText || 'selected'}
           width={selected?.width}
           height={selected?.height}
           blurDataURL={selected?.blurDataURL}
@@ -29,7 +29,7 @@ export default function PhotoGalleryWithCarousel({ images }) {
         <Carousel itemToShow={8} showButtons spacing={0}>
           {images
             .filter((image) => image.width > 200)
-            .map((variant) => (
+            .map((variant, i) => (
               <button
                 key={variant.src}
                 type="button"
@@ -40,7 +40,7 @@ export default function PhotoGalleryWithCarousel({ images }) {
               >
                 <Image
                   src={variant?.small}
-                  alt={variant?.altText}
+                  alt={variant?.altText || `variant ${i}`}
                   width={variant?.width}
                   height={variant?.height}
                   blurDataURL={variant?.blurDataURL}

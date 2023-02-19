@@ -36,13 +36,13 @@ export function CollectionProvider({
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
       dispatch({ type: actions.SET_LOADING, payload: true });
-      const data = await getClient().collection.filterCollectionForward(
-        query.collectionSlug || 'all',
-        first,
+      const data = await getClient().collection.collection({
+        handle: query.collectionSlug,
         filters,
+        first,
+        after,
         sort,
-        after
-      );
+      });
       dispatch({ type: actions.SET_LOADING, payload: false });
       return data;
     },
@@ -86,6 +86,9 @@ export function CollectionProvider({
 
     push(newUrl, undefined, { shallow: true });
     const filters = selectedFilters.map((item) => JSON.parse(item.input));
+
+    console.log('🚀 ~ file: CollectionContext.js:90 ~ applyFilters ~ filters', filters);
+
     const data = await handleGetData(15, filters, query.sort_key, null);
     handleSetFilterState(data);
   }, [asPath, handleGetData, handleSetFilterState, push, query.sort_key, selectedFilters, toggleFilter]);

@@ -17,10 +17,10 @@ export const getServerSideProps = async ({ res }) => {
     .map((page) => `${BASE_URL}/${page.replace('.js', '')}`);
 
   // Get list of collections
-  const collections = await getClient().collection.getSitemap(100);
+  const response = await getClient().collection.collections({ first: 100, firstProducts: 250 });
 
   // Get all dynamic paths
-  const dynamicPaths = collections?.reduce((acc, collection) => {
+  const dynamicPaths = response?.collections?.reduce((acc, collection) => {
     collection.products.forEach((product) =>
       acc.push(`${BASE_URL}${product.productType}/${collection.handle}/${product.handle}`)
     );

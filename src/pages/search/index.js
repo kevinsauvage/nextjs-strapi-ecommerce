@@ -10,6 +10,7 @@ import styles from './search.module.scss';
 function Search() {
   const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [pageInfo, setPageInfo] = useState();
   const { query } = useRouter();
 
   const searchTerm = query?.query;
@@ -17,9 +18,13 @@ function Search() {
   const handleSearch = useCallback(async () => {
     if (!searchTerm || !searchTerm?.trim()) return;
     setLoading(true);
-    const searchResponse = await getClient().product.searchProducts(`${searchTerm}*`);
+    const searchResponse = await getClient().product.getProducts({ query: `${searchTerm}*`, first: 10 });
     setLoading(false);
-    setSearch(searchResponse);
+
+    const { products, pageInfo: pageInfoRes } = searchResponse || {};
+
+    if (products) setSearch(products);
+    if (pageInfoRes) setPageInfo(pageInfoRes);
   }, [searchTerm]);
 
   useEffect(() => {

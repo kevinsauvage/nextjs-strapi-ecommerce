@@ -28,10 +28,20 @@ export default function OrdersPage() {
     async (endCursor) => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setIsLoading(true);
-      const res = await getClient().customer.queryCustomerOrders(shopifyToken, 5, endCursor || '');
+      const res = await getClient().customer.queryCustomerOrders({
+        customerAccessToken: shopifyToken,
+        first: 5,
+        after: endCursor,
+      });
+
       setIsLoading(false);
 
       if (res?.orders) {
+        const totalOrders = res.totalCount;
+
+        // TODO
+        console.log('🚀 ~ file: index.js:44 ~ totalOrders', totalOrders);
+
         dispatch({ type: actions.ADD_ORDERS, payload: res?.orders });
         dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: res?.pageInfo });
       } else {

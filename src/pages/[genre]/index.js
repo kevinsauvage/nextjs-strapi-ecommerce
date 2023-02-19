@@ -17,20 +17,11 @@ Shop.getLayout = function getLayout(page) {
 };
 
 export async function getServerSideProps(ctx) {
-  const { delegateToken, ip, startCursor, sortKey, query } = getInfoFromCtx(ctx);
-  const data =
-    (await getClient().collection.filterCollectionForward(
-      'all',
-      16,
-      [],
-      sortKey,
-      startCursor,
-      delegateToken,
-      ip
-    )) || {};
+  const { delegateToken, ip, query } = getInfoFromCtx(ctx);
+
   const menuSlug = `collections-${query?.genre}`;
 
-  const menu = await getClient().shop.getMenu(menuSlug, delegateToken, ip);
+  const menu = await getClient(delegateToken, ip).shop.getMenu({ handle: menuSlug });
 
   if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;
@@ -43,6 +34,11 @@ export async function getServerSideProps(ctx) {
       props: {},
     };
   }
-
-  return { props: { ...data, menu } };
+  return {
+    redirect: {
+      permanent: false,
+      destination: '/',
+    },
+    props: {},
+  };
 }

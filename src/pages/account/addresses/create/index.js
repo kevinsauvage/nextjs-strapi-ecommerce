@@ -29,7 +29,8 @@ function Addresses() {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       const { customerAddress, customerUserErrors } =
-        (await getClient().customer.customerAddressCreate(address, shopifyToken)) || {};
+        (await getClient().customer.customerAddressCreate({ address, customerAccessToken: shopifyToken })) ||
+        {};
 
       if (customerAddress) return showToast.success('Address created successfully');
       if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));

@@ -29,7 +29,7 @@ export function CartProvider({ children }) {
       if (!cartId) return console.error('Missing cart id storage');
 
       toggleLoading(true);
-      const removeLinesRes = await getClient().cart.removeCartLines(cartId, [lineItemId]);
+      const removeLinesRes = await getClient().cart.cartLinesRemove({ cartId, lines: [lineItemId] });
       const newCart = removeLinesRes?.cart;
       const userErrors = removeLinesRes?.userErrors;
 
@@ -52,13 +52,11 @@ export function CartProvider({ children }) {
   const handleQuantityChange = useCallback(
     async (lineItems, successCallback) => {
       if (!lineItems) return console.error('Missing line items to update');
-
-      const cartIdStorage = window.localStorage.getItem(cartIdStorageKey);
-      if (!cartIdStorage) return console.error('Missing cart id storage');
+      if (!cart?.id) return console.error('Missing cart id ');
 
       toggleLoading(true);
 
-      const updateLinesRes = await getClient().cart.updateCartLines(cartIdStorage, lineItems);
+      const updateLinesRes = await getClient().cart.cartLinesUpdate({ cartId: cart.id, lines: lineItems });
 
       const newCart = updateLinesRes?.cart;
       const userErrors = updateLinesRes?.userErrors;
@@ -76,7 +74,7 @@ export function CartProvider({ children }) {
       }
       return showToast.error(userFeedback.updateLines.error);
     },
-    [handleSetCart, showToast, toggleLoading]
+    [cart?.id, handleSetCart, showToast, toggleLoading]
   );
 
   const handleAddToCart = useCallback(
@@ -89,14 +87,15 @@ export function CartProvider({ children }) {
         const lineItemsToAdd = [{ merchandiseId: variantId, quantity: parseInt(quantity, 10) }];
 
         toggleLoading(true);
-        const addLineResponse = await getClient().cart.addCartLines(cartId, lineItemsToAdd);
+        const addLineResponse = await getClient().cart.cartLinesAdd({ cartId, lines: lineItemsToAdd });
+
         toggleLoading(false);
 
         const newCart = addLineResponse?.cart;
         const userErrors = addLineResponse?.userErrors;
 
         if (newCart?.id) {
-          dispatch({ type: actions.ADD_CART, payload: addLineResponse });
+          dispatch({ type: actions.ADD_CART, payload: newCart });
           return showToast.success('Product added successfully');
         }
 
@@ -127,7 +126,10 @@ export function CartProvider({ children }) {
         email: customer.email,
       };
 
-      const updateResponse = await getClient().cart.updateCartBuyerIdentity(buyerInput, cartId);
+      const updateResponse = await getClient().cart.cartBuyerIdentityUpdate({
+        buyerIdentity: buyerInput,
+        cartId,
+      });
 
       const newCart = updateResponse?.cart;
 
@@ -145,16 +147,17 @@ export function CartProvider({ children }) {
         const cartId = window.localStorage.getItem(cartIdStorageKey);
 
         if (cartId) {
-          const getCartResponse = await getClient().cart.cartQuery(cartId);
+          const getCartResponse = await getClient().cart.cartQuery({ cartId });
+
           if (getCartResponse?.id) handleSetCart(getCartResponse);
           return;
         }
 
         if (!cartId) {
-          const createCartRes = await getClient().cart.createCart({});
+          const createCartRes = await getClient().cart.cartCreate({ input: {} });
 
-          if (createCartRes?.id) {
-            window.localStorage.setItem(cartIdStorageKey, createCartRes.id);
+          if (createCartRes?.cart?.id) {
+            window.localStorage.setItem(cartIdStorageKey, createCartRes.cart.id);
             handleSetCart(createCartRes);
           }
         }

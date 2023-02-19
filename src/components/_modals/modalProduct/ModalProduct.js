@@ -11,7 +11,7 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
     const { handle } = selectedProduct || {};
     if (handle) {
       getClient()
-        .product.getProduct(handle)
+        .product.getProductByHandle({ handle })
         .then((res) => {
           if (res?.handle) setProduct(res);
           setLoading(false);
