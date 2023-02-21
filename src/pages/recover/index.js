@@ -17,7 +17,7 @@ function ResetPassword() {
     const { email } = formData;
     if (!email) return showToast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
-    const recoverRes = await getClient().customer.customerRecover({ email });
+    const recoverRes = await getClient().storefront.customer.customerRecover({ email });
 
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;

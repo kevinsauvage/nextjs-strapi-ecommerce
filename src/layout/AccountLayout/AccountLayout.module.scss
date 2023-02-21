@@ -10,7 +10,7 @@
   justify-content: center;
   background-color: var(--surface-dark-200);
   color: var(--onSurface-dark);
-  min-height: 160px;
+  min-height: 130px;
   border-bottom: 1px solid var(--surface-300);
 }
 
@@ -26,7 +26,7 @@
   margin: 0 auto;
   border-radius: $radius;
   min-height: 50vh;
-  padding: var(--space-5) 0;
+  padding: var(--space-3) 0;
 }
 
 .nav {

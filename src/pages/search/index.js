@@ -18,7 +18,10 @@ function Search() {
   const handleSearch = useCallback(async () => {
     if (!searchTerm || !searchTerm?.trim()) return;
     setLoading(true);
-    const searchResponse = await getClient().product.getProducts({ query: `${searchTerm}*`, first: 10 });
+    const searchResponse = await getClient().storefront.product.getProducts({
+      query: `${searchTerm}*`,
+      first: 10,
+    });
     setLoading(false);
 
     const { products, pageInfo: pageInfoRes } = searchResponse || {};

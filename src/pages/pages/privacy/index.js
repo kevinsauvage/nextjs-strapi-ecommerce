@@ -16,7 +16,7 @@ function PrivacyPage({ privacyPolicy }) {
 export default PrivacyPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getClient().shop.getPrivacyPolicy();
+  const shopInfo = await getClient().storefront.shop.getPrivacyPolicy();
   const privacyPolicy = shopInfo?.privacyPolicy;
   return { props: { privacyPolicy } };
 }

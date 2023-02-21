@@ -23,10 +23,13 @@ export default function Home({ bestSelling, newArrival, homeData }) {
 }
 
 export async function getStaticProps() {
-  const bestSelling = await getClient().product.getProducts({ sortKey: 'BEST_SELLING', first: 16 });
-  const newArrival = await getClient().product.getProducts({ sortKey: 'CREATED_AT', first: 16 });
-  const homeData = await getClient().shop.getPage({ handle: 'Home' });
-  const homeData2 = await getClient().shop.getMetaObject({
+  const bestSelling = await getClient().storefront.product.getProducts({
+    sortKey: 'BEST_SELLING',
+    first: 16,
+  });
+  const newArrival = await getClient().storefront.product.getProducts({ sortKey: 'CREATED_AT', first: 16 });
+  const homeData = await getClient().storefront.shop.getPage({ handle: 'Home' });
+  const homeData2 = await getClient().storefront.shop.getMetaObject({
     handle: { type: 'page_data', handle: 'page-data-home' },
   });
 

@@ -21,7 +21,7 @@ function AddressUpdate() {
   useEffect(() => {
     async function fetchAddress() {
       if (addressId && query) {
-        const res = await getClient().customer.queryCustomerAddressById({ addressId });
+        const res = await getClient().storefront.customer.queryCustomerAddressById({ addressId });
         setIsLoading(false);
         if (res) return setAddress(res);
         showToast.error('Something went wrong');
@@ -46,11 +46,12 @@ function AddressUpdate() {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
     toggleLoading(true);
-    const { customerAddress, customerUserErrors } = await getClient().customer.customerAddressUpdate({
-      address: formData,
-      customerAccessToken: shopifyToken,
-      addressId,
-    });
+    const { customerAddress, customerUserErrors } =
+      await getClient().storefront.customer.customerAddressUpdate({
+        address: formData,
+        customerAccessToken: shopifyToken,
+        addressId,
+      });
     toggleLoading(false);
 
     if (customerAddress) {

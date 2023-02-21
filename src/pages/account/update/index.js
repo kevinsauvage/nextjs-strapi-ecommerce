@@ -44,7 +44,7 @@ function OrderDetail() {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
     toggleLoading(true);
 
-    const updateResponse = await getClient().customer.customerUpdate({
+    const updateResponse = await getClient().storefront.customer.customerUpdate({
       customerAccessToken: shopifyToken,
       customer: customerInput,
     });

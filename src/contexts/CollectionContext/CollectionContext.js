@@ -36,7 +36,7 @@ export function CollectionProvider({
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
       dispatch({ type: actions.SET_LOADING, payload: true });
-      const data = await getClient().collection.collection({
+      const data = await getClient().storefront.collection.collection({
         handle: query.collectionSlug,
         filters,
         first,

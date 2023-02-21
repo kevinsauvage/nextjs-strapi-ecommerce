@@ -14,12 +14,12 @@ function AccountLayout({
 }) {
   return (
     <div className={styles.AccountLayout}>
-      <Breadcrumbs />
       <div className={styles.banner}>
         <Container>
           <h1 className={styles.title}>My Account</h1>
         </Container>
       </div>
+      <Breadcrumbs />
       <Container>
         <main className={styles.main}>
           <nav className={styles.nav}>

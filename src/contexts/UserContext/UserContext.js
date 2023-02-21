@@ -31,7 +31,8 @@ export function UserProvider({ children }) {
         return;
       }
 
-      const userRes = (await getClient().customer.queryCustomer({ customerAccessToken: shopifyToken })) || {};
+      const userRes =
+        (await getClient().storefront.customer.queryCustomer({ customerAccessToken: shopifyToken })) || {};
 
       if (userRes?.id) {
         setUser(userRes);

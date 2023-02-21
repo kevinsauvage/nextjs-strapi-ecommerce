@@ -34,15 +34,16 @@ function ProductPage({ product, recommendations = [] }) {
 export default ProductPage;
 
 export async function getStaticProps({ params }) {
-  const product = (await getClient().product.getProductByHandle({ handle: params.productSlug })) || null;
+  const product =
+    (await getClient().storefront.product.getProductByHandle({ handle: params.productSlug })) || null;
 
   const recommendations =
-    (await getClient().product.productRecommendations({ productId: product?.id })) || null;
+    (await getClient().storefront.product.productRecommendations({ productId: product?.id })) || null;
   return { props: { product, recommendations }, revalidate: 10 };
 }
 
 export async function getStaticPaths() {
-  const data = await getClient().product.getProducts({ sortKey: 'BEST_SELLING', first: 200 });
+  const data = await getClient().storefront.product.getProducts({ sortKey: 'BEST_SELLING', first: 200 });
 
   const paths = data.products.map((product) => ({
     params: {

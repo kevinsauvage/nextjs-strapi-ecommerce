@@ -17,7 +17,7 @@ function ShippingPage({ shippingPolicy }) {
 export default ShippingPage;
 
 export async function getStaticProps() {
-  const shopInfo = await getClient().shop.getShippingPolicy();
+  const shopInfo = await getClient().storefront.shop.getShippingPolicy();
   const { shippingPolicy } = shopInfo;
   return { props: { shippingPolicy } };
 }

@@ -11,7 +11,7 @@ const getToken = async (req, res) => {
 
     switch (method) {
       case 'GET': {
-        const response = await getClient().admin.getDelegateToken({
+        const response = await getClient().admin.customer.getDelegateToken({
           input: {
             delegateAccessScope: delegateAccessScope.split(','),
             expiresIn,

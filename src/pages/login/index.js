@@ -23,7 +23,9 @@ function LoginPage() {
     if (!email || !password) return showToast.error(userFeedback?.missingFields);
 
     toggleLoading(true);
-    const resLogin = await getClient().customer.customerAccessTokenCreate({ input: { email, password } });
+    const resLogin = await getClient().storefront.customer.customerAccessTokenCreate({
+      input: { email, password },
+    });
 
     toggleLoading(false);
 

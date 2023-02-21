@@ -27,7 +27,7 @@ function RegisterPage() {
       toggleLoading(true);
 
       // Register the user
-      const registerRes = await getClient().customer.customerCreate({
+      const registerRes = await getClient().storefront.customer.customerCreate({
         input: { email, password, firstName, lastName },
       });
       if (!registerRes) throw new Error(userFeedback?.register.error);
@@ -36,7 +36,9 @@ function RegisterPage() {
       showToast.success(userFeedback?.register?.success);
 
       // Login the user
-      const dataLogin = await getClient().customer.customerAccessTokenCreate({ input: { email, password } });
+      const dataLogin = await getClient().storefront.customer.customerAccessTokenCreate({
+        input: { email, password },
+      });
 
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
       if (!accessToken) {
@@ -48,7 +50,10 @@ function RegisterPage() {
       // Associate user to checkout
       const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
       if (checkoutId) {
-        const assosiateRes = await getClient().checkout.associateCustomerToCheckout(checkoutId, accessToken);
+        const assosiateRes = await getClient().storefront.checkout.associateCustomerToCheckout(
+          checkoutId,
+          accessToken
+        );
         if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
       } else {
         console.warn('Checkout id not fount');

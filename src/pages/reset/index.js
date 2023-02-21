@@ -22,7 +22,7 @@ function Password({ resetUrl }) {
     if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
     toggleLoading(true);
 
-    const resetRes = await getClient().customer.customerResetByUrl({ password, resetUrl });
+    const resetRes = await getClient().storefront.customer.customerResetByUrl({ password, resetUrl });
 
     toggleLoading(false);
 

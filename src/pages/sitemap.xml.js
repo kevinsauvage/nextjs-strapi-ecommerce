@@ -17,7 +17,7 @@ export const getServerSideProps = async ({ res }) => {
     .map((page) => `${BASE_URL}/${page.replace('.js', '')}`);
 
   // Get list of collections
-  const response = await getClient().collection.collections({ first: 100, firstProducts: 250 });
+  const response = await getClient().storefront.collection.collections({ first: 100, firstProducts: 250 });
 
   // Get all dynamic paths
   const dynamicPaths = response?.collections?.reduce((acc, collection) => {

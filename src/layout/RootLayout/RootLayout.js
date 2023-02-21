@@ -17,7 +17,7 @@ function RootLayout({ children }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const [header] = await Promise.all([getClient().shop.getMenu({ handle: 'main-menu' })]);
+      const [header] = await Promise.all([getClient().storefront.shop.getMenu({ handle: 'main-menu' })]);
 
       setMenuHeader(header);
     };
@@ -27,8 +27,8 @@ function RootLayout({ children }) {
   useEffect(() => {
     const fetchData = async () => {
       const [footer, shop] = await Promise.all([
-        getClient().shop.getMenu({ handle: 'footer' }),
-        getClient().shop.getShop(),
+        getClient().storefront.shop.getMenu({ handle: 'footer' }),
+        getClient().storefront.shop.getShop(),
       ]);
       setMenuFooter(footer);
       setShopInfo(shop);

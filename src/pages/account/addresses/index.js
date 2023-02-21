@@ -21,7 +21,9 @@ function Addresses() {
 
   const fetchAddresses = useCallback(async () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-    const res = await getClient().customer.queryCustomerAddresses({ customerAccessToken: shopifyToken });
+    const res = await getClient().storefront.customer.queryCustomerAddresses({
+      customerAccessToken: shopifyToken,
+    });
     setIsLoading(false);
     if (Array.isArray(res)) dispatch({ type: actions.ADD_ADDRESSES, payload: res });
     else showToast.error('Something went wrong, please try again later');
@@ -32,7 +34,7 @@ function Addresses() {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const res = await getClient().customer.customerDefaultAddressUpdate({
+      const res = await getClient().storefront.customer.customerDefaultAddressUpdate({
         customerAccessToken: shopifyToken,
         addressId: id,
       });
@@ -56,7 +58,7 @@ function Addresses() {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const deleteRes = await getClient().customer.customerAddressDelete({
+      const deleteRes = await getClient().storefront.customer.customerAddressDelete({
         customerAccessToken: shopifyToken,
         addressId: id,
       });
