@@ -21,7 +21,7 @@ export async function getServerSideProps(ctx) {
 
   const menuSlug = `collections-${query?.genre}`;
 
-  const menu = await getClient(delegateToken, ip).shop.getMenu({ handle: menuSlug });
+  const menu = await getClient(delegateToken, ip).storefront.shop.getMenu({ handle: menuSlug });
 
   if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;

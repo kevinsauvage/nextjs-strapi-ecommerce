@@ -11,7 +11,7 @@ export const getServerSideProps = async (ctx) => {
 
   if (shopifyToken) {
     nookies.set(ctx, config.cookies.shopifyToken, 'delete', { maxAge: 0, path: '/' });
-    await getClient(delegateToken, ip).customer.customerAccessTokenDelete({
+    await getClient(delegateToken, ip).storefront.customer.customerAccessTokenDelete({
       customerAccessToken: shopifyToken,
     });
 
