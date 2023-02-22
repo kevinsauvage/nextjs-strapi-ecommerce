@@ -57,7 +57,9 @@ config.routes = {
   login: '/login',
   logout: '/logout',
   register: '/register',
+
   cart: '/cart',
+  wishlist: '/wishlist',
   account: '/account',
   emailResetPassword: '/recover',
   resetPassword: '/reset',

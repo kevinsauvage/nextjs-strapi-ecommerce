@@ -5,7 +5,6 @@ import { useCallback, useEffect, useState } from 'react';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Button from '@/components/Button/Button';
 import Loader from '@/components/_loaders/Loader/Loader';
@@ -81,5 +80,3 @@ export default function OrdersPage() {
     </PageLayout>
   );
 }
-
-OrdersPage.getLayout = (page) => <UserProvider>{page}</UserProvider>;

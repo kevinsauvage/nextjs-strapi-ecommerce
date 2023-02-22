@@ -3,6 +3,7 @@ import RootLayout from '@/layout/RootLayout/RootLayout';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { ToastProvider } from '@/contexts/ToastContext/NotificationContext';
 import { CartProvider } from '@/contexts/CartContext/CartContext';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import config from '@/config/index';
 import '../styles/index.scss';
 
@@ -14,10 +15,12 @@ function MyApp({ Component, pageProps }) {
     <GlobalProvider>
       <ToastProvider>
         <CartProvider>
-          <Head>
-            <title>{siteTitle}</title>
-          </Head>
-          <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
+          <UserProvider>
+            <Head>
+              <title>{siteTitle}</title>
+            </Head>
+            <RootLayout>{getLayout(<Component {...pageProps} />)}</RootLayout>
+          </UserProvider>
         </CartProvider>
       </ToastProvider>
     </GlobalProvider>

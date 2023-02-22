@@ -2,8 +2,9 @@
 import { useRouter } from 'next/router';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import config from '@/config/index';
-import { bag, user, search } from '@/assets/svg';
+import { bag, user, search, heart } from '@/assets/svg';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+
 import styles from './UserButtons.module.scss';
 
 export default function UserButtons() {
@@ -16,13 +17,20 @@ export default function UserButtons() {
     {
       item: <div className={styles.search}> {search}</div>,
       id: 0,
-      name: 'Toggle themes',
+      name: 'Search',
       onClick: () => toggleSearch(!searchOpen),
     },
 
     {
-      item: user,
+      item: heart,
       id: 1,
+      name: 'Wishlist',
+      onClick: () => router.push(config.routes.wishlist),
+    },
+
+    {
+      item: user,
+      id: 2,
       onClick: () => router.push(config.routes.account),
       name: 'User account',
     },
@@ -35,7 +43,7 @@ export default function UserButtons() {
           </div>
         </div>
       ),
-      id: 2,
+      id: 3,
       onClick: () => router.push(config.routes.cart),
       name: 'Toggle Checkout',
     },

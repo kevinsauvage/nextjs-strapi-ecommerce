@@ -17,7 +17,7 @@ const { userFeedback } = config;
 function LoginPage() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
-  const { push } = useRouter();
+  const { push, query } = useRouter();
 
   const onSubmit = async ({ email, password }) => {
     if (!email || !password) return showToast.error(userFeedback?.missingFields);
@@ -38,7 +38,8 @@ function LoginPage() {
     if (!accessToken) return showToast.error(userFeedback.login.error);
     handleSetTokenCookies(accessToken);
     showToast.success(userFeedback.login.success);
-    return push(config.routes.account);
+    const nextUrl = query?.redirectUrl ? query.redirectUrl : config.routes.account;
+    return push(nextUrl);
   };
 
   return (

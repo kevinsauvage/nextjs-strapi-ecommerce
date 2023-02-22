@@ -2,7 +2,6 @@ import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
@@ -52,7 +51,5 @@ function Addresses() {
     </PageLayout>
   );
 }
-
-Addresses.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default Addresses;

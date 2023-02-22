@@ -87,8 +87,6 @@ export function CollectionProvider({
     push(newUrl, undefined, { shallow: true });
     const filters = selectedFilters.map((item) => JSON.parse(item.input));
 
-    console.log('🚀 ~ file: CollectionContext.js:90 ~ applyFilters ~ filters', filters);
-
     const data = await handleGetData(15, filters, query.sort_key, null);
     handleSetFilterState(data);
   }, [asPath, handleGetData, handleSetFilterState, push, query.sort_key, selectedFilters, toggleFilter]);

@@ -18,6 +18,26 @@
   }
 }
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.wishlist {
+  border: none;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  path {
+    fill: var(--onSurface-hight);
+  }
+}
+
 .link {
   display: block;
 }

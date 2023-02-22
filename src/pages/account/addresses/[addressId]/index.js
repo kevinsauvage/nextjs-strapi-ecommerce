@@ -5,7 +5,6 @@ import config from '@/config/index';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
@@ -73,7 +72,5 @@ function AddressUpdate() {
     </PageLayout>
   );
 }
-
-AddressUpdate.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default AddressUpdate;

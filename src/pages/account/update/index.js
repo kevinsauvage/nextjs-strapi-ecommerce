@@ -1,17 +1,16 @@
-import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
-import Form from '@/components/_scopes/forms/Form/Form';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import Input from '@/components/_scopes/forms/Input/Input';
-import { actions } from '@/contexts/UserContext/UserReducer';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+import { actions } from '@/contexts/UserContext/UserReducer';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import Form from '@/components/_scopes/forms/Form/Form';
+import Input from '@/components/_scopes/forms/Input/Input';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Row from '@/components/_scopes/forms/Row/Row';
 import PageLayout from '@/layout/PageLayout/PageLayout';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import config from '@/config/index';
 import { handleSetTokenCookies, handleGetTokenCookies } from '@/helpers/cookies';
+import config from '@/config/index';
 import getClient from '@/shopify/index';
 import styles from './Update.module.scss';
 
@@ -117,7 +116,5 @@ function OrderDetail() {
     </PageLayout>
   );
 }
-
-OrderDetail.getLayout = (page) => <UserProvider>{page}</UserProvider>;
 
 export default OrderDetail;

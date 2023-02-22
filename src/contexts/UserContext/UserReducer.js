@@ -1,5 +1,6 @@
 export const initialState = {
   user: undefined,
+  wishlist: [],
   loading: false,
   addresses: undefined,
   orders: [],
@@ -8,6 +9,7 @@ export const initialState = {
 
 export const actions = {
   ADD_USER: 'ADD_USER',
+  ADD_USER_WISHLIST: 'ADD_USER_WISHLIST',
   REMOVE_USER: 'REMOVE_USER',
   CHANGE_LOADING: 'CHANGE_LOADING',
   ADD_ADDRESSES: 'ADD_ADDRESSES',
@@ -19,6 +21,10 @@ export const UserReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.ADD_USER: {
       return { ...state, user: action.payload };
+    }
+
+    case actions.ADD_USER_WISHLIST: {
+      return { ...state, wishlist: action.payload };
     }
 
     case actions.REMOVE_USER: {

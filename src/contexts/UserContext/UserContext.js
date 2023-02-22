@@ -3,6 +3,7 @@ import config from '@/config/index';
 import { useRouter } from 'next/router';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import { nextApiHelper } from '@/helpers/apiNext';
 import { UserReducer, initialState, actions } from './UserReducer';
 import { useToastContext } from '../ToastContext/NotificationContext';
 import useCartContext from '../CartContext/useCartContext';
@@ -11,14 +12,20 @@ export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const { user, addresses, orders, ordersPageInfo } = states || {};
+  const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
   const { showToast } = useToastContext();
   const { updateCartBuyerIdentity } = useCartContext();
-  const { push } = useRouter();
+  const { push, asPath } = useRouter();
 
   const setUser = useCallback((payload) => {
     if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
   }, []);
+
+  const setUserWishlist = useCallback((payload) => {
+    if (payload) dispatch({ type: actions.ADD_USER_WISHLIST, payload });
+  }, []);
+
+  const isWishlist = useCallback((product) => wishlist.some((item) => item.id === product.id), [wishlist]);
 
   useEffect(() => {
     const getCustomer = async () => {
@@ -31,8 +38,20 @@ export function UserProvider({ children }) {
         return;
       }
 
-      const userRes =
-        (await getClient().storefront.customer.queryCustomer({ customerAccessToken: shopifyToken })) || {};
+      const userRes = await getClient().storefront.customer.queryCustomer({
+        customerAccessToken: shopifyToken,
+      });
+
+      const wishlistRes = await getClient().storefront.customer.queryCustomerMetafields({
+        customerAccessToken: shopifyToken,
+        metafields: [{ key: 'wishlist', namespace: 'custom' }],
+      });
+
+      if (wishlistRes?.length > 0) {
+        const metafield = wishlistRes.filter((item) => item.key === 'wishlist')?.[0]?.value;
+        const value = metafield && JSON.parse(metafield);
+        if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
+      }
 
       if (userRes?.id) {
         setUser(userRes);
@@ -43,7 +62,45 @@ export function UserProvider({ children }) {
       push(config.routes.logout);
     };
     getCustomer();
-  }, [dispatch, user, showToast, setUser, push, updateCartBuyerIdentity]);
+  }, [dispatch, user, showToast, setUser, push, updateCartBuyerIdentity, setUserWishlist]);
+
+  const handleSetProductToWishList = useCallback(
+    async (product) => {
+      if (!user?.id) {
+        return push({
+          pathname: config.routes.login,
+          query: { redirectUrl: asPath },
+        });
+      }
+
+      const newWishList = isWishlist(product)
+        ? wishlist.filter((prod) => prod.id !== product.id)
+        : [...wishlist, product];
+
+      const metafields = {
+        metafields: [
+          {
+            key: 'wishlist',
+            namespace: 'custom',
+            ownerId: user.id,
+            type: 'json',
+            value: JSON.stringify(newWishList),
+          },
+        ],
+      };
+
+      const response = await nextApiHelper(`/api/wishlist`, metafields, 'POST');
+
+      if (response?.response) {
+        if (newWishList.length < wishlist.length) {
+          showToast.success('Product correctly removed from wishlist');
+        } else showToast.success('Product correctly added to wishlist');
+        return setUserWishlist(response?.response);
+      }
+      return showToast.error("Couldn't set product to user wishlist");
+    },
+    [asPath, isWishlist, push, setUserWishlist, showToast, user?.id, wishlist]
+  );
 
   const values = useMemo(
     () => ({
@@ -52,8 +109,11 @@ export function UserProvider({ children }) {
       orders,
       dispatch,
       ordersPageInfo,
+      wishlist,
+      isWishlist,
+      handleSetProductToWishList,
     }),
-    [user, addresses, orders, ordersPageInfo]
+    [user, addresses, orders, ordersPageInfo, wishlist, isWishlist, handleSetProductToWishList]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;
