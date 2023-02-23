@@ -1,6 +1,5 @@
 import Button from '@/components/Button/Button';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
-import Image from 'next/image';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
@@ -59,34 +58,6 @@ export default function ProductDescription({
             <small>{`${weight} ${weightUnit?.toLowerCase()}`}</small>
           </li>
         )}
-      </ul>
-
-      <ul className={styles.variantList}>
-        {Array.isArray(product?.variants) &&
-          product?.variants.map((variant) => {
-            const { image } = variant;
-            return (
-              <li key={variant.id}>
-                <button
-                  type="button"
-                  className={`${styles.variantButton} ${
-                    selected?.image?.src === image?.src ? styles.selectedVariant : ''
-                  } `}
-                  onClick={() => handleSetSelectedProductOption(variant.selectedOptions)}
-                >
-                  <Image
-                    src={image.small}
-                    width={image.width}
-                    height={image.height}
-                    alt="variant image"
-                    quality={10}
-                    blurDataURL={image?.blurDataURL}
-                    placeholder="blur"
-                  />
-                </button>
-              </li>
-            );
-          })}
       </ul>
 
       <Options

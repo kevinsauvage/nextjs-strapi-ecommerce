@@ -119,7 +119,7 @@ export function CartProvider({ children }) {
     [showToast, toggleLoading]
   );
 
-  const getTotalItems = useCallback(() => cart?.totalQuantity || (0)[cart?.lines], [cart]);
+  const getTotalItems = useCallback(() => cart?.totalQuantity, [cart]);
 
   const updateCartBuyerIdentity = useCallback(
     async (customer, token) => {
