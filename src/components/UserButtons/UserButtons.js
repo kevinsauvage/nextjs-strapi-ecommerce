@@ -15,7 +15,7 @@ export default function UserButtons() {
 
   const data = [
     {
-      item: <div className={styles.search}> {search}</div>,
+      item: search,
       id: 0,
       name: 'Search',
       onClick: () => toggleSearch(!searchOpen),
@@ -38,9 +38,11 @@ export default function UserButtons() {
       item: (
         <div className={styles.cart}>
           {bag}
-          <div className={styles.totalItems}>
-            <p>{getTotalItems() || 0}</p>
-          </div>
+          {getTotalItems() && (
+            <div className={styles.totalItems}>
+              <p>{getTotalItems()}</p>
+            </div>
+          )}
         </div>
       ),
       id: 3,

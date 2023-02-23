@@ -4,16 +4,6 @@
   margin-left: auto;
 }
 
-.search {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  path {
-    fill: var(--onSurface-dark);
-  }
-}
-
 .button {
   position: relative;
   display: flex;
@@ -35,7 +25,7 @@
     height: 18px;
   }
   path {
-    fill: var(--onSurface-dark);
+    stroke: var(--onSurface-dark);
   }
 }
 
@@ -50,8 +40,8 @@
   position: absolute;
   padding: 3px;
   border-radius: 50%;
-  top: -5px;
-  right: -9px;
+  top: -8px;
+  right: -10px;
   min-width: 1rem;
   min-height: 1rem;
   background-color: var(--complementary-500);

@@ -27,7 +27,7 @@ $boxDimension: 36px;
   background-color: transparent;
   border-right: 1px solid var(--surface-500);
   border-left: 1px solid var(--surface-500);
-  color: var(--onBackground-medium);
+  color: var(--onSurface-medium);
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -49,11 +49,11 @@ $boxDimension: 36px;
   justify-content: center;
 
   &:first-of-type {
-    border-right: 1px solid var(--onBackground-600);
+    border-right: 1px solid var(--onSurface-hight);
   }
 
   &:last-of-type {
-    border-left: 1px solid var(--onBackground-600);
+    border-left: 1px solid var(--onSurface-hight);
   }
 
   svg {
