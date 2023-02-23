@@ -50,11 +50,13 @@ function Search() {
   return (
     <PageLayout title="Search page">
       <Breadcrumbs />
-      <div className={styles.header}>
-        <Container>
-          <h1>Search results for: {searchTerm?.toUpperCase()}</h1>
-        </Container>
-      </div>
+      {!loading && (
+        <div className={styles.header}>
+          <Container>
+            <h1>Search results for: {searchTerm?.toUpperCase()}</h1>
+          </Container>
+        </div>
+      )}
       <Container>
         <div className={styles.search}>
           <ProductsList loading={loading} layout="grid" products={search} />
