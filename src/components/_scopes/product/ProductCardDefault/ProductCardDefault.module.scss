@@ -7,6 +7,7 @@
   cursor: pointer;
   background-color: var(--surface-100);
   border: 1px solid var(--surface-300);
+  padding: var(--space-0);
 
   &:hover,
   &:focus,
@@ -56,6 +57,7 @@
   height: 100%;
   border-top: 1px solid rgba(var(--surface-900), 0.1);
   background-color: var(--surface-100);
+  margin-top: var(--space-0);
 }
 
 .contentInner {
@@ -78,14 +80,17 @@
   }
 }
 
-.quickView {
+.bottom {
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+}
+
+.quickView {
   text-decoration: underline;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
   border: none;
-  margin-left: auto;
 }
 
 .discount {

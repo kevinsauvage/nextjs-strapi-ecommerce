@@ -1,14 +1,12 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
-import ListDisplay from '@/components/ListDisplay/ListDisplay';
-import ProductCardDefault from '../../product/ProductCardDefault/ProductCardDefault';
 import styles from './ProductsDisplay.module.scss';
+import ProductsList from '../../product/ProductList/ProductsList';
 
 function ProductsDisplay({ bestSelling, newArrival }) {
   const [index, setIndex] = useState(0);
   const [products] = useState([bestSelling.products, newArrival.products]);
-
-  const nav = [{ title: 'Best selling' }, { title: 'New Arrival' }];
+  const nav = useMemo(() => [{ title: 'Best selling' }, { title: 'New Arrival' }], []);
 
   return (
     <div className={styles.productsDisplay}>
@@ -29,10 +27,7 @@ function ProductsDisplay({ bestSelling, newArrival }) {
             ))}
         </ul>
       </div>
-      <ListDisplay layout="grid">
-        {Array.isArray(products[index]) &&
-          products[index].map((product) => <ProductCardDefault product={product} key={product.id} />)}
-      </ListDisplay>
+      <ProductsList products={products[index]} layout="grid" />
     </div>
   );
 }

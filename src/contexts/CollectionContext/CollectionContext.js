@@ -70,6 +70,8 @@ export function CollectionProvider({
 
   const resetFilters = useCallback(async () => {
     toggleFilter(false);
+    dispatch({ type: actions.SET_PRODUCTS, payload: [] });
+
     const newQuery = query.sort_key ? { sort_key: query.sort_key } : {};
     push({ pathname: asPath.split('?')[0], query: newQuery }, undefined, { shallow: true });
     const data = await handleGetData(15, [], query.sort_key, null);
@@ -79,9 +81,11 @@ export function CollectionProvider({
 
   const applyFilters = useCallback(async () => {
     toggleFilter(false);
+    dispatch({ type: actions.SET_PRODUCTS, payload: [] });
     const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
-    if (selectedFilters.length > 0)
+    if (selectedFilters.length > 0) {
       selectedFilters.forEach((item) => newUrl.searchParams.append('filter', item.id));
+    }
     if (query.sort_key) newUrl.searchParams.set('sort_key', query.sort_key);
 
     push(newUrl, undefined, { shallow: true });
@@ -94,6 +98,7 @@ export function CollectionProvider({
   const handleSort = useCallback(
     async (value) => {
       if (!value) return null;
+      dispatch({ type: actions.SET_PRODUCTS, payload: [] });
       push({ pathname: to, query: { ...query, sort_key: value } }, undefined, { shallow: true });
       const filters = getFormattedFilter();
       const data = await handleGetData(15, filters, value, null);

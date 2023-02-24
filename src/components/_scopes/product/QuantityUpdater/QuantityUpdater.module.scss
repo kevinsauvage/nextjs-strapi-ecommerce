@@ -25,9 +25,8 @@ $boxDimension: 36px;
   width: $boxDimension;
   border: none;
   background-color: transparent;
-  border-right: 1px solid var(--surface-500);
-  border-left: 1px solid var(--surface-500);
   color: var(--onSurface-medium);
+  font-size: 17px;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -47,13 +46,14 @@ $boxDimension: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 40px;
 
   &:first-of-type {
-    border-right: 1px solid var(--onSurface-hight);
+    border-right: 1px solid var(--surface-500);
   }
 
   &:last-of-type {
-    border-left: 1px solid var(--onSurface-hight);
+    border-left: 1px solid var(--surface-500);
   }
 
   svg {

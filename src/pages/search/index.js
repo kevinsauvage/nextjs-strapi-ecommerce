@@ -5,7 +5,8 @@ import ProductsList from '@/components/_scopes/product/ProductList/ProductsList'
 import Container from '@/components/Container/Container';
 import getClient from '@/shopify/index';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Button from '@/components/Button/Button';
+// eslint-disable-next-line import/no-named-default
+import { default as SearchInput } from '@/components/_scopes/search/Search/Search';
 import styles from './search.module.scss';
 
 function Search() {
@@ -50,23 +51,16 @@ function Search() {
   return (
     <PageLayout title="Search page">
       <Breadcrumbs />
-      {!loading && (
-        <div className={styles.header}>
-          <Container>
-            <h1>Search results for: {searchTerm?.toUpperCase()}</h1>
-          </Container>
-        </div>
-      )}
-      <Container>
+      <SearchInput size="medium" />
+      <Container size="medium">
         <div className={styles.search}>
-          <ProductsList loading={loading} layout="grid" products={search} />
-          {pageInfo?.hasNextPage && (
-            <div>
-              <Button primary onClick={() => handleSearch(pageInfo.endCursor)}>
-                Next
-              </Button>
-            </div>
-          )}
+          <ProductsList
+            hasNextPage={pageInfo?.hasNextPage}
+            handleNext={() => handleSearch(pageInfo.endCursor)}
+            loading={loading}
+            layout="grid"
+            products={search}
+          />
         </div>
       </Container>
     </PageLayout>

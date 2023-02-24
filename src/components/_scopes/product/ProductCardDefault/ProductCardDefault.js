@@ -70,19 +70,21 @@ export default function ProductCardDefault({ product = {} }) {
                 {heart}
               </button>
             </div>
-            <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
-            <button
-              className={styles.quickView}
-              type="button"
-              aria-label="Quick view"
-              onClick={(e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                setSelectedProduct(product);
-              }}
-            >
-              Quick view
-            </button>
+            <div className={styles.bottom}>
+              <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
+              <button
+                className={styles.quickView}
+                type="button"
+                aria-label="Quick view"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setSelectedProduct(product);
+                }}
+              >
+                Quick view
+              </button>
+            </div>
           </div>
         </div>
       </Link>

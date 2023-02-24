@@ -3,8 +3,18 @@ import useCollectionContext from '@/contexts/CollectionContext/useCollectionCont
 import Loader from '@/components/_loaders/Loader/Loader';
 
 function CollectionPage() {
-  const { loading, products, layout } = useCollectionContext();
-  return <ProductsList products={products} layout={layout} loading={loading} loader={<Loader />} />;
+  const { loading, products, layout, handleNext, pageInfo } = useCollectionContext();
+
+  return (
+    <ProductsList
+      handleNext={handleNext}
+      hasNextPage={pageInfo?.hasNextPage}
+      products={products}
+      layout={layout}
+      loading={loading}
+      loader={<Loader />}
+    />
+  );
 }
 
 export default CollectionPage;

@@ -11,27 +11,27 @@ export default function UserButtons() {
   const { toggleSearch, searchOpen } = useGlobalContext();
   const { getTotalItems } = useCartContext();
 
-  const router = useRouter();
+  const { push, pathname } = useRouter();
 
   const data = [
     {
       item: search,
       id: 0,
       name: 'Search',
-      onClick: () => toggleSearch(!searchOpen),
+      onClick: () => !pathname.startsWith('/search') && toggleSearch(!searchOpen),
     },
 
     {
       item: heart,
       id: 1,
       name: 'Wishlist',
-      onClick: () => router.push(config.routes.wishlist),
+      onClick: () => push(config.routes.wishlist),
     },
 
     {
       item: user,
       id: 2,
-      onClick: () => router.push(config.routes.account),
+      onClick: () => push(config.routes.account),
       name: 'User account',
     },
     {
@@ -46,7 +46,7 @@ export default function UserButtons() {
         </div>
       ),
       id: 3,
-      onClick: () => router.push(config.routes.cart),
+      onClick: () => push(config.routes.cart),
       name: 'Toggle Checkout',
     },
   ];

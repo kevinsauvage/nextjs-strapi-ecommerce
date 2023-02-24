@@ -1,5 +1,4 @@
 import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
-import Pagination from '@/components/_scopes/product/Pagination/Pagination';
 import Sort from '@/components/_scopes/product/Sort/Sort';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import CollectionBanner from '@/components/_scopes/collection/CollectionBanner/CollectionBanner';
@@ -26,6 +25,7 @@ function CollectionLayout({ children, collection }) {
     collectionNav,
     allFilters,
   } = useCollectionContext();
+
   const { filterOpen, toggleFilter } = useGlobalContext();
   const { title, description } = collection || {};
   const { query } = useRouter();
@@ -37,7 +37,7 @@ function CollectionLayout({ children, collection }) {
         <Breadcrumbs lastElement={title} />
         <CollectionBanner title={title} description={description} />
         <div className={styles.header}>
-          <Container>
+          <Container size="medium">
             <LayoutButtons
               handleChange={(payload) => collectionDispatch({ type: actions.SET_LAYOUT, payload })}
               selected={layout}
@@ -59,7 +59,6 @@ function CollectionLayout({ children, collection }) {
           <div className={styles.CollectionLayout}>
             <main className={styles.main}>
               <section className={styles.children}>{children}</section>
-              <Pagination />
             </main>
           </div>
         </Container>

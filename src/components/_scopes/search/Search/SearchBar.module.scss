@@ -20,36 +20,6 @@
   display: flex;
   align-items: center;
   width: 100%;
-
   background-color: var(--surface-100);
   border: 1px solid var(--surface-300);
-}
-
-.form {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-
-  label {
-    width: 100%;
-  }
-}
-
-.input {
-  width: 100%;
-  height: 120px;
-  padding-left: var(--space-3);
-  border: none;
-  font-size: 60px;
-  border-radius: $radius;
-  color: var(--surface-700);
-
-  @include placeholder {
-    color: var(--surface-300);
-  }
-
-  &:focus {
-    outline: none;
-  }
 }

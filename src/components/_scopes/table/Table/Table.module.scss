@@ -11,13 +11,14 @@
 
 .tHead {
   font-weight: $fontWeightSemiBold;
-  padding: var(--space-1);
   text-transform: uppercase;
+  padding: var(--space-1);
   text-align: start;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
   border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-dark-200);
   color: var(--onSurface-dark);
+  height: 50px;
 }
 
 .tData {
