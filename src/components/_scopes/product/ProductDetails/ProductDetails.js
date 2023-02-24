@@ -1,5 +1,7 @@
+/* eslint-disable react/no-danger */
 import { useEffect, useState } from 'react';
 import processHtml from '@/helpers/html';
+import Container from '@/components/Container/Container';
 import styles from './ProductDetails.module.scss';
 
 function ProductDetails({ html }) {
@@ -10,10 +12,12 @@ function ProductDetails({ html }) {
   }, [html]);
 
   return (
-    <div className={styles.ProductDetails}>
-      <h3 className={styles.title}>Product Details</h3>
-      <div className={styles.description} dangerouslySetInnerHTML={{ __html: htmlSanitized }} />
-    </div>
+    <Container size="medium">
+      <div className={styles.ProductDetails}>
+        <h3 className={styles.title}>Product Details</h3>
+        <div className={styles.description} dangerouslySetInnerHTML={{ __html: htmlSanitized }} />
+      </div>
+    </Container>
   );
 }
 

@@ -20,8 +20,10 @@ function ProductPage({ product, recommendations = [] }) {
         <PageLayout title={title} description={description}>
           <ProductPresenter product={product} />
           {Array.isArray(recommendations) && recommendations.length > 0 && (
-            <div className={styles.carousel}>
-              <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+            <div className={styles.recommendations}>
+              <Container size="medium">
+                <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+              </Container>
               <ProductsList products={recommendations} layout="grid" />
             </div>
           )}

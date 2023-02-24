@@ -1,12 +1,13 @@
 .ProductDescription {
   display: flex;
   flex-direction: column;
-  padding-right: var(--space-2);
+  padding: var(--space-2);
   position: sticky;
   top: 20px;
   height: 100%;
   max-width: 500px;
   width: 50%;
+  background-color: var(--surface-100);
 
   &.Separator + .Separator {
     display: none;
