@@ -1,9 +1,9 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
-import config from '@/config/index';
 import { useRouter } from 'next/router';
+import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
-import getClient from '@/shopify/index';
 import { nextApiHelper } from '@/helpers/apiNext';
+import getClient from '@/shopify/index';
 import { UserReducer, initialState, actions } from './UserReducer';
 import { useToastContext } from '../ToastContext/NotificationContext';
 import useCartContext from '../CartContext/useCartContext';
@@ -41,17 +41,6 @@ export function UserProvider({ children }) {
       const userRes = await getClient().storefront.customer.queryCustomer({
         customerAccessToken: shopifyToken,
       });
-
-      const wishlistRes = await getClient().storefront.customer.queryCustomerMetafields({
-        customerAccessToken: shopifyToken,
-        metafields: [{ key: 'wishlist', namespace: 'custom' }],
-      });
-
-      if (wishlistRes?.length > 0) {
-        const metafield = wishlistRes.filter((item) => item.key === 'wishlist')?.[0]?.value;
-        const value = metafield && JSON.parse(metafield);
-        if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
-      }
 
       if (userRes?.id) {
         setUser(userRes);
@@ -112,8 +101,18 @@ export function UserProvider({ children }) {
       wishlist,
       isWishlist,
       handleSetProductToWishList,
+      setUserWishlist,
     }),
-    [user, addresses, orders, ordersPageInfo, wishlist, isWishlist, handleSetProductToWishList]
+    [
+      user,
+      addresses,
+      orders,
+      ordersPageInfo,
+      wishlist,
+      isWishlist,
+      handleSetProductToWishList,
+      setUserWishlist,
+    ]
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

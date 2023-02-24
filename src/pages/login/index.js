@@ -36,10 +36,9 @@ function LoginPage() {
 
     const accessToken = resLogin?.customerAccessToken?.accessToken;
     if (!accessToken) return showToast.error(userFeedback.login.error);
-    handleSetTokenCookies(accessToken);
-    showToast.success(userFeedback.login.success);
     const nextUrl = query?.redirectUrl ? query.redirectUrl : config.routes.account;
-    return push(nextUrl);
+    showToast.success(userFeedback.login.success);
+    return handleSetTokenCookies(accessToken, push(nextUrl));
   };
 
   return (

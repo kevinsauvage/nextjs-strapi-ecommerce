@@ -74,12 +74,13 @@ export const setCookieFront = (cName, cValue, expDays = 1, secure = true, sameSi
   }
 };
 
-export const handleSetTokenCookies = (accessToken) => {
+export const handleSetTokenCookies = (accessToken, callback) => {
   const maxAgeInDays = 1;
   const date = new Date();
   date.setDate(date.getDate() + maxAgeInDays);
   setCookieFront(config.cookies.shopifyToken, accessToken, 1, false);
   setCookieFront(config.cookies.shopifyTokenExpire, JSON.stringify(date), 1, false);
+  if (callback && typeof callback === 'function') callback();
 };
 
 export const handleGetTokenCookies = async () => {
