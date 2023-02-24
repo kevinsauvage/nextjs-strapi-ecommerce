@@ -52,7 +52,7 @@ function Search() {
     <PageLayout title="Search page">
       <Breadcrumbs />
       <SearchInput size="medium" />
-      <Container size="medium">
+      <Container>
         <div className={styles.search}>
           <ProductsList
             hasNextPage={pageInfo?.hasNextPage}

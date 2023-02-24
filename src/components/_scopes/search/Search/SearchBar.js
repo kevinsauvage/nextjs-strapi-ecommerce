@@ -7,7 +7,7 @@ export default function SearchBar() {
 
   return (
     <div className={`${styles.container} ${searchOpen && styles.expanded}`}>
-      <Search />
+      <Search size="medium" />
     </div>
   );
 }
