@@ -34,7 +34,6 @@ export function UserProvider({ children }) {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
-        console.error('Missing shopify token to getCustomer');
         return dispatch({ type: actions.ADD_USER, payload: undefined });
       }
 

@@ -32,8 +32,6 @@ function Search() {
         after: endCursor || null,
       });
 
-      console.log('🚀 ~ file: index.js:27 ~ searchResponse ~ searchResponse:', searchResponse);
-
       setLoading(false);
 
       const { products, pageInfo: pageInfoRes } = searchResponse || {};
