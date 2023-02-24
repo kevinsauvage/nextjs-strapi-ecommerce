@@ -1,21 +1,21 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
-import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import { nextApiHelper } from '@/helpers/apiNext';
+import config from '@/config/index';
 import getClient from '@/shopify/index';
-import { UserReducer, initialState, actions } from './UserReducer';
 import { useToastContext } from '../ToastContext/NotificationContext';
+import { UserReducer, initialState, actions } from './UserReducer';
 import useCartContext from '../CartContext/useCartContext';
 
 export const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
-  const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
   const { showToast } = useToastContext();
   const { updateCartBuyerIdentity } = useCartContext();
   const { push, asPath } = useRouter();
+  const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
 
   const setUser = useCallback((payload) => {
     if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
@@ -48,7 +48,7 @@ export function UserProvider({ children }) {
       return push(config.routes.logout);
     };
     getCustomer();
-  }, [dispatch, user, showToast, setUser, push, updateCartBuyerIdentity, setUserWishlist]);
+  }, [user, showToast, updateCartBuyerIdentity, setUserWishlist, setUser, push, dispatch]);
 
   const handleSetProductToWishList = useCallback(
     async (product) => {
@@ -95,9 +95,9 @@ export function UserProvider({ children }) {
       user,
       addresses,
       orders,
-      dispatch,
       ordersPageInfo,
       wishlist,
+      dispatch,
       isWishlist,
       handleSetProductToWishList,
       setUserWishlist,

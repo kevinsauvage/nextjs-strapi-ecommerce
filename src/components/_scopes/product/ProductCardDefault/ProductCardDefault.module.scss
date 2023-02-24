@@ -62,8 +62,7 @@
 
 .contentInner {
   height: 100%;
-  background-color: var(--surface-200);
-  padding: var(--space-0);
+  padding: var(--space-0) 0;
 }
 
 .image {
@@ -89,7 +88,7 @@
 
 .quickView {
   text-decoration: underline;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize-100);
+  font-size: 13px;
   border: none;
 }
 
@@ -106,6 +105,8 @@
 
 .title {
   white-space: pre-wrap;
+  font-size: 16px;
+  font-weight: 700;
   @include text-shorten(1);
 }
 
