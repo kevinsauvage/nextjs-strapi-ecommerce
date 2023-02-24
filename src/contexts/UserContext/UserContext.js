@@ -29,13 +29,13 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     const getCustomer = async () => {
-      if (user?.id) return;
+      if (user?.id) return null;
 
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
         console.error('Missing shopify token to getCustomer');
-        return;
+        return dispatch({ type: actions.ADD_USER, payload: undefined });
       }
 
       const userRes = await getClient().storefront.customer.queryCustomer({
@@ -44,18 +44,18 @@ export function UserProvider({ children }) {
 
       if (userRes?.id) {
         setUser(userRes);
-        updateCartBuyerIdentity(userRes, shopifyToken);
-
-        return;
+        return updateCartBuyerIdentity(userRes, shopifyToken);
       }
-      push(config.routes.logout);
+      return push(config.routes.logout);
     };
     getCustomer();
   }, [dispatch, user, showToast, setUser, push, updateCartBuyerIdentity, setUserWishlist]);
 
   const handleSetProductToWishList = useCallback(
     async (product) => {
-      if (!user?.id) {
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      if (!shopifyToken) {
         return push({
           pathname: config.routes.login,
           query: { redirectUrl: asPath },
