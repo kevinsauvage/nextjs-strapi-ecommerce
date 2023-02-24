@@ -38,7 +38,11 @@ function LoginPage() {
     if (!accessToken) return showToast.error(userFeedback.login.error);
     const nextUrl = query?.redirectUrl ? query.redirectUrl : config.routes.account;
     showToast.success(userFeedback.login.success);
-    return handleSetTokenCookies(accessToken, push(nextUrl));
+    await new Promise((resolve) => {
+      handleSetTokenCookies(accessToken);
+      resolve();
+    });
+    return push(nextUrl);
   };
 
   return (
