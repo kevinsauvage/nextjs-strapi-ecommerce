@@ -15,32 +15,32 @@ export const bag = (
     <path
       d="M1.82 7.5H10L11 2.5H0.999998C0.926869 2.50027 0.854689 2.51657 0.788546 2.54777C0.722404 2.57896 0.663909 2.62429 0.617187 2.68055C0.570464 2.7368 0.536651 2.80263 0.518131 2.87337C0.499611 2.94412 0.496835 3.01806 0.509998 3.09L1.33 7.09C1.34913 7.20565 1.40908 7.31062 1.49899 7.38584C1.58889 7.46107 1.70278 7.50157 1.82 7.5V7.5Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M11 2.5L11.42 0.9C11.4431 0.787064 11.5044 0.68556 11.5937 0.612669C11.683 0.539778 11.7947 0.499976 11.91 0.5H13.5"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M10 7.5L9.58 9.6C9.55695 9.71294 9.49558 9.81444 9.40629 9.88733C9.317 9.96022 9.20527 10 9.09 10H3"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M3.5 13.5C3.77614 13.5 4 13.2761 4 13C4 12.7239 3.77614 12.5 3.5 12.5C3.22386 12.5 3 12.7239 3 13C3 13.2761 3.22386 13.5 3.5 13.5Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M8.5 13.5C8.77614 13.5 9 13.2761 9 13C9 12.7239 8.77614 12.5 8.5 12.5C8.22386 12.5 8 12.7239 8 13C8 13.2761 8.22386 13.5 8.5 13.5Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -50,14 +50,14 @@ export const user = (
     <path
       d="M7 7C8.79493 7 10.25 5.54493 10.25 3.75C10.25 1.95507 8.79493 0.5 7 0.5C5.20507 0.5 3.75 1.95507 3.75 3.75C3.75 5.54493 5.20507 7 7 7Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
     <path
       d="M13.18 13.4999C12.7602 12.1907 11.9355 11.0487 10.8248 10.2385C9.7141 9.42828 8.37481 8.9917 7.00001 8.9917C5.6252 8.9917 4.28591 9.42828 3.17522 10.2385C2.06453 11.0487 1.23983 12.1907 0.820007 13.4999H13.18Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
@@ -67,10 +67,10 @@ export const search = (
     <path
       d="M5.92 11.84C8.91338 11.84 11.34 9.41338 11.34 6.42C11.34 3.42662 8.91338 1 5.92 1C2.92662 1 0.5 3.42662 0.5 6.42C0.5 9.41338 2.92662 11.84 5.92 11.84Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
-    <path d="M13.5 14L9.75 10.25" stroke="#000001" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M13.5 14L9.75 10.25" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -107,8 +107,25 @@ export const heart = (
     <path
       d="M7 11.4499L1.48 6.4499C-1.52 3.4499 2.89 -2.3101 7 2.3499C11.11 -2.3101 15.5 3.4699 12.52 6.4499L7 11.4499Z"
       stroke="#000001"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const eye = (
+  <svg width="14" height="10" viewBox="0 0 14 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M13.23 4.33C13.3958 4.51375 13.4876 4.75248 13.4876 5C13.4876 5.24752 13.3958 5.48625 13.23 5.67C12.18 6.8 9.79 9 7 9C4.21 9 1.82 6.8 0.769998 5.67C0.604159 5.48625 0.51236 5.24752 0.51236 5C0.51236 4.75248 0.604159 4.51375 0.769998 4.33C1.82 3.2 4.21 1 7 1C9.79 1 12.18 3.2 13.23 4.33Z"
+      stroke="#000001"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M7 7C8.10457 7 9 6.10457 9 5C9 3.89543 8.10457 3 7 3C5.89543 3 5 3.89543 5 5C5 6.10457 5.89543 7 7 7Z"
+      stroke="#000001"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );

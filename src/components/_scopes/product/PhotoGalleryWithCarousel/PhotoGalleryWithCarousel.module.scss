@@ -4,6 +4,8 @@ $maxHeight: 600px;
   width: 50%;
   height: fit-content;
   background-color: var(--surface-100);
+  position: static;
+  top: 0;
 }
 
 .selectedImage {

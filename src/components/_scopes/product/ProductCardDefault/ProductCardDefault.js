@@ -1,10 +1,10 @@
+import { useRef, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import { useRef, useState } from 'react';
-import { useRouter } from 'next/router';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import { heart } from '@/assets/svg';
+import { heart, eye } from '@/assets/svg';
 import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
@@ -29,7 +29,31 @@ export default function ProductCardDefault({ product = {} }) {
   return (
     <li className={styles.productCardDefault}>
       {loading && <AbsoluteLoader />}
-
+      <div className={styles.buttons}>
+        <button
+          className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            handleWishlist();
+          }}
+        >
+          {heart}
+        </button>
+        <button
+          className={styles.quickView}
+          type="button"
+          aria-label="Quick view"
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            setSelectedProduct(product);
+          }}
+        >
+          {eye}
+        </button>
+      </div>
       <Link
         ref={cardRef}
         className={styles.link}
@@ -58,32 +82,9 @@ export default function ProductCardDefault({ product = {} }) {
           <div className={styles.contentInner}>
             <div className={styles.header}>
               <b className={styles.title}>{title}</b>
-              <button
-                className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
-                type="button"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  handleWishlist();
-                }}
-              >
-                {heart}
-              </button>
             </div>
             <div className={styles.bottom}>
               <Price compareAtPriceV2={compareAtPriceV2} priceV2={priceV2} size="S" />
-              <button
-                className={styles.quickView}
-                type="button"
-                aria-label="Quick view"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setSelectedProduct(product);
-                }}
-              >
-                Quick view
-              </button>
             </div>
           </div>
         </div>

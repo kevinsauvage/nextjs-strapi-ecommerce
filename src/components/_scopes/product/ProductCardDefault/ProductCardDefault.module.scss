@@ -5,9 +5,6 @@
   max-width: 330px;
   width: 100%;
   cursor: pointer;
-  background-color: var(--surface-100);
-  border: 1px solid var(--surface-300);
-  padding: var(--space-0);
 
   &:hover,
   &:focus,
@@ -15,6 +12,10 @@
   &:focus-within {
     img {
       transform: scale(1.1);
+    }
+
+    .buttons {
+      opacity: 1;
     }
   }
 }
@@ -26,12 +27,30 @@
   gap: 1rem;
 }
 
-.wishlist {
+.buttons {
+  position: absolute;
+  z-index: 999;
+  right: var(--space-0);
+  top: var(--space-0);
+  opacity: 0;
+  transition: opacity 0.2s linear;
+}
+
+.wishlist,
+.quickView {
   border: none;
+  background-color: var(--surface-200);
+  border: 1px solid rgba(var(--RGB-surface-100), 0.5);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-0);
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
   }
 
   path {
@@ -55,9 +74,6 @@
   flex-direction: column;
   z-index: 999;
   height: 100%;
-  border-top: 1px solid rgba(var(--surface-900), 0.1);
-  background-color: var(--surface-100);
-  margin-top: var(--space-0);
 }
 
 .contentInner {
@@ -70,6 +86,7 @@
   width: 100%;
   display: flex;
   overflow: hidden;
+  border: 1px solid var(--surface-300);
 
   img {
     transition: 0.2s all ease-in-out;
@@ -83,13 +100,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  margin-top: var(--space-2);
-}
-
-.quickView {
-  text-decoration: underline;
-  font-size: 13px;
-  border: none;
+  margin-top: var(--space-0);
 }
 
 .discount {
@@ -106,7 +117,8 @@
 .title {
   white-space: pre-wrap;
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--onSurface-medium);
   @include text-shorten(1);
 }
 
