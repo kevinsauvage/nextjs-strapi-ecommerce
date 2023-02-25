@@ -1,14 +1,20 @@
+/* eslint-disable react/no-danger */
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Container from '@/components/Container/Container';
 import styles from './shipping.module.scss';
 
 function ShippingPage({ shippingPolicy }) {
   return (
-    <PageLayout title="Our shipping policies">
+    <PageLayout title="Shipping policy">
+      <PageBanner title="Shipping policy" />
+      <Breadcrumbs lastElement="Shipping policy" />
       <div className={styles.privacy}>
-        <h1>Shipping policy</h1>
-
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
+        <Container>
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
+        </Container>
       </div>
     </PageLayout>
   );

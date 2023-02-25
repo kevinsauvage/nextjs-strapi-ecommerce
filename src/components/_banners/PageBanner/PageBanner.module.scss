@@ -3,10 +3,11 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--surface-dark-200);
+  background-color: var(--surface-dark-100);
   color: var(--onSurface-dark);
   min-height: 130px;
-  border-bottom: 1px solid var(--surface-300);
+  border-bottom: 0.1px solid var(--surface-900);
+  border-top: 0.1px solid var(--surface-900);
 }
 
 .title {

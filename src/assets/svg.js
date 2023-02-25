@@ -129,3 +129,10 @@ export const eye = (
     />
   </svg>
 );
+
+export const arrowRight = (
+  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0.5 4H13.5" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M10 7.5L13.5 4L10 0.5" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);

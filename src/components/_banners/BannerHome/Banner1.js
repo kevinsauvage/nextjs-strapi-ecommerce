@@ -7,7 +7,7 @@ export default function BannerHome({ data }) {
 
   return (
     <section className={styles.banner} style={{ backgroundImage: `url(${image?.url})` }}>
-      <Container size="medium">
+      <Container>
         <div className={styles.inner}>
           <div className={styles.container} style={{ ...style }}>
             {data?.items &&

@@ -11,6 +11,7 @@ export default function PageLayout({ children, title, description }) {
         <title key="title">{siteTitle}</title>
         {description && <meta name="description" content={description} />}
       </Head>
+
       <div className={styles.children}>{children}</div>
     </div>
   );

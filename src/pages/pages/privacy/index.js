@@ -1,13 +1,20 @@
+/* eslint-disable react/no-danger */
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Container from '@/components/Container/Container';
 import styles from './Privacy.module.scss';
 
 function PrivacyPage({ privacyPolicy }) {
   return (
-    <PageLayout title="Our privacy policy">
+    <PageLayout title="Privacy policy">
+      <PageBanner title="Privacy policy" />
+      <Breadcrumbs lastElement="Privacy policy" />
       <div className={styles.privacy}>
-        <h1>Privacy policy</h1>
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
+        <Container>
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
+        </Container>
       </div>
     </PageLayout>
   );

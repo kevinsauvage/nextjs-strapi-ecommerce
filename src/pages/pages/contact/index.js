@@ -7,6 +7,8 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { sendMail } from '@/helpers/apiNext';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 
 function ContactPage() {
   const { toggleLoading } = useGlobalContext();
@@ -32,6 +34,8 @@ function ContactPage() {
 
   return (
     <PageLayout title="Contact Us">
+      <PageBanner title="Contact Us" />
+      <Breadcrumbs />
       <FormContainer>
         <Form
           onSubmit={onSubmit}

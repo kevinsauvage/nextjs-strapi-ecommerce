@@ -1,13 +1,20 @@
+/* eslint-disable react/no-danger */
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Container from '@/components/Container/Container';
 import styles from './refund.module.scss';
 
 function RefoundPage({ refundPolicy }) {
   return (
-    <PageLayout title="Our refund policy">
+    <PageLayout title="Refund policy">
+      <PageBanner title="Refund policy" />
+      <Breadcrumbs lastElement="Refund policy" />
       <div className={styles.privacy}>
-        <h1>Refound policy</h1>
-        <div className={styles.content} dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
+        <Container>
+          <div className={styles.content} dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
+        </Container>
       </div>
     </PageLayout>
   );
