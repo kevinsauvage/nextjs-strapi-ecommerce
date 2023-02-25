@@ -1,10 +1,8 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import useCartContext from '@/contexts/CartContext/useCartContext';
 import CartItem from '../CartItem/CartItem';
 import Table, { Body, Head, Row, THead } from '../../table/Table/Table';
 
-function CartTable({ handleChange }) {
-  const { cart, removeFromCart } = useCartContext();
+function CartTable({ handleChange, handleRemove, cart }) {
   return (
     <Table>
       <Head>
@@ -25,7 +23,7 @@ function CartTable({ handleChange }) {
             variant={item.variant}
             quantity={item?.quantity}
             title={item?.title}
-            removeFromCart={removeFromCart}
+            removeFromCart={handleRemove}
             lineId={item.id}
             item={item}
             handleChange={handleChange}

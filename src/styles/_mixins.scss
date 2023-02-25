@@ -66,35 +66,17 @@
   }
 }
 
-// @include fluid-font(320px, 1024px, 22px, 55px);
-@mixin fluid-font($min-width, $max-width, $min-font-size, $max-font-size) {
-  $unit1: unit($min-width);
-  $unit2: unit($max-width);
-  $unit3: unit($min-font-size);
-  $unit4: unit($max-font-size);
+@mixin fluid-font($min-vw, $max-vw, $min-value, $max-value) {
+  $factor: 1 / ($max-vw - $min-vw) * ($max-value - $min-value);
+  $calc-value: unquote('#{ $min-value - ($min-vw * $factor) } + #{ 100vw * $factor }');
 
-  @if $unit1 ==$unit2 and $unit1 ==$unit3 and $unit1 ==$unit4 {
-    & {
-      font-size: $min-font-size;
-      line-height: $min-font-size * 1.618;
-
-      @media screen and (min-width: $min-width) {
-        font-size: calc(
-          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
-            ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)})
-        );
-        line-height: calc(
-          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} * 1.618 *
-            ((100vw - #{$min-width}) / #{strip-unit($max-width - $min-width)})
-        );
-      }
-
-      @media screen and (min-width: $max-width) {
-        font-size: $max-font-size;
-        line-height: $max-font-size * 1.618;
-      }
-    }
-  }
+  font-size: $min-value; // Fallback for older browsers
+  font-size: clamp(
+    #{if($min-value > $max-value, $max-value, $min-value)},
+    #{$calc-value},
+    #{if($min-value > $max-value, $min-value, $max-value)}
+  );
+  line-height: $min-value * 1.66;
 }
 
 @mixin underline($color) {
@@ -168,9 +150,10 @@
     background: rgba($bgColor, 0.6);
     background: linear-gradient(
       $deg,
-      rgba($bgColor, 0.8) 0%,
-      rgba($bgColor, 0.4) 50%,
-      rgba($bgColor, 0) 100%
+      rgba($bgColor, 1) 0%,
+      rgba($bgColor, 0.5) 25%,
+      rgba($bgColor, 0.3) 50%,
+      rgba($bgColor, 0.1) 100%
     );
   }
 }

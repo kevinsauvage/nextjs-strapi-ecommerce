@@ -27,7 +27,10 @@ function CollectionLayout({ children, collection }) {
   } = useCollectionContext();
 
   const { filterOpen, toggleFilter } = useGlobalContext();
-  const { title, description } = collection || {};
+  const { title, description, image } = collection || {};
+
+  console.log('🚀 ~ file: CollectionLayout.js:32 ~ CollectionLayout ~ collection:', collection);
+
   const { query } = useRouter();
 
   return (
@@ -35,7 +38,7 @@ function CollectionLayout({ children, collection }) {
       <PageLayout title={title} description={description}>
         <CollectionNav items={collectionNav} />
         <Breadcrumbs lastElement={title} />
-        <CollectionBanner title={title} description={description} />
+        <CollectionBanner title={title} description={description} image={image} />
         <div className={styles.header}>
           <Container size="medium">
             <LayoutButtons

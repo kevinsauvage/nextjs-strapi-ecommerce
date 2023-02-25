@@ -1,5 +1,8 @@
 .DropDown {
   position: relative;
+  border: 0.1px solid rgba(var(--RGB-onSurface-hight), 0.5);
+  margin-left: 4px;
+  padding: 2px;
 }
 
 .menu {
@@ -7,10 +10,9 @@
   z-index: 99999;
   top: 100%;
   min-width: 190px;
-  right: 0;
-  border-radius: 3px;
+  right: -0.2px;
   border: 0.1px solid var(--surface-900);
-  background-color: var(--surface-200);
+  background-color: var(--surface-100);
   overflow: hidden;
 }
 
@@ -20,22 +22,24 @@
   font-weight: $fontWeightSemiBold;
 
   svg {
-    margin-left: 4px;
+    margin-left: 8px;
+    width: 13px;
+    height: 13px;
   }
 
   path {
-    fill: var(--surface-900);
+    fill: var(--onSurface-hight);
   }
 }
 
 .option {
-  padding: 8px;
+  padding: 12px;
   white-space: nowrap;
   cursor: pointer;
   border-bottom: 0.1px solid var(--surface-900);
 
   p {
-    font-size: 12px;
+    font-size: 13px;
   }
 
   &:last-of-type {
@@ -43,7 +47,7 @@
   }
 
   &:hover {
-    background-color: var(--surface-300);
-    color: var(--onSurface-hight);
+    background-color: var(--surface-dark-100);
+    color: var(--onSurface-dark);
   }
 }

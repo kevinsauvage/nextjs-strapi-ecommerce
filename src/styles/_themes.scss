@@ -70,8 +70,8 @@ $colors-light: (
   // Surface colors
   surface-100: lighten($surface, 25%),
   surface-200: lighten($surface, 20%),
-  surface-300: lighten($surface, 10%),
-  surface-400: lighten($surface, 5%),
+  surface-300: lighten($surface, 15%),
+  surface-400: lighten($surface, 10%),
   surface-500: $surface,
   surface-600: darken($surface, 5%),
   surface-700: darken($surface, 10%),

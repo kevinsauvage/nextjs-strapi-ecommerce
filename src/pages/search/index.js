@@ -5,11 +5,11 @@ import ProductsList from '@/components/_scopes/product/ProductList/ProductsList'
 import Container from '@/components/Container/Container';
 import getClient from '@/shopify/index';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-// eslint-disable-next-line import/no-named-default
-import { default as SearchInput } from '@/components/_scopes/search/Search/Search';
+import Search from '@/components/_scopes/search/Search/Search';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import styles from './search.module.scss';
 
-function Search() {
+function SearchPage() {
   const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageInfo, setPageInfo] = useState();
@@ -48,8 +48,9 @@ function Search() {
 
   return (
     <PageLayout title="Search page">
+      <PageBanner title="Search" />
       <Breadcrumbs />
-      <SearchInput size="medium" />
+      <Search size="medium" />
       <Container>
         <div className={styles.search}>
           <ProductsList
@@ -65,4 +66,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default SearchPage;

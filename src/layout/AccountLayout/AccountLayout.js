@@ -3,6 +3,7 @@ import config from '@/config/index';
 import Loader from '@/components/_loaders/Loader/Loader';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import styles from './AccountLayout.module.scss';
 
 function AccountLayout({
@@ -14,11 +15,7 @@ function AccountLayout({
 }) {
   return (
     <div className={styles.AccountLayout}>
-      <div className={styles.banner}>
-        <Container>
-          <h1 className={styles.title}>My Account</h1>
-        </Container>
-      </div>
+      <PageBanner title="My Account" />
       <Breadcrumbs />
       <Container>
         <main className={styles.main}>

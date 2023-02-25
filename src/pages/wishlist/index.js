@@ -7,6 +7,7 @@ import { handleGetTokenCookies } from '@/helpers/cookies';
 import config from '@/config/index';
 import { useEffect, useState } from 'react';
 import getClient from '@/shopify/index';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import styles from './Wishlist.module.scss';
 
 function Wishlist() {
@@ -43,9 +44,9 @@ function Wishlist() {
   }, [user, setUserWishlist, wishlist.length]);
 
   return (
-    <PageLayout title="Search page">
+    <PageLayout title="Wishlist">
+      <PageBanner title="Wishlist" />
       <Breadcrumbs />
-
       <Container extraClass={styles.container}>
         <ProductsList loading={loading} layout="grid" products={wishlist} />
       </Container>

@@ -23,7 +23,7 @@
   border: none;
   font-size: 60px;
   border-radius: $radius;
-  color: var(--surface-900);
+  color: var(--onSurface-hight);
 
   @include placeholder {
     color: var(--surface-300);
