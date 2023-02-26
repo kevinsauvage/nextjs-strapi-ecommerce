@@ -1,5 +1,6 @@
 // pages/_document.js
 import { Html, Head, Main, NextScript } from 'next/document';
+import config from '@/config/index';
 
 export default function Document() {
   return (
@@ -8,6 +9,7 @@ export default function Document() {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link rel="preconnect" href="https://cdn.shopify.com" crossOrigin="true" />
+        <link rel="preconnect" href={config.domain} crossOrigin="true" />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"

@@ -4,6 +4,7 @@ const config = {
   baseUrl: 'http://localhost:3000',
   paymentUrl: 'https://checkout.ecomtestshopi.xyz',
   name: 'Site Name',
+  domain: 'https://ecomfashionstore.myshopify.com',
 };
 
 config.userFeedback = {
