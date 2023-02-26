@@ -15,7 +15,7 @@ function CollectionBanner({ title, description, image }) {
       </Container>
       {image && (
         <div className={styles.image}>
-          <Image src={image.large} alt={description} width={image.width} height={image.height} />
+          <Image src={image.large} priority alt={description} width={image.width} height={image.height} />
         </div>
       )}
     </div>
