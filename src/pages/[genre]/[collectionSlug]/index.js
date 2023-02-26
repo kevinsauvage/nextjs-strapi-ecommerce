@@ -21,7 +21,7 @@ export async function getServerSideProps(ctx) {
   const data = await getClient(delegateToken, ip).storefront.collection.collection({
     handle: collectionSlug,
     filters: [],
-    first: 16,
+    first: 12,
     after: startCursor,
     sort: sortKey,
   });
