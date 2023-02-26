@@ -1,7 +1,7 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import Button from '@/components/Button/Button';
 import { useRouter } from 'next/router';
-import { getFiltersFromQuery } from '@/helpers/index';
+import { getSelectedFilter } from '@/helpers/index';
 import styles from './FilterManager.module.scss';
 
 export default function FilterManager() {
@@ -16,12 +16,12 @@ export default function FilterManager() {
           outlined
           type="button"
           onClick={resetFilters}
-          disabled={!getFiltersFromQuery(allFilters, query).length}
+          disabled={!getSelectedFilter(allFilters, query).length}
         >
           Reset all
           <small>
-            {getFiltersFromQuery(allFilters, query).length
-              ? `(${getFiltersFromQuery(allFilters, query).length.toString()})`
+            {getSelectedFilter(allFilters, query).length
+              ? `(${getSelectedFilter(allFilters, query).length.toString()})`
               : null}
           </small>
         </Button>
@@ -33,7 +33,6 @@ export default function FilterManager() {
           disabled={!isSelectionDifferent()}
         >
           Apply filters
-          <small>{isSelectionDifferent() ? `(${isSelectionDifferent().toString()})` : null}</small>
         </Button>
       </div>
     </div>

@@ -23,18 +23,23 @@ export const getInfoFromCtx = (ctx) => {
   };
 };
 
-export const getFiltersFromQuery = (filters, query) => {
-  if (!query?.filter) return [];
-  let queryFilters = [];
-  if (Array.isArray(query.filter)) queryFilters = query.filter;
-  else if (query.filter && query.filter.length) queryFilters = [query.filter];
+export const getSelectedFilter = (filters, query) => {
+  if (!query) return [];
 
   const newFilters = filters.reduce((acc, filter) => {
-    filter.values.forEach((value) => {
-      queryFilters.forEach((queryFilter) => {
-        if (queryFilter === value.id) acc.push(value);
-      });
-    });
+    const item = query[filter.id];
+
+    if (item) {
+      if (Array.isArray(item)) {
+        item.forEach((queryFilter) => {
+          acc.push({ filterId: filter.id, input: queryFilter });
+        });
+      } else {
+        [item].forEach((queryFilter) => {
+          acc.push({ filterId: filter.id, input: queryFilter });
+        });
+      }
+    }
     return acc;
   }, []);
   return newFilters;

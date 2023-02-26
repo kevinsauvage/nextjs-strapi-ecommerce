@@ -13,7 +13,7 @@ export const UserContext = createContext();
 export function UserProvider({ children }) {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { showToast } = useToastContext();
-  const { updateCartBuyerIdentity } = useCartContext();
+  const { updateCartBuyerIdentity, cart } = useCartContext();
   const { push, asPath } = useRouter();
   const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
 
@@ -42,13 +42,17 @@ export function UserProvider({ children }) {
       });
 
       if (userRes?.id) {
-        setUser(userRes);
-        return updateCartBuyerIdentity(userRes, shopifyToken);
+        return setUser(userRes);
       }
       return push(config.routes.logout);
     };
     getCustomer();
-  }, [user, showToast, updateCartBuyerIdentity, setUserWishlist, setUser, push, dispatch]);
+  }, [user, showToast, setUserWishlist, setUser, push, dispatch]);
+
+  useEffect(() => {
+    const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
+    if (shopifyToken && user?.id) updateCartBuyerIdentity(user, shopifyToken);
+  }, [updateCartBuyerIdentity, user, cart]);
 
   const handleSetProductToWishList = useCallback(
     async (product) => {

@@ -1,66 +1,63 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
-import { useCallback } from 'react';
-import { actions } from '@/contexts/CollectionContext/CollectionReducer';
-import { useRouter } from 'next/router';
 import { extractUniqueColorNames } from '@/helpers/index';
+import PriceFilters from './PriceFilters/PriceFilters';
 import styles from './Filters.module.scss';
 
+const DefaultFilters = ({ filter }) => {
+  const { handleSetFilters, isSelected } = useCollectionContext();
+
+  return filter?.values?.map((value) => (
+    <button
+      key={value.label}
+      style={{ backgroundColor: value.label }}
+      className={`${styles.button} ${isSelected(filter.id, value.input) && styles.selected}`}
+      type="button"
+      onClick={() => handleSetFilters(filter.id, value.input)}
+    >
+      <p className={styles.value}>{value.label}</p>
+    </button>
+  ));
+};
+
+function ColorFilters({ filter }) {
+  const { handleSetFilters, isSelected } = useCollectionContext();
+
+  const colors = extractUniqueColorNames(filter.values);
+
+  return colors.map((value) => (
+    <button
+      key={value.label}
+      style={{ backgroundColor: value.label }}
+      className={`${styles.button} ${styles.color} ${isSelected(filter.id, value.input) && styles.selected}`}
+      type="button"
+      onClick={() => handleSetFilters(filter.id, value.input)}
+    >
+      <div className={styles.value} />
+    </button>
+  ));
+}
+
 export default function Filters() {
-  const { selectedFilters, allFilters, dispatch } = useCollectionContext();
-  const { query } = useRouter();
+  const { allFilters } = useCollectionContext();
 
-  const isAlreadyApplied = useCallback(
-    (valueId) => {
-      const res = selectedFilters.some((filter) => filter.id === valueId);
-      return res;
-    },
-    [selectedFilters]
-  );
+  const getComponent = (filter) => {
+    const components = {
+      'filter.v.option.color': <ColorFilters filter={filter} />,
+      'filter.v.price': <PriceFilters filter={filter} />,
+    };
 
-  const isSelected = (valueId) => {
-    let items;
-    if (Array.isArray(query.filter)) items = query.filter;
-    else if (query.filter && query.filter.length) items = query.filter;
-    else items = [];
-    const actualSelection = selectedFilters.filter((filter) => !items.includes(filter.id));
-    const res = actualSelection?.some((filter) => JSON.stringify(filter.id) === JSON.stringify(valueId));
-    return res;
-  };
+    const component = components[filter?.id];
 
-  const filters = allFilters.filter((item) => item.type === 'LIST').filter((item) => item.values.length > 1);
-
-  const getValues = (id, values) => {
-    if (id.includes('color')) return extractUniqueColorNames(values);
-    return values;
+    return component || <DefaultFilters filter={filter} />;
   };
 
   return (
     <div className={styles.filters}>
-      {Array.isArray(filters) &&
-        filters.map((filter) => (
+      {Array.isArray(allFilters) &&
+        allFilters.map((filter) => (
           <div className={styles.filterContainer} key={filter.label}>
             <b className={styles.label}>{filter.label}</b>
-            <div className={styles.filter}>
-              {getValues(filter.id, filter.values).map((value) => (
-                <button
-                  key={value.label}
-                  className={`${styles.button} ${isAlreadyApplied(value.id) && styles.checked} ${
-                    isSelected(value.id) && styles.selected
-                  }`}
-                  type="button"
-                  onClick={() =>
-                    isAlreadyApplied(value.id) || isSelected(value.id)
-                      ? dispatch({
-                          type: actions.SET_SELECTED_FILTERS,
-                          payload: selectedFilters.filter((f) => f.id !== value.id),
-                        })
-                      : dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [...selectedFilters, value] })
-                  }
-                >
-                  <p className={styles.value}>{value.label}</p>
-                </button>
-              ))}
-            </div>
+            <div className={styles.filter}>{getComponent(filter)}</div>
           </div>
         ))}
     </div>

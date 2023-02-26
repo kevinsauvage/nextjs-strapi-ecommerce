@@ -32,8 +32,6 @@ function middleware(request) {
   // Get user auth cookies
   const cookieShopify = cookies.get(config.cookies.shopifyToken);
 
-  console.log('🚀 ~ file: middleware.js:35 ~ middleware ~ cookieShopify:', cookieShopify);
-
   // Cannot access account if not login
   if (
     (!cookieShopify && pathname.startsWith('/account')) ||

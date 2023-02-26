@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import { useRouter } from 'next/router';
 import config from '@/config/index';
 import { numberOfDifferences } from '@/helpers/array';
-import { getFiltersFromQuery } from '@/helpers/index';
+import { getSelectedFilter } from '@/helpers/index';
 import getClient from '@/shopify/index';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
 import useGlobalContext from '../GlobalContext/useGlobalContext';
@@ -19,19 +19,14 @@ export function CollectionProvider({
   const { products: initialProducts, title } = collection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;
+
   const { toggleFilter } = useGlobalContext();
   const { query, push, to, asPath } = useRouter();
 
-  useEffect(() => {
-    if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
-    if (initialPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: initialPageInfo });
-    if (collectionFilters) dispatch({ type: actions.SET_ALL_FILTERS, payload: collectionFilters });
-  }, [collectionFilters, initialPageInfo, initialProducts]);
-
-  const getFormattedFilter = useCallback(() => {
-    const filteredFilters = getFiltersFromQuery(allFilters, query);
-    return filteredFilters.map((item) => JSON.parse(item.input));
-  }, [allFilters, query]);
+  const getFormattedFilter = useCallback(
+    () => selectedFilters.map((item) => JSON.parse(item.input)),
+    [selectedFilters]
+  );
 
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
@@ -84,16 +79,24 @@ export function CollectionProvider({
     dispatch({ type: actions.SET_PRODUCTS, payload: [] });
     const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
     if (selectedFilters.length > 0) {
-      selectedFilters.forEach((item) => newUrl.searchParams.append('filter', item.id));
+      selectedFilters.forEach((item) => newUrl.searchParams.append(item.filterId, item.input));
     }
     if (query.sort_key) newUrl.searchParams.set('sort_key', query.sort_key);
 
     push(newUrl, undefined, { shallow: true });
-    const filters = selectedFilters.map((item) => JSON.parse(item.input));
-
+    const filters = getFormattedFilter();
     const data = await handleGetData(15, filters, query.sort_key, null);
     handleSetFilterState(data);
-  }, [asPath, handleGetData, handleSetFilterState, push, query.sort_key, selectedFilters, toggleFilter]);
+  }, [
+    asPath,
+    getFormattedFilter,
+    handleGetData,
+    handleSetFilterState,
+    push,
+    query.sort_key,
+    selectedFilters,
+    toggleFilter,
+  ]);
 
   const handleSort = useCallback(
     async (value) => {
@@ -114,22 +117,72 @@ export function CollectionProvider({
   }, [getFormattedFilter, handleGetData, handleSetFilterState, pageInfo.endCursor, query.sort_key]);
 
   const isSelectionDifferent = useCallback(() => {
-    const filteredFilters = getFiltersFromQuery(allFilters, query);
+    const filteredFilters = getSelectedFilter(allFilters, query);
     return numberOfDifferences(filteredFilters, selectedFilters);
   }, [allFilters, query, selectedFilters]);
+
+  const isSelected = useCallback(
+    (filterId, input) => {
+      const res = selectedFilters?.some((filter) => filter.input === input && filter.filterId === filterId);
+      return res;
+    },
+    [selectedFilters]
+  );
+
+  const handleSetFilters = useCallback(
+    (filterId, input) => {
+      if (isSelected(filterId, input)) {
+        const newFilters = selectedFilters.filter((filter) => {
+          if (filter.filterId !== filterId) return true;
+          if (filter.input !== input) return true;
+          return false;
+        });
+
+        dispatch({
+          type: actions.SET_SELECTED_FILTERS,
+          payload: newFilters,
+        });
+      } else {
+        dispatch({
+          type: actions.SET_SELECTED_FILTERS,
+          payload: [...selectedFilters, { filterId, input }],
+        });
+      }
+    },
+    [isSelected, selectedFilters]
+  );
+
+  const handleSetUniqueFilters = useCallback(
+    async (filterId, input) => {
+      const newFilters = selectedFilters.filter((filter) => {
+        if (filter.filterId !== filterId) return true;
+        return false;
+      });
+
+      dispatch({
+        type: actions.SET_SELECTED_FILTERS,
+        payload: [...newFilters, { filterId, input }],
+      });
+    },
+    [selectedFilters]
+  );
+
+  useEffect(() => {
+    if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
+    if (initialPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: initialPageInfo });
+    if (collectionFilters) dispatch({ type: actions.SET_ALL_FILTERS, payload: collectionFilters });
+  }, [collectionFilters, initialPageInfo, initialProducts]);
 
   useEffect(() => {
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
   }, [query.collectionSlug]);
 
   useEffect(() => {
-    if (query?.filter) {
-      const filteredFilters = getFiltersFromQuery(allFilters, query);
-      if (Array.isArray(filteredFilters)) {
-        dispatch({ type: actions.SET_SELECTED_FILTERS, payload: filteredFilters });
-      }
-    } else dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
-  }, [query, allFilters]);
+    const filteredFilters = getSelectedFilter(allFilters, query);
+    if (Array.isArray(filteredFilters)) {
+      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: filteredFilters });
+    }
+  }, [allFilters, query]);
 
   useEffect(() => {
     if (menu) {
@@ -153,6 +206,9 @@ export function CollectionProvider({
       isSelectionDifferent,
       collectionNav,
       title,
+      isSelected,
+      handleSetFilters,
+      handleSetUniqueFilters,
     }),
     [
       selectedFilters,
@@ -168,6 +224,9 @@ export function CollectionProvider({
       isSelectionDifferent,
       collectionNav,
       title,
+      isSelected,
+      handleSetFilters,
+      handleSetUniqueFilters,
     ]
   );
 

@@ -123,11 +123,12 @@ export function CartProvider({ children }) {
 
   const updateCartBuyerIdentity = useCallback(
     async (customer, token) => {
-      const cartId = window.localStorage.getItem(cartIdStorageKey);
+      if (!cart?.id) return console.warn('Missing cart');
+      if (!customer) return console.warn('Missing customer');
+      if (!token) return console.warn('Missing token');
+      if (cart?.buyerIdentity) return console.warn('Buyer identity already present');
 
-      if (!cartId) return console.error('Missing cart id storage');
-      if (!customer) return console.error('Missing customer');
-      if (!token) return console.error('Missing token');
+      console.warn('updateCartBuyerIdentity call happening');
 
       // TODO: ADD SHIPPING ADDRESS
       const buyerInput = {
@@ -137,7 +138,7 @@ export function CartProvider({ children }) {
 
       const updateResponse = await getClient().storefront.cart.cartBuyerIdentityUpdate({
         buyerIdentity: buyerInput,
-        cartId,
+        cartId: cart.id,
       });
 
       const newCart = updateResponse?.cart;
@@ -147,7 +148,7 @@ export function CartProvider({ children }) {
       }
       return null;
     },
-    [handleSetCart]
+    [cart?.buyerIdentity, cart?.id, handleSetCart]
   );
 
   useEffect(() => {

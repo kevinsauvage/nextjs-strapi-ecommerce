@@ -13,7 +13,7 @@ import Slide from '@/components/Slide/Slide';
 import Container from '@/components/Container/Container';
 import FilterManager from '@/components/_scopes/collection/Filters/FilterManager/FilterManager';
 import { useRouter } from 'next/router';
-import { getFiltersFromQuery } from '@/helpers/index';
+import { getSelectedFilter } from '@/helpers/index';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
@@ -28,8 +28,6 @@ function CollectionLayout({ children, collection }) {
 
   const { filterOpen, toggleFilter } = useGlobalContext();
   const { title, description, image } = collection || {};
-
-  console.log('🚀 ~ file: CollectionLayout.js:32 ~ CollectionLayout ~ collection:', collection);
 
   const { query } = useRouter();
 
@@ -50,8 +48,8 @@ function CollectionLayout({ children, collection }) {
               <button className={styles.filterButton} type="button" onClick={() => toggleFilter(true)}>
                 {filter} Filter{' '}
                 <small>
-                  {getFiltersFromQuery(allFilters, query).length
-                    ? `(${getFiltersFromQuery(allFilters, query).length.toString()})`
+                  {getSelectedFilter(allFilters, query).length
+                    ? `(${getSelectedFilter(allFilters, query).length.toString()})`
                     : null}
                 </small>
               </button>

@@ -1,0 +1,13 @@
+.priceFilters {
+}
+
+.priceInputs {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+}
