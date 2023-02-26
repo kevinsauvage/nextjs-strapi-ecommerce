@@ -104,7 +104,7 @@ export function CollectionProvider({
       dispatch({ type: actions.SET_PRODUCTS, payload: [] });
       push({ pathname: to, query: { ...query, sort_key: value } }, undefined, { shallow: true });
       const filters = getFormattedFilter();
-      const data = await handleGetData(15, filters, value, null);
+      const data = await handleGetData(30, filters, value, null);
       return handleSetFilterState(data);
     },
     [getFormattedFilter, handleGetData, handleSetFilterState, push, query, to]
@@ -112,7 +112,7 @@ export function CollectionProvider({
 
   const handleNext = useCallback(async () => {
     const filters = getFormattedFilter();
-    const data = await handleGetData(15, filters, query.sort_key, pageInfo.endCursor);
+    const data = await handleGetData(30, filters, query.sort_key, pageInfo.endCursor);
     handleSetFilterState(data, true);
   }, [getFormattedFilter, handleGetData, handleSetFilterState, pageInfo.endCursor, query.sort_key]);
 
