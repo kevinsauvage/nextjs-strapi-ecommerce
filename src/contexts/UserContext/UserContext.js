@@ -47,7 +47,7 @@ export function UserProvider({ children }) {
       return push(config.routes.logout);
     };
     getCustomer();
-  }, [user, showToast, setUserWishlist, setUser, push, dispatch]);
+  }, [user, showToast, setUser, push, dispatch]);
 
   useEffect(() => {
     const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
