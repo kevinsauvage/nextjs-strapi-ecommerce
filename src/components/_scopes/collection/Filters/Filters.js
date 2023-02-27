@@ -1,44 +1,16 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
-import { extractUniqueColorNames } from '@/helpers/index';
+import { getSelectedFilter } from '@/helpers/index';
+import { useRouter } from 'next/router';
+import Button from '@/components/Button/Button';
 import PriceFilters from './PriceFilters/PriceFilters';
 import styles from './Filters.module.scss';
-
-const DefaultFilters = ({ filter }) => {
-  const { handleSetFilters, isSelected } = useCollectionContext();
-
-  return filter?.values?.map((value) => (
-    <button
-      key={value.label}
-      style={{ backgroundColor: value.label }}
-      className={`${styles.button} ${isSelected(filter.id, value.input) && styles.selected}`}
-      type="button"
-      onClick={() => handleSetFilters(filter.id, value.input)}
-    >
-      <p className={styles.value}>{value.label}</p>
-    </button>
-  ));
-};
-
-function ColorFilters({ filter }) {
-  const { handleSetFilters, isSelected } = useCollectionContext();
-
-  const colors = extractUniqueColorNames(filter.values);
-
-  return colors.map((value) => (
-    <button
-      key={value.label}
-      style={{ backgroundColor: value.label }}
-      className={`${styles.button} ${styles.color} ${isSelected(filter.id, value.input) && styles.selected}`}
-      type="button"
-      onClick={() => handleSetFilters(filter.id, value.input)}
-    >
-      <div className={styles.value} />
-    </button>
-  ));
-}
+import ColorFilters from './ColorFilters/ColorFilters';
+import Filter from './Filter/Filter';
+import DefaultFilters from './DefaultFilters/DefaultFilters';
 
 export default function Filters() {
-  const { allFilters } = useCollectionContext();
+  const { allFilters, applyFilters, isSelectionDifferent, resetFilters } = useCollectionContext();
+  const { query } = useRouter();
 
   const getComponent = (filter) => {
     const components = {
@@ -53,13 +25,37 @@ export default function Filters() {
 
   return (
     <div className={styles.filters}>
+      <div className={styles.header}>
+        <h3 className={styles.title}>
+          Filters{' '}
+          <small>
+            {getSelectedFilter(allFilters, query).length
+              ? `(${getSelectedFilter(allFilters, query).length.toString()})`
+              : null}
+          </small>
+        </h3>
+        {getSelectedFilter(allFilters, query).length ? (
+          <button className={styles.reset} type="button" onClick={resetFilters}>
+            Reset all
+          </button>
+        ) : null}
+      </div>
       {Array.isArray(allFilters) &&
         allFilters.map((filter) => (
-          <div className={styles.filterContainer} key={filter.label}>
-            <b className={styles.label}>{filter.label}</b>
-            <div className={styles.filter}>{getComponent(filter)}</div>
-          </div>
+          <Filter key={filter.id} filter={filter}>
+            {getComponent(filter)}
+          </Filter>
         ))}
+
+      <Button
+        extraClass={styles.button}
+        type="button"
+        primary
+        onClick={applyFilters}
+        disabled={!isSelectionDifferent()}
+      >
+        Apply filters
+      </Button>
     </div>
   );
 }

@@ -1,0 +1,26 @@
+.button {
+  border-radius: $radius;
+  min-height: 36px;
+  min-width: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  color: var(--onSurface-hight);
+  background-color: var(--surface-100);
+
+  &:hover {
+    background-color: var(--surface-dark-200);
+    color: var(--onSurface-dark);
+  }
+}
+
+.selected {
+  background-color: var(--surface-dark-100);
+  color: var(--onSurface-dark);
+
+  &:hover {
+    color: var(--onSurface-hight);
+    background-color: var(--surface-100);
+  }
+}

@@ -1,0 +1,65 @@
+.CollectionPage {
+  display: flex;
+}
+.aside {
+  max-width: 300px;
+}
+
+.main {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-0);
+  height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background-color: var(--surface-200);
+  padding: 0 var(--space-1);
+}
+
+.headerContainer {
+  height: fit-content;
+}
+
+.filterButton {
+  border: none;
+  text-transform: uppercase;
+  font-weight: $fontWeightSemiBold;
+  padding: 0;
+
+  svg {
+    margin-right: 4px;
+  }
+  path {
+    fill: var(--onSurface-hight);
+  }
+}
+
+.noResults {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-width: 240px;
+  margin: 0 auto;
+  margin-top: var(--space-4);
+  text-align: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  b {
+    font-size: 18px;
+    margin-top: var(--space-1);
+    margin-bottom: var(--space-0);
+  }
+}

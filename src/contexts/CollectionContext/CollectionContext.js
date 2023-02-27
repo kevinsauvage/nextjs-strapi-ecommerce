@@ -5,7 +5,6 @@ import { numberOfDifferences } from '@/helpers/array';
 import { getSelectedFilter } from '@/helpers/index';
 import getClient from '@/shopify/index';
 import { CollectionReducer, initialState, actions } from './CollectionReducer';
-import useGlobalContext from '../GlobalContext/useGlobalContext';
 
 export const CollectionContext = createContext();
 
@@ -19,8 +18,6 @@ export function CollectionProvider({
   const { products: initialProducts, title } = collection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
   const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;
-
-  const { toggleFilter } = useGlobalContext();
   const { query, push, to, asPath } = useRouter();
 
   const getFormattedFilter = useCallback(
@@ -64,7 +61,6 @@ export function CollectionProvider({
   );
 
   const resetFilters = useCallback(async () => {
-    toggleFilter(false);
     dispatch({ type: actions.SET_PRODUCTS, payload: [] });
 
     const newQuery = query.sort_key ? { sort_key: query.sort_key } : {};
@@ -72,10 +68,9 @@ export function CollectionProvider({
     const data = await handleGetData(15, [], query.sort_key, null);
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
     handleSetFilterState(data);
-  }, [asPath, handleGetData, handleSetFilterState, push, query, toggleFilter]);
+  }, [asPath, handleGetData, handleSetFilterState, push, query]);
 
   const applyFilters = useCallback(async () => {
-    toggleFilter(false);
     dispatch({ type: actions.SET_PRODUCTS, payload: [] });
     const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
     if (selectedFilters.length > 0) {
@@ -95,7 +90,6 @@ export function CollectionProvider({
     push,
     query.sort_key,
     selectedFilters,
-    toggleFilter,
   ]);
 
   const handleSort = useCallback(

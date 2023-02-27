@@ -8,7 +8,7 @@ export const GlobalStoreContext = createContext();
 export function GlobalProvider({ children }) {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
-  const { searchOpen, selectedProduct, loading, filterOpen } = states;
+  const { searchOpen, selectedProduct, loading } = states;
 
   const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
 
@@ -26,24 +26,19 @@ export function GlobalProvider({ children }) {
   }, [router.asPath, resetToggle]);
 
   useEffect(() => {
-    if (selectedProduct || loading || filterOpen) {
+    if (selectedProduct || loading) {
       document.body.style.overflow = 'hidden';
     } else document.body.style.overflow = 'visible';
-  }, [selectedProduct, loading, searchOpen, filterOpen]);
+  }, [selectedProduct, loading, searchOpen]);
 
   const values = useMemo(
     () => ({
       searchOpen,
       selectedProduct,
       loading,
-      filterOpen,
 
       toggleLoading: (payload) => {
         dispatch({ type: actions.TOGGLE_LOADING, payload });
-      },
-
-      toggleFilter: (payload) => {
-        dispatch({ type: actions.TOGGLE_FILTERS, payload });
       },
 
       toggleSearch: (payload) => {
@@ -58,7 +53,7 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [searchOpen, selectedProduct, loading, filterOpen, resetToggle]
+    [searchOpen, selectedProduct, loading, resetToggle]
   );
 
   return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;

@@ -1,10 +1,14 @@
-.priceFilters {
-}
-
 .priceInputs {
   display: flex;
   align-items: center;
   gap: var(--space-1);
+
+  input {
+    width: 120px;
+    height: 40px;
+    border-radius: 10px;
+    margin: var(--space-0) 0;
+  }
 }
 
 .label {
