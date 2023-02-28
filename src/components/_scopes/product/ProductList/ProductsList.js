@@ -1,14 +1,15 @@
 import ListDisplay from '@/components/ListDisplay/ListDisplay';
 import Button from '@/components/Button/Button';
-import Container from '@/components/Container/Container';
+import NoResults from '@/components/NoResults/NoResults';
+import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import styles from './ProductList.module.scss';
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 import ProductCardRow from '../ProductCardRow/ProductCardRow';
 
-function ProductsList({ products, layout, hasNextPage, handleNext }) {
+function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, loading }) {
   return (
-    <Container size="medium">
-      {Array.isArray(products) && products.length > 0 && (
+    <div>
+      {Array.isArray(products) && products.length > 0 ? (
         <ListDisplay layout={layout}>
           {products.map((product) =>
             layout === 'grid' ? (
@@ -18,7 +19,11 @@ function ProductsList({ products, layout, hasNextPage, handleNext }) {
             )
           )}
         </ListDisplay>
+      ) : (
+        !loading && <NoResults />
       )}
+
+      {loading && <BlockLoader />}
 
       {Array.isArray(products) && products.length > 0 && handleNext && (
         <div className={styles.nextButton}>
@@ -27,7 +32,7 @@ function ProductsList({ products, layout, hasNextPage, handleNext }) {
           </Button>
         </div>
       )}
-    </Container>
+    </div>
   );
 }
 

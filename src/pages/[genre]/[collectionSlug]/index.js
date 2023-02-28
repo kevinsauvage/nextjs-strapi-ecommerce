@@ -11,7 +11,7 @@ export default function CollectionSlugPage(props) {
 CollectionSlugPage.getLayout = function getLayout(page) {
   return (
     <CollectionProvider {...page.props}>
-      <CollectionLayout collection={page.props.collection}>{page}</CollectionLayout>
+      <CollectionLayout>{page}</CollectionLayout>
     </CollectionProvider>
   );
 };

@@ -6,8 +6,8 @@ import Container from '@/components/Container/Container';
 import PageLayout from '../PageLayout/PageLayout';
 import styles from './CollectionLayout.module.scss';
 
-function CollectionLayout({ children, collection }) {
-  const { collectionNav } = useCollectionContext();
+function CollectionLayout({ children }) {
+  const { collectionNav, collection } = useCollectionContext();
   const { title, description, image } = collection || {};
 
   return (

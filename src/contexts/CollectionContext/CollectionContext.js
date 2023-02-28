@@ -10,14 +10,15 @@ export const CollectionContext = createContext();
 
 export function CollectionProvider({
   children,
-  collection,
+  collection: initialCollection,
   pageInfo: initialPageInfo,
   collectionFilters,
   menu,
 }) {
-  const { products: initialProducts, title } = collection || {};
+  const { products: initialProducts } = initialCollection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
-  const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav } = states;
+  const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav, collection } =
+    states;
   const { query, push, to, asPath } = useRouter();
 
   const getFormattedFilter = useCallback(
@@ -55,7 +56,6 @@ export function CollectionProvider({
           payload: concat ? [...products, ...newProducts] : newProducts,
         });
       }
-      if (!concat) window.scrollTo(0, 0);
     },
     [products]
   );
@@ -165,7 +165,8 @@ export function CollectionProvider({
     if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
     if (initialPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: initialPageInfo });
     if (collectionFilters) dispatch({ type: actions.SET_ALL_FILTERS, payload: collectionFilters });
-  }, [collectionFilters, initialPageInfo, initialProducts]);
+    if (initialCollection) dispatch({ type: actions.SET_COLLECTION, payload: initialCollection });
+  }, [initialCollection, collectionFilters, initialPageInfo, initialProducts]);
 
   useEffect(() => {
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
@@ -186,7 +187,6 @@ export function CollectionProvider({
 
   const values = useMemo(
     () => ({
-      selectedFilters,
       allFilters,
       pageInfo,
       products,
@@ -199,13 +199,12 @@ export function CollectionProvider({
       handleNext,
       isSelectionDifferent,
       collectionNav,
-      title,
       isSelected,
       handleSetFilters,
       handleSetUniqueFilters,
+      collection,
     }),
     [
-      selectedFilters,
       allFilters,
       pageInfo,
       products,
@@ -217,10 +216,10 @@ export function CollectionProvider({
       handleNext,
       isSelectionDifferent,
       collectionNav,
-      title,
       isSelected,
       handleSetFilters,
       handleSetUniqueFilters,
+      collection,
     ]
   );
 
