@@ -13,3 +13,7 @@
 .outlined {
   @include button-outlined;
 }
+
+.contrast {
+  @include button-contrast;
+}

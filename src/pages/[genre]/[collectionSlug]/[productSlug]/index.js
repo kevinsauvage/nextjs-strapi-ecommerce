@@ -23,8 +23,8 @@ function ProductPage({ product, recommendations = [] }) {
             <div className={styles.recommendations}>
               <Container size="medium">
                 <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+                <ProductsList products={recommendations} layout="grid" />
               </Container>
-              <ProductsList products={recommendations} layout="grid" />
             </div>
           )}
         </PageLayout>

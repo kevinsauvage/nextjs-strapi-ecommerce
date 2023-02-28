@@ -167,7 +167,7 @@
   align-items: center;
   justify-content: center;
   white-space: nowrap;
-  padding: 14px 40px;
+  padding: 14px 30px;
   border-radius: $radius;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -175,12 +175,19 @@
   transition: all 0.3s ease-in;
   border: 2px solid transparent;
   @include boxShadow(2);
+  svg {
+    margin-right: var(--space-1);
+  }
 }
 
 @mixin button-primary {
   @include button;
   background-color: var(--primary-500);
   color: var(--onSurface-dark);
+
+  path {
+    stroke: var(--onSurface-dark);
+  }
 
   &:hover:enabled {
     background-color: var(--primary-700);
@@ -203,6 +210,22 @@
   border: 2px solid var(--surface-dark-100);
   background-color: transparent;
   color: var(--surface-dark-100);
+
+  &:hover:enabled {
+    background-color: var(--surface-dark-100);
+    color: var(--onSurface-dark);
+  }
+}
+
+@mixin button-contrast {
+  @include button;
+  border: 2px solid var(--surface-dark-100);
+  background-color: var(--surface-dark-100);
+  color: var(--onSurface-dark);
+
+  path {
+    stroke: var(--onSurface-dark);
+  }
 
   &:hover:enabled {
     background-color: var(--surface-dark-100);

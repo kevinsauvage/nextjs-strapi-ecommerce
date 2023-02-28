@@ -5,9 +5,9 @@
   position: sticky;
   top: 20px;
   height: 100%;
-  max-width: 500px;
-  width: 50%;
-  background-color: var(--surface-100);
+  background-color: var(--surface-200);
+  border: 1px solid var(--surface-300);
+  border-radius: $radius;
 
   &.Separator + .Separator {
     display: none;
@@ -15,10 +15,16 @@
 }
 
 .list {
-  margin-bottom: var(--space-1);
+  margin-bottom: var(--space-2);
   li {
     @include text-shorten(1);
   }
+}
+
+.options {
+  border-top: 1px solid var(--surface-300);
+  border-bottom: 1px solid var(--surface-300);
+  padding: var(--space-2) 0;
 }
 
 .type {
@@ -32,32 +38,42 @@
 
 .title {
   position: relative;
+  @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
+  margin-bottom: var(--space-1);
 }
 
 .wrapper {
   display: flex;
+  align-items: center;
   gap: var(--space-1);
   margin-top: var(--space-2);
   flex-wrap: wrap;
 }
 
-.variantButton {
-  padding: 0;
-  margin: 0;
-  margin-bottom: var(--space-1);
-  border-radius: $radius;
-  overflow: hidden;
-  max-width: 80px;
-  border: 2px solid var(--surface-800);
+.prices {
+}
 
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: $radius;
+.totalPrice,
+.unitPrice {
+  height: 100%;
+  font-weight: 800;
+
+  &:first-of-type {
+    margin-right: var(--space-2);
   }
 
-  &.selectedVariant {
-    border: 2px solid var(--surface-dark-100) !important;
+  p {
+    font-weight: 600;
+    @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+  }
+}
+
+.totalPrice {
+  margin-right: var(--space-2);
+}
+
+.isWishlist {
+  path {
+    fill: var(--onSurface-dark);
   }
 }

@@ -20,6 +20,7 @@ export default function Button({
     if (primary) return styles.primary;
     if (secondary) return styles.secondary;
     if (outlined) return styles.outlined;
+    if (contrast) return styles.contrast;
     return '';
   };
 

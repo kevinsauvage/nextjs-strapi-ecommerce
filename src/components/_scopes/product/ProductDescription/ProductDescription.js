@@ -1,5 +1,10 @@
 import Button from '@/components/Button/Button';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
+import { heart, bag } from '@/assets/svg';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+
+import { useState } from 'react';
+import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
 
@@ -16,6 +21,18 @@ export default function ProductDescription({
 }) {
   const { productType, variants, options, title } = product || {};
 
+  console.log('🚀 ~ file: ProductDescription.js:21 ~ product:', product);
+
+  const { handleSetProductToWishList, isWishlist } = useUserContext();
+
+  const [loading, setLoading] = useState(false);
+
+  const handleWishlist = async () => {
+    setLoading(true);
+    await handleSetProductToWishList(product);
+    setLoading(false);
+  };
+
   const {
     quantityAvailable,
     availableForSale,
@@ -28,6 +45,7 @@ export default function ProductDescription({
 
   return (
     <div className={styles.ProductDescription}>
+      {loading && <PageLoader />}
       <h1 className={styles.title}>{title}</h1>
       <ul className={styles.list}>
         <li>
@@ -48,10 +66,7 @@ export default function ProductDescription({
           <b>Selected variant: </b>
           <small>{variantTitle}</small>
         </li>
-        <li>
-          <b>Unit price: </b>
-          <small>{`${priceV2?.amount} ${priceV2?.currencyCode}`}</small>
-        </li>
+
         {weight && (
           <li>
             <b>Weight: </b>
@@ -59,28 +74,52 @@ export default function ProductDescription({
           </li>
         )}
       </ul>
-
-      <Options
-        options={options}
-        isOptionOutOfStock={isOptionOutOfStock}
-        isSelected={isOptionSelected}
-        handleClick={handleSetSelectedProductOption}
-        variants={variants}
-      />
-      <div className={styles.wrapper}>
+      <div className={styles.options}>
+        <Options
+          options={options}
+          isOptionOutOfStock={isOptionOutOfStock}
+          isSelected={isOptionSelected}
+          handleClick={handleSetSelectedProductOption}
+          variants={variants}
+        />
         <QuantityUpdater
-          showTitle={false}
+          showTitle
           originalQuantity={1}
           onChange={handleChangeInput}
           quantityAvailable={quantityAvailable}
         />
+      </div>
+      <div className={`${styles.wrapper} ${styles.prices}`}>
+        <div className={styles.unitPrice}>
+          <small>Unit price</small>
+          <p>
+            {priceV2?.currencyCode} {priceV2?.amount}
+          </p>
+        </div>
+
+        <div className={styles.totalPrice}>
+          <small>Total price</small>
+          <p>
+            {priceV2?.currencyCode} {totalPrice}
+          </p>
+        </div>
+      </div>
+      <div className={styles.wrapper}>
         <Button
           type="button"
           primary
           disabled={!availableForSale || quantityAvailable < quantity}
           onClick={handleAddToCart}
         >
-          {availableForSale ? `ADD TO CART (${priceV2?.currencyCode} ${totalPrice})` : 'SOLD OUT'}
+          {bag} {availableForSale ? 'ADD TO CART' : 'SOLD OUT'}
+        </Button>
+        <Button
+          type="button"
+          contrast
+          onClick={() => handleWishlist()}
+          extraClass={isWishlist(product) && styles.isWishlist}
+        >
+          {heart} {isWishlist(product) ? 'Remove from' : 'Add to'} wishlist
         </Button>
       </div>
     </div>

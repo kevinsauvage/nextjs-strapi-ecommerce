@@ -17,8 +17,15 @@ $boxDimension: 36px;
   align-items: center;
   border-radius: $radius;
   @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  border: 2px solid var(--surface-800);
-  color: var(--surface-900);
+  border: 1px solid var(--surface-dark-100);
+  color: var(--onSurface-hight);
+  background-color: var(--surface-100);
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: var(--surface-200);
+  }
 }
 
 .name {
@@ -35,6 +42,13 @@ $boxDimension: 36px;
 }
 
 .selectedOption {
-  border: 2px solid var(--surface-dark-100);
-  color: var(--surface-dark-100);
+  border: 1px solid var(--surface-dark-100);
+  color: var(--onSurface-dark);
+  background-color: var(--surface-dark-100);
+
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: var(--surface-dark-200);
+  }
 }
