@@ -3,6 +3,7 @@ $boxDimension: 36px;
 .quantityContainer {
   margin-top: var(--space-0);
 }
+
 .label {
   display: block;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);

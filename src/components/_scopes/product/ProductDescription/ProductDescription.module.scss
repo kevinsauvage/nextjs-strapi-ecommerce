@@ -27,15 +27,6 @@
   padding: var(--space-2) 0;
 }
 
-.type {
-  color: white;
-  background-color: green;
-  border-radius: 3px;
-  padding: var(--space-0);
-  width: fit-content;
-  margin-bottom: var(--space-1);
-}
-
 .title {
   position: relative;
   @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
@@ -48,9 +39,6 @@
   gap: var(--space-1);
   margin-top: var(--space-2);
   flex-wrap: wrap;
-}
-
-.prices {
 }
 
 .totalPrice,
