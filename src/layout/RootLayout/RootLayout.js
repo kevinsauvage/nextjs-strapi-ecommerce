@@ -15,10 +15,11 @@ function RootLayout({ children }) {
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
 
+  console.log('🚀 ~ file: RootLayout.js:18 ~ RootLayout ~ shopInfo:', shopInfo);
+
   useEffect(() => {
     const fetchData = async () => {
-      const [header] = await Promise.all([getClient().storefront.shop.getMenu({ handle: 'main-menu' })]);
-
+      const header = await getClient().storefront.shop.getMenu({ handle: 'main-menu' });
       setMenuHeader(header);
     };
     fetchData();
@@ -42,7 +43,7 @@ function RootLayout({ children }) {
       <SearchBar />
       <Header headerMenu={menuHeader} />
       {children}
-      <Footer menuFooter={menuFooter} shopInfo={shopInfo} />
+      <Footer menuFooter={menuFooter} />
       {loading && <PageLoader />}
       {selectedProduct && (
         <ModalProduct handleClose={() => setSelectedProduct(false)} selectedProduct={selectedProduct} />

@@ -5,12 +5,19 @@ import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsD
 import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
 import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
 import getClient from '@/shopify/index';
+import Head from 'next/head';
+import config from '@/config/index';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
-  const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
+  const { banner, categories, featuredCollections, bigCardCollections, seo } = homeData || {};
+  const siteTitle = `${config.name} ${seo?.title && `| ${seo?.title}`}`;
 
   return (
     <div>
+      <Head>
+        <title>{siteTitle}</title>
+        <meta key="description" name="description" content={seo?.description} />
+      </Head>
       <Banner1 data={banner} />
       <Container>
         {categories && <CollectionsRow collections={categories} />}

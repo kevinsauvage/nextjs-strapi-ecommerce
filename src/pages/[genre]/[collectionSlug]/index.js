@@ -18,13 +18,27 @@ CollectionSlugPage.getLayout = function getLayout(page) {
 
 export async function getServerSideProps(ctx) {
   const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } = getInfoFromCtx(ctx);
+
+  const filters = Object.keys(query).reduce((acc, key) => {
+    if (key.startsWith('filter')) {
+      const filter = query[key];
+      if (Array.isArray(filter)) {
+        filter.map((f) => acc.push(JSON.parse(f)));
+      } else {
+        acc.push(JSON.parse(filter));
+      }
+    }
+    return acc;
+  }, []);
+
   const data = await getClient(delegateToken, ip).storefront.collection.collection({
     handle: collectionSlug,
-    filters: [],
+    filters,
     first: 12,
     after: startCursor,
     sort: sortKey,
   });
+
   const menu = await getClient(delegateToken, ip).storefront.shop.getMenu({
     handle: `collections-${query.genre}`,
   });

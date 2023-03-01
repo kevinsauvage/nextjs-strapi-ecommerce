@@ -70,6 +70,17 @@ const colors = [
   'magenta',
   'crimson',
   'teal',
+  'aquamarine',
+  'chartreuse',
+  'coral',
+  'fuchsia',
+  'khaki',
+  'lavender',
+  'lime',
+  'mustard',
+  'peach',
+  'salmon',
+  'sienna',
 ];
 
 export const extractUniqueColorNames = (data) => {

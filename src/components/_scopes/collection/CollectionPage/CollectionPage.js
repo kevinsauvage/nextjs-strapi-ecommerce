@@ -16,7 +16,7 @@ function CollectionPage() {
         <Filters />
       </aside>
       <main className={styles.main}>
-        <div size="medium" extraClass={styles.headerContainer}>
+        <div size="medium" className={styles.headerContainer}>
           <div className={styles.header}>
             <LayoutButtons
               handleChange={(payload) => dispatch({ type: actions.SET_LAYOUT, payload })}

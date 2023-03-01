@@ -1,15 +1,16 @@
 import Container from '@/components/Container/Container';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import siteMetadata from '@/data/siteMetadata';
 import styles from './Footer.module.scss';
 
-function Footer({ menuFooter, shopInfo }) {
+function Footer({ menuFooter }) {
   return (
     <>
       <footer className={styles.footer}>
         <Container extraClass={styles.container}>
           <div className={styles.about}>
             <b className={styles.title}>About</b>
-            <p className={styles.navItem}>{shopInfo?.description}</p>
+            <p className={styles.navItem}>{siteMetadata?.about?.short}</p>
           </div>
           <ul className={styles.navList}>
             {Array.isArray(menuFooter) &&
