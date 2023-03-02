@@ -18,12 +18,10 @@ export default function Home({ bestSelling, newArrival, homeData }) {
         <meta key="description" name="description" content={seo.home.description} />
       </Head>
       <Banner1 data={banner} />
-      <Container>
+      <Container size="medium">
         {categories && <CollectionsRow collections={categories} />}
         {featuredCollections && <CollectionGrid collections={featuredCollections} />}
-        <Container size="medium">
-          <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
-        </Container>
+        <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
         {bigCardCollections && <CollectionBigBanner collections={bigCardCollections} />}
       </Container>
     </div>
