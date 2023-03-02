@@ -38,7 +38,7 @@ export default function Breadcrumbs({ lastElement }) {
               {breadcrumbs.map((crumb, idx) => (
                 <li key={crumb.href} className={styles.item}>
                   {lastElement && idx === breadcrumbs.length - 1 ? (
-                    <p>{lastElement}</p>
+                    <p className={styles.item}>{lastElement}</p>
                   ) : (
                     <Crumbs {...crumb} last={idx === breadcrumbs.length - 1} />
                   )}

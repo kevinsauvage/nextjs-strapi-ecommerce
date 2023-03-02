@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import config from '@/config/index';
-import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import Tooltip from '@/components/Tooltip/Tooltip';
+import { edit, remove } from '@/assets/svg';
 import style from './Address.module.scss';
 
 function Address({ address, handleDelete, handleSetAsDefault, isDefault, displayButton = true }) {
@@ -28,12 +29,19 @@ function Address({ address, handleDelete, handleSetAsDefault, isDefault, display
       <div className={style.side}>
         {displayButton ? (
           <div className={style.buttons}>
-            <Link className={style.button} href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}>
-              <FaRegEdit />
-            </Link>
-            <button type="button" onClick={handleDelete} className={style.button}>
-              <FaRegTrashAlt />
-            </button>
+            <Tooltip text="Edit address">
+              <Link
+                className={style.button}
+                href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
+              >
+                {edit}
+              </Link>
+            </Tooltip>
+            <Tooltip text="Remove Address">
+              <button type="button" onClick={handleDelete} className={style.button}>
+                {remove}
+              </button>
+            </Tooltip>
           </div>
         ) : null}
 

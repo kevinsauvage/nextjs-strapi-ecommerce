@@ -1,3 +1,5 @@
+import Head from 'next/head';
+import seo from '@/data/seo';
 import Container from '@/components/Container/Container';
 import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
@@ -5,24 +7,23 @@ import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsD
 import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
 import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
 import getClient from '@/shopify/index';
-import Head from 'next/head';
-import config from '@/config/index';
 
 export default function Home({ bestSelling, newArrival, homeData }) {
-  const { banner, categories, featuredCollections, bigCardCollections, seo } = homeData || {};
-  const siteTitle = `${config.name} ${seo?.title && `| ${seo?.title}`}`;
+  const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
     <div>
       <Head>
-        <title>{siteTitle}</title>
-        <meta key="description" name="description" content={seo?.description} />
+        <title>{seo.home.title}</title>
+        <meta key="description" name="description" content={seo.home.description} />
       </Head>
       <Banner1 data={banner} />
       <Container>
         {categories && <CollectionsRow collections={categories} />}
         {featuredCollections && <CollectionGrid collections={featuredCollections} />}
-        <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
+        <Container size="medium">
+          <ProductsDisplay bestSelling={bestSelling} newArrival={newArrival} />
+        </Container>
         {bigCardCollections && <CollectionBigBanner collections={bigCardCollections} />}
       </Container>
     </div>
@@ -30,10 +31,7 @@ export default function Home({ bestSelling, newArrival, homeData }) {
 }
 
 export async function getStaticProps() {
-  const bestSelling = await getClient().storefront.product.getProducts({
-    sortKey: 'BEST_SELLING',
-    first: 9,
-  });
+  const bestSelling = await getClient().storefront.product.getProducts({ sortKey: 'BEST_SELLING', first: 9 });
   const newArrival = await getClient().storefront.product.getProducts({ sortKey: 'CREATED_AT', first: 9 });
   const homeData = await getClient().storefront.shop.getMetaObject({
     handle: { type: 'page_data', handle: 'page-data-home' },

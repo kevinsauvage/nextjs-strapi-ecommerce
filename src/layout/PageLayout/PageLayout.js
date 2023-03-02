@@ -3,7 +3,7 @@ import config from '@/config/index';
 import styles from './PageLayout.module.scss';
 
 export default function PageLayout({ children, title, description }) {
-  const siteTitle = `${config.name}${title && `| ${title}`}`;
+  const siteTitle = `${config.name} ${title && `| ${title}`}`;
 
   return (
     <div className={`${styles.page}`}>

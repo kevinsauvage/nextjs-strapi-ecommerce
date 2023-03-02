@@ -7,7 +7,7 @@
   color: var(--onSurface-medium);
   border: 0.1px solid var(--surface-300);
   position: relative;
-  background-color: var(--surface-100);
+  background-color: var(--surface-200);
 }
 
 .side {
@@ -20,15 +20,23 @@
 .buttons {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: $gapSmall;
 }
 
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: fit-content;
+  display: block;
+  position: relative;
   border: none;
+  box-sizing: border-box;
+  padding: 0px;
+  margin: 0 2px;
+
+  svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
 }
 
 .setAsDefault {

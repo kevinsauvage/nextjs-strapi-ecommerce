@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Tooltip from '@/components/Tooltip/Tooltip';
+import { remove } from '@/assets/svg';
 import styles from './CartItem.module.scss';
 import { Row, TData } from '../../table/Table/Table';
 import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
@@ -30,7 +32,10 @@ export default function CartItem({ handleChange, removeFromCart, item }) {
         </div>
       </TData>
       <TData>
-        <span className={styles.price}>€{priceV2.amount}</span>
+        <span className={styles.price}>
+          {priceV2?.amount}
+          {priceV2?.currencyCode}
+        </span>
       </TData>
       <TData>
         <QuantityUpdater
@@ -46,12 +51,17 @@ export default function CartItem({ handleChange, removeFromCart, item }) {
         />
       </TData>
       <TData>
-        <span className={styles.subtotal}>€{totalPrice.toFixed(2)}</span>
+        <span className={styles.subtotal}>
+          {totalPrice.toFixed(2)}
+          {priceV2?.currencyCode}
+        </span>
       </TData>
       <TData>
-        <button type="button" className={styles.button} onClick={() => removeFromCart(id)}>
-          Remove
-        </button>
+        <Tooltip text="Remove from cart">
+          <button type="button" className={styles.button} onClick={() => removeFromCart(id)}>
+            {remove}
+          </button>
+        </Tooltip>
       </TData>
     </Row>
   );

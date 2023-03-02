@@ -6,6 +6,7 @@ import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 function Addresses() {
   const { toggleLoading } = useGlobalContext();
@@ -44,7 +45,10 @@ function Addresses() {
   };
 
   return (
-    <PageLayout title="Create new address">
+    <PageLayout
+      title={seo.account.addresses.create.title}
+      description={seo.account.addresses.create.description}
+    >
       <AccountLayout title="Create address">
         <AddressForm buttonText="Create Address" onSubmit={handleSubmit} />
       </AccountLayout>

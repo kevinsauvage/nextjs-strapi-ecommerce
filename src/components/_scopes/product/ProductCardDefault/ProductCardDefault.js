@@ -6,6 +6,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { heart, eye } from '@/assets/svg';
 import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
+import Tooltip from '@/components/Tooltip/Tooltip';
 import styles from './ProductCardDefault.module.scss';
 import Price from '../Price/Price';
 
@@ -30,29 +31,33 @@ export default function ProductCardDefault({ product = {} }) {
     <li className={styles.productCardDefault}>
       {loading && <AbsoluteLoader />}
       <div className={styles.buttons}>
-        <button
-          className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
-          type="button"
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            handleWishlist();
-          }}
-        >
-          {heart}
-        </button>
-        <button
-          className={styles.quickView}
-          type="button"
-          aria-label="Quick view"
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            setSelectedProduct(product);
-          }}
-        >
-          {eye}
-        </button>
+        <Tooltip text={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}>
+          <button
+            className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              handleWishlist();
+            }}
+          >
+            {heart}
+          </button>
+        </Tooltip>
+        <Tooltip text="Quick view">
+          <button
+            className={styles.quickView}
+            type="button"
+            aria-label="Quick view"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setSelectedProduct(product);
+            }}
+          >
+            {eye}
+          </button>
+        </Tooltip>
       </div>
       <Link
         ref={cardRef}

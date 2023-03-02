@@ -11,6 +11,7 @@ import Loader from '@/components/_loaders/Loader/Loader';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 import styles from './Orders.module.scss';
 
 export default function OrdersPage() {
@@ -59,7 +60,7 @@ export default function OrdersPage() {
     'This page shows all of your previous orders in one place. You can see the order number, date, items purchased, and order status. This makes it easy to keep track of your orders and track their progress. You can use this page to view and manage your orders whenever you need to.';
 
   return (
-    <PageLayout title="Orders" description={description}>
+    <PageLayout title={seo.account.orders.title} description={seo.account.orders.description}>
       <AccountLayout title="Orders" titleBannerChildren="My orders" descriptionBannerChildren={description}>
         {!isLoading && !orders?.length ? (
           <div>

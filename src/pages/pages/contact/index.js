@@ -9,6 +9,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import seo from '@/data/seo';
 
 function ContactPage() {
   const { toggleLoading } = useGlobalContext();
@@ -33,7 +34,7 @@ function ContactPage() {
   };
 
   return (
-    <PageLayout title="Contact Us">
+    <PageLayout title={seo.pages.contact.title} description={seo.pages.contact.description}>
       <PageBanner title="Contact Us" />
       <Breadcrumbs />
       <FormContainer>

@@ -8,6 +8,7 @@ import config from '@/config/index';
 import { useEffect, useState } from 'react';
 import getClient from '@/shopify/index';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import seo from '@/data/seo';
 import styles from './Wishlist.module.scss';
 
 function Wishlist() {
@@ -44,7 +45,7 @@ function Wishlist() {
   }, [user, setUserWishlist, wishlist.length]);
 
   return (
-    <PageLayout title="Wishlist">
+    <PageLayout title={seo.wishlist.title} description={seo.wishlist.description}>
       <PageBanner title="Wishlist" />
       <Breadcrumbs />
       <Container extraClass={styles.container}>

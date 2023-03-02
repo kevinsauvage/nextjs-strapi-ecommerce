@@ -10,6 +10,7 @@ import Container from '@/components/Container/Container';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import seo from '@/data/seo';
 import styles from './Cart.module.scss';
 
 function CartPage() {
@@ -54,7 +55,7 @@ function CartPage() {
   };
 
   return (
-    <PageLayout title="Your Cart">
+    <PageLayout title={seo.cart.title} description={seo.cart.description}>
       <PageBanner title="Cart" />
       <Breadcrumbs />
       <Container>

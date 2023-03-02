@@ -10,6 +10,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { handleSetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 const { userFeedback } = config;
 
@@ -68,7 +69,7 @@ function RegisterPage() {
   };
 
   return (
-    <PageLayout title="Register your account">
+    <PageLayout title={seo.register.title} description={seo.register.description}>
       <FormContainer>
         <Form
           autoComplete="off"

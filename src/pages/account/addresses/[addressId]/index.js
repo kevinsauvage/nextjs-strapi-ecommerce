@@ -8,6 +8,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 function AddressUpdate() {
   const { query, back, push } = useRouter();
@@ -63,7 +64,10 @@ function AddressUpdate() {
   };
 
   return (
-    <PageLayout title="Update Address">
+    <PageLayout
+      title={seo.account.addresses.update.title}
+      description={seo.account.addresses.update.description}
+    >
       <AccountLayout loading={isLoading} title="Update Address">
         {address && (
           <AddressForm buttonText="Update Address" initialValues={address} onSubmit={handleUpdateAddress} />

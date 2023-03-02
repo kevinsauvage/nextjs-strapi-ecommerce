@@ -11,6 +11,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { handleSetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
@@ -51,7 +52,7 @@ function Password({ resetUrl }) {
   }, [resetUrl, push]);
 
   return (
-    <PageLayout title="Password recovery">
+    <PageLayout title={seo.reset.title} description={seo.reset.description}>
       <FormContainer>
         <Form title="Reset Password" onSubmit={onSubmit} requiredFields={['password']}>
           <Input

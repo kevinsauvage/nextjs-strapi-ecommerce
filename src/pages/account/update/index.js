@@ -12,6 +12,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 import { handleSetTokenCookies, handleGetTokenCookies } from '@/helpers/cookies';
 import config from '@/config/index';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -67,7 +68,7 @@ function OrderDetail() {
     'On this page, you can modify personal information, communication preferences, and billing details. Keeping your account up-to-date is important for security and an easy experience. Manage your account easily with this page.';
 
   return (
-    <PageLayout title="Update account Information" description={description}>
+    <PageLayout title={seo.account.update.title} description={seo.account.update.description}>
       <AccountLayout
         loading={isLoading || !id}
         title="Account Details"

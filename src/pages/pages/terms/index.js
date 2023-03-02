@@ -4,11 +4,12 @@ import getClient from '@/shopify/index';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Container from '@/components/Container/Container';
+import seo from '@/data/seo';
 import styles from './Terms.module.scss';
 
 function TermsPage({ termsOfService }) {
   return (
-    <PageLayout title="Terms and conditions">
+    <PageLayout title={seo.pages.terms.title} description={seo.pages.terms.description}>
       <PageBanner title="Terms and conditions" />
       <Breadcrumbs lastElement="Terms and conditions" />
       <div className={styles.terms}>

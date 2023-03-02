@@ -8,6 +8,7 @@ import BackButton from '@/components/BackButton/BackButton';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
@@ -26,7 +27,7 @@ function ResetPassword() {
   };
 
   return (
-    <PageLayout title="Password recovery">
+    <PageLayout title={seo.recover.title} description={seo.recover.description}>
       <FormContainer>
         <Form title="Password Recovery" onSubmit={onSubmit} requiredFields={['email']}>
           <Input

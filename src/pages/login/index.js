@@ -11,6 +11,7 @@ import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import { handleSetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
+import seo from '@/data/seo';
 
 const { userFeedback } = config;
 
@@ -46,7 +47,7 @@ function LoginPage() {
   };
 
   return (
-    <PageLayout title="User Login">
+    <PageLayout title={seo.login.title} description={seo.login.description}>
       <FormContainer>
         <Form onSubmit={onSubmit} title="Login" requiredFields={['email', 'password']}>
           <Input

@@ -7,6 +7,7 @@ import getClient from '@/shopify/index';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Search from '@/components/_scopes/search/Search/Search';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import seo from '@/data/seo';
 import styles from './search.module.scss';
 
 function SearchPage() {
@@ -47,11 +48,11 @@ function SearchPage() {
   }, [handleSearch]);
 
   return (
-    <PageLayout title="Search page">
+    <PageLayout title={seo.search.title} description={seo.search.description}>
       <PageBanner title="Search" />
       <Breadcrumbs />
       <Search size="medium" />
-      <Container>
+      <Container size="medium">
         <div className={styles.search}>
           <ProductsList
             hasNextPage={pageInfo?.hasNextPage}
