@@ -4,6 +4,8 @@ body {
   font-family: $sans-serif, Helvetica, Arial, sans-serif;
   -webkit-text-size-adjust: 100%; //fix for iOS
   letter-spacing: 1px;
+  font-size: 14px;
+  font-weight: $fontWeightNormal;
 }
 
 a,

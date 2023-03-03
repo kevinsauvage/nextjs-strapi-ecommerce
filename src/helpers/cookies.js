@@ -51,7 +51,7 @@ export const getCookieFront = (name) => {
 };
 
 export const setCookieFront = (cName, cValue, expDays = 1, secure = true, sameSite = 'Lax') => {
-  if (typeof cName !== 'string' || typeof cValue !== 'string' || typeof expDays !== 'number') {
+  if (typeof cName !== 'string' || typeof expDays !== 'number') {
     throw new TypeError('Invalid input parameters');
   }
 
