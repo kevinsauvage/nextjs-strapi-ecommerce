@@ -24,14 +24,12 @@
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
-  border-radius: $radius;
   min-height: 50vh;
   padding: var(--space-3) 0;
 }
 
 .nav {
   min-width: 230px;
-  border-radius: $radius;
 }
 
 .list {
@@ -39,6 +37,8 @@
   display: block;
   top: 2rem;
   border-bottom: none;
+  border-radius: $radius;
+  overflow: hidden;
 }
 
 .listItem {
@@ -70,6 +70,8 @@
   background-color: var(--surface-200);
   padding: var(--space-2);
   margin-bottom: var(--space-1);
+  border-radius: $radius;
+  overflow: hidden;
 
   h2 {
     margin-bottom: var(--space-1);

@@ -17,6 +17,7 @@ $boxDimension: 36px;
   align-items: center;
   min-height: $boxDimension;
   border-radius: $radius;
+  overflow: hidden;
   height: 100%;
   border: 1px solid var(--surface-500);
   background-color: var(--surface-100);

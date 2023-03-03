@@ -11,6 +11,8 @@
   justify-content: center;
   flex-direction: column;
   padding: var(--space-3);
+  border-radius: $radius;
+  overflow: hidden;
 }
 
 .subtitle {
