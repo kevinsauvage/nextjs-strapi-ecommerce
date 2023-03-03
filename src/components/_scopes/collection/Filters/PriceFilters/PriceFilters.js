@@ -32,8 +32,10 @@ function PriceFilters({ filter }) {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    const input = { price: { min: parseInt(min, 10), max: parseInt(max, 10) } };
-    handleSetUniqueFilters(filter.id, JSON.stringify(input));
+    handleSetUniqueFilters(
+      filter.id,
+      JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(max, 10) } })
+    );
   };
 
   return (
@@ -45,8 +47,15 @@ function PriceFilters({ filter }) {
             <input
               type="number"
               min={0}
+              value={min}
               defaultValue={defaultValues.min}
-              onChange={(e) => setMin(e.target.value)}
+              onChange={(e) => {
+                setMin(e.target.value);
+                handleSetUniqueFilters(
+                  filter.id,
+                  JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } })
+                );
+              }}
             />
           </label>
           <label className={styles.label}>
@@ -56,13 +65,19 @@ function PriceFilters({ filter }) {
             <input
               type="number"
               max={Math.ceil(original?.max)}
+              value={Math.ceil(max)}
               defaultValue={Math.ceil(defaultValues?.max)}
-              onChange={(e) => setMax(e.target.value)}
+              onChange={(e) => {
+                setMax(e.target.value);
+                handleSetUniqueFilters(
+                  filter.id,
+                  JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } })
+                );
+              }}
             />
             <small />
           </label>
         </div>
-        <button type="submit">Confirm</button>
       </form>
     )
   );
