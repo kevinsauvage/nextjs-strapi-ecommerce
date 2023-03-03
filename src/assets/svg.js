@@ -164,3 +164,25 @@ export const remove = (
     />
   </svg>
 );
+
+export const arrowRight2 = (
+  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M0.849998 0.5L7 6.65C7.04783 6.69489 7.08595 6.74911 7.11201 6.80931C7.13807 6.8695 7.15152 6.9344 7.15152 7C7.15152 7.0656 7.13807 7.1305 7.11201 7.19069C7.08595 7.25089 7.04783 7.30511 7 7.35L0.849998 13.5"
+      stroke="#000001"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const arrowLeft2 = (
+  <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      d="M7.15 0.5L0.999999 6.65C0.952168 6.69489 0.914046 6.74911 0.887985 6.80931C0.861925 6.8695 0.84848 6.9344 0.84848 7C0.84848 7.0656 0.861925 7.1305 0.887985 7.19069C0.914046 7.25089 0.952168 7.30511 0.999999 7.35L7.15 13.5"
+      stroke="#000001"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);

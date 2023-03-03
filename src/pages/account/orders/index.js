@@ -37,11 +37,6 @@ export default function OrdersPage() {
       setIsLoading(false);
 
       if (res?.orders) {
-        // const totalOrders = res.totalCount;
-
-        // TODO
-        // console.log('🚀 ~ file: index.js:44 ~ totalOrders', totalOrders);
-
         dispatch({ type: actions.ADD_ORDERS, payload: res?.orders });
         dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: res?.pageInfo });
       } else {

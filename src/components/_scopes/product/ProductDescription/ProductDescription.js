@@ -21,8 +21,6 @@ export default function ProductDescription({
 }) {
   const { productType, variants, options, title } = product || {};
 
-  console.log('🚀 ~ file: ProductDescription.js:21 ~ product:', product);
-
   const { handleSetProductToWishList, isWishlist } = useUserContext();
 
   const [loading, setLoading] = useState(false);

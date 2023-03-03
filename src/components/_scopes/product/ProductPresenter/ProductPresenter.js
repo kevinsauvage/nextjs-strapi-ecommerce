@@ -2,7 +2,7 @@ import useProductSelection from '@/hooks/useProductSelection';
 import styles from './ProductPresenter.module.scss';
 import ProductDescription from '../ProductDescription/ProductDescription';
 import ProductDetails from '../ProductDetails/ProductDetails';
-import PhotoGalleryWithCarousel from '../PhotoGalleryWithCarousel/PhotoGalleryWithCarousel';
+import PhotoSlider from '../PhotoSlider/PhotoSlider';
 
 export default function ProductPresenter({ product, isModal }) {
   const {
@@ -20,7 +20,7 @@ export default function ProductPresenter({ product, isModal }) {
   return (
     <>
       <div className={styles.container}>
-        <PhotoGalleryWithCarousel images={product?.images} />
+        <PhotoSlider selectedVariant={selectedVariant} variants={product?.variants} />
         <ProductDescription
           product={product}
           quantity={quantity}

@@ -168,8 +168,7 @@
   justify-content: center;
   white-space: nowrap;
   padding: 14px 30px;
-  border-radius: $radius;
-  letter-spacing: 2px;
+  border-radius: 2px;
   text-transform: uppercase;
   font-weight: $fontWeightSemiBold;
   transition: all 0.3s ease-in;
@@ -182,7 +181,7 @@
 
 @mixin button-primary {
   @include button;
-  background-color: var(--primary-500);
+  background-color: var(--primary-600);
   color: var(--onSurface-dark);
 
   path {
@@ -190,14 +189,14 @@
   }
 
   &:hover:enabled {
-    background-color: var(--primary-700);
+    background-color: var(--primary-800);
   }
 }
 
 @mixin button-secondary {
   @include button;
-  background-color: var(--complementary-500);
-  border: 2px solid var(--complementary-600);
+  background-color: var(--complementary-700);
+  border: 2px solid var(--complementary-800);
   color: var(--onSurface-dark);
 
   &:hover:enabled {
