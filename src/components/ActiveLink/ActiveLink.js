@@ -13,7 +13,7 @@ export default withRouter(({ router, children, as, url, scroll = true, isActive,
       as={as}
       scroll={scroll}
       className={`${styles.ActiveLink}  ${
-        (router.asPath === path?.toLowerCase() || isActive) && activeStyle
+        (router.asPath.split('?')[0] === path?.toLowerCase().split('?')[0] || isActive) && activeStyle
       }`}
     >
       {children}

@@ -1,0 +1,39 @@
+.CollectionPage {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.aside {
+  width: 100%;
+  background-color: var(--surface-100);
+}
+
+.main {
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 50px;
+  width: 100%;
+  border: none;
+}
+
+.headerContainer {
+  height: fit-content;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--surface-400);
+  border-radius: $radius;
+  padding: 5px var(--space-0);
+
+  p {
+    margin-right: var(--space-0);
+    font-weight: 600;
+  }
+}

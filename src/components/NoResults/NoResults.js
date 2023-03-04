@@ -13,8 +13,7 @@ function NoResults() {
         width={notFound.width}
         height={notFound.height}
       />
-      <b>Result Not Found</b>
-      <p>Whoops... No products were found.</p>
+      <p>Whoops... There is no results.</p>
     </div>
   );
 }

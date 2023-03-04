@@ -27,12 +27,6 @@ export function GlobalProvider({ children }) {
     resetToggle();
   }, [router.asPath, resetToggle]);
 
-  useEffect(() => {
-    if (selectedProduct || loading) {
-      document.body.style.overflow = 'hidden';
-    } else document.body.style.overflow = 'visible';
-  }, [selectedProduct, loading, searchOpen]);
-
   const values = useMemo(
     () => ({
       searchOpen,

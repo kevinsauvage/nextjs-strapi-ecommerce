@@ -203,7 +203,7 @@ function Addresses() {
       </AccountLayout>
       {showCreateForm && (
         <Modal handleClose={() => setShowCreateForm(false)}>
-          <AddressForm buttonText="Create Address" onSubmit={handleCreateAddress} />
+          <AddressForm title="Create address" buttonText="Create Address" onSubmit={handleCreateAddress} />
         </Modal>
       )}
     </PageLayout>

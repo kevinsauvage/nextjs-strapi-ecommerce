@@ -5,12 +5,14 @@
     "node": true,
     "jest": true
   },
+  "plugins": ["react", "import", "simple-import-sort"],
   "extends": [
     "airbnb",
     "prettier",
     "next/core-web-vitals",
     "eslint:recommended",
-    "plugin:react-hooks/recommended"
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -19,7 +21,6 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["react", "import", "simple-import-sort"],
   "rules": {
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": [

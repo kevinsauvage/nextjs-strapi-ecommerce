@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { eye,heart } from '@/assets/svg';
+import { eye, heart } from '@/assets/svg';
 import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
@@ -17,8 +17,8 @@ export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants, collections, productType } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { query } = useRouter();
-  const { setSelectedProduct } = useGlobalContext() || {};
   const cardRef = useRef();
+  const { setSelectedProduct } = useGlobalContext() || {};
   const { handleSetProductToWishList, isWishlist } = useUserContext() || {};
   const [loading, setLoading] = useState(false);
 

@@ -1,6 +1,4 @@
 .filters {
-  border: 0.1px solid var(--surface-400);
-  border-radius: $radius;
 }
 .header {
   background-color: var(--surface-dark-100);
@@ -10,7 +8,6 @@
   align-items: center;
   justify-content: space-between;
   color: var(--onSurface-dark);
-  border-radius: $radius;
 }
 
 .bottom {

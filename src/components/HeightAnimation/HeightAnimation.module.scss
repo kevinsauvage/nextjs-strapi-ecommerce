@@ -1,12 +1,15 @@
 .HeightAnimation {
   position: relative;
+  transition: top;
 }
+
 .hoverAnimation {
   @include gradient-overlay(var(--RGB-surface-100), 0deg);
 }
 
 .children {
   overflow: hidden;
+  transform: translateZ(0);
   transition: max-height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 

@@ -1,39 +1,52 @@
 /* eslint-disable no-nested-ternary */
+import { filter } from '@/assets/svg';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
-import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
-import { actions } from '@/contexts/CollectionContext/CollectionReducer';
+import Container from '@/components/Container/Container';
+import SlideIn from '@/components/SlideIn/SlideIn';
+import Wrapper from '@/components/Wrapper/Wrapper';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 
 import Sort from '../../product/Sort/Sort';
 import Filters from '../Filters/Filters';
 
-import styles from './collectionNav.module.scss';
+import styles from './collectionPage.module.scss';
 
 function CollectionPage() {
-  const { loading, products, layout, handleNext, pageInfo, handleSort, dispatch } = useCollectionContext();
+  const { loading, products, layout, handleNext, pageInfo, handleSort } = useCollectionContext();
 
   return (
     <div className={styles.CollectionPage}>
-      <aside className={styles.aside}>
-        <Filters />
-      </aside>
       <main className={styles.main}>
-        <div size="medium" className={styles.headerContainer}>
+        <div className={styles.headerContainer}>
           <div className={styles.header}>
-            <LayoutButtons
-              handleChange={(payload) => dispatch({ type: actions.SET_LAYOUT, payload })}
-              selected={layout}
-            />
-            <Sort handleChange={handleSort} />
+            <Container>
+              <Wrapper>
+                <Sort handleChange={handleSort} />
+                <SlideIn
+                  title={
+                    <span className={styles.filterButton}>
+                      <p>Filters</p>
+                      {filter}
+                    </span>
+                  }
+                >
+                  <aside className={styles.aside}>
+                    <Filters />
+                  </aside>
+                </SlideIn>
+              </Wrapper>
+            </Container>
           </div>
         </div>
-        <ProductsList
-          handleNext={handleNext}
-          hasNextPage={pageInfo?.hasNextPage}
-          products={products}
-          layout={layout}
-          loading={loading}
-        />
+        <Container>
+          <ProductsList
+            handleNext={handleNext}
+            hasNextPage={pageInfo?.hasNextPage}
+            products={products}
+            layout={layout}
+            loading={loading}
+          />
+        </Container>
       </main>
     </div>
   );

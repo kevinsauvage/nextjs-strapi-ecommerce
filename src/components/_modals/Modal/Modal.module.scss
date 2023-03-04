@@ -6,20 +6,34 @@
   bottom: 0;
   right: 0;
   z-index: 999999999;
-  background-color: rgba(black, 0.9);
+  background-color: rgba(black, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .Container {
-  width: 100%;
-  max-width: 800px;
-  height: 70vh;
+  width: fit-content;
+  min-width: 50vw;
+  max-width: 900px;
+  max-height: 80vh;
   background-color: var(--surface-100);
   overflow: auto;
 }
 
+.Container::-webkit-scrollbar {
+  background-color: var(--surface-100);
+  width: 8px;
+  height: 8px; /* The height is only seen on horizontal scrolling */
+}
+
+.Container::-webkit-scrollbar-track {
+  background-color: var(--surface-800);
+}
+
+.Container::-webkit-scrollbar-thumb {
+  background-color: var(--primary-500);
+}
 .close {
   position: absolute;
   border: none;
@@ -29,7 +43,6 @@
   height: 70px;
   width: 70px;
   transition: 0.3s;
-  background-color: var(--surface-dark-100);
 
   svg,
   path {
@@ -37,13 +50,11 @@
   }
 
   &:hover {
-    background-color: var(--complementary-500);
+    transform: scale(1.1);
+  }
 
-    @include boxShadow(2);
-    svg,
-    path {
-      stroke: var(--onSurface-dark);
-    }
+  &:active {
+    transform: scale(0.9);
   }
 
   svg {

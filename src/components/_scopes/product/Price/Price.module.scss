@@ -10,13 +10,13 @@
 }
 
 .currentPrice {
-  color: rgb(214, 25, 25);
+  color: var(--onSurface-medium);
   font-weight: 600;
 }
 
 .small {
   p {
-    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
+    font-size: 14px;
   }
 }
 

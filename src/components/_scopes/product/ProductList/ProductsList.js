@@ -29,8 +29,8 @@ function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, load
 
       {Array.isArray(products) && products.length > 0 && handleNext && (
         <div className={styles.nextButton}>
-          <Button primary disabled={!hasNextPage} onClick={() => handleNext()}>
-            Next
+          <Button contrast disabled={!hasNextPage} onClick={() => handleNext()}>
+            Load more products
           </Button>
         </div>
       )}

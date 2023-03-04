@@ -1,3 +1,4 @@
+import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 
 import Search from './Search';
@@ -8,8 +9,10 @@ export default function SearchBar() {
   const { searchOpen } = useGlobalContext();
 
   return (
-    <div className={`${styles.container} ${searchOpen && styles.expanded}`}>
-      <Search size="medium" />
-    </div>
+    <HeightAnimation isOpen={searchOpen}>
+      <div className={styles.container}>
+        <Search size="medium" />
+      </div>
+    </HeightAnimation>
   );
 }

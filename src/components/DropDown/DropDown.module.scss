@@ -1,6 +1,6 @@
 .DropDown {
   position: relative;
-  border: 0.1px solid var(--surface-400);
+  border: 1px solid var(--surface-400);
   margin-left: 4px;
   padding: 4px;
   border-radius: $radius;
@@ -12,14 +12,13 @@
   top: 100%;
   min-width: 190px;
   right: -0.2px;
-  border: 0.1px solid var(--surface-900);
+  border: 1px solid var(--surface-900);
   background-color: var(--surface-100);
   overflow: hidden;
 }
 
 .button {
   border: none;
-  text-transform: uppercase;
   font-weight: $fontWeightSemiBold;
 
   svg {

@@ -65,6 +65,7 @@ function Address({
       {editAddress && (
         <Modal handleClose={() => setEditAddress(false)}>
           <AddressForm
+            title="Update Address"
             buttonText="Update Address"
             initialValues={address}
             onSubmit={(formData) => handleUpdateAddress(formData, address.id)}
