@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react';
+
 import { arrowDown } from '@/assets/svg';
 import useOnClickOutside from '@/hooks/useClickOutside';
+
 import styles from './DropDown.module.scss';
 
 function Dropdown({ options, changeCallback, selected }) {

@@ -1,19 +1,26 @@
 import { useCallback, useEffect, useState } from 'react';
+
+import Modal from '@/components/_modals/Modal/Modal';
 import Address from '@/components/_scopes/account/Address/Address';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import { actions } from '@/contexts/UserContext/UserReducer';
-import AccountLayout from '@/layout/AccountLayout/AccountLayout';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import Button from '@/components/Button/Button';
 import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { actions } from '@/contexts/UserContext/UserReducer';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+import seo from '@/data/seo';
 import { handleGetTokenCookies } from '@/helpers/cookies';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
+
 import styles from './Addresses.module.scss';
 
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
+  const [showCreateForm, setShowCreateForm] = useState(false);
+
   const { dispatch, user, addresses } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
@@ -28,28 +35,45 @@ function Addresses() {
     else showToast.error('Something went wrong, please try again later');
   }, [dispatch, showToast]);
 
-  const handleSetAsDefault = async (id) => {
-    try {
-      toggleLoading(true);
-      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+  useEffect(() => {
+    if (addresses) setIsLoading(false);
+  }, [addresses]);
 
-      const res = await getClient().storefront.customer.customerDefaultAddressUpdate({
-        customerAccessToken: shopifyToken,
-        addressId: id,
-      });
-      const { customer, customerUserErrors } = res || {};
+  useEffect(() => {
+    fetchAddresses();
+  }, [fetchAddresses]);
 
-      if (customer?.id) {
-        showToast.success('Address correctly set as default address');
-        return dispatch({ type: actions.ADD_USER, payload: customer });
-      }
-
-      return customerUserErrors.forEach((element) => showToast.error(element.message));
-    } catch (error) {
-      return showToast.error('Something went wrong, please try again later');
-    } finally {
-      toggleLoading(false);
+  const handleUpdateAddress = async (formData, addressId) => {
+    if (
+      !formData?.address1 ||
+      !formData?.city ||
+      !formData?.country ||
+      !formData?.firstName ||
+      !formData?.lastName ||
+      !formData?.zip
+    ) {
+      return showToast.error('Missing field');
     }
+    const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+    toggleLoading(true);
+    const { customerAddress, customerUserErrors } =
+      await getClient().storefront.customer.customerAddressUpdate({
+        address: formData,
+        customerAccessToken: shopifyToken,
+        addressId,
+      });
+    toggleLoading(false);
+
+    if (customerAddress) {
+      dispatch({
+        type: actions.ADD_ADDRESSES,
+        payload: addresses.map((address) => (address.id === addressId ? customerAddress : address)),
+      });
+      showToast.success('Address updated successfully');
+    }
+    if (customerUserErrors) return customerUserErrors.map((err) => showToast.error(err.message));
+    return showToast.error('Something went wrong');
   };
 
   const handleDelete = async (id) => {
@@ -79,28 +103,82 @@ function Addresses() {
     }
   };
 
+  const handleSetAsDefault = async (id) => {
+    try {
+      toggleLoading(true);
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      const res = await getClient().storefront.customer.customerDefaultAddressUpdate({
+        customerAccessToken: shopifyToken,
+        addressId: id,
+      });
+      const { customer, customerUserErrors } = res || {};
+
+      if (customer?.id) {
+        showToast.success('Address correctly set as default address');
+        return dispatch({ type: actions.ADD_USER, payload: customer });
+      }
+
+      return customerUserErrors.forEach((element) => showToast.error(element.message));
+    } catch (error) {
+      return showToast.error('Something went wrong, please try again later');
+    } finally {
+      toggleLoading(false);
+    }
+  };
+
+  const handleCreateAddress = async (address) => {
+    try {
+      if (
+        !address?.address1 ||
+        !address?.city ||
+        !address?.country ||
+        !address?.firstName ||
+        !address?.lastName ||
+        !address?.zip
+      ) {
+        return showToast.error('Missing field');
+      }
+      toggleLoading(true);
+
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      const { customerAddress, customerUserErrors } =
+        (await getClient().storefront.customer.customerAddressCreate({
+          address,
+          customerAccessToken: shopifyToken,
+        })) || {};
+
+      if (customerAddress) {
+        dispatch({
+          type: actions.ADD_ADDRESSES,
+          payload: [...addresses, customerAddress],
+        });
+        setShowCreateForm(false);
+        return showToast.success('Address created successfully');
+      }
+      if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));
+      return showToast.error('Something went wrong');
+    } catch (err) {
+      return showToast.error('Error creating address, please try again later');
+    } finally {
+      toggleLoading(false);
+    }
+  };
+
   const isDefault = (address) => address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
-
-  useEffect(() => {
-    if (addresses) setIsLoading(false);
-  }, [addresses]);
-
-  useEffect(() => {
-    fetchAddresses();
-  }, [fetchAddresses]);
 
   const description =
     'This page shows all of the addresses you have saved in your account. You can view and modify your addresses, including adding new ones, deleting old ones, and editing existing ones. This makes it easy to manage and update all of your addresses in one place. You can use this page to make sure all of your saved addresses are accurate and up-to-date.';
 
   return (
-    <PageLayout title="Addresses" description={description}>
+    <PageLayout title={seo.account.addresses.title} description={seo.account.addresses.description}>
       <AccountLayout
         loading={isLoading}
-        title="Addresses"
-        titleBannerChildren="My address book"
+        title={seo.account.addresses.title}
         descriptionBannerChildren={description}
         otherBannerChildrenContenct={
-          <Button extraClass={styles.btn} primary href={config.routes.createAddress}>
+          <Button extraClass={styles.btn} primary onClick={() => setShowCreateForm(true)}>
             Add new address
           </Button>
         }
@@ -112,6 +190,7 @@ function Addresses() {
                 key={item.id}
                 title={`Address ${i + 1}`}
                 handleSetAsDefault={handleSetAsDefault}
+                handleUpdateAddress={handleUpdateAddress}
                 address={item}
                 isDefault={isDefault(item)}
                 handleDelete={() => handleDelete(item.id)}
@@ -122,6 +201,11 @@ function Addresses() {
           <p className={styles.noAddresses}>There is no addresses to show</p>
         )}
       </AccountLayout>
+      {showCreateForm && (
+        <Modal handleClose={() => setShowCreateForm(false)}>
+          <AddressForm buttonText="Create Address" onSubmit={handleCreateAddress} />
+        </Modal>
+      )}
     </PageLayout>
   );
 }

@@ -1,8 +1,10 @@
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useEffect, useState } from 'react';
-import PageLayout from '@/layout/PageLayout/PageLayout';
+
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import seo from '@/data/seo';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+
 import styles from './Account.module.scss';
 
 function Account() {
@@ -17,7 +19,7 @@ function Account() {
 
   return (
     <PageLayout title={seo.account.title} description={seo.account.description}>
-      <AccountLayout title="My Account" loading={isLoading}>
+      <AccountLayout title={seo.account.title} loading={isLoading}>
         <main className={styles.main}>
           <div className={styles.content}>
             <h2>Welcome to you account</h2>

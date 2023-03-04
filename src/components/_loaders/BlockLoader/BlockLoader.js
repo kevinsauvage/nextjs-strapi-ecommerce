@@ -1,4 +1,5 @@
 import Loader from '../Loader/Loader';
+
 import styles from './BlockLoader.module.scss';
 
 function BlockLoader() {

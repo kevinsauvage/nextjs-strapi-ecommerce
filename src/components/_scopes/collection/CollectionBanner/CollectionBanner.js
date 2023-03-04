@@ -1,5 +1,7 @@
-import Container from '@/components/Container/Container';
 import Image from 'next/image';
+
+import Container from '@/components/Container/Container';
+
 import styles from './CollectionBanner.module.scss';
 
 function CollectionBanner({ title, description, image }) {

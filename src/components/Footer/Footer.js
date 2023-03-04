@@ -1,6 +1,7 @@
-import Container from '@/components/Container/Container';
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import Container from '@/components/Container/Container';
 import siteMetadata from '@/data/siteMetadata';
+
 import styles from './Footer.module.scss';
 
 function Footer({ menuFooter }) {

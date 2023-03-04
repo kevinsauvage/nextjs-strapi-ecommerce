@@ -1,17 +1,20 @@
-import Form from '@/components/_scopes/forms/Form/Form';
-import Input from '@/components/_scopes/forms/Input/Input';
-import config from '@/config/index';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
+import Form from '@/components/_scopes/forms/Form/Form';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
+import Input from '@/components/_scopes/forms/Input/Input';
 import BackButton from '@/components/BackButton/BackButton';
-import PageLayout from '@/layout/PageLayout/PageLayout';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import { handleSetTokenCookies } from '@/helpers/cookies';
-import getClient from '@/shopify/index';
 import seo from '@/data/seo';
+import { handleSetTokenCookies } from '@/helpers/cookies';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 
 function Password({ resetUrl }) {
   const { push, query } = useRouter();
@@ -53,8 +56,10 @@ function Password({ resetUrl }) {
 
   return (
     <PageLayout title={seo.reset.title} description={seo.reset.description}>
+      <PageBanner title={seo.reset.title} />
+      <Breadcrumbs />
       <FormContainer>
-        <Form title="Reset Password" onSubmit={onSubmit} requiredFields={['password']}>
+        <Form title={seo.reset.title} onSubmit={onSubmit} requiredFields={['password']}>
           <Input
             id="password"
             label="New password"

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
 export default function useProductSelection({ product }) {

@@ -1,5 +1,7 @@
 import Link from 'next/link';
+
 import Container from '@/components/Container/Container';
+
 import styles from './Banner1.module.scss';
 
 export default function BannerHome({ data }) {

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import config from './config';
 
 const PUBLIC_FILE = /\.(.*)$/;

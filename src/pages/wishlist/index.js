@@ -1,14 +1,16 @@
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
-import Container from '@/components/Container/Container';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import { handleGetTokenCookies } from '@/helpers/cookies';
-import config from '@/config/index';
 import { useEffect, useState } from 'react';
-import getClient from '@/shopify/index';
+
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Container from '@/components/Container/Container';
+import config from '@/config/index';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import seo from '@/data/seo';
+import { handleGetTokenCookies } from '@/helpers/cookies';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
+
 import styles from './Wishlist.module.scss';
 
 function Wishlist() {
@@ -46,7 +48,7 @@ function Wishlist() {
 
   return (
     <PageLayout title={seo.wishlist.title} description={seo.wishlist.description}>
-      <PageBanner title="Wishlist" />
+      <PageBanner title={seo.wishlist.title} />
       <Breadcrumbs />
       <Container extraClass={styles.container}>
         <ProductsList loading={loading} layout="grid" products={wishlist} />

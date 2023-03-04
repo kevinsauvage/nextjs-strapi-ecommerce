@@ -1,17 +1,20 @@
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import Input from '@/components/_scopes/forms/Input/Input';
+import { useRouter } from 'next/router';
+
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Form from '@/components/_scopes/forms/Form/Form';
+import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
+import Input from '@/components/_scopes/forms/Input/Input';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Wrapper from '@/components/Wrapper/Wrapper';
 import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
-import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
-import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import Wrapper from '@/components/Wrapper/Wrapper';
-import { handleSetTokenCookies } from '@/helpers/cookies';
-import getClient from '@/shopify/index';
 import seo from '@/data/seo';
+import { handleSetTokenCookies } from '@/helpers/cookies';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 
 const { userFeedback } = config;
 
@@ -27,7 +30,6 @@ function LoginPage() {
     const resLogin = await getClient().storefront.customer.customerAccessTokenCreate({
       input: { email, password },
     });
-
     toggleLoading(false);
 
     const customerUserErrors = resLogin?.customerUserErrors;
@@ -39,6 +41,7 @@ function LoginPage() {
     if (!accessToken) return showToast.error(userFeedback.login.error);
     const nextUrl = query?.redirectUrl ? query.redirectUrl : config.routes.account;
     showToast.success(userFeedback.login.success);
+
     await new Promise((resolve) => {
       handleSetTokenCookies(accessToken);
       resolve();
@@ -48,6 +51,8 @@ function LoginPage() {
 
   return (
     <PageLayout title={seo.login.title} description={seo.login.description}>
+      <PageBanner title={seo.login.title} />
+      <Breadcrumbs />
       <FormContainer>
         <Form onSubmit={onSubmit} title="Login" requiredFields={['email', 'password']}>
           <Input

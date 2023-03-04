@@ -1,5 +1,7 @@
 import Link from 'next/link';
+
 import { arrowRight } from '@/assets/svg';
+
 import styles from './Crumbs.module.scss';
 
 export default function Crumbs({ title, href, last, isNotClickable }) {

@@ -1,11 +1,13 @@
 import { useRouter } from 'next/router';
-import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
+
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
-import PageLayout from '@/layout/PageLayout/PageLayout';
+import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
+import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
-import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
+
 import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {

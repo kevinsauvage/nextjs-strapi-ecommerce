@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router';
+
 import Container from '../Container/Container';
-import styles from './Breadcrumbs.module.scss';
+
 import Crumbs from './Crumbs';
+
+import styles from './Breadcrumbs.module.scss';
 
 export default function Breadcrumbs({ lastElement }) {
   const router = useRouter();

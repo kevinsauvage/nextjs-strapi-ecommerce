@@ -36,11 +36,13 @@
 }
 
 .cookieList {
-  margin: var(--space-2) 0;
-
   li {
     margin-bottom: var(--space-1);
   }
+}
+
+.modalSubtitle {
+  margin-bottom: var(--space-0);
 }
 
 .cookieSettingsModal {
@@ -59,6 +61,8 @@
     padding: 2rem;
     border-radius: 5px;
     max-width: 700px;
+    max-height: 80vh;
+    overflow: auto;
     background-color: var(--surface-100);
 
     h2 {

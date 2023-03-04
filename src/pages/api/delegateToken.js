@@ -1,4 +1,5 @@
 import { setCookie } from 'nookies';
+
 import getClient from '@/shopify/index';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;

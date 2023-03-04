@@ -1,6 +1,8 @@
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
 import { arrowLeft2, arrowRight2 } from '@/assets/svg';
+
 import styles from './PhotoSlider.module.scss';
 
 export default function PhotoSlider({ variants, selectedVariant }) {
@@ -30,10 +32,10 @@ export default function PhotoSlider({ variants, selectedVariant }) {
 
   return (
     <div className={styles.PhotoSlider}>
+      <div className={styles.indicators}>
+        {index + 1} / {variants.length}
+      </div>
       <div className={styles.buttons}>
-        <div>
-          {index + 1}/{variants.length}
-        </div>
         <button disabled={index <= 0} type="button" onClick={() => handlePrevious()}>
           {arrowLeft2}
         </button>

@@ -1,11 +1,12 @@
 import Head from 'next/head';
-import seo from '@/data/seo';
-import Container from '@/components/Container/Container';
-import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
+
 import Banner1 from '@/components/_banners/BannerHome/Banner1';
-import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
-import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
+import CollectionGrid from '@/components/_scopes/collection/CollectionGrid/CollectionGrid';
 import CollectionBigBanner from '@/components/_scopes/home/CollectionBigBanner/CollectionBigBanner';
+import CollectionsRow from '@/components/_scopes/home/CollectionsRow/CollectionsRow';
+import ProductsDisplay from '@/components/_scopes/home/ProductsDisplay/ProductsDisplay';
+import Container from '@/components/Container/Container';
+import seo from '@/data/seo';
 import getClient from '@/shopify/index';
 
 export default function Home({ bestSelling, newArrival, homeData }) {

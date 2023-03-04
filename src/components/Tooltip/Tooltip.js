@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import styles from './Tooltip.module.scss';
 
 function Tooltip({ children, text }) {

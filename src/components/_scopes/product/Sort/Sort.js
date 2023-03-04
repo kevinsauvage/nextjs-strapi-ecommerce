@@ -1,5 +1,7 @@
-import Dropdown from '@/components/DropDown/DropDown';
 import { useRouter } from 'next/router';
+
+import Dropdown from '@/components/DropDown/DropDown';
+
 import styles from './Sort.module.scss';
 
 export default function Sort({ handleChange }) {

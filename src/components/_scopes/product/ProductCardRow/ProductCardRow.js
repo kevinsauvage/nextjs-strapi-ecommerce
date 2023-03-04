@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import useProductSelection from '@/hooks/useProductSelection';
+
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
-import Price from '../Price/Price';
-import styles from './ProductCardRow.module.scss';
+import useProductSelection from '@/hooks/useProductSelection';
+
 import Options from '../Options/Options';
+import Price from '../Price/Price';
+
+import styles from './ProductCardRow.module.scss';
 
 export default function ProductCardRow({ product }) {
   const {

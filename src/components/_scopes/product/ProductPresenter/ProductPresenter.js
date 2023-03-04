@@ -1,8 +1,10 @@
 import useProductSelection from '@/hooks/useProductSelection';
-import styles from './ProductPresenter.module.scss';
+
+import PhotoSlider from '../PhotoSlider/PhotoSlider';
 import ProductDescription from '../ProductDescription/ProductDescription';
 import ProductDetails from '../ProductDetails/ProductDetails';
-import PhotoSlider from '../PhotoSlider/PhotoSlider';
+
+import styles from './ProductPresenter.module.scss';
 
 export default function ProductPresenter({ product, isModal }) {
   const {

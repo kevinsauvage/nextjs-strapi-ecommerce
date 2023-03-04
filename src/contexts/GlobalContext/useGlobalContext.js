@@ -1,5 +1,6 @@
-const { useContext } = require('react');
-const { GlobalStoreContext } = require('./GlobalContext');
+import { useContext } from 'react';
+
+import { GlobalStoreContext } from './GlobalContext';
 
 const useGlobalContext = () => useContext(GlobalStoreContext);
 

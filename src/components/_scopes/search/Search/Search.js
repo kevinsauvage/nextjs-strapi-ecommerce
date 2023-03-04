@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import Container from '@/components/Container/Container';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import config from '@/config/index';
 import { useRouter } from 'next/router';
+
+import Container from '@/components/Container/Container';
+import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { capitalizeFirstLetter } from '@/helpers/string';
+
 import styles from './Search.module.scss';
 
 export default function Search({ size }) {

@@ -1,12 +1,15 @@
+import { useRouter } from 'next/router';
+
+import Button from '@/components/Button/Button';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import { getSelectedFilter } from '@/helpers/index';
-import { useRouter } from 'next/router';
-import Button from '@/components/Button/Button';
-import PriceFilters from './PriceFilters/PriceFilters';
-import styles from './Filters.module.scss';
+
 import ColorFilters from './ColorFilters/ColorFilters';
-import Filter from './Filter/Filter';
 import DefaultFilters from './DefaultFilters/DefaultFilters';
+import Filter from './Filter/Filter';
+import PriceFilters from './PriceFilters/PriceFilters';
+
+import styles from './Filters.module.scss';
 
 export default function Filters() {
   const { allFilters, applyFilters, isSelectionDifferent, resetFilters } = useCollectionContext();
@@ -47,15 +50,17 @@ export default function Filters() {
           </Filter>
         ))}
 
-      <Button
-        extraClass={styles.button}
-        type="button"
-        primary
-        onClick={applyFilters}
-        disabled={!isSelectionDifferent()}
-      >
-        Apply filters
-      </Button>
+      <div className={styles.bottom}>
+        <Button
+          extraClass={styles.button}
+          type="button"
+          primary
+          onClick={applyFilters}
+          disabled={!isSelectionDifferent()}
+        >
+          Apply filters
+        </Button>
+      </div>
     </div>
   );
 }

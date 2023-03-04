@@ -1,10 +1,12 @@
-import ListDisplay from '@/components/ListDisplay/ListDisplay';
-import Button from '@/components/Button/Button';
-import NoResults from '@/components/NoResults/NoResults';
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
-import styles from './ProductList.module.scss';
+import Button from '@/components/Button/Button';
+import ListDisplay from '@/components/ListDisplay/ListDisplay';
+import NoResults from '@/components/NoResults/NoResults';
+
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 import ProductCardRow from '../ProductCardRow/ProductCardRow';
+
+import styles from './ProductList.module.scss';
 
 function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, loading }) {
   return (

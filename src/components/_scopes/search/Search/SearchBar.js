@@ -1,6 +1,8 @@
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import styles from './SearchBar.module.scss';
+
 import Search from './Search';
+
+import styles from './SearchBar.module.scss';
 
 export default function SearchBar() {
   const { searchOpen } = useGlobalContext();

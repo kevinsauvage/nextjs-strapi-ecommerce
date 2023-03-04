@@ -1,5 +1,7 @@
 import Image from 'next/image';
+
 import notFound from '@/assets/Notfound.svg';
+
 import styles from './NoResults.module.scss';
 
 function NoResults() {

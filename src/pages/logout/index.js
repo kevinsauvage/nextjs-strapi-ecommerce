@@ -1,7 +1,8 @@
-import { getInfoFromCtx } from '@/helpers/index';
+import nookies from 'nookies';
+
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import config from '@/config/index';
-import nookies from 'nookies';
+import { getInfoFromCtx } from '@/helpers/index';
 import getClient from '@/shopify/index';
 
 const index = () => <PageLoader />;

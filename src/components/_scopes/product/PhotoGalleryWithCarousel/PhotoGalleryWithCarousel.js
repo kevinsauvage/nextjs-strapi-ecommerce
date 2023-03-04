@@ -1,6 +1,8 @@
-import Image from 'next/image';
-import Carousel from '@/components/Carousel/Carousel';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
+
+import Carousel from '@/components/Carousel/Carousel';
+
 import styles from './PhotoGalleryWithCarousel.module.scss';
 
 export default function PhotoGalleryWithCarousel({ images }) {

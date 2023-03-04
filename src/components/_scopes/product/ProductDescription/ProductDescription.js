@@ -1,12 +1,14 @@
-import Button from '@/components/Button/Button';
+import { useState } from 'react';
+
+import { bag,heart } from '@/assets/svg';
+import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
-import { heart, bag } from '@/assets/svg';
+import Button from '@/components/Button/Button';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 
-import { useState } from 'react';
-import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
-import styles from './ProductDescription.module.scss';
 import Options from '../Options/Options';
+
+import styles from './ProductDescription.module.scss';
 
 export default function ProductDescription({
   handleSetSelectedProductOption,
@@ -94,7 +96,6 @@ export default function ProductDescription({
             {priceV2?.currencyCode} {priceV2?.amount}
           </p>
         </div>
-
         <div className={styles.totalPrice}>
           <small>Total price</small>
           <p>

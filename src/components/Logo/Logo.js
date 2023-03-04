@@ -1,5 +1,7 @@
 import Link from 'next/link';
+
 import { logo } from '@/assets/svg';
+
 import styles from './Logo.module.scss';
 
 export default function Logo() {

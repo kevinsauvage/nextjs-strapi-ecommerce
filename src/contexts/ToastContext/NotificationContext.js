@@ -1,5 +1,6 @@
-import { createContext, useReducer, useContext, useMemo, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { createPortal } from 'react-dom';
+
 import Toast from '@/components/Toast/Toast';
 
 export const ToastContext = createContext();

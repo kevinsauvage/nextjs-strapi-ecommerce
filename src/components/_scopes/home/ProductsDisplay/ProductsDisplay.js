@@ -1,7 +1,10 @@
 import { useMemo, useState } from 'react';
+
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
-import styles from './ProductsDisplay.module.scss';
+
 import ProductsList from '../../product/ProductList/ProductsList';
+
+import styles from './ProductsDisplay.module.scss';
 
 function ProductsDisplay({ bestSelling, newArrival }) {
   const [index, setIndex] = useState(0);

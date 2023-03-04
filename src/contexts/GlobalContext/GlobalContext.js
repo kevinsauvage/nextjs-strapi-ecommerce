@@ -1,7 +1,9 @@
-import { useRouter } from 'next/router';
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
+import { useRouter } from 'next/router';
+
 import { generateDelegateToken } from '@/helpers/apiNext';
-import { GlobalReducer, initialState, actions } from './GlobalReducer';
+
+import { actions, GlobalReducer, initialState } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
 

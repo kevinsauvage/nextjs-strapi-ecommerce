@@ -1,4 +1,5 @@
 import Image from 'next/legacy/image';
+
 import styles from './PhotoGallery.module.scss';
 
 export default function PhotoGallery({ images = [], alt }) {

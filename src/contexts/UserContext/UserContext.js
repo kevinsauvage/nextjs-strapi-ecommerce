@@ -1,12 +1,15 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
-import { handleGetTokenCookies } from '@/helpers/cookies';
-import { nextApiHelper } from '@/helpers/apiNext';
+
 import config from '@/config/index';
+import { nextApiHelper } from '@/helpers/apiNext';
+import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
-import { useToastContext } from '../ToastContext/NotificationContext';
-import { UserReducer, initialState, actions } from './UserReducer';
+
 import useCartContext from '../CartContext/useCartContext';
+import { useToastContext } from '../ToastContext/NotificationContext';
+
+import { actions, initialState, UserReducer } from './UserReducer';
 
 export const UserContext = createContext();
 

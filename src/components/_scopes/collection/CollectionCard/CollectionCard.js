@@ -1,4 +1,5 @@
 import Link from 'next/link';
+
 import style from './CollectionCard.module.scss';
 
 export default function CollectionCard({ collection }) {

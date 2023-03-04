@@ -1,6 +1,6 @@
-import { UserContext } from './UserContext';
+import { useContext } from 'react';
 
-const { useContext } = require('react');
+import { UserContext } from './UserContext';
 
 const useUserContext = () => useContext(UserContext);
 

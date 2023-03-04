@@ -1,7 +1,8 @@
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
-import { useSwipeable } from 'react-swipeable';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { useSwipeable } from 'react-swipeable';
 import { useRouter } from 'next/router';
+
 import styles from './Carousel.module.scss';
 
 function CarouselVertical({ children, itemToShow = 5, showButtons }) {

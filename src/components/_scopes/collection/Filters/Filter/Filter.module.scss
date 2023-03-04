@@ -1,7 +1,5 @@
 .filter {
-  max-height: 60px;
   overflow: hidden;
-  transition: max-height 0.1s linear;
   border-bottom: 0.1px solid var(--surface-400);
 
   &:last-of-type {
@@ -9,8 +7,6 @@
   }
 
   &.open {
-    max-height: 300px;
-
     .arrow {
       transform: rotate(90deg);
     }
@@ -45,7 +41,6 @@
   gap: var(--space-0);
   padding: var(--space-1);
   margin-bottom: var(--space-1);
-  max-height: 240px;
   overflow: auto;
 
   &::-webkit-scrollbar {

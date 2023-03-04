@@ -1,5 +1,6 @@
 /* eslint-disable react/button-has-type */
 import Link from 'next/link';
+
 import styles from './Button.module.scss';
 
 export default function Button({

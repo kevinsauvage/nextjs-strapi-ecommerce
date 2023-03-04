@@ -1,14 +1,16 @@
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Form from '@/components/_scopes/forms/Form/Form';
+import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
 import Input from '@/components/_scopes/forms/Input/Input';
+import BackButton from '@/components/BackButton/BackButton';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
-import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
-import BackButton from '@/components/BackButton/BackButton';
-import PageLayout from '@/layout/PageLayout/PageLayout';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import getClient from '@/shopify/index';
 import seo from '@/data/seo';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
 
 function ResetPassword() {
   const { toggleLoading } = useGlobalContext();
@@ -19,7 +21,6 @@ function ResetPassword() {
     if (!email) return showToast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
     const recoverRes = await getClient().storefront.customer.customerRecover({ email });
-
     toggleLoading(false);
     const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
     if (errors?.length) return errors.forEach((element) => showToast.error(element.message));
@@ -28,8 +29,10 @@ function ResetPassword() {
 
   return (
     <PageLayout title={seo.recover.title} description={seo.recover.description}>
+      <PageBanner title={seo.recover.title} />
+      <Breadcrumbs />
       <FormContainer>
-        <Form title="Password Recovery" onSubmit={onSubmit} requiredFields={['email']}>
+        <Form title={seo.recover.title} onSubmit={onSubmit} requiredFields={['email']}>
           <Input
             id="email"
             label="Email address"

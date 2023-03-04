@@ -1,5 +1,7 @@
 import { Children, cloneElement, isValidElement } from 'react';
+
 import useForm from '@/hooks/useForm';
+
 import styles from './Form.module.scss';
 
 export default function Form({
@@ -46,7 +48,7 @@ export default function Form({
 
   return (
     <form className={styles.form} onSubmit={handleSubmit} {...rest}>
-      {title && <h1 className={styles.title}>{title}</h1>}
+      {title && <h3 className={styles.title}>{title}</h3>}
       <div className={styles.children}>{iterateOverChildren(children)}</div>
     </form>
   );

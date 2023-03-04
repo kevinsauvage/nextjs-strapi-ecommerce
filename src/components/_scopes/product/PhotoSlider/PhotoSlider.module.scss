@@ -1,6 +1,7 @@
 .PhotoSlider {
   position: relative;
   width: 100%;
+  height: fit-content;
 
   img {
     width: 100%;
@@ -8,6 +9,17 @@
     object-fit: contain;
   }
 }
+
+.indicators {
+  position: absolute;
+  bottom: var(--space-0);
+  right: var(--space-0);
+  background-color: var(--surface-dark-100);
+  color: var(--onSurface-dark);
+  padding: var(--space-0);
+  border-radius: $radius;
+}
+
 .buttons {
   position: absolute;
   top: var(--space-1);

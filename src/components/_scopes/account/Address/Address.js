@@ -1,11 +1,23 @@
-import Link from 'next/link';
-import config from '@/config/index';
-import Tooltip from '@/components/Tooltip/Tooltip';
+import { useState } from 'react';
+
 import { edit, remove } from '@/assets/svg';
+import Modal from '@/components/_modals/Modal/Modal';
+import Tooltip from '@/components/Tooltip/Tooltip';
+
+import AddressForm from '../AddressForm/AddressForm';
+
 import style from './Address.module.scss';
 
-function Address({ address, handleDelete, handleSetAsDefault, isDefault, displayButton = true }) {
+function Address({
+  address,
+  handleDelete,
+  handleSetAsDefault,
+  handleUpdateAddress,
+  isDefault,
+  displayButton = true,
+}) {
   const { id, address1, address2, name, city, country, province, zip, company, phone } = address || {};
+  const [editAddress, setEditAddress] = useState(false);
 
   return (
     <div className={style.address}>
@@ -30,12 +42,9 @@ function Address({ address, handleDelete, handleSetAsDefault, isDefault, display
         {displayButton ? (
           <div className={style.buttons}>
             <Tooltip text="Edit address">
-              <Link
-                className={style.button}
-                href={`${config.routes.updateAddress}/${encodeURIComponent(id)}`}
-              >
+              <button type="button" className={style.button} onClick={() => setEditAddress(true)}>
                 {edit}
-              </Link>
+              </button>
             </Tooltip>
             <Tooltip text="Remove Address">
               <button type="button" onClick={handleDelete} className={style.button}>
@@ -53,6 +62,15 @@ function Address({ address, handleDelete, handleSetAsDefault, isDefault, display
 
         {isDefault && <p className={style.defaultText}>Default address</p>}
       </div>
+      {editAddress && (
+        <Modal handleClose={() => setEditAddress(false)}>
+          <AddressForm
+            buttonText="Update Address"
+            initialValues={address}
+            onSubmit={(formData) => handleUpdateAddress(formData, address.id)}
+          />
+        </Modal>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+
 import config from '@/config/index';
 import getClient from '@/shopify/index';
 

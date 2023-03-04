@@ -1,5 +1,7 @@
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
+
 import CollectionCard from '../CollectionCard/CollectionCard';
+
 import styles from './CollectionGrid.module.scss';
 
 function CollectionGrid({ collections }) {

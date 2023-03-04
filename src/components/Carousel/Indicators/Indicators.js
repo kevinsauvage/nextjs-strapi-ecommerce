@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { IoIosArrowRoundBack, IoIosArrowRoundForward } from 'react-icons/io';
+
 import style from './Indicators.module.scss';
 
 export default function Indicators({ itemsToShow, totalItems, handleClick, activeIndex }) {

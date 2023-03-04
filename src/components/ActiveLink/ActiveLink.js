@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { withRouter } from 'next/router';
+
 import styles from './ActiveLink.module.scss';
 
 export default withRouter(({ router, children, as, url, scroll = true, isActive, activeStyle, ...rest }) => {

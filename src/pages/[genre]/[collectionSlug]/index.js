@@ -1,7 +1,7 @@
-import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
+import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
 import { getInfoFromCtx } from '@/helpers/index';
-import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
+import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import getClient from '@/shopify/index';
 
 export default function CollectionSlugPage(props) {

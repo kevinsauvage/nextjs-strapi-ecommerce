@@ -1,5 +1,7 @@
 import Head from 'next/head';
+
 import config from '@/config/index';
+
 import styles from './PageLayout.module.scss';
 
 export default function PageLayout({ children, title, description }) {

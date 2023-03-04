@@ -1,6 +1,8 @@
-import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import { useEffect, useState } from 'react';
+
+import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
 import getClient from '@/shopify/index';
+
 import Modal from '../Modal/Modal';
 
 export default function ModalProduct({ handleClose, selectedProduct }) {

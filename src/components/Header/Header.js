@@ -1,7 +1,8 @@
 import Container from '@/components/Container/Container';
-import UserButtons from '@/components/UserButtons/UserButtons';
-import Navbar from '@/components/Navbar/Navbar';
 import Logo from '@/components/Logo/Logo';
+import Navbar from '@/components/Navbar/Navbar';
+import UserButtons from '@/components/UserButtons/UserButtons';
+
 import styles from './Header.module.scss';
 
 function Header({ headerMenu }) {

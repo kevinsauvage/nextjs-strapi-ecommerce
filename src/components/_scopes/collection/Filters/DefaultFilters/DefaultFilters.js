@@ -1,4 +1,5 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
+
 import styles from './DefaultFilters.module.scss';
 
 const DefaultFilters = ({ filter }) => {

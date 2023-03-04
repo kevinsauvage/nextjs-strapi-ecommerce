@@ -1,14 +1,17 @@
 import { useRef, useState } from 'react';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import { heart, eye } from '@/assets/svg';
+import { useRouter } from 'next/router';
+
+import { eye,heart } from '@/assets/svg';
 import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import Tooltip from '@/components/Tooltip/Tooltip';
-import styles from './ProductCardDefault.module.scss';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import useUserContext from '@/contexts/UserContext/useUserContext';
+
 import Price from '../Price/Price';
+
+import styles from './ProductCardDefault.module.scss';
 
 export default function ProductCardDefault({ product = {} }) {
   const { title, images, handle, variants, collections, productType } = product;

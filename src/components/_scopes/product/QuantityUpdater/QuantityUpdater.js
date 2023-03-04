@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { VscAdd, VscRemove } from 'react-icons/vsc';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { useRouter } from 'next/router';
+
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+
 import styles from './QuantityUpdater.module.scss';
 
 export default function QuantityUpdater({

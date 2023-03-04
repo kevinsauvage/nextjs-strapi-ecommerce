@@ -1,7 +1,8 @@
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Form from '@/components/_scopes/forms/Form/Form';
 import Input from '@/components/_scopes/forms/Input/Input';
-import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Row from '@/components/_scopes/forms/Row/Row';
+
 import styles from './AddressForm.module.scss';
 
 function AddressForm({ initialValues, onSubmit, buttonText, title }) {

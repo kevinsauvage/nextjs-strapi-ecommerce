@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
+
 import styles from './CollectionsRow.module.scss';
 
 function CollectionsRow({ collections }) {

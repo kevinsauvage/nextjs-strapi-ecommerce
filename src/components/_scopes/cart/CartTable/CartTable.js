@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/control-has-associated-label */
-import CartItem from '../CartItem/CartItem';
 import Table, { Body, Head, Row, THead } from '../../table/Table/Table';
+import CartItem from '../CartItem/CartItem';
 
 function CartTable({ handleChange, handleRemove, cart }) {
   return (

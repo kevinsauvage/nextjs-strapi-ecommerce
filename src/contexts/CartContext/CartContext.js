@@ -1,9 +1,12 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
+
 import config from '@/config/index';
 import getClient from '@/shopify/index';
-import { CartReducer, initialState, actions } from './CartReducer';
+
 import useGlobalContext from '../GlobalContext/useGlobalContext';
 import { useToastContext } from '../ToastContext/NotificationContext';
+
+import { actions, CartReducer, initialState } from './CartReducer';
 
 const {
   userFeedback,

@@ -1,13 +1,15 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useEffect, useState } from 'react';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
+
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
-import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
-import getClient from '@/shopify/index';
+import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
+import Footer from '@/components/Footer/Footer';
+import Header from '@/components/Header/Header';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import getClient from '@/shopify/index';
+
 import styles from './RootLayout.module.scss';
 
 function RootLayout({ children }) {

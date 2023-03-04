@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@kevinsauvage/shopify-storefront-api": "^1.1.13",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "next": "13.1.2",
     "nodemailer": "^6.9.1",
     "nookies": "^2.5.2",

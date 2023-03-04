@@ -1,11 +1,13 @@
 /* eslint-disable no-nested-ternary */
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
-import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import LayoutButtons from '@/components/LayoutButtons/LayoutButtons';
 import { actions } from '@/contexts/CollectionContext/CollectionReducer';
-import Filters from '../Filters/Filters';
-import styles from './collectionNav.module.scss';
+import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
+
 import Sort from '../../product/Sort/Sort';
+import Filters from '../Filters/Filters';
+
+import styles from './collectionNav.module.scss';
 
 function CollectionPage() {
   const { loading, products, layout, handleNext, pageInfo, handleSort, dispatch } = useCollectionContext();

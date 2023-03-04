@@ -1,21 +1,16 @@
-import ActiveLink from '@/components/ActiveLink/ActiveLink';
-import config from '@/config/index';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Loader from '@/components/_loaders/Loader/Loader';
+import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import config from '@/config/index';
+
 import styles from './AccountLayout.module.scss';
 
-function AccountLayout({
-  children,
-  loading,
-  titleBannerChildren,
-  descriptionBannerChildren,
-  otherBannerChildrenContenct,
-}) {
+function AccountLayout({ children, loading, title, descriptionBannerChildren, otherBannerChildrenContenct }) {
   return (
     <div className={styles.AccountLayout}>
-      <PageBanner title="My Account" />
+      <PageBanner title={title} />
       <Breadcrumbs />
       <Container>
         <main className={styles.main}>
@@ -37,9 +32,9 @@ function AccountLayout({
               </div>
             ) : (
               <>
-                {titleBannerChildren && (
+                {descriptionBannerChildren && (
                   <div className={styles.bannerChildren}>
-                    <h2>{titleBannerChildren}</h2>
+                    <h2>{title}</h2>
                     {descriptionBannerChildren && (
                       <p className={styles.bannerChildrenDescription}>{descriptionBannerChildren}</p>
                     )}

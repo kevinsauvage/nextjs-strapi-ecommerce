@@ -1,5 +1,7 @@
-import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import { useRouter } from 'next/router';
+
+import ActiveLink from '@/components/ActiveLink/ActiveLink';
+
 import styles from './Navbar.module.scss';
 
 function Navbar({ headerMenu }) {

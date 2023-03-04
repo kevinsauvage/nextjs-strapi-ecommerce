@@ -1,5 +1,6 @@
-import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import { remove } from '@/assets/svg';
+import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
+
 import styles from './Modal.module.scss';
 
 export default function Modal({ handleClose, loading, children }) {

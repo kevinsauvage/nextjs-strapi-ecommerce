@@ -1,7 +1,9 @@
 /* eslint-disable react/no-danger */
 import { useEffect, useState } from 'react';
-import processHtml from '@/helpers/html';
+
 import Container from '@/components/Container/Container';
+import processHtml from '@/helpers/html';
+
 import styles from './ProductDetails.module.scss';
 
 function ProductDetails({ html }) {

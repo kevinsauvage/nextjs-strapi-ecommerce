@@ -1,5 +1,6 @@
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import { extractUniqueColorNames } from '@/helpers/index';
+
 import styles from './ColorFilters.module.scss';
 
 function ColorFilters({ filter }) {

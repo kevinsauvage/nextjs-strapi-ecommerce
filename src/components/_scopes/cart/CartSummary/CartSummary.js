@@ -1,5 +1,6 @@
 import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+
 import styles from './CartSummary.module.scss';
 
 function CartSummaryRow({ title, content, children }) {

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import styles from './Toast.module.scss';
 
 function ToastItem({ tranformY = 0, toast, toastDispatch }) {

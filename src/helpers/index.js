@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import nookies from 'nookies';
+
 import config from '@/config/index';
 
 const getIpAddressFromCtx = (ctx) => {

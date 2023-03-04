@@ -1,12 +1,14 @@
 import Head from 'next/head';
-import RootLayout from '@/layout/RootLayout/RootLayout';
+import Script from 'next/script';
+
+import config from '@/config/index';
+import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { GlobalProvider } from '@/contexts/GlobalContext/GlobalContext';
 import { ToastProvider } from '@/contexts/ToastContext/NotificationContext';
-import { CartProvider } from '@/contexts/CartContext/CartContext';
 import { UserProvider } from '@/contexts/UserContext/UserContext';
-import config from '@/config/index';
+import RootLayout from '@/layout/RootLayout/RootLayout';
+
 import '../styles/index.scss';
-import Script from 'next/script';
 
 function MyApp({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);

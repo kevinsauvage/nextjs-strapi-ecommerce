@@ -1,9 +1,11 @@
-import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
 import CollectionBanner from '@/components/_scopes/collection/CollectionBanner/CollectionBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import CollectionNav from '@/components/_scopes/collection/CollectionNav/CollectionNav';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
+import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
+
 import PageLayout from '../PageLayout/PageLayout';
+
 import styles from './CollectionLayout.module.scss';
 
 function CollectionLayout({ children }) {

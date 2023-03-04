@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Tooltip from '@/components/Tooltip/Tooltip';
+
 import { remove } from '@/assets/svg';
-import styles from './CartItem.module.scss';
-import { Row, TData } from '../../table/Table/Table';
+import Tooltip from '@/components/Tooltip/Tooltip';
+
 import QuantityUpdater from '../../product/QuantityUpdater/QuantityUpdater';
+import { Row, TData } from '../../table/Table/Table';
+
+import styles from './CartItem.module.scss';
 
 export default function CartItem({ handleChange, removeFromCart, item }) {
   const { merchandise, quantity, id } = item || {};

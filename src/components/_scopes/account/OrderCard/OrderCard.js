@@ -1,6 +1,8 @@
 import Link from 'next/link';
-import style from './OrderCard.module.scss';
+
 import AccountRow from '../AccountRow/AccountRow';
+
+import style from './OrderCard.module.scss';
 
 function OrderCard({ order }) {
   const {

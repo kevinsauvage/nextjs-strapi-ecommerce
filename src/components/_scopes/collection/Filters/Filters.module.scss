@@ -1,3 +1,7 @@
+.filters {
+  border: 0.1px solid var(--surface-400);
+  border-radius: $radius;
+}
 .header {
   background-color: var(--surface-dark-100);
   padding: var(--space-1);
@@ -9,13 +13,20 @@
   border-radius: $radius;
 }
 
+.bottom {
+  padding: var(--space-0);
+}
+
 .title {
   color: var(--onSurface-dark);
+  display: flex;
+  align-items: center;
+  gap: var(--space-0);
 }
 
 .button {
+  display: block;
   width: 100%;
-  margin-top: var(--space-0);
 }
 
 .reset {

@@ -1,9 +1,15 @@
+.priceFilters {
+  display: block;
+  height: 100%;
+}
 .priceInputs {
   display: flex;
   align-items: center;
   gap: var(--space-1);
 
   input {
+    display: block;
+    position: relative;
     width: 120px;
     height: 40px;
     border-radius: 10px;

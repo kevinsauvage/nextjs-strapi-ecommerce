@@ -1,17 +1,19 @@
 // import { useState } from 'react';
-import Orders from '@/components/_scopes/account/Orders/Orders';
-import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import { useCallback, useEffect, useState } from 'react';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import { actions } from '@/contexts/UserContext/UserReducer';
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import Button from '@/components/Button/Button';
+
 import Loader from '@/components/_loaders/Loader/Loader';
+import Orders from '@/components/_scopes/account/Orders/Orders';
+import Button from '@/components/Button/Button';
 import config from '@/config/index';
-import { handleGetTokenCookies } from '@/helpers/cookies';
-import getClient from '@/shopify/index';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { actions } from '@/contexts/UserContext/UserReducer';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import seo from '@/data/seo';
+import { handleGetTokenCookies } from '@/helpers/cookies';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
+
 import styles from './Orders.module.scss';
 
 export default function OrdersPage() {
@@ -56,7 +58,7 @@ export default function OrdersPage() {
 
   return (
     <PageLayout title={seo.account.orders.title} description={seo.account.orders.description}>
-      <AccountLayout title="Orders" titleBannerChildren="My orders" descriptionBannerChildren={description}>
+      <AccountLayout title={seo.account.orders.title} descriptionBannerChildren={description}>
         {!isLoading && !orders?.length ? (
           <div>
             <p>You didn&apos;t make any orders yet.</p>

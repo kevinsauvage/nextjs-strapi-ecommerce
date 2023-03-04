@@ -1,8 +1,9 @@
 .DropDown {
   position: relative;
-  border: 0.1px solid rgba(var(--RGB-onSurface-hight), 0.5);
+  border: 0.1px solid var(--surface-400);
   margin-left: 4px;
-  padding: 2px;
+  padding: 4px;
+  border-radius: $radius;
 }
 
 .menu {
@@ -23,8 +24,8 @@
 
   svg {
     margin-left: 8px;
-    width: 13px;
-    height: 13px;
+    width: 12px;
+    height: 12px;
   }
 
   path {

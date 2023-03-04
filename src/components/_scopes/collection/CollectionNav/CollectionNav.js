@@ -1,5 +1,6 @@
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import Container from '@/components/Container/Container';
+
 import styles from './CollectionNav.module.scss';
 
 function CollectionNav({ items }) {

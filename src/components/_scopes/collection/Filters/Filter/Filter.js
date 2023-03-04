@@ -1,5 +1,8 @@
 import { useState } from 'react';
+
 import { arrowRight } from '@/assets/svg';
+import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
+
 import styles from './Filter.module.scss';
 
 function Filter({ filter, children }) {
@@ -11,7 +14,9 @@ function Filter({ filter, children }) {
         <b className={styles.label}>{filter.label}</b>
         <span className={styles.arrow}>{arrowRight}</span>
       </button>
-      <div className={styles.children}>{children}</div>
+      <HeightAnimation initialHeight={0} isOpen={open}>
+        <div className={styles.children}>{children}</div>
+      </HeightAnimation>
     </div>
   );
 }

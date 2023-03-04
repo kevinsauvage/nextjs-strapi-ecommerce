@@ -1,10 +1,12 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
+
 import config from '@/config/index';
 import { numberOfDifferences } from '@/helpers/array';
 import { getSelectedFilter } from '@/helpers/index';
 import getClient from '@/shopify/index';
-import { CollectionReducer, initialState, actions } from './CollectionReducer';
+
+import { actions, CollectionReducer, initialState } from './CollectionReducer';
 
 export const CollectionContext = createContext();
 

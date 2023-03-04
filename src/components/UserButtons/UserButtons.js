@@ -1,9 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import { useRouter } from 'next/router';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+
+import { bag, heart, search, user } from '@/assets/svg';
 import config from '@/config/index';
-import { bag, user, search, heart } from '@/assets/svg';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 
 import styles from './UserButtons.module.scss';
 

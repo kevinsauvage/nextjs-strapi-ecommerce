@@ -1,6 +1,7 @@
+import CollectionCard from '../_scopes/collection/CollectionCard/CollectionCard';
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Container from '../Container/Container';
-import CollectionCard from '../_scopes/collection/CollectionCard/CollectionCard';
+
 import styles from './BigMenu.module.scss';
 
 function BigMenu({ data, handleClose, collections }) {

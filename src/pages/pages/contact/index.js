@@ -1,15 +1,15 @@
-import Input from '@/components/_scopes/forms/Input/Input';
-import Form from '@/components/_scopes/forms/Form/Form';
+import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
-import TextArea from '@/components/_scopes/forms/TextArea/TextArea';
+import Form from '@/components/_scopes/forms/Form/Form';
 import FormContainer from '@/components/_scopes/forms/FormContainer/FormContainer';
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import { sendMail } from '@/helpers/apiNext';
+import Input from '@/components/_scopes/forms/Input/Input';
+import TextArea from '@/components/_scopes/forms/TextArea/TextArea';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import seo from '@/data/seo';
+import { sendMail } from '@/helpers/apiNext';
+import PageLayout from '@/layout/PageLayout/PageLayout';
 
 function ContactPage() {
   const { toggleLoading } = useGlobalContext();
@@ -35,13 +35,13 @@ function ContactPage() {
 
   return (
     <PageLayout title={seo.pages.contact.title} description={seo.pages.contact.description}>
-      <PageBanner title="Contact Us" />
+      <PageBanner title={seo.pages.contact.title} />
       <Breadcrumbs />
       <FormContainer>
         <Form
           onSubmit={onSubmit}
           action="submit"
-          title="Contact Us"
+          title={seo.pages.contact.title}
           initialValues={[{ email: '', name: '', message: '' }]}
           requiredFields={['email', 'name', 'message']}
         >

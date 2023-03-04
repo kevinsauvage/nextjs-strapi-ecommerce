@@ -1,9 +1,11 @@
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
+import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
 import { useSwipeable } from 'react-swipeable';
 import { useRouter } from 'next/router';
-import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
-import styles from './Carousel.module.scss';
+
 import Indicators from './Indicators/Indicators';
+
+import styles from './Carousel.module.scss';
 
 function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 }) {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);

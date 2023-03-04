@@ -1,13 +1,15 @@
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
-import Container from '@/components/Container/Container';
-import getClient from '@/shopify/index';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Search from '@/components/_scopes/search/Search/Search';
+import { useRouter } from 'next/router';
+
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
+import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
+import Search from '@/components/_scopes/search/Search/Search';
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Container from '@/components/Container/Container';
 import seo from '@/data/seo';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
+
 import styles from './search.module.scss';
 
 function SearchPage() {
@@ -49,7 +51,7 @@ function SearchPage() {
 
   return (
     <PageLayout title={seo.search.title} description={seo.search.description}>
-      <PageBanner title="Search" />
+      <PageBanner title={seo.search.title} />
       <Breadcrumbs />
       <Search size="medium" />
       <Container size="medium">

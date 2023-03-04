@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-import useUserContext from '@/contexts/UserContext/useUserContext';
-import { actions } from '@/contexts/UserContext/UserReducer';
-import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+
+import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Form from '@/components/_scopes/forms/Form/Form';
 import Input from '@/components/_scopes/forms/Input/Input';
-import Buttons from '@/components/_scopes/forms/Buttons/Buttons';
 import Row from '@/components/_scopes/forms/Row/Row';
-import PageLayout from '@/layout/PageLayout/PageLayout';
-import { handleSetTokenCookies, handleGetTokenCookies } from '@/helpers/cookies';
 import config from '@/config/index';
-import getClient from '@/shopify/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { actions } from '@/contexts/UserContext/UserReducer';
+import useUserContext from '@/contexts/UserContext/useUserContext';
 import seo from '@/data/seo';
+import { handleGetTokenCookies, handleSetTokenCookies } from '@/helpers/cookies';
+import AccountLayout from '@/layout/AccountLayout/AccountLayout';
+import PageLayout from '@/layout/PageLayout/PageLayout';
+import getClient from '@/shopify/index';
+
 import styles from './Update.module.scss';
 
 function OrderDetail() {
@@ -71,8 +73,7 @@ function OrderDetail() {
     <PageLayout title={seo.account.update.title} description={seo.account.update.description}>
       <AccountLayout
         loading={isLoading || !id}
-        title="Account Details"
-        titleBannerChildren="Update Account Details"
+        title={seo.account.update.title}
         descriptionBannerChildren={description}
       >
         <div className={styles.form}>

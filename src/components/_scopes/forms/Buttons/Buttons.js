@@ -1,4 +1,5 @@
 import Button from '@/components/Button/Button';
+
 import styles from './Buttons.module.scss';
 
 function Buttons({ children, text }) {

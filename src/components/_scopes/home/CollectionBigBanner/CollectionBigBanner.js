@@ -1,4 +1,5 @@
 import CollectionCard from '../../collection/CollectionCard/CollectionCard';
+
 import styles from './CollectionBigBanner.module.scss';
 
 function CollectionBigBanner({ collections }) {
