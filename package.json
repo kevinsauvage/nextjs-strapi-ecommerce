@@ -10,6 +10,7 @@
     "lint-fix": "next lint -- --fix"
   },
   "dependencies": {
+    "@kevinsauvage/shopify-storefront-api": "^1.1.14",
     "next": "13.1.2",
     "nodemailer": "^6.9.1",
     "nookies": "^2.5.2",

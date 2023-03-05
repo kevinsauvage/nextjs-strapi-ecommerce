@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import styles from './HeightAnimation.module.scss';
 
 // Animation type: hover, button
+// Hover animation need initial height higher than 0
 function HeightAnimation({ children, animationType, isOpen, initialHeight = 0 }) {
   const refChildren = useRef();
   const [maxHeight, setMaxHeight] = useState();
