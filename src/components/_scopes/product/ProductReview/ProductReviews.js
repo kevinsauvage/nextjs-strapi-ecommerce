@@ -31,8 +31,8 @@ export default function ProductReviews({ product }) {
   useEffect(() => {
     const productReview = product?.metafields?.filter((metafield) => metafield?.key === 'reviews');
     const value = productReview?.[0]?.value;
-    if (value) setReviews(JSON.parse(value));
-  }, [product]);
+    setReviews(value ? JSON.parse(value) : undefined);
+  }, [product?.metafields]);
 
   const handleSetProductReview = useCallback(
     async (formData) => {
