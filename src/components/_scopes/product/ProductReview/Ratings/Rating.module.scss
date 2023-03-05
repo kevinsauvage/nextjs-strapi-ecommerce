@@ -3,11 +3,11 @@
 }
 
 .star {
-  .filled {
-    background-color: red;
-  }
+  border: none;
+  font-size: 26px;
+  padding: 0;
 
   &.filled {
-    background-color: greenyellow;
+    color: #e8b80a;
   }
 }

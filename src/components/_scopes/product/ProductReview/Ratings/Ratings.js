@@ -5,16 +5,9 @@ import styles from './Rating.module.scss';
 export default function Rating({ rating, onChange }) {
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
-  const handleMouseEnter = (index) => {
-    setHoveredIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredIndex(-1);
-  };
-  const handleClick = (index) => {
-    onChange(index + 1);
-  };
+  const handleMouseEnter = (index) => setHoveredIndex(index);
+  const handleMouseLeave = () => setHoveredIndex(-1);
+  const handleClick = (index) => onChange(index + 1);
 
   const stars = Array.from({ length: 5 }, (_, index) => (
     <button

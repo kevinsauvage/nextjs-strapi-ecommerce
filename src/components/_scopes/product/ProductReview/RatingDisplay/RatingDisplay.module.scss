@@ -1,0 +1,29 @@
+.rating {
+  position: relative;
+  margin: 0;
+  width: fit-content;
+  padding: 0;
+  font-size: 20px;
+  color: var(--surface-600);
+
+  .filled {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    overflow: hidden;
+    padding: 0;
+    color: #e8b80a;
+
+    span {
+      display: inline-block;
+    }
+  }
+
+  .empty {
+    z-index: 0;
+    display: block;
+    padding: 0;
+  }
+}

@@ -1,0 +1,14 @@
+.pagination {
+  @include flex-center;
+}
+
+.item {
+  button {
+    border: none;
+  }
+
+  &.active {
+    color: red;
+    text-decoration: underline;
+  }
+}

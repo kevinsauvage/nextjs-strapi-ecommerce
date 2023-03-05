@@ -1,0 +1,17 @@
+.Review {
+  border: 1px solid var(--surface-400);
+  border-radius: $radius;
+  margin: var(--space-0) 0;
+  background-color: var(--surface-300);
+  padding: var(--space-2);
+
+  .by {
+    margin-bottom: var(--space-0);
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .message {
+    margin-top: var(--space-2);
+  }
+}

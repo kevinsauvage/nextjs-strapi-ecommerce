@@ -37,17 +37,18 @@ function HeightAnimation({ children, animationType, isOpen, initialHeight = 0 })
 
   return (
     <>
-      <div
-        className={`${styles.HeightAnimation} ${
-          animationType === 'hover' && actualHeight !== maxHeight && styles.hoverAnimation
-        }`}
-        onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
-        onMouseLeave={() => animationType === 'hover' && setActualHeight(initialHeight)}
-        onFocus={() => animationType === 'hover' && setActualHeight(maxHeight)}
-        onBlur={() => animationType === 'hover' && setActualHeight(initialHeight)}
-        style={{ maxHeight: `${actualHeight}px` }}
-      >
-        <div ref={refChildren} onLoad={calculateHeight} className={styles.children}>
+      <div className={`${styles.HeightAnimation} `} style={{ maxHeight: `${actualHeight}px` }}>
+        <div
+          ref={refChildren}
+          onLoad={calculateHeight}
+          className={`${styles.children} ${
+            animationType === 'hover' && actualHeight !== maxHeight && styles.hoverAnimation
+          } `}
+          onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
+          onMouseLeave={() => animationType === 'hover' && setActualHeight(initialHeight)}
+          onFocus={() => animationType === 'hover' && setActualHeight(maxHeight)}
+          onBlur={() => animationType === 'hover' && setActualHeight(initialHeight)}
+        >
           {children}
         </div>
       </div>

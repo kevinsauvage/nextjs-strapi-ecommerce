@@ -10,20 +10,20 @@
 .reviewForm {
   textArea {
     background-color: var(--surface-300);
+
+    @include placeholder {
+      color: var(--surface-600);
+    }
   }
 }
 
 .rating {
   padding: var(--space-2);
   padding-bottom: unset;
-}
 
-.review {
-  border: 1px solid var(--surface-400);
-  border-radius: $radius;
-  margin: var(--space-0) 0;
-  background-color: var(--surface-300);
-  padding: var(--space-2);
+  h6 {
+    margin-bottom: var(--space-0);
+  }
 }
 
 .buttonSubmit {

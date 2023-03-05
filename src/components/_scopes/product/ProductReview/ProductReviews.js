@@ -14,16 +14,15 @@ import Form from '../../forms/Form/Form';
 import TextArea from '../../forms/TextArea/TextArea';
 
 import Rating from './Ratings/Ratings';
+import Reviews from './Reviews/Reviews';
 
 import styles from './ProductReviews.module.scss';
 
 export default function ProductReviews({ product }) {
   const [reviews, setReviews] = useState([]);
-
-  console.log('🚀 ~ file: ProductReviews.js:23 ~ ProductReviews ~ reviews:', reviews);
-
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState();
+
   const { push, asPath } = useRouter();
   const { showToast } = useToastContext();
   const { user } = useUserContext();
@@ -31,12 +30,11 @@ export default function ProductReviews({ product }) {
   useEffect(() => {
     const productReview = product?.metafields?.filter((metafield) => metafield?.key === 'reviews');
     const value = productReview?.[0]?.value;
-    setReviews(value ? JSON.parse(value) : undefined);
+    setReviews(value ? JSON.parse(value) : []);
   }, [product?.metafields]);
 
   const handleSetProductReview = useCallback(
     async (formData) => {
-      if (!formData?.review) return showToast.error('Missing review field');
       if (typeof rating === 'undefined') return showToast.error('Please select a rating');
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
@@ -50,7 +48,7 @@ export default function ProductReviews({ product }) {
       const date = new Date();
       const reviewObj = {
         customerId: user.id,
-        review: { message: formData.review, rating },
+        review: { message: formData.message, rating },
         customerFirstName: user.firstName,
         customerLastName: user.lastName,
         createdAt: date,
@@ -90,23 +88,7 @@ export default function ProductReviews({ product }) {
       <Collapsible title="Reviews">
         <div className={styles.ProductReviewsContent}>
           <div className={styles.customerReviews}>
-            {Array.isArray(reviews) && reviews.length > 0 ? (
-              reviews.map((review) => {
-                const date = new Date(review?.createdAt);
-                return (
-                  <li key={review.createdAt} className={styles.review}>
-                    <p>
-                      By {review?.customerFirstName} {review?.customerLastName}
-                    </p>
-                    <p>{review?.review?.message}</p>
-                    <p>{review?.review?.rating} stars</p>
-                    <p>{date.toDateString()}</p>
-                  </li>
-                );
-              })
-            ) : (
-              <p>No reviews</p>
-            )}
+            {Array.isArray(reviews) && reviews.length > 0 ? <Reviews reviews={reviews} /> : <p>No reviews</p>}
           </div>
 
           <div className={styles.addReview}>
@@ -118,16 +100,14 @@ export default function ProductReviews({ product }) {
               <Form
                 extraClass={styles.reviewForm}
                 onSubmit={handleSetProductReview}
-                requiredFields={['review']}
-                initialValues={{ review: '' }}
+                initialValues={{ message: '' }}
               >
                 <TextArea
-                  placeholder="Review"
-                  name="review"
-                  id="review"
-                  label="review"
+                  placeholder="Amazing product"
+                  name="message"
+                  id="message"
+                  label="message"
                   input="true"
-                  required="true"
                 />
                 <Button extraClass={styles.buttonSubmit} primary type="submit">
                   Publish review
