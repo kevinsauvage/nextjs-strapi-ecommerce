@@ -1,20 +1,20 @@
 .crumbs {
+  opacity: 0.6;
   display: flex;
   align-items: center;
   text-transform: capitalize;
   font-size: 10px;
   font-weight: 500;
-  opacity: 0.6;
 }
 
 .last {
-  font-weight: 600;
   opacity: 1;
+  font-weight: 600;
 }
 
 .arrow {
-  margin: 0 6px;
   opacity: 0.6;
+  margin: 0 6px;
 
   svg {
     width: 8px;

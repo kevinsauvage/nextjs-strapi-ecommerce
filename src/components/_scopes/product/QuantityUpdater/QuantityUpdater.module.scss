@@ -6,37 +6,37 @@ $boxDimension: 36px;
 
 .label {
   display: block;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
   margin-bottom: 4px;
   width: fit-content;
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
 }
 
 .inputBox {
-  width: fit-content;
   display: flex;
   align-items: center;
-  min-height: $boxDimension;
-  border-radius: $radius;
-  overflow: hidden;
-  height: 100%;
   border: 1px solid var(--surface-500);
+  border-radius: $radius;
   background-color: var(--surface-100);
+  min-height: $boxDimension;
+  height: 100%;
+  width: fit-content;
+  overflow: hidden;
 }
 
 .input {
   display: block;
-  text-align: center;
-  height: 100%;
-  width: calc($boxDimension + 10px);
   border: none;
   background-color: transparent;
-  color: var(--onSurface-hight);
+  height: 100%;
+  width: calc($boxDimension + 10px);
   font-size: 17px;
+  color: var(--onSurface-hight);
+  text-align: center;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
     margin: 0;
+    -webkit-appearance: none;
   }
 
   &[type='number'] {
@@ -45,14 +45,14 @@ $boxDimension: 36px;
 }
 
 .btnQuantity {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: var(--surface-200);
+  min-height: $boxDimension;
   height: 100%;
   width: $boxDimension;
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: $boxDimension;
-  background-color: var(--surface-200);
 
   &:first-of-type {
     border-right: 1px solid var(--surface-500);

@@ -1,8 +1,8 @@
 .ActiveLink {
-  font-weight: $fontWeightMedium;
-  width: fit-content;
-  height: 100%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: fit-content;
+  font-weight: $fontWeightMedium;
 }

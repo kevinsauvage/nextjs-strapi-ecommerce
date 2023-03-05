@@ -1,10 +1,10 @@
 .orderCard {
-  padding: var(--space-2);
   border-radius: $radius;
-  width: 100%;
-  color: var(--onSurface-medium);
   margin-bottom: var(--space-1);
   background-color: var(--surface-200);
+  width: 100%;
+  padding: var(--space-2);
+  color: var(--onSurface-medium);
 
   &:last-of-type {
     margin-bottom: 0;
@@ -12,10 +12,10 @@
 }
 
 .header {
-  margin-bottom: var(--space-1);
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-1);
 }
 
 .trackContainer {
@@ -23,8 +23,8 @@
 }
 
 .noTrackingUrl {
-  background-color: var(--surface-300);
   border: 1px solid var(--surface-500);
+  background-color: var(--surface-300);
   padding: 4px;
 
   p {
@@ -37,7 +37,7 @@
 }
 
 .trackButton {
-  padding: 2px 4px;
-  width: fit-content;
   border: 2px solid var(--surface-dark-100);
+  width: fit-content;
+  padding: 2px 4px;
 }

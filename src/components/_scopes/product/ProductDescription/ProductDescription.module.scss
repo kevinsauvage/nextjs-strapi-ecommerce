@@ -1,13 +1,13 @@
 .ProductDescription {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-2);
   position: sticky;
   top: 20px;
-  height: 100%;
-  background-color: var(--surface-100);
+  display: flex;
+  flex-direction: column;
   border-radius: $radius;
+  background-color: var(--surface-100);
+  height: 100%;
   width: fit-content;
+  padding: var(--space-2);
 
   &.Separator+.Separator {
     display: none;
@@ -30,16 +30,16 @@
 
 .title {
   position: relative;
-  @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
   margin-bottom: var(--space-1);
+  @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
 }
 
 .wrapper {
   display: flex;
   align-items: center;
-  gap: var(--space-1);
-  margin-top: var(--space-2);
   flex-wrap: wrap;
+  margin-top: var(--space-2);
+  gap: var(--space-1);
 }
 
 .prices {}

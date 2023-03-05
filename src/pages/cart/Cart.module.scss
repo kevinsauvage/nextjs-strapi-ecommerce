@@ -1,9 +1,9 @@
 .cart {
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 360px;
-  gap: var(--space-2);
+  margin: 0 auto;
   padding: var(--space-2) 0;
+  gap: var(--space-2);
 }
 
 .emptyCart {
@@ -11,6 +11,6 @@
 }
 
 .button {
-  margin-left: auto;
   margin-top: var(--space-1);
+  margin-left: auto;
 }

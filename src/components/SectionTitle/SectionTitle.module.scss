@@ -1,9 +1,9 @@
 .title {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 6px;
+  align-items: center;
   margin-bottom: var(--space-2);
+  gap: 6px;
 
   p {
     font-weight: $fontWeightLight;

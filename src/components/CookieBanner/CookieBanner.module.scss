@@ -1,36 +1,36 @@
 .cookieBanner {
+  z-index: 9999;
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: var(--surface-dark-100);
-  border-top: 1px solid var(--onSurface-dark);
-  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  border-top: 1px solid var(--onSurface-dark);
+  background-color: var(--surface-dark-100);
+  padding: 1rem;
 
   p {
-    color: var(--onSurface-dark);
     margin-right: 1rem;
+    color: var(--onSurface-dark);
   }
 
   .acceptBtn {
-    background-color: var(--primary-400);
-    color: var(--onSurface-dark);
     border: none;
     border-radius: 5px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
     margin-right: 1rem;
+    background-color: var(--primary-400);
+    padding: 0.5rem 1rem;
+    color: var(--onSurface-dark);
+    cursor: pointer;
   }
 
   .settingsBtn {
-    color: var(--primary-400);
     border: none;
-    text-decoration: underline;
     padding: 0.5rem 1rem;
+    text-decoration: underline;
+    color: var(--primary-400);
     cursor: pointer;
   }
 }
@@ -46,24 +46,24 @@
 }
 
 .cookieSettingsModal {
+  z-index: 9999;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
 
   .modalContent {
-    padding: 2rem;
     border-radius: 5px;
-    max-width: 700px;
-    max-height: 80vh;
-    overflow: auto;
     background-color: var(--surface-100);
+    max-height: 80vh;
+    max-width: 700px;
+    overflow: auto;
+    padding: 2rem;
 
     h2 {
       margin-bottom: var(--space-0);
@@ -91,13 +91,13 @@
     }
 
     .saveBtn {
-      background-color: var(--primary-400);
-      color: var(--onSurface-dark);
       border: none;
       border-radius: 5px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
       margin-top: var(--space-1);
+      background-color: var(--primary-400);
+      padding: 0.5rem 1rem;
+      color: var(--onSurface-dark);
+      cursor: pointer;
     }
   }
 

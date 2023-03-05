@@ -1,22 +1,22 @@
 .Carousel {
-  overflow: hidden;
   position: relative;
   height: 100%;
+  overflow: hidden;
 
   .inner {
     display: flex;
     flex-direction: column;
-    white-space: nowrap;
-    transition: transform 0.3s ease-in-out;
     height: calc(100% - 60px);
     width: 100%;
+    white-space: nowrap;
+    transition: transform 0.3s ease-in-out;
   }
 
   .button {
-    position: relative;
-    background-color: #e8e8e8;
     z-index: 99;
+    position: relative;
     border: none;
+    background-color: #e8e8e8;
     height: 30px;
     width: 100%;
 

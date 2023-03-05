@@ -1,19 +1,19 @@
 .DropDown {
   position: relative;
   border: 1px solid var(--surface-400);
+  border-radius: $radius;
   margin-left: 4px;
   padding: 4px;
-  border-radius: $radius;
 }
 
 .menu {
-  position: absolute;
   z-index: 99999;
+  position: absolute;
   top: 100%;
-  min-width: 190px;
   right: -0.2px;
   border: 1px solid var(--surface-900);
   background-color: var(--surface-100);
+  min-width: 190px;
   overflow: hidden;
 }
 
@@ -23,8 +23,8 @@
 
   svg {
     margin-left: 8px;
-    width: 12px;
     height: 12px;
+    width: 12px;
   }
 
   path {
@@ -33,10 +33,10 @@
 }
 
 .option {
+  border-bottom: 0.1px solid var(--surface-900);
   padding: 12px;
   white-space: nowrap;
   cursor: pointer;
-  border-bottom: 0.1px solid var(--surface-900);
 
   p {
     font-size: 13px;

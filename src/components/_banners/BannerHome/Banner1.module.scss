@@ -1,17 +1,17 @@
 .banner {
   position: relative;
-  width: 100%;
-  height: 45vw;
-  max-height: 600px;
+  border-radius: $radius;
   margin-bottom: var(--space-6);
   background-position: bottom;
-  background-repeat: no-repeat;
   background-size: cover;
+  background-repeat: no-repeat;
   background-attachment: fixed;
+  max-height: 600px;
+  height: 45vw;
+  width: 100%;
   overflow: hidden;
-  border-radius: $radius;
-  @include overlay(var(--RGB-surface-100), 0.4);
   color: var(--onSurface-hight);
+  @include overlay(var(--RGB-surface-100), 0.4);
 
   @include respond('tablet') {
     height: 66vw;
@@ -19,21 +19,21 @@
 }
 
 .inner {
-  @include flex-column;
-  justify-content: center;
   position: relative;
-  width: 100%;
-  height: 100%;
+  justify-content: center;
   border-radius: $radius;
+  height: 100%;
+  width: 100%;
+  @include flex-column;
 }
 
 .container {
-  position: relative;
   z-index: 99;
-  width: fit-content;
-  height: fit-content;
+  position: relative;
   display: flex;
   align-items: center;
+  height: fit-content;
+  width: fit-content;
   gap: var(--space-2);
 
   @include respond('tablet') {
@@ -42,32 +42,32 @@
 }
 
 .content {
-  width: fit-content;
   height: fit-content;
+  width: fit-content;
 
   &:nth-child(2) {
-    text-align: right;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-end;
+    text-align: right;
   }
 }
 
 .upTitle {
   display: flex;
   align-items: center;
-  gap: var(--space-0);
   font-weight: $fontWeightMedium;
+  gap: var(--space-0);
 
   span {
-    height: 3px;
-    width: 60px;
-    display: block;
-    position: relative;
     z-index: 99;
+    position: relative;
+    display: block;
     border-radius: $radius;
     background-color: var(--onSurface-hight);
+    height: 3px;
+    width: 60px;
   }
 }
 
@@ -84,18 +84,18 @@
 }
 
 .link {
-  @include button;
-  width: fit-content;
   display: block;
   background-color: var(--primary-500);
+  width: fit-content;
   color: var(--onSurface-dark);
+  @include button;
 
   &:hover {
     background-color: var(--primary-700);
   }
 
   p {
-    font-weight: $fontWeightBold;
     width: fit-content;
+    font-weight: $fontWeightBold;
   }
 }

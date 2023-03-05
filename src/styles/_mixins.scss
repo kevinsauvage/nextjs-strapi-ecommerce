@@ -1,14 +1,14 @@
 // @include text-shorten(3);
 @mixin text-shorten($numLines: 1) {
-  white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   @supports (-webkit-line-clamp: $numLines) {
+    display: -webkit-box;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: initial;
-    display: -webkit-box;
     -webkit-line-clamp: $numLines;
     -webkit-box-orient: vertical;
   }
@@ -21,13 +21,13 @@
 
 @mixin flex-center {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 @mixin flex-center-column {
-  @include flex-center;
   flex-direction: column;
+  @include flex-center;
 }
 
 @mixin flex-center-vert {
@@ -83,14 +83,14 @@
   display: block;
 
   &::after {
-    content: '';
     position: absolute;
-    left: 0px;
     bottom: 1px;
+    left: 0px;
+    content: '';
+    border-radius: $radius;
+    background-color: $color;
     height: 1px;
     max-width: 40px;
-    background-color: $color;
-    border-radius: $radius;
     width: 60%;
   }
 }
@@ -137,26 +137,24 @@
 
 @mixin overlay($bgColor: #000000, $bgOpacity: 0.6) {
   &:after {
-    content: '';
+    z-index: 0;
     position: absolute;
     top: 0;
     left: 0;
+    content: '';
+    background: rgba(($bgColor), $bgOpacity);
     height: 100%;
     width: 100%;
-    background: rgba(($bgColor), $bgOpacity);
-    z-index: 0;
   }
 }
 
 @mixin gradient-overlay($bgColor: #000000, $deg: 0deg) {
   &:after {
-    content: '';
+    z-index: 0;
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
-    width: 100%;
-    z-index: 0;
+    content: '';
     border-radius: inherit;
     background: rgba($bgColor, 0.6);
     background: linear-gradient($deg,
@@ -164,6 +162,8 @@
         rgba($bgColor, 0.8) 25%,
         rgba($bgColor, 0.4) 50%,
         rgba($bgColor, 0.1) 100%);
+    height: 100%;
+    width: 100%;
   }
 }
 
@@ -173,15 +173,15 @@
 
 @mixin button {
   display: flex;
-  align-items: center;
   justify-content: center;
-  white-space: nowrap;
-  padding: 14px 30px;
+  align-items: center;
+  border: 2px solid transparent;
   border-radius: 2px;
+  padding: 14px 30px;
+  white-space: nowrap;
   text-transform: uppercase;
   font-weight: $fontWeightSemiBold;
   transition: all 0.3s ease-in;
-  border: 2px solid transparent;
   @include boxShadow(2);
 
   &:hover:enabled {
@@ -198,9 +198,9 @@
 }
 
 @mixin button-primary {
-  @include button;
   background-color: var(--primary-600);
   color: var(--onSurface-dark);
+  @include button;
 
   path {
     stroke: var(--onSurface-dark);
@@ -212,10 +212,10 @@
 }
 
 @mixin button-secondary {
-  @include button;
-  background-color: var(--complementary-700);
   border: 2px solid var(--complementary-800);
+  background-color: var(--complementary-700);
   color: var(--onSurface-dark);
+  @include button;
 
   &:hover:enabled {
     background-color: var(--complementary-700);
@@ -223,10 +223,10 @@
 }
 
 @mixin button-outlined {
-  @include button;
   border: 2px solid var(--surface-dark-100);
   background-color: transparent;
   color: var(--surface-dark-100);
+  @include button;
 
   &:hover:enabled {
     background-color: var(--surface-dark-100);
@@ -235,10 +235,10 @@
 }
 
 @mixin button-contrast {
-  @include button;
   border: 2px solid var(--surface-dark-100);
   background-color: var(--surface-dark-100);
   color: var(--onSurface-dark);
+  @include button;
 
   path {
     stroke: var(--onSurface-dark);

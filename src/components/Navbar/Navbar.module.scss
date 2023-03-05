@@ -14,21 +14,21 @@
 }
 
 .item {
-  text-transform: uppercase;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  height: 100%;
-  color: var(--onSurface-dark);
   border-right: 0.1px solid var(--surface-900);
+  height: 100%;
+  text-transform: uppercase;
+  color: var(--onSurface-dark);
+  cursor: pointer;
 
   &:first-child {
     border-left: 0.1px solid var(--surface-900);
   }
 
   a {
-    padding: 0 var(--space-1);
     min-width: 110px;
+    padding: 0 var(--space-1);
     font-weight: $fontWeightSemiBold;
 
     &:hover {

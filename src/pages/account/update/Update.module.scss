@@ -5,9 +5,9 @@
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
 
   input {
-    cursor: pointer;
-    width: 16px;
     height: 16px;
+    width: 16px;
+    cursor: pointer;
   }
 
   span {

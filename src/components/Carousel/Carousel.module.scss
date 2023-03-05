@@ -1,7 +1,7 @@
 .container {
-  display: flex;
   position: sticky;
   top: 20px;
+  display: flex;
 }
 
 .header {
@@ -16,17 +16,17 @@
 }
 
 .Carousel {
-  overflow: hidden;
   position: relative;
   width: 100%;
+  overflow: hidden;
 
   .inner {
     display: flex;
+    height: 100%;
+    width: calc(100% - 60px);
+    width: 100%;
     white-space: nowrap;
     transition: transform 0.3s ease-in-out;
-    width: calc(100% - 60px);
-    height: 100%;
-    width: 100%;
   }
 
   .CarouselItem {
@@ -35,13 +35,13 @@
 }
 
 .button {
-  position: relative;
   z-index: 99;
+  position: relative;
   border: none;
-  width: 30px;
-  background-color: var(--complementary);
-  transition: all 0.2s ease-in-out;
   border: 0.1px solid rgba(var(--surface-900), 0.3);
+  background-color: var(--complementary);
+  width: 30px;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
     background-color: var(--surface-100);

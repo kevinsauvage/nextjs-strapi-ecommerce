@@ -1,6 +1,6 @@
 .label {
-  width: 100%;
   display: block;
+  width: 100%;
 
   &.missing {
     b {
@@ -19,22 +19,22 @@
 }
 
 .textarea {
+  border: 1px solid var(--surface-300);
+  border-radius: $radius;
+  background-color: var(--surface-200);
   min-height: 200px;
   width: 100%;
+  resize: vertical;
   padding-top: var(--space-0);
   padding-left: var(--space-1);
-  resize: vertical;
-  border-radius: $radius;
-  border: 1px solid var(--surface-300);
-  background-color: var(--surface-200);
   color: var(--onSurface-medium);
+
+  @include placeholder {
+    color: rgba(var(--surface-900), 0.3);
+  }
 
   &:focus,
   &:focus-visible {
     outline: 1px solid var(--primary-500);
-  }
-
-  @include placeholder {
-    color: rgba(var(--surface-900), 0.3);
   }
 }

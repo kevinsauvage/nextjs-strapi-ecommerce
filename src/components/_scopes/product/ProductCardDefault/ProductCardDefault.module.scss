@@ -1,9 +1,9 @@
 .productCardDefault {
   position: relative;
-  overflow: hidden;
   height: 100%;
   max-width: 330px;
   width: 100%;
+  overflow: hidden;
   cursor: pointer;
 
   &:hover,
@@ -22,35 +22,35 @@
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   gap: 1rem;
 }
 
 .buttons {
-  position: absolute;
   z-index: 999;
-  right: var(--space-0);
+  position: absolute;
   top: var(--space-0);
+  right: var(--space-0);
   opacity: 0;
   transition: opacity 0.2s linear;
 }
 
 .wishlist,
 .quickView {
-  border: none;
-  background-color: var(--surface-200);
-  border: 1px solid rgba(var(--RGB-surface-100), 0.5);
-  width: 40px;
-  height: 40px;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border: none;
+  border: 1px solid rgba(var(--RGB-surface-100), 0.5);
   margin-bottom: var(--space-0);
+  background-color: var(--surface-200);
+  height: 40px;
+  width: 40px;
 
   svg {
-    width: 22px;
     height: 22px;
+    width: 22px;
   }
 
   path {
@@ -69,10 +69,10 @@
 }
 
 .content {
-  display: flex;
-  position: relative;
-  flex-direction: column;
   z-index: 999;
+  position: relative;
+  display: flex;
+  flex-direction: column;
   height: 100%;
 }
 
@@ -83,35 +83,35 @@
 
 .image {
   position: relative;
-  width: 100%;
   display: flex;
-  overflow: hidden;
   border: 1px solid var(--surface-300);
+  width: 100%;
+  overflow: hidden;
 
   img {
-    transition: 0.2s all ease-in-out;
     height: 100%;
     width: 100%;
     object-fit: cover;
+    transition: 0.2s all ease-in-out;
   }
 }
 
 .bottom {
   display: flex;
-  align-items: flex-end;
   justify-content: space-between;
+  align-items: flex-end;
   margin-top: var(--space-0);
 }
 
 .discount {
-  position: absolute;
-  left: var(--space-0);
-  top: var(--space-0);
-  background-color: var(--danger);
   z-index: 999;
+  position: absolute;
+  top: var(--space-0);
+  left: var(--space-0);
+  border-radius: $radius;
+  background-color: var(--danger);
   padding: 2px 6px;
   color: var(--surface-900);
-  border-radius: $radius;
 }
 
 .title {

@@ -1,30 +1,30 @@
 .Modal {
+  z-index: 999999999;
   position: fixed;
-  width: 100%;
-  left: 0;
   top: 0;
   bottom: 0;
+  left: 0;
   right: 0;
-  z-index: 999999999;
-  background-color: rgba(black, 0.8);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background-color: rgba(black, 0.8);
+  width: 100%;
 }
 
 .Container {
-  width: fit-content;
-  min-width: 50vw;
-  max-width: 900px;
-  max-height: 80vh;
   background-color: var(--surface-100);
+  max-height: 80vh;
+  max-width: 900px;
+  min-width: 50vw;
+  width: fit-content;
   overflow: auto;
 }
 
 .Container::-webkit-scrollbar {
   background-color: var(--surface-100);
-  width: 8px;
   height: 8px;
+  width: 8px;
   /* The height is only seen on horizontal scrolling */
 }
 
@@ -37,11 +37,11 @@
 }
 
 .close {
-  position: absolute;
-  border: none;
-  right: 0;
-  top: 0;
   z-index: 2;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: none;
   height: 70px;
   width: 70px;
   transition: 0.3s;
@@ -60,7 +60,7 @@
   }
 
   svg {
-    width: 40px;
     height: 40px;
+    width: 40px;
   }
 }

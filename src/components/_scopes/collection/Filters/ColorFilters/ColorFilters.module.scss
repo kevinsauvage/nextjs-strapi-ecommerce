@@ -1,18 +1,18 @@
 .button {
-  border-radius: $radius;
-  min-height: 36px;
-  min-width: 36px;
+  opacity: 0.8;
   display: flex;
   justify-content: center;
   align-items: center;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  color: var(--onSurface-hight);
-  background-color: var(--surface-100);
-  border-radius: 50%;
-  opacity: 0.8;
   border: none;
+  border-radius: $radius;
+  border-radius: 50%;
   margin-right: 4px;
   margin-bottom: 4px;
+  background-color: var(--surface-100);
+  min-height: 36px;
+  min-width: 36px;
+  color: var(--onSurface-hight);
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   &.selected {
     opacity: 1;

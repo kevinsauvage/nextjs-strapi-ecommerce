@@ -1,27 +1,27 @@
 .breadcrumbs {
-  background-color: var(--surface-100);
   border-bottom: 1px solid var(--surface-400);
+  background-color: var(--surface-100);
 }
 
 .list {
-  height: 40px;
   display: flex;
   align-items: center;
+  height: 40px;
 }
 
 .item {
-  list-style: none;
   display: flex;
   align-items: center;
+  list-style: none;
 
   &:last-of-type {
-    font-weight: 600;
     opacity: 1;
+    font-weight: 600;
 
     p {
+      opacity: 1;
       font-size: 10px;
       font-weight: 600;
-      opacity: 1;
     }
   }
 }

@@ -6,29 +6,29 @@ $height: 34px;
 .toggleTheme {
   position: relative;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
+  border-radius: 99em;
+  background-color: var(--complementary-500);
   height: $height;
   width: $width;
   padding: 8.7px;
-  border-radius: 99em;
   transition: all 0.3s ease;
-  background-color: var(--complementary-500);
   @include borderLight(var(--complementary-700), 0.6);
 }
 
 .inner {
+  z-index: 0;
   position: absolute;
   top: 50%;
   left: 2px;
   transform: translateY(-50%) translateX(-0%);
-  width: $innerSize;
-  min-height: $innerSize;
   border-radius: 50%;
-  transition: all 0.3s ease;
   background-color: var(--surface-dark-100);
+  min-height: $innerSize;
+  width: $innerSize;
+  transition: all 0.3s ease;
   @include borderLight(var(--RBG-primary-100), 1);
-  z-index: 0;
 }
 
 .moon,

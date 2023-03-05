@@ -1,6 +1,6 @@
 .filter {
-  overflow: hidden;
   border-bottom: 0.1px solid var(--surface-400);
+  overflow: hidden;
 
   &:last-of-type {
     border: none;
@@ -14,20 +14,20 @@
 }
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: none;
   height: 60px;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border: none;
-  padding-left: var(--space-1);
   padding-right: var(--space-1);
+  padding-left: var(--space-1);
 }
 
 .label {
   display: block;
-  color: var(--onSurface-hight);
   text-transform: uppercase;
+  color: var(--onSurface-hight);
 }
 
 .arrow {
@@ -38,10 +38,10 @@
 .children {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-0);
-  padding: var(--space-1);
   margin-bottom: var(--space-1);
   overflow: auto;
+  padding: var(--space-1);
+  gap: var(--space-0);
 
   &::-webkit-scrollbar {
     width: 4px;
@@ -52,8 +52,8 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
-    border-radius: 20px;
     outline: 0.1px solid slategrey;
+    border-radius: 20px;
+    background-color: darkgrey;
   }
 }

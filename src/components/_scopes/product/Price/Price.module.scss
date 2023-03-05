@@ -5,13 +5,13 @@
 }
 
 .compareAtPriceV2 {
-  text-decoration: line-through;
   opacity: 0.5;
+  text-decoration: line-through;
 }
 
 .currentPrice {
-  color: var(--onSurface-medium);
   font-weight: 600;
+  color: var(--onSurface-medium);
 }
 
 .small {

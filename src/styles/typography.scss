@@ -4,14 +4,14 @@ h3,
 h4,
 h5,
 h6 {
+  text-shadow: $textShadow-100;
   font-style: normal;
   font-weight: $fontWeightSemiBold;
-  text-shadow: $textShadow-100;
 }
 
 h1 {
-  @include fluid-font(320px, 1024px, $fontSize-500, $fontSize-600);
   font-weight: $fontWeightBold;
+  @include fluid-font(320px, 1024px, $fontSize-500, $fontSize-600);
 }
 
 .big {
@@ -49,8 +49,8 @@ label,
 a,
 button,
 p {
-  font-weight: $fontWeightNormal;
   font-size: 13px;
+  font-weight: $fontWeightNormal;
 }
 
 small {

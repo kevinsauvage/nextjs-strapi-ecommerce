@@ -4,8 +4,8 @@
 }
 
 .aside {
-  width: 100%;
   background-color: var(--surface-100);
+  width: 100%;
 }
 
 .main {
@@ -14,11 +14,11 @@
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
+  align-items: center;
+  border: none;
   height: 50px;
   width: 100%;
-  border: none;
 }
 
 .headerContainer {

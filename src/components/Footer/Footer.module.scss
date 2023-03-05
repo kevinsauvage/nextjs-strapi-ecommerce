@@ -15,10 +15,10 @@
 }
 
 .title {
+  display: block;
   margin-bottom: var(--space-1);
   text-transform: capitalize;
   @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
-  display: block;
 }
 
 .about {
@@ -36,9 +36,9 @@
 }
 
 .navItem {
-  width: fit-content;
   margin-bottom: var(--space-1);
   min-width: 130px;
+  width: fit-content;
 
   a {
     font-size: 12px;
@@ -52,12 +52,12 @@
 
 .bottom {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  width: 100%;
-  padding: var(--space-0) 0;
+  align-items: center;
   border-top: 0.1px solid rgba(var(--RGB-surface-100), 0.3);
   background-color: var(--surface-dark-100);
+  width: 100%;
+  padding: var(--space-0) 0;
   color: var(--onSurface-dark);
 
   p {

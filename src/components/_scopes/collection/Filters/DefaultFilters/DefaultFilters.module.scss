@@ -1,14 +1,14 @@
 .button {
-  border-radius: $radius;
-  min-height: 36px;
-  min-width: 36px;
   display: flex;
   justify-content: center;
   align-items: center;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
-  color: var(--onSurface-hight);
-  background-color: var(--surface-100);
   border: 1px solid var(--surface-dark-300);
+  border-radius: $radius;
+  background-color: var(--surface-100);
+  min-height: 36px;
+  min-width: 36px;
+  color: var(--onSurface-hight);
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   &:hover {
     background-color: var(--surface-dark-200);
@@ -21,7 +21,7 @@
   color: var(--onSurface-dark);
 
   &:hover {
-    color: var(--onSurface-hight);
     background-color: var(--surface-100);
+    color: var(--onSurface-hight);
   }
 }

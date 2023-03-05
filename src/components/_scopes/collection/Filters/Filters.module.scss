@@ -1,12 +1,12 @@
 .filters {}
 
 .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-0);
   background-color: var(--surface-dark-100);
   padding: var(--space-1);
-  margin-bottom: var(--space-0);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   color: var(--onSurface-dark);
 }
 
@@ -15,9 +15,9 @@
 }
 
 .title {
-  color: var(--onSurface-dark);
   display: flex;
   align-items: center;
+  color: var(--onSurface-dark);
   gap: var(--space-0);
 }
 

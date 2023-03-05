@@ -79,11 +79,11 @@ time,
 mark,
 audio,
 video {
+  border: 0;
   margin: 0;
   padding: 0;
-  border: 0;
-  font-size: 100%;
   vertical-align: baseline;
+  font-size: 100%;
 }
 
 /* HTML5 display-role reset for older browsers */

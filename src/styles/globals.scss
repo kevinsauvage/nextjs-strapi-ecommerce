@@ -1,31 +1,31 @@
 html,
 body {
   position: relative;
-  font-family: $sans-serif, Helvetica, Arial, sans-serif;
-  -webkit-text-size-adjust: 100%; //fix for iOS
   letter-spacing: 1px;
+  font-family: $sans-serif, Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-weight: $fontWeightNormal;
+  -webkit-text-size-adjust: 100%; //fix for iOS
 }
 
 a,
 button {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
 button {
-  background-color: transparent;
   display: flex;
-  font-family: $sans-serif;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  font-family: $sans-serif;
   cursor: pointer;
 
   &:disabled,
   &[disabled='disabled'] {
-    cursor: unset !important;
     opacity: 0.5;
+    cursor: unset !important;
   }
 }
 

@@ -1,20 +1,20 @@
 .Collapsible {
+  border: 0.1px solid var(--surface-400);
+  border-radius: $radius;
+  background-color: var(--surface-200);
   width: 100%;
   transition: all 0.2s ease-in-out 0.05s;
-  background-color: var(--surface-200);
-  border-radius: $radius;
-  border: 0.1px solid var(--surface-400);
 }
 
 .header {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: var(--space-2);
-  height: 40px;
-  width: 100%;
+  align-items: center;
   border: none;
   border-radius: $radius;
+  height: 40px;
+  width: 100%;
+  padding: var(--space-2);
 
   &:hover {
     background-color: var(--surface-400);
@@ -22,15 +22,15 @@
 }
 
 .icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: transform 0.05s linear;
 
   svg {
-    width: 16px;
     height: 16px;
+    width: 16px;
   }
 
   &.open {

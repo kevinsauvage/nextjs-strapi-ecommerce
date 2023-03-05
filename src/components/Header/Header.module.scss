@@ -1,25 +1,25 @@
 .header {
-  width: 100%;
-  align-items: center;
   z-index: 9999;
   position: relative;
-  height: $header-height;
-  background-color: var(--surface-dark-100);
+  align-items: center;
   border-bottom: 0.1px solid rgba(var(--RGB-surface-100), 0.1);
+  background-color: var(--surface-dark-100);
+  height: $header-height;
+  width: 100%;
 }
 
 .inner {
-  width: 100%;
-  height: $header-height;
   display: flex;
   justify-content: space-between;
+  height: $header-height;
+  width: 100%;
 }
 
 .left {
-  width: 100%;
-  height: 100%;
   position: relative;
   display: flex;
   align-items: center;
+  height: 100%;
+  width: 100%;
   gap: var(--space-1);
 }

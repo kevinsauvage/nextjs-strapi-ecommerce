@@ -9,17 +9,17 @@ $boxDimension: 36px;
 }
 
 .button {
-  padding: 5px;
-  min-height: $boxDimension;
-  min-width: $boxDimension;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: $radius;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
   border: 1px solid var(--surface-dark-100);
-  color: var(--onSurface-hight);
+  border-radius: $radius;
   background-color: var(--surface-100);
+  min-height: $boxDimension;
+  min-width: $boxDimension;
+  padding: 5px;
+  color: var(--onSurface-hight);
+  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
 
   &:hover,
   &:focus,
@@ -30,9 +30,9 @@ $boxDimension: 36px;
 
 .name {
   display: block;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
   margin-bottom: 4px;
   width: fit-content;
+  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
 }
 
 .list {
@@ -43,8 +43,8 @@ $boxDimension: 36px;
 
 .selectedOption {
   border: 1px solid var(--surface-dark-100);
-  color: var(--onSurface-dark);
   background-color: var(--surface-dark-100);
+  color: var(--onSurface-dark);
 
   &:hover,
   &:focus,

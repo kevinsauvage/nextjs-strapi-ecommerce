@@ -1,13 +1,13 @@
 .CollectionBanner {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-2);
-  overflow: hidden;
   position: relative;
-  margin-top: var(--space-0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-bottom: 1px solid var(--surface-400);
+  margin-top: var(--space-0);
+  width: 100%;
+  overflow: hidden;
+  gap: var(--space-2);
 }
 
 .content {

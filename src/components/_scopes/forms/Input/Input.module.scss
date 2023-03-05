@@ -1,8 +1,8 @@
 .label {
+  position: relative;
+  display: block;
   width: 100%;
   padding-bottom: var(--space-1);
-  display: block;
-  position: relative;
 
   &.missing {
     b {
@@ -25,13 +25,13 @@
 }
 
 .input {
+  border: 1px solid var(--surface-300);
+  border-radius: $radius;
+  background-color: var(--surface-100);
   height: 44px;
   width: 100%;
-  border-radius: $radius;
   resize: vertical;
   padding-left: var(--space-1);
-  border: 1px solid var(--surface-300);
-  background-color: var(--surface-100);
   color: var(--onSurface-medium);
 
   @include placeholder {

@@ -1,13 +1,13 @@
 .address {
+  position: relative;
   display: flex;
   justify-content: space-between;
-  padding: var(--space-2);
-  border-radius: $radius;
-  width: 100%;
-  color: var(--onSurface-medium);
   border: 0.1px solid var(--surface-300);
-  position: relative;
+  border-radius: $radius;
   background-color: var(--surface-200);
+  width: 100%;
+  padding: var(--space-2);
+  color: var(--onSurface-medium);
 }
 
 .side {
@@ -19,44 +19,44 @@
 
 .buttons {
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: $gapSmall;
 }
 
 .button {
-  display: block;
   position: relative;
+  display: block;
   border: none;
+  margin: 0 2px;
   box-sizing: border-box;
   padding: 0px;
-  margin: 0 2px;
 
   svg {
     display: block;
-    width: 18px;
     height: 18px;
+    width: 18px;
   }
 }
 
 .setAsDefault {
   border: none;
-  text-decoration: underline;
-  width: fit-content;
   margin-top: var(--space-0);
+  width: fit-content;
   padding: 0;
+  text-decoration: underline;
   align-self: flex-end;
 }
 
 .defaultText {
-  background-color: var(--surface-dark-100);
-  color: white;
-  font-weight: 500;
-  text-align: end;
-  border-radius: $radius;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  border-radius: $radius;
+  background-color: var(--surface-dark-100);
   padding: 8px;
   font-size: 10px;
+  font-weight: 500;
+  color: white;
+  text-align: end;
 }

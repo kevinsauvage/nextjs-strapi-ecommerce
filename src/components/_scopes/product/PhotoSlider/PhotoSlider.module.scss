@@ -1,11 +1,11 @@
 .PhotoSlider {
   position: relative;
-  width: 100%;
   height: fit-content;
+  width: 100%;
 
   img {
-    width: 100%;
     height: fit-content;
+    width: 100%;
     object-fit: contain;
   }
 }
@@ -14,10 +14,10 @@
   position: absolute;
   bottom: var(--space-0);
   right: var(--space-0);
-  background-color: var(--surface-dark-100);
-  color: var(--onSurface-dark);
-  padding: var(--space-0);
   border-radius: $radius;
+  background-color: var(--surface-dark-100);
+  padding: var(--space-0);
+  color: var(--onSurface-dark);
 }
 
 .buttons {
@@ -25,20 +25,20 @@
   top: var(--space-1);
   right: var(--space-1);
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
   gap: var(--space-0);
 
   button {
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 50%;
     background-color: var(--surface-300);
-    z-index: 10;
-    font-size: 30px;
-    width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 40px;
+    font-size: 30px;
     cursor: pointer;
   }
 }
