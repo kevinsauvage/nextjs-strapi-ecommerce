@@ -1,8 +1,10 @@
+import Container from '@/components/Container/Container';
 import useProductSelection from '@/hooks/useProductSelection';
 
 import PhotoSlider from '../PhotoSlider/PhotoSlider';
 import ProductDescription from '../ProductDescription/ProductDescription';
 import ProductDetails from '../ProductDetails/ProductDetails';
+import ProductReviews from '../ProductReview/ProductReviews';
 
 import styles from './ProductPresenter.module.scss';
 
@@ -36,7 +38,13 @@ export default function ProductPresenter({ product, isModal }) {
           totalPrice={totalPrice}
         />
       </div>
-      {!isModal && <ProductDetails html={descriptionHtml} />}
+
+      {!isModal && (
+        <Container size="medium">
+          <ProductDetails html={descriptionHtml} />
+          <ProductReviews product={product} />
+        </Container>
+      )}
     </>
   );
 }

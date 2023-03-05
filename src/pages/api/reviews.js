@@ -10,8 +10,10 @@ const handle = async (req, res) => {
 
         const response = await getClient().admin.customer.metafieldsSet({ metafields });
 
+        console.log('🚀 ~ file: reviews.js:13 ~ handle ~ response:', response);
+
         if (!response) {
-          return res.status(500).json({ error: 'Could not set metafield' });
+          return res.status(500).json({ error: 'Could not set review' });
         }
 
         const errors = response?.userErrors;
@@ -20,7 +22,7 @@ const handle = async (req, res) => {
           return console.error(errors);
         }
 
-        const value = response?.metafields?.filter((field) => field.key === 'wishlist')?.[0]?.value;
+        const value = response?.metafields?.filter((field) => field.key === 'reviews')?.[0]?.value;
 
         const parsed = value ? JSON.parse(value) : null;
 

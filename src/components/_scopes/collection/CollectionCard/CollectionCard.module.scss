@@ -7,11 +7,12 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
-  color: var(--surface-900);
+  color: var(--onSurface-hight);
   border-radius: $radius;
   transition: all 0.2s ease-in-out;
-  min-height: 260px;
+  border-radius: $radius;
   @include gradient-overlay(var(--RGB-surface-100));
+  @include boxShadow(2);
 
   &:hover {
     background-size: 110%;
@@ -41,11 +42,11 @@
 
 .subtitle {
   margin-bottom: var(--space-1);
+  font-weight: 500;
   max-width: 200px;
 }
 
 .link {
   width: fit-content;
-  @include button-secondary;
   padding: 10px 20px;
 }

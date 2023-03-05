@@ -1,20 +1,9 @@
 .ProductDetails {
   margin-top: var(--space-6);
-  padding: var(--space-2);
-  border-radius: $radius;
-  background-color: var(--surface-200);
-  border: 0.1px solid rgba(var(--RGB-surface-900), 0.1);
-}
-
-.title {
-  padding-bottom: var(--space-1);
 }
 
 .description {
-  padding-top: var(--space-1);
   img {
     display: none;
   }
-
-  border-top: 1px solid rgba(var(--RGB-surface-900), 0.1);
 }

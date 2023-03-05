@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import HeightAnimation from '../HeightAnimation/HeightAnimation';
+
 import styles from './Collapsible.module.scss';
 
 export default function Collapsible({ children, title, last }) {
@@ -18,7 +20,9 @@ export default function Collapsible({ children, title, last }) {
           <span />
         </div>
       </button>
-      <div className={`${styles.children} ${open ? styles.open : styles.close}`}>{children}</div>
+      <HeightAnimation isOpen={open}>
+        <div className={styles.children}>{children}</div>
+      </HeightAnimation>
     </div>
   );
 }

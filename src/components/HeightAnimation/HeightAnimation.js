@@ -2,43 +2,53 @@ import { useEffect, useRef, useState } from 'react';
 
 import styles from './HeightAnimation.module.scss';
 
+// Animation type: hover, button
 function HeightAnimation({ children, initialHeight = 0, animationType, isOpen }) {
   const refChildren = useRef();
-  const [originalHeight, setOriginalHeight] = useState();
-  const [actualHeight, setActualHeight] = useState();
+  const [maxHeight, setMaxHeight] = useState();
+  const [actualHeight, setActualHeight] = useState(initialHeight);
 
   useEffect(() => {
-    if (refChildren?.current && typeof originalHeight === 'undefined') {
-      const elementRect = refChildren.current.getBoundingClientRect();
-      const { height } = elementRect;
-      if (height) setOriginalHeight(elementRect?.height);
-      setActualHeight(initialHeight);
+    if (!animationType) {
+      if (isOpen) setActualHeight(maxHeight);
+      else setActualHeight(initialHeight);
     }
-  }, [initialHeight, originalHeight, refChildren]);
+  }, [animationType, initialHeight, isOpen, maxHeight]);
+
+  function calculateHeight() {
+    if (refChildren.current) {
+      const newHeight = refChildren.current.scrollHeight;
+      setMaxHeight(newHeight);
+    }
+  }
 
   useEffect(() => {
-    if (isOpen) setActualHeight(originalHeight);
-    else setActualHeight(initialHeight);
-  }, [initialHeight, isOpen, originalHeight]);
+    calculateHeight();
+  }, [children, isOpen]);
 
   return (
     <div
       className={`${styles.HeightAnimation} ${
-        animationType === 'hover' && actualHeight !== originalHeight && styles.hoverAnimation
+        animationType === 'hover' && actualHeight !== maxHeight && styles.hoverAnimation
       }`}
-      onMouseOver={() => animationType === 'hover' && setActualHeight(originalHeight)}
+      onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
       onMouseLeave={() => animationType === 'hover' && setActualHeight(initialHeight)}
-      onFocus={() => animationType === 'hover' && setActualHeight(originalHeight)}
+      onFocus={() => animationType === 'hover' && setActualHeight(maxHeight)}
       onBlur={() => animationType === 'hover' && setActualHeight(initialHeight)}
     >
-      <div ref={refChildren} className={styles.children} style={{ maxHeight: `${actualHeight}px` }}>
+      <div
+        ref={refChildren}
+        onLoad={calculateHeight}
+        className={styles.children}
+        style={{ maxHeight: `${actualHeight}px` }}
+      >
         {children}
       </div>
       {animationType === 'button' && (
         <button
           type="button"
           className={styles.button}
-          onClick={() => setActualHeight((prev) => (prev === initialHeight ? originalHeight : initialHeight))}
+          onClick={() => setActualHeight((prev) => (prev === initialHeight ? maxHeight : initialHeight))}
         >
           {actualHeight ? 'Show less' : 'Show more'}
         </button>

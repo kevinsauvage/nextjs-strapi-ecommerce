@@ -39,7 +39,10 @@ export default ProductPage;
 
 export async function getStaticProps({ params }) {
   const product =
-    (await getClient().storefront.product.getProductByHandle({ handle: params.productSlug })) || null;
+    (await getClient().storefront.product.getProductByHandle({
+      handle: params.productSlug,
+      identifiers: [{ key: 'reviews', namespace: 'custom' }],
+    })) || null;
 
   const recommendations =
     (await getClient().storefront.product.productRecommendations({ productId: product?.id })) || null;

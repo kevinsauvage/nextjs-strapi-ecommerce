@@ -1,25 +1,19 @@
 .Collapsible {
   width: 100%;
   transition: all 0.2s ease-in-out 0.05s;
-
-  border-bottom: 1px solid var(--surface-900);
-  &:last-of-type {
-    border: none;
-  }
+  background-color: var(--surface-200);
+  border-radius: $radius;
+  border: 0.1px solid var(--surface-400);
 }
 
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--space-0);
+  padding: var(--space-2);
   height: 40px;
   width: 100%;
   border: none;
-}
-
-.last {
-  border-bottom: none;
 }
 
 .icon {
@@ -47,23 +41,10 @@
   }
 }
 
-.children {
-  overflow: hidden;
-  max-height: 0px;
-  padding: 0px 8px;
-  display: none;
-}
-
 .open {
-  & > .children {
-    display: block;
-    margin-bottom: 10px;
-    animation: open 0.3s ease-in-out forwards;
-  }
-
   & > .header {
     transition: none;
-    border-bottom: 1px solid transparent;
+    border-bottom: 0.1px solid var(--surface-400);
   }
 
   & .icon {
@@ -74,28 +55,6 @@
   }
 }
 
-.close {
-  & > .children {
-    animation: close 0.2s ease-in-out forwards;
-  }
-}
-
-@keyframes open {
-  0% {
-    max-height: 0px;
-  }
-
-  100% {
-    max-height: 10000px;
-  }
-}
-
-@keyframes close {
-  0% {
-    max-height: 1000px;
-  }
-
-  100% {
-    max-height: 0px;
-  }
+.children {
+  padding: var(--space-2);
 }

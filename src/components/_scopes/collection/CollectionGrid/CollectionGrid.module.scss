@@ -20,8 +20,6 @@
   display: block;
   width: 100%;
   height: 100%;
-  overflow: hidden;
-  @include boxShadow(2);
   border-radius: $radius;
 
   &:nth-child(6n + 1) {

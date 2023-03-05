@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import Button from '@/components/Button/Button';
 
 import style from './CollectionCard.module.scss';
 
@@ -6,14 +6,15 @@ export default function CollectionCard({ collection }) {
   const { title, image, handle, subtitle } = collection || {};
 
   const backgroundStyle = { backgroundImage: `url(${image.url})` };
+
   return (
     <div className={style.CollectionCard} style={{ ...backgroundStyle }} alt={image?.alt}>
       <div className={style.content}>
-        <h3 className={style.title}>{title} COLLECTION</h3>
+        <h4 className={style.title}>{title} COLLECTION</h4>
         {subtitle && <p className={style.subtitle}>{subtitle}</p>}
-        <Link className={style.link} href={`${handle}`}>
+        <Button contrast extraClass={style.link} href={handle}>
           <span>Shop now</span>
-        </Link>
+        </Button>
       </div>
     </div>
   );

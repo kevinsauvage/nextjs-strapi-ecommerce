@@ -43,11 +43,6 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@kevinsauvage/shopify-storefront-api@^1.1.13":
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/@kevinsauvage/shopify-storefront-api/-/shopify-storefront-api-1.1.13.tgz#97aac714e9a57686747568e658b791908632189b"
-  integrity sha512-vtMiuPdrUEYNsBpC5Wj9s5PxiYN6XK9xQdfMusCa5WTk7tJOGMl4yWDkwmPYNwiDcmNgD5O2RAsDoToPzVkjnA==
-
 "@next/env@13.1.2":
   version "13.1.2"
   resolved "https://registry.npmjs.org/@next/env/-/env-13.1.2.tgz"

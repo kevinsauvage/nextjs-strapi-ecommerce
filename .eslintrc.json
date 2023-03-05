@@ -5,7 +5,7 @@
     "node": true,
     "jest": true
   },
-  "plugins": ["react", "import", "simple-import-sort"],
+  "plugins": ["react", "simple-import-sort"],
   "extends": [
     "airbnb",
     "prettier",
