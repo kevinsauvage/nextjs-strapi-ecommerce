@@ -1,0 +1,12 @@
+.rating {
+  display: flex;
+}
+.star {
+  .filled {
+    background-color: red;
+  }
+
+  &.filled {
+    background-color: greenyellow;
+  }
+}

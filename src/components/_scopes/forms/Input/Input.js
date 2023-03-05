@@ -1,18 +1,8 @@
 import styles from './Input.module.scss';
 
-export default function Input({
-  id,
-  name,
-  type,
-  label,
-  placeholder,
-  onChange,
-  required,
-  ariaInvalid,
-  ...rest
-}) {
+export default function Input({ id, name, type, label, placeholder, onChange, required, invalid, ...rest }) {
   return (
-    <label htmlFor={id} className={`${styles.label} ${ariaInvalid && styles.missing}`}>
+    <label htmlFor={id} className={`${styles.label} ${invalid && styles.missing}`}>
       <b className={styles.title}>
         {label}
         {required ? <span className={styles.required}>*</span> : ''}

@@ -80,7 +80,7 @@ function CookieBanner() {
               personalized content. We want to give you the option to choose which cookies you allow us to
               use.
             </p>
-            <HeightAnimation initialHeight={0} animationType="button">
+            <HeightAnimation initialHeight={60} animationType="hover">
               <ul className={`${styles.cookieList}`}>
                 <li>
                   <strong>Strictly Necessary Cookies:</strong>{' '}

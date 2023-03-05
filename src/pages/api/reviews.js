@@ -10,8 +10,6 @@ const handle = async (req, res) => {
 
         const response = await getClient().admin.customer.metafieldsSet({ metafields });
 
-        console.log('🚀 ~ file: reviews.js:13 ~ handle ~ response:', response);
-
         if (!response) {
           return res.status(500).json({ error: 'Could not set review' });
         }

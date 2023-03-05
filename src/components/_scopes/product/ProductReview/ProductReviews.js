@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import Button from '@/components/Button/Button';
 import Collapsible from '@/components/Collapsible/Collapsible';
 import config from '@/config/index';
@@ -12,25 +13,31 @@ import { handleGetTokenCookies } from '@/helpers/cookies';
 import Form from '../../forms/Form/Form';
 import TextArea from '../../forms/TextArea/TextArea';
 
+import Rating from './Ratings/Ratings';
+
 import styles from './ProductReviews.module.scss';
 
 export default function ProductReviews({ product }) {
   const [reviews, setReviews] = useState([]);
+
+  console.log('🚀 ~ file: ProductReviews.js:23 ~ ProductReviews ~ reviews:', reviews);
+
+  const [loading, setLoading] = useState(false);
+  const [rating, setRating] = useState();
   const { push, asPath } = useRouter();
   const { showToast } = useToastContext();
   const { user } = useUserContext();
 
   useEffect(() => {
     const productReview = product?.metafields?.filter((metafield) => metafield?.key === 'reviews');
-
     const value = productReview?.[0]?.value;
-    if (value) {
-      setReviews(JSON.parse(value));
-    }
+    if (value) setReviews(JSON.parse(value));
   }, [product]);
 
   const handleSetProductReview = useCallback(
     async (formData) => {
+      if (!formData?.review) return showToast.error('Missing review field');
+      if (typeof rating === 'undefined') return showToast.error('Please select a rating');
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
@@ -41,14 +48,15 @@ export default function ProductReviews({ product }) {
       }
 
       const date = new Date();
-
       const reviewObj = {
         customerId: user.id,
-        review: formData,
+        review: { message: formData.review, rating },
         customerFirstName: user.firstName,
         customerLastName: user.lastName,
-        creatadeAt: date,
+        createdAt: date,
       };
+
+      const newReviews = [...reviews, reviewObj];
 
       const metafields = {
         metafields: [
@@ -57,41 +65,58 @@ export default function ProductReviews({ product }) {
             namespace: 'custom',
             ownerId: product.id,
             type: 'json',
-            value: JSON.stringify([...reviews, reviewObj]),
+            value: JSON.stringify(newReviews),
           },
         ],
       };
 
+      setLoading(true);
       const response = await nextApiHelper(`/api/reviews`, metafields, 'POST');
-
-      console.log('🚀 ~ file: ProductPresenter.js:50 ~ response:', response);
+      setLoading(false);
 
       if (response?.response) {
         setReviews(response.response);
-        return showToast.success('Product correctly added a review');
+        setRating();
+        return showToast.success('Review correctly added');
       }
-      return showToast.error("Couldn't set product to user wishlist");
+      return showToast.error("Couldn't add the review, please try again later");
     },
-    [asPath, product.id, push, reviews, showToast, user]
+    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName]
   );
+
   return (
     <div className={styles.ProductReviews}>
+      {loading && <AbsoluteLoader />}
       <Collapsible title="Reviews">
         <div className={styles.ProductReviewsContent}>
           <div className={styles.customerReviews}>
-            <h6>Customer reviews</h6>
-            {Array.isArray(reviews) &&
-              reviews.map((review) => (
-                <li key={review.creatadeAt} className={styles.review}>
-                  <p>{review?.review?.review}</p>
-                </li>
-              ))}
+            {Array.isArray(reviews) && reviews.length > 0 ? (
+              reviews.map((review) => {
+                const date = new Date(review?.createdAt);
+                return (
+                  <li key={review.createdAt} className={styles.review}>
+                    <p>
+                      By {review?.customerFirstName} {review?.customerLastName}
+                    </p>
+                    <p>{review?.review?.message}</p>
+                    <p>{review?.review?.rating} stars</p>
+                    <p>{date.toDateString()}</p>
+                  </li>
+                );
+              })
+            ) : (
+              <p>No reviews</p>
+            )}
           </div>
 
-          <div className={styles.reviewForm}>
-            <Collapsible title={<>Add a review</>}>
-              <h6>Add a review</h6>
+          <div className={styles.addReview}>
+            <Collapsible title="Add a review">
+              <div className={styles.rating}>
+                <h6>Leave a review</h6>
+                <Rating rating={rating} onChange={(payload) => setRating(payload)} />
+              </div>
               <Form
+                extraClass={styles.reviewForm}
                 onSubmit={handleSetProductReview}
                 requiredFields={['review']}
                 initialValues={{ review: '' }}
@@ -104,8 +129,8 @@ export default function ProductReviews({ product }) {
                   input="true"
                   required="true"
                 />
-                <Button primary type="submit">
-                  Submit
+                <Button extraClass={styles.buttonSubmit} primary type="submit">
+                  Publish review
                 </Button>
               </Form>
             </Collapsible>

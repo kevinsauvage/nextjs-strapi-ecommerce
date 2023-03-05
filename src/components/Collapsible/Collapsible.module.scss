@@ -14,6 +14,12 @@
   height: 40px;
   width: 100%;
   border: none;
+
+  border-radius: $radius;
+
+  &:hover {
+    background-color: var(--surface-400);
+  }
 }
 
 .icon {
@@ -21,40 +27,20 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  width: 14px;
-  height: 14px;
+  transition: transform 0.05s linear;
 
-  & span {
-    width: 14px;
-    height: 1px;
-    display: block;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease-in-out;
-    background-color: var(--surface-900);
+  svg {
+    width: 16px;
+    height: 16px;
   }
 
-  & span:nth-child(2) {
-    transform: translate(-50%, -50%) rotate(90deg);
+  &.open {
+    transform: rotate(90deg);
   }
 }
 
 .open {
   & > .header {
-    transition: none;
     border-bottom: 0.1px solid var(--surface-400);
   }
-
-  & .icon {
-    & span:nth-child(2) {
-      transform: translate(-50%, -50%) rotate(0deg);
-      opacity: 0;
-    }
-  }
-}
-
-.children {
-  padding: var(--space-2);
 }

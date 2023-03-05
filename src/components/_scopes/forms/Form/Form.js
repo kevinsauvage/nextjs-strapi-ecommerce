@@ -10,6 +10,7 @@ export default function Form({
   initialValues,
   title,
   buttonText,
+  extraClass = '',
   requiredFields = [],
   ...rest
 }) {
@@ -30,7 +31,7 @@ export default function Form({
         onChange: handleInputChange,
         value,
         'aria-invalid': missing.includes(child.props.name) || false,
-        ariaInvalid: missing.includes(child.props.name) || false,
+        invalid: missing.includes(child.props.name) ? true : null,
       };
 
       if (child.props.type === 'checkbox') {
@@ -47,7 +48,7 @@ export default function Form({
     });
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit} {...rest}>
+    <form className={`${styles.form} ${extraClass}`} onSubmit={handleSubmit} {...rest}>
       {title && <h3 className={styles.title}>{title}</h3>}
       <div className={styles.children}>{iterateOverChildren(children)}</div>
     </form>

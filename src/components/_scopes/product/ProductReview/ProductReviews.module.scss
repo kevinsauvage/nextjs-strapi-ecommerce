@@ -1,11 +1,36 @@
 .ProductReviews {
+  position: relative;
+}
+.customerReviews {
+  padding: var(--space-2);
+  border-radius: $radius;
 }
 
 .reviewForm {
-  max-width: 500px;
+  textArea {
+    background-color: var(--surface-300);
+  }
+}
+
+.rating {
+  padding: var(--space-2);
+  padding-bottom: unset;
 }
 
 .review {
-  border: 1px solid black;
+  border: 1px solid var(--surface-400);
   padding: var(--space-2);
+  background-color: var(--surface-300);
+  border-radius: $radius;
+  margin: var(--space-0) 0;
+}
+
+.buttonSubmit {
+  margin-top: var(--space-0);
+  margin-left: auto;
+}
+
+.addReview {
+  margin: 0 var(--space-2);
+  padding-bottom: var(--space-2);
 }
