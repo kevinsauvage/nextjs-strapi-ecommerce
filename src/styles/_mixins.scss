@@ -41,11 +41,13 @@
 }
 
 @mixin fade($type) {
-  @if $type== 'hide' {
+  @if $type=='hide' {
     visibility: hidden;
     opacity: 0;
     transition: visibility 1s, opacity 1s;
-  } @else if $type== 'show' {
+  }
+
+  @else if $type=='show' {
     visibility: visible;
     opacity: 1;
     transition: visibility 1s, opacity 1s;
@@ -69,13 +71,10 @@
 @mixin fluid-font($min-vw, $max-vw, $min-value, $max-value) {
   $factor: 1 / ($max-vw - $min-vw) * ($max-value - $min-value);
   $calc-value: unquote('#{ $min-value - ($min-vw * $factor) } + #{ 100vw * $factor }');
-
   font-size: $min-value; // Fallback for older browsers
-  font-size: clamp(
-    #{if($min-value > $max-value, $max-value, $min-value)},
+  font-size: clamp(#{if($min-value > $max-value, $max-value, $min-value)},
     #{$calc-value},
-    #{if($min-value > $max-value, $min-value, $max-value)}
-  );
+    #{if($min-value > $max-value, $min-value, $max-value)});
   line-height: $min-value * 1.66;
 }
 
@@ -97,15 +96,23 @@
 }
 
 @mixin boxShadow($level) {
-  @if $level ==1 {
+  @if $level==1 {
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.08);
-  } @else if $level ==2 {
+  }
+
+  @else if $level==2 {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 0 4px rgba(0, 0, 0, 0.12);
-  } @else if $level ==3 {
+  }
+
+  @else if $level==3 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 10px rgba(0, 0, 0, 0.14);
-  } @else if $level ==4 {
+  }
+
+  @else if $level==4 {
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
-  } @else if $level ==5 {
+  }
+
+  @else if $level==5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
   }
 }
@@ -114,12 +121,15 @@
   &::-webkit-input-placeholder {
     @content;
   }
+
   &:-moz-placeholder {
     @content;
   }
+
   &::-moz-placeholder {
     @content;
   }
+
   &:-ms-input-placeholder {
     @content;
   }
@@ -149,13 +159,11 @@
     z-index: 0;
     border-radius: inherit;
     background: rgba($bgColor, 0.6);
-    background: linear-gradient(
-      $deg,
-      rgba($bgColor, 1) 0%,
-      rgba($bgColor, 0.8) 25%,
-      rgba($bgColor, 0.4) 50%,
-      rgba($bgColor, 0.1) 100%
-    );
+    background: linear-gradient($deg,
+        rgba($bgColor, 1) 0%,
+        rgba($bgColor, 0.8) 25%,
+        rgba($bgColor, 0.4) 50%,
+        rgba($bgColor, 0.1) 100%);
   }
 }
 
@@ -183,6 +191,7 @@
   &:active:enabled {
     transform: scale(0.95);
   }
+
   svg {
     margin-right: var(--space-1);
   }

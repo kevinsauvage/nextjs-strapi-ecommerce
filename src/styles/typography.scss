@@ -13,14 +13,14 @@ h1 {
   @include fluid-font(320px, 1024px, $fontSize-500, $fontSize-600);
   font-weight: $fontWeightBold;
 }
+
 .big {
-  @include fluid-font(
-    320px,
+  @include fluid-font(320px,
     1024px,
     $fontSize-600 * $ratio * $ratio,
-    $fontSize-600 * $ratio * $ratio * $ratio
-  );
+    $fontSize-600 * $ratio * $ratio * $ratio);
 }
+
 h2 {
   @include fluid-font(320px, 1024px, $fontSize-400, $fontSize-500);
 }

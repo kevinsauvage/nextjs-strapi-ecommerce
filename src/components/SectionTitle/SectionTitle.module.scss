@@ -12,6 +12,7 @@
   h2 {
     font-weight: $fontWeightBold;
   }
+
   p,
   h2 {
     @include fluid-font(320px, 1024px, $fontSize-300, $fontSize-600);

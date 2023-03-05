@@ -9,6 +9,7 @@
   justify-content: space-between;
   padding: 0 var(--space-1) 0 0;
 }
+
 .title {
   text-transform: uppercase;
   @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
@@ -38,7 +39,6 @@
   z-index: 99;
   border: none;
   width: 30px;
-
   background-color: var(--complementary);
   transition: all 0.2s ease-in-out;
   border: 0.1px solid rgba(var(--surface-900), 0.3);
@@ -46,6 +46,7 @@
   &:hover {
     background-color: var(--surface-100);
   }
+
   svg {
     font-size: 40px;
   }

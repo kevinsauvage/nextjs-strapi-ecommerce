@@ -30,7 +30,7 @@ $gap: var(--space-4);
 }
 
 .navigation {
-  & > ul {
+  &>ul {
     display: flex;
     gap: $gap;
     width: 100%;

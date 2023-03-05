@@ -8,6 +8,7 @@
     b {
       color: var(--danger-500);
     }
+
     input {
       border: 1px solid var(--danger-500);
     }
@@ -36,6 +37,7 @@
   @include placeholder {
     color: var(--surface-700);
   }
+
   &:focus,
   &:focus-visible {
     outline: 1px solid var(--primary-500);

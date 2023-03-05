@@ -14,7 +14,6 @@
   height: 40px;
   width: 100%;
   border: none;
-
   border-radius: $radius;
 
   &:hover {
@@ -40,7 +39,7 @@
 }
 
 .open {
-  & > .header {
+  &>.header {
     border-bottom: 0.1px solid var(--surface-400);
   }
 }

@@ -8,13 +8,15 @@
   background-color: var(--surface-100);
   border-radius: $radius;
   width: fit-content;
-  &.Separator + .Separator {
+
+  &.Separator+.Separator {
     display: none;
   }
 }
 
 .list {
   margin-bottom: var(--space-2);
+
   li {
     @include text-shorten(1);
   }
@@ -40,8 +42,7 @@
   flex-wrap: wrap;
 }
 
-.prices {
-}
+.prices {}
 
 .totalPrice,
 .unitPrice {

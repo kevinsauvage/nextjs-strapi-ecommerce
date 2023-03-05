@@ -24,7 +24,8 @@
 .Container::-webkit-scrollbar {
   background-color: var(--surface-100);
   width: 8px;
-  height: 8px; /* The height is only seen on horizontal scrolling */
+  height: 8px;
+  /* The height is only seen on horizontal scrolling */
 }
 
 .Container::-webkit-scrollbar-track {
@@ -34,6 +35,7 @@
 .Container::-webkit-scrollbar-thumb {
   background-color: var(--primary-500);
 }
+
 .close {
   position: absolute;
   border: none;

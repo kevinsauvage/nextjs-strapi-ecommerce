@@ -5,6 +5,7 @@
   color: var(--onSurface-medium);
   margin-bottom: var(--space-1);
   background-color: var(--surface-200);
+
   &:last-of-type {
     margin-bottom: 0;
   }
@@ -25,6 +26,7 @@
   background-color: var(--surface-300);
   border: 1px solid var(--surface-500);
   padding: 4px;
+
   p {
     font-size: 12px;
   }

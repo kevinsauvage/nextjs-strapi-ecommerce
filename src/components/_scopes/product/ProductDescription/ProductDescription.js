@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { bag,heart } from '@/assets/svg';
+import { bag, heart } from '@/assets/svg';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
