@@ -41,45 +41,45 @@ function PriceFilters({ filter }) {
   };
 
   return (
-    <form className={styles.priceFilters} onSubmit={handleConfirm}>
-      <div className={styles.priceInputs}>
-        <label className={styles.label}>
-          <small>From</small>
-          <input
-            type="number"
-            min={0}
-            value={min}
-            defaultValue={defaultValues?.min}
-            onChange={(e) => {
-              setMin(e.target.value);
-              handleSetUniqueFilters(
-                filter.id,
-                JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } })
-              );
-            }}
-          />
-        </label>
-        <label className={styles.label}>
-          <small>
-            To <span>(Max {Math.ceil(original?.max)})</span>
-          </small>
-          <input
-            type="number"
-            max={Math.ceil(original?.max)}
-            value={Math.ceil(max)}
-            defaultValue={Math.ceil(defaultValues?.max)}
-            onChange={(e) => {
-              setMax(e.target.value);
-              handleSetUniqueFilters(
-                filter.id,
-                JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } })
-              );
-            }}
-          />
-          <small />
-        </label>
-      </div>
-    </form>
+    original?.max && (
+      <form className={styles.priceFilters} onSubmit={handleConfirm}>
+        <div className={styles.priceInputs}>
+          <label className={styles.label}>
+            <small>From</small>
+            <input
+              type="number"
+              min={0}
+              value={min}
+              onChange={(e) => {
+                setMin(e.target.value);
+                handleSetUniqueFilters(
+                  filter.id,
+                  JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } })
+                );
+              }}
+            />
+          </label>
+          <label className={styles.label}>
+            <small>
+              To <span>(Max {Math.ceil(original?.max)})</span>
+            </small>
+            <input
+              type="number"
+              max={Math.ceil(original?.max)}
+              value={Math.ceil(max)}
+              onChange={(e) => {
+                setMax(e.target.value);
+                handleSetUniqueFilters(
+                  filter.id,
+                  JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } })
+                );
+              }}
+            />
+            <small />
+          </label>
+        </div>
+      </form>
+    )
   );
 }
 

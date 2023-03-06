@@ -4,7 +4,6 @@ import ListDisplay from '@/components/ListDisplay/ListDisplay';
 import NoResults from '@/components/NoResults/NoResults';
 
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
-import ProductCardRow from '../ProductCardRow/ProductCardRow';
 
 import styles from './ProductList.module.scss';
 
@@ -13,13 +12,9 @@ function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, load
     <div>
       {Array.isArray(products) && products.length > 0 ? (
         <ListDisplay layout={layout}>
-          {products.map((product) =>
-            layout === 'grid' ? (
-              <ProductCardDefault product={product} key={product.id} />
-            ) : (
-              <ProductCardRow product={product} key={product.id} />
-            )
-          )}
+          {products.map((product, i) => (
+            <ProductCardDefault product={product} key={product.id} priority={i < 5} />
+          ))}
         </ListDisplay>
       ) : (
         !loading && <NoResults />

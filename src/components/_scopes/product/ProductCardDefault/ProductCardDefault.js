@@ -13,7 +13,7 @@ import Price from '../Price/Price';
 
 import styles from './ProductCardDefault.module.scss';
 
-export default function ProductCardDefault({ product = {} }) {
+export default function ProductCardDefault({ product = {}, priority }) {
   const { title, images, handle, variants, collections, productType } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { query } = useRouter();
@@ -77,6 +77,7 @@ export default function ProductCardDefault({ product = {} }) {
             blurDataURL={images?.[0]?.blurDataURL}
             placeholder="blur"
             quality={20}
+            priority={priority}
             aria-label={`Image of ${title}`}
           />
         </div>
