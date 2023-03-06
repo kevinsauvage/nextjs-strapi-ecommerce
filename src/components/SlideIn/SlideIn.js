@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import styles from './SlideIn.module.scss';
 
-function SlideIn({ children, title, width = 300, animationDuration = 0.3 }) {
+function SlideIn({ children, title }) {
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleMenu = () => {
@@ -28,15 +28,7 @@ function SlideIn({ children, title, width = 300, animationDuration = 0.3 }) {
       >
         {title}
       </button>
-      <div
-        className={`${styles.children} ${showMenu ? styles.showChildren : ''}`}
-        style={{
-          width: `${width}px`,
-          transition: `right ${animationDuration}s ease-in-out`,
-        }}
-      >
-        {children}
-      </div>
+      <div className={`${styles.children} ${showMenu ? styles.showChildren : ''}`}>{children}</div>
       {showMenu && <div className={styles.backdrop} onClick={toggleMenu} aria-hidden="true" />}
     </div>
   );
