@@ -30,9 +30,10 @@ const nextConfig = {
     workerThreads: false,
     cpus: 1,
   },
-  /*   compiler: {
+  reactStrictMode: true,
+  compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
-  }, */
+  },
 };
 
 module.exports = nextConfig;
