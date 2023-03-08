@@ -64,7 +64,7 @@ export default function OrdersPage() {
       >
         {error ? (
           <p>Error</p>
-        ) : !orders?.length ? (
+        ) : !orders?.length && !isLoading ? (
           <EmptyState
             image={NotFoundIllustration}
             title="Your Order List is Empty"
