@@ -40,7 +40,6 @@
   justify-content: center;
 }
 
-
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
     @content;
@@ -164,6 +163,7 @@
   align-items: center;
   border: 2px solid transparent;
   border-radius: 2px;
+  width: fit-content;
   padding: 14px 30px;
   white-space: nowrap;
   text-transform: uppercase;

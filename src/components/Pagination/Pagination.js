@@ -8,17 +8,19 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
   }
 
   return (
-    <nav>
-      <ul className={styles.pagination}>
-        {pageNumbers.map((number) => (
-          <li key={number} className={`${styles.item} ${currentPage === number ? styles.active : ''}`}>
-            <button type="button" onClick={() => onPageChange(number)} className="page-link">
-              {number}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    totalPages > 2 && (
+      <nav>
+        <ul className={styles.pagination}>
+          {pageNumbers.map((number) => (
+            <li key={number} className={`${styles.item} ${currentPage === number ? styles.active : ''}`}>
+              <button type="button" onClick={() => onPageChange(number)} className="page-link">
+                {number}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
   );
 }
 

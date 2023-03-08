@@ -2,16 +2,17 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
+import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 import styles from './PriceFilters.module.scss';
 
 function PriceFilters({ filter }) {
   const { handleSetUniqueFilters } = useCollectionContext();
-  const [defaultValues, setDefaultValues] = useState();
   const [original, setOriginal] = useState({});
   const [min, setMin] = useState();
   const [max, setMax] = useState();
   const { query } = useRouter();
+  const { showToast } = useToastContext();
 
   useEffect(() => {
     const selected = query[filter?.id];
@@ -22,11 +23,9 @@ function PriceFilters({ filter }) {
 
     if (selected) {
       const parsed = JSON.parse(selected)?.price;
-      setDefaultValues(parsed);
       setMin(parsed.min);
       setMax(parsed.max);
     } else {
-      setDefaultValues(price);
       setMin(price.min);
       setMax(price.max);
     }
@@ -34,7 +33,11 @@ function PriceFilters({ filter }) {
 
   const handleConfirm = (e) => {
     e.preventDefault();
-    handleSetUniqueFilters(
+    if (min < 0) return showToast.error('Minimum value must be greater than or equal to 0');
+    if (min > max) return showToast.error('Min value must be greater than max');
+    if (max > original?.max) return showToast.error(`Max value must be greater than ${original.max}`);
+
+    return handleSetUniqueFilters(
       filter.id,
       JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(max, 10) } })
     );
@@ -42,14 +45,13 @@ function PriceFilters({ filter }) {
 
   return (
     original?.max && (
-      <form className={styles.priceFilters} onSubmit={handleConfirm}>
+      <form className={styles.priceFilters} onSubmit={(e) => handleConfirm(e, min, max)}>
         <div className={styles.priceInputs}>
           <label className={styles.label}>
             <small>From</small>
             <input
               type="number"
-              min={0}
-              value={min}
+              value={min.toString()}
               onChange={(e) => {
                 setMin(e.target.value);
                 handleSetUniqueFilters(
@@ -65,8 +67,7 @@ function PriceFilters({ filter }) {
             </small>
             <input
               type="number"
-              max={Math.ceil(original?.max)}
-              value={Math.ceil(max)}
+              value={Math.ceil(max).toString()}
               onChange={(e) => {
                 setMax(e.target.value);
                 handleSetUniqueFilters(

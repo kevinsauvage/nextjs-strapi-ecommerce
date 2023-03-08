@@ -5,8 +5,6 @@ import seo from '@/data/seo';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 
-import styles from './Account.module.scss';
-
 function Account() {
   const { user } = useUserContext();
   const { firstName, lastName } = user || {};
@@ -19,22 +17,21 @@ function Account() {
 
   return (
     <PageLayout title={seo.account.title} description={seo.account.description}>
-      <AccountLayout title={seo.account.title} loading={isLoading}>
-        <main className={styles.main}>
-          <div className={styles.content}>
-            <h2>Welcome to you account</h2>
-            <p className={styles.subtitle}>
-              Welcome{' '}
-              <b>
-                {firstName} {lastName}
-              </b>
-              , your account dashboard provides access to all of your important account information and
-              features, allowing you to manage your profile and view orders. You can update personal
-              information and view order history, all in one convenient place.
-            </p>
-          </div>
-        </main>
-      </AccountLayout>
+      <AccountLayout
+        title={seo.account.title}
+        loading={isLoading}
+        descriptionBannerChildren={
+          <p>
+            Welcome{' '}
+            <b>
+              {firstName} {lastName}
+            </b>
+            , your account dashboard provides access to all of your important account information and
+            features, allowing you to manage your profile and view orders. You can update personal information
+            and view order history, all in one convenient place.
+          </p>
+        }
+      />
     </PageLayout>
   );
 }

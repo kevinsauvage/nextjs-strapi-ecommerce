@@ -76,44 +76,41 @@ function OrderDetail() {
         title={seo.account.update.title}
         descriptionBannerChildren={description}
       >
-        <div className={styles.form}>
-          <Form
-            onSubmit={handleSubmit}
-            requiredFields={['firstName', 'lastName', 'email']}
-            initialValues={{
-              acceptsMarketing: true,
-              email,
-              firstName,
-              lastName,
-              password,
-              phone,
-            }}
-          >
-            <Row>
-              <Input id="firstName" type="text" label="First Name" name="firstName" required="true" />
-              <Input id="lastName" type="text" name="lastName" label="Last Name" required="true" />
-            </Row>
-            <Row>
-              <Input id="email" type="email" label="Email Address" name="email" required="true" />
-              <Input input="true" id="password" type="password" name="password" label="Password" />
-            </Row>
-            <Row>
-              <Input input="true" id="phone" type="text" name="phone" label="Phone" />
-            </Row>
-            <label htmlFor="acceptsMarketing" className={styles.checkbox}>
-              <input
-                checkbox="true"
-                id="acceptsMarketing"
-                className={styles.checkboxInput}
-                type="checkbox"
-                name="acceptsMarketing"
-                label="Accepts marketing"
-              />
-              <span>Check this case to receive our last update</span>
-            </label>
-            <Buttons text="UPDATE INFO" />
-          </Form>
-        </div>
+        <Form
+          onSubmit={handleSubmit}
+          requiredFields={['firstName', 'lastName', 'email']}
+          initialValues={{
+            acceptsMarketing: true,
+            email,
+            firstName,
+            lastName,
+            password,
+            phone,
+          }}
+        >
+          <Row>
+            <Input id="firstName" type="text" label="First Name" name="firstName" required="true" />
+            <Input id="lastName" type="text" name="lastName" label="Last Name" required="true" />
+          </Row>
+          <Row>
+            <Input id="email" type="email" label="Email Address" name="email" required="true" />
+            <Input input="true" id="password" type="password" name="password" label="Password" />
+          </Row>
+          <Row>
+            <Input input="true" id="phone" type="text" name="phone" label="Phone" />
+          </Row>
+          <label htmlFor="acceptsMarketing" className={styles.checkbox}>
+            <input
+              checkbox="true"
+              id="acceptsMarketing"
+              type="checkbox"
+              name="acceptsMarketing"
+              label="Accepts marketing"
+            />
+            <span>Check this case to receive our last update</span>
+          </label>
+          <Buttons text="UPDATE INFO" />
+        </Form>
       </AccountLayout>
     </PageLayout>
   );

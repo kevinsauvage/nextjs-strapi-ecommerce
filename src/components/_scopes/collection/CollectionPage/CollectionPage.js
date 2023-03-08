@@ -1,7 +1,9 @@
 /* eslint-disable no-nested-ternary */
+import notFoundIllustration from '@/assets/NotFoundIllustration.svg';
 import { filter } from '@/assets/svg';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import Container from '@/components/Container/Container';
+import EmptyState from '@/components/EmptyState/EmptyState';
 import SlideIn from '@/components/SlideIn/SlideIn';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import useCollectionContext from '@/contexts/CollectionContext/useCollectionContext';
@@ -12,7 +14,8 @@ import Filters from '../Filters/Filters';
 import styles from './collectionPage.module.scss';
 
 function CollectionPage() {
-  const { loading, products, layout, handleNext, pageInfo, handleSort } = useCollectionContext();
+  const { loading, products, layout, handleNext, pageInfo, handleSort, getFormattedFilter } =
+    useCollectionContext();
 
   return (
     <div className={styles.CollectionPage}>
@@ -21,31 +24,43 @@ function CollectionPage() {
           <div className={styles.header}>
             <Container>
               <Wrapper>
-                <Sort handleChange={handleSort} />
-                <SlideIn
-                  title={
-                    <span className={styles.filterButton}>
-                      <p>Filters</p>
-                      {filter}
-                    </span>
-                  }
-                >
-                  <aside className={styles.aside}>
-                    <Filters />
-                  </aside>
-                </SlideIn>
+                {(products?.length > 0 || getFormattedFilter().length > 0) && (
+                  <>
+                    <Sort handleChange={handleSort} />
+                    <SlideIn
+                      title={
+                        <span className={styles.filterButton}>
+                          <p>Filters</p>
+                          {filter}
+                        </span>
+                      }
+                    >
+                      <aside className={styles.aside}>
+                        <Filters />
+                      </aside>
+                    </SlideIn>
+                  </>
+                )}
               </Wrapper>
             </Container>
           </div>
         </div>
         <Container>
-          <ProductsList
-            handleNext={handleNext}
-            hasNextPage={pageInfo?.hasNextPage}
-            products={products}
-            layout={layout}
-            loading={loading}
-          />
+          {loading || products?.length > 0 ? (
+            <ProductsList
+              handleNext={handleNext}
+              hasNextPage={pageInfo?.hasNextPage}
+              products={products}
+              layout={layout}
+              loading={loading}
+            />
+          ) : (
+            <EmptyState
+              image={notFoundIllustration}
+              title="Result Not Found"
+              subtitle="Please try again with another filters"
+            />
+          )}
         </Container>
       </main>
     </div>

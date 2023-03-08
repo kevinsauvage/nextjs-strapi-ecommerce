@@ -5,6 +5,16 @@
   background-color: var(--surface-300);
   padding: var(--space-2);
 
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .buttonRemove {
+    border: none;
+  }
+
   .by {
     margin-bottom: var(--space-0);
     font-size: 12px;

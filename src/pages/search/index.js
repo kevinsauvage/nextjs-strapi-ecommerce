@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
+import notFoundIllustration from '@/assets/NotFoundIllustration.svg';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
 import Search from '@/components/_scopes/search/Search/Search';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
+import EmptyState from '@/components/EmptyState/EmptyState';
 import seo from '@/data/seo';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
@@ -27,7 +29,6 @@ function SearchPage() {
   const handleSearch = useCallback(
     async (endCursor) => {
       if (!searchTerm || !searchTerm?.trim()) return;
-      setLoading(true);
 
       const searchResponse = await getClient().storefront.product.getProducts({
         query: `${searchTerm}*`,
@@ -56,13 +57,21 @@ function SearchPage() {
       <Search size="medium" />
       <Container size="medium">
         <div className={styles.search}>
-          <ProductsList
-            hasNextPage={pageInfo?.hasNextPage}
-            handleNext={() => handleSearch(pageInfo.endCursor)}
-            loading={loading}
-            layout="grid"
-            products={search}
-          />
+          {!loading && search.length === 0 ? (
+            <EmptyState
+              image={notFoundIllustration}
+              title="Result Not Found"
+              subtitle="Please try again with another keywords or maybe use generic term"
+            />
+          ) : (
+            <ProductsList
+              hasNextPage={pageInfo?.hasNextPage}
+              handleNext={() => handleSearch(pageInfo.endCursor)}
+              loading={loading}
+              layout="grid"
+              products={search}
+            />
+          )}
         </div>
       </Container>
     </PageLayout>

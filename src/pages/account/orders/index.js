@@ -1,9 +1,10 @@
-// import { useState } from 'react';
+/* eslint-disable no-nested-ternary */
 import { useCallback, useEffect, useState } from 'react';
 
-import Loader from '@/components/_loaders/Loader/Loader';
+import NotFoundIllustration from '@/assets/NotFoundIllustration.svg';
 import Orders from '@/components/_scopes/account/Orders/Orders';
 import Button from '@/components/Button/Button';
+import EmptyState from '@/components/EmptyState/EmptyState';
 import config from '@/config/index';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import { actions } from '@/contexts/UserContext/UserReducer';
@@ -13,8 +14,6 @@ import { handleGetTokenCookies } from '@/helpers/cookies';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
-
-import styles from './Orders.module.scss';
 
 export default function OrdersPage() {
   const { orders, dispatch, ordersPageInfo: pageInfo } = useUserContext();
@@ -58,21 +57,32 @@ export default function OrdersPage() {
 
   return (
     <PageLayout title={seo.account.orders.title} description={seo.account.orders.description}>
-      <AccountLayout title={seo.account.orders.title} descriptionBannerChildren={description}>
-        {!isLoading && !orders?.length ? (
-          <div>
-            <p>You didn&apos;t make any orders yet.</p>
-          </div>
-        ) : null}
-        {error ? <p>Error</p> : <Orders orders={orders} />}
-        {isLoading ? (
-          <div className={styles.loader}>
-            <Loader />
-          </div>
+      <AccountLayout
+        isLoading={isLoading}
+        title={seo.account.orders.title}
+        descriptionBannerChildren={orders?.length > 0 && description}
+      >
+        {error ? (
+          <p>Error</p>
+        ) : !orders?.length ? (
+          <EmptyState
+            image={NotFoundIllustration}
+            title="Your Order List is Empty"
+            subtitle="Looks like you haven’t added anything to your cart yet"
+          />
         ) : (
-          <Button disabled={!pageInfo?.hasNextPage} primary onClick={() => fetchOrders(pageInfo.endCursor)}>
-            See more
-          </Button>
+          <>
+            <Orders orders={orders} />
+            {pageInfo?.hasNextPage && (
+              <Button
+                disabled={!pageInfo?.hasNextPage}
+                primary
+                onClick={() => fetchOrders(pageInfo.endCursor)}
+              >
+                See more
+              </Button>
+            )}
+          </>
         )}
       </AccountLayout>
     </PageLayout>

@@ -30,6 +30,7 @@ export function CollectionProvider({
 
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
+      console.log('setloading true');
       dispatch({ type: actions.SET_LOADING, payload: true });
       const data = await getClient().storefront.collection.collection({
         handle: query.collectionSlug,
@@ -38,6 +39,8 @@ export function CollectionProvider({
         after,
         sort,
       });
+      console.log('setloading false');
+
       dispatch({ type: actions.SET_LOADING, payload: false });
       return data;
     },
@@ -205,6 +208,7 @@ export function CollectionProvider({
       handleSetFilters,
       handleSetUniqueFilters,
       collection,
+      getFormattedFilter,
     }),
     [
       allFilters,
@@ -222,6 +226,7 @@ export function CollectionProvider({
       handleSetFilters,
       handleSetUniqueFilters,
       collection,
+      getFormattedFilter,
     ]
   );
 

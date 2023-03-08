@@ -83,7 +83,8 @@ $colors-light: ( // Primary colors
   // On surface
   onSurface-dark: #efefef,
   onSurface-hight: #111111,
-  onSurface-medium: #2e2e2e,
+  onSurface-medium: #373737,
+  onSurface-light: #747474,
   onSurface-disabled: #464646);
 
 @function hexToRGB($hex) {

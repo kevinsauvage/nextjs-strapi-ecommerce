@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 
+import NoAddressIllustration from '@/assets/NoAddressIllustration.svg';
 import Modal from '@/components/_modals/Modal/Modal';
 import Address from '@/components/_scopes/account/Address/Address';
 import AddressForm from '@/components/_scopes/account/AddressForm/AddressForm';
 import Button from '@/components/Button/Button';
+import EmptyState from '@/components/EmptyState/EmptyState';
 import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
@@ -15,8 +17,6 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-import styles from './Addresses.module.scss';
-
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -24,6 +24,10 @@ function Addresses() {
   const { dispatch, user, addresses } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
+
+  useLayoutEffect(() => {
+    if (addresses) setIsLoading(false);
+  }, [addresses]);
 
   const fetchAddresses = useCallback(async () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
@@ -34,10 +38,6 @@ function Addresses() {
     if (Array.isArray(res)) dispatch({ type: actions.ADD_ADDRESSES, payload: res });
     else showToast.error('Something went wrong, please try again later');
   }, [dispatch, showToast]);
-
-  useEffect(() => {
-    if (addresses) setIsLoading(false);
-  }, [addresses]);
 
   useEffect(() => {
     fetchAddresses();
@@ -176,29 +176,35 @@ function Addresses() {
       <AccountLayout
         loading={isLoading}
         title={seo.account.addresses.title}
-        descriptionBannerChildren={description}
+        descriptionBannerChildren={addresses?.length > 0 && description}
         otherBannerChildrenContenct={
-          <Button extraClass={styles.btn} primary onClick={() => setShowCreateForm(true)}>
+          <Button primary onClick={() => setShowCreateForm(true)}>
             Add new address
           </Button>
         }
       >
         {Array.isArray(addresses) && addresses.length > 0 ? (
-          <div className={styles.list}>
-            {addresses.map((item, i) => (
-              <Address
-                key={item.id}
-                title={`Address ${i + 1}`}
-                handleSetAsDefault={handleSetAsDefault}
-                handleUpdateAddress={handleUpdateAddress}
-                address={item}
-                isDefault={isDefault(item)}
-                handleDelete={() => handleDelete(item.id)}
-              />
-            ))}
-          </div>
+          addresses.map((item, i) => (
+            <Address
+              key={item.id}
+              title={`Address ${i + 1}`}
+              handleSetAsDefault={handleSetAsDefault}
+              handleUpdateAddress={handleUpdateAddress}
+              address={item}
+              isDefault={isDefault(item)}
+              handleDelete={() => handleDelete(item.id)}
+            />
+          ))
         ) : (
-          <p className={styles.noAddresses}>There is no addresses to show</p>
+          <EmptyState
+            image={NoAddressIllustration}
+            title="No Address Yet"
+            subtitle="Please add your address for your better experience"
+          >
+            <Button primary onClick={() => setShowCreateForm(true)}>
+              Add new address
+            </Button>
+          </EmptyState>
         )}
       </AccountLayout>
       {showCreateForm && (
