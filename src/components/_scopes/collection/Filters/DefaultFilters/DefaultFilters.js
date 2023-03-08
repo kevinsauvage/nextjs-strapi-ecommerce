@@ -8,6 +8,7 @@ const DefaultFilters = ({ filter }) => {
   return filter?.values?.map((value) => (
     <button
       key={value.label}
+      aria-label={value.label}
       style={{ backgroundColor: value.label }}
       className={`${styles.button} ${isSelected(filter.id, value.input) && styles.selected}`}
       type="button"

@@ -36,6 +36,7 @@ export default function ProductCardDefault({ product = {}, priority }) {
       <div className={styles.buttons}>
         <Tooltip text={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}>
           <button
+            aria-label={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}
             className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
             type="button"
             onClick={(e) => {
