@@ -1,7 +1,6 @@
 import Link from 'next/link';
-import { arrowRight2 } from 'src/assets/svg';
 
-import { arrowRight } from '@/assets/svg';
+import { arrowRight2 } from '@/assets/svg';
 
 import styles from './Crumbs.module.scss';
 
