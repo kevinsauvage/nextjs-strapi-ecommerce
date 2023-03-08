@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { arrowRight2 } from 'src/assets/svg';
 
 import { arrowRight } from '@/assets/svg';
 
@@ -18,7 +19,7 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
     return (
       <>
         <a className={styles.crumbs}>{title}</a>
-        {!last && <p className={styles.arrow}>{arrowRight}</p>}
+        {!last && <p className={styles.arrow}>{arrowRight2}</p>}
       </>
     );
   }
@@ -27,7 +28,7 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
       <Link href={href} className={styles.crumbs}>
         {decodeURIComponent(title)}
       </Link>
-      {!last && <p className={styles.arrow}>{arrowRight}</p>}
+      {!last && <p className={styles.arrow}>{arrowRight2}</p>}
     </>
   );
 }
