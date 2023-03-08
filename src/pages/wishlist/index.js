@@ -21,7 +21,7 @@ function Wishlist() {
 
   useEffect(() => {
     const getCustomer = async () => {
-      if (wishlist.length) return null;
+      if (wishlist.length) return setLoading(false);
 
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
