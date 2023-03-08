@@ -19,8 +19,6 @@ function Wishlist() {
   const { wishlist, user, setUserWishlist } = useUserContext();
   const [loading, setLoading] = useState(true);
 
-  console.log('🚀 ~ file: index.js:22 ~ Wishlist ~ loading:', loading);
-
   useEffect(() => {
     const getCustomer = async () => {
       if (wishlist.length) return null;

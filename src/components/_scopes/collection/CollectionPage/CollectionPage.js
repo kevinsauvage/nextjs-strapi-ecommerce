@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 import notFoundIllustration from '@/assets/NotFoundIllustration.svg';
 import { filter } from '@/assets/svg';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
