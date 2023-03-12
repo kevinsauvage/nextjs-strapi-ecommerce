@@ -6,15 +6,15 @@
   gap: 6px;
 
   p {
-    font-weight: $fontWeightLight;
+    font-weight: 300;
   }
 
   h2 {
-    font-weight: $fontWeightBold;
+    font-weight: 700;
   }
 
   p,
   h2 {
-    @include fluid-font(320px, 1024px, $fontSize-300, $fontSize-600);
+    font-size: 2rem;
   }
 }

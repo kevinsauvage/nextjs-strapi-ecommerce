@@ -12,7 +12,7 @@
   min-height: 36px;
   min-width: 36px;
   color: var(--onSurface-hight);
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  font-size: 0.9rem;
 
   &.selected {
     opacity: 1;

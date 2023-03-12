@@ -16,18 +16,18 @@
 
 .small {
   p {
-    font-size: 14px;
+    font-size: 1rem;
   }
 }
 
 .medium {
   p {
-    @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
+    font-size: 1.1rem;
   }
 }
 
 .large {
   p {
-    @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+    font-size: 1.2rem;
   }
 }

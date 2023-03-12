@@ -1,34 +1,8 @@
-@import './responsive';
-// Font weight
-$fontWeightLight: 300;
-$fontWeightNormal: 400;
-$fontWeightMedium: 500;
-$fontWeightSemiBold: 600;
-$fontWeightBold: 700;
-$fontWeightExtraBold: 800;
-// Font sizes
-$font-size: 13px;
-$ratio: 1.2;
-/* Calculate values */
-$fontSize--100: $font-size / $ratio;
-$fontSize-100: $font-size;
-$fontSize-200: $fontSize-100 * $ratio;
-$fontSize-300: $fontSize-200 * $ratio;
-$fontSize-400: $fontSize-300 * $ratio;
-$fontSize-500: $fontSize-400 * $ratio;
-$fontSize-600: $fontSize-500 * $ratio;
 // Fonts
 $sans-serif: 'Poppins',
 sans-serif;
-$serif: Merriweather,
-Georgia,
-'Times New Roman',
-serif;
 $radius: 10px;
 $header-height: 60px;
 $header-height-mobile: 50px;
-$gapSmall: var(--space-0);
-$gapMedium: var(--space-2);
-$gapBig: var(--space-4);
 $textShadow-100: 0.3px 0.3px 0.3px rgba(0, 0, 0, 0.6);
 $textShadow-200: 0.7px 0.7px 0.7px rgba(0, 0, 0, 0.6);

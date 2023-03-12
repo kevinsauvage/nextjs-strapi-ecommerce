@@ -20,7 +20,7 @@
 
 .button {
   border: none;
-  font-weight: $fontWeightSemiBold;
+  font-weight: 600;
 
   svg {
     margin-left: 8px;
@@ -40,7 +40,7 @@
   cursor: pointer;
 
   p {
-    font-size: 13px;
+    font-size: 0.9rem;
   }
 
   &:last-of-type {

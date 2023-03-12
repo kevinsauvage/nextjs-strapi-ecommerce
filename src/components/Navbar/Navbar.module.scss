@@ -8,7 +8,7 @@
   align-items: center;
   height: 100%;
 
-  @include respond(mobile) {
+  @include respond(mobile tablet) {
     display: none;
   }
 }
@@ -29,7 +29,7 @@
   a {
     min-width: 110px;
     padding: 0 var(--space-1);
-    font-weight: $fontWeightSemiBold;
+    font-weight: 600;
 
     &:hover {
       background-color: var(--surface-900);

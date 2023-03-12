@@ -36,8 +36,7 @@
 
 .title {
   position: relative;
-  margin-bottom: var(--space-1);
-  @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+  font-size: 1.4rem;
 }
 
 .wrapper {
@@ -58,12 +57,12 @@
 
   small {
     font-weight: 400;
-    font-size: 11px;
+    font-size: 0.9rem;
   }
 
   p {
     font-weight: 600;
-    @include fluid-font(320px, 1424px, $fontSize-300, $fontSize-400);
+    font-size: 1.3rem;
   }
 }
 

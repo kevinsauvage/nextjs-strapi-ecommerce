@@ -43,7 +43,7 @@ function OrderCard({ order }) {
   return (
     <li className={style.orderCard}>
       <div className={style.header}>
-        <h4>Order {order.name}</h4>
+        <h5>Order {order.name}</h5>
       </div>
 
       <div className={style.orderCardDetail}>

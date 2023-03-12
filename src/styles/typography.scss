@@ -1,3 +1,17 @@
+html {
+  letter-spacing: 1px;
+  font-family: $sans-serif, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: calc(14px * 1.5);
+  font-weight: 400;
+  -webkit-text-size-adjust: 100%; //fix for iOS
+
+  @media (max-width: 1000px) {
+    font-size: calc(10px + .4vw);
+    line-height: calc(10px + .4vw * 1.5);
+  }
+}
+
 h1,
 h2,
 h3,
@@ -6,70 +20,74 @@ h5,
 h6 {
   text-shadow: $textShadow-100;
   font-style: normal;
-  font-weight: $fontWeightSemiBold;
+  font-weight: 600;
 }
 
 h1 {
-  font-weight: $fontWeightBold;
-  @include fluid-font(320px, 1024px, $fontSize-500, $fontSize-600);
-}
-
-.big {
-  @include fluid-font(320px,
-    1024px,
-    $fontSize-600 * $ratio * $ratio,
-    $fontSize-600 * $ratio * $ratio * $ratio);
+  font-weight: 700;
+  font-size: 2.5rem;
+  line-height: calc(2.5rem * 1.5);
 }
 
 h2 {
-  @include fluid-font(320px, 1024px, $fontSize-400, $fontSize-500);
+  font-size: 2.25rem;
+  line-height: calc(2.25rem * 1.5);
 }
 
 h3 {
-  @include fluid-font(320px, 1024px, $fontSize-300, $fontSize-400);
+  font-size: 2rem;
+  line-height: calc(2rem * 1.5);
 }
 
 h4 {
-  @include fluid-font(320px, 1024px, $fontSize-200, $fontSize-300);
+  font-size: 1.75rem;
+  line-height: calc(1.75rem * 1.5);
 }
 
 h5 {
-  @include fluid-font(320px, 1024px, $fontSize-100, $fontSize-200);
+  font-size: 1.5rem;
+  line-height: calc(1.5rem * 1.5);
 }
 
 h6 {
-  @include fluid-font(320px, 1024px, $fontSize-100, $fontSize-100);
+  font-size: 1.25rem;
+  line-height: calc(1.25rem * 1.5);
 }
 
 strong {
-  font-weight: $fontWeightBold;
+  font-weight: 700;
 }
 
 label,
 a,
-button,
-p {
-  font-size: 13px;
-  font-weight: $fontWeightNormal;
+button {
+  font-size: 1rem;
+  font-weight: 400;
 }
 
 small {
-  font-size: 12px;
+  font-size: 0.8rem;
 }
 
-a,
-button,
+b {
+  font-weight: 600;
+}
+
 p,
-b {
-  @include fluid-font(320px, 1024px, $fontSize--100, $fontSize-100);
-}
-
-b {
-  font-weight: $fontWeightSemiBold;
+b,
+strong,
+a {
+  font-size: 1rem;
+  line-height: calc(1rem * 1.5);
 }
 
 input,
 textarea,
 select {
   font-family: $sans-serif;
+}
+
+.big {
+  font-size: 3rem;
+  line-height: calc(3rem * 1.5);
 }

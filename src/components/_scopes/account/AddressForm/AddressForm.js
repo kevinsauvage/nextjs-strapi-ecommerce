@@ -29,7 +29,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
     >
       <div className={styles.form}>
         <div className={styles.info}>
-          <h4 className={styles.title}>Contact Information</h4>
+          <h5 className={styles.title}>Contact Information</h5>
           <Row>
             <Input
               placeholder="First name"
@@ -63,7 +63,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
           </Row>
         </div>
         <div>
-          <h4 className={styles.title}>Address</h4>
+          <h5 className={styles.title}>Address</h5>
           <Row>
             <Input
               placeholder="Address 1"

@@ -22,7 +22,7 @@ export default function BannerHome({ data }) {
                   <h1 className={`${styles.title} big`}>{item.title}</h1>
                   <p className={styles.subtitle}>{item.description}</p>
                   <Link href={item.handle} className={styles.link}>
-                    <p>Shop now</p>
+                    Shop now
                   </Link>
                 </div>
               ))}

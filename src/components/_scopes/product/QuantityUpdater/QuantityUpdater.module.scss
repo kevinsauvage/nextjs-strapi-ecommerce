@@ -8,7 +8,7 @@ $boxDimension: 36px;
   display: block;
   margin-bottom: 4px;
   width: fit-content;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
+  font-size: 1.1rem;
 }
 
 .inputBox {
@@ -29,7 +29,7 @@ $boxDimension: 36px;
   background-color: transparent;
   height: 100%;
   width: calc($boxDimension + 10px);
-  font-size: 17px;
+  font-size: 1.2rem;
   color: var(--onSurface-hight);
   text-align: center;
 

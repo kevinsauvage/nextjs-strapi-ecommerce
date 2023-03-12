@@ -17,7 +17,7 @@
     }
 
     svg {
-      @include fluid-font(320px, 1424px, $fontSize-400, $fontSize-500);
+      font-size: 1.4rem;
     }
   }
 }

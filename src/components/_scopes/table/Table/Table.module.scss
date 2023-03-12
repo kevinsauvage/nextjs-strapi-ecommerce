@@ -12,13 +12,13 @@
 .tHead {
   border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-dark-200);
-  height: 50px;
+  line-height: 30px;
   padding: var(--space-1);
   text-transform: uppercase;
-  font-weight: $fontWeightSemiBold;
+  font-weight: 600;
   color: var(--onSurface-dark);
   text-align: start;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  font-size: 1rem;
 }
 
 .tData {
@@ -26,9 +26,9 @@
   height: 80px;
   padding: var(--space-0) var(--space-1);
   vertical-align: middle;
-  font-weight: $fontWeightNormal;
+  font-weight: 400;
   text-align: start;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+  font-size: 1rem;
 
   @include respond(mobile) {
     height: unset;
@@ -61,7 +61,7 @@
       width: 40%;
       padding-right: 10px;
       white-space: nowrap;
-      font-size: 12px;
+      font-size: 0.9rem;
       font-weight: 500;
     }
   }

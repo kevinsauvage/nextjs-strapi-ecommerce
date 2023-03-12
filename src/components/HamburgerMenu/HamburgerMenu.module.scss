@@ -2,7 +2,7 @@
   display: none;
   visibility: hidden;
 
-  @include respond(mobile) {
+  @include respond(mobile tablet) {
     display: block;
     visibility: visible;
   }

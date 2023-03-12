@@ -1,11 +1,6 @@
 html,
 body {
   position: relative;
-  letter-spacing: 1px;
-  font-family: $sans-serif, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  font-weight: $fontWeightNormal;
-  -webkit-text-size-adjust: 100%; //fix for iOS
 }
 
 a,
@@ -47,14 +42,12 @@ button {
   animation-fill-mode: both;
 }
 
-
 @include keyframes(fadeIn) {
   0% {
     opacity: 0;
   }
-  
+
   100% {
     opacity: 1;
   }
-
 }

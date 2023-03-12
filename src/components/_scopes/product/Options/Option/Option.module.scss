@@ -19,7 +19,7 @@ $boxDimension: 36px;
   min-width: $boxDimension;
   padding: 5px;
   color: var(--onSurface-hight);
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  font-size: 0.8rem;
 
   &:hover,
   &:focus,
@@ -32,7 +32,6 @@ $boxDimension: 36px;
   display: block;
   margin-bottom: 4px;
   width: fit-content;
-  @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-200);
 }
 
 .list {

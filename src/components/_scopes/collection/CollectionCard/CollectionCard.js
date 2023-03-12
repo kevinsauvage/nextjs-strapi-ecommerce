@@ -10,7 +10,9 @@ export default function CollectionCard({ collection }) {
   return (
     <div className={style.CollectionCard} style={{ ...backgroundStyle }} alt={image?.alt}>
       <div className={style.content}>
-        <h4 className={style.title}>{title} COLLECTION</h4>
+        <p className={style.title}>
+          <span>{title} </span> COLLECTION
+        </p>
         {subtitle && <p className={style.subtitle}>{subtitle}</p>}
         <Button contrast extraClass={style.link} href={handle}>
           <span>Shop now</span>

@@ -56,16 +56,6 @@
   }
 }
 
-@mixin fluid-font($min-vw, $max-vw, $min-value, $max-value) {
-  $factor: 1 / ($max-vw - $min-vw) * ($max-value - $min-value);
-  $calc-value: unquote('#{ $min-value - ($min-vw * $factor) } + #{ 100vw * $factor }');
-  font-size: $min-value; // Fallback for older browsers
-  font-size: clamp(#{if($min-value > $max-value, $max-value, $min-value)},
-    #{$calc-value},
-    #{if($min-value > $max-value, $min-value, $max-value)});
-  line-height: $min-value * 1.66;
-}
-
 @mixin underline($color) {
   position: relative;
   display: block;
@@ -169,7 +159,7 @@
   padding: 14px 30px;
   white-space: nowrap;
   text-transform: uppercase;
-  font-weight: $fontWeightSemiBold;
+  font-weight: 600;
   transition: all 0.3s ease-in;
   @include boxShadow(2);
 

@@ -49,7 +49,7 @@ export default function Form({
 
   return (
     <form className={`${styles.form} ${extraClass}`} onSubmit={handleSubmit} {...rest}>
-      {title && <h3 className={styles.title}>{title}</h3>}
+      {title && <h2 className={styles.title}>{title}</h2>}
       <div className={styles.children}>{iterateOverChildren(children)}</div>
     </form>
   );

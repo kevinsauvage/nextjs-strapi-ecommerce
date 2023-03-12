@@ -21,10 +21,10 @@
   width: fit-content;
   padding: 0;
   text-transform: uppercase;
-  font-weight: $fontWeightMedium;
+  font-weight: 500;
 }
 
 .active {
-  font-weight: $fontWeightBold;
+  font-weight: 700;
   @include underline(var(--surface-900));
 }

@@ -22,8 +22,8 @@
 }
 
 .text {
-  font-weight: $fontWeightMedium;
-  @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+  font-weight: 500;
+  font-size: 1.2rem;
 }
 
 .subtitle {

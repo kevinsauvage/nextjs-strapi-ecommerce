@@ -34,7 +34,7 @@
 }
 
 .subtotal {
-  font-weight: $fontWeightMedium;
+  font-weight: 500;
 }
 
 .content {
@@ -82,5 +82,5 @@
   background-color: transparent;
   white-space: nowrap;
   text-decoration: underline;
-  @include fluid-font(320px, 1424px, $fontSize--100, $fontSize--100);
+  font-size: 0.9rem;
 }

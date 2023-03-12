@@ -18,7 +18,7 @@
   display: block;
   margin-bottom: var(--space-1);
   text-transform: capitalize;
-  @include fluid-font(320px, 1424px, $fontSize-200, $fontSize-300);
+  font-size: 1.2rem;
 }
 
 .about {
@@ -45,7 +45,7 @@
   width: fit-content;
 
   a {
-    font-size: 12px;
+    font-size: 0.9rem;
     font-weight: 300;
   }
 
@@ -65,6 +65,6 @@
   color: var(--onSurface-dark);
 
   p {
-    font-size: 12px;
+    font-size: 0.9rem;
   }
 }

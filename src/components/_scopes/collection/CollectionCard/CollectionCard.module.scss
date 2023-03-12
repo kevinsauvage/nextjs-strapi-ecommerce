@@ -28,18 +28,19 @@
 }
 
 .title {
-  margin-bottom: var(--space-0);
+  margin-bottom: var(--space-1);
   text-transform: uppercase;
-  font-weight: 700;
+  font-weight: 400;
+  font-size: 1.5rem;
 
   span {
-    font-weight: 400;
+    font-weight: 700;
   }
 }
 
 .subtitle {
   margin-bottom: var(--space-1);
-  max-width: 200px;
+  max-width: 300px;
   font-weight: 500;
 }
 

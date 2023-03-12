@@ -2,7 +2,7 @@
   background-color: var(--surface-dark-200);
   height: 50px;
 
-  @include respond(mobile) {
+  @include respond(mobile tablet) {
     display: none;
   }
 }
@@ -10,10 +10,6 @@
 .menu {
   display: flex;
   flex-wrap: wrap;
-
-  @include respond(mobile) {
-    gap: var(--space-1);
-  }
 }
 
 .item {
@@ -25,8 +21,8 @@
   padding-right: var(--space-2);
 
   a {
-    font-size: 12px;
-    font-weight: $fontWeightNormal;
+    font-size: 0.8rem;
+    font-weight: 400;
     color: var(--onSurface-dark);
   }
 }

@@ -5,4 +5,8 @@
 .nextButton {
   margin: var(--space-5) auto;
   width: fit-content;
+
+  @include respond(mobile) {
+    margin: var(--space-2) auto;
+  }
 }
