@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import { bag, heart, home, logo, logout, user } from '@/assets/svg';
+import { bag, heart, home, logout, user } from '@/assets/svg';
 import config from '@/config/index';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 
 import Collapsible from '../Collapsible/Collapsible';
+import Logo from '../Logo/Logo';
 import SlideIn from '../SlideIn/SlideIn';
 
 import styles from './HamburgerMenu.module.scss';
@@ -70,7 +71,7 @@ export default function HamburgerMenu({ headerMenu }) {
     <div className={styles.HamburgerMenu}>
       <SlideIn
         animationPosition="left"
-        headerTitle={<span>{logo}</span>}
+        headerTitle={<Logo />}
         title={
           <span className={styles.icon}>
             <svg width="14" height="12" viewBox="0 0 14 12" fill="none" xmlns="http://www.w3.org/2000/svg">

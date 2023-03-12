@@ -36,7 +36,7 @@ function SlideIn({ children, title, animationPosition = 'right', headerTitle }) 
       <div className={styles.children} style={slideInStyles}>
         {headerTitle && (
           <header className={styles.header}>
-            <h3>{headerTitle}</h3>
+            {headerTitle}
             <button type="button" onClick={() => setShowMenu(false)} className={styles.icon}>
               {close}
             </button>

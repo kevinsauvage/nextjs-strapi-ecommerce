@@ -55,6 +55,12 @@
 
   .userNavListItem {
     padding: var(--space-1);
+    font-size: 1.1rem;
+
+    svg {
+      width: 1.4rem;
+      height: 1.4rem;
+    }
 
     a {
       display: flex;
