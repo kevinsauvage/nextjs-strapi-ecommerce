@@ -8,8 +8,7 @@ import styles from './ProductList.module.scss';
 
 function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, loading }) {
   return (
-    Array.isArray(products) &&
-    products.length > 0 && (
+    Array.isArray(products) && (
       <div className={styles.ProductsList}>
         <ListDisplay layout={layout}>
           {products.map((product, i) => (
@@ -17,7 +16,7 @@ function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, load
           ))}
         </ListDisplay>
         {loading && <BlockLoader />}
-        {handleNext && (
+        {handleNext && !loading && (
           <div className={styles.nextButton}>
             <Button contrast disabled={!hasNextPage} onClick={() => handleNext()}>
               Load more products

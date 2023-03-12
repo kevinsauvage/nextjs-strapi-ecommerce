@@ -24,7 +24,6 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
   useEffect(() => {
     if (carouselRef?.current) {
       const width = carouselRef?.current?.getBoundingClientRect().width;
-
       const totalWidth = (width / 100) * itemDimension;
       const position = totalWidth * Children.count(children) - width;
       setMaxTranslatePosition(position);
@@ -40,7 +39,6 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
 
   useEffect(() => {
     const newPosition = index * carouselWidth;
-
     if (newPosition === translatePosition) return;
     if (newPosition < translatePosition) {
       if (newPosition < 0) setTranslatePosition(0);

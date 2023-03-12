@@ -1,32 +1,25 @@
-.filters {}
-
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-bottom: var(--space-0);
   background-color: var(--surface-dark-100);
   padding: var(--space-1);
   color: var(--onSurface-dark);
+
+  .reset {
+    border: none;
+    text-decoration: underline;
+    margin-left: 0;
+    padding: 0;
+  }
 }
 
 .bottom {
   padding: var(--space-0);
 }
 
-.title {
-  display: flex;
-  align-items: center;
-  color: var(--onSurface-dark);
-  gap: var(--space-0);
-}
-
 .button {
   display: block;
   width: 100%;
-}
-
-.reset {
-  border: none;
-  text-decoration: underline;
 }

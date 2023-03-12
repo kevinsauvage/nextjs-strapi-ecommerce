@@ -1,3 +1,4 @@
+@import './responsive';
 // Font weight
 $fontWeightLight: 300;
 $fontWeightNormal: 400;
@@ -25,6 +26,7 @@ Georgia,
 serif;
 $radius: 10px;
 $header-height: 60px;
+$header-height-mobile: 50px;
 $gapSmall: var(--space-0);
 $gapMedium: var(--space-2);
 $gapBig: var(--space-4);

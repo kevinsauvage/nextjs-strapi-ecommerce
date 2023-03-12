@@ -9,8 +9,12 @@
   width: 100%;
   padding: 0 2rem;
 
-  @include respond('tablet') {
+  @include respond(tablet) {
     padding: 0 1rem;
+  }
+
+  @include respond(mobile) {
+    padding: 0 0.5rem;
   }
 }
 

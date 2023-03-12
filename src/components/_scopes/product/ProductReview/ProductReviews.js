@@ -125,13 +125,16 @@ export default function ProductReviews({ product }) {
     },
     [asPath, product.id, push, reviews, showToast, user?.id]
   );
+
+  const totalReviews = reviews.length;
+
   return (
     <div className={styles.ProductReviews}>
       {loading && <AbsoluteLoader />}
-      <Collapsible title="Reviews">
+      <Collapsible title={<span>Reviews{totalReviews > 0 && <small> ({totalReviews})</small>}</span>}>
         <div className={styles.ProductReviewsContent}>
           <div className={styles.customerReviews}>
-            {Array.isArray(reviews) && reviews.length > 0 ? (
+            {Array.isArray(reviews) && totalReviews > 0 ? (
               <Reviews reviews={reviews} handleRemoveProductReview={handleRemoveProductReview} />
             ) : (
               <p>No reviews</p>

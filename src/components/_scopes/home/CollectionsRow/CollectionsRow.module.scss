@@ -5,18 +5,12 @@
 .list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  grid-template-rows: 1fr min-content;
   height: 100%;
   width: 100%;
   gap: var(--space-1);
   text-align: center;
 
-  @include respond('tablet') {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  @include respond('mobile') {
-    grid-template-columns: 1fr 1fr;
+  @include respond(mobile) {
     gap: var(--space-0);
   }
 }

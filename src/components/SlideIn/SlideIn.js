@@ -1,21 +1,26 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+
+import { close } from '@/assets/svg';
 
 import styles from './SlideIn.module.scss';
 
-function SlideIn({ children, title }) {
+function SlideIn({ children, title, animationPosition = 'right', headerTitle }) {
   const [showMenu, setShowMenu] = useState(false);
+  const { asPath } = useRouter();
 
-  const toggleMenu = () => {
-    setShowMenu(!showMenu);
-  };
+  const toggleMenu = () => setShowMenu(!showMenu);
 
   useEffect(() => {
-    if (showMenu) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'visible';
-    }
+    setShowMenu(false);
+  }, [asPath]);
+
+  useEffect(() => {
+    if (showMenu) document.body.style.overflow = 'hidden';
+    else document.body.style.overflow = 'visible';
   }, [showMenu]);
+
+  const slideInStyles = { [animationPosition]: showMenu ? '0' : '-100%' };
 
   return (
     <div className={styles.slideIn}>
@@ -28,7 +33,17 @@ function SlideIn({ children, title }) {
       >
         {title}
       </button>
-      <div className={`${styles.children} ${showMenu ? styles.showChildren : ''}`}>{children}</div>
+      <div className={styles.children} style={slideInStyles}>
+        {headerTitle && (
+          <header className={styles.header}>
+            <h3>{headerTitle}</h3>
+            <button type="button" onClick={() => setShowMenu(false)} className={styles.icon}>
+              {close}
+            </button>
+          </header>
+        )}
+        {children}
+      </div>
       {showMenu && <div className={styles.backdrop} onClick={toggleMenu} aria-hidden="true" />}
     </div>
   );

@@ -29,6 +29,7 @@ function SearchPage() {
   const handleSearch = useCallback(
     async (endCursor) => {
       if (!searchTerm || !searchTerm?.trim()) return;
+      setLoading(true);
 
       const searchResponse = await getClient().storefront.product.getProducts({
         query: `${searchTerm}*`,
@@ -57,19 +58,19 @@ function SearchPage() {
       <Search size="medium" />
       <Container size="medium">
         <div className={styles.search}>
-          {!loading && search.length === 0 ? (
-            <EmptyState
-              image={notFoundIllustration}
-              title="Result Not Found"
-              subtitle="Please try again with another keywords or maybe use generic term"
-            />
-          ) : (
+          {loading || search.length > 0 ? (
             <ProductsList
               hasNextPage={pageInfo?.hasNextPage}
               handleNext={() => handleSearch(pageInfo.endCursor)}
               loading={loading}
               layout="grid"
               products={search}
+            />
+          ) : (
+            <EmptyState
+              image={notFoundIllustration}
+              title="Result Not Found"
+              subtitle="Please try again with another keywords or maybe use generic term"
             />
           )}
         </div>

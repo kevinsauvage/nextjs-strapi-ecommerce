@@ -12,13 +12,37 @@
   z-index: 99999;
   position: fixed;
   top: 0;
-  right: -450px;
   background-color: white;
   height: 100%;
   width: 450px;
+  max-width: 100%;
   overflow: auto;
-  transition: right 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  background-color: var(--surface-dark-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: $header-height;
+  padding: 0 var(--space-1);
+  color: var(--onSurface-dark);
+
+  button {
+    border: none;
+    padding: 0;
+
+    svg {
+      width: 20px;
+      height: 20px;
+
+      path {
+        fill: var(--onSurface-dark)
+      }
+    }
+  }
 }
 
 .showChildren {

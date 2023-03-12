@@ -17,13 +17,9 @@ import getClient from '@/shopify/index';
 
 export default function OrdersPage() {
   const { orders, dispatch, ordersPageInfo: pageInfo } = useUserContext();
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToastContext();
   const [error, setError] = useState(false);
-
-  useEffect(() => {
-    if (orders) setIsLoading(false);
-  }, [orders]);
 
   const fetchOrders = useCallback(
     async (endCursor) => {
@@ -64,13 +60,7 @@ export default function OrdersPage() {
       >
         {error ? (
           <p>Error</p>
-        ) : !orders?.length && !isLoading ? (
-          <EmptyState
-            image={NotFoundIllustration}
-            title="Your Order List is Empty"
-            subtitle="Looks like you haven’t added anything to your cart yet"
-          />
-        ) : (
+        ) : orders?.length || isLoading ? (
           <>
             <Orders orders={orders} />
             {pageInfo?.hasNextPage && (
@@ -83,6 +73,12 @@ export default function OrdersPage() {
               </Button>
             )}
           </>
+        ) : (
+          <EmptyState
+            image={NotFoundIllustration}
+            title="Your Order List is Empty"
+            subtitle="Looks like you haven’t made any order yet"
+          />
         )}
       </AccountLayout>
     </PageLayout>

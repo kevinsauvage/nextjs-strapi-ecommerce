@@ -6,6 +6,7 @@ import styles from './Navbar.module.scss';
 
 function Navbar({ headerMenu }) {
   const { asPath } = useRouter();
+
   return (
     <nav className={styles.nav}>
       <ul className={styles.list}>

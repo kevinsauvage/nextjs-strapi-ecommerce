@@ -12,7 +12,7 @@ import styles from './CartItem.module.scss';
 export default function CartItem({ handleChange, removeFromCart, item }) {
   const { merchandise, quantity, id } = item || {};
   const { priceV2, product, title: variantTitle, image, quantityAvailable } = merchandise || {};
-  const { title, handle, collections } = product || {};
+  const { title, handle, collections, productType } = product || {};
 
   const totalPrice = Number(priceV2?.amount) * Number(quantity);
 
@@ -21,12 +21,17 @@ export default function CartItem({ handleChange, removeFromCart, item }) {
       <TData>
         <div className={styles.list}>
           <div className={styles.image}>
-            <Image src={image.small} alt={image.alt || variantTitle} width={600} height={600} />
+            <Image
+              src={image.medium}
+              alt={image.alt || variantTitle}
+              width={image.width}
+              height={image.height}
+            />
           </div>
           <div className={styles.content}>
             <Link
               className={styles.link}
-              href={`/${product?.productType}/${collections?.[0]?.handle}/${handle}`}
+              href={`/${productType}/${collections?.nodes?.[0]?.handle}/${handle}`}
             >
               <b className={styles.title}>{title}</b>
             </Link>

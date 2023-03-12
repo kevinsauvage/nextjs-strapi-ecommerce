@@ -23,12 +23,65 @@
 
 .tData {
   border: 0.01px solid var(--surface-300);
-  background-color: var(--surface-200);
   height: 80px;
-  min-width: 100px;
   padding: var(--space-0) var(--space-1);
   vertical-align: middle;
   font-weight: $fontWeightNormal;
   text-align: start;
   @include fluid-font(320px, 1424px, $fontSize-100, $fontSize-100);
+
+  @include respond(mobile) {
+    height: unset;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 40%;
+    border-bottom: 0.1px solid var(--surface-500);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.table,
+.tData,
+.tHead,
+.body,
+.row,
+.head {
+  @include respond(mobile) {
+    display: block;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: var(--space-1);
+      transform: translateY(-50%);
+      width: 40%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}
+
+.row {
+  background-color: var(--surface-200);
+
+  @include respond(mobile) {
+    margin-bottom: var(--space-1);
+    border: 0.01px solid var(--surface-300);
+    border-radius: $radius;
+  }
+}
+
+.tHead,
+.head {
+  @include respond(mobile) {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
 }

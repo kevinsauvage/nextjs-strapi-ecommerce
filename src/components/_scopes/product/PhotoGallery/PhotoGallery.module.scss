@@ -1,9 +1,27 @@
 .gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   height: 100%;
   width: 100%;
-  gap: 16px;
+
+  @include respond(mobile) {
+    display: none;
+    visibility: hidden;
+  }
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-1);
+  height: 100%;
+  width: 100%;
+
+  @include respond(mobile) {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    white-space: nowrap;
+    transition: transform 0.3s ease-in-out;
+  }
 }
 
 .galleryImage {
@@ -13,8 +31,24 @@
   height: fit-content;
   width: 100%;
 
+  @include respond(mobile) {
+    flex: 0 0 auto;
+  }
+
   .image {
     height: fit-content;
     width: 100%;
+  }
+}
+
+.carousel {
+  display: none;
+  visibility: hidden;
+
+  @include respond(mobile) {
+    display: unset;
+    visibility: visible;
+    position: sticky;
+    top: var(--space-0);
   }
 }

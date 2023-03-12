@@ -1,10 +1,14 @@
 import { useRouter } from 'next/router';
 
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
+import PhotoGallery from '@/components/_scopes/product/PhotoGallery/PhotoGallery';
+import ProductDescription from '@/components/_scopes/product/ProductDescription/ProductDescription';
+import ProductDetails from '@/components/_scopes/product/ProductDetails/ProductDetails';
 import ProductsList from '@/components/_scopes/product/ProductList/ProductsList';
-import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
+import ProductReviews from '@/components/_scopes/product/ProductReview/ProductReviews';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
+import useProductSelection from '@/hooks/useProductSelection';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
@@ -12,26 +16,55 @@ import styles from './ProductSlug.module.scss';
 
 function ProductPage({ product, recommendations = [] }) {
   const router = useRouter();
+
+  const {
+    isOptionSelected,
+    handleSetSelectedProductOption,
+    selectedVariant,
+    handleAddToCart,
+    handleChangeInput,
+    isOptionOutOfStock,
+    totalPrice,
+    quantity,
+  } = useProductSelection({ product });
+
   if (router.isFallback) return <PageLoader />;
-  const { title, description } = product;
+
+  const { title, description, descriptionHtml } = product;
 
   return (
-    <>
+    <PageLayout title={title} description={description}>
       <Breadcrumbs lastElement={title} />
-      <Container extraClass={styles.container}>
-        <PageLayout title={title} description={description}>
-          <ProductPresenter product={product} />
-          {Array.isArray(recommendations) && recommendations.length > 0 && (
-            <div className={styles.recommendations}>
-              <Container size="medium">
-                <h3 className={styles.recommendationsTitle}>Recommendations</h3>
-                <ProductsList products={recommendations} layout="grid" />
-              </Container>
-            </div>
-          )}
-        </PageLayout>
+      <Container>
+        <div className={styles.top}>
+          <PhotoGallery images={product?.variants?.map((variant) => variant.image)} />
+          <ProductDescription
+            product={product}
+            quantity={quantity}
+            isOptionOutOfStock={isOptionOutOfStock}
+            handleChangeInput={handleChangeInput}
+            handleAddToCart={handleAddToCart}
+            handleSetSelectedProductOption={handleSetSelectedProductOption}
+            selected={selectedVariant}
+            isOptionSelected={isOptionSelected}
+            isModal={false}
+            totalPrice={totalPrice}
+          />
+        </div>
       </Container>
-    </>
+      <Container size="medium">
+        <ProductDetails html={descriptionHtml} />
+        <ProductReviews product={product} />
+      </Container>
+      {Array.isArray(recommendations) && recommendations.length > 0 && (
+        <div className={styles.recommendations}>
+          <Container size="medium">
+            <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+            <ProductsList products={recommendations} layout="grid" />
+          </Container>
+        </div>
+      )}
+    </PageLayout>
   );
 }
 

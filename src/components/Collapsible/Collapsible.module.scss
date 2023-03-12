@@ -1,7 +1,4 @@
 .Collapsible {
-  border: 0.1px solid var(--surface-400);
-  border-radius: $radius;
-  background-color: var(--surface-200);
   width: 100%;
   transition: all 0.2s ease-in-out 0.05s;
 }
@@ -11,14 +8,10 @@
   justify-content: space-between;
   align-items: center;
   border: none;
-  border-radius: $radius;
-  height: 40px;
+  height: 60px;
   width: 100%;
-  padding: var(--space-2);
-
-  &:hover {
-    background-color: var(--surface-400);
-  }
+  padding: var(--space-1);
+  color: var(--onSurface-hight);
 }
 
 .icon {
@@ -31,15 +24,14 @@
   svg {
     height: 16px;
     width: 16px;
+    fill: var(--onSurface-hight);
+  }
+
+  path {
+    stroke: var(--onSurface-hight);
   }
 
   &.open {
     transform: rotate(90deg);
-  }
-}
-
-.open {
-  &>.header {
-    border-bottom: 0.1px solid var(--surface-400);
   }
 }

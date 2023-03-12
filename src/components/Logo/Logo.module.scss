@@ -6,12 +6,11 @@
   width: fit-content;
   cursor: pointer;
 
-  img {
-    height: 60%;
-    width: fit-content !important;
+  svg {
+    max-width: 80px;
   }
 
-  * {
+  path {
     stroke: var(--onSurface-dark);
   }
 }

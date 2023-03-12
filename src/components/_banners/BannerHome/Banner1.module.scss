@@ -1,19 +1,18 @@
 .banner {
   position: relative;
-  border-radius: $radius;
   margin-bottom: var(--space-6);
   background-position: bottom;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  max-height: 600px;
-  height: 45vw;
+  max-height: 800px;
+  height: 80vh;
   width: 100%;
   overflow: hidden;
   color: var(--onSurface-hight);
   @include overlay(var(--RGB-surface-100), 0.4);
 
-  @include respond('tablet') {
+  @include respond(tablet) {
     height: 66vw;
   }
 }
@@ -36,7 +35,7 @@
   width: fit-content;
   gap: var(--space-2);
 
-  @include respond('tablet') {
+  @include respond(tablet) {
     margin-left: var(--space-3);
   }
 }

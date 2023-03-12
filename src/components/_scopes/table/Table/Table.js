@@ -1,5 +1,9 @@
 import styles from './Table.module.scss';
 
+function Table({ children }) {
+  return <table className={styles.table}>{children}</table>;
+}
+
 export function Body({ children }) {
   return <tbody className={styles.body}>{children}</tbody>;
 }
@@ -18,10 +22,6 @@ export function THead({ children }) {
 
 export function TData({ children }) {
   return <td className={styles.tData}>{children}</td>;
-}
-
-function Table({ children }) {
-  return <table className={styles.table}>{children}</table>;
 }
 
 export default Table;

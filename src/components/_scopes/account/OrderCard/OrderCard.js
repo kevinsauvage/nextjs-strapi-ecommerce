@@ -1,4 +1,7 @@
 import Link from 'next/link';
+import { v4 as uuidv4 } from 'uuid';
+
+import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
 
 import AccountRow from '../AccountRow/AccountRow';
 
@@ -17,10 +20,6 @@ function OrderCard({ order }) {
     totalPriceV2,
     successfulFulfillments,
   } = order || {};
-
-  const successfulFulfillment = successfulFulfillments?.[0];
-  const trackingUrl = successfulFulfillment?.trackingInfo?.[0]?.url;
-  const trackingNumber = successfulFulfillment?.trackingInfo?.[0]?.number;
 
   const getDate = (timestamp) => {
     const options = {
@@ -44,25 +43,12 @@ function OrderCard({ order }) {
   return (
     <li className={style.orderCard}>
       <div className={style.header}>
-        <h5>Order {order.name}</h5>
-        {successfulFulfillment && (
-          <div className={style.trackContainer}>
-            {trackingUrl ? (
-              <Link className={style.trackButton} href={trackingUrl}>
-                <p>Track order</p>
-              </Link>
-            ) : (
-              <div className={style.noTrackingUrl}>
-                <p>
-                  Tracking Company: <span>{successfulFulfillment?.trackingCompany}</span>
-                </p>
-                <p>Tracking number: {trackingNumber}</p>
-              </div>
-            )}
-          </div>
-        )}
+        <h4>Order {order.name}</h4>
       </div>
+
       <div className={style.orderCardDetail}>
+        <h6>Order informations</h6>
+
         <AccountRow title="Total price" content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} />
         {parseInt(totalRefundedV2?.amount, 10) > 0 ? (
           <AccountRow
@@ -82,6 +68,36 @@ function OrderCard({ order }) {
           </>
         ) : null}
       </div>
+      {successfulFulfillments && successfulFulfillments.length > 0 && (
+        <div className={style.bottom}>
+          <HeightAnimation
+            animationType="button"
+            buttonTextActive="Hide tracking information"
+            buttonTextInactive="Show tracking information"
+          >
+            {successfulFulfillments.map((successfulFulfillment, i) => {
+              const { trackingInfo } = successfulFulfillment;
+              return (
+                <div key={uuidv4()} className={style.trackContainer}>
+                  <h6>Tracking informations {successfulFulfillments.length > 1 && i + 1}</h6>
+                  <AccountRow title="Tracking Company" content={successfulFulfillment?.trackingCompany} />
+                  {trackingInfo &&
+                    trackingInfo.map((trackInfo) => {
+                      const { url, number } = trackInfo;
+                      return (
+                        <AccountRow
+                          key={number}
+                          title="Tracking number"
+                          content={url ? <Link href={url}>{number}</Link> : number}
+                        />
+                      );
+                    })}
+                </div>
+              );
+            })}
+          </HeightAnimation>
+        </div>
+      )}
     </li>
   );
 }

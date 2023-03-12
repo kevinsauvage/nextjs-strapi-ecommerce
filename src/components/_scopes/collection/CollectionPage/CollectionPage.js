@@ -22,25 +22,24 @@ function CollectionPage() {
         <div className={styles.headerContainer}>
           <div className={styles.header}>
             <Container>
-              <Wrapper>
-                {(products?.length > 0 || getFormattedFilter().length > 0) && (
-                  <>
-                    <Sort handleChange={handleSort} />
-                    <SlideIn
-                      title={
-                        <span className={styles.filterButton}>
-                          <p>Filters</p>
-                          {filter}
-                        </span>
-                      }
-                    >
-                      <aside className={styles.aside}>
-                        <Filters />
-                      </aside>
-                    </SlideIn>
-                  </>
-                )}
-              </Wrapper>
+              {(products?.length > 0 || getFormattedFilter().length > 0) && (
+                <Wrapper>
+                  <Sort handleChange={handleSort} />
+                  <SlideIn
+                    headerTitle="Filters"
+                    title={
+                      <span className={styles.filterButton}>
+                        <p>Filters</p>
+                        {filter}
+                      </span>
+                    }
+                  >
+                    <aside className={styles.aside}>
+                      <Filters />
+                    </aside>
+                  </SlideIn>
+                </Wrapper>
+              )}
             </Container>
           </div>
         </div>

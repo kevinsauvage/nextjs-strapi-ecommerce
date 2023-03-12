@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import NoAddressIllustration from '@/assets/NoAddressIllustration.svg';
 import Modal from '@/components/_modals/Modal/Modal';
@@ -25,7 +25,7 @@ function Addresses() {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (addresses) setIsLoading(false);
   }, [addresses]);
 

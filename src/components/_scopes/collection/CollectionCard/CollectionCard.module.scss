@@ -5,18 +5,15 @@
   border-radius: $radius;
   border-radius: $radius;
   background-position: center;
-  background-size: 100%;
+  background-size: cover;
   background-repeat: no-repeat;
   height: 100%;
   width: 100%;
+  min-height: 300px;
   color: var(--onSurface-hight);
   transition: all 0.2s ease-in-out;
   @include gradient-overlay(var(--RGB-surface-100));
   @include boxShadow(2);
-
-  &:hover {
-    background-size: 110%;
-  }
 }
 
 .content {

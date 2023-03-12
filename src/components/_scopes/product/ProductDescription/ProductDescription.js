@@ -18,6 +18,7 @@ export default function ProductDescription({
   handleAddToCart,
   selected,
   product,
+  isModal,
   totalPrice,
   quantity,
 }) {
@@ -47,33 +48,35 @@ export default function ProductDescription({
     <div className={styles.ProductDescription}>
       {loading && <PageLoader />}
       <h1 className={styles.title}>{title}</h1>
-      <ul className={styles.list}>
-        <li>
-          <b>Sku: </b>
-          <small>{sku}</small>
-        </li>
-        {productType && (
+      {!isModal && (
+        <ul className={styles.list}>
           <li>
-            <b>Product type: </b>
-            <small>{productType}</small>
+            <b>Sku: </b>
+            <small>{sku}</small>
           </li>
-        )}
-        <li>
-          <b>Available: </b>
-          <small>{quantityAvailable || 0}</small>
-        </li>
-        <li>
-          <b>Selected variant: </b>
-          <small>{variantTitle}</small>
-        </li>
+          {productType && (
+            <li>
+              <b>Product type: </b>
+              <small>{productType}</small>
+            </li>
+          )}
+          <li>
+            <b>Available: </b>
+            <small>{quantityAvailable || 0}</small>
+          </li>
+          <li>
+            <b>Selected variant: </b>
+            <small>{variantTitle}</small>
+          </li>
 
-        {weight && (
-          <li>
-            <b>Weight: </b>
-            <small>{`${weight} ${weightUnit?.toLowerCase()}`}</small>
-          </li>
-        )}
-      </ul>
+          {weight && (
+            <li>
+              <b>Weight: </b>
+              <small>{`${weight} ${weightUnit?.toLowerCase()}`}</small>
+            </li>
+          )}
+        </ul>
+      )}
       <div className={styles.options}>
         <Options
           options={options}
@@ -106,6 +109,7 @@ export default function ProductDescription({
       <div className={styles.wrapper}>
         <Button
           type="button"
+          extraClass={styles.button}
           primary
           disabled={!availableForSale || quantityAvailable < quantity}
           onClick={handleAddToCart}
@@ -116,7 +120,7 @@ export default function ProductDescription({
           type="button"
           contrast
           onClick={() => handleWishlist()}
-          extraClass={isWishlist(product) && styles.isWishlist}
+          extraClass={`${styles.button} ${isWishlist(product) && styles.isWishlist}`}
         >
           {heart} {isWishlist(product) ? 'Remove from' : 'Add to'} wishlist
         </Button>

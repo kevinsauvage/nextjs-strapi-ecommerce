@@ -1,26 +1,45 @@
 import Image from 'next/legacy/image';
 
+import Carousel from '@/components/Carousel/Carousel';
+
 import styles from './PhotoGallery.module.scss';
 
-export default function PhotoGallery({ images = [], alt }) {
+function PhotoItem({ image }) {
+  return (
+    <div className={styles.galleryImage}>
+      <Image
+        src={image?.src}
+        alt={image?.alt}
+        width={image?.width}
+        height={image?.height}
+        blurDataURL={image?.blurDataURL}
+        placeholder="blur"
+        quality={50}
+        className={styles.image}
+      />
+    </div>
+  );
+}
+
+export default function PhotoGallery({ images = [] }) {
   return (
     Array.isArray(images) && (
-      <div className={styles.gallery}>
-        {images.map((image) => (
-          <div key={image?.src} className={styles.galleryImage}>
-            <Image
-              src={image?.src}
-              alt={image?.alt || alt}
-              width={image?.width}
-              height={image?.height}
-              blurDataURL={image?.blurDataURL}
-              placeholder="blur"
-              quality={50}
-              className={styles.image}
-            />
+      <>
+        <div className={styles.gallery}>
+          <div className={styles.inner}>
+            {images.map((image) => (
+              <PhotoItem key={image?.src} image={image} />
+            ))}
           </div>
-        ))}
-      </div>
+        </div>
+        <div className={styles.carousel}>
+          <Carousel itemToShow={1} spacing={0}>
+            {images.map((image) => (
+              <PhotoItem key={image?.src} image={image} />
+            ))}
+          </Carousel>
+        </div>
+      </>
     )
   );
 }

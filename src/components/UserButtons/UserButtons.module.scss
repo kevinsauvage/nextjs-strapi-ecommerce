@@ -29,6 +29,23 @@
   path {
     stroke: var(--onSurface-dark);
   }
+
+  @include respond(mobile tablet) {
+    &:hover {
+      border: none;
+    }
+  }
+
+  @include respond(mobile) {
+    width: 40px;
+  }
+}
+
+.wishlist,
+.user {
+  @include respond(mobile) {
+    display: none;
+  }
 }
 
 .cart {

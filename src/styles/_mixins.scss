@@ -1,3 +1,5 @@
+@import './responsive';
+
 // @include text-shorten(3);
 @mixin text-shorten($numLines: 1) {
   overflow: hidden;
@@ -171,12 +173,14 @@
   transition: all 0.3s ease-in;
   @include boxShadow(2);
 
-  &:hover:enabled {
-    transform: scale(1.05);
-  }
+  @include respond(laptop desktop) {
+    &:hover:enabled {
+      transform: scale(1.05);
+    }
 
-  &:active:enabled {
-    transform: scale(0.95);
+    &:active:enabled {
+      transform: scale(0.95);
+    }
   }
 
   svg {
@@ -193,8 +197,10 @@
     stroke: var(--onSurface-dark);
   }
 
-  &:hover:enabled {
-    background-color: var(--primary-800);
+  @include respond(laptop desktop) {
+    &:hover:enabled {
+      background-color: var(--primary-800);
+    }
   }
 }
 
@@ -204,8 +210,10 @@
   color: var(--onSurface-dark);
   @include button;
 
-  &:hover:enabled {
-    background-color: var(--complementary-700);
+  @include respond(laptop desktop) {
+    &:hover:enabled {
+      background-color: var(--complementary-700);
+    }
   }
 }
 
@@ -215,9 +223,11 @@
   color: var(--surface-dark-100);
   @include button;
 
-  &:hover:enabled {
-    background-color: var(--surface-dark-100);
-    color: var(--onSurface-dark);
+  @include respond(laptop desktop) {
+    &:hover:enabled {
+      background-color: var(--surface-dark-100);
+      color: var(--onSurface-dark);
+    }
   }
 }
 
@@ -231,8 +241,10 @@
     stroke: var(--onSurface-dark);
   }
 
-  &:hover:enabled {
-    background-color: var(--surface-dark-100);
-    color: var(--onSurface-dark);
+  @include respond(laptop desktop) {
+    &:hover:enabled {
+      background-color: var(--surface-dark-100);
+      color: var(--onSurface-dark);
+    }
   }
 }

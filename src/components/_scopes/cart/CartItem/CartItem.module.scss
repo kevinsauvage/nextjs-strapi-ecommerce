@@ -3,12 +3,13 @@
 }
 
 .list {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
 }
 
 .image {
   position: relative;
+  width: 80px;
+  height: 80px;
 
   img {
     border-radius: $radius;
@@ -39,6 +40,7 @@
 .content {
   padding: var(--space-0) 0 var(--space-0) 1rem;
   text-align: start;
+  width: 60%;
 }
 
 .title {

@@ -1,23 +1,23 @@
-$mobile: 480px;
-$tablet: 780px;
-$laptop: 1024px;
+$media_query_prefix: "only screen and";
+$media_queries: ("mobile": "(max-width: 767px)",
+  "tablet": "(min-width: 768px) and (max-width: 1023px)",
+  "laptop": "(min-width: 1024px) and (max-width: 1439px)",
+  "desktop": "(min-width: (1440px))",
+  "retina2": "(-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi)",
+  "retina3": "(-webkit-min-device-pixel-ratio: 3) and (min-resolution: 288dpi)",
+  "landscape": "(orientation:landscape)",
+  "portrait": "(orientation:portrait)"
+);
 
-@mixin respond($media) {
-  @if $media==mobile {
-    @media (max-width: $mobile) {
-      @content;
-    }
+@mixin respond($breakpoints) {
+  $conditions: ();
+
+  @each $breakpoint in $breakpoints {
+    $media_query: "#{$media_query_prefix} #{map-get($media_queries, $breakpoint)}";
+    $conditions: append($conditions, $media_query, comma);
   }
 
-  @else if $media==tablet {
-    @media (max-width: $tablet) {
-      @content;
-    }
-  }
-
-  @else if $media==laptop {
-    @media (max-width: $laptop) {
-      @content;
-    }
+  @media #{$conditions} {
+    @content;
   }
 }

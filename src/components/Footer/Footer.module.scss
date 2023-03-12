@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--space-6);
 
-  @include respond('tablet') {
+  @include respond(mobile tablet) {
     flex-direction: column;
     gap: var(--space-4);
   }
@@ -23,6 +23,10 @@
 
 .about {
   max-width: 40%;
+
+  @include respond(mobile) {
+    max-width: 100%;
+  }
 }
 
 .navList {
@@ -30,7 +34,7 @@
   grid-template-columns: 1fr 1fr 1fr;
   gap: var(--space-3);
 
-  @include respond('mobile') {
+  @include respond(mobile) {
     grid-template-columns: 1fr 1fr;
   }
 }

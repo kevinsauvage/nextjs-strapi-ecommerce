@@ -29,20 +29,16 @@ export default function Filters() {
   return (
     <div className={styles.filters}>
       <div className={styles.header}>
-        <h3 className={styles.title}>
-          Filters{' '}
-          <small>
-            {getSelectedFilter(allFilters, query).length
-              ? `(${getSelectedFilter(allFilters, query).length.toString()})`
-              : null}
-          </small>
-        </h3>
-        {getSelectedFilter(allFilters, query).length ? (
-          <button className={styles.reset} type="button" onClick={resetFilters}>
-            Reset all
-          </button>
-        ) : null}
+        <button
+          className={styles.reset}
+          type="button"
+          disabled={!getSelectedFilter(allFilters, query).length}
+          onClick={resetFilters}
+        >
+          Reset all {` (${getSelectedFilter(allFilters, query).length.toString()})`}
+        </button>
       </div>
+
       {Array.isArray(allFilters) &&
         allFilters.map((filter) => (
           <Filter key={filter.id} filter={filter}>

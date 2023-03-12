@@ -5,12 +5,12 @@
   width: 100%;
   gap: var(--space-1);
 
-  @include respond('tablet') {
+  @include respond(mobile) {
     flex-direction: column;
     height: 100%;
   }
 
-  @include respond('mobile') {
+  @include respond(mobile) {
     gap: var(--space-0);
   }
 }

@@ -9,7 +9,12 @@
   row-gap: var(--space-2);
   justify-items: center;
 
-  @include respond('mobile') {
+  @include respond(tablet) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--space-0);
+  }
+
+  @include respond(mobile) {
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
     gap: var(--space-0);
   }

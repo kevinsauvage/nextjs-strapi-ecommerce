@@ -19,25 +19,15 @@
 }
 
 .trackContainer {
-  display: flex;
-}
+  margin-top: var(--space-1);
 
-.noTrackingUrl {
-  border: 1px solid var(--surface-500);
-  background-color: var(--surface-300);
-  padding: 4px;
-
-  p {
-    font-size: 12px;
+  a {
+    text-decoration: underline;
   }
 }
 
-.link {
-  text-decoration: underline;
-}
-
-.trackButton {
-  border: 2px solid var(--surface-dark-100);
-  width: fit-content;
-  padding: 2px 4px;
+.bottom {
+  button {
+    margin-top: var(--space-1);
+  }
 }

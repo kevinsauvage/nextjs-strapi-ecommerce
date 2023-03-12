@@ -5,6 +5,8 @@
   text-transform: capitalize;
   font-size: 10px;
   font-weight: 500;
+  white-space: nowrap;
+  @include text-shorten(1);
 }
 
 .last {

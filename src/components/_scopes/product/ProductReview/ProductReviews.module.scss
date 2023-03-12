@@ -1,10 +1,11 @@
 .ProductReviews {
   position: relative;
+  background-color: var(--surface-200);
 }
 
 .customerReviews {
   border-radius: $radius;
-  padding: var(--space-2);
+  padding: var(--space-1);
 }
 
 .reviewForm {
@@ -32,6 +33,23 @@
 }
 
 .addReview {
-  margin: 0 var(--space-2);
   padding-bottom: var(--space-2);
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--surface-300);
+  border-radius: $radius;
+  width: fit-content;
+  margin: 0 auto;
+  padding: var(--space-2);
+
+  b {
+    margin-bottom: var(--space-1);
+    max-width: 300px;
+    text-align: center;
+  }
 }

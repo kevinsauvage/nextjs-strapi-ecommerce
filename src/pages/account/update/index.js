@@ -29,13 +29,25 @@ function OrderDetail() {
   }, [id]);
 
   const handleSubmit = async (formData) => {
-    if (!formData.password || !formData.email || !formData.firstName || !formData.lastName) {
+    if (!formData.email || !formData.firstName || !formData.lastName || !formData.password) {
       return showToast.error('Please fill in all required fields');
+    }
+    toggleLoading(true);
+
+    const resLogin = await getClient().storefront.customer.customerAccessTokenCreate({
+      input: { email: user.email, password: formData.password },
+    });
+
+    if (!resLogin || !resLogin.customerAccessToken) {
+      console.log(formData);
+      toggleLoading(false);
+
+      return showToast.error('Wrong current password');
     }
 
     const customerInput = {
       email: formData.email || '',
-      password: formData.password || '',
+      password: formData.newPassword || '',
       firstName: formData.firstName || '',
       lastName: formData.lastName || '',
       acceptsMarketing: true,
@@ -44,7 +56,6 @@ function OrderDetail() {
     if (phone) customerInput.phone = phone;
 
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-    toggleLoading(true);
 
     const updateResponse = await getClient().storefront.customer.customerUpdate({
       customerAccessToken: shopifyToken,
@@ -78,7 +89,7 @@ function OrderDetail() {
       >
         <Form
           onSubmit={handleSubmit}
-          requiredFields={['firstName', 'lastName', 'email']}
+          requiredFields={['firstName', 'lastName', 'email', 'password']}
           initialValues={{
             acceptsMarketing: true,
             email,
@@ -89,15 +100,16 @@ function OrderDetail() {
           }}
         >
           <Row>
-            <Input id="firstName" type="text" label="First Name" name="firstName" required="true" />
-            <Input id="lastName" type="text" name="lastName" label="Last Name" required="true" />
+            <Input id="firstName" type="text" label="First Name" name="firstName" />
+            <Input id="lastName" type="text" name="lastName" label="Last Name" />
           </Row>
           <Row>
-            <Input id="email" type="email" label="Email Address" name="email" required="true" />
-            <Input input="true" id="password" type="password" name="password" label="Password" />
+            <Input id="email" type="email" label="Email Address" name="email" />
+            <Input id="phone" type="text" name="phone" label="Phone" />
           </Row>
           <Row>
-            <Input input="true" id="phone" type="text" name="phone" label="Phone" />
+            <Input id="password" type="password" name="password" label="Current Password" />
+            <Input id="newPassword" type="password" name="newPassword" label="New Password" />
           </Row>
           <label htmlFor="acceptsMarketing" className={styles.checkbox}>
             <input
@@ -107,7 +119,7 @@ function OrderDetail() {
               name="acceptsMarketing"
               label="Accepts marketing"
             />
-            <span>Check this case to receive our last update</span>
+            <p>Check this case to receive our last update</p>
           </label>
           <Buttons text="UPDATE INFO" />
         </Form>

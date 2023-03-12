@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
-import ProductPresenter from '@/components/_scopes/product/ProductPresenter/ProductPresenter';
+import PhotoSlider from '@/components/_scopes/product/PhotoSlider/PhotoSlider';
+import ProductDescription from '@/components/_scopes/product/ProductDescription/ProductDescription';
+import useProductSelection from '@/hooks/useProductSelection';
 import getClient from '@/shopify/index';
 
 import Modal from '../Modal/Modal';
+
+import styles from './ModalProduct.module.scss';
 
 export default function ModalProduct({ handleClose, selectedProduct }) {
   const [product, setProduct] = useState([]);
@@ -21,9 +25,34 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
     }
   }, [selectedProduct]);
 
+  const {
+    isOptionSelected,
+    handleSetSelectedProductOption,
+    selectedVariant,
+    handleAddToCart,
+    handleChangeInput,
+    isOptionOutOfStock,
+    totalPrice,
+    quantity,
+  } = useProductSelection({ product });
+
   return (
     <Modal loading={loading} handleClose={handleClose}>
-      <ProductPresenter product={product} isModal />
+      <div className={styles.modalProduct}>
+        <PhotoSlider selectedVariant={selectedVariant} variants={product?.variants} />
+        <ProductDescription
+          product={product}
+          quantity={quantity}
+          isOptionOutOfStock={isOptionOutOfStock}
+          handleChangeInput={handleChangeInput}
+          handleAddToCart={handleAddToCart}
+          handleSetSelectedProductOption={handleSetSelectedProductOption}
+          selected={selectedVariant}
+          isOptionSelected={isOptionSelected}
+          isModal
+          totalPrice={totalPrice}
+        />
+      </div>
     </Modal>
   );
 }

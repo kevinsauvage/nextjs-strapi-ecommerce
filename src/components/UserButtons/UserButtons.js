@@ -19,6 +19,7 @@ export default function UserButtons() {
       item: search,
       id: 0,
       name: 'Search',
+      extraClass: styles.search,
       onClick: () => !pathname.startsWith('/search') && toggleSearch(!searchOpen),
     },
 
@@ -26,12 +27,14 @@ export default function UserButtons() {
       item: heart,
       id: 1,
       name: 'Wishlist',
+      extraClass: styles.wishlist,
       onClick: () => push(config.routes.wishlist),
     },
 
     {
       item: user,
       id: 2,
+      extraClass: styles.user,
       onClick: () => push(config.routes.account),
       name: 'User account',
     },
@@ -60,7 +63,7 @@ export default function UserButtons() {
           type="button"
           key={i}
           onClick={() => el.onClick && el.onClick()}
-          className={styles.button}
+          className={`${styles.button} ${el.extraClass}`}
         >
           {el.item}
         </button>

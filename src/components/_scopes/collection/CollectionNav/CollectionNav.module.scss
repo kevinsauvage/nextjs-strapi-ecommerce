@@ -1,13 +1,17 @@
 .CollectionNav {
   background-color: var(--surface-dark-200);
   height: 50px;
+
+  @include respond(mobile) {
+    display: none;
+  }
 }
 
 .menu {
   display: flex;
   flex-wrap: wrap;
 
-  @include respond('mobile') {
+  @include respond(mobile) {
     gap: var(--space-1);
   }
 }

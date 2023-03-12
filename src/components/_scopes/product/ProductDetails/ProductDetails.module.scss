@@ -1,5 +1,10 @@
 .ProductDetails {
   margin-top: var(--space-6);
+  background-color: var(--surface-200);
+
+  @include respond(mobile) {
+    margin-top: var(--space-2);
+  }
 }
 
 .description {

@@ -3,6 +3,8 @@ import Logo from '@/components/Logo/Logo';
 import Navbar from '@/components/Navbar/Navbar';
 import UserButtons from '@/components/UserButtons/UserButtons';
 
+import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
+
 import styles from './Header.module.scss';
 
 function Header({ headerMenu }) {
@@ -11,6 +13,7 @@ function Header({ headerMenu }) {
       <Container>
         <div className={styles.inner}>
           <div className={styles.left}>
+            <HamburgerMenu headerMenu={headerMenu} />
             <Logo />
             <Navbar headerMenu={headerMenu} />
           </div>

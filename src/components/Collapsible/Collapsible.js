@@ -6,21 +6,21 @@ import HeightAnimation from '../HeightAnimation/HeightAnimation';
 
 import styles from './Collapsible.module.scss';
 
-export default function Collapsible({ children, title, last }) {
+export default function Collapsible({ children, title, last, extraClass = {} }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={`${styles.Collapsible} ${open ? styles.open : styles.close} `}>
+    <div className={`${styles.Collapsible} ${open ? styles.open : styles.close} ${extraClass.container}`}>
       <button
         type="button"
-        className={`${styles.header} ${last && styles.last}`}
+        className={`${styles.header} ${last && styles.last} ${extraClass.header}`}
         onClick={() => setOpen((prev) => !prev)}
       >
         <strong className={styles.title}>{title}</strong>
         <div className={`${styles.icon} ${open ? styles.open : styles.close}`}>{arrowRight}</div>
       </button>
       <HeightAnimation isOpen={open}>
-        <div className={styles.children}>{children}</div>
+        <div className={`${styles.children} ${extraClass.children}`}>{children}</div>
       </HeightAnimation>
     </div>
   );

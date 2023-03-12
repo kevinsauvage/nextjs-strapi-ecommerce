@@ -1,0 +1,65 @@
+.HamburgerMenu {
+  display: none;
+  visibility: hidden;
+
+  @include respond(mobile) {
+    display: block;
+    visibility: visible;
+  }
+}
+
+.icon {
+  svg {
+    width: 25px;
+    display: block;
+    height: 22px;
+  }
+
+  path {
+    stroke: var(--onSurface-dark)
+  }
+}
+
+.menu {
+  height: 100%;
+
+  &>li {
+    margin-bottom: var(--space-1);
+  }
+}
+
+.menuItem {}
+
+.menuLink {
+  height: 50px;
+  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-1);
+
+  svg {
+    opacity: 0.4;
+  }
+}
+
+.subMenu {
+  margin-left: var(--space-1);
+}
+
+.userNav {
+  padding: var(--space-1);
+  border-top: 1px solid var(--surface-300);
+
+  .userNavList {}
+
+  .userNavListItem {
+    padding: var(--space-1);
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+    }
+  }
+}
