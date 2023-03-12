@@ -9,12 +9,13 @@
 .menu {
   z-index: 99999;
   position: absolute;
-  top: 100%;
-  right: -0.2px;
-  border: 1px solid var(--surface-900);
+  top: 120%;
+  right: -2px;
+  border: 1px solid var(--surface-400);
   background-color: var(--surface-100);
   min-width: 190px;
   overflow: hidden;
+  border-radius: $radius;
 }
 
 .button {
@@ -33,7 +34,7 @@
 }
 
 .option {
-  border-bottom: 0.1px solid var(--surface-900);
+  border-bottom: 1px solid var(--surface-400);
   padding: 12px;
   white-space: nowrap;
   cursor: pointer;
@@ -46,8 +47,10 @@
     border-bottom: none;
   }
 
-  &:hover {
-    background-color: var(--surface-dark-100);
-    color: var(--onSurface-dark);
+  @include respond(laptop desktop) {
+    &:hover {
+      background-color: var(--surface-dark-100);
+      color: var(--onSurface-dark);
+    }
   }
 }

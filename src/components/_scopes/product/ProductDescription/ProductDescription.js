@@ -1,9 +1,7 @@
-import { useState } from 'react';
-
 import { bag, heart } from '@/assets/svg';
-import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
 import QuantityUpdater from '@/components/_scopes/product/QuantityUpdater/QuantityUpdater';
 import Button from '@/components/Button/Button';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 
 import Options from '../Options/Options';
@@ -22,17 +20,10 @@ export default function ProductDescription({
   totalPrice,
   quantity,
 }) {
-  const { productType, variants, options, title } = product || {};
-
   const { handleSetProductToWishList, isWishlist } = useUserContext();
+  const { toggleLoading } = useGlobalContext();
 
-  const [loading, setLoading] = useState(false);
-
-  const handleWishlist = async () => {
-    setLoading(true);
-    await handleSetProductToWishList(product);
-    setLoading(false);
-  };
+  const { productType, variants, options, title } = product || {};
 
   const {
     quantityAvailable,
@@ -44,9 +35,14 @@ export default function ProductDescription({
     weightUnit,
   } = selected || {};
 
+  const handleWishlist = async () => {
+    toggleLoading(true);
+    await handleSetProductToWishList(product);
+    toggleLoading(false);
+  };
+
   return (
     <div className={styles.ProductDescription}>
-      {loading && <PageLoader />}
       <h1 className={styles.title}>{title}</h1>
       {!isModal && (
         <ul className={styles.list}>

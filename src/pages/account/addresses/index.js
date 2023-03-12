@@ -20,7 +20,6 @@ import getClient from '@/shopify/index';
 function Addresses() {
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
-
   const { dispatch, user, addresses } = useUserContext();
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
