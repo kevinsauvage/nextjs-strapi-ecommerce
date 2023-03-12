@@ -6,6 +6,7 @@
   border: none;
   width: fit-content;
   font-weight: 500;
+  padding: 0;
 }
 
 .children {
@@ -29,18 +30,18 @@
   height: $header-height;
   padding: 0 var(--space-1);
   color: var(--onSurface-dark);
+}
 
-  button {
-    border: none;
-    padding: 0;
+.icon {
+  border: none;
+  padding: 0;
 
-    svg {
-      width: 20px;
-      height: 20px;
+  svg {
+    width: 20px;
+    height: 20px;
 
-      path {
-        fill: var(--onSurface-dark)
-      }
+    path {
+      fill: var(--onSurface-dark)
     }
   }
 }

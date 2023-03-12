@@ -9,10 +9,6 @@
     display: flex;
     flex-direction: column;
   }
-
-  @include respond(mobile) {
-    gap: var(--space-0);
-  }
 }
 
 .item {
