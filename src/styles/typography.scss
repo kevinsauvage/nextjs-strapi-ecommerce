@@ -7,8 +7,8 @@ html {
   -webkit-text-size-adjust: 100%; //fix for iOS
 
   @media (max-width: 1000px) {
-    font-size: calc(10px + .4vw);
-    line-height: calc(10px + .4vw * 1.5);
+    font-size: calc(12px + .2vw);
+    line-height: calc(10px + .2vw * 1.5);
   }
 }
 
