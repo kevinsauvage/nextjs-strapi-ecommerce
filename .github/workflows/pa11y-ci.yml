@@ -12,10 +12,9 @@ jobs:
     steps:
       # Checkout latest commit of repo
       # https://github.com/actions/checkout#checkout-v3
-      - uses: actions/checkout@v3
-
       - env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - uses: actions/checkout@v3
 
       # Install project dependencies
       - run: npm install
