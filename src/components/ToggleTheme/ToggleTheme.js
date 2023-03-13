@@ -7,21 +7,22 @@ function ToggleTheme() {
 
   useEffect(() => {
     const isDarkTheme = window.localStorage.getItem('isDarkTheme');
-    if (isDarkTheme) {
-      const element = document.querySelector('html');
-      element.classList.add('theme-dark');
-      setIsActive(true);
+    if (!isDarkTheme) {
+      return;
     }
+    const element = document.querySelector('html');
+    element.classList.add('theme-dark');
+    setIsActive(true);
   }, []);
 
   const handleClick = () => {
     const element = document.querySelector('html');
-    if (!isActive) {
-      element.classList.add('theme-dark');
-      window.localStorage.setItem('isDarkTheme', null);
-    } else {
+    if (isActive) {
       element.classList.remove('theme-dark');
       window.localStorage.removeItem('isDarkTheme');
+    } else {
+      element.classList.add('theme-dark');
+      window.localStorage.setItem('isDarkTheme', null);
     }
     setIsActive((prev) => !prev);
   };

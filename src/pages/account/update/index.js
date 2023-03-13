@@ -39,9 +39,7 @@ function OrderDetail() {
     });
 
     if (!resLogin || !resLogin.customerAccessToken) {
-      console.log(formData);
       toggleLoading(false);
-
       return showToast.error('Wrong current password');
     }
 

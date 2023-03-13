@@ -5,8 +5,6 @@ import Pagination from '@/components/Pagination/Pagination';
 import Review from '../Review/Review';
 
 export default function Reviews({ reviews, handleRemoveProductReview }) {
-  console.log('🚀 ~ file: Reviews.js:9 ~ Reviews ~ reviews:', reviews);
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(reviews.length / 5);

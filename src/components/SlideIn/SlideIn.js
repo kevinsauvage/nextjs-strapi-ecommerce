@@ -16,8 +16,7 @@ function SlideIn({ children, title, animationPosition = 'right', headerTitle }) 
   }, [asPath]);
 
   useEffect(() => {
-    if (showMenu) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'visible';
+    document.body.style.overflow = showMenu ? 'hidden' : 'visible';
   }, [showMenu]);
 
   const slideInStyles = { [animationPosition]: showMenu ? '0' : '-100%' };

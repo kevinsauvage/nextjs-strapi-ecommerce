@@ -25,10 +25,10 @@ function PriceFilters({ filter }) {
       const parsed = JSON.parse(selected)?.price;
       setMin(parsed.min);
       setMax(parsed.max);
-    } else {
-      setMin(price.min);
-      setMax(price.max);
+      return;
     }
+    setMin(price.min);
+    setMax(price.max);
   }, [filter?.id, filter?.values, query]);
 
   const handleConfirm = (e) => {
@@ -45,7 +45,7 @@ function PriceFilters({ filter }) {
 
   return (
     original?.max && (
-      <form className={styles.priceFilters} onSubmit={(e) => handleConfirm(e, min, max)}>
+      <form className={styles.priceFilters} onSubmit={(e) => handleConfirm(e)}>
         <div className={styles.priceInputs}>
           <label className={styles.label}>
             <small>From</small>

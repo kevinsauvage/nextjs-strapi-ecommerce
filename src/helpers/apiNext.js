@@ -2,16 +2,12 @@ export const nextApiHelper = async (url, body = {}, method = 'POST') => {
   try {
     const object = {
       method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     };
 
     if (body) object.body = JSON.stringify(body);
-
     const res = await fetch(url, object);
-
-    return res && res.json();
+    return res?.json();
   } catch (err) {
     return console.error(err);
   }

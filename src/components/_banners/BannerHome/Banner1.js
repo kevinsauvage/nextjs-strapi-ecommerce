@@ -12,20 +12,19 @@ export default function BannerHome({ data }) {
       <Container>
         <div className={styles.inner}>
           <div className={styles.container} style={{ ...style }}>
-            {data?.items &&
-              data.items.map((item) => (
-                <div key={item.title} className={styles.content}>
-                  <p className={styles.upTitle}>
-                    <span />
-                    {item.upTitle}
-                  </p>
-                  <h1 className={`${styles.title} big`}>{item.title}</h1>
-                  <p className={styles.subtitle}>{item.description}</p>
-                  <Link href={item.handle} className={styles.link}>
-                    Shop now
-                  </Link>
-                </div>
-              ))}
+            {data?.items?.map((item) => (
+              <div key={item.title} className={styles.content}>
+                <p className={styles.upTitle}>
+                  <span />
+                  {item.upTitle}
+                </p>
+                <h1 className={`${styles.title} big`}>{item.title}</h1>
+                <p className={styles.subtitle}>{item.description}</p>
+                <Link href={item.handle} className={styles.link}>
+                  Shop now
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </Container>

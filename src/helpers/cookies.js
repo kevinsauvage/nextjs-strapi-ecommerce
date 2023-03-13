@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import config from '@/config/index';
 import getClient from '@/shopify/index';
 
@@ -41,8 +42,8 @@ export const handleSetCookies = (
 export const getCookieFront = (name) => {
   const cookies = document.cookie.split(';');
   // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].trim();
+  for (const cooky of cookies) {
+    const cookie = cooky.trim();
     if (cookie.startsWith(`${name}=`)) {
       return cookie.substring(name.length + 1);
     }

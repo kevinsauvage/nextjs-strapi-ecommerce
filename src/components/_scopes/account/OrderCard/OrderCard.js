@@ -81,17 +81,16 @@ function OrderCard({ order }) {
                 <div key={uuidv4()} className={style.trackContainer}>
                   <h6>Tracking informations {successfulFulfillments.length > 1 && i + 1}</h6>
                   <AccountRow title="Tracking Company" content={successfulFulfillment?.trackingCompany} />
-                  {trackingInfo &&
-                    trackingInfo.map((trackInfo) => {
-                      const { url, number } = trackInfo;
-                      return (
-                        <AccountRow
-                          key={number}
-                          title="Tracking number"
-                          content={url ? <Link href={url}>{number}</Link> : number}
-                        />
-                      );
-                    })}
+                  {trackingInfo?.map((trackInfo) => {
+                    const { url, number } = trackInfo;
+                    return (
+                      <AccountRow
+                        key={number}
+                        title="Tracking number"
+                        content={url ? <Link href={url}>{number}</Link> : number}
+                      />
+                    );
+                  })}
                 </div>
               );
             })}

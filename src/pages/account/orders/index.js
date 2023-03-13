@@ -51,35 +51,36 @@ export default function OrdersPage() {
   const description =
     'This page shows all of your previous orders in one place. You can see the order number, date, items purchased, and order status. This makes it easy to keep track of your orders and track their progress. You can use this page to view and manage your orders whenever you need to.';
 
+  const renderContent = () => {
+    if (error) return <p>Error</p>;
+    if (orders.length || isLoading) {
+      return (
+        <>
+          <Orders orders={orders} />
+          {pageInfo?.hasNextPage && (
+            <Button disabled={!pageInfo?.hasNextPage} primary onClick={() => fetchOrders(pageInfo.endCursor)}>
+              See more
+            </Button>
+          )}
+        </>
+      );
+    }
+    return (
+      <EmptyState
+        image={NotFoundIllustration}
+        title="Your Order List is Empty"
+        subtitle="Looks like you haven’t made any order yet"
+      />
+    );
+  };
   return (
     <PageLayout title={seo.account.orders.title} description={seo.account.orders.description}>
       <AccountLayout
-        isLoading={isLoading}
+        loading={isLoading}
         title={seo.account.orders.title}
         descriptionBannerChildren={orders?.length > 0 && description}
       >
-        {error ? (
-          <p>Error</p>
-        ) : orders?.length || isLoading ? (
-          <>
-            <Orders orders={orders} />
-            {pageInfo?.hasNextPage && (
-              <Button
-                disabled={!pageInfo?.hasNextPage}
-                primary
-                onClick={() => fetchOrders(pageInfo.endCursor)}
-              >
-                See more
-              </Button>
-            )}
-          </>
-        ) : (
-          <EmptyState
-            image={NotFoundIllustration}
-            title="Your Order List is Empty"
-            subtitle="Looks like you haven’t made any order yet"
-          />
-        )}
+        {renderContent()}
       </AccountLayout>
     </PageLayout>
   );

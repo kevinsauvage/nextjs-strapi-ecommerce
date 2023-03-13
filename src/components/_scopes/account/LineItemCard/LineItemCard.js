@@ -17,12 +17,11 @@ function LineItemCard({ item }) {
         <p>
           Price: {priceV2?.amount} {priceV2?.currencyCode}
         </p>
-        {selectedOptions &&
-          selectedOptions?.map((option) => (
-            <p key={option.name}>
-              {option.name}: {option.value}
-            </p>
-          ))}
+        {selectedOptions?.map((option) => (
+          <p key={option.name}>
+            {option.name}: {option.value}
+          </p>
+        ))}
       </div>
     </div>
   );
