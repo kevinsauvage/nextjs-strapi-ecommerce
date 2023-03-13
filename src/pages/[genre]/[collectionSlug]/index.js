@@ -23,7 +23,7 @@ export async function getServerSideProps(ctx) {
     if (key.startsWith('filter')) {
       const filter = query[key];
       if (Array.isArray(filter)) {
-        filter.map((f) => acc.push(JSON.parse(f)));
+        filter.forEach((f) => acc.push(JSON.parse(f)));
       } else {
         acc.push(JSON.parse(filter));
       }

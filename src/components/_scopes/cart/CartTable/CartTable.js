@@ -9,8 +9,6 @@ import CartItem from '../CartItem/CartItem';
 import styles from './CartTable.module.scss';
 
 function CartTable({ handleChange, handleRemove, cart }) {
-  console.log('🚀 ~ file: CartTable.js:11 ~ CartTable ~ cart:', cart);
-
   const [currentPage, setCurrentPage] = useState(1);
   const linesLength = cart?.lines.length || 0;
 

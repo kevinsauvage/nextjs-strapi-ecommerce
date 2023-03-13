@@ -19,7 +19,7 @@ export default function Sort({ handleChange }) {
       <Dropdown
         options={sortingOptions}
         changeCallback={handleChange}
-        selected={sortingOptions.filter((item) => item.label === query.sort_key)[0]}
+        selected={sortingOptions.find((item) => item.label === query.sort_key)}
       />
     </div>
   );

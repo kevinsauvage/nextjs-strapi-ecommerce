@@ -21,13 +21,14 @@ function CarouselVertical({ children, itemToShow = 5, showButtons }) {
 
   // Handle vertical position
   useEffect(() => {
-    if (carouselRef?.current) {
-      const height = carouselRef?.current?.getBoundingClientRect().height;
-      const totalHeight = (height / 100) * itemDimension;
-      const position = totalHeight * Children.count(children) - height;
-      setMaxTranslatePosition(position);
-      setCarouselHeight(height);
+    if (!carouselRef?.current) {
+      return;
     }
+    const height = carouselRef?.current?.getBoundingClientRect().height;
+    const totalHeight = (height / 100) * itemDimension;
+    const position = totalHeight * Children.count(children) - height;
+    setMaxTranslatePosition(position);
+    setCarouselHeight(height);
   }, [children, itemDimension, carouselRef]);
 
   const handleChangeIndex = (i) => {

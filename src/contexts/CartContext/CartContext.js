@@ -46,7 +46,7 @@ export function CartProvider({ children }) {
         return handleSetCart(newCart);
       }
 
-      if (userErrors && userErrors.length) {
+      if (userErrors?.length) {
         return userErrors.forEach((error) => showToast.error(error));
       }
 
@@ -78,7 +78,7 @@ export function CartProvider({ children }) {
         return handleSetCart(newCart);
       }
 
-      if (userErrors && userErrors.length) {
+      if (userErrors?.length) {
         return userErrors.forEach((error) => showToast.error(error));
       }
       return showToast.error(userFeedback.updateLines.error);
@@ -111,7 +111,7 @@ export function CartProvider({ children }) {
           return showToast.success('Product added successfully');
         }
 
-        if (userErrors && userErrors.length) {
+        if (userErrors?.length) {
           return userErrors.forEach((error) => showToast.error(error));
         }
 
@@ -156,23 +156,22 @@ export function CartProvider({ children }) {
 
   useEffect(() => {
     const handleRender = async () => {
-      if (!cart?.id) {
-        const cartId = window.localStorage.getItem(cartIdStorageKey);
+      if (cart?.id) return;
+      const cartId = window.localStorage.getItem(cartIdStorageKey);
 
-        if (cartId) {
-          const getCartResponse = await getClient().storefront.cart.cartQuery({ cartId });
+      if (cartId) {
+        const getCartResponse = await getClient().storefront.cart.cartQuery({ cartId });
 
-          if (getCartResponse?.id) handleSetCart(getCartResponse);
-          return;
-        }
+        if (getCartResponse?.id) handleSetCart(getCartResponse);
+        return;
+      }
 
-        if (!cartId) {
-          const createCartRes = await getClient().storefront.cart.cartCreate({ input: {} });
+      if (!cartId) {
+        const createCartRes = await getClient().storefront.cart.cartCreate({ input: {} });
 
-          if (createCartRes?.cart?.id) {
-            window.localStorage.setItem(cartIdStorageKey, createCartRes.cart.id);
-            handleSetCart(createCartRes);
-          }
+        if (createCartRes?.cart?.id) {
+          window.localStorage.setItem(cartIdStorageKey, createCartRes.cart.id);
+          handleSetCart(createCartRes);
         }
       }
     };

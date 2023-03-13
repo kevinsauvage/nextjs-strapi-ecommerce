@@ -42,56 +42,58 @@ function CartPage() {
   };
 
   const handleRemoveLine = (lineId) => {
-    setLineItemsToUpdate((prev) => {
-      const currentItems = prev.filter((item) => item.id !== lineId);
-      return currentItems;
-    });
+    setLineItemsToUpdate((prev) => prev.filter((item) => item.id !== lineId));
     removeFromCart(lineId);
+  };
+
+  const renderContent = () => {
+    if (isCartLoading) return <BlockLoader />;
+
+    if (cart?.lines?.length > 0)
+      return (
+        <section className={styles.cart}>
+          <main>
+            <CartTable handleChange={handleSetLineToUpdate} handleRemove={handleRemoveLine} cart={cart} />
+            {lineItemsToUpdate.length > 0 && (
+              <Button
+                extraClass={styles.button}
+                secondary
+                onClick={handleUpdate}
+                disabled={!lineItemsToUpdate.length}
+              >
+                Update
+              </Button>
+            )}
+          </main>
+          <aside>
+            <CartSummary />
+          </aside>
+        </section>
+      );
+
+    return (
+      <EmptyState
+        image={cartIllustration}
+        title="Your cart is empty"
+        subtitle="Looks like you haven’t added anything to your cart yet"
+      >
+        <Button
+          text="CONTINUE SHOPPING"
+          contrast
+          onClick={() => {
+            if (document.referrer.includes(window.location.origin)) router.back();
+            else router.push('/');
+          }}
+        />
+      </EmptyState>
+    );
   };
 
   return (
     <PageLayout title={seo.cart.title} description={seo.cart.description}>
       <PageBanner title={seo.cart.title} />
       <Breadcrumbs />
-      <Container>
-        {isCartLoading ? (
-          <BlockLoader />
-        ) : cart?.lines?.length > 0 ? (
-          <section className={styles.cart}>
-            <main>
-              <CartTable handleChange={handleSetLineToUpdate} handleRemove={handleRemoveLine} cart={cart} />
-              {lineItemsToUpdate.length > 0 && (
-                <Button
-                  extraClass={styles.button}
-                  secondary
-                  onClick={handleUpdate}
-                  disabled={!lineItemsToUpdate.length}
-                >
-                  Update
-                </Button>
-              )}
-            </main>
-            <aside>
-              <CartSummary />
-            </aside>
-          </section>
-        ) : (
-          <EmptyState
-            image={cartIllustration}
-            title="Your cart is empty"
-            subtitle="Looks like you haven’t added anything to your cart yet"
-          >
-            <Button
-              text="CONTINUE SHOPPING"
-              contrast
-              onClick={() => {
-                if (document.referrer.includes(window.location.origin)) router.back();
-                else router.push('/');
-              }}
-            />
-          </EmptyState>
-        )}
-      </Container>
+      <Container>{renderContent()}</Container>
     </PageLayout>
   );
 }

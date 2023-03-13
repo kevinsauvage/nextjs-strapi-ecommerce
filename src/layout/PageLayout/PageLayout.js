@@ -5,7 +5,8 @@ import config from '@/config/index';
 import styles from './PageLayout.module.scss';
 
 export default function PageLayout({ children, title, description }) {
-  const siteTitle = `${config.name} ${title && `| ${title}`}`;
+  const secundaryTitle = title ? `| ${title}` : '';
+  const siteTitle = `${config.name} ${secundaryTitle}`;
 
   return (
     <div className={`${styles.page}`}>

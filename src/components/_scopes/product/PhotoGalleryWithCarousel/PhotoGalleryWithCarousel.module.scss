@@ -46,4 +46,6 @@ $maxHeight: 600px;
   }
 }
 
-.selected {}
+.selected {
+  border: 1px solid var(--surface-200);
+}

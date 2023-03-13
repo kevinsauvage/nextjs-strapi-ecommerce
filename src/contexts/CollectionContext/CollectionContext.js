@@ -30,7 +30,6 @@ export function CollectionProvider({
 
   const handleGetData = useCallback(
     async (first, filters, sort, after = null) => {
-      console.log('setloading true');
       dispatch({ type: actions.SET_LOADING, payload: true });
       const data = await getClient().storefront.collection.collection({
         handle: query.collectionSlug,
@@ -39,7 +38,6 @@ export function CollectionProvider({
         after,
         sort,
       });
-      console.log('setloading false');
 
       dispatch({ type: actions.SET_LOADING, payload: false });
       return data;
@@ -121,10 +119,8 @@ export function CollectionProvider({
   }, [allFilters, query, selectedFilters]);
 
   const isSelected = useCallback(
-    (filterId, input) => {
-      const res = selectedFilters?.some((filter) => filter.input === input && filter.filterId === filterId);
-      return res;
-    },
+    (filterId, input) =>
+      selectedFilters?.some((filter) => filter.input === input && filter.filterId === filterId),
     [selectedFilters]
   );
 
@@ -133,8 +129,7 @@ export function CollectionProvider({
       if (isSelected(filterId, input)) {
         const newFilters = selectedFilters.filter((filter) => {
           if (filter.filterId !== filterId) return true;
-          if (filter.input !== input) return true;
-          return false;
+          return filter.input !== input;
         });
 
         dispatch({
@@ -153,10 +148,7 @@ export function CollectionProvider({
 
   const handleSetUniqueFilters = useCallback(
     async (filterId, input) => {
-      const newFilters = selectedFilters.filter((filter) => {
-        if (filter.filterId !== filterId) return true;
-        return false;
-      });
+      const newFilters = selectedFilters.filter((filter) => filter.filterId !== filterId);
 
       dispatch({
         type: actions.SET_SELECTED_FILTERS,

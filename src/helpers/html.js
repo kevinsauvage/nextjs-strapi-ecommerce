@@ -17,9 +17,7 @@ function processHtml(html) {
   html = html.replace(/<script[^>]*>[^<]*<\/script>/g, '');
 
   // remove link tags
-  html = html.replace(/<link[^>]*>/g, '');
-
-  return html;
+  return html.replace(/<link[^>]*>/g, '');
 }
 
 export default processHtml;

@@ -34,12 +34,11 @@ function BigMenu({ data, handleClose, collections }) {
           <div className={styles.content}>
             <div className={styles.navigation}>{renderItems(data)}</div>
             <div className={styles.collections}>
-              {collections &&
-                collections?.map((collection) => (
-                  <li key={collection.title} className={styles.card}>
-                    <CollectionCard collection={collection} />
-                  </li>
-                ))}
+              {collections?.map((collection) => (
+                <li key={collection.title} className={styles.card}>
+                  <CollectionCard collection={collection} />
+                </li>
+              ))}
             </div>
           </div>
         </Container>

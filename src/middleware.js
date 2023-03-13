@@ -9,9 +9,7 @@ const checkBasicAuth = (req) => {
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');
-
-    if (user === 'kevin' && pwd === '50625062') return true;
-    return false;
+    return user === 'kevin' && pwd === '50625062';
   }
   return false;
 };
@@ -21,9 +19,8 @@ function middleware(request) {
   const { pathname, origin } = nextUrl;
 
   if (!checkBasicAuth(request)) {
-    const url = nextUrl;
-    url.pathname = '/api/auth';
-    return NextResponse.rewrite(url);
+    nextUrl.pathname = '/api/auth';
+    return NextResponse.rewrite(nextUrl);
   }
   // Early return if it is a public file such as an image
   if (pathname.startsWith('/_next') || pathname.includes('/api/') || PUBLIC_FILE.test(pathname)) {

@@ -27,7 +27,7 @@ export const getInfoFromCtx = (ctx) => {
 export const getSelectedFilter = (filters, query) => {
   if (!query) return [];
 
-  const newFilters = filters.reduce((acc, filter) => {
+  return filters.reduce((acc, filter) => {
     const item = query[filter.id];
 
     if (item) {
@@ -43,7 +43,6 @@ export const getSelectedFilter = (filters, query) => {
     }
     return acc;
   }, []);
-  return newFilters;
 };
 
 const colors = [

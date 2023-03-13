@@ -33,8 +33,7 @@ export default function useProductSelection({ product }) {
         !array2?.some((object2) => object1.name === object2.name && object1.value === object2.value)
     );
 
-    if (difference?.length) return true;
-    return false;
+    return !!difference?.length;
   }, []);
 
   const isOptionSelected = useCallback(
@@ -59,8 +58,7 @@ export default function useProductSelection({ product }) {
 
         return !getDifference(variant.selectedOptions, selection);
       }, {});
-      if (dif?.length) return false;
-      return true;
+      return !dif?.length;
     },
     [getDifference, product?.variants, selectedProductOption]
   );
