@@ -35,7 +35,7 @@ jobs:
           export USERNAME=kevin
           export PASSWORD=50625062
 
-          export URL="http://$USERNAME:$PASSWORD@${{ github.event.deployment_status.target_url }}"
+          export URL="https://$USERNAME:$PASSWORD@$www.ecomtestshopi.xyz"
           npm run pa11y-ci -- --sitemap "$URL/sitemap.xml"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
