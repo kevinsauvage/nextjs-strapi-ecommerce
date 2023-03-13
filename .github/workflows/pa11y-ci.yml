@@ -4,6 +4,8 @@ on: deployment_status
 
 jobs:
   pa11y-ci:
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     # Only run if the Vercel deployment was successful
     # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#deployment_status
     if: github.event.deployment_status.state == 'success'
@@ -12,8 +14,7 @@ jobs:
     steps:
       # Checkout latest commit of repo
       # https://github.com/actions/checkout#checkout-v3
-      - env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - uses: actions/checkout@v3
 
       # Install project dependencies
