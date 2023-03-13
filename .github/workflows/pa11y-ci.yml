@@ -1,0 +1,36 @@
+# Wait to run until after the Vercel deployment has finished
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#deployment_status
+name: Wait for Vercel deployment
+
+on: deployment_status
+
+jobs:
+  pa11y:
+    name: Run pa11y-ci
+    runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@kevinsauvage'
+          always-auth: true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run pa11y-ci
+        run: |
+          npm run pa11y-ci -- --sitemap "$URL/sitemap.xml"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

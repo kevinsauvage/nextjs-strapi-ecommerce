@@ -18,10 +18,10 @@ function middleware(request) {
   const { nextUrl, cookies } = request;
   const { pathname, origin } = nextUrl;
 
-  if (!checkBasicAuth(request)) {
+  /*   if (!checkBasicAuth(request)) {
     nextUrl.pathname = '/api/auth';
     return NextResponse.rewrite(nextUrl);
-  }
+  } */
   // Early return if it is a public file such as an image
   if (pathname.startsWith('/_next') || pathname.includes('/api/') || PUBLIC_FILE.test(pathname)) {
     return null;
