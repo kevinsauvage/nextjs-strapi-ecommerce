@@ -31,7 +31,7 @@ jobs:
 
       - name: Run pa11y-ci
         run: |
-          export URL="https://www.ecomtestshopi.xyz"
-          npm run pa11y-ci -- --sitemap "$URL/sitemap.xml"
+          export URL="https://${{ github.event.deployment_status.target_url }}"
+          pa11y-ci --config=./pa11y-config.js --sitemap "$URL/sitemap.xml"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
