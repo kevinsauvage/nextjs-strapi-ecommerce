@@ -32,6 +32,4 @@ jobs:
       - name: Run pa11y-ci
         run: |
           export URL="${{ github.event.deployment_status.target_url }}"
-          export NEW_URL=$(echo "$URL" | sed 's|^\(.*\)\:\/\/\(.*\)$|\1:\/\/kevin:50625062@\2|') 
-
-          npm run pa11y-ci --debug --config=./pa11y-config.js --sitemap "https://$NEW_URL/sitemap.xml"
+          npm run pa11y-ci --debug --config=./pa11y-config.js --sitemap "$URL/sitemap.xml"

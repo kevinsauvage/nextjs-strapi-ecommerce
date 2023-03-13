@@ -7,6 +7,6 @@ module.exports = {
     headers: {
       Authorization: `Basic ${encodedCredentials}`,
     },
-    timeout: 10000,
+    timeout: 10000000,
   },
 };
