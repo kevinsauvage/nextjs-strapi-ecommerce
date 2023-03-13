@@ -14,20 +14,36 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.4.2
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v2.4.2
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org/'
           scope: '@kevinsauvage'
           always-auth: true
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          npm ci --no-audit --no-progress
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Run pa11y-ci
-        run: npm run pa11y-ci -- --sitemap ${{ github.event.deployment_status.target_url }}/sitemap.xml
+        run: |
+          # Set the username and password as environment variables
+          export USERNAME=kevin
+          export PASSWORD=50625062
+
+          # Construct the URL with the username and password included
+          export URL="${{ github.event.deployment_status.target_url }}"
+          export AUTH="Authorization: Basic $(echo -n "$USERNAME:$PASSWORD" | base64)"
+          export HEADERS="\"$AUTH\""
+
+          # Run pa11y-ci with basic auth bypassed for the specified URL
+          npm run pa11y-ci -- --sitemap "$URL/sitemap.xml" --include-headers "$HEADERS"
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
