@@ -1,5 +1,6 @@
 {
-  "urls": [
-    "http://localhost:3000/"
-  ]
+  "headers": {
+    "username": "kevin",
+    "password": "50625062"
+  }
 }
