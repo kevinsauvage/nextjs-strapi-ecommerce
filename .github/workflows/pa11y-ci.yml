@@ -40,7 +40,7 @@ jobs:
           export AUTH="Authorization: Basic $(echo -n "$USERNAME:$PASSWORD" | base64)"
           export HEADERS="\"$AUTH\""
 
-          # Run pa11y-ci with basic auth bypassed for the specified URL
-          npm run pa11y-ci -- --sitemap "$URL/sitemap.xml" --include-headers "$HEADERS"
+          export URL="http://$USERNAME:$PASSWORD@${{ github.event.deployment_status.target_url }}"
+          npm run pa11y-ci -- --sitemap "$URL/sitemap.xml"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
