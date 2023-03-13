@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import config from './config';
 
 const PUBLIC_FILE = /\.(.*)$/;
-
+/* 
 const checkBasicAuth = (req) => {
   const basicAuth = req?.headers?.get('authorization');
   if (basicAuth) {
@@ -12,7 +12,7 @@ const checkBasicAuth = (req) => {
     return user === 'kevin' && pwd === '50625062';
   }
   return false;
-};
+}; */
 
 function middleware(request) {
   const { nextUrl, cookies } = request;
