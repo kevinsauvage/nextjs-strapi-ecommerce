@@ -13,6 +13,8 @@ jobs:
       # Checkout latest commit of repo
       # https://github.com/actions/checkout#checkout-v3
       - uses: actions/checkout@v3
+      - env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       # Install project dependencies
       - run: npm install
@@ -20,3 +22,7 @@ jobs:
       # Run pa11y-ci against the generated sitemap
       # https://github.com/pa11y/pa11y-ci#sitemaps
       - run: npm run pa11y-ci -- --sitemap ${{ github.event.deployment_status.target_url }}/sitemap.xml
+
+steps:
+  - run: |
+      npm install
