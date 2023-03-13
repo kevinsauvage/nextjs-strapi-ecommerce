@@ -12,13 +12,13 @@ const handler = async (req, res) => {
     if (!message) {
       const error = new Error();
       error.message = 'Missing message';
-      return res.status(401).send(error);
+      return res.status(401).send({ success: false, error: 'Error API' });
     }
 
     if (!email) {
       const error = new Error();
       error.message = 'Missing email';
-      return res.status(401).send(error);
+      return res.status(401).send({ success: false, error: 'Error API' });
     }
 
     const transporter = nodemailer.createTransport({

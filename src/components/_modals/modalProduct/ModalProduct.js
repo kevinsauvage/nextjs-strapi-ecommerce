@@ -16,6 +16,7 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
   useEffect(() => {
     const { handle } = selectedProduct || {};
     if (handle) {
+      // TODO: handle error here
       getClient()
         .storefront.product.getProductByHandle({ handle })
         .then((res) => {
