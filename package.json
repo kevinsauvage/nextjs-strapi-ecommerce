@@ -8,7 +8,6 @@
     "start": "next start",
     "lint": "next lint",
     "lint-fix": "next lint -- --fix",
-    "pa11y-ci": "pa11y-ci",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
