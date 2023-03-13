@@ -4,8 +4,6 @@ on: deployment_status
 
 jobs:
   pa11y-ci:
-    env:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     # Only run if the Vercel deployment was successful
     # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#deployment_status
     if: github.event.deployment_status.state == 'success'
@@ -17,6 +15,10 @@ jobs:
 
       - uses: actions/checkout@v3
 
+      - name: Install dependencies
+        uses: bahmutov/npm-install@v1
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
       # Install project dependencies
       - run: npm install
 
