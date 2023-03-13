@@ -1,26 +1,23 @@
 # Wait to run until after the Vercel deployment has finished
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#deployment_status
+name: Wait for Vercel deployment
+
 on: deployment_status
 
 jobs:
-  pa11y-ci:
-    # Only run if the Vercel deployment was successful
-    # https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads#deployment_status
-    if: github.event.deployment_status.state == 'success'
+  pa11y:
+    name: Run pa11y-ci
     runs-on: ubuntu-latest
+    if: github.event.deployment_status.state == 'success'
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     steps:
-      # Checkout latest commit of repo
-      # https://github.com/actions/checkout#checkout-v3
-
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Install dependencies
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-      # Install project dependencies
-      - run: npm install
+        run: npm install
 
-      # Run pa11y-ci against the generated sitemap
-      # https://github.com/pa11y/pa11y-ci#sitemaps
-      - run: npm run pa11y-ci -- --sitemap ${{ github.event.deployment_status.target_url }}/sitemap.xml
+      - name: Run pa11y-ci
+        run: npm run pa11y-ci -- --sitemap ${{ github.event.deployment_status.target_url }}/sitemap.xml
