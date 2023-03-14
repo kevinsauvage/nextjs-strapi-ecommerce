@@ -96,7 +96,7 @@ export default function HamburgerMenu({ headerMenu }) {
                           {menuItem.icon} {menuItem.text}
                         </Link>
                       </li>
-                    ) : null
+                    ) : null,
                   )}
                 </ul>
               </nav>

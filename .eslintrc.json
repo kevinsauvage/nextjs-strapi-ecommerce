@@ -74,26 +74,43 @@
         "controlComponents": ["CustomInput"],
         "depth": 3
       }
-    ]
+    ],
+    "no-param-reassign": "error",
+    "no-shadow": "error",
+    "no-empty-function": "error",
+    "prefer-const": "error",
+    "no-use-before-define": "error",
+    "no-multi-spaces": "error",
+    "comma-dangle": ["error", "always-multiline"],
+    "quotes": ["error", "single"]
   },
   "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {
     "import/resolver": {
-      "alias": [
-        ["@/components", "./src/components"],
-        ["@/contexts", "./src/contexts"],
-        ["@/config", "./src/config"],
-        ["@/hooks", "./src/hooks"],
-        ["@/assets", "./src/assets"],
-        ["@/data", "./src/data"],
-        ["@/styles", "./src/styles"],
-        ["@/lib", "./src/lib"],
-        ["@/helpers", "./src/helpers"],
-        ["@/utils", "./src/utils"],
-        ["@/layout", "./src/layout"],
-        ["@/modals", "./src/modals"],
-        ["@/shopify", "./src/shopify"]
-      ]
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+
+      "alias": {
+        "map": [
+          ["@/components", "./src/components"],
+          ["@/contexts", "./src/contexts"],
+          ["@/config", "./src/config"],
+          ["@/hooks", "./src/hooks"],
+          ["@/assets", "./src/assets"],
+          ["@/data", "./src/data"],
+          ["@/styles", "./src/styles"],
+          ["@/lib", "./src/lib"],
+          ["@/helpers", "./src/helpers"],
+          ["@/utils", "./src/utils"],
+          ["@/layout", "./src/layout"],
+          ["@/modals", "./src/modals"],
+          ["@/shopify", "./src/shopify"]
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "root": ["./src"]
     }
   },
   "globals": {

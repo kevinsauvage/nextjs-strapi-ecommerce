@@ -8,8 +8,8 @@
 
 .image {
   position: relative;
-  width: 80px;
   height: 80px;
+  width: 80px;
 
   img {
     border-radius: $radius;
@@ -38,9 +38,9 @@
 }
 
 .content {
+  width: 60%;
   padding: var(--space-0) 0 var(--space-0) 1rem;
   text-align: start;
-  width: 60%;
 }
 
 .title {

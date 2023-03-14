@@ -46,7 +46,7 @@ function CookieBanner() {
       setShowModal(false);
       setConsent(true);
     },
-    [tranformedSettings]
+    [tranformedSettings],
   );
 
   const acceptAllCookie = useCallback(() => {

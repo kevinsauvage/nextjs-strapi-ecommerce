@@ -32,8 +32,8 @@
   height: 44px;
   width: 100%;
   padding-left: var(--space-1);
-  color: var(--onSurface-medium);
   font-size: 0.9rem;
+  color: var(--onSurface-medium);
 
   @include placeholder {
     color: var(--surface-700);

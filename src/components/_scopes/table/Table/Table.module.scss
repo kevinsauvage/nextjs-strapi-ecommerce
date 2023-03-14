@@ -12,13 +12,13 @@
 .tHead {
   border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-dark-200);
-  line-height: 30px;
   padding: var(--space-1);
   text-transform: uppercase;
+  font-size: 1rem;
+  line-height: 30px;
   font-weight: 600;
   color: var(--onSurface-dark);
   text-align: start;
-  font-size: 1rem;
 }
 
 .tData {
@@ -26,17 +26,17 @@
   height: 80px;
   padding: var(--space-0) var(--space-1);
   vertical-align: middle;
+  font-size: 1rem;
   font-weight: 400;
   text-align: start;
-  font-size: 1rem;
 
   @include respond(mobile) {
-    height: unset;
+    position: relative;
     border: none;
     border-bottom: 1px solid #eee;
-    position: relative;
-    padding-left: 40%;
     border-bottom: 0.1px solid var(--surface-500);
+    height: unset;
+    padding-left: 40%;
 
     &:last-child {
       border-bottom: none;
@@ -71,9 +71,9 @@
   background-color: var(--surface-200);
 
   @include respond(mobile) {
-    margin-bottom: var(--space-1);
     border: 0.01px solid var(--surface-300);
     border-radius: $radius;
+    margin-bottom: var(--space-1);
   }
 }
 

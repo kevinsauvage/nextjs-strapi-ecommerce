@@ -13,7 +13,7 @@ export const handleSetCookies = (
   name,
   value,
   maxAge = COOKIE_EXPIRATION_TIME,
-  httpOnly = false
+  httpOnly = false,
 ) => {
   if (!value || !name || !response) {
     console.error('Invalid arguments for setting cookie');

@@ -9,13 +9,15 @@ import getClient from '@/shopify/index';
 import styles from './shipping.module.scss';
 
 function ShippingPage({ shippingPolicy }) {
+  const { title, description } = seo.pages.privacy || {};
+
   return (
-    <PageLayout title={seo.pages.privacy.title} description={seo.pages.privacy.description}>
-      <PageBanner title={seo.pages.privacy.title} />
-      <Breadcrumbs lastElement={seo.pages.privacy.title} />
+    <PageLayout description={description} title={title}>
+      <PageBanner title={title} />
+      <Breadcrumbs lastElement={title} />
       <div className={styles.privacy}>
         <Container>
-          <div className={styles.content} dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
+          <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} className={styles.content} />
         </Container>
       </div>
     </PageLayout>

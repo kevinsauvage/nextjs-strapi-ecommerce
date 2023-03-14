@@ -41,7 +41,7 @@ export default function OrdersPage() {
         setError(true);
       }
     },
-    [dispatch, showToast]
+    [dispatch, showToast],
   );
 
   useEffect(() => {

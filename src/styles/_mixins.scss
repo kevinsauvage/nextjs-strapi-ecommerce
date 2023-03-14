@@ -183,14 +183,14 @@
   color: var(--onSurface-dark);
   @include button;
 
-  path {
-    stroke: var(--onSurface-dark);
-  }
-
   @include respond(laptop desktop) {
     &:hover:enabled {
       background-color: var(--primary-800);
     }
+  }
+
+  path {
+    stroke: var(--onSurface-dark);
   }
 }
 
@@ -227,14 +227,14 @@
   color: var(--onSurface-dark);
   @include button;
 
-  path {
-    stroke: var(--onSurface-dark);
-  }
-
   @include respond(laptop desktop) {
     &:hover:enabled {
       background-color: var(--surface-dark-100);
       color: var(--onSurface-dark);
     }
+  }
+
+  path {
+    stroke: var(--onSurface-dark);
   }
 }

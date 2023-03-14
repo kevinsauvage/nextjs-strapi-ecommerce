@@ -13,9 +13,9 @@ export const nextApiHelper = async (url, body = {}, method = 'POST') => {
   }
 };
 
-export const generateDelegateToken = () => nextApiHelper(`/api/delegateToken`, null, 'GET');
+export const generateDelegateToken = () => nextApiHelper('/api/delegateToken', null, 'GET');
 
 export const sendMail = async (body) => {
-  const apiUrl = `/api/email`;
+  const apiUrl = '/api/email';
   return nextApiHelper(apiUrl, body, 'POST');
 };

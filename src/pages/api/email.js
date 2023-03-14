@@ -29,7 +29,7 @@ const handler = async (req, res) => {
     const mailOptions = {
       from: { name, address: email },
       to: 'kevinsauvage@outlook.com',
-      subject: `Request ECommerce _ {name shop}`,
+      subject: 'Request ECommerce _ {name shop}',
       text: message,
     };
 

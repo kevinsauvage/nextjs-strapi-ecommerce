@@ -39,7 +39,7 @@ function PriceFilters({ filter }) {
 
     return handleSetUniqueFilters(
       filter.id,
-      JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(max, 10) } })
+      JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(max, 10) } }),
     );
   };
 
@@ -56,7 +56,7 @@ function PriceFilters({ filter }) {
                 setMin(e.target.value);
                 handleSetUniqueFilters(
                   filter.id,
-                  JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } })
+                  JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } }),
                 );
               }}
             />
@@ -72,7 +72,7 @@ function PriceFilters({ filter }) {
                 setMax(e.target.value);
                 handleSetUniqueFilters(
                   filter.id,
-                  JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } })
+                  JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } }),
                 );
               }}
             />

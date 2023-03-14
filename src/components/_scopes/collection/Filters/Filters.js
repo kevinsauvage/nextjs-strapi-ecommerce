@@ -31,9 +31,9 @@ export default function Filters() {
       <div className={styles.header}>
         <button
           className={styles.reset}
-          type="button"
           disabled={!getSelectedFilter(allFilters, query).length}
           onClick={resetFilters}
+          type="button"
         >
           Reset all {` (${getSelectedFilter(allFilters, query).length.toString()})`}
         </button>
@@ -48,11 +48,11 @@ export default function Filters() {
 
       <div className={styles.bottom}>
         <Button
-          extraClass={styles.button}
-          type="button"
-          primary
-          onClick={applyFilters}
           disabled={!isSelectionDifferent()}
+          extraClass={styles.button}
+          onClick={applyFilters}
+          primary
+          type="button"
         >
           Apply filters
         </Button>

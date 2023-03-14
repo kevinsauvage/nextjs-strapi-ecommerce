@@ -20,17 +20,17 @@ export default function useProductSelection({ product }) {
 
       const filtered =
         selectedProductOption?.filter(
-          (option) => Object.values(option)[0] !== Object.values(productOption)[0]
+          (option) => Object.values(option)[0] !== Object.values(productOption)[0],
         ) || [];
       return setSelectedProductOption([...filtered, productOption]);
     },
-    [selectedProductOption]
+    [selectedProductOption],
   );
 
   const getDifference = useCallback((array1, array2) => {
     const difference = array1?.filter(
       (object1) =>
-        !array2?.some((object2) => object1.name === object2.name && object1.value === object2.value)
+        !array2?.some((object2) => object1.name === object2.name && object1.value === object2.value),
     );
 
     return !!difference?.length;
@@ -40,12 +40,12 @@ export default function useProductSelection({ product }) {
     (optionName, optionValue) => {
       if (selectedProductOption?.length) {
         return selectedProductOption?.find(
-          (option) => option.name === optionName && option.value === optionValue
+          (option) => option.name === optionName && option.value === optionValue,
         );
       }
       return false;
     },
-    [selectedProductOption]
+    [selectedProductOption],
   );
 
   const isOptionOutOfStock = useCallback(
@@ -60,7 +60,7 @@ export default function useProductSelection({ product }) {
       }, {});
       return !dif?.length;
     },
-    [getDifference, product?.variants, selectedProductOption]
+    [getDifference, product?.variants, selectedProductOption],
   );
 
   const handleAddToCart = useCallback(() => {
@@ -86,7 +86,7 @@ export default function useProductSelection({ product }) {
     if (product?.id && selectedProductOption?.length) {
       const dif = product?.variants?.filter(
         (variant) => !getDifference(variant.selectedOptions, selectedProductOption),
-        {}
+        {},
       );
       setSelectedVariant(...dif);
     }

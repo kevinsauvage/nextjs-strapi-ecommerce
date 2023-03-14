@@ -54,7 +54,7 @@ const seo = {
   search: {
     title: 'Search',
     description:
-      "Looking for something specific? Our search page makes it easy to find what you're looking for. Enter your search terms and browse through relevant results quickly. Start searching now.",
+      'Looking for something specific? Our search page makes it easy to find what you\'re looking for. Enter your search terms and browse through relevant results quickly. Start searching now.',
   },
   wishlist: {
     title: 'Wishlist',
@@ -70,7 +70,7 @@ const seo = {
     privacy: {
       title: 'Privacy',
       description:
-        "Protecting your privacy is our top priority. Our privacy page outlines how we collect and use your personal information to ensure it's safe and secure. Read more now.",
+        'Protecting your privacy is our top priority. Our privacy page outlines how we collect and use your personal information to ensure it\'s safe and secure. Read more now.',
     },
     refund: {
       title: 'Refund',

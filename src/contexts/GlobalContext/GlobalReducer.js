@@ -31,7 +31,7 @@ export const GlobalReducer = (state = initialState, action) => {
     }
 
     case actions.RESET_TOGGLE_STATES: {
-      return { ...initialState, loading: state.loading };
+      return { ...initialState, loading: action.loading };
     }
     default:
       return state;

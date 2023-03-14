@@ -42,12 +42,12 @@ function Address({
         {displayButton ? (
           <div className={style.buttons}>
             <Tooltip text="Edit address">
-              <button type="button" className={style.button} onClick={() => setEditAddress(true)}>
+              <button className={style.button} onClick={() => setEditAddress(true)} type="button">
                 {edit}
               </button>
             </Tooltip>
             <Tooltip text="Remove Address">
-              <button type="button" onClick={handleDelete} className={style.button}>
+              <button className={style.button} onClick={handleDelete} type="button">
                 {remove}
               </button>
             </Tooltip>
@@ -55,7 +55,7 @@ function Address({
         ) : null}
 
         {!isDefault && displayButton && (
-          <button className={style.setAsDefault} type="button" onClick={() => handleSetAsDefault(id)}>
+          <button className={style.setAsDefault} onClick={() => handleSetAsDefault(id)} type="button">
             Set as default
           </button>
         )}
@@ -65,10 +65,10 @@ function Address({
       {editAddress && (
         <Modal handleClose={() => setEditAddress(false)}>
           <AddressForm
-            title="Update Address"
             buttonText="Update Address"
             initialValues={address}
             onSubmit={(formData) => handleUpdateAddress(formData, address.id)}
+            title="Update Address"
           />
         </Modal>
       )}

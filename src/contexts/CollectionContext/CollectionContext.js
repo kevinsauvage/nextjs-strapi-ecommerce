@@ -25,7 +25,7 @@ export function CollectionProvider({
 
   const getFormattedFilter = useCallback(
     () => selectedFilters.map((item) => JSON.parse(item.input)),
-    [selectedFilters]
+    [selectedFilters],
   );
 
   const handleGetData = useCallback(
@@ -42,7 +42,7 @@ export function CollectionProvider({
       dispatch({ type: actions.SET_LOADING, payload: false });
       return data;
     },
-    [query.collectionSlug]
+    [query.collectionSlug],
   );
 
   const handleSetFilterState = useCallback(
@@ -60,7 +60,7 @@ export function CollectionProvider({
         });
       }
     },
-    [products]
+    [products],
   );
 
   const resetFilters = useCallback(async () => {
@@ -104,7 +104,7 @@ export function CollectionProvider({
       const data = await handleGetData(30, filters, value, null);
       return handleSetFilterState(data);
     },
-    [getFormattedFilter, handleGetData, handleSetFilterState, push, query, to]
+    [getFormattedFilter, handleGetData, handleSetFilterState, push, query, to],
   );
 
   const handleNext = useCallback(async () => {
@@ -121,7 +121,7 @@ export function CollectionProvider({
   const isSelected = useCallback(
     (filterId, input) =>
       selectedFilters?.some((filter) => filter.input === input && filter.filterId === filterId),
-    [selectedFilters]
+    [selectedFilters],
   );
 
   const handleSetFilters = useCallback(
@@ -143,7 +143,7 @@ export function CollectionProvider({
         });
       }
     },
-    [isSelected, selectedFilters]
+    [isSelected, selectedFilters],
   );
 
   const handleSetUniqueFilters = useCallback(
@@ -155,7 +155,7 @@ export function CollectionProvider({
         payload: [...newFilters, { filterId, input }],
       });
     },
-    [selectedFilters]
+    [selectedFilters],
   );
 
   useEffect(() => {
@@ -219,7 +219,7 @@ export function CollectionProvider({
       handleSetUniqueFilters,
       collection,
       getFormattedFilter,
-    ]
+    ],
   );
 
   return <CollectionContext.Provider value={values}>{children}</CollectionContext.Provider>;

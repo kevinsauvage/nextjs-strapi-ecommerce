@@ -72,7 +72,7 @@ export default function ProductReviews({ product }) {
       };
 
       setLoading(true);
-      const response = await nextApiHelper(`/api/reviews`, metafields, 'POST');
+      const response = await nextApiHelper('/api/reviews', metafields, 'POST');
       setLoading(false);
 
       if (response?.response) {
@@ -80,9 +80,9 @@ export default function ProductReviews({ product }) {
         setRating();
         return showToast.success('Review correctly added');
       }
-      return showToast.error("Couldn't add the review, please try again later");
+      return showToast.error('Couldn\'t add the review, please try again later');
     },
-    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName]
+    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName],
   );
 
   const handleRemoveProductReview = useCallback(
@@ -114,16 +114,16 @@ export default function ProductReviews({ product }) {
       };
 
       setLoading(true);
-      const response = await nextApiHelper(`/api/reviews`, metafields, 'POST');
+      const response = await nextApiHelper('/api/reviews', metafields, 'POST');
       setLoading(false);
 
       if (response?.response) {
         setReviews(response.response);
         return showToast.success('Review correctly removed');
       }
-      return showToast.error("Couldn't remove the review, please try again later");
+      return showToast.error('Couldn\'t remove the review, please try again later');
     },
-    [asPath, product.id, push, reviews, showToast, user?.id]
+    [asPath, product.id, push, reviews, showToast, user?.id],
   );
 
   const totalReviews = reviews.length;

@@ -84,7 +84,7 @@ export function UserProvider({ children }) {
         ],
       };
 
-      const response = await nextApiHelper(`/api/wishlist`, metafields, 'POST');
+      const response = await nextApiHelper('/api/wishlist', metafields, 'POST');
 
       if (response?.response) {
         if (newWishList.length < wishlist.length) {
@@ -92,9 +92,9 @@ export function UserProvider({ children }) {
         } else showToast.success('Product correctly added to wishlist');
         return setUserWishlist(response?.response);
       }
-      return showToast.error("Couldn't set product to user wishlist");
+      return showToast.error('Couldn\'t set product to user wishlist');
     },
-    [asPath, isWishlist, push, setUserWishlist, showToast, user?.id, wishlist]
+    [asPath, isWishlist, push, setUserWishlist, showToast, user?.id, wishlist],
   );
 
   const values = useMemo(
@@ -118,7 +118,7 @@ export function UserProvider({ children }) {
       isWishlist,
       handleSetProductToWishList,
       setUserWishlist,
-    ]
+    ],
   );
 
   return <UserContext.Provider value={values}>{children}</UserContext.Provider>;

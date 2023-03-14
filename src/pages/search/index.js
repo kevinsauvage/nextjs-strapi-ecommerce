@@ -44,7 +44,7 @@ function SearchPage() {
       if (products) setSearch((prev) => [...prev, ...products]);
       if (pageInfoRes) setPageInfo(pageInfoRes);
     },
-    [searchTerm]
+    [searchTerm],
   );
 
   useEffect(() => {

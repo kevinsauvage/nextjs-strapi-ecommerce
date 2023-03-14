@@ -34,7 +34,7 @@ const useForm = (onSubmit, initialValues = {}, requiredFields = []) => {
 
       setLoading(false);
     },
-    [formData, onSubmit, requiredFields]
+    [formData, onSubmit, requiredFields],
   );
 
   const handleReset = useCallback(() => setFormData(initialValues || {}), [initialValues]);

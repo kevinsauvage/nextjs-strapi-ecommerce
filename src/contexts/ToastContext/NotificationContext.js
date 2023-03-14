@@ -74,7 +74,7 @@ export function ToastProvider({ children }) {
         });
       },
     }),
-    []
+    [],
   );
 
   const toastData = useMemo(() => ({ toasts, showToast }), [toasts, showToast]);

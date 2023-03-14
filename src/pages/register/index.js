@@ -56,7 +56,7 @@ function RegisterPage() {
       if (checkoutId) {
         const assosiateRes = await getClient().storefront.checkout.associateCustomerToCheckout(
           checkoutId,
-          accessToken
+          accessToken,
         );
         if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
       } else {

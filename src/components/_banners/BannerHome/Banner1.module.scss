@@ -17,8 +17,8 @@
   }
 
   @include respond(mobile) {
-    height: 60vh;
     margin-bottom: var(--space-3);
+    height: 60vh;
   }
 }
 

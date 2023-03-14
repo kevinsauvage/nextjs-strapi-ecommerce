@@ -7,9 +7,9 @@
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  min-height: 300px;
   height: 100%;
   width: 100%;
-  min-height: 300px;
   color: var(--onSurface-hight);
   transition: all 0.2s ease-in-out;
   @include gradient-overlay(var(--RGB-surface-100));
@@ -30,8 +30,8 @@
 .title {
   margin-bottom: var(--space-1);
   text-transform: uppercase;
-  font-weight: 400;
   font-size: 1.5rem;
+  font-weight: 400;
 
   span {
     font-weight: 700;

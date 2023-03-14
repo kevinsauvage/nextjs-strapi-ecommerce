@@ -11,7 +11,6 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
 
   return (
     <Form
-      onSubmit={onSubmit}
       extraClass={styles.formContainer}
       initialValues={{
         address1,
@@ -25,103 +24,104 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
         province,
         zip,
       }}
-      title={title}
+      onSubmit={onSubmit}
       requiredFields={['firstName', 'lastName', 'address1', 'province', 'country', 'zip', 'city']}
+      title={title}
     >
       <div className={styles.form}>
         <div className={styles.info}>
           <h6 className={styles.title}>Contact Information</h6>
           <Row>
             <Input
-              placeholder="First name"
-              input="true"
-              type="text"
               id="firstName"
-              name="firstName"
+              input="true"
               label="First Name"
+              name="firstName"
+              placeholder="First name"
               required="true"
+              type="text"
             />
             <Input
-              placeholder="Last name"
-              input="true"
-              type="text"
               id="lastName"
-              name="lastName"
+              input="true"
               label="Last Name"
+              name="lastName"
+              placeholder="Last name"
               required="true"
+              type="text"
             />
           </Row>
           <Row>
             <Input
-              placeholder="Company"
-              input="true"
-              type="text"
               id="company"
-              name="company"
+              input="true"
               label="Company"
+              name="company"
+              placeholder="Company"
+              type="text"
             />
-            <Input placeholder="Phone" input="true" type="text" id="phone" name="phone" label="Phone" />
+            <Input id="phone" input="true" label="Phone" name="phone" placeholder="Phone" type="text" />
           </Row>
         </div>
         <div>
           <h6 className={styles.title}>Address</h6>
           <Row>
             <Input
-              placeholder="Address 1"
-              input="true"
-              type="text"
               id="address1"
-              name="address1"
+              input="true"
               label="Address1"
+              name="address1"
+              placeholder="Address 1"
               required="true"
+              type="text"
             />
             <Input
-              placeholder="Address 2"
-              input="true"
-              type="text"
               id="address2"
-              name="address2"
+              input="true"
               label="Address2"
+              name="address2"
+              placeholder="Address 2"
+              type="text"
             />
           </Row>
           <Row>
             <Input
-              placeholder="City"
-              input="true"
-              type="text"
               id="city"
-              name="city"
+              input="true"
               label="City"
+              name="city"
+              placeholder="City"
               required="true"
+              type="text"
             />
             <Input
-              placeholder="Province"
-              input="true"
-              type="text"
               id="province"
-              name="province"
+              input="true"
               label="Province"
+              name="province"
+              placeholder="Province"
               required="true"
+              type="text"
             />
           </Row>
           <Row>
             <Input
-              placeholder="Country"
-              input="true"
-              type="text"
               id="country"
-              name="country"
+              input="true"
               label="Country"
+              name="country"
+              placeholder="Country"
               required="true"
+              type="text"
             />
             <Input
-              placeholder="Zip"
-              input="true"
-              type="text"
               id="zip"
-              name="zip"
+              input="true"
               label="Zip"
+              name="zip"
+              placeholder="Zip"
               required="true"
+              type="text"
             />
           </Row>
         </div>

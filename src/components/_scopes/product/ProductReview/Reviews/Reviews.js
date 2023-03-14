@@ -18,7 +18,7 @@ export default function Reviews({ reviews, handleRemoveProductReview }) {
         total += curr.review.rating;
         return total;
       }, 0) / reviews.length,
-    [reviews]
+    [reviews],
   );
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);

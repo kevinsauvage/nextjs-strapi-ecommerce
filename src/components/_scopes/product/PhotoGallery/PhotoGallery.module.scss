@@ -3,17 +3,17 @@
   width: 100%;
 
   @include respond(mobile) {
-    display: none;
     visibility: hidden;
+    display: none;
   }
 }
 
 .inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--space-1);
   height: 100%;
   width: 100%;
+  gap: var(--space-1);
 
   @include respond(mobile) {
     display: flex;
@@ -42,13 +42,13 @@
 }
 
 .carousel {
-  display: none;
   visibility: hidden;
+  display: none;
 
   @include respond(mobile) {
-    display: unset;
-    visibility: visible;
     position: sticky;
     top: var(--space-0);
+    visibility: visible;
+    display: unset;
   }
 }

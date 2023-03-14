@@ -52,7 +52,7 @@ export function CartProvider({ children }) {
 
       return showToast.error(userFeedback.removeLinesFromCart.error);
     },
-    [handleSetCart, showToast, toggleLoading]
+    [handleSetCart, showToast, toggleLoading],
   );
 
   const handleQuantityChange = useCallback(
@@ -83,7 +83,7 @@ export function CartProvider({ children }) {
       }
       return showToast.error(userFeedback.updateLines.error);
     },
-    [cart?.id, handleSetCart, showToast, toggleLoading]
+    [cart?.id, handleSetCart, showToast, toggleLoading],
   );
 
   const handleAddToCart = useCallback(
@@ -119,7 +119,7 @@ export function CartProvider({ children }) {
       }
       return null;
     },
-    [showToast, toggleLoading]
+    [showToast, toggleLoading],
   );
 
   const getTotalItems = useCallback(() => cart?.totalQuantity, [cart]);
@@ -151,7 +151,7 @@ export function CartProvider({ children }) {
       }
       return null;
     },
-    [cart?.buyerIdentity, cart?.id, handleSetCart]
+    [cart?.buyerIdentity, cart?.id, handleSetCart],
   );
 
   useEffect(() => {
@@ -199,7 +199,7 @@ export function CartProvider({ children }) {
       handleSetCart,
       handleAddToCart,
       getTotalItems,
-    ]
+    ],
   );
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

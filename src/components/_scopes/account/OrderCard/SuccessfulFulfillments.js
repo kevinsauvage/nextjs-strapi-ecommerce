@@ -20,14 +20,14 @@ export default function SuccessfulFulfillments({ successfulFulfillments }) {
           return (
             <div key={uuidv4()} className={styles.trackContainer}>
               <h6>Tracking informations {successfulFulfillments.length > 1 && i + 1}</h6>
-              <AccountRow title="Tracking Company" content={successfulFulfillment?.trackingCompany} />
+              <AccountRow content={successfulFulfillment?.trackingCompany} title="Tracking Company" />
               {trackingInfo?.map((trackInfo) => {
                 const { url, number } = trackInfo;
                 return (
                   <AccountRow
                     key={number}
-                    title="Tracking number"
                     content={url ? <Link href={url}>{number}</Link> : number}
+                    title="Tracking number"
                   />
                 );
               })}

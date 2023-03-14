@@ -12,10 +12,10 @@
   top: 120%;
   right: -2px;
   border: 1px solid var(--surface-400);
+  border-radius: $radius;
   background-color: var(--surface-100);
   min-width: 190px;
   overflow: hidden;
-  border-radius: $radius;
 }
 
 .button {
@@ -39,18 +39,18 @@
   white-space: nowrap;
   cursor: pointer;
 
+  @include respond(laptop desktop) {
+    &:hover {
+      background-color: var(--surface-dark-100);
+      color: var(--onSurface-dark);
+    }
+  }
+
   p {
     font-size: 0.9rem;
   }
 
   &:last-of-type {
     border-bottom: none;
-  }
-
-  @include respond(laptop desktop) {
-    &:hover {
-      background-color: var(--surface-dark-100);
-      color: var(--onSurface-dark);
-    }
   }
 }

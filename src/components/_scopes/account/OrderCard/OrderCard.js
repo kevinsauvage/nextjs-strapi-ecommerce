@@ -46,22 +46,22 @@ function OrderCard({ order }) {
       <div className={style.orderCardDetail}>
         <h6>Order informations</h6>
 
-        <AccountRow title="Total price" content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} />
+        <AccountRow content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} title="Total price" />
         {parseInt(totalRefundedV2?.amount, 10) > 0 ? (
           <AccountRow
-            title="Total refounded"
             content={`${totalRefundedV2?.amount} ${totalRefundedV2?.currencyCode}`}
+            title="Total refounded"
           />
         ) : null}
-        <AccountRow title="Financial Status" content={formatStatus(financialStatus)} />
-        <AccountRow title="Fulfillment Status" content={formatStatus(fulfillmentStatus)} />
-        <AccountRow title="Email" content={email} />
-        {phone && <AccountRow title="Phone" content={phone} />}
-        <AccountRow title="ProcessedAt" content={getDate(processedAt)} />
+        <AccountRow content={formatStatus(financialStatus)} title="Financial Status" />
+        <AccountRow content={formatStatus(fulfillmentStatus)} title="Fulfillment Status" />
+        <AccountRow content={email} title="Email" />
+        {phone && <AccountRow content={phone} title="Phone" />}
+        <AccountRow content={getDate(processedAt)} title="ProcessedAt" />
         {canceledAt ? (
           <>
-            <AccountRow title="Cancel Reason" content={cancelReason} />
-            <AccountRow title="Canceled At" content={getDate(canceledAt)} />
+            <AccountRow content={cancelReason} title="Cancel Reason" />
+            <AccountRow content={getDate(canceledAt)} title="Canceled At" />
           </>
         ) : null}
       </div>
