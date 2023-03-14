@@ -2,8 +2,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './CollectionBanner.module.scss';
 
-const CollectionBanner = ({ title, description }) => {
-  return (
+const CollectionBanner = ({ title, description }) => (
     <div className={styles.CollectionBanner}>
       <Container>
         <div className={styles.content}>
@@ -13,6 +12,5 @@ const CollectionBanner = ({ title, description }) => {
       </Container>
     </div>
   );
-};
 
 export default CollectionBanner;

@@ -13,8 +13,7 @@ const AccountLayout = ({
   title,
   descriptionBannerChildren,
   otherBannerChildrenContenct,
-}) => {
-  return (
+}) => (
     <div className={styles.AccountLayout}>
       <PageBanner title={title} />
       <Breadcrumbs />
@@ -57,6 +56,5 @@ const AccountLayout = ({
       </Container>
     </div>
   );
-};
 
 export default AccountLayout;

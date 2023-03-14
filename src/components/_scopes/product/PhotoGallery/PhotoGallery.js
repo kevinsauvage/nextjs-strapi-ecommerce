@@ -4,8 +4,7 @@ import Carousel from '@/components/Carousel/Carousel';
 
 import styles from './PhotoGallery.module.scss';
 
-const PhotoItem = ({ image }) => {
-  return (
+const PhotoItem = ({ image }) => (
     <div className={styles.galleryImage}>
       <Image
         src={image?.src}
@@ -19,10 +18,8 @@ const PhotoItem = ({ image }) => {
       />
     </div>
   );
-};
 
-const PhotoGallery = ({ images = [] }) => {
-  return (
+const PhotoGallery = ({ images = [] }) => (
     Array.isArray(images) && (
       <>
         <div className={styles.gallery}>
@@ -42,6 +39,5 @@ const PhotoGallery = ({ images = [] }) => {
       </>
     )
   );
-};
 
 export default PhotoGallery;

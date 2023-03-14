@@ -4,8 +4,7 @@ import CollectionCard from '../CollectionCard/CollectionCard';
 
 import styles from './CollectionGrid.module.scss';
 
-const CollectionGrid = ({ collections }) => {
-  return (
+const CollectionGrid = ({ collections }) => (
     <section>
       <SectionTitle first="FEATURED" second="COLLECTIONS" />
       <ul className={styles.CollectionGrid}>
@@ -18,6 +17,5 @@ const CollectionGrid = ({ collections }) => {
       </ul>
     </section>
   );
-};
 
 export default CollectionGrid;

@@ -8,8 +8,7 @@ import getClient from '@/shopify/index';
 
 import styles from './refund.module.scss';
 
-const RefoundPage = ({ refundPolicy }) => {
-  return (
+const RefoundPage = ({ refundPolicy }) => (
     <PageLayout title={seo.pages.refund.title} description={seo.pages.refund.description}>
       <PageBanner title={seo.pages.refund.title} />
       <Breadcrumbs lastElement={seo.pages.refund.title} />
@@ -20,7 +19,6 @@ const RefoundPage = ({ refundPolicy }) => {
       </div>
     </PageLayout>
   );
-};
 
 export default RefoundPage;
 

@@ -2,8 +2,7 @@ import CollectionCard from '../../collection/CollectionCard/CollectionCard';
 
 import styles from './CollectionBigBanner.module.scss';
 
-const CollectionBigBanner = ({ collections }) => {
-  return (
+const CollectionBigBanner = ({ collections }) => (
     <ul className={styles.CollectionBigBanner}>
       {collections.map((collection) => (
         <li key={collection.handle} className={styles.item}>
@@ -12,6 +11,5 @@ const CollectionBigBanner = ({ collections }) => {
       ))}
     </ul>
   );
-};
 
 export default CollectionBigBanner;

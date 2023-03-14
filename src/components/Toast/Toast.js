@@ -25,13 +25,11 @@ const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
   );
 };
 
-const Toast = ({ toasts, toastDispatch }) => {
-  return (
+const Toast = ({ toasts, toastDispatch }) => (
     toasts.length > 0 &&
     toasts.map((toast, i) => (
       <ToastItem key={toast.id} toast={toast} toastDispatch={toastDispatch} tranformY={i * 50} />
     ))
   );
-};
 
 export default Toast;

@@ -39,9 +39,10 @@ const QuantityUpdater = ({
     const num = e.target.value;
     if (Number(num) > quantityAvailable) {
       setQuantity(quantityAvailable);
-      return showToast.error(`There is Only ${quantityAvailable} variant available`);
+      showToast.error(`There is Only ${quantityAvailable} variant available`);
+      return;
     }
-    if (Number(num) <= Number(originalQuantity)) return setQuantity(num);
+    if (Number(num) <= Number(originalQuantity)) setQuantity(num);
   };
 
   const handleConfirmInput = (e) => {

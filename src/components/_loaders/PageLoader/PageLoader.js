@@ -2,12 +2,10 @@ import Loader from '../Loader/Loader';
 
 import styles from './PageLoader.module.scss';
 
-const PageLoader = ({ position }) => {
-  return (
+const PageLoader = ({ position }) => (
     <div className={`${styles.loader} fadeIn`} style={{ position }}>
       <Loader />
     </div>
   );
-};
 
 export default PageLoader;

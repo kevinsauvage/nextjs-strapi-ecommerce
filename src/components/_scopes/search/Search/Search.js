@@ -7,6 +7,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { capitalizeFirstLetter } from '@/helpers/string';
 
 import styles from './Search.module.scss';
+
 const Search = ({ size }) => {
   const router = useRouter();
   const [query, setQuery] = useState('');

@@ -4,12 +4,10 @@ import { logo } from '@/assets/svg';
 
 import styles from './Logo.module.scss';
 
-const Logo = () => {
-  return (
+const Logo = () => (
     <Link href="/" className={styles.Logo} aria-label="Link to home page">
       {logo}
     </Link>
   );
-};
 
 export default Logo;

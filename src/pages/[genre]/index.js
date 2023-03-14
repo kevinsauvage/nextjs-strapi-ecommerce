@@ -4,9 +4,7 @@ import { getInfoFromCtx } from '@/helpers/index';
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import getClient from '@/shopify/index';
 
-const Shop = (props) => {
-  return <CollectionPage {...props} />;
-};
+const Shop = (props) => <CollectionPage {...props} />;
 
 export default Shop;
 

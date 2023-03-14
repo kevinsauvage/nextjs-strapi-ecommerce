@@ -4,8 +4,7 @@ import siteMetadata from '@/data/siteMetadata';
 
 import styles from './Footer.module.scss';
 
-const Footer = ({ menuFooter }) => {
-  return (
+const Footer = ({ menuFooter }) => (
     <>
       <footer className={styles.footer}>
         <Container extraClass={styles.container}>
@@ -37,6 +36,5 @@ const Footer = ({ menuFooter }) => {
       </div>
     </>
   );
-};
 
 export default Footer;

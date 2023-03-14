@@ -1,7 +1,6 @@
 import styles from './Input.module.scss';
 
-const Input = ({ id, name, type, label, placeholder, onChange, required, invalid, ...rest }) => {
-  return (
+const Input = ({ id, name, type, label, placeholder, onChange, required, invalid, ...rest }) => (
     <label htmlFor={id} className={`${styles.label} ${invalid && styles.missing}`}>
       <b className={styles.title}>
         {label}
@@ -18,6 +17,5 @@ const Input = ({ id, name, type, label, placeholder, onChange, required, invalid
       />
     </label>
   );
-};
 
 export default Input;

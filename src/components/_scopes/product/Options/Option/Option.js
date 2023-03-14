@@ -1,7 +1,6 @@
 import styles from './Option.module.scss';
 
-const Option = ({ option, handleClick, isSelected, isOptionOutOfStock }) => {
-  return (
+const Option = ({ option, handleClick, isSelected, isOptionOutOfStock }) => (
     Array.isArray(option.values) &&
     option.values.length > 1 && (
       <div className={styles.option}>
@@ -23,6 +22,5 @@ const Option = ({ option, handleClick, isSelected, isOptionOutOfStock }) => {
       </div>
     )
   );
-};
 
 export default Option;

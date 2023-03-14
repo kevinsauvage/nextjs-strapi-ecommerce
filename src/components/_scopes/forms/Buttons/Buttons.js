@@ -2,13 +2,11 @@ import Button from '@/components/Button/Button';
 
 import styles from './Buttons.module.scss';
 
-const Buttons = ({ children, text }) => {
-  return (
+const Buttons = ({ children, text }) => (
     <div className={styles.buttons}>
       <Button text={text} type="submit" primary />
       {children}
     </div>
   );
-};
 
 export default Buttons;

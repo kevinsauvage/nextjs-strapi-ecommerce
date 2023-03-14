@@ -4,9 +4,7 @@ import { getInfoFromCtx } from '@/helpers/index';
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import getClient from '@/shopify/index';
 
-const CollectionSlugPage = (props) => {
-  return <CollectionPage {...props} />;
-};
+const CollectionSlugPage = (props) => <CollectionPage {...props} />;
 
 export default CollectionSlugPage;
 

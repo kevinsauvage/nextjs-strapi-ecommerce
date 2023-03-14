@@ -3,8 +3,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './CollectionNav.module.scss';
 
-const CollectionNav = ({ items }) => {
-  return (
+const CollectionNav = ({ items }) => (
     <div className={styles.CollectionNav}>
       <Container>
         <nav className={styles.nav}>
@@ -22,6 +21,5 @@ const CollectionNav = ({ items }) => {
       </Container>
     </div>
   );
-};
 
 export default CollectionNav;

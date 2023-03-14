@@ -1,8 +1,7 @@
 // pages/_document.js
 import { Head, Html, Main, NextScript } from 'next/document';
 
-const Document = () => {
-  return (
+const Document = () => (
     <Html className="theme-light" lang="en">
       <Head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -21,6 +20,5 @@ const Document = () => {
       </body>
     </Html>
   );
-};
 
 export default Document;

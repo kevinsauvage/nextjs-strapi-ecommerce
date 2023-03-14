@@ -3,8 +3,7 @@ import useCartContext from '@/contexts/CartContext/useCartContext';
 
 import styles from './CartSummary.module.scss';
 
-const CartSummaryRow = ({ title, content, children }) => {
-  return (
+const CartSummaryRow = ({ title, content, children }) => (
     <div className={styles.CartSummaryRow}>
       <div className={styles.CartSummaryRow__header}>
         <p className={styles.CartSummaryRow__title}>{title}</p>
@@ -13,7 +12,6 @@ const CartSummaryRow = ({ title, content, children }) => {
       {children && <div className={styles.CartSummaryRow__children}>{children}</div>}
     </div>
   );
-};
 
 const CartSummary = () => {
   const { cart, getTotalItems } = useCartContext();
