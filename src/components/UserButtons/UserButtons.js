@@ -57,11 +57,11 @@ const UserButtons = () => {
 
   return (
     <div className={styles.container}>
-      {data.map((el, i) => (
+      {data.map((el) => (
         <button
           aria-label={el.name}
           type="button"
-          key={i}
+          key={el.id}
           onClick={() => el.onClick?.()}
           className={`${styles.button} ${el.extraClass}`}
         >
