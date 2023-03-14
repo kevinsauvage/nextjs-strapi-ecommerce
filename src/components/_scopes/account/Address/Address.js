@@ -8,14 +8,14 @@ import AddressForm from '../AddressForm/AddressForm';
 
 import style from './Address.module.scss';
 
-function Address({
+const Address = ({
   address,
   handleDelete,
   handleSetAsDefault,
   handleUpdateAddress,
   isDefault,
   displayButton = true,
-}) {
+}) => {
   const { id, address1, address2, name, city, country, province, zip, company, phone } = address || {};
   const [editAddress, setEditAddress] = useState(false);
 
@@ -74,6 +74,6 @@ function Address({
       )}
     </div>
   );
-}
+};
 
 export default Address;

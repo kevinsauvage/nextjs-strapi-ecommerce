@@ -4,7 +4,7 @@ import useHideScrollbar from '@/hooks/useHideScrollbar';
 
 import styles from './Modal.module.scss';
 
-export default function Modal({ handleClose, loading, children, padding = '0px' }) {
+const Modal = ({ handleClose, loading, children, padding = '0px' }) => {
   useHideScrollbar();
   return (
     <div className={styles.Modal}>
@@ -22,4 +22,6 @@ export default function Modal({ handleClose, loading, children, padding = '0px' 
       )}
     </div>
   );
-}
+};
+
+export default Modal;

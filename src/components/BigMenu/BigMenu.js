@@ -4,7 +4,7 @@ import Container from '../Container/Container';
 
 import styles from './BigMenu.module.scss';
 
-function BigMenu({ data, handleClose, collections }) {
+const BigMenu = ({ data, handleClose, collections }) => {
   const renderItems = (items) => (
     <ul>
       {items.map((item) => (
@@ -45,6 +45,6 @@ function BigMenu({ data, handleClose, collections }) {
       </div>
     </div>
   );
-}
+};
 
 export default BigMenu;

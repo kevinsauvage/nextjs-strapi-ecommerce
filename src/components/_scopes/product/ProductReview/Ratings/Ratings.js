@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import styles from './Rating.module.scss';
 
-export default function Rating({ rating, onChange }) {
+const Rating = ({ rating, onChange }) => {
   const [hoveredIndex, setHoveredIndex] = useState(-1);
 
   const handleMouseEnter = (index) => setHoveredIndex(index);
@@ -25,4 +25,6 @@ export default function Rating({ rating, onChange }) {
   ));
 
   return <div className={styles.rating}>{stars}</div>;
-}
+};
+
+export default Rating;

@@ -31,7 +31,7 @@ export const toastReducer = (state, action) => {
   }
 };
 
-export function ToastProvider({ children }) {
+export const ToastProvider = ({ children }) => {
   const [toasts, toastDispatch] = useReducer(toastReducer, initialState);
   const [mounted, setMounted] = useState();
 
@@ -74,7 +74,7 @@ export function ToastProvider({ children }) {
         });
       },
     }),
-    [],
+    []
   );
 
   const toastData = useMemo(() => ({ toasts, showToast }), [toasts, showToast]);
@@ -91,6 +91,6 @@ export function ToastProvider({ children }) {
         createPortal(<Toast toasts={toasts} toastDispatch={toastDispatch} />, document?.body)}
     </ToastContext.Provider>
   );
-}
+};
 
 export const useToastContext = () => useContext(ToastContext);

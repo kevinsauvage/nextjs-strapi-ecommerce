@@ -18,7 +18,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 
 import styles from './Cart.module.scss';
 
-function CartPage() {
+const CartPage = () => {
   const [lineItemsToUpdate, setLineItemsToUpdate] = useState([]);
   const { cart, isCartLoading, handleQuantityChange, removeFromCart } = useCartContext();
   const { showToast } = useToastContext();
@@ -96,6 +96,6 @@ function CartPage() {
       <Container>{renderContent()}</Container>
     </PageLayout>
   );
-}
+};
 
 export default CartPage;

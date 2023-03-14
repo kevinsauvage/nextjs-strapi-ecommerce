@@ -7,7 +7,13 @@ import config from '@/config/index';
 
 import styles from './AccountLayout.module.scss';
 
-function AccountLayout({ children, loading, title, descriptionBannerChildren, otherBannerChildrenContenct }) {
+const AccountLayout = ({
+  children,
+  loading,
+  title,
+  descriptionBannerChildren,
+  otherBannerChildrenContenct,
+}) => {
   return (
     <div className={styles.AccountLayout}>
       <PageBanner title={title} />
@@ -51,6 +57,6 @@ function AccountLayout({ children, loading, title, descriptionBannerChildren, ot
       </Container>
     </div>
   );
-}
+};
 
 export default AccountLayout;

@@ -1,6 +1,6 @@
 import styles from './Pagination.module.scss';
 /* eslint-disable no-plusplus */
-function Pagination({ currentPage, totalPages, onPageChange }) {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = [];
 
   for (let i = 1; i <= totalPages; i++) {
@@ -22,6 +22,6 @@ function Pagination({ currentPage, totalPages, onPageChange }) {
       </nav>
     )
   );
-}
+};
 
 export default Pagination;

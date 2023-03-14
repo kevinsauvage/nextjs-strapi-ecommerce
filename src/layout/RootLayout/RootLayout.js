@@ -12,7 +12,7 @@ import getClient from '@/shopify/index';
 
 import styles from './RootLayout.module.scss';
 
-function RootLayout({ children }) {
+const RootLayout = ({ children }) => {
   const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
@@ -54,6 +54,6 @@ function RootLayout({ children }) {
       <CookieBanner />
     </div>
   );
-}
+};
 
 export default RootLayout;

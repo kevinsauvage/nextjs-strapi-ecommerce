@@ -9,7 +9,7 @@ import Container from '@/components/Container/Container';
 import seo from '@/data/seo';
 import getClient from '@/shopify/index';
 
-export default function Home({ bestSelling, newArrival, homeData }) {
+const Home = ({ bestSelling, newArrival, homeData }) => {
   const { banner, categories, featuredCollections, bigCardCollections } = homeData || {};
 
   return (
@@ -27,7 +27,9 @@ export default function Home({ bestSelling, newArrival, homeData }) {
       </Container>
     </div>
   );
-}
+};
+
+export default Home;
 
 export async function getStaticProps() {
   const bestSelling = await getClient().storefront.product.getProducts({ sortKey: 'BEST_SELLING', first: 9 });

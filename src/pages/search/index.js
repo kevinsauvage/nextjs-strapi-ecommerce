@@ -14,7 +14,7 @@ import getClient from '@/shopify/index';
 
 import styles from './search.module.scss';
 
-function SearchPage() {
+const SearchPage = () => {
   const [search, setSearch] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pageInfo, setPageInfo] = useState();
@@ -44,7 +44,7 @@ function SearchPage() {
       if (products) setSearch((prev) => [...prev, ...products]);
       if (pageInfoRes) setPageInfo(pageInfoRes);
     },
-    [searchTerm],
+    [searchTerm]
   );
 
   useEffect(() => {
@@ -77,6 +77,6 @@ function SearchPage() {
       </Container>
     </PageLayout>
   );
-}
+};
 
 export default SearchPage;

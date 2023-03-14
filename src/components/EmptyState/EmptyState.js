@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import styles from './EmptyState.module.scss';
 
-function EmptyState({ children, image, title, subtitle, altText }) {
+const EmptyState = ({ children, image, title, subtitle, altText }) => {
   return (
     <div className={styles.container}>
       <Image
@@ -17,6 +17,6 @@ function EmptyState({ children, image, title, subtitle, altText }) {
       {children}
     </div>
   );
-}
+};
 
 export default EmptyState;

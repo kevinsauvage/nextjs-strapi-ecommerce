@@ -2,7 +2,7 @@ import Button from '@/components/Button/Button';
 
 import style from './CollectionCard.module.scss';
 
-export default function CollectionCard({ collection }) {
+const CollectionCard = ({ collection }) => {
   const { title, image, handle, subtitle } = collection || {};
 
   const backgroundStyle = { backgroundImage: `url(${image.url})` };
@@ -20,4 +20,6 @@ export default function CollectionCard({ collection }) {
       </div>
     </div>
   );
-}
+};
+
+export default CollectionCard;

@@ -11,7 +11,7 @@ import seo from '@/data/seo';
 import { sendMail } from '@/helpers/apiNext';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 
-function ContactPage() {
+const ContactPage = () => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
@@ -30,7 +30,9 @@ function ContactPage() {
       });
 
       showToast.success('Message sent successfully');
-    } else showToast.error('Something went wrong, please try again');
+      return;
+    }
+    showToast.error('Something went wrong, please try again');
   };
 
   return (
@@ -67,6 +69,6 @@ function ContactPage() {
       </FormContainer>
     </PageLayout>
   );
-}
+};
 
 export default ContactPage;

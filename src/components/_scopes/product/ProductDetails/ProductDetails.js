@@ -6,7 +6,7 @@ import processHtml from '@/helpers/html';
 
 import styles from './ProductDetails.module.scss';
 
-function ProductDetails({ html }) {
+const ProductDetails = ({ html }) => {
   const [htmlSanitized, setHtmlSanitized] = useState();
 
   useEffect(() => {
@@ -20,6 +20,6 @@ function ProductDetails({ html }) {
       </Collapsible>
     </div>
   ) : null;
-}
+};
 
 export default ProductDetails;

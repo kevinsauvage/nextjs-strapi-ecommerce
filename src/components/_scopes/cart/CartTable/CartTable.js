@@ -8,7 +8,7 @@ import CartItem from '../CartItem/CartItem';
 
 import styles from './CartTable.module.scss';
 
-function CartTable({ handleChange, handleRemove, cart }) {
+const CartTable = ({ handleChange, handleRemove, cart }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const linesLength = cart?.lines.length || 0;
 
@@ -38,6 +38,6 @@ function CartTable({ handleChange, handleRemove, cart }) {
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
-}
+};
 
 export default CartTable;

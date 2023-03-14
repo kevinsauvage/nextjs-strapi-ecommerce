@@ -8,7 +8,7 @@ import Options from '../Options/Options';
 
 import styles from './ProductDescription.module.scss';
 
-export default function ProductDescription({
+const ProductDescription = ({
   handleSetSelectedProductOption,
   isOptionOutOfStock,
   handleChangeInput,
@@ -19,7 +19,7 @@ export default function ProductDescription({
   isModal,
   totalPrice,
   quantity,
-}) {
+}) => {
   const { handleSetProductToWishList, isWishlist } = useUserContext();
   const { toggleLoading } = useGlobalContext();
 
@@ -123,4 +123,6 @@ export default function ProductDescription({
       </div>
     </div>
   );
-}
+};
+
+export default ProductDescription;

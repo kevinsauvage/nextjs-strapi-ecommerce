@@ -1,6 +1,6 @@
 import Option from './Option/Option';
 
-export default function Options({ options, isOptionOutOfStock, isSelected, handleClick, styles }) {
+const Options = ({ options, isOptionOutOfStock, isSelected, handleClick, styles }) => {
   return Array.isArray(options) ? (
     <div className={styles}>
       {options.map((option) => (
@@ -19,4 +19,6 @@ export default function Options({ options, isOptionOutOfStock, isSelected, handl
       ))}
     </div>
   ) : null;
-}
+};
+
+export default Options;

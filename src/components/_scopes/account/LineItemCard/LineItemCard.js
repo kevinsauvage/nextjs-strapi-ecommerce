@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import styles from './LineItemCard.module.scss';
 
-function LineItemCard({ item }) {
+const LineItemCard = ({ item }) => {
   const { quantity, title, variant } = item;
   const { title: variantTitle, selectedOptions, image, priceV2 } = variant || {};
 
@@ -25,6 +25,6 @@ function LineItemCard({ item }) {
       </div>
     </div>
   );
-}
+};
 
 export default LineItemCard;

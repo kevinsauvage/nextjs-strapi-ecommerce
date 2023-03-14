@@ -6,7 +6,7 @@ import Crumbs from './Crumbs';
 
 import styles from './Breadcrumbs.module.scss';
 
-export default function Breadcrumbs({ lastElement }) {
+const Breadcrumbs = ({ lastElement }) => {
   const router = useRouter();
 
   const filterCrumb = ['pages', 'reset'];
@@ -53,4 +53,5 @@ export default function Breadcrumbs({ lastElement }) {
       </div>
     )
   );
-}
+};
+export default Breadcrumbs;

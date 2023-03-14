@@ -4,7 +4,7 @@ import useForm from '@/hooks/useForm';
 
 import styles from './Form.module.scss';
 
-export default function Form({
+const Form = ({
   children,
   onSubmit,
   initialValues,
@@ -13,7 +13,7 @@ export default function Form({
   extraClass = '',
   requiredFields = [],
   ...rest
-}) {
+}) => {
   const {
     formData,
     handleInputChange,
@@ -53,4 +53,6 @@ export default function Form({
       <div className={styles.children}>{iterateOverChildren(children)}</div>
     </form>
   );
-}
+};
+
+export default Form;

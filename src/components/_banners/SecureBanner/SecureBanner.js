@@ -5,7 +5,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './SecureBanner.module.scss';
 
-export default function SecureBanner() {
+const SecureBanner = () => {
   const items = [
     {
       text: 'Free shipping',
@@ -44,4 +44,6 @@ export default function SecureBanner() {
       </Container>
     </div>
   );
-}
+};
+
+export default SecureBanner;

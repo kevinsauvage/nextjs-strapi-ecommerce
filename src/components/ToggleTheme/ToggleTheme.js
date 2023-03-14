@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import styles from './ToggleTheme.module.scss';
 
-function ToggleTheme() {
+const ToggleTheme = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
@@ -79,6 +79,6 @@ function ToggleTheme() {
       </svg>
     </div>
   );
-}
+};
 
 export default ToggleTheme;

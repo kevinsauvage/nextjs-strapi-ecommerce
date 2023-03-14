@@ -5,7 +5,7 @@ import Carousel from '@/components/Carousel/Carousel';
 
 import styles from './PhotoGalleryWithCarousel.module.scss';
 
-export default function PhotoGalleryWithCarousel({ images }) {
+const PhotoGalleryWithCarousel = ({ images }) => {
   const [selected, setSelected] = useState({});
 
   useEffect(() => {
@@ -56,4 +56,6 @@ export default function PhotoGalleryWithCarousel({ images }) {
       )}
     </div>
   );
-}
+};
+
+export default PhotoGalleryWithCarousel;

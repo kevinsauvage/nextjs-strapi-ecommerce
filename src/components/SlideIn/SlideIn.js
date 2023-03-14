@@ -5,7 +5,7 @@ import { close } from '@/assets/svg';
 
 import styles from './SlideIn.module.scss';
 
-function SlideIn({ children, title, animationPosition = 'right', headerTitle }) {
+const SlideIn = ({ children, title, animationPosition = 'right', headerTitle }) => {
   const [showMenu, setShowMenu] = useState(false);
   const { asPath } = useRouter();
 
@@ -46,6 +46,6 @@ function SlideIn({ children, title, animationPosition = 'right', headerTitle }) 
       {showMenu && <div className={styles.backdrop} onClick={toggleMenu} aria-hidden="true" />}
     </div>
   );
-}
+};
 
 export default SlideIn;

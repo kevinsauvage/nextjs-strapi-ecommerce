@@ -6,7 +6,7 @@ import HeightAnimation from '../HeightAnimation/HeightAnimation';
 
 import styles from './Collapsible.module.scss';
 
-export default function Collapsible({ children, title, last, extraClass = {} }) {
+const Collapsible = ({ children, title, last, extraClass = {} }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -24,4 +24,6 @@ export default function Collapsible({ children, title, last, extraClass = {} }) 
       </HeightAnimation>
     </div>
   );
-}
+};
+
+export default Collapsible;

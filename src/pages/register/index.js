@@ -17,7 +17,7 @@ import getClient from '@/shopify/index';
 
 const { userFeedback } = config;
 
-function RegisterPage() {
+const RegisterPage = () => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
   const { push } = useRouter();
@@ -56,7 +56,7 @@ function RegisterPage() {
       if (checkoutId) {
         const assosiateRes = await getClient().storefront.checkout.associateCustomerToCheckout(
           checkoutId,
-          accessToken,
+          accessToken
         );
         if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
       } else {
@@ -133,6 +133,6 @@ function RegisterPage() {
       </FormContainer>
     </PageLayout>
   );
-}
+};
 
 export default RegisterPage;

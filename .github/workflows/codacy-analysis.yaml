@@ -12,3 +12,6 @@ jobs:
 
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master
+
+      - name: SonnarQube Code Analysis
+        uses: experfy/sonarqube@1.0.0

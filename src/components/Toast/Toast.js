@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import styles from './Toast.module.scss';
 
-function ToastItem({ tranformY = 0, toast, toastDispatch }) {
+const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
   function renderItem(content) {
     if (typeof content === 'function') return content();
     return <p>{content}</p>;
@@ -23,13 +23,15 @@ function ToastItem({ tranformY = 0, toast, toastDispatch }) {
       </div>
     </div>
   );
-}
+};
 
-export default function Toast({ toasts, toastDispatch }) {
+const Toast = ({ toasts, toastDispatch }) => {
   return (
     toasts.length > 0 &&
     toasts.map((toast, i) => (
       <ToastItem key={toast.id} toast={toast} toastDispatch={toastDispatch} tranformY={i * 50} />
     ))
   );
-}
+};
+
+export default Toast;

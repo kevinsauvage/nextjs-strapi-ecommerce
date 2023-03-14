@@ -15,7 +15,7 @@ import getClient from '@/shopify/index';
 
 import styles from './Wishlist.module.scss';
 
-function Wishlist() {
+const Wishlist = () => {
   const { wishlist, user, setUserWishlist } = useUserContext();
   const [loading, setLoading] = useState(true);
 
@@ -65,6 +65,6 @@ function Wishlist() {
       </Container>
     </PageLayout>
   );
-}
+};
 
 export default Wishlist;

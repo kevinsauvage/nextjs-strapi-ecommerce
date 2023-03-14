@@ -6,7 +6,7 @@ import RatingDisplay from '../RatingDisplay/RatingDisplay';
 
 import styles from './Review.module.scss';
 
-export default function Review({ review, handleRemoveProductReview }) {
+const Review = ({ review, handleRemoveProductReview }) => {
   const date = review?.createdAt && new Date(review?.createdAt);
   const rating = review?.review?.rating;
   const message = review?.review?.message;
@@ -37,4 +37,6 @@ export default function Review({ review, handleRemoveProductReview }) {
       </li>
     )
   );
-}
+};
+
+export default Review;

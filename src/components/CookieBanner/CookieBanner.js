@@ -7,7 +7,7 @@ import HeightAnimation from '../HeightAnimation/HeightAnimation';
 
 import styles from './CookieBanner.module.scss';
 
-function CookieBanner() {
+const CookieBanner = () => {
   const [showModal, setShowModal] = useState(false);
   const [consent, setConsent] = useState(true);
 
@@ -46,7 +46,7 @@ function CookieBanner() {
       setShowModal(false);
       setConsent(true);
     },
-    [tranformedSettings],
+    [tranformedSettings]
   );
 
   const acceptAllCookie = useCallback(() => {
@@ -160,6 +160,6 @@ function CookieBanner() {
       )}
     </>
   );
-}
+};
 
 export default CookieBanner;

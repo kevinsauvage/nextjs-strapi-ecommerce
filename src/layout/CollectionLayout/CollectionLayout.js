@@ -5,9 +5,7 @@ import useCollectionContext from '@/contexts/CollectionContext/useCollectionCont
 
 import PageLayout from '../PageLayout/PageLayout';
 
-import styles from './CollectionLayout.module.scss';
-
-function CollectionLayout({ children }) {
+const CollectionLayout = ({ children }) => {
   const { collectionNav, collection } = useCollectionContext();
   const { title, description } = collection || {};
 
@@ -16,9 +14,9 @@ function CollectionLayout({ children }) {
       <CollectionNav items={collectionNav} />
       <Breadcrumbs lastElement={title} />
       <CollectionBanner title={title} description={description} />
-      <div className={styles.children}>{children}</div>
+      {children}
     </PageLayout>
   );
-}
+};
 
 export default CollectionLayout;

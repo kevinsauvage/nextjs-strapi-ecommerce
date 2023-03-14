@@ -4,7 +4,7 @@ import config from '@/config/index';
 
 import styles from './PageLayout.module.scss';
 
-export default function PageLayout({ children, title, description }) {
+const PageLayout = ({ children, title, description }) => {
   const secundaryTitle = title ? `| ${title}` : '';
   const siteTitle = `${config.name} ${secundaryTitle}`;
 
@@ -18,4 +18,6 @@ export default function PageLayout({ children, title, description }) {
       <div className={styles.children}>{children}</div>
     </div>
   );
-}
+};
+
+export default PageLayout;

@@ -5,7 +5,7 @@ import { arrowLeft2, arrowRight2 } from '@/assets/svg';
 
 import styles from './PhotoSlider.module.scss';
 
-export default function PhotoSlider({ variants, selectedVariant }) {
+const PhotoSlider = ({ variants, selectedVariant }) => {
   const [selected, setSelected] = useState({});
   const [index, setIndex] = useState(0);
 
@@ -58,4 +58,6 @@ export default function PhotoSlider({ variants, selectedVariant }) {
       )}
     </div>
   );
-}
+};
+
+export default PhotoSlider;

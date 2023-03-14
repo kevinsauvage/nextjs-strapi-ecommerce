@@ -7,7 +7,7 @@ import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';
 
 import styles from './Header.module.scss';
 
-function Header({ headerMenu }) {
+const Header = ({ headerMenu }) => {
   return (
     <header className={`${styles.header}`}>
       <Container>
@@ -22,6 +22,6 @@ function Header({ headerMenu }) {
       </Container>
     </header>
   );
-}
+};
 
 export default Header;

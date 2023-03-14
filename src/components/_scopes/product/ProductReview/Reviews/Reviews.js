@@ -4,7 +4,7 @@ import Pagination from '@/components/Pagination/Pagination';
 
 import Review from '../Review/Review';
 
-export default function Reviews({ reviews, handleRemoveProductReview }) {
+const Reviews = ({ reviews, handleRemoveProductReview }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(reviews.length / 5);
@@ -18,7 +18,7 @@ export default function Reviews({ reviews, handleRemoveProductReview }) {
         total += curr.review.rating;
         return total;
       }, 0) / reviews.length,
-    [reviews],
+    [reviews]
   );
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
@@ -33,4 +33,6 @@ export default function Reviews({ reviews, handleRemoveProductReview }) {
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
-}
+};
+
+export default Reviews;

@@ -1,6 +1,6 @@
 import styles from './Option.module.scss';
 
-export default function Option({ option, handleClick, isSelected, isOptionOutOfStock }) {
+const Option = ({ option, handleClick, isSelected, isOptionOutOfStock }) => {
   return (
     Array.isArray(option.values) &&
     option.values.length > 1 && (
@@ -23,4 +23,6 @@ export default function Option({ option, handleClick, isSelected, isOptionOutOfS
       </div>
     )
   );
-}
+};
+
+export default Option;

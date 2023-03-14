@@ -7,7 +7,7 @@ import AccountRow from '../AccountRow/AccountRow';
 
 import styles from './SuccessfulFulfillments.module.scss';
 
-export default function SuccessfulFulfillments({ successfulFulfillments }) {
+const SuccessfulFulfillments = ({ successfulFulfillments }) => {
   return (
     <div className={styles.SuccessfulFulfillments}>
       <HeightAnimation
@@ -37,4 +37,6 @@ export default function SuccessfulFulfillments({ successfulFulfillments }) {
       </HeightAnimation>
     </div>
   );
-}
+};
+
+export default SuccessfulFulfillments;

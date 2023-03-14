@@ -7,7 +7,7 @@ import Indicators from './Indicators/Indicators';
 
 import styles from './Carousel.module.scss';
 
-function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 }) {
+const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 }) => {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
@@ -119,6 +119,6 @@ function Carousel({ children, title, itemToShow = 4, showButtons, spacing = 6 })
       </div>
     </>
   );
-}
+};
 
 export default Carousel;

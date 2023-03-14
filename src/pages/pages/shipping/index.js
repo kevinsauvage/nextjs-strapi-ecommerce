@@ -8,7 +8,7 @@ import getClient from '@/shopify/index';
 
 import styles from './shipping.module.scss';
 
-function ShippingPage({ shippingPolicy }) {
+const ShippingPage = ({ shippingPolicy }) => {
   const { title, description } = seo.pages.privacy || {};
 
   return (
@@ -22,7 +22,7 @@ function ShippingPage({ shippingPolicy }) {
       </div>
     </PageLayout>
   );
-}
+};
 
 export default ShippingPage;
 

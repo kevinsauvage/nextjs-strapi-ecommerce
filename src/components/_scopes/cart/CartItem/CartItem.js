@@ -9,7 +9,7 @@ import { Row, TData } from '../../table/Table/Table';
 
 import styles from './CartItem.module.scss';
 
-export default function CartItem({ handleChange, removeFromCart, item }) {
+const CartItem = ({ handleChange, removeFromCart, item }) => {
   const { merchandise, quantity, id } = item || {};
   const { priceV2, product, title: variantTitle, image, quantityAvailable } = merchandise || {};
   const { title, handle, collections, productType } = product || {};
@@ -73,4 +73,6 @@ export default function CartItem({ handleChange, removeFromCart, item }) {
       </TData>
     </Row>
   );
-}
+};
+
+export default CartItem;

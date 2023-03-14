@@ -10,7 +10,7 @@ import RootLayout from '@/layout/RootLayout/RootLayout';
 
 import '../styles/index.scss';
 
-function MyApp({ Component, pageProps }) {
+const MyApp = ({ Component, pageProps }) => {
   const getLayout = Component.getLayout || ((page) => page);
   const siteTitle = `${config.name} | Home page`;
 
@@ -45,6 +45,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </GlobalProvider>
     </>
   );
-}
+};
 
 export default MyApp;

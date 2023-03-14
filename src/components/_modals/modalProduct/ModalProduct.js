@@ -9,7 +9,7 @@ import Modal from '../Modal/Modal';
 
 import styles from './ModalProduct.module.scss';
 
-export default function ModalProduct({ handleClose, selectedProduct }) {
+const ModalProduct = ({ handleClose, selectedProduct }) => {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,6 +22,10 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
         .then((res) => {
           if (res?.handle) setProduct(res);
           setLoading(false);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.err(err);
         });
     }
   }, [selectedProduct]);
@@ -56,4 +60,6 @@ export default function ModalProduct({ handleClose, selectedProduct }) {
       </div>
     </Modal>
   );
-}
+};
+
+export default ModalProduct;

@@ -16,7 +16,7 @@ import { handleSetTokenCookies } from '@/helpers/cookies';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-function Password({ resetUrl }) {
+const Password = ({ resetUrl }) => {
   const { push, query } = useRouter();
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
@@ -76,7 +76,7 @@ function Password({ resetUrl }) {
       </FormContainer>
     </PageLayout>
   );
-}
+};
 
 export default Password;
 

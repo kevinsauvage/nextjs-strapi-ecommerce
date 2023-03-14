@@ -6,7 +6,7 @@ import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 
 import styles from './ProductList.module.scss';
 
-function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, loading }) {
+const ProductsList = ({ products, layout = 'grid', hasNextPage, handleNext, loading }) => {
   return (
     Array.isArray(products) && (
       <div className={styles.ProductsList}>
@@ -26,6 +26,6 @@ function ProductsList({ products, layout = 'grid', hasNextPage, handleNext, load
       </div>
     )
   );
-}
+};
 
 export default ProductsList;

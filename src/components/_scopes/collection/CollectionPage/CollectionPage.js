@@ -12,7 +12,7 @@ import Filters from '../Filters/Filters';
 
 import styles from './collectionPage.module.scss';
 
-function CollectionPage() {
+const CollectionPage = () => {
   const { loading, products, layout, handleNext, pageInfo, handleSort, getFormattedFilter } =
     useCollectionContext();
 
@@ -63,6 +63,6 @@ function CollectionPage() {
       </main>
     </div>
   );
-}
+};
 
 export default CollectionPage;

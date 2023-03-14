@@ -30,8 +30,6 @@
   }
 }
 
-.menuItem {}
-
 .menuLink {
   display: block;
   display: flex;
@@ -52,8 +50,6 @@
 .userNav {
   border-top: 1px solid var(--surface-300);
   padding: var(--space-1);
-
-  .userNavList {}
 
   .userNavListItem {
     padding: var(--space-1);

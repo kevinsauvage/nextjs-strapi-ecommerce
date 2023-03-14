@@ -18,7 +18,7 @@ import getClient from '@/shopify/index';
 
 const { userFeedback } = config;
 
-function LoginPage() {
+const LoginPage = () => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
   const { push, query } = useRouter();
@@ -83,6 +83,6 @@ function LoginPage() {
       </FormContainer>
     </PageLayout>
   );
-}
+};
 
 export default LoginPage;

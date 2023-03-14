@@ -6,7 +6,7 @@ import ProductsList from '../../product/ProductList/ProductsList';
 
 import styles from './ProductsDisplay.module.scss';
 
-function ProductsDisplay({ bestSelling, newArrival }) {
+const ProductsDisplay = ({ bestSelling, newArrival }) => {
   const [index, setIndex] = useState(0);
   const [products] = useState([bestSelling.products, newArrival.products]);
   const nav = useMemo(() => [{ title: 'Best selling' }, { title: 'New Arrival' }], []);
@@ -33,6 +33,6 @@ function ProductsDisplay({ bestSelling, newArrival }) {
       <ProductsList products={products[index]} layout="grid" />
     </div>
   );
-}
+};
 
 export default ProductsDisplay;

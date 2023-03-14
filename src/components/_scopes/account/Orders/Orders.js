@@ -2,7 +2,7 @@ import OrderCard from '../OrderCard/OrderCard';
 
 import styles from './Orders.module.scss';
 
-export default function Orders({ orders }) {
+const Orders = ({ orders }) => {
   if (Array.isArray(orders)) {
     return (
       <ul className={styles.orders}>
@@ -14,4 +14,6 @@ export default function Orders({ orders }) {
   }
 
   return null;
-}
+};
+
+export default Orders;

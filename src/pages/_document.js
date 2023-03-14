@@ -1,7 +1,7 @@
 // pages/_document.js
 import { Head, Html, Main, NextScript } from 'next/document';
 
-export default function Document() {
+const Document = () => {
   return (
     <Html className="theme-light" lang="en">
       <Head>
@@ -21,4 +21,6 @@ export default function Document() {
       </body>
     </Html>
   );
-}
+};
+
+export default Document;

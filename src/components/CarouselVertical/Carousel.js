@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 
 import styles from './Carousel.module.scss';
 
-function CarouselVertical({ children, itemToShow = 5, showButtons }) {
+const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
   const [maxTranslatePosition, setMaxTranslatePosition] = useState(0);
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselHeight, setCarouselHeight] = useState(0);
@@ -96,6 +96,6 @@ function CarouselVertical({ children, itemToShow = 5, showButtons }) {
       )}
     </div>
   );
-}
+};
 
 export default CarouselVertical;

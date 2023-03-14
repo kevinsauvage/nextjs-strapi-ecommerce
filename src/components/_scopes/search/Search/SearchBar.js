@@ -4,7 +4,7 @@ import Search from './Search';
 
 import styles from './SearchBar.module.scss';
 
-export default function SearchBar() {
+const SearchBar = () => {
   const { searchOpen } = useGlobalContext();
 
   return (
@@ -12,4 +12,6 @@ export default function SearchBar() {
       {searchOpen && <Search size="medium" />}
     </div>
   );
-}
+};
+
+export default SearchBar;

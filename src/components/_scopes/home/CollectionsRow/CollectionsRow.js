@@ -5,7 +5,7 @@ import SectionTitle from '@/components/SectionTitle/SectionTitle';
 
 import styles from './CollectionsRow.module.scss';
 
-function CollectionsRow({ collections }) {
+const CollectionsRow = ({ collections }) => {
   return (
     <div className={styles.CollectionsRow}>
       <SectionTitle first="Shop By" second="Category" />
@@ -27,6 +27,6 @@ function CollectionsRow({ collections }) {
       </ul>
     </div>
   );
-}
+};
 
 export default CollectionsRow;

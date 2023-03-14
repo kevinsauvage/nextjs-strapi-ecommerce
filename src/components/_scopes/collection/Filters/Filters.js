@@ -11,7 +11,7 @@ import PriceFilters from './PriceFilters/PriceFilters';
 
 import styles from './Filters.module.scss';
 
-export default function Filters() {
+const Filters = () => {
   const { allFilters, applyFilters, isSelectionDifferent, resetFilters } = useCollectionContext();
   const { query } = useRouter();
 
@@ -59,4 +59,6 @@ export default function Filters() {
       </div>
     </div>
   );
-}
+};
+
+export default Filters;

@@ -12,7 +12,7 @@ import SlideIn from '../SlideIn/SlideIn';
 
 import styles from './HamburgerMenu.module.scss';
 
-export default function HamburgerMenu({ headerMenu }) {
+const HamburgerMenu = ({ headerMenu }) => {
   const [userMenuItems, setUserMenuItems] = useState();
   const router = useRouter();
 
@@ -96,7 +96,7 @@ export default function HamburgerMenu({ headerMenu }) {
                           {menuItem.icon} {menuItem.text}
                         </Link>
                       </li>
-                    ) : null,
+                    ) : null
                   )}
                 </ul>
               </nav>
@@ -106,4 +106,6 @@ export default function HamburgerMenu({ headerMenu }) {
       </SlideIn>
     </div>
   );
-}
+};
+
+export default HamburgerMenu;

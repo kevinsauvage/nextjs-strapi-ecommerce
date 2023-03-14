@@ -4,7 +4,7 @@ import SuccessfulFulfillments from './SuccessfulFulfillments';
 
 import style from './OrderCard.module.scss';
 
-function OrderCard({ order }) {
+const OrderCard = ({ order }) => {
   const {
     financialStatus,
     email,
@@ -70,6 +70,6 @@ function OrderCard({ order }) {
       )}
     </li>
   );
-}
+};
 
 export default OrderCard;

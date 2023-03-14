@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import styles from './Button.module.scss';
 
-export default function Button({
+const Button = ({
   children,
   type,
   onClick,
@@ -16,7 +16,7 @@ export default function Button({
   disabled,
   href,
   ...rest
-}) {
+}) => {
   const getStyle = () => {
     if (primary) return styles.primary;
     if (secondary) return styles.secondary;
@@ -47,4 +47,6 @@ export default function Button({
       {text}
     </button>
   );
-}
+};
+
+export default Button;

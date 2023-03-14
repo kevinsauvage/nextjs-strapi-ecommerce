@@ -1,27 +1,27 @@
 import styles from './Table.module.scss';
 
-function Table({ children }) {
+const Table = ({ children }) => {
   return <table className={styles.table}>{children}</table>;
-}
+};
 
-export function Body({ children }) {
+export const Body = ({ children }) => {
   return <tbody className={styles.body}>{children}</tbody>;
-}
+};
 
-export function Head({ children }) {
+export const Head = ({ children }) => {
   return <thead className={styles.head}>{children}</thead>;
-}
+};
 
-export function Row({ children }) {
+export const Row = ({ children }) => {
   return <tr className={styles.row}>{children}</tr>;
-}
+};
 
-export function THead({ children }) {
+export const THead = ({ children }) => {
   return <th className={styles.tHead}>{children}</th>;
-}
+};
 
-export function TData({ children }) {
+export const TData = ({ children }) => {
   return <td className={styles.tData}>{children}</td>;
-}
+};
 
 export default Table;

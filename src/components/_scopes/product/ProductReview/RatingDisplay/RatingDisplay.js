@@ -1,6 +1,6 @@
 import styles from './RatingDisplay.module.scss';
 
-export default function RatingDisplay({ percentage = 90 }) {
+const RatingDisplay = ({ percentage = 90 }) => {
   return (
     <div className={styles.rating}>
       <div className={styles.filled} style={{ width: `${percentage}%` }}>
@@ -11,4 +11,6 @@ export default function RatingDisplay({ percentage = 90 }) {
       </div>
     </div>
   );
-}
+};
+
+export default RatingDisplay;

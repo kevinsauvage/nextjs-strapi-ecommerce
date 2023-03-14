@@ -10,7 +10,7 @@ import Price from '../Price/Price';
 
 import styles from './ProductCardRow.module.scss';
 
-export default function ProductCardRow({ product }) {
+const ProductCardRow = ({ product }) => {
   const {
     isOptionSelected,
     handleSetSelectedProductOption,
@@ -82,4 +82,6 @@ export default function ProductCardRow({ product }) {
       </div>
     </li>
   );
-}
+};
+
+export default ProductCardRow;

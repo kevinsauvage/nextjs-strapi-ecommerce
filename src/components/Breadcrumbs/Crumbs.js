@@ -4,7 +4,7 @@ import { arrowRight2 } from '@/assets/svg';
 
 import styles from './Crumbs.module.scss';
 
-export default function Crumbs({ title, href, last, isNotClickable }) {
+const Crumbs = ({ title, href, last, isNotClickable }) => {
   if (isNotClickable) return null;
   if (last) {
     const t = decodeURIComponent(title)
@@ -30,4 +30,6 @@ export default function Crumbs({ title, href, last, isNotClickable }) {
       {!last && <p className={styles.arrow}>{arrowRight2}</p>}
     </>
   );
-}
+};
+
+export default Crumbs;

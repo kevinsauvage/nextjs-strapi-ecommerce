@@ -8,7 +8,7 @@ import getClient from '@/shopify/index';
 
 import styles from './Terms.module.scss';
 
-function TermsPage({ termsOfService }) {
+const TermsPage = ({ termsOfService }) => {
   return (
     <PageLayout title={seo.pages.terms.title} description={seo.pages.terms.description}>
       <PageBanner title={seo.pages.terms.title} />
@@ -20,7 +20,7 @@ function TermsPage({ termsOfService }) {
       </div>
     </PageLayout>
   );
-}
+};
 
 export default TermsPage;
 

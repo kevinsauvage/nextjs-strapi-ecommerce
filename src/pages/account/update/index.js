@@ -17,7 +17,7 @@ import getClient from '@/shopify/index';
 
 import styles from './Update.module.scss';
 
-function OrderDetail() {
+const OrderDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { user, dispatch } = useUserContext();
   const { toggleLoading } = useGlobalContext();
@@ -124,6 +124,6 @@ function OrderDetail() {
       </AccountLayout>
     </PageLayout>
   );
-}
+};
 
 export default OrderDetail;

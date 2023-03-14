@@ -17,7 +17,7 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-function Addresses() {
+const Addresses = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const { dispatch, user, addresses } = useUserContext();
@@ -213,6 +213,6 @@ function Addresses() {
       )}
     </PageLayout>
   );
-}
+};
 
 export default Addresses;

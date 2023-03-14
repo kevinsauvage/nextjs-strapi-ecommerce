@@ -14,7 +14,7 @@ import getClient from '@/shopify/index';
 
 import styles from './ProductSlug.module.scss';
 
-function ProductPage({ product, recommendations = [] }) {
+const ProductPage = ({ product, recommendations = [] }) => {
   const router = useRouter();
 
   const {
@@ -66,7 +66,7 @@ function ProductPage({ product, recommendations = [] }) {
       )}
     </PageLayout>
   );
-}
+};
 
 export default ProductPage;
 

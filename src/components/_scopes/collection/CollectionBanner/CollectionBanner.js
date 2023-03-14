@@ -2,7 +2,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './CollectionBanner.module.scss';
 
-function CollectionBanner({ title, description }) {
+const CollectionBanner = ({ title, description }) => {
   return (
     <div className={styles.CollectionBanner}>
       <Container>
@@ -13,6 +13,6 @@ function CollectionBanner({ title, description }) {
       </Container>
     </div>
   );
-}
+};
 
 export default CollectionBanner;

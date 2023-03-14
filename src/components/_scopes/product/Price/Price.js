@@ -1,6 +1,6 @@
 import styles from './Price.module.scss';
 
-export default function Price({ compareAtPriceV2, priceV2, size = 'M' }) {
+const Price = ({ compareAtPriceV2, priceV2, size = 'M' }) => {
   const isDiscount = compareAtPriceV2 && compareAtPriceV2?.amount !== priceV2?.amount;
 
   const sizeStyles = {
@@ -22,4 +22,6 @@ export default function Price({ compareAtPriceV2, priceV2, size = 'M' }) {
       </p>
     </div>
   );
-}
+};
+
+export default Price;

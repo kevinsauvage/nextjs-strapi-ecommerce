@@ -4,7 +4,7 @@ import ActiveLink from '@/components/ActiveLink/ActiveLink';
 
 import styles from './Navbar.module.scss';
 
-function Navbar({ headerMenu }) {
+const Navbar = ({ headerMenu }) => {
   const { asPath } = useRouter();
 
   return (
@@ -25,6 +25,6 @@ function Navbar({ headerMenu }) {
       </ul>
     </nav>
   );
-}
+};
 
 export default Navbar;

@@ -5,7 +5,7 @@ import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
 
 import styles from './Filter.module.scss';
 
-function Filter({ filter, children }) {
+const Filter = ({ filter, children }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -19,6 +19,6 @@ function Filter({ filter, children }) {
       </HeightAnimation>
     </div>
   );
-}
+};
 
 export default Filter;

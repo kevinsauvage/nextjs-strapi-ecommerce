@@ -5,7 +5,7 @@ import seo from '@/data/seo';
 import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 
-function Account() {
+const Account = () => {
   const { user } = useUserContext();
   const { firstName, lastName } = user || {};
   const [isLoading, setIsLoading] = useState(false);
@@ -34,6 +34,6 @@ function Account() {
       />
     </PageLayout>
   );
-}
+};
 
 export default Account;

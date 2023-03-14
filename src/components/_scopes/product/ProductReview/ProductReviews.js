@@ -19,7 +19,7 @@ import Reviews from './Reviews/Reviews';
 
 import styles from './ProductReviews.module.scss';
 
-export default function ProductReviews({ product }) {
+const ProductReviews = ({ product }) => {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   const [rating, setRating] = useState();
@@ -80,9 +80,9 @@ export default function ProductReviews({ product }) {
         setRating();
         return showToast.success('Review correctly added');
       }
-      return showToast.error('Couldn\'t add the review, please try again later');
+      return showToast.error("Couldn't add the review, please try again later");
     },
-    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName],
+    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName]
   );
 
   const handleRemoveProductReview = useCallback(
@@ -121,9 +121,9 @@ export default function ProductReviews({ product }) {
         setReviews(response.response);
         return showToast.success('Review correctly removed');
       }
-      return showToast.error('Couldn\'t remove the review, please try again later');
+      return showToast.error("Couldn't remove the review, please try again later");
     },
-    [asPath, product.id, push, reviews, showToast, user?.id],
+    [asPath, product.id, push, reviews, showToast, user?.id]
   );
 
   const totalReviews = reviews.length;
@@ -184,4 +184,6 @@ export default function ProductReviews({ product }) {
       </Collapsible>
     </div>
   );
-}
+};
+
+export default ProductReviews;

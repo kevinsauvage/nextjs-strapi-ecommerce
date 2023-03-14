@@ -8,7 +8,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 
 import styles from './UserButtons.module.scss';
 
-export default function UserButtons() {
+const UserButtons = () => {
   const { toggleSearch, searchOpen } = useGlobalContext();
   const { getTotalItems } = useCartContext();
 
@@ -62,7 +62,7 @@ export default function UserButtons() {
           aria-label={el.name}
           type="button"
           key={i}
-          onClick={() => el.onClick && el.onClick()}
+          onClick={() => el.onClick?.()}
           className={`${styles.button} ${el.extraClass}`}
         >
           {el.item}
@@ -70,4 +70,6 @@ export default function UserButtons() {
       ))}
     </div>
   );
-}
+};
+
+export default UserButtons;

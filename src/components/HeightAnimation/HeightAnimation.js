@@ -4,14 +4,14 @@ import styles from './HeightAnimation.module.scss';
 
 // Animation type: hover, button
 // Hover animation need initial height higher than 0
-function HeightAnimation({
+const HeightAnimation = ({
   children,
   animationType,
   isOpen,
   initialHeight = 0,
   buttonTextActive = 'Show less',
   buttonTextInactive = 'Show more',
-}) {
+}) => {
   const refChildren = useRef();
   const [maxHeight, setMaxHeight] = useState();
   const [actualHeight, setActualHeight] = useState(initialHeight);
@@ -70,6 +70,6 @@ function HeightAnimation({
       )}
     </>
   );
-}
+};
 
 export default HeightAnimation;

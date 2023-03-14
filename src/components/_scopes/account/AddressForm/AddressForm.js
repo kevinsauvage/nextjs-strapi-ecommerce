@@ -5,7 +5,7 @@ import Row from '@/components/_scopes/forms/Row/Row';
 
 import styles from './AddressForm.module.scss';
 
-function AddressForm({ initialValues, onSubmit, buttonText, title }) {
+const AddressForm = ({ initialValues, onSubmit, buttonText, title }) => {
   const { address1, address2, city, company, lastName, firstName, zip, phone, country, province } =
     initialValues || {};
 
@@ -129,6 +129,6 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
       <Buttons text={buttonText} />
     </Form>
   );
-}
+};
 
 export default AddressForm;

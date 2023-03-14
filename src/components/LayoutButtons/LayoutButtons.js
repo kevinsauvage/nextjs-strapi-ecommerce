@@ -2,7 +2,7 @@ import { RiGridFill, RiListCheck2 } from 'react-icons/ri';
 
 import styles from './LayoutButtons.module.scss';
 
-export default function LayoutButtons({ handleChange, selected }) {
+const LayoutButtons = ({ handleChange, selected }) => {
   return (
     <div className={styles.LayoutButtons}>
       <button
@@ -23,4 +23,6 @@ export default function LayoutButtons({ handleChange, selected }) {
       </button>
     </div>
   );
-}
+};
+
+export default LayoutButtons;

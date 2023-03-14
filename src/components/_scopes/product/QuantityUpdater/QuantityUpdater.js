@@ -5,14 +5,13 @@ import { useRouter } from 'next/router';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 import styles from './QuantityUpdater.module.scss';
-
-export default function QuantityUpdater({
+const QuantityUpdater = ({
   originalQuantity,
   onChange,
   quantityAvailable,
   extraStyles,
   showTitle = true,
-}) {
+}) => {
   const [quantity, setQuantity] = useState(originalQuantity);
   const input = useRef(null);
   const { showToast } = useToastContext();
@@ -81,4 +80,6 @@ export default function QuantityUpdater({
       </div>
     </div>
   );
-}
+};
+
+export default QuantityUpdater;

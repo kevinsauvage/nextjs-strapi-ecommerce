@@ -7,8 +7,7 @@ import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { capitalizeFirstLetter } from '@/helpers/string';
 
 import styles from './Search.module.scss';
-
-export default function Search({ size }) {
+const Search = ({ size }) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const { searchOpen } = useGlobalContext();
@@ -60,4 +59,6 @@ export default function Search({ size }) {
       </Container>
     </div>
   );
-}
+};
+
+export default Search;

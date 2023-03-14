@@ -5,7 +5,7 @@ import useOnClickOutside from '@/hooks/useClickOutside';
 
 import styles from './DropDown.module.scss';
 
-function Dropdown({ options, changeCallback, selected }) {
+const Dropdown = ({ options, changeCallback, selected }) => {
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(selected || options[0]);
   const containerRef = useRef();
@@ -54,6 +54,6 @@ function Dropdown({ options, changeCallback, selected }) {
       )}
     </div>
   );
-}
+};
 
 export default Dropdown;

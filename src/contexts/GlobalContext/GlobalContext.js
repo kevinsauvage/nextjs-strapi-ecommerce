@@ -7,7 +7,7 @@ import { actions, GlobalReducer, initialState } from './GlobalReducer';
 
 export const GlobalStoreContext = createContext();
 
-export function GlobalProvider({ children }) {
+export const GlobalProvider = ({ children }) => {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
   const router = useRouter();
   const { searchOpen, selectedProduct, loading } = states;
@@ -16,7 +16,7 @@ export function GlobalProvider({ children }) {
 
   const handleRender = useCallback(async () => {
     const res = await generateDelegateToken();
-    if (!res?.ok) console.error('Couldn\'t  set delegate token');
+    if (!res?.ok) console.error("Couldn't  set delegate token");
   }, []);
 
   useEffect(() => {
@@ -49,8 +49,8 @@ export function GlobalProvider({ children }) {
 
       resetToggle,
     }),
-    [searchOpen, selectedProduct, loading, resetToggle],
+    [searchOpen, selectedProduct, loading, resetToggle]
   );
 
   return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;
-}
+};

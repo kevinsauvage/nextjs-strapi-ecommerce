@@ -4,7 +4,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './Banner1.module.scss';
 
-export default function BannerHome({ data }) {
+const BannerHome = ({ data }) => {
   const { image, style = {} } = data || {};
 
   return (
@@ -30,4 +30,6 @@ export default function BannerHome({ data }) {
       </Container>
     </section>
   );
-}
+};
+
+export default BannerHome;

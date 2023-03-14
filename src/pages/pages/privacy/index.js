@@ -8,7 +8,7 @@ import getClient from '@/shopify/index';
 
 import styles from './Privacy.module.scss';
 
-function PrivacyPage({ privacyPolicy }) {
+const PrivacyPage = ({ privacyPolicy }) => {
   return (
     <PageLayout title={seo.pages.privacy.title} description={seo.pages.privacy.description}>
       <PageBanner title={seo.pages.privacy.title} />
@@ -20,7 +20,7 @@ function PrivacyPage({ privacyPolicy }) {
       </div>
     </PageLayout>
   );
-}
+};
 
 export default PrivacyPage;
 

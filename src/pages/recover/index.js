@@ -12,7 +12,7 @@ import seo from '@/data/seo';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-function ResetPassword() {
+const ResetPassword = () => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
@@ -49,6 +49,6 @@ function ResetPassword() {
       </FormContainer>
     </PageLayout>
   );
-}
+};
 
 export default ResetPassword;

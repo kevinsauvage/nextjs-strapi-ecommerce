@@ -2,7 +2,7 @@ import Container from '@/components/Container/Container';
 
 import styles from './PageBanner.module.scss';
 
-function PageBanner({ title, children }) {
+const PageBanner = ({ title, children }) => {
   return (
     <div className={styles.PageBanner}>
       <Container>
@@ -11,6 +11,6 @@ function PageBanner({ title, children }) {
       </Container>
     </div>
   );
-}
+};
 
 export default PageBanner;

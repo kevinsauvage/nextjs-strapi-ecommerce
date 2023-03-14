@@ -7,7 +7,6 @@
   },
   "plugins": ["react", "simple-import-sort"],
   "extends": [
-    "airbnb",
     "prettier",
     "next/core-web-vitals",
     "eslint:recommended",
@@ -66,6 +65,9 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "no-console": "off",
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+
+    // "no-restricted-syntax": ["error", "FunctionExpression", "FunctionDeclaration"],
     "jsx-a11y/label-has-associated-control": [
       2,
       {
@@ -80,9 +82,7 @@
     "no-empty-function": "error",
     "prefer-const": "error",
     "no-use-before-define": "error",
-    "no-multi-spaces": "error",
-    "comma-dangle": ["error", "always-multiline"],
-    "quotes": ["error", "single"]
+    "no-multi-spaces": "error"
   },
   "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {

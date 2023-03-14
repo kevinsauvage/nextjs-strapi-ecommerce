@@ -15,7 +15,7 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-export default function OrdersPage() {
+const OrdersPage = () => {
   const { orders, dispatch, ordersPageInfo: pageInfo } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToastContext();
@@ -41,7 +41,7 @@ export default function OrdersPage() {
         setError(true);
       }
     },
-    [dispatch, showToast],
+    [dispatch, showToast]
   );
 
   useEffect(() => {
@@ -84,4 +84,6 @@ export default function OrdersPage() {
       </AccountLayout>
     </PageLayout>
   );
-}
+};
+
+export default OrdersPage;

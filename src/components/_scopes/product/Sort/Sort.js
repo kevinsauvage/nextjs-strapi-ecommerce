@@ -4,7 +4,7 @@ import Dropdown from '@/components/DropDown/DropDown';
 
 import styles from './Sort.module.scss';
 
-export default function Sort({ handleChange }) {
+const Sort = ({ handleChange }) => {
   const { query } = useRouter();
 
   const sortingOptions = [
@@ -23,4 +23,6 @@ export default function Sort({ handleChange }) {
       />
     </div>
   );
-}
+};
+
+export default Sort;
