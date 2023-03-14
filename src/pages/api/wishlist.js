@@ -16,7 +16,8 @@ const handle = async (req, res) => {
       const errors = response?.userErrors;
 
       if (errors?.length > 0) {
-        return console.error(errors);
+        console.error(errors);
+        return res.status(500).json({ message: 'Method not allowed' });
       }
 
       const value = response?.metafields?.filter((field) => field.key === 'wishlist')?.[0]?.value;

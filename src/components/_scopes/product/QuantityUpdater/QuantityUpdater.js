@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 import styles from './QuantityUpdater.module.scss';
+
 const QuantityUpdater = ({
   originalQuantity,
   onChange,
