@@ -9,7 +9,6 @@ const Form = ({
   onSubmit,
   initialValues,
   title,
-  buttonText,
   extraClass = '',
   requiredFields = [],
   ...rest
