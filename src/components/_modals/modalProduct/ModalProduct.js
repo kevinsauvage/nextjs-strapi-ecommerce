@@ -25,7 +25,7 @@ const ModalProduct = ({ handleClose, selectedProduct }) => {
         })
         .catch((err) => {
           setLoading(false);
-          console.err(err);
+          console.error(err);
         });
     }
   }, [selectedProduct]);
