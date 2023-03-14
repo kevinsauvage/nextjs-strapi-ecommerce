@@ -30,16 +30,14 @@ const HeightAnimation = ({
     }
   }
   useEffect(() => {
-    if (!refChildren.current) return;
-    const resizeObserver = new ResizeObserver(() => {
-      calculateHeight();
-      return undefined; // explicitly return undefined
-    });
-    resizeObserver.observe(refChildren.current);
-    // eslint-disable-next-line consistent-return
-    return () => {
-      resizeObserver.disconnect();
-    };
+    let resizeObserver;
+    if (refChildren.current) {
+      resizeObserver = new ResizeObserver(() => {
+        calculateHeight();
+      });
+      resizeObserver.observe(refChildren.current);
+    }
+    return () => resizeObserver.disconnect();
   }, []);
 
   return (
