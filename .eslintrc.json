@@ -50,14 +50,7 @@
     ],
     "react/prop-types": 0,
     "react/no-unused-prop-types": "error",
-    "no-unused-vars": [
-      "error",
-      {
-        "ignoreRestSiblings": true,
-        "destructuredArrayIgnorePattern": "[A-Z]",
-        "caughtErrors": "none"
-      }
-    ],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "default-param-last": 0,
