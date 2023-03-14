@@ -12,6 +12,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
   return (
     <Form
       onSubmit={onSubmit}
+      extraClass={styles.formContainer}
       initialValues={{
         address1,
         address2,
@@ -29,7 +30,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
     >
       <div className={styles.form}>
         <div className={styles.info}>
-          <h5 className={styles.title}>Contact Information</h5>
+          <h6 className={styles.title}>Contact Information</h6>
           <Row>
             <Input
               placeholder="First name"
@@ -63,7 +64,7 @@ function AddressForm({ initialValues, onSubmit, buttonText, title }) {
           </Row>
         </div>
         <div>
-          <h5 className={styles.title}>Address</h5>
+          <h6 className={styles.title}>Address</h6>
           <Row>
             <Input
               placeholder="Address 1"

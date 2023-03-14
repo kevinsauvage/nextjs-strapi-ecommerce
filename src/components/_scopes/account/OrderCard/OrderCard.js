@@ -1,9 +1,6 @@
-import Link from 'next/link';
-import { v4 as uuidv4 } from 'uuid';
-
-import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
-
 import AccountRow from '../AccountRow/AccountRow';
+
+import SuccessfulFulfillments from './SuccessfulFulfillments';
 
 import style from './OrderCard.module.scss';
 
@@ -69,33 +66,7 @@ function OrderCard({ order }) {
         ) : null}
       </div>
       {successfulFulfillments && successfulFulfillments.length > 0 && (
-        <div className={style.bottom}>
-          <HeightAnimation
-            animationType="button"
-            buttonTextActive="Hide tracking information"
-            buttonTextInactive="Show tracking information"
-          >
-            {successfulFulfillments.map((successfulFulfillment, i) => {
-              const { trackingInfo } = successfulFulfillment;
-              return (
-                <div key={uuidv4()} className={style.trackContainer}>
-                  <h6>Tracking informations {successfulFulfillments.length > 1 && i + 1}</h6>
-                  <AccountRow title="Tracking Company" content={successfulFulfillment?.trackingCompany} />
-                  {trackingInfo?.map((trackInfo) => {
-                    const { url, number } = trackInfo;
-                    return (
-                      <AccountRow
-                        key={number}
-                        title="Tracking number"
-                        content={url ? <Link href={url}>{number}</Link> : number}
-                      />
-                    );
-                  })}
-                </div>
-              );
-            })}
-          </HeightAnimation>
-        </div>
+        <SuccessfulFulfillments successfulFulfillments={successfulFulfillments} />
       )}
     </li>
   );

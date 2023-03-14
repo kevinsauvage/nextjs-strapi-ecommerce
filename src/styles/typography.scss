@@ -1,14 +1,14 @@
 html {
   letter-spacing: 1px;
   font-family: $sans-serif, Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: calc(14px * 1.5);
+  font-size: 13px;
+  line-height: calc(13px * 1.5);
   font-weight: 400;
   -webkit-text-size-adjust: 100%; //fix for iOS
 
   @media (max-width: 1000px) {
-    font-size: calc(12px + .2vw);
-    line-height: calc(12px + .2vw * 1.5);
+    font-size: calc(12px + .1vw);
+    line-height: calc(12px + .1vw * 1.5);
   }
 }
 
@@ -45,13 +45,13 @@ h4 {
 }
 
 h5 {
-  font-size: 1.5rem;
-  line-height: calc(1.5rem * 1.5);
+  font-size: 1.2rem;
+  line-height: calc(1.2rem * 1.5);
 }
 
 h6 {
-  font-size: 1.25rem;
-  line-height: calc(1.25rem * 1.5);
+  font-size: 1rem;
+  line-height: calc(1rem * 1.5);
 }
 
 strong {

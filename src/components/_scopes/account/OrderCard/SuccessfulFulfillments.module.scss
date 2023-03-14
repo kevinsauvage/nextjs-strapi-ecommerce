@@ -1,0 +1,17 @@
+.SuccessfulFulfillments {
+  button {
+    margin-top: var(--space-1);
+  }
+
+  .trackContainer {
+    margin-top: var(--space-1);
+
+    h6 {
+      margin-bottom: var(--space-0);
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+}

@@ -1,7 +1,14 @@
+.formContainer {
+  padding: var(--space-4) var(--space-6);
+  width: 100%;
+}
+
+.form {}
+
 .info {
   margin-bottom: var(--space-3);
 }
 
 .title {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-1);
 }

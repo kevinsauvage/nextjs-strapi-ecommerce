@@ -11,23 +11,15 @@
   }
 }
 
+.orderCardDetail {
+  h6 {
+    margin-bottom: var(--space-0);
+  }
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: var(--space-1);
-}
-
-.trackContainer {
-  margin-top: var(--space-1);
-
-  a {
-    text-decoration: underline;
-  }
-}
-
-.bottom {
-  button {
-    margin-top: var(--space-1);
-  }
 }
