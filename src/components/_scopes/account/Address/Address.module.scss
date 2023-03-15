@@ -8,7 +8,7 @@
   background-color: var(--surface-200);
   width: 100%;
   padding: var(--space-2);
-  color: var(--onSurface-medium);
+  color: var(--on-surface-medium);
 }
 
 .side {
@@ -31,7 +31,7 @@
   border: none;
   margin: 0 2px;
   box-sizing: border-box;
-  padding: 0px;
+  padding: 0;
 
   svg {
     display: block;
@@ -40,7 +40,7 @@
   }
 }
 
-.setAsDefault {
+.default-button {
   border: none;
   margin-top: var(--space-0);
   width: fit-content;
@@ -49,7 +49,7 @@
   align-self: flex-end;
 }
 
-.defaultText {
+.default-text {
   display: flex;
   justify-content: center;
   align-items: center;

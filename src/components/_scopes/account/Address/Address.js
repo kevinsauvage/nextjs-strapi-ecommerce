@@ -21,18 +21,18 @@ const Address = ({
 
   return (
     <div className={style.address}>
-      <div className={style.main}>
-        <p className={`${style.row} ${style.name}`}>{name}</p>
-        <p className={style.row}>
+      <div>
+        <p>{name}</p>
+        <p>
           {address1}, {address2}
         </p>
-        <p className={style.row}>
+        <p>
           {zip}, {city}
         </p>
-        <p className={style.row}>
+        <p>
           {province}, {country}
         </p>
-        <div className={style.row}>
+        <div>
           {company && <p>{company}</p>}
           {phone && <p>{phone}</p>}
         </div>
@@ -55,12 +55,12 @@ const Address = ({
         ) : null}
 
         {!isDefault && displayButton && (
-          <button className={style.setAsDefault} onClick={() => handleSetAsDefault(id)} type="button">
+          <button className={style['default-button']} onClick={() => handleSetAsDefault(id)} type="button">
             Set as default
           </button>
         )}
 
-        {isDefault && <p className={style.defaultText}>Default address</p>}
+        {isDefault && <p className={style['default-text']}>Default address</p>}
       </div>
       {editAddress && (
         <Modal handleClose={() => setEditAddress(false)}>

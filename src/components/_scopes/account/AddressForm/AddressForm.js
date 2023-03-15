@@ -11,7 +11,7 @@ const AddressForm = ({ initialValues, onSubmit, buttonText, title }) => {
 
   return (
     <Form
-      extraClass={styles.formContainer}
+      extraClass={styles.form}
       initialValues={{
         address1,
         address2,
@@ -28,7 +28,7 @@ const AddressForm = ({ initialValues, onSubmit, buttonText, title }) => {
       requiredFields={['firstName', 'lastName', 'address1', 'province', 'country', 'zip', 'city']}
       title={title}
     >
-      <div className={styles.form}>
+      <div>
         <div className={styles.info}>
           <h6 className={styles.title}>Contact Information</h6>
           <Row>

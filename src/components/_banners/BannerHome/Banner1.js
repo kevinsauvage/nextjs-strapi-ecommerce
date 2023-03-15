@@ -14,7 +14,7 @@ const BannerHome = ({ data }) => {
           <div className={styles.container} style={{ ...style }}>
             {data?.items?.map((item) => (
               <div key={item.title} className={styles.content}>
-                <p className={styles.upTitle}>
+                <p className={styles['up-title']}>
                   <span />
                   {item.upTitle}
                 </p>

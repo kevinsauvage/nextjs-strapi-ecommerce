@@ -12,7 +12,7 @@ export default withRouter(({ router, children, as, url, scroll = true, isActive,
       href={path.toLowerCase()}
       as={as}
       scroll={scroll}
-      className={`${styles.ActiveLink}  ${
+      className={`${styles.link}  ${
         (router.asPath.split('?')[0] === path?.toLowerCase().split('?')[0] || isActive) && activeStyle
       }`}
     >

@@ -42,7 +42,7 @@
   }
 
   path {
-    stroke: var(--onSurface-dark);
+    stroke: var(--on-surface-dark);
   }
 }
 
@@ -60,7 +60,7 @@
   align-items: center;
 }
 
-.totalItems {
+.total-items {
   position: absolute;
   top: -8px;
   right: -10px;
@@ -70,7 +70,8 @@
   min-width: 1rem;
   padding: 3px;
   color: var(--surface-900);
-  @include borderLight(var(--RBG-primary), 1);
+
+  @include border-light(var(--RBG-primary), 1);
 
   p {
     display: flex;
@@ -78,6 +79,6 @@
     align-items: center;
     font-size: 0.8rem;
     line-height: 10px;
-    color: var(--onSurface-dark);
+    color: var(--on-surface-dark);
   }
 }

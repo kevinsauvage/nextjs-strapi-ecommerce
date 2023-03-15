@@ -8,7 +8,7 @@ const CollectionCard = ({ collection }) => {
   const backgroundStyle = { backgroundImage: `url(${image.url})` };
 
   return (
-    <div className={style.CollectionCard} style={{ ...backgroundStyle }} alt={image?.alt}>
+    <div className={style.card} style={{ ...backgroundStyle }} alt={image?.alt}>
       <div className={style.content}>
         <p className={style.title}>
           <span>{title} </span> COLLECTION

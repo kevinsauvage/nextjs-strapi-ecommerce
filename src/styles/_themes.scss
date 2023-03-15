@@ -1,20 +1,17 @@
-// Light colors
 $primary: #1383d3;
 $warning: #ffd752;
 $success: #52a86e;
 $error: #ee2d2d;
 $surface: #c9c9c9;
 $complementary: complement($primary);
-$surfaceDark: #1e1e1e;
-// Dark colors
+$surface-dark: #1e1e1e;
 $primary-dark: #0e79a3;
 $warning-dark: #f7b924;
 $success-dark: #2f9652;
 $error-dark: #ff5151;
-$surface-dark: #484848;
 $complementary-dark: complement($primary-dark);
-$surfaceDark-dark: #000000;
-$colors-light: ( // Primary colors
+$surface-dark-dark: #000000;
+$colors-light: ( 
   primary-100: lighten($primary, 30%),
   primary-200: lighten($primary, 20%),
   primary-300: lighten($primary, 10%),
@@ -24,7 +21,6 @@ $colors-light: ( // Primary colors
   primary-700: darken($primary, 10%),
   primary-800: darken($primary, 20%),
   primary-900: darken($primary, 30%),
-  // Complementary colors
   complementary-100: lighten($complementary, 30%),
   complementary-200: lighten($complementary, 20%),
   complementary-300: lighten($complementary, 10%),
@@ -34,7 +30,6 @@ $colors-light: ( // Primary colors
   complementary-700: darken($complementary, 10%),
   complementary-800: darken($complementary, 20%),
   complementary-900: darken($complementary, 30%),
-  // Warning colors
   warning-100: lighten($warning, 30%),
   warning-200: lighten($warning, 20%),
   warning-300: lighten($warning, 10%),
@@ -44,7 +39,6 @@ $colors-light: ( // Primary colors
   warning-700: darken($warning, 10%),
   warning-800: darken($warning, 20%),
   warning-900: darken($warning, 30%),
-  // Success colors
   success-100: lighten($success, 30%),
   success-200: lighten($success, 20%),
   success-300: lighten($success, 10%),
@@ -54,7 +48,6 @@ $colors-light: ( // Primary colors
   success-700: darken($success, 10%),
   success-800: darken($success, 20%),
   success-900: darken($success, 30%),
-  // Error colors
   danger-100: lighten($error, 30%),
   danger-200: lighten($error, 20%),
   danger-300: lighten($error, 10%),
@@ -64,7 +57,6 @@ $colors-light: ( // Primary colors
   danger-700: darken($error, 10%),
   danger-800: darken($error, 20%),
   danger-900: darken($error, 30%),
-  // Surface colors
   surface-100: lighten($surface, 20%),
   surface-200: lighten($surface, 15%),
   surface-300: lighten($surface, 10%),
@@ -74,50 +66,43 @@ $colors-light: ( // Primary colors
   surface-700: darken($surface, 10%),
   surface-800: darken($surface, 15%),
   surface-900: darken($surface, 35%),
-  // Always dark
-  surface-dark-100: $surfaceDark,
-  surface-dark-200: lighten($surfaceDark, 5%),
-  surface-dark-300: lighten($surfaceDark, 10%),
-  surface-dark-400: lighten($surfaceDark, 15%),
-  surface-dark-500: lighten($surfaceDark, 20%),
-  // On surface
-  onSurface-dark: #efefef,
-  onSurface-hight: #111111,
-  onSurface-medium: #373737,
-  onSurface-light: #747474,
-  onSurface-disabled: #464646);
+  surface-dark-100: $surface-dark,
+  surface-dark-200: lighten($surface-dark, 5%),
+  surface-dark-300: lighten($surface-dark, 10%),
+  surface-dark-400: lighten($surface-dark, 15%),
+  surface-dark-500: lighten($surface-dark, 20%),
+  on-surface-dark: #efefef,
+  on-surface-hight: #111111,
+  on-surface-medium: #373737,
+  on-surface-light: #747474,
+  on-surface-disabled: #464646);
 
-@function hexToRGB($hex) {
+@function hex-to-rgb($hex) {
   @return red($hex),
   green($hex),
   blue($hex);
 }
 
-@mixin generate_colors($colors) {
-
+@mixin generate-colors($colors) {
   @each $color,
   $value in $colors {
-    @if str-slice(#{$value}, 1, 1)=='#' {
+    @if str-slice(#{$value}, 1, 1) == '#' {
       --#{$color}: #{$value};
-    }
-
-    @else {
+    } @else {
       --#{$color}: var(--#{$value});
     }
   }
 
   @each $color,
   $value in $colors {
-    @if str-slice(#{$value}, 1, 1)=='#' {
-      --RGB-#{$color}: #{hexToRGB($value)};
-    }
-
-    @else {
-      --RGB-#{$color}: var(--RGB_#{$value});
+    @if str-slice(#{$value}, 1, 1) == '#' {
+      --rgb-#{$color}: #{hex-to-rgb($value)};
+    } @else {
+      --rgb-#{$color}: var(--RGB_#{$value});
     }
   }
 }
 
 .theme-light {
-  @include generate_colors($colors-light);
+  @include generate-colors($colors-light);
 }

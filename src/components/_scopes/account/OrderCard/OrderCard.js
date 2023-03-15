@@ -38,12 +38,12 @@ const OrderCard = ({ order }) => {
   }
 
   return (
-    <li className={style.orderCard}>
+    <li className={style.card}>
       <div className={style.header}>
         <h5>Order {order.name}</h5>
       </div>
 
-      <div className={style.orderCardDetail}>
+      <div className={style.detail}>
         <h6>Order informations</h6>
 
         <AccountRow content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} title="Total price" />

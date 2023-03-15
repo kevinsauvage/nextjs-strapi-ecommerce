@@ -1,4 +1,4 @@
-.PhotoSlider {
+.slider {
   position: sticky;
   top: 0;
   height: fit-content;
@@ -18,7 +18,7 @@
   border-radius: $radius;
   background-color: var(--surface-dark-100);
   padding: var(--space-0);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
 }
 
 .buttons {

@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "lint-fix": "next lint -- --fix",
+    "lint:css": "stylelint **/*.{scss,css}",
+    "lint:css:fix": "stylelint --fix **/*.{scss,css}",
     "postbuild": "next-sitemap"
   },
   "dependencies": {
@@ -23,6 +25,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "eslint-plugin-sonarjs": "^0.18.0",
     "@babel/core": "^7.21.3",
     "@babel/eslint-parser": "^7.21.3",
     "eslint": "^8.36.0",
@@ -30,15 +33,17 @@
     "eslint-config-next": "13.1.2",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-alias": "^1.1.2",
-    "eslint-import-resolver-jsconfig": "^1.1.0",
+    "eslint-plugin-css-modules": "^2.11.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
-    "npm": "^9.6.1",
-    "pa11y-ci": "^3.0.1",
     "prettier": "^2.8.0",
-    "sass": "^1.54.4"
+    "sass": "^1.54.4",
+    "stylelint": "^15.2.0",
+    "stylelint-checkstyle-formatter": "^0.1.2",
+    "stylelint-config-standard-scss": "^7.0.1",
+    "stylelint-scss": "^4.5.0"
   }
 }

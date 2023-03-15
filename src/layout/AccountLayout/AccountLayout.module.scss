@@ -1,22 +1,8 @@
-.AccountLayout {
+.account-layout {
   position: relative;
   min-height: calc(100vh - $header-height);
 }
 
-.banner {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid var(--surface-300);
-  background-color: var(--surface-dark-200);
-  min-height: 130px;
-  color: var(--onSurface-dark);
-}
-
-.title {
-  text-transform: uppercase;
-}
 
 .main {
   display: flex;
@@ -49,7 +35,7 @@
   overflow: hidden;
 }
 
-.listItem {
+.list-item {
   background-color: var(--surface-200);
   width: 100%;
   text-transform: uppercase;
@@ -65,7 +51,7 @@
   .active {
     border-left: 3px solid var(--complementary-500);
     background-color: var(--surface-dark-200);
-    color: var(--onSurface-dark);
+    color: var(--on-surface-dark);
   }
 }
 
@@ -74,7 +60,7 @@
   width: 100%;
 }
 
-.bannerChildren {
+.banner-children {
   border-radius: $radius;
   margin-bottom: var(--space-1);
   background-color: var(--surface-200);
@@ -86,11 +72,13 @@
   }
 }
 
-.bannerChildrenDescription {
+.banner-children-description {
   font-weight: 500;
 }
 
-.bannerChildrenOther {
+
+
+.banner-children-other {
   margin-top: var(--space-2);
 }
 

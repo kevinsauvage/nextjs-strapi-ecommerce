@@ -2,5 +2,6 @@
   "singleQuote": true,
   "tabWidth": 2,
   "semi": true,
-  "printWidth": 110
+  "printWidth": 110,
+  "stylelintIntegration": true
 }

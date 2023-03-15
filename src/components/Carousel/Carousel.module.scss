@@ -13,7 +13,7 @@
   font-size: 1.4rem;
 }
 
-.Carousel {
+.carousel {
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -27,7 +27,7 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  .CarouselItem {
+  .item {
     flex: 0 0 auto;
   }
 }
@@ -36,7 +36,7 @@
   z-index: 99;
   position: relative;
   border: none;
-  border: 0.1px solid rgba(var(--surface-900), 0.3);
+  border: 0.1px solid rgb(var(--surface-900) 0.3);
   background-color: var(--complementary);
   width: 30px;
   transition: all 0.2s ease-in-out;

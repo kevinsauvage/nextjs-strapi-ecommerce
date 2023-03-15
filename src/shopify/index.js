@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import ShopifyClient from '@kevinsauvage/shopify-storefront-api';
 
 const domain = process.env.NEXT_PUBLIC_SHOPIFY_SHOP_DOMAIN;

@@ -5,17 +5,17 @@ import CollectionCard from '../CollectionCard/CollectionCard';
 import styles from './CollectionGrid.module.scss';
 
 const CollectionGrid = ({ collections }) => (
-    <section>
-      <SectionTitle first="FEATURED" second="COLLECTIONS" />
-      <ul className={styles.CollectionGrid}>
-        {Array.isArray(collections) &&
-          collections.map((collection) => (
-            <li key={collection.title} className={styles.item}>
-              <CollectionCard collection={collection} />
-            </li>
-          ))}
-      </ul>
-    </section>
-  );
+  <section>
+    <SectionTitle first="FEATURED" second="COLLECTIONS" />
+    <ul className={styles.grid}>
+      {Array.isArray(collections) &&
+        collections.map((collection) => (
+          <li key={collection.title} className={styles.item}>
+            <CollectionCard collection={collection} />
+          </li>
+        ))}
+    </ul>
+  </section>
+);
 
 export default CollectionGrid;

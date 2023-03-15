@@ -18,7 +18,7 @@ const CartTable = ({ handleChange, handleRemove, cart }) => {
 
   const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
   return (
-    <div className={styles.CartTable}>
+    <div className={styles['cart-table']}>
       <Table>
         <Head>
           <Row>

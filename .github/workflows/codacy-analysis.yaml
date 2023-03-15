@@ -14,5 +14,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Setup Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
       - name: Run Codacy Analysis CLI
         uses: codacy/codacy-analysis-cli-action@master

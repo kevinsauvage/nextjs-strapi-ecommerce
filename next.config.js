@@ -14,6 +14,7 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com', 'cdn.shopify.com'],
   },
+
   sassOptions: {
     includePaths: [path.join(__dirname, './src/styles/')],
     prependData: `

@@ -23,7 +23,7 @@ const BigMenu = ({ data, handleClose, collections }) => {
   );
 
   return (
-    <div className={styles.bigMenu} role="button" tabIndex={0} onClick={handleClose} onKeyDown={handleClose}>
+    <div className={styles.menu} role="button" tabIndex={0} onClick={handleClose} onKeyDown={handleClose}>
       <div
         className={styles.inner}
         role="presentation"

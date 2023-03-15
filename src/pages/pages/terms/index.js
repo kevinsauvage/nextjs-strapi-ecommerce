@@ -9,16 +9,16 @@ import getClient from '@/shopify/index';
 import styles from './Terms.module.scss';
 
 const TermsPage = ({ termsOfService }) => (
-    <PageLayout title={seo.pages.terms.title} description={seo.pages.terms.description}>
-      <PageBanner title={seo.pages.terms.title} />
-      <Breadcrumbs lastElement={seo.pages.terms.title} />
-      <div className={styles.terms}>
-        <Container>
-          <div className={styles.content} dangerouslySetInnerHTML={{ __html: termsOfService?.body }} />
-        </Container>
-      </div>
-    </PageLayout>
-  );
+  <PageLayout title={seo.pages.terms.title} description={seo.pages.terms.description}>
+    <PageBanner title={seo.pages.terms.title} />
+    <Breadcrumbs lastElement={seo.pages.terms.title} />
+    <div className={styles.terms}>
+      <Container>
+        <div dangerouslySetInnerHTML={{ __html: termsOfService?.body }} />
+      </Container>
+    </div>
+  </PageLayout>
+);
 
 export default TermsPage;
 

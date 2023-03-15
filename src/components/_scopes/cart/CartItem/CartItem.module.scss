@@ -1,6 +1,4 @@
-.container {
-  width: 100%;
-}
+
 
 .list {
   display: flex;
@@ -25,9 +23,7 @@
   }
 }
 
-.item {
-  text-align: center;
-}
+
 
 .price {
   opacity: 0.7;
@@ -46,35 +42,6 @@
 .title {
   display: block;
   margin-bottom: var(--space-0);
-}
-
-.input {
-  border: none;
-  border-bottom: 1px solid var(--surface-900);
-  background-color: transparent;
-  height: 30px;
-  width: 80px;
-  color: var(--surface-900);
-  text-align: center;
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    margin: 0;
-    -webkit-appearance: none;
-  }
-
-  &[type='number'] {
-    -moz-appearance: textfield;
-  }
-}
-
-.delete {
-  cursor: pointer;
-
-  svg,
-  path {
-    stroke: var(--surface-900);
-  }
 }
 
 .button {

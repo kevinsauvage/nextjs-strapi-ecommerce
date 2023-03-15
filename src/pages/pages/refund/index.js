@@ -9,16 +9,16 @@ import getClient from '@/shopify/index';
 import styles from './refund.module.scss';
 
 const RefoundPage = ({ refundPolicy }) => (
-    <PageLayout title={seo.pages.refund.title} description={seo.pages.refund.description}>
-      <PageBanner title={seo.pages.refund.title} />
-      <Breadcrumbs lastElement={seo.pages.refund.title} />
-      <div className={styles.privacy}>
-        <Container>
-          <div className={styles.content} dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
-        </Container>
-      </div>
-    </PageLayout>
-  );
+  <PageLayout title={seo.pages.refund.title} description={seo.pages.refund.description}>
+    <PageBanner title={seo.pages.refund.title} />
+    <Breadcrumbs lastElement={seo.pages.refund.title} />
+    <div className={styles.privacy}>
+      <Container>
+        <div dangerouslySetInnerHTML={{ __html: refundPolicy?.body }} />
+      </Container>
+    </div>
+  </PageLayout>
+);
 
 export default RefoundPage;
 

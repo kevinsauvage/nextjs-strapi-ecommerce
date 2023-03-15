@@ -26,10 +26,10 @@
   width: 100%;
   resize: vertical;
   padding: var(--space-1);
-  color: var(--onSurface-medium);
+  color: var(--on-surface-medium);
 
   @include placeholder {
-    color: rgba(var(--surface-900), 0.3);
+    color: rgb(var(--surface-900) 0.3);
   }
 
   &:focus,

@@ -22,7 +22,7 @@ const SlideIn = ({ children, title, animationPosition = 'right', headerTitle }) 
   const slideInStyles = { [animationPosition]: showMenu ? '0' : '-100%' };
 
   return (
-    <div className={styles.slideIn}>
+    <div className={styles['slide-in']}>
       <button
         className={styles.button}
         aria-label={showMenu ? 'Close menu' : 'Open menu'}

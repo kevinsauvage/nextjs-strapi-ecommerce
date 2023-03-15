@@ -8,7 +8,7 @@ const Indicators = ({ itemsToShow, totalItems, handleClick, activeIndex }) => {
 
   return (
     total > 1 && (
-      <div className={style.Indicators}>
+      <div className={style.indicators}>
         <button
           type="button"
           className={`${style.arrow} ${style.left}`}

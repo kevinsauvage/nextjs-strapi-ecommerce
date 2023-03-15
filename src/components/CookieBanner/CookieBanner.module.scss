@@ -1,4 +1,4 @@
-.cookieBanner {
+.cookie-banner {
   z-index: 9999;
   position: fixed;
   bottom: 0;
@@ -7,26 +7,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid var(--onSurface-dark);
+  border-top: 1px solid var(--on-surface-dark);
   background-color: var(--surface-dark-100);
   padding: 1rem;
 
   p {
     margin-right: 1rem;
-    color: var(--onSurface-dark);
+    color: var(--on-surface-dark);
   }
 
-  .acceptBtn {
+  .accept-btn {
     border: none;
     border-radius: 5px;
     margin-right: 1rem;
     background-color: var(--primary-400);
     padding: 0.5rem 1rem;
-    color: var(--onSurface-dark);
+    color: var(--on-surface-dark);
     cursor: pointer;
   }
 
-  .settingsBtn {
+  .settings-btn {
     border: none;
     padding: 0.5rem 1rem;
     text-decoration: underline;
@@ -35,17 +35,17 @@
   }
 }
 
-.cookieList {
+.cookie-list {
   li {
     margin-bottom: var(--space-1);
   }
 }
 
-.modalSubtitle {
+.modal-subtitle {
   margin-bottom: var(--space-0);
 }
 
-.cookieSettingsModal {
+.cookie-settings-modal {
   z-index: 9999;
   position: fixed;
   top: 0;
@@ -53,11 +53,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: #000000cc;
   height: 100%;
   width: 100%;
 
-  .modalContent {
+  .modal-content {
     border-radius: 5px;
     background-color: var(--surface-100);
     max-height: 80vh;
@@ -85,23 +85,23 @@
       }
     }
 
-    .inputWrapper {
+    .input-wrapper {
       display: flex;
       align-items: center;
     }
 
-    .saveBtn {
+    .save-btn {
       border: none;
       border-radius: 5px;
       margin-top: var(--space-1);
       background-color: var(--primary-400);
       padding: 0.5rem 1rem;
-      color: var(--onSurface-dark);
+      color: var(--on-surface-dark);
       cursor: pointer;
     }
   }
 
-  .formTitle {
+  .form-title {
     margin-bottom: var(--space-1);
   }
 }

@@ -20,18 +20,15 @@ const HamburgerMenu = ({ headerMenu }) => {
     const { title, url, items } = menuItem;
 
     return (
-      <li key={menuItem.id} className={styles.menuItem}>
+      <li key={menuItem.id}>
         {items && items.length > 0 ? (
-          <Collapsible
-            title={title}
-            extraClass={{ header: styles.collapsableHeader, container: styles.collapsableContainer }}
-          >
-            <ul className={styles.subMenu}>{items.map((item) => renderMenuItem(item))}</ul>
+          <Collapsible title={title}>
+            <ul className={styles['sub-menu']}>{items.map((item) => renderMenuItem(item))}</ul>
           </Collapsible>
         ) : (
           <Link
             href={url.replace('https://ecomfashionstore.myshopify.com', window?.location.origin)}
-            className={styles.menuLink}
+            className={styles['menu-link']}
           >
             {title}
             <svg width="20" height="12" viewBox="0 0 20 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +65,7 @@ const HamburgerMenu = ({ headerMenu }) => {
   }, [router.asPath]);
 
   return (
-    <div className={styles.HamburgerMenu}>
+    <div className={styles['hamburger-menu']}>
       <SlideIn
         animationPosition="left"
         headerTitle={<Logo />}
@@ -87,11 +84,11 @@ const HamburgerMenu = ({ headerMenu }) => {
             {headerMenu?.map((item) => renderMenuItem(item))}
 
             <li>
-              <nav className={styles.userNav}>
-                <ul className={styles.userNavList}>
+              <nav className={styles['user-nav']}>
+                <ul>
                   {userMenuItems?.map((menuItem) =>
                     menuItem.condition ? (
-                      <li key={menuItem.id} className={styles.userNavListItem}>
+                      <li key={menuItem.id} className={styles['user-nav-list-item']}>
                         <Link href={menuItem.link}>
                           {menuItem.icon} {menuItem.text}
                         </Link>

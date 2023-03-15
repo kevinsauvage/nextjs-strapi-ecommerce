@@ -9,16 +9,16 @@ import getClient from '@/shopify/index';
 import styles from './Privacy.module.scss';
 
 const PrivacyPage = ({ privacyPolicy }) => (
-    <PageLayout title={seo.pages.privacy.title} description={seo.pages.privacy.description}>
-      <PageBanner title={seo.pages.privacy.title} />
-      <Breadcrumbs lastElement={seo.pages.privacy.title} />
-      <div className={styles.privacy}>
-        <Container>
-          <div className={styles.content} dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
-        </Container>
-      </div>
-    </PageLayout>
-  );
+  <PageLayout title={seo.pages.privacy.title} description={seo.pages.privacy.description}>
+    <PageBanner title={seo.pages.privacy.title} />
+    <Breadcrumbs lastElement={seo.pages.privacy.title} />
+    <div className={styles.privacy}>
+      <Container>
+        <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
+      </Container>
+    </div>
+  </PageLayout>
+);
 
 export default PrivacyPage;
 

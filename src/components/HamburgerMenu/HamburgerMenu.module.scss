@@ -1,4 +1,4 @@
-.HamburgerMenu {
+.hamburger-menu {
   visibility: hidden;
   display: none;
 
@@ -18,7 +18,7 @@
   }
 
   path {
-    stroke: var(--onSurface-dark);
+    stroke: var(--on-surface-dark);
   }
 }
 
@@ -30,7 +30,7 @@
   }
 }
 
-.menuLink {
+.menu-link {
   display: block;
   display: flex;
   justify-content: space-between;
@@ -43,15 +43,15 @@
   }
 }
 
-.subMenu {
+.sub-menu {
   margin-left: var(--space-1);
 }
 
-.userNav {
+.user-nav {
   border-top: 1px solid var(--surface-300);
   padding: var(--space-1);
 
-  .userNavListItem {
+  .user-nav-list-item {
     padding: var(--space-1);
     font-size: 1.1rem;
 

@@ -6,9 +6,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(var(--RGB-surface-100), 0.3);
+  background: rgb(var(--rgb-surface-100) 0.3);
   height: 100vh;
   width: 100vw;
   backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
 }

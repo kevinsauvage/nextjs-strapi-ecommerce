@@ -86,7 +86,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
             <IoIosArrowDropleft />
           </button>
         )}
-        <div {...handlers} className={`${styles.Carousel}`}>
+        <div {...handlers} className={`${styles.carousel}`}>
           <div
             ref={carouselRef}
             className={styles.inner}
@@ -96,7 +96,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
           >
             {Children.map(children, (child) => (
               <div
-                className={`${styles.CarouselItem}`}
+                className={`${styles.item}`}
                 style={{ width: `${itemDimension}%`, padding: `${spacing}px` }}
               >
                 {cloneElement(child)}

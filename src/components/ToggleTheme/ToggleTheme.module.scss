@@ -1,9 +1,9 @@
 $width: 65px;
 $padding: 1px;
-$innerSize: 30px;
+$inner-size: 30px;
 $height: 34px;
 
-.toggleTheme {
+.toggle-theme {
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -14,7 +14,8 @@ $height: 34px;
   width: $width;
   padding: 8.7px;
   transition: all 0.3s ease;
-  @include borderLight(var(--complementary-700), 0.6);
+
+  @include border-light(var(--complementary-700), 0.6);
 }
 
 .inner {
@@ -25,10 +26,11 @@ $height: 34px;
   transform: translateY(-50%) translateX(-0%);
   border-radius: 50%;
   background-color: var(--surface-dark-100);
-  min-height: $innerSize;
-  width: $innerSize;
+  min-height: $inner-size;
+  width: $inner-size;
   transition: all 0.3s ease;
-  @include borderLight(var(--RBG-primary-100), 1);
+  
+  @include border-light(var(--RBG-primary-100), 1);
 }
 
 .moon,
@@ -57,13 +59,13 @@ $height: 34px;
 
   .sun {
     path {
-      stroke: var(--onSurface-dark);
+      stroke: var(--on-surface-dark);
     }
   }
 
   .moon {
     path {
-      stroke: var(--onSurface-dark);
+      stroke: var(--on-surface-dark);
       fill: var(--complementary-600);
     }
   }

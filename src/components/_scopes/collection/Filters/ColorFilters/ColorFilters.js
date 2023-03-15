@@ -17,7 +17,7 @@ function ColorFilters({ filter }) {
       type="button"
       onClick={() => handleSetFilters(filter.id, value.input)}
     >
-      <div className={styles.value} />
+      <div />
     </button>
   ));
 }

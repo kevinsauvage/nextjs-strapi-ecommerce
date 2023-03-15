@@ -1,4 +1,4 @@
-$boxDimension: 36px;
+$box-dimension: 36px;
 
 .option {
   padding-bottom: var(--space-1);
@@ -15,11 +15,11 @@ $boxDimension: 36px;
   border: 1px solid var(--surface-dark-100);
   border-radius: $radius;
   background-color: var(--surface-100);
-  min-height: $boxDimension;
-  min-width: $boxDimension;
+  min-height: $box-dimension;
+  min-width: $box-dimension;
   padding: 5px;
   font-size: 0.8rem;
-  color: var(--onSurface-hight);
+  color: var(--on-surface-hight);
 
   &:hover,
   &:focus,
@@ -40,10 +40,10 @@ $boxDimension: 36px;
   gap: 4px;
 }
 
-.selectedOption {
+.selected-option {
   border: 1px solid var(--surface-dark-100);
   background-color: var(--surface-dark-100);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
 
   &:hover,
   &:focus,

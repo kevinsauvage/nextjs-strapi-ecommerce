@@ -35,7 +35,7 @@ const CartItem = ({ handleChange, removeFromCart, item }) => {
             >
               <b className={styles.title}>{title}</b>
             </Link>
-            <p className={styles.variant}>{variantTitle}</p>
+            <p>{variantTitle}</p>
           </div>
         </div>
       </TData>

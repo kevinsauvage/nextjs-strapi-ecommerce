@@ -1,3 +1,4 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import { useCallback, useEffect, useState } from 'react';
 
 import { getCookieFront, setCookieFront } from '@/helpers/cookies';
@@ -62,26 +63,26 @@ const CookieBanner = () => {
 
   return (
     <>
-      <div className={styles.cookieBanner}>
+      <div className={styles['cookie-banner']}>
         <p>We use cookies to enhance your experience on our website.</p>
-        <button type="button" className={styles.acceptBtn} onClick={acceptAllCookie}>
+        <button type="button" className={styles['accept-btn']} onClick={acceptAllCookie}>
           Accept All
         </button>
-        <button type="button" className={styles.settingsBtn} onClick={() => setShowModal(true)}>
+        <button type="button" className={styles['settings-btn']} onClick={() => setShowModal(true)}>
           Cookie Settings
         </button>
       </div>
       {showModal && (
-        <div className={styles.cookieSettingsModal}>
-          <div className={styles.modalContent}>
+        <div className={styles['cookie-settings-modal']}>
+          <div className={styles['modal-content']}>
             <h2>Cookie Settings</h2>
-            <p className={styles.modalSubtitle}>
+            <p className={styles['modal-subtitle']}>
               We use cookies on our website to enhance your browsing experience and to provide you with
               personalized content. We want to give you the option to choose which cookies you allow us to
               use.
             </p>
             <HeightAnimation initialHeight={60} animationType="hover">
-              <ul className={`${styles.cookieList}`}>
+              <ul className={`${styles['cookie-list']}`}>
                 <li>
                   <strong>Strictly Necessary Cookies:</strong>{' '}
                   <p>
@@ -126,10 +127,10 @@ const CookieBanner = () => {
                 analytics_storage: true,
               }}
             >
-              <p className={styles.formTitle}>
+              <p className={styles['form-title']}>
                 <b>Please select which cookies you&apos;d like to allow:</b>
               </p>
-              <div className={styles.inputWrapper}>
+              <div className={styles['input-wrapper']}>
                 <input
                   type="checkbox"
                   id="functionality_storage"
@@ -139,19 +140,19 @@ const CookieBanner = () => {
                 />
                 <label htmlFor="functionality_storage">Strictly Necessary Cookies</label>
               </div>
-              <div className={styles.inputWrapper}>
+              <div className={styles['input-wrapper']}>
                 <input type="checkbox" id="analytics_storage" name="analytics_storage" />
                 <label htmlFor="analytics_storage">Analytics Cookies</label>
               </div>
-              <div className={styles.inputWrapper}>
+              <div className={styles['input-wrapper']}>
                 <input type="checkbox" id="personalization_storage" name="personalization_storage" />
                 <label htmlFor="personalization_storage">Personalization Cookies</label>
               </div>
-              <div className={styles.inputWrapper}>
+              <div className={styles['input-wrapper']}>
                 <input type="checkbox" id="ad_storage" name="ad_storage" />
                 <label htmlFor="ad_storage">Advertising Cookies</label>
               </div>
-              <button type="submit" className={styles.saveBtn}>
+              <button type="submit" className={styles['save-btn']}>
                 Save Settings
               </button>
             </Form>

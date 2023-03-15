@@ -45,8 +45,8 @@ const PriceFilters = ({ filter }) => {
 
   return (
     original?.max && (
-      <form className={styles.priceFilters} onSubmit={(e) => handleConfirm(e)}>
-        <div className={styles.priceInputs}>
+      <form className={styles['price-filters']} onSubmit={(e) => handleConfirm(e)}>
+        <div className={styles['price-inputs']}>
           <label className={styles.label}>
             <small>From</small>
             <input

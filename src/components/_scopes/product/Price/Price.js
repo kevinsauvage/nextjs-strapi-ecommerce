@@ -10,15 +10,15 @@ const Price = ({ compareAtPriceV2, priceV2, size = 'M' }) => {
   };
 
   return (
-    <div className={`${styles.Price} ${isDiscount ? styles.PriceDiscount : ''} ${sizeStyles[size]}`}>
+    <div className={`${styles.price} ${sizeStyles[size]}`}>
       {isDiscount && (
-        <p className={styles.compareAtPriceV2}>
+        <p className={styles.compare}>
           {compareAtPriceV2?.amount} {compareAtPriceV2?.currencyCode}
         </p>
       )}
-      <p className={styles.currentPrice}>
-        <span className={styles.amount}>{priceV2?.amount}</span>
-        <span className={styles.currency}> {priceV2?.currencyCode}</span>
+      <p className={styles.current}>
+        <span>{priceV2?.amount}</span>
+        <span> {priceV2?.currencyCode}</span>
       </p>
     </div>
   );

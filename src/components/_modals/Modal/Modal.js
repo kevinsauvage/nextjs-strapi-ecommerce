@@ -7,12 +7,12 @@ import styles from './Modal.module.scss';
 const Modal = ({ handleClose, loading, children, padding = '0px' }) => {
   useHideScrollbar();
   return (
-    <div className={styles.Modal}>
+    <div className={styles.modal}>
       {loading ? (
         <AbsoluteLoader />
       ) : (
-        <div className={styles.Container} style={{ padding }}>
-          <div className={styles.header}>
+        <div className={styles.container} style={{ padding }}>
+          <div>
             <button className={styles.close} type="button" onClick={() => handleClose()}>
               {remove}
             </button>

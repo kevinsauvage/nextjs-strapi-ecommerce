@@ -17,7 +17,7 @@ const ShippingPage = ({ shippingPolicy }) => {
       <Breadcrumbs lastElement={title} />
       <div className={styles.privacy}>
         <Container>
-          <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} className={styles.content} />
+          <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
         </Container>
       </div>
     </PageLayout>

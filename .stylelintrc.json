@@ -1,0 +1,13 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "color-hex-length": "long",
+    "color-function-notation": null,
+    "selector-no-vendor-prefix": null,
+    "alpha-value-notation": null,
+    "at-rule-no-unknown": null,
+    "scss/at-rule-no-unknown": null,
+    "scss/no-global-function-names": null
+  },
+  "processors": ["stylelint-checkstyle-formatter"]
+}

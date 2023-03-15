@@ -9,8 +9,9 @@
   height: 80vh;
   width: 100%;
   overflow: hidden;
-  color: var(--onSurface-hight);
-  @include overlay(var(--RGB-surface-100), 0.4);
+  color: var(--on-surface-hight);
+
+  @include overlay(var(--rgb-surface-100), 0.4);
 
   @include respond(tablet) {
     height: 70vh;
@@ -28,6 +29,7 @@
   border-radius: $radius;
   height: 100%;
   width: 100%;
+
   @include flex-column;
 }
 
@@ -58,7 +60,7 @@
   }
 }
 
-.upTitle {
+.up-title {
   display: flex;
   align-items: center;
   font-weight: 500;
@@ -69,7 +71,7 @@
     position: relative;
     display: block;
     border-radius: $radius;
-    background-color: var(--onSurface-hight);
+    background-color: var(--on-surface-hight);
     height: 3px;
     width: 60px;
   }
@@ -84,6 +86,7 @@
   margin-bottom: var(--space-2);
   max-width: 400px;
   font-weight: 500;
+
   @include text-shorten(3);
 }
 
@@ -91,7 +94,8 @@
   display: block;
   background-color: var(--primary-500);
   width: fit-content;
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
+
   @include button;
 
   &:hover {

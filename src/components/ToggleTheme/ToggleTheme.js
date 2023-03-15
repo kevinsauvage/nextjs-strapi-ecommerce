@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import styles from './ToggleTheme.module.scss';
 
+const darkTheme = 'theme-dark';
+
 const ToggleTheme = () => {
   const [isActive, setIsActive] = useState(false);
 
@@ -11,17 +13,17 @@ const ToggleTheme = () => {
       return;
     }
     const element = document.querySelector('html');
-    element.classList.add('theme-dark');
+    element.classList.add(darkTheme);
     setIsActive(true);
   }, []);
 
   const handleClick = () => {
     const element = document.querySelector('html');
     if (isActive) {
-      element.classList.remove('theme-dark');
+      element.classList.remove(darkTheme);
       window.localStorage.removeItem('isDarkTheme');
     } else {
-      element.classList.add('theme-dark');
+      element.classList.add(darkTheme);
       window.localStorage.setItem('isDarkTheme', null);
     }
     setIsActive((prev) => !prev);
@@ -32,7 +34,7 @@ const ToggleTheme = () => {
       tabIndex={0}
       name="toggleTheme"
       aria-label="toggleTheme"
-      className={`${styles.toggleTheme} ${isActive ? styles.active : ''}`}
+      className={`${styles['toggle-theme']} ${isActive ? styles.active : ''}`}
       onClick={handleClick}
       onKeyDown={handleClick}
     >

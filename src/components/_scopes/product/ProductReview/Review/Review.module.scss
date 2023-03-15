@@ -1,4 +1,5 @@
-.Review {
+
+.review {
   border: 1px solid var(--surface-400);
   border-radius: $radius;
   margin: var(--space-0) 0;
@@ -11,7 +12,7 @@
     align-items: center;
   }
 
-  .buttonRemove {
+  .button-remove {
     border: none;
   }
 

@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable simple-import-sort/imports */
 import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 import Container from '@/components/Container/Container';
 import config from '@/config/index';
@@ -41,7 +42,7 @@ const Search = ({ size }) => {
     <div className={styles.search}>
       <Container size={size}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <label className={styles.header}>
+          <label>
             <input
               ref={input}
               className={styles.input}

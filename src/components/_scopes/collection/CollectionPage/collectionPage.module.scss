@@ -1,4 +1,4 @@
-.CollectionPage {
+.page {
   display: flex;
   gap: var(--space-2);
 }
@@ -21,11 +21,9 @@
   width: 100%;
 }
 
-.headerContainer {
-  height: fit-content;
-}
 
-.filterButton {
+
+.filter-button {
   display: flex;
   align-items: center;
   border: 1px solid var(--surface-400);

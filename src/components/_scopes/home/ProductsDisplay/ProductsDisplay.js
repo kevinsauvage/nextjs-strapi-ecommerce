@@ -12,7 +12,7 @@ const ProductsDisplay = ({ bestSelling, newArrival }) => {
   const nav = useMemo(() => [{ title: 'Best selling' }, { title: 'New Arrival' }], []);
 
   return (
-    <div className={styles.productsDisplay}>
+    <div className={styles.products}>
       <div className={styles.header}>
         <SectionTitle first="OUR SELECTION OF" second="PRODUCTS" />
         <ul className={styles.nav}>

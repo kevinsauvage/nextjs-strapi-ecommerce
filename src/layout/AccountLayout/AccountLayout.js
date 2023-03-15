@@ -14,47 +14,47 @@ const AccountLayout = ({
   descriptionBannerChildren,
   otherBannerChildrenContenct,
 }) => (
-    <div className={styles.AccountLayout}>
-      <PageBanner title={title} />
-      <Breadcrumbs />
-      <Container>
-        <main className={styles.main}>
-          <nav className={styles.nav}>
-            <ul className={styles.list}>
-              {config?.accountNav?.map((item) => (
-                <li className={styles.listItem} key={item.title}>
-                  <ActiveLink url={item.url} activeStyle={styles.active} scroll>
-                    {item.title}
-                  </ActiveLink>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <section className={styles.children}>
-            {loading ? (
-              <div className={styles.loading}>
-                <Loader />
-              </div>
-            ) : (
-              <>
-                {descriptionBannerChildren && (
-                  <div className={styles.bannerChildren}>
-                    <h2>{title}</h2>
-                    {descriptionBannerChildren && (
-                      <p className={styles.bannerChildrenDescription}>{descriptionBannerChildren}</p>
-                    )}
-                    {otherBannerChildrenContenct && (
-                      <div className={styles.bannerChildrenOther}>{otherBannerChildrenContenct}</div>
-                    )}
-                  </div>
-                )}
-                {children}
-              </>
-            )}
-          </section>
-        </main>
-      </Container>
-    </div>
-  );
+  <div className={styles['account-layout']}>
+    <PageBanner title={title} />
+    <Breadcrumbs />
+    <Container>
+      <main className={styles.main}>
+        <nav className={styles.nav}>
+          <ul className={styles.list}>
+            {config?.accountNav?.map((item) => (
+              <li className={styles['list-item']} key={item.title}>
+                <ActiveLink url={item.url} activeStyle={styles.active} scroll>
+                  {item.title}
+                </ActiveLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <section className={styles.children}>
+          {loading ? (
+            <div className={styles.loading}>
+              <Loader />
+            </div>
+          ) : (
+            <>
+              {descriptionBannerChildren && (
+                <div className={styles['banner-children']}>
+                  <h2>{title}</h2>
+                  {descriptionBannerChildren && (
+                    <p className={styles['banner-children-description']}>{descriptionBannerChildren}</p>
+                  )}
+                  {otherBannerChildrenContenct && (
+                    <div className={styles['banner-children-other']}>{otherBannerChildrenContenct}</div>
+                  )}
+                </div>
+              )}
+              {children}
+            </>
+          )}
+        </section>
+      </main>
+    </Container>
+  </div>
+);
 
 export default AccountLayout;

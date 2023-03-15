@@ -8,8 +8,8 @@ export const Head = ({ children }) => <thead className={styles.head}>{children}<
 
 export const Row = ({ children }) => <tr className={styles.row}>{children}</tr>;
 
-export const THead = ({ children }) => <th className={styles.tHead}>{children}</th>;
+export const THead = ({ children }) => <th className={styles['t-head']}>{children}</th>;
 
-export const TData = ({ children }) => <td className={styles.tData}>{children}</td>;
+export const TData = ({ children }) => <td className={styles['t-data']}>{children}</td>;
 
 export default Table;

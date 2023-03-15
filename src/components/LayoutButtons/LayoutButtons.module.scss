@@ -1,4 +1,4 @@
-.LayoutButtons {
+.buttons {
   display: flex;
   align-items: center;
 }
@@ -8,16 +8,12 @@
   align-items: center;
   border: none;
   margin-right: 3px;
-  padding: 0px;
-}
+  padding: 0;
 
-.buttonGrid {
   &.grid {
     border: 1px solid rgb(var(--color-primary-0));
   }
-}
-
-.buttonRow {
+  
   &.row {
     border: 1px solid rgb(var(--color-primary-0));
   }

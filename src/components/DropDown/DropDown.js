@@ -21,7 +21,7 @@ const Dropdown = ({ options, changeCallback, selected }) => {
   };
 
   return (
-    <div className={styles.DropDown} ref={containerRef}>
+    <div className={styles['drop-down']} ref={containerRef}>
       <button
         type="button"
         className={styles.button}

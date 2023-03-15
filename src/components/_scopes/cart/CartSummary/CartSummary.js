@@ -4,14 +4,14 @@ import useCartContext from '@/contexts/CartContext/useCartContext';
 import styles from './CartSummary.module.scss';
 
 const CartSummaryRow = ({ title, content, children }) => (
-    <div className={styles.CartSummaryRow}>
-      <div className={styles.CartSummaryRow__header}>
-        <p className={styles.CartSummaryRow__title}>{title}</p>
-        <p className={styles.CartSummaryRow__content}>{content}</p>
-      </div>
-      {children && <div className={styles.CartSummaryRow__children}>{children}</div>}
+  <div className={styles['cart-summary-row']}>
+    <div className={styles['cart-summary-row__header']}>
+      <p className={styles['cart-summary-row__title']}>{title}</p>
+      <p>{content}</p>
     </div>
-  );
+    {children && <div className={styles['cart-summary-row__children']}>{children}</div>}
+  </div>
+);
 
 const CartSummary = () => {
   const { cart, getTotalItems } = useCartContext();

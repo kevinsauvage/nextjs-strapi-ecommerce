@@ -12,7 +12,7 @@
   min-height: 36px;
   min-width: 36px;
   font-size: 0.9rem;
-  color: var(--onSurface-hight);
+  color: var(--on-surface-hight);
 
   &.selected {
     opacity: 1;
@@ -22,6 +22,6 @@
 
   &:hover {
     background-color: var(--surface-dark-200);
-    color: var(--onSurface-dark);
+    color: var(--on-surface-dark);
   }
 }

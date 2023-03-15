@@ -31,13 +31,13 @@ const ProductCardDefault = ({ product = {}, priority }) => {
   };
 
   return (
-    <li className={styles.productCardDefault}>
+    <li className={styles.card}>
       {loading && <AbsoluteLoader />}
       <div className={styles.buttons}>
         <Tooltip text={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}>
           <button
             aria-label={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}
-            className={`${styles.wishlist} ${isWishlist(product) ? styles.isWishlist : ''}`}
+            className={`${styles.wishlist} ${isWishlist(product) ? styles['is-wishlist'] : ''}`}
             type="button"
             onClick={(e) => {
               e.stopPropagation();
@@ -50,7 +50,7 @@ const ProductCardDefault = ({ product = {}, priority }) => {
         </Tooltip>
         <Tooltip text="Quick view">
           <button
-            className={styles.quickView}
+            className={styles['quick-view']}
             type="button"
             aria-label="Quick view"
             onClick={(e) => {
@@ -89,7 +89,7 @@ const ProductCardDefault = ({ product = {}, priority }) => {
         )}
 
         <div className={styles.content}>
-          <div className={styles.contentInner}>
+          <div className={styles.inner}>
             <div className={styles.header}>
               <b className={styles.title}>{title}</b>
             </div>

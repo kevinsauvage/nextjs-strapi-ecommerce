@@ -51,10 +51,10 @@ const QuantityUpdater = ({
   };
 
   return (
-    <div className={`${styles.quantityContainer} ${extraStyles}`}>
+    <div className={`${styles.container} ${extraStyles}`}>
       {showTitle && <b className={styles.label}>SELECT QUANTITY</b>}
-      <div className={styles.inputBox}>
-        <button type="button" onClick={removeOne} className={styles.btnQuantity} disabled={quantity <= 1}>
+      <div className={styles.box}>
+        <button type="button" onClick={removeOne} className={styles.button} disabled={quantity <= 1}>
           <VscRemove />
         </button>
         <input
@@ -73,7 +73,7 @@ const QuantityUpdater = ({
         <button
           type="button"
           onClick={addOne}
-          className={styles.btnQuantity}
+          className={styles.button}
           disabled={quantity >= quantityAvailable}
         >
           <VscAdd />

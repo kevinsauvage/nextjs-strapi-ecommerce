@@ -14,7 +14,7 @@ const ProductDetails = ({ html }) => {
   }, [html]);
 
   return htmlSanitized ? (
-    <div className={styles.ProductDetails}>
+    <div className={styles.details}>
       <Collapsible title="Product Details">
         <div className={styles.description} dangerouslySetInnerHTML={{ __html: htmlSanitized }} />
       </Collapsible>

@@ -19,7 +19,6 @@ const UserButtons = () => {
       item: search,
       id: 0,
       name: 'Search',
-      extraClass: styles.search,
       onClick: () => !pathname.startsWith('/search') && toggleSearch(!searchOpen),
     },
 
@@ -43,7 +42,7 @@ const UserButtons = () => {
         <div className={styles.cart}>
           {bag}
           {getTotalItems() && (
-            <div className={styles.totalItems}>
+            <div className={styles['total-items']}>
               <p>{getTotalItems()}</p>
             </div>
           )}

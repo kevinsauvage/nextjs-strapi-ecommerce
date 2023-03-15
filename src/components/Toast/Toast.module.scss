@@ -10,9 +10,9 @@
   width: 80%;
   color: var(--surface-100);
   transition: all 0.3s ease-in;
-  animation: slideUp 0.3s ease-in-out forwards;
+  animation: slide-up 0.3s ease-in-out forwards;
 
-  .toastContainer {
+  .container {
     position: relative;
     width: 100%;
 
@@ -57,7 +57,7 @@
   }
 }
 
-@keyframes slideUp {
+@keyframes slide-up {
   0% {
     bottom: -50px;
   }

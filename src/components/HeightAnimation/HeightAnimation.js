@@ -42,13 +42,11 @@ const HeightAnimation = ({
 
   return (
     <>
-      <div className={styles.HeightAnimation} style={{ maxHeight: `${actualHeight}px` }}>
+      <div className={styles.animation} style={{ maxHeight: `${actualHeight}px` }}>
         <div
           ref={refChildren}
           onLoad={calculateHeight}
-          className={`${styles.children} ${
-            animationType === 'hover' && actualHeight !== maxHeight && styles.hoverAnimation
-          } `}
+          className={` ${animationType === 'hover' && actualHeight !== maxHeight && styles.hover} `}
           onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
           onMouseLeave={() => animationType === 'hover' && setActualHeight(initialHeight)}
           onFocus={() => animationType === 'hover' && setActualHeight(maxHeight)}

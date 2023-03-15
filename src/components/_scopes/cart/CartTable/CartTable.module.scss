@@ -1,22 +1,22 @@
-.CartTable {
+.cart-table {
   @include respond(mobile) {
-    td:nth-of-type(1):before {
+    td:nth-of-type(1)::before {
       content: "Product";
     }
 
-    td:nth-of-type(2):before {
+    td:nth-of-type(2)::before {
       content: "Unit Price";
     }
 
-    td:nth-of-type(3):before {
+    td:nth-of-type(3)::before {
       content: "Quantity";
     }
 
-    td:nth-of-type(4):before {
+    td:nth-of-type(4)::before {
       content: "Subotal";
     }
 
-    td:nth-of-type(5):before {
+    td:nth-of-type(5)::before {
       content: "Remove";
     }
   }

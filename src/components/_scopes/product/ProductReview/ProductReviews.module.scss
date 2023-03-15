@@ -1,15 +1,15 @@
-.ProductReviews {
+.reviews {
   position: relative;
   background-color: var(--surface-200);
 }
 
-.customerReviews {
+.customer-reviews {
   border-radius: $radius;
   padding: var(--space-1);
 }
 
-.reviewForm {
-  textArea {
+.form {
+  textarea {
     background-color: var(--surface-300);
 
     @include placeholder {
@@ -27,12 +27,12 @@
   }
 }
 
-.buttonSubmit {
+.button {
   margin-top: var(--space-0);
   margin-left: auto;
 }
 
-.addReview {
+.add-review {
   padding-bottom: var(--space-2);
 }
 

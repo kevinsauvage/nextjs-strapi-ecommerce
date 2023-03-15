@@ -1,4 +1,4 @@
-.Indicators {
+.indicators {
   display: flex;
   align-items: center;
 
@@ -30,7 +30,7 @@
   min-width: 16px;
 
   &.last {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   &.active {

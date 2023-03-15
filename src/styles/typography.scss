@@ -4,8 +4,8 @@ html {
   font-size: 13px;
   line-height: calc(13px * 1.5);
   font-weight: 400;
-  -webkit-text-size-adjust: 100%; //fix for iOS
-
+  text-size-adjust: 100%;
+  
   @media (max-width: 1000px) {
     font-size: calc(12px + .1vw);
     line-height: calc(12px + .1vw * 1.5);
@@ -18,7 +18,7 @@ h3,
 h4,
 h5,
 h6 {
-  text-shadow: $textShadow-100;
+  text-shadow: $text-shadow-100;
   font-style: normal;
   font-weight: 600;
 }

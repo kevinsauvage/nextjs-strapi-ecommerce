@@ -1,4 +1,4 @@
-.PageBanner {
+.banner {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -7,7 +7,7 @@
   border-bottom: 0.1px solid var(--surface-900);
   background-color: var(--surface-dark-100);
   min-height: 100px;
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
 }
 
 .title {

@@ -1,6 +1,6 @@
-$boxDimension: 36px;
+$box-dimension: 36px;
 
-.quantityContainer {
+.container {
   margin-top: var(--space-0);
 }
 
@@ -11,13 +11,13 @@ $boxDimension: 36px;
   font-size: 1.1rem;
 }
 
-.inputBox {
+.box {
   display: flex;
   align-items: center;
   border: 1px solid var(--surface-500);
   border-radius: $radius;
   background-color: var(--surface-100);
-  min-height: $boxDimension;
+  min-height: $box-dimension;
   height: 100%;
   width: fit-content;
   overflow: hidden;
@@ -28,31 +28,31 @@ $boxDimension: 36px;
   border: none;
   background-color: transparent;
   height: 100%;
-  width: calc($boxDimension + 10px);
+  width: calc($box-dimension + 10px);
   font-size: 1.2rem;
-  color: var(--onSurface-hight);
+  color: var(--on-surface-hight);
   text-align: center;
 
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     margin: 0;
-    -webkit-appearance: none;
+    appearance: none;
   }
 
   &[type='number'] {
-    -moz-appearance: textfield;
+    appearance: textfield;
   }
 }
 
-.btnQuantity {
+.button {
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
   background-color: var(--surface-200);
-  min-height: $boxDimension;
+  min-height: $box-dimension;
   height: 100%;
-  width: $boxDimension;
+  width: $box-dimension;
 
   &:first-of-type {
     border-right: 1px solid var(--surface-500);

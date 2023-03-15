@@ -3,9 +3,9 @@
   transform: translateZ(0);
   display: flex;
   align-items: center;
-  border: 0.1px solid rgba(var(--surface-900), 0.1);
+  border: 0.1px solid rgb(var(--surface-900) 0.1);
   background-color: var(--surface-200);
-  max-height: 0px;
+  max-height: 0;
   height: 300px;
   width: 100%;
   overflow: hidden;

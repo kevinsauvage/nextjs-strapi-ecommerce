@@ -60,7 +60,7 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
   const handlers = useSwipeable({ ...handlersObject });
 
   return (
-    <div {...handlers} className={`${styles.Carousel}`}>
+    <div {...handlers} className={`${styles.carousel}`}>
       {showButtons && (
         <button
           className={`${styles.button}`}
@@ -79,14 +79,14 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
         }}
       >
         {Children.map(children, (child) => (
-          <div className={styles.CarouselItem} style={{ height: `${itemDimension}%` }}>
+          <div className={styles.item} style={{ height: `${itemDimension}%` }}>
             {cloneElement(child)}
           </div>
         ))}
       </div>
       {showButtons && (
         <button
-          className={`${styles.next} ${styles.button}`}
+          className={styles.button}
           type="button"
           disabled={translatePosition === maxTranslatePosition}
           onClick={() => handleChangeIndex(index + 1)}

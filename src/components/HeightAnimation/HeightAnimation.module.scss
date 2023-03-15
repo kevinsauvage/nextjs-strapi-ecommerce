@@ -1,4 +1,4 @@
-.HeightAnimation {
+.animation {
   position: relative;
   transform: translateZ(0);
   overflow: hidden;
@@ -6,8 +6,8 @@
   transition: max-height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.hoverAnimation {
-  @include gradient-overlay(var(--RGB-surface-100), 0deg);
+.hover {
+  @include gradient-overlay(var(--rgb-surface-100), 0deg);
 }
 
 .button {

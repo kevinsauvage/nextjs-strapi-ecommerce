@@ -129,11 +129,11 @@ const ProductReviews = ({ product }) => {
   const totalReviews = reviews.length;
 
   return (
-    <div className={styles.ProductReviews}>
+    <div className={styles.reviews}>
       {loading && <AbsoluteLoader />}
       <Collapsible title={<span>Reviews{totalReviews > 0 && <small> ({totalReviews})</small>}</span>}>
-        <div className={styles.ProductReviewsContent}>
-          <div className={styles.customerReviews}>
+        <div>
+          <div className={styles['customer-reviews']}>
             {Array.isArray(reviews) && totalReviews > 0 ? (
               <Reviews reviews={reviews} handleRemoveProductReview={handleRemoveProductReview} />
             ) : (
@@ -141,7 +141,7 @@ const ProductReviews = ({ product }) => {
             )}
           </div>
 
-          <div className={styles.addReview}>
+          <div className={styles['add-review']}>
             <Collapsible title="Add a review">
               {user?.id ? (
                 <>
@@ -150,7 +150,7 @@ const ProductReviews = ({ product }) => {
                     <Rating rating={rating} onChange={(payload) => setRating(payload)} />
                   </div>
                   <Form
-                    extraClass={styles.reviewForm}
+                    extraClass={styles.form}
                     onSubmit={handleSetProductReview}
                     initialValues={{ message: '' }}
                   >
@@ -161,7 +161,7 @@ const ProductReviews = ({ product }) => {
                       label="message"
                       input="true"
                     />
-                    <Button extraClass={styles.buttonSubmit} primary type="submit">
+                    <Button extraClass={styles.button} primary type="submit">
                       Publish review
                     </Button>
                   </Form>
@@ -169,11 +169,7 @@ const ProductReviews = ({ product }) => {
               ) : (
                 <div className={styles.login}>
                   <b>Login to you account to leave a review</b>
-                  <Button
-                    extraClass={styles.loginButton}
-                    contrast
-                    href={`${config.routes.login}?redirectUrl=${asPath}`}
-                  >
+                  <Button contrast href={`${config.routes.login}?redirectUrl=${asPath}`}>
                     Go to login page
                   </Button>
                 </div>

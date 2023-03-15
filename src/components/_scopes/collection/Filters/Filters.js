@@ -27,7 +27,7 @@ const Filters = () => {
   };
 
   return (
-    <div className={styles.filters}>
+    <div>
       <div className={styles.header}>
         <button
           className={styles.reset}

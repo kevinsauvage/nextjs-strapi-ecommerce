@@ -1,9 +1,34 @@
-.productCardDefault {
+.card {
   position: relative;
   height: 100%;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
+
+  .buttons {
+    z-index: 999;
+    position: absolute;
+    top: var(--space-0);
+    right: var(--space-0);
+    opacity: 0;
+    transition: opacity 0.2s linear;
+  }
+
+  .image {
+    position: relative;
+    display: flex;
+    border: 1px solid var(--surface-300);
+    width: 100%;
+    overflow: hidden;
+  
+    img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 0.2s all ease-in-out;
+    }
+  }
+  
 
   &:hover,
   &:focus,
@@ -26,22 +51,15 @@
   gap: 1rem;
 }
 
-.buttons {
-  z-index: 999;
-  position: absolute;
-  top: var(--space-0);
-  right: var(--space-0);
-  opacity: 0;
-  transition: opacity 0.2s linear;
-}
 
 .wishlist,
-.quickView {
+.quick-view {
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
-  border: 1px solid rgba(var(--RGB-surface-100), 0.5);
+  /* stylelint-disable-next-line color-function-notation */
+  border: 1px solid rgba(var(--rgb-surface-100), 0.5);
   margin-bottom: var(--space-0);
   background-color: var(--surface-200);
   height: 40px;
@@ -53,13 +71,13 @@
   }
 
   path {
-    stroke: var(--onSurface-hight);
+    stroke: var(--on-surface-hight);
   }
 }
 
-.isWishlist {
+.is-wishlist {
   path {
-    fill: var(--onSurface-hight);
+    fill: var(--on-surface-hight);
   }
 }
 
@@ -75,25 +93,12 @@
   height: 100%;
 }
 
-.contentInner {
+.inner {
   height: 100%;
   padding: var(--space-0) 0;
 }
 
-.image {
-  position: relative;
-  display: flex;
-  border: 1px solid var(--surface-300);
-  width: 100%;
-  overflow: hidden;
 
-  img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    transition: 0.2s all ease-in-out;
-  }
-}
 
 .bottom {
   display: flex;
@@ -117,16 +122,7 @@
   white-space: pre-wrap;
   font-size: 14px;
   font-weight: 500;
-  color: var(--onSurface-medium);
+  color: var(--on-surface-medium);
+
   @include text-shorten(2);
-}
-
-@keyframes slideUp {
-  0% {
-    transform: translateY(100%);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
 }

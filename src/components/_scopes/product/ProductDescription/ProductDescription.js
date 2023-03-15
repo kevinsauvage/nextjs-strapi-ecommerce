@@ -42,7 +42,7 @@ const ProductDescription = ({
   };
 
   return (
-    <div className={styles.ProductDescription}>
+    <div className={styles.description}>
       <h1 className={styles.title}>{title}</h1>
       {!isModal && (
         <ul className={styles.list}>
@@ -88,14 +88,14 @@ const ProductDescription = ({
           quantityAvailable={quantityAvailable}
         />
       </div>
-      <div className={`${styles.wrapper} ${styles.prices}`}>
-        <div className={styles.unitPrice}>
+      <div className={styles.wrapper}>
+        <div className={styles['unit-price']}>
           <small>Unit price</small>
           <p>
             {priceV2?.currencyCode} {priceV2?.amount}
           </p>
         </div>
-        <div className={styles.totalPrice}>
+        <div className={styles['total-price']}>
           <small>Total price</small>
           <p>
             {priceV2?.currencyCode} {totalPrice}
@@ -116,7 +116,7 @@ const ProductDescription = ({
           type="button"
           contrast
           onClick={() => handleWishlist()}
-          extraClass={`${styles.button} ${isWishlist(product) && styles.isWishlist}`}
+          extraClass={`${styles.button} ${isWishlist(product) && styles['is-wishlist']}`}
         >
           {heart} {isWishlist(product) ? 'Remove from' : 'Add to'} wishlist
         </Button>

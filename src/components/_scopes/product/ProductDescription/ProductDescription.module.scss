@@ -1,4 +1,4 @@
-.ProductDescription {
+.description {
   position: sticky;
   top: 20px;
   display: flex;
@@ -14,9 +14,6 @@
     padding: var(--space-1);
   }
 
-  &.Separator+.Separator {
-    display: none;
-  }
 }
 
 .list {
@@ -47,9 +44,12 @@
   gap: var(--space-1);
 }
 
+.total-price {
+  margin-right: var(--space-2);
+}
 
-.totalPrice,
-.unitPrice {
+.total-price,
+.unit-price {
   &:first-of-type {
     margin-right: var(--space-0);
   }
@@ -65,16 +65,14 @@
   }
 }
 
-.totalPrice {
-  margin-right: var(--space-2);
-}
+
 
 .button {
   width: 100%;
 }
 
-.isWishlist {
+.is-wishlist {
   path {
-    fill: var(--onSurface-dark);
+    fill: var(--on-surface-dark);
   }
 }

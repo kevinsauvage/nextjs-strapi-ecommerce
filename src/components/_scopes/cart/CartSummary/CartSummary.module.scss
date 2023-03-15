@@ -1,6 +1,5 @@
 .summary {
   position: sticky;
-  position: -webkit-sticky;
   top: var(--space-2);
   border: 0.01px solid var(--surface-300);
   border-radius: $radius;
@@ -21,24 +20,16 @@
 }
 
 .title {
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
 }
 
-.subtotal {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 0.01px solid var(--surface-900);
-  width: 100%;
-  padding-bottom: var(--space-1);
-}
 
 .btn {
   margin-top: var(--space-1);
   width: 100%;
 }
 
-.CartSummaryRow {
+.cart-summary-row {
   border-bottom: 0.01px solid var(--primary);
   padding: var(--space-0) 0;
 

@@ -6,14 +6,6 @@
     "jest": true
   },
   "parser": "@babel/eslint-parser",
-  "plugins": ["react", "simple-import-sort"],
-  "extends": [
-    "airbnb",
-    "prettier",
-    "next/core-web-vitals",
-    "eslint:recommended",
-    "plugin:jsx-a11y/recommended"
-  ],
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -21,6 +13,50 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "ignorePatterns": ["node_modules/", ".next/"],
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+
+      "alias": {
+        "map": [
+          ["@/components", "./src/components"],
+          ["@/contexts", "./src/contexts"],
+          ["@/config", "./src/config"],
+          ["@/hooks", "./src/hooks"],
+          ["@/assets", "./src/assets"],
+          ["@/data", "./src/data"],
+          ["@/styles", "./src/styles"],
+          ["@/lib", "./src/lib"],
+          ["@/helpers", "./src/helpers"],
+          ["@/utils", "./src/utils"],
+          ["@/layout", "./src/layout"],
+          ["@/modals", "./src/modals"],
+          ["@/shopify", "./src/shopify"]
+        ],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      },
+      "root": ["./src"]
+    }
+  },
+  "globals": {
+    "React": "writable"
+  },
+  "plugins": ["react", "simple-import-sort", "css-modules", "sonarjs"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "next",
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:css-modules/recommended",
+    "plugin:sonarjs/recommended"
+  ],
+
   "rules": {
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": [
@@ -75,37 +111,5 @@
     "prefer-const": "error",
     "no-use-before-define": "error",
     "no-multi-spaces": "error"
-  },
-  "ignorePatterns": ["node_modules/", ".next/"],
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      },
-
-      "alias": {
-        "map": [
-          ["@/components", "./src/components"],
-          ["@/contexts", "./src/contexts"],
-          ["@/config", "./src/config"],
-          ["@/hooks", "./src/hooks"],
-          ["@/assets", "./src/assets"],
-          ["@/data", "./src/data"],
-          ["@/styles", "./src/styles"],
-          ["@/lib", "./src/lib"],
-          ["@/helpers", "./src/helpers"],
-          ["@/utils", "./src/utils"],
-          ["@/layout", "./src/layout"],
-          ["@/modals", "./src/modals"],
-          ["@/shopify", "./src/shopify"]
-        ],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      },
-      "root": ["./src"]
-    }
-  },
-  "globals": {
-    "React": "writable"
   }
 }

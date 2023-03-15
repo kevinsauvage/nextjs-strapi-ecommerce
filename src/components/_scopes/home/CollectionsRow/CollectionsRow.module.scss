@@ -1,4 +1,4 @@
-.CollectionsRow {
+.row {
   margin-bottom: var(--space-6);
 }
 
@@ -33,5 +33,6 @@
   height: 100%;
   width: 100%;
   object-fit: cover;
-  @include boxShadow(1);
+
+  @include box-shadow(1);
 }

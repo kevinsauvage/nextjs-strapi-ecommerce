@@ -14,7 +14,7 @@ const DefaultFilters = ({ filter }) => {
       type="button"
       onClick={() => handleSetFilters(filter.id, value.input)}
     >
-      <p className={styles.value}>{value.label}</p>
+      <p>{value.label}</p>
     </button>
   ));
 };

@@ -24,7 +24,7 @@ const ProductCardRow = ({ product }) => {
   const { quantityAvailable, image, compareAtPriceV2, priceV2 } = selectedVariant || {};
 
   return (
-    <li className={`${styles.ProductCardRow}`}>
+    <li className={`${styles.card}`}>
       <div className={styles.image}>
         {image?.small && (
           <Image

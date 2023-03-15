@@ -35,7 +35,7 @@ const SecureBanner = () => {
         {items.map((item) => (
           <div key={item.text} className={styles.item}>
             {item.icon}
-            <div className={styles.content}>
+            <div>
               <p className={styles.text}>{item.text}</p>
               <p className={styles.subtitle}>{item.subtitle}</p>
             </div>

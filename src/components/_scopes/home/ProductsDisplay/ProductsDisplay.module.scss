@@ -1,4 +1,4 @@
-.productsDisplay {
+.products {
   margin-bottom: var(--space-6);
 }
 
@@ -26,5 +26,6 @@
 
 .active {
   font-weight: 700;
+
   @include underline(var(--surface-900));
 }

@@ -1,6 +1,6 @@
+/* stylelint-disable at-rule-no-vendor-prefix */
 @import './responsive';
 
-// @include text-shorten(3);
 @mixin text-shorten($numLines: 1) {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -29,6 +29,7 @@
 
 @mixin flex-center-column {
   flex-direction: column;
+
   @include flex-center;
 }
 
@@ -63,7 +64,7 @@
   &::after {
     position: absolute;
     bottom: 1px;
-    left: 0px;
+    left: 0;
     content: '';
     border-radius: $radius;
     background-color: $color;
@@ -73,24 +74,16 @@
   }
 }
 
-@mixin boxShadow($level) {
-  @if $level==1 {
-    box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.08);
-  }
-
-  @else if $level==2 {
+@mixin box-shadow($level) {
+  @if $level == 1 {
+    box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 0 3px rgba(0, 0, 0, 0.08);
+  } @else if $level == 2 {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 0 4px rgba(0, 0, 0, 0.12);
-  }
-
-  @else if $level==3 {
+  } @else if $level == 3 {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.19), 0 0 10px rgba(0, 0, 0, 0.14);
-  }
-
-  @else if $level==4 {
+  } @else if $level == 4 {
     box-shadow: 0 0 28px rgba(0, 0, 0, 0.25), 0 0 17px rgba(0, 0, 0, 0.2);
-  }
-
-  @else if $level==5 {
+  } @else if $level == 5 {
     box-shadow: 0 0 38px rgba(0, 0, 0, 0.3), 0 0 22px rgba(0, 0, 0, 0.24);
   }
 }
@@ -114,7 +107,7 @@
 }
 
 @mixin overlay($bgColor: #000000, $bgOpacity: 0.6) {
-  &:after {
+  &::after {
     z-index: 0;
     position: absolute;
     top: 0;
@@ -127,7 +120,7 @@
 }
 
 @mixin gradient-overlay($bgColor: #000000, $deg: 0deg) {
-  &:after {
+  &::after {
     z-index: 0;
     position: absolute;
     top: 0;
@@ -145,7 +138,7 @@
   }
 }
 
-@mixin borderLight($color, $opacity: 0.5) {
+@mixin border-light($color, $opacity: 0.5) {
   border: 0.1px solid rgba($color, $opacity);
 }
 
@@ -161,7 +154,8 @@
   text-transform: uppercase;
   font-weight: 600;
   transition: all 0.3s ease-in;
-  @include boxShadow(2);
+
+  @include box-shadow(2);
 
   @include respond(laptop desktop) {
     &:hover:enabled {
@@ -180,7 +174,8 @@
 
 @mixin button-primary {
   background-color: var(--primary-600);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
+
   @include button;
 
   @include respond(laptop desktop) {
@@ -190,14 +185,15 @@
   }
 
   path {
-    stroke: var(--onSurface-dark);
+    stroke: var(--on-surface-dark);
   }
 }
 
 @mixin button-secondary {
   border: 2px solid var(--complementary-800);
   background-color: var(--complementary-700);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
+
   @include button;
 
   @include respond(laptop desktop) {
@@ -211,12 +207,13 @@
   border: 2px solid var(--surface-dark-100);
   background-color: transparent;
   color: var(--surface-dark-100);
+
   @include button;
 
   @include respond(laptop desktop) {
     &:hover:enabled {
       background-color: var(--surface-dark-100);
-      color: var(--onSurface-dark);
+      color: var(--on-surface-dark);
     }
   }
 }
@@ -224,17 +221,18 @@
 @mixin button-contrast {
   border: 2px solid var(--surface-dark-100);
   background-color: var(--surface-dark-100);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
+  
   @include button;
 
   @include respond(laptop desktop) {
     &:hover:enabled {
       background-color: var(--surface-dark-100);
-      color: var(--onSurface-dark);
+      color: var(--on-surface-dark);
     }
   }
 
   path {
-    stroke: var(--onSurface-dark);
+    stroke: var(--on-surface-dark);
   }
 }

@@ -17,6 +17,8 @@ import AccountLayout from '@/layout/AccountLayout/AccountLayout';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
+const errorMessage = 'Something went wrong, please try again later';
+
 const Addresses = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -35,7 +37,7 @@ const Addresses = () => {
     });
     setIsLoading(false);
     if (Array.isArray(res)) dispatch({ type: actions.ADD_ADDRESSES, payload: res });
-    else showToast.error('Something went wrong, please try again later');
+    else showToast.error(errorMessage);
   }, [dispatch, showToast]);
 
   useEffect(() => {
@@ -94,9 +96,9 @@ const Addresses = () => {
         return showToast.success('Address deleted successfully');
       }
 
-      return showToast.error('Something went wrong, please try again later');
+      return showToast.error(errorMessage);
     } catch (error) {
-      return showToast.error('Something went wrong, please try again later');
+      return showToast.error(errorMessage);
     } finally {
       toggleLoading(false);
     }
@@ -120,7 +122,7 @@ const Addresses = () => {
 
       return customerUserErrors.forEach((element) => showToast.error(element.message));
     } catch (error) {
-      return showToast.error('Something went wrong, please try again later');
+      return showToast.error(errorMessage);
     } finally {
       toggleLoading(false);
     }

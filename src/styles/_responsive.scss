@@ -1,5 +1,5 @@
-$media_query_prefix: "only screen and";
-$media_queries: ("mobile": "(max-width: 767px)",
+$media-query-prefix: "only screen and";
+$media-queries: ("mobile": "(max-width: 767px)",
   "tablet": "(min-width: 768px) and (max-width: 1023px)",
   "laptop": "(min-width: 1024px) and (max-width: 1439px)",
   "desktop": "(min-width: (1440px))",
@@ -13,7 +13,7 @@ $media_queries: ("mobile": "(max-width: 767px)",
   $conditions: ();
 
   @each $breakpoint in $breakpoints {
-    $media_query: "#{$media_query_prefix} #{map-get($media_queries, $breakpoint)}";
+    $media-query: "#{$media_query_prefix} #{map-get($media_queries, $breakpoint)}";
     $conditions: append($conditions, $media_query, comma);
   }
 

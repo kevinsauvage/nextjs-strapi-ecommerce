@@ -43,7 +43,7 @@ const ModalProduct = ({ handleClose, selectedProduct }) => {
 
   return (
     <Modal loading={loading} handleClose={handleClose}>
-      <div className={styles.modalProduct}>
+      <div className={styles.modal}>
         <PhotoSlider selectedVariant={selectedVariant} variants={product?.variants} />
         <ProductDescription
           product={product}

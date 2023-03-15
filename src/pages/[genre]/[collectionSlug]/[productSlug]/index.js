@@ -59,7 +59,7 @@ const ProductPage = ({ product, recommendations = [] }) => {
       {Array.isArray(recommendations) && recommendations.length > 0 && (
         <div className={styles.recommendations}>
           <Container size="medium">
-            <h3 className={styles.recommendationsTitle}>Recommendations</h3>
+            <h3 className={styles['recommendations-title']}>Recommendations</h3>
             <ProductsList products={recommendations} layout="grid" />
           </Container>
         </div>

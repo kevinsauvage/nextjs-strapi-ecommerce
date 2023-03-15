@@ -17,31 +17,29 @@ const CollectionPage = () => {
     useCollectionContext();
 
   return (
-    <div className={styles.CollectionPage}>
+    <div className={styles.page}>
       <main className={styles.main}>
-        <div className={styles.headerContainer}>
-          <div className={styles.header}>
-            <Container>
-              {(products?.length > 0 || getFormattedFilter().length > 0) && (
-                <Wrapper>
-                  <Sort handleChange={handleSort} />
-                  <SlideIn
-                    headerTitle="Filters"
-                    title={
-                      <span className={styles.filterButton}>
-                        <p>Filters</p>
-                        {filter}
-                      </span>
-                    }
-                  >
-                    <aside className={styles.aside}>
-                      <Filters />
-                    </aside>
-                  </SlideIn>
-                </Wrapper>
-              )}
-            </Container>
-          </div>
+        <div className={styles.header}>
+          <Container>
+            {(products?.length > 0 || getFormattedFilter().length > 0) && (
+              <Wrapper>
+                <Sort handleChange={handleSort} />
+                <SlideIn
+                  headerTitle="Filters"
+                  title={
+                    <span className={styles['filter-button']}>
+                      <p>Filters</p>
+                      {filter}
+                    </span>
+                  }
+                >
+                  <aside className={styles.aside}>
+                    <Filters />
+                  </aside>
+                </SlideIn>
+              </Wrapper>
+            )}
+          </Container>
         </div>
         <Container>
           {loading || products?.length > 0 ? (

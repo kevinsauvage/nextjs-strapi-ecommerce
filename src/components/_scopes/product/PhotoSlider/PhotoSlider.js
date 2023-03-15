@@ -31,7 +31,7 @@ const PhotoSlider = ({ variants, selectedVariant }) => {
   };
 
   return (
-    <div className={styles.PhotoSlider}>
+    <div className={styles.slider}>
       <div className={styles.indicators}>
         {index + 1} / {variants.length}
       </div>
@@ -45,7 +45,6 @@ const PhotoSlider = ({ variants, selectedVariant }) => {
       </div>
       {selectedImage?.src && (
         <Image
-          className={styles.image}
           src={selectedImage?.large}
           alt={selectedImage?.altText || 'selectedImage'}
           width={selectedImage?.width}

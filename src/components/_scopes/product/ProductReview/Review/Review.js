@@ -14,7 +14,7 @@ const Review = ({ review, handleRemoveProductReview }) => {
 
   return (
     rating && (
-      <li className={styles.Review}>
+      <li className={styles.review}>
         <div className={styles.header}>
           <p className={styles.by}>
             By {review?.customerFirstName} {review?.customerLastName}{' '}
@@ -23,7 +23,7 @@ const Review = ({ review, handleRemoveProductReview }) => {
           {user?.id === review?.customerId && (
             <Tooltip text="Remove review">
               <button
-                className={styles.buttonRemove}
+                className={styles['button-remove']}
                 type="button"
                 onClick={() => handleRemoveProductReview(review)}
               >

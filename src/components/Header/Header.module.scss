@@ -2,7 +2,7 @@
   z-index: 9999;
   position: relative;
   align-items: center;
-  border-bottom: 0.1px solid rgba(var(--RGB-surface-100), 0.1);
+  border-bottom: 0.1px solid rgb(var(--rgb-surface-100) 0.1);
   background-color: var(--surface-dark-100);
   width: 100%;
 }

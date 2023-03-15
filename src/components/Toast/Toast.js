@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+// eslint-disable-next-line css-modules/no-unused-class
 import styles from './Toast.module.scss';
 
 const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
@@ -16,7 +17,7 @@ const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
   }, [toast, toastDispatch]);
   return (
     <div className={styles.toast} style={{ bottom: `${tranformY}px` }}>
-      <div className={styles.toastContainer}>
+      <div className={styles.container}>
         <div className={`${styles.item} ${toast?.type ? styles[toast?.type] : ''}`}>
           {renderItem(toast?.content)}
         </div>
@@ -25,11 +26,10 @@ const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
   );
 };
 
-const Toast = ({ toasts, toastDispatch }) => (
-    toasts.length > 0 &&
-    toasts.map((toast, i) => (
-      <ToastItem key={toast.id} toast={toast} toastDispatch={toastDispatch} tranformY={i * 50} />
-    ))
-  );
+const Toast = ({ toasts, toastDispatch }) =>
+  toasts.length > 0 &&
+  toasts.map((toast, i) => (
+    <ToastItem key={toast.id} toast={toast} toastDispatch={toastDispatch} tranformY={i * 50} />
+  ));
 
 export default Toast;

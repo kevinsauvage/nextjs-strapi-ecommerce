@@ -1,4 +1,4 @@
-.DropDown {
+.drop-down {
   position: relative;
   border: 1px solid var(--surface-400);
   border-radius: $radius;
@@ -29,7 +29,7 @@
   }
 
   path {
-    fill: var(--onSurface-hight);
+    fill: var(--on-surface-hight);
   }
 }
 
@@ -42,7 +42,7 @@
   @include respond(laptop desktop) {
     &:hover {
       background-color: var(--surface-dark-100);
-      color: var(--onSurface-dark);
+      color: var(--on-surface-dark);
     }
   }
 

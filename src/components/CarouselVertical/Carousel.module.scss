@@ -1,4 +1,4 @@
-.Carousel {
+.carousel {
   position: relative;
   height: 100%;
   overflow: hidden;
@@ -21,11 +21,11 @@
     width: 100%;
 
     &:hover {
-      border: 0.1px solid rgb(162, 162, 162);
+      border: 0.1px solid rgb(162 162 162);
     }
   }
 
-  .CarouselItem {
+  .item {
     position: relative;
     flex: 0 0 auto;
   }

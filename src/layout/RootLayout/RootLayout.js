@@ -42,7 +42,7 @@ const RootLayout = ({ children }) => {
   }, []);
 
   return (
-    <div className={styles.RootLayout}>
+    <div className={styles['root-layout']}>
       <SearchBar />
       <Header headerMenu={menuHeader} />
       {children}

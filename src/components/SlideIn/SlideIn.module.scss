@@ -1,4 +1,4 @@
-.slideIn {
+.slide-in {
   position: relative;
 }
 
@@ -19,7 +19,7 @@
   width: 450px;
   overflow: auto;
   transition: all 0.3s ease-in-out;
-  box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 0 4px #0000004d;
 }
 
 .header {
@@ -29,7 +29,7 @@
   background-color: var(--surface-dark-100);
   height: $header-height;
   padding: 0 var(--space-1);
-  color: var(--onSurface-dark);
+  color: var(--on-surface-dark);
 }
 
 .icon {
@@ -41,21 +41,19 @@
     width: 20px;
 
     path {
-      fill: var(--onSurface-dark);
+      fill: var(--on-surface-dark);
     }
   }
 }
 
-.showChildren {
-  right: 0;
-}
+
 
 .backdrop {
   z-index: 10;
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: #0000004d;
   height: 100%;
   width: 100%;
 }

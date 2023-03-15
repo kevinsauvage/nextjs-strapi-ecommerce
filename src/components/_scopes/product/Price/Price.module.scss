@@ -1,17 +1,17 @@
-.Price {
+.price {
   display: flex;
   align-items: center;
   gap: var(--space-0);
 }
 
-.compareAtPriceV2 {
+.compare {
   opacity: 0.5;
   text-decoration: line-through;
 }
 
-.currentPrice {
+.current {
   font-weight: 600;
-  color: var(--onSurface-medium);
+  color: var(--on-surface-medium);
 }
 
 .small {
