@@ -75,8 +75,8 @@ const ProductReviews = ({ product }) => {
       const response = await nextApiHelper('/api/reviews', metafields, 'POST');
       setLoading(false);
 
-      if (response?.response) {
-        setReviews(response.response);
+      if (response?.responseMetafield) {
+        setReviews(response.responseMetafield);
         setRating();
         return showToast.success('Review correctly added');
       }
