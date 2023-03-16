@@ -4,8 +4,8 @@
 }
 
 .customer-reviews {
-  border-radius: $radius;
   padding: var(--space-1);
+  border-radius: $radius;
 }
 
 .form {
@@ -38,18 +38,18 @@
 
 .login {
   display: flex;
+  width: fit-content;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: var(--space-2);
   border-radius: $radius;
   margin: 0 auto;
   background-color: var(--surface-300);
-  width: fit-content;
-  padding: var(--space-2);
 
   b {
-    margin-bottom: var(--space-1);
     max-width: 300px;
+    margin-bottom: var(--space-1);
     text-align: center;
   }
 }

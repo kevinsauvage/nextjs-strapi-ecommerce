@@ -1,63 +1,63 @@
 .address {
   position: relative;
   display: flex;
+  width: 100%;
   justify-content: space-between;
+  padding: var(--space-2);
   border: 0.1px solid var(--surface-300);
   border-radius: $radius;
   margin-bottom: var(--space-1);
   background-color: var(--surface-200);
-  width: 100%;
-  padding: var(--space-2);
   color: var(--on-surface-medium);
 }
 
 .side {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
 }
 
 .buttons {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   gap: var(--space-0);
 }
 
 .button {
   position: relative;
   display: block;
-  border: none;
-  margin: 0 2px;
   box-sizing: border-box;
   padding: 0;
+  border: none;
+  margin: 0 2px;
 
   svg {
     display: block;
-    height: 18px;
     width: 18px;
+    height: 18px;
   }
 }
 
 .default-button {
+  width: fit-content;
+  align-self: flex-end;
+  padding: 0;
   border: none;
   margin-top: var(--space-0);
-  width: fit-content;
-  padding: 0;
   text-decoration: underline;
-  align-self: flex-end;
 }
 
 .default-text {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 8px;
   border-radius: $radius;
   background-color: var(--surface-dark-100);
-  padding: 8px;
+  color: white;
   font-size: 0.7rem;
   font-weight: 500;
-  color: white;
   text-align: end;
 }

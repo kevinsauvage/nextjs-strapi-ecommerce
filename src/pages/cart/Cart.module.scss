@@ -1,9 +1,9 @@
 .cart {
   display: grid;
-  grid-template-columns: 1fr minmax(280px, 360px);
-  margin: 0 auto;
   padding: var(--space-2) 0;
+  margin: 0 auto;
   gap: var(--space-2);
+  grid-template-columns: 1fr minmax(280px, 360px);
 
   @include respond(mobile tablet) {
     display: flex;

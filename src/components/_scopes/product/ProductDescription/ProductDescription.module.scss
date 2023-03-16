@@ -2,12 +2,12 @@
   position: sticky;
   top: 20px;
   display: flex;
-  flex-direction: column;
-  background-color: var(--surface-100);
-  height: 100%;
-  max-width: 430px;
   width: fit-content;
+  max-width: 430px;
+  height: 100%;
+  flex-direction: column;
   padding: var(--space-2);
+  background-color: var(--surface-100);
 
   @include respond(mobile) {
     width: 100%;
@@ -26,9 +26,9 @@
 }
 
 .options {
+  padding: var(--space-2) 0;
   border-top: 1px solid var(--surface-300);
   border-bottom: 1px solid var(--surface-300);
-  padding: var(--space-2) 0;
 }
 
 .title {
@@ -38,8 +38,8 @@
 
 .wrapper {
   display: flex;
-  align-items: center;
   flex-wrap: wrap;
+  align-items: center;
   margin-top: var(--space-2);
   gap: var(--space-1);
 }

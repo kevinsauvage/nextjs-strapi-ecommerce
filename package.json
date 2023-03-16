@@ -25,7 +25,6 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "eslint-plugin-sonarjs": "^0.18.0",
     "@babel/core": "^7.21.3",
     "@babel/eslint-parser": "^7.21.3",
     "eslint": "^8.36.0",
@@ -39,11 +38,14 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-sonarjs": "^0.18.0",
     "prettier": "^2.8.0",
     "sass": "^1.54.4",
     "stylelint": "^15.2.0",
     "stylelint-checkstyle-formatter": "^0.1.2",
-    "stylelint-config-standard-scss": "^7.0.1",
+    "stylelint-config-idiomatic-order": "^9.0.0",
+    "stylelint-config-recommended-scss": "^9.0.1",
+    "stylelint-order": "^6.0.3",
     "stylelint-scss": "^4.5.0"
   }
 }

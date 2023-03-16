@@ -1,8 +1,8 @@
 .loader {
   position: relative;
   display: inline-block;
-  height: 80px;
   width: 80px;
+  height: 80px;
 }
 
 .loader div {
@@ -12,13 +12,13 @@
 
 .loader div::after {
   position: absolute;
-  content: ' ';
   display: block;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   margin: -4px 0 0 -4px;
   background: var(--on-surface-hight);
-  height: 7px;
-  width: 7px;
+  content: ' ';
 }
 
 .loader div:nth-child(1) {

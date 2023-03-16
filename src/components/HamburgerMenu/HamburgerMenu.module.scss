@@ -1,10 +1,10 @@
 .hamburger-menu {
-  visibility: hidden;
   display: none;
+  visibility: hidden;
 
   @include respond(mobile tablet) {
-    visibility: visible;
     display: block;
+    visibility: visible;
   }
 }
 
@@ -13,8 +13,8 @@
 
   svg {
     display: block;
-    height: 22px;
     width: 25px;
+    height: 22px;
   }
 
   path {
@@ -33,9 +33,9 @@
 .menu-link {
   display: block;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   height: 50px;
+  align-items: center;
+  justify-content: space-between;
   padding: 0 var(--space-1);
 
   svg {
@@ -48,16 +48,16 @@
 }
 
 .user-nav {
-  border-top: 1px solid var(--surface-300);
   padding: var(--space-1);
+  border-top: 1px solid var(--surface-300);
 
   .user-nav-list-item {
     padding: var(--space-1);
     font-size: 1.1rem;
 
     svg {
-      height: 1.4rem;
       width: 1.4rem;
+      height: 1.4rem;
     }
 
     a {

@@ -1,14 +1,14 @@
 .button {
   display: flex;
-  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
   align-items: center;
+  justify-content: center;
   border: 1px solid var(--surface-dark-300);
   border-radius: $radius;
   background-color: var(--surface-100);
-  min-height: 36px;
-  min-width: 36px;
-  font-size: 0.9rem;
   color: var(--on-surface-hight);
+  font-size: 0.9rem;
 
   &:hover {
     background-color: var(--surface-dark-200);

@@ -9,16 +9,16 @@
 }
 
 .footer {
-  background-color: var(--surface-dark-100);
   padding: var(--space-3) 0;
+  background-color: var(--surface-dark-100);
   color: var(--on-surface-dark);
 }
 
 .title {
   display: block;
   margin-bottom: var(--space-1);
-  text-transform: capitalize;
   font-size: 1.2rem;
+  text-transform: capitalize;
 }
 
 .about {
@@ -31,8 +31,8 @@
 
 .nav-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
   gap: var(--space-3);
+  grid-template-columns: 1fr 1fr 1fr;
 
   @include respond(mobile) {
     grid-template-columns: 1fr 1fr;
@@ -40,9 +40,9 @@
 }
 
 .nav-item {
-  margin-bottom: var(--space-1);
-  min-width: 130px;
   width: fit-content;
+  min-width: 130px;
+  margin-bottom: var(--space-1);
 
   a {
     font-size: 0.9rem;
@@ -56,12 +56,12 @@
 
 .bottom {
   display: flex;
-  justify-content: space-between;
+  width: 100%;
   align-items: center;
+  justify-content: space-between;
+  padding: var(--space-0) 0;
   border-top: 0.1px solid rgb(var(--rgb-surface-100) 0.3);
   background-color: var(--surface-dark-100);
-  width: 100%;
-  padding: var(--space-0) 0;
   color: var(--on-surface-dark);
 
   p {

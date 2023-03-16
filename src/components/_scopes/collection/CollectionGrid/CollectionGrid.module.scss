@@ -1,9 +1,9 @@
 .grid {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  grid-auto-flow: dense;
   margin-bottom: var(--space-6);
   gap: var(--space-1);
+  grid-auto-flow: dense;
+  grid-template-columns: repeat(7, 1fr);
 
   @include respond(mobile) {
     display: flex;
@@ -14,9 +14,9 @@
 .item {
   position: relative;
   display: block;
-  border-radius: $radius;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  border-radius: $radius;
 
   &:nth-child(6n + 1) {
     grid-column: span 4;

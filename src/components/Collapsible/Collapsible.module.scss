@@ -5,25 +5,25 @@
 
 .header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border: none;
-  height: 60px;
   width: 100%;
+  height: 60px;
+  align-items: center;
+  justify-content: space-between;
   padding: var(--space-1);
+  border: none;
   color: var(--on-surface-hight);
 }
 
 .icon {
   position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   transition: transform 0.05s linear;
 
   svg {
-    height: 16px;
     width: 16px;
+    height: 16px;
     fill: var(--on-surface-hight);
   }
 

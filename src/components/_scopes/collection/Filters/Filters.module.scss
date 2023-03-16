@@ -1,16 +1,16 @@
 .header {
   display: flex;
-  justify-content: flex-end;
   align-items: center;
+  justify-content: flex-end;
+  padding: var(--space-1);
   margin-bottom: var(--space-0);
   background-color: var(--surface-dark-100);
-  padding: var(--space-1);
   color: var(--on-surface-dark);
 
   .reset {
+    padding: 0;
     border: none;
     margin-left: 0;
-    padding: 0;
     text-decoration: underline;
   }
 }

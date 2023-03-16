@@ -9,10 +9,10 @@
   @supports (-webkit-line-clamp: $numLines) {
     display: -webkit-box;
     overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $numLines;
     text-overflow: ellipsis;
     white-space: initial;
-    -webkit-line-clamp: $numLines;
-    -webkit-box-orient: vertical;
   }
 }
 
@@ -23,8 +23,8 @@
 
 @mixin flex-center {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 @mixin flex-center-column {
@@ -65,18 +65,18 @@
     position: absolute;
     bottom: 1px;
     left: 0;
-    content: '';
+    width: 60%;
+    max-width: 40px;
+    height: 1px;
     border-radius: $radius;
     background-color: $color;
-    height: 1px;
-    max-width: 40px;
-    width: 60%;
+    content: '';
   }
 }
 
 @mixin box-shadow($level) {
   @if $level == 1 {
-    box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 0 3px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 0 3px rgba(0, 0, 0, 0.08);
   } @else if $level == 2 {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.16), 0 0 4px rgba(0, 0, 0, 0.12);
   } @else if $level == 3 {
@@ -108,33 +108,35 @@
 
 @mixin overlay($bgColor: #000000, $bgOpacity: 0.6) {
   &::after {
-    z-index: 0;
     position: absolute;
+    z-index: 0;
     top: 0;
     left: 0;
-    content: '';
-    background: rgba(($bgColor), $bgOpacity);
-    height: 100%;
     width: 100%;
+    height: 100%;
+    background: rgba(($bgColor), $bgOpacity);
+    content: '';
   }
 }
 
 @mixin gradient-overlay($bgColor: #000000, $deg: 0deg) {
   &::after {
-    z-index: 0;
     position: absolute;
+    z-index: 0;
     top: 0;
     left: 0;
-    content: '';
+    width: 100%;
+    height: 100%;
     border-radius: inherit;
     background: rgba($bgColor, 0.6);
-    background: linear-gradient($deg,
-        rgba($bgColor, 1) 0%,
-        rgba($bgColor, 0.8) 25%,
-        rgba($bgColor, 0.4) 50%,
-        rgba($bgColor, 0.1) 100%);
-    height: 100%;
-    width: 100%;
+    background: linear-gradient(
+      $deg,
+      rgba($bgColor, 1) 0%,
+      rgba($bgColor, 0.8) 25%,
+      rgba($bgColor, 0.4) 50%,
+      rgba($bgColor, 0.1) 100%
+    );
+    content: '';
   }
 }
 
@@ -144,16 +146,16 @@
 
 @mixin button {
   display: flex;
-  justify-content: center;
+  width: fit-content;
   align-items: center;
+  justify-content: center;
+  padding: 14px 30px;
   border: 2px solid transparent;
   border-radius: 2px;
-  width: fit-content;
-  padding: 14px 30px;
-  white-space: nowrap;
-  text-transform: uppercase;
   font-weight: 600;
+  text-transform: uppercase;
   transition: all 0.3s ease-in;
+  white-space: nowrap;
 
   @include box-shadow(2);
 
@@ -222,7 +224,7 @@
   border: 2px solid var(--surface-dark-100);
   background-color: var(--surface-dark-100);
   color: var(--on-surface-dark);
-  
+
   @include button;
 
   @include respond(laptop desktop) {

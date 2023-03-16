@@ -1,27 +1,27 @@
 .crumbs {
-  opacity: 0.6;
   display: flex;
   align-items: center;
-  white-space: nowrap;
-  text-transform: capitalize;
   font-size: 0.7rem;
   font-weight: 500;
+  opacity: 0.6;
+  text-transform: capitalize;
+  white-space: nowrap;
 
   @include text-shorten(1);
 }
 
 .last {
-  opacity: 1;
   font-weight: 600;
+  opacity: 1;
 }
 
 .arrow {
-  opacity: 0.6;
-  margin: 0 6px;
   width: 8px;
+  margin: 0 6px;
+  opacity: 0.6;
 
   svg {
-    height: 8px;
     width: 8px;
+    height: 8px;
   }
 }

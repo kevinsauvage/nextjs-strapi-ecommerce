@@ -3,5 +3,6 @@
   "tabWidth": 2,
   "semi": true,
   "printWidth": 110,
-  "stylelintIntegration": true
+  "stylelintIntegration": true,
+  "endOfLine": "auto"
 }

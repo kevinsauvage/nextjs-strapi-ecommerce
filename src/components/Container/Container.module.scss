@@ -1,13 +1,13 @@
 .container {
   display: inherit;
-  flex-direction: inherit;
-  justify-content: inherit;
-  align-items: inherit;
-  margin: 0 auto;
-  height: 100%;
-  max-width: 1300px;
   width: 100%;
+  max-width: 1300px;
+  height: 100%;
+  flex-direction: inherit;
+  align-items: inherit;
+  justify-content: inherit;
   padding: 0 2rem;
+  margin: 0 auto;
 
   @include respond(mobile tablet) {
     padding: 0 1rem;

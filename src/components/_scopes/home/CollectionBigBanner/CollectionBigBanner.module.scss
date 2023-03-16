@@ -1,17 +1,17 @@
 .banner {
   display: flex;
-  margin-bottom: var(--space-6);
-  height: 35vw;
   width: 100%;
+  height: 35vw;
+  margin-bottom: var(--space-6);
   gap: var(--space-1);
 
   @include respond(mobile) {
-    flex-direction: column;
     height: 100%;
+    flex-direction: column;
   }
 }
 
 .item {
-  height: 100%;
   width: 100%;
+  height: 100%;
 }

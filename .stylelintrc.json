@@ -1,12 +1,17 @@
 {
-  "extends": "stylelint-config-standard-scss",
+  "plugins": ["stylelint-order"],
+  "extends": [
+    "stylelint-config-html",
+    "stylelint-config-idiomatic-order",
+    "stylelint-config-recommended-scss"
+  ],
   "rules": {
     "color-hex-length": "long",
     "color-function-notation": null,
     "selector-no-vendor-prefix": null,
     "alpha-value-notation": null,
     "at-rule-no-unknown": null,
-    "scss/at-rule-no-unknown": null,
+    "order/order": ["custom-properties", "declarations"],
     "scss/no-global-function-names": null
   },
   "processors": ["stylelint-checkstyle-formatter"]

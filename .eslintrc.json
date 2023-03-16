@@ -16,11 +16,6 @@
   "ignorePatterns": ["node_modules/", ".next/"],
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      },
-
       "alias": {
         "map": [
           ["@/components", "./src/components"],
@@ -38,8 +33,7 @@
           ["@/shopify", "./src/shopify"]
         ],
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
-      },
-      "root": ["./src"]
+      }
     }
   },
   "globals": {
@@ -87,7 +81,6 @@
     ],
     "react/prop-types": 0,
     "react/no-unused-prop-types": "error",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "default-param-last": 0,
@@ -95,6 +88,13 @@
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
     "no-console": "off",
+    "no-param-reassign": "error",
+    "no-shadow": "error",
+    "no-empty-function": "error",
+    "prefer-const": "error",
+    "no-use-before-define": "error",
+    "no-multi-spaces": "error",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
     "jsx-a11y/label-has-associated-control": [
       2,
@@ -104,12 +104,6 @@
         "controlComponents": ["CustomInput"],
         "depth": 3
       }
-    ],
-    "no-param-reassign": "error",
-    "no-shadow": "error",
-    "no-empty-function": "error",
-    "prefer-const": "error",
-    "no-use-before-define": "error",
-    "no-multi-spaces": "error"
+    ]
   }
 }

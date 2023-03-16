@@ -1,14 +1,14 @@
 .rating {
   position: relative;
-  margin: 0;
   width: fit-content;
   padding: 0;
-  font-size: 1.2rem;
+  margin: 0;
   color: var(--surface-600);
+  font-size: 1.2rem;
 
   .filled {
-    z-index: 1;
     position: absolute;
+    z-index: 1;
     top: 0;
     left: 0;
     display: block;

@@ -4,9 +4,9 @@
 
 .list {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100%;
+  align-items: center;
+  justify-content: center;
 
   @include respond(mobile tablet) {
     display: none;
@@ -15,12 +15,12 @@
 
 .item {
   display: flex;
+  height: 100%;
   align-items: center;
   border-right: 0.1px solid var(--surface-900);
-  height: 100%;
-  text-transform: uppercase;
   color: var(--on-surface-dark);
   cursor: pointer;
+  text-transform: uppercase;
 
   &:first-child {
     border-left: 0.1px solid var(--surface-900);

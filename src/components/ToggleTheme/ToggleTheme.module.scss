@@ -6,28 +6,28 @@ $height: 34px;
 .toggle-theme {
   position: relative;
   display: flex;
-  justify-content: space-between;
+  width: $width;
+  height: $height;
   align-items: center;
+  justify-content: space-between;
+  padding: 8.7px;
   border-radius: 99em;
   background-color: var(--complementary-500);
-  height: $height;
-  width: $width;
-  padding: 8.7px;
   transition: all 0.3s ease;
 
   @include border-light(var(--complementary-700), 0.6);
 }
 
 .inner {
-  z-index: 0;
   position: absolute;
+  z-index: 0;
   top: 50%;
   left: 2px;
-  transform: translateY(-50%) translateX(-0%);
+  width: $inner-size;
+  min-height: $inner-size;
   border-radius: 50%;
   background-color: var(--surface-dark-100);
-  min-height: $inner-size;
-  width: $inner-size;
+  transform: translateY(-50%) translateX(-0%);
   transition: all 0.3s ease;
   
   @include border-light(var(--RBG-primary-100), 1);
@@ -65,8 +65,8 @@ $height: 34px;
 
   .moon {
     path {
-      stroke: var(--on-surface-dark);
       fill: var(--complementary-600);
+      stroke: var(--on-surface-dark);
     }
   }
 }

@@ -1,12 +1,12 @@
 .banner {
   display: flex;
+  min-height: 100px;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   border-top: 0.1px solid var(--surface-900);
   border-bottom: 0.1px solid var(--surface-900);
   background-color: var(--surface-dark-100);
-  min-height: 100px;
   color: var(--on-surface-dark);
 }
 

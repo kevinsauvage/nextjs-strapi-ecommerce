@@ -4,8 +4,8 @@
 
   .arrow {
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     border: none;
 
     &.left {
@@ -23,11 +23,11 @@
 }
 
 .dot {
+  min-width: 16px;
+  min-height: 16px;
   border-radius: 50%;
   margin-right: 14px;
   background-color: var(--surface-900);
-  min-height: 16px;
-  min-width: 16px;
 
   &.last {
     margin-right: 0;

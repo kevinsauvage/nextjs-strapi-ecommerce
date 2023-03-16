@@ -4,10 +4,10 @@
 
 .list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-  height: 100%;
   width: 100%;
+  height: 100%;
   gap: var(--space-1);
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
   text-align: center;
 
   @include respond(mobile) {
@@ -17,9 +17,9 @@
 
 .card {
   position: relative;
-  margin-bottom: var(--space-1);
-  height: fit-content;
   width: 100%;
+  height: fit-content;
+  margin-bottom: var(--space-1);
 
   b {
     font-size: 1.2rem;
@@ -28,10 +28,10 @@
 
 .image {
   display: block;
-  border-radius: $radius;
+  width: 100%;
   height: fit-content;
   height: 100%;
-  width: 100%;
+  border-radius: $radius;
   object-fit: cover;
 
   @include box-shadow(1);

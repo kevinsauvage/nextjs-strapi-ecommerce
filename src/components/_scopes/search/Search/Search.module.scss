@@ -1,16 +1,16 @@
 .search {
   display: flex;
+  width: 100%;
   align-items: center;
   border: 1px solid var(--surface-300);
   background-color: var(--surface-100);
-  width: 100%;
 }
 
 .form {
   display: flex;
-  align-items: center;
-  height: 100%;
   width: 100%;
+  height: 100%;
+  align-items: center;
 
   label {
     width: 100%;
@@ -18,12 +18,12 @@
 }
 
 .input {
+  width: 100%;
+  height: 120px;
   border: none;
   border-radius: $radius;
-  height: 120px;
-  width: 100%;
-  font-size: 3rem;
   color: var(--on-surface-hight);
+  font-size: 3rem;
 
   @include placeholder {
     color: var(--surface-300);

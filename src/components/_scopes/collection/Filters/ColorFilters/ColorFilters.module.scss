@@ -1,18 +1,18 @@
 .button {
-  opacity: 0.8;
   display: flex;
-  justify-content: center;
+  min-width: 36px;
+  min-height: 36px;
   align-items: center;
+  justify-content: center;
   border: none;
   border-radius: $radius;
   border-radius: 50%;
   margin-right: 4px;
   margin-bottom: 4px;
   background-color: var(--surface-100);
-  min-height: 36px;
-  min-width: 36px;
-  font-size: 0.9rem;
   color: var(--on-surface-hight);
+  font-size: 0.9rem;
+  opacity: 0.8;
 
   &.selected {
     opacity: 1;

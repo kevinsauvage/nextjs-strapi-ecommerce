@@ -1,16 +1,16 @@
 .toast {
-  z-index: 9999999999999999999;
   position: fixed;
+  z-index: 9999999999999999999;
+  right: 0;
   bottom: 10px;
   left: 50%;
-  right: 0;
-  transform: translate(-50%, -10px);
-  max-height: 50px;
-  max-width: 600px;
   width: 80%;
-  color: var(--surface-100);
-  transition: all 0.3s ease-in;
+  max-width: 600px;
+  max-height: 50px;
   animation: slide-up 0.3s ease-in-out forwards;
+  color: var(--surface-100);
+  transform: translate(-50%, -10px);
+  transition: all 0.3s ease-in;
 
   .container {
     position: relative;
@@ -18,12 +18,12 @@
 
     .item {
       display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 10px;
-      min-height: 40px;
       width: 100%;
+      min-height: 40px;
+      align-items: center;
+      justify-content: center;
       padding: var(--space-0);
+      border-radius: 10px;
       transition: 0.2s;
 
       p {

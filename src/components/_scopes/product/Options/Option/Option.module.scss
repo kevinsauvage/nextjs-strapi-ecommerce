@@ -10,16 +10,16 @@ $box-dimension: 36px;
 
 .button {
   display: flex;
-  justify-content: center;
+  min-width: $box-dimension;
+  min-height: $box-dimension;
   align-items: center;
+  justify-content: center;
+  padding: 5px;
   border: 1px solid var(--surface-dark-100);
   border-radius: $radius;
   background-color: var(--surface-100);
-  min-height: $box-dimension;
-  min-width: $box-dimension;
-  padding: 5px;
-  font-size: 0.8rem;
   color: var(--on-surface-hight);
+  font-size: 0.8rem;
 
   &:hover,
   &:focus,
@@ -30,8 +30,8 @@ $box-dimension: 36px;
 
 .name {
   display: block;
-  margin-bottom: 4px;
   width: fit-content;
+  margin-bottom: 4px;
 }
 
 .list {

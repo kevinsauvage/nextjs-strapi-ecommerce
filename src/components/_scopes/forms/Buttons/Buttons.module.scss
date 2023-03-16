@@ -1,16 +1,16 @@
 .buttons {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin-top: var(--space-1);
   width: fit-content;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: var(--space-1);
   gap: 2rem;
   text-align: center;
 
   & a {
-    text-decoration: underline;
-    font-size: 0.9rem;
     color: var(--primary);
+    font-size: 0.9rem;
+    text-decoration: underline;
   }
 }

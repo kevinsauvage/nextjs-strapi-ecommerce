@@ -1,18 +1,18 @@
 .summary {
   position: sticky;
   top: var(--space-2);
+  overflow: hidden;
+  width: 100%;
+  height: fit-content;
   border: 0.01px solid var(--surface-300);
   border-radius: $radius;
   background-color: var(--surface-200);
-  height: fit-content;
-  width: 100%;
-  overflow: hidden;
 }
 
 .header {
+  padding: var(--space-1);
   border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-dark-200);
-  padding: var(--space-1);
 }
 
 .content {
@@ -25,13 +25,13 @@
 
 
 .btn {
-  margin-top: var(--space-1);
   width: 100%;
+  margin-top: var(--space-1);
 }
 
 .cart-summary-row {
-  border-bottom: 0.01px solid var(--primary);
   padding: var(--space-0) 0;
+  border-bottom: 0.01px solid var(--primary);
 
   &:last-of-type {
     border-bottom: none;
@@ -44,8 +44,8 @@
 
   &__header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
   }
 
   &__children {

@@ -1,21 +1,21 @@
 .drop-down {
   position: relative;
+  padding: 4px;
   border: 1px solid var(--surface-400);
   border-radius: $radius;
   margin-left: 4px;
-  padding: 4px;
 }
 
 .menu {
-  z-index: 99999;
   position: absolute;
+  z-index: 99999;
   top: 120%;
   right: -2px;
+  overflow: hidden;
+  min-width: 190px;
   border: 1px solid var(--surface-400);
   border-radius: $radius;
   background-color: var(--surface-100);
-  min-width: 190px;
-  overflow: hidden;
 }
 
 .button {
@@ -23,9 +23,9 @@
   font-weight: 600;
 
   svg {
-    margin-left: 8px;
-    height: 12px;
     width: 12px;
+    height: 12px;
+    margin-left: 8px;
   }
 
   path {
@@ -34,10 +34,10 @@
 }
 
 .option {
-  border-bottom: 1px solid var(--surface-400);
   padding: 12px;
-  white-space: nowrap;
+  border-bottom: 1px solid var(--surface-400);
   cursor: pointer;
+  white-space: nowrap;
 
   @include respond(laptop desktop) {
     &:hover {

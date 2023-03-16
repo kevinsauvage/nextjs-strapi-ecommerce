@@ -5,8 +5,8 @@
 
 .list {
   display: flex;
-  align-items: center;
   height: 40px;
+  align-items: center;
 }
 
 .item {
@@ -19,8 +19,8 @@
   }
 
   &:last-of-type {
-    opacity: 1;
     font-weight: 600;
+    opacity: 1;
 
     @include respond(mobile) {
       max-width: unset;
@@ -29,10 +29,10 @@
 }
 
 .last {
-  opacity: 1;
-  white-space: nowrap;
   font-size: 0.8rem;
   font-weight: 600;
+  opacity: 1;
+  white-space: nowrap;
 
   @include text-shorten(1);
 }

@@ -19,14 +19,14 @@
 }
 
 .textarea {
+  width: 100%;
+  min-height: 200px;
+  padding: var(--space-1);
   border: 1px solid var(--surface-300);
   border-radius: $radius;
   background-color: var(--surface-200);
-  min-height: 200px;
-  width: 100%;
-  resize: vertical;
-  padding: var(--space-1);
   color: var(--on-surface-medium);
+  resize: vertical;
 
   @include placeholder {
     color: rgb(var(--surface-900) 0.3);

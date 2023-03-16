@@ -1,9 +1,9 @@
 html {
-  letter-spacing: 1px;
   font-family: $sans-serif, Helvetica, Arial, sans-serif;
   font-size: 13px;
-  line-height: calc(13px * 1.5);
   font-weight: 400;
+  letter-spacing: 1px;
+  line-height: calc(13px * 1.5);
   text-size-adjust: 100%;
   
   @media (max-width: 1000px) {
@@ -18,15 +18,15 @@ h3,
 h4,
 h5,
 h6 {
-  text-shadow: $text-shadow-100;
   font-style: normal;
   font-weight: 600;
+  text-shadow: $text-shadow-100;
 }
 
 h1 {
   font-size: 2.5rem;
-  line-height: calc(2.5rem * 1.5);
   font-weight: 700;
+  line-height: calc(2.5rem * 1.5);
 }
 
 h2 {

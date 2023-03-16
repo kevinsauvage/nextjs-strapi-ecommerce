@@ -1,42 +1,42 @@
 .table {
-  border-bottom: none;
-  border-radius: $radius;
-  border-collapse: separate;
-  background-color: var(--surface-100);
-  height: fit-content;
-  width: 100%;
   overflow: hidden;
+  width: 100%;
+  height: fit-content;
+  border-radius: $radius;
+  border-bottom: none;
+  background-color: var(--surface-100);
+  border-collapse: separate;
   border-spacing: 0;
 }
 
 .t-head {
+  padding: var(--space-1);
   border-bottom: 1px solid var(--surface-300);
   background-color: var(--surface-dark-200);
-  padding: var(--space-1);
-  text-transform: uppercase;
-  font-size: 1rem;
-  line-height: 30px;
-  font-weight: 600;
   color: var(--on-surface-dark);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 30px;
   text-align: start;
+  text-transform: uppercase;
 }
 
 .t-data {
-  border: 0.01px solid var(--surface-300);
   height: 80px;
   padding: var(--space-0) var(--space-1);
-  vertical-align: middle;
+  border: 0.01px solid var(--surface-300);
   font-size: 1rem;
   font-weight: 400;
   text-align: start;
+  vertical-align: middle;
 
   @include respond(mobile) {
     position: relative;
+    height: unset;
+    padding-left: 40%;
     border: none;
     border-bottom: 1px solid #eeeeee;
     border-bottom: 0.1px solid var(--surface-500);
-    height: unset;
-    padding-left: 40%;
 
     &:last-child {
       border-bottom: none;
@@ -57,12 +57,12 @@
       position: absolute;
       top: 50%;
       left: var(--space-1);
-      transform: translateY(-50%);
       width: 40%;
       padding-right: 10px;
-      white-space: nowrap;
       font-size: 0.9rem;
       font-weight: 500;
+      transform: translateY(-50%);
+      white-space: nowrap;
     }
   }
 }
