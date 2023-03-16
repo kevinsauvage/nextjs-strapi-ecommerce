@@ -4,6 +4,25 @@ import SuccessfulFulfillments from './SuccessfulFulfillments';
 
 import style from './OrderCard.module.scss';
 
+function formatStatus(status) {
+  return status
+    .toLowerCase()
+    .replace(/_/g, ' ')
+    .replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+const getDate = (timestamp) => {
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+
+  const date = new Date(timestamp);
+  return date.toLocaleDateString('en-US', options);
+};
+
 const OrderCard = ({ order }) => {
   const {
     financialStatus,
@@ -18,25 +37,6 @@ const OrderCard = ({ order }) => {
     successfulFulfillments,
   } = order || {};
 
-  const getDate = (timestamp) => {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-
-    const date = new Date(timestamp);
-    return date.toLocaleDateString('en-US', options);
-  };
-
-  function formatStatus(status) {
-    return status
-      .toLowerCase()
-      .replace(/_/g, ' ')
-      .replace(/\b\w/g, (match) => match.toUpperCase());
-  }
-
   return (
     <li className={style.card}>
       <div className={style.header}>
@@ -47,23 +47,23 @@ const OrderCard = ({ order }) => {
         <h6>Order informations</h6>
 
         <AccountRow content={`${totalPriceV2?.amount} ${totalPriceV2?.currencyCode}`} title="Total price" />
-        {parseInt(totalRefundedV2?.amount, 10) > 0 ? (
+        {Number.parseInt(totalRefundedV2?.amount, 10) > 0 && (
           <AccountRow
             content={`${totalRefundedV2?.amount} ${totalRefundedV2?.currencyCode}`}
             title="Total refounded"
           />
-        ) : null}
+        )}
         <AccountRow content={formatStatus(financialStatus)} title="Financial Status" />
         <AccountRow content={formatStatus(fulfillmentStatus)} title="Fulfillment Status" />
         <AccountRow content={email} title="Email" />
         {phone && <AccountRow content={phone} title="Phone" />}
         <AccountRow content={getDate(processedAt)} title="ProcessedAt" />
-        {canceledAt ? (
+        {canceledAt && (
           <>
             <AccountRow content={cancelReason} title="Cancel Reason" />
             <AccountRow content={getDate(canceledAt)} title="Canceled At" />
           </>
-        ) : null}
+        )}
       </div>
       {successfulFulfillments && successfulFulfillments.length > 0 && (
         <SuccessfulFulfillments successfulFulfillments={successfulFulfillments} />

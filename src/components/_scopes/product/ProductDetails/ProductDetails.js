@@ -13,13 +13,15 @@ const ProductDetails = ({ html }) => {
     setHtmlSanitized(processHtml(html));
   }, [html]);
 
-  return htmlSanitized ? (
-    <div className={styles.details}>
-      <Collapsible title="Product Details">
-        <div className={styles.description} dangerouslySetInnerHTML={{ __html: htmlSanitized }} />
-      </Collapsible>
-    </div>
-  ) : null;
+  return (
+    htmlSanitized && (
+      <div className={styles.details}>
+        <Collapsible title="Product Details">
+          <div className={styles.description} dangerouslySetInnerHTML={{ __html: htmlSanitized }} />
+        </Collapsible>
+      </div>
+    )
+  );
 };
 
 export default ProductDetails;

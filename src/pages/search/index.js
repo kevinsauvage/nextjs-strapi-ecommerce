@@ -34,15 +34,15 @@ const SearchPage = () => {
       const searchResponse = await getClient().storefront.product.getProducts({
         query: `${searchTerm}*`,
         first: 10,
-        after: endCursor || null,
+        after: endCursor || undefined,
       });
 
       setLoading(false);
 
-      const { products, pageInfo: pageInfoRes } = searchResponse || {};
+      const { products, pageInfo: pageInfoResponse } = searchResponse || {};
 
-      if (products) setSearch((prev) => [...prev, ...products]);
-      if (pageInfoRes) setPageInfo(pageInfoRes);
+      if (products) setSearch((previous) => [...previous, ...products]);
+      if (pageInfoResponse) setPageInfo(pageInfoResponse);
     },
     [searchTerm]
   );

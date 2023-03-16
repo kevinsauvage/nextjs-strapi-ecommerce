@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 
 import Button from '@/components/Button/Button';
 
-const CheckoutBtn = ({ extraClass, checkoutUrl }) => {
+const CheckoutButton = ({ extraClass, checkoutUrl }) => {
   const router = useRouter();
   const redirectToCheckout = async () => router.push(checkoutUrl);
 
@@ -11,4 +11,4 @@ const CheckoutBtn = ({ extraClass, checkoutUrl }) => {
   );
 };
 
-export default CheckoutBtn;
+export default CheckoutButton;

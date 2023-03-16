@@ -31,7 +31,7 @@ const Filters = () => {
       <div className={styles.header}>
         <button
           className={styles.reset}
-          disabled={!getSelectedFilter(allFilters, query).length}
+          disabled={getSelectedFilter(allFilters, query).length === 0}
           onClick={resetFilters}
           type="button"
         >

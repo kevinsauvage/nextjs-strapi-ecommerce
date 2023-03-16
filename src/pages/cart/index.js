@@ -35,14 +35,14 @@ const CartPage = () => {
   };
 
   const handleSetLineToUpdate = (line) => {
-    setLineItemsToUpdate((prev) => {
-      const currentItems = prev.filter((item) => item.id !== line.id);
+    setLineItemsToUpdate((previous) => {
+      const currentItems = previous.filter((item) => item.id !== line.id);
       return [...currentItems, line];
     });
   };
 
   const handleRemoveLine = (lineId) => {
-    setLineItemsToUpdate((prev) => prev.filter((item) => item.id !== lineId));
+    setLineItemsToUpdate((previous) => previous.filter((item) => item.id !== lineId));
     removeFromCart(lineId);
   };
 
@@ -59,7 +59,7 @@ const CartPage = () => {
                 extraClass={styles.button}
                 secondary
                 onClick={handleUpdate}
-                disabled={!lineItemsToUpdate.length}
+                disabled={lineItemsToUpdate.length === 0}
               >
                 Update
               </Button>

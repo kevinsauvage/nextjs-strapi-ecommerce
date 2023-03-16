@@ -8,9 +8,9 @@ import styles from './DropDown.module.scss';
 const Dropdown = ({ options, changeCallback, selected }) => {
   const [open, setOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(selected || options[0]);
-  const containerRef = useRef();
+  const containerReference = useRef();
 
-  useOnClickOutside(containerRef, () => setOpen(false));
+  useOnClickOutside(containerReference, () => setOpen(false));
 
   const toggleOpen = () => setOpen(!open);
 
@@ -21,7 +21,7 @@ const Dropdown = ({ options, changeCallback, selected }) => {
   };
 
   return (
-    <div className={styles['drop-down']} ref={containerRef}>
+    <div className={styles['drop-down']} ref={containerReference}>
       <button
         type="button"
         className={styles.button}

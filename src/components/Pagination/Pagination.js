@@ -3,8 +3,8 @@ import styles from './Pagination.module.scss';
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   const pageNumbers = [];
 
-  for (let i = 1; i <= totalPages; i++) {
-    pageNumbers.push(i);
+  for (let index = 1; index <= totalPages; index++) {
+    pageNumbers.push(index);
   }
 
   return (

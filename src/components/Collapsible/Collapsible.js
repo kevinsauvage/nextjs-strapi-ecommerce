@@ -14,7 +14,7 @@ const Collapsible = ({ children, title, extraClass = {} }) => {
       <button
         type="button"
         className={`${styles.header} ${extraClass.header}`}
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => setOpen((previous) => !previous)}
       >
         <strong>{title}</strong>
         <div className={`${styles.icon} ${open && styles.open}`}>{arrowRight}</div>

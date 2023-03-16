@@ -13,16 +13,16 @@ import Price from '../Price/Price';
 
 import styles from './ProductCardDefault.module.scss';
 
+const isWhatPercentOf = (x, y) => (((x - y) / y) * 100).toFixed(0);
+
 const ProductCardDefault = ({ product = {}, priority }) => {
   const { title, images, handle, variants, collections, productType } = product;
   const { priceV2, compareAtPriceV2 } = variants?.[0] || {};
   const { query } = useRouter();
-  const cardRef = useRef();
+  const cardReference = useRef();
   const { setSelectedProduct } = useGlobalContext() || {};
   const { handleSetProductToWishList, isWishlist } = useUserContext() || {};
   const [loading, setLoading] = useState(false);
-
-  const isWhatPercentOf = (x, y) => (((x - y) / y) * 100.0).toFixed(0);
 
   const handleWishlist = async () => {
     setLoading(true);
@@ -39,9 +39,9 @@ const ProductCardDefault = ({ product = {}, priority }) => {
             aria-label={isWishlist(product) ? 'Remove from wishlist' : 'Add to wishlist'}
             className={`${styles.wishlist} ${isWishlist(product) ? styles['is-wishlist'] : ''}`}
             type="button"
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
+            onClick={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
               handleWishlist();
             }}
           >
@@ -53,9 +53,9 @@ const ProductCardDefault = ({ product = {}, priority }) => {
             className={styles['quick-view']}
             type="button"
             aria-label="Quick view"
-            onClick={(e) => {
-              e.stopPropagation();
-              e.preventDefault();
+            onClick={(event) => {
+              event.stopPropagation();
+              event.preventDefault();
               setSelectedProduct(product);
             }}
           >
@@ -64,7 +64,7 @@ const ProductCardDefault = ({ product = {}, priority }) => {
         </Tooltip>
       </div>
       <Link
-        ref={cardRef}
+        ref={cardReference}
         className={styles.link}
         href={`/${productType}/${query?.collectionSlug || collections?.[0]?.handle}/${handle}`}
         aria-label={`View product details for ${title}`}

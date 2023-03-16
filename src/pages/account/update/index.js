@@ -34,11 +34,11 @@ const OrderDetail = () => {
     }
     toggleLoading(true);
 
-    const resLogin = await getClient().storefront.customer.customerAccessTokenCreate({
+    const responseLogin = await getClient().storefront.customer.customerAccessTokenCreate({
       input: { email: user.email, password: formData.password },
     });
 
-    if (!resLogin || !resLogin.customerAccessToken) {
+    if (!responseLogin || !responseLogin.customerAccessToken) {
       toggleLoading(false);
       return showToast.error('Wrong current password');
     }

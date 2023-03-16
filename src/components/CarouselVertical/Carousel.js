@@ -10,7 +10,7 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselHeight, setCarouselHeight] = useState(0);
   const [itemDimension] = useState(100 / itemToShow);
-  const carouselRef = useRef(null);
+  const carouselReference = useRef(null);
   const { asPath } = useRouter();
   const [index, setIndex] = useState(0);
   const [maxIndex] = useState(Math.ceil(Children.count(children) / itemToShow - 1));
@@ -21,20 +21,20 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
 
   // Handle vertical position
   useEffect(() => {
-    if (!carouselRef?.current) {
+    if (!carouselReference?.current) {
       return;
     }
-    const height = carouselRef?.current?.getBoundingClientRect().height;
+    const height = carouselReference?.current?.getBoundingClientRect().height;
     const totalHeight = (height / 100) * itemDimension;
     const position = totalHeight * Children.count(children) - height;
     setMaxTranslatePosition(position);
     setCarouselHeight(height);
-  }, [children, itemDimension, carouselRef]);
+  }, [children, itemDimension, carouselReference]);
 
-  const handleChangeIndex = (i) => {
-    if (i < 0) setIndex(0);
-    else if (i + 1 > maxIndex) setIndex(maxIndex);
-    else setIndex(i);
+  const handleChangeIndex = (index_) => {
+    if (index_ < 0) setIndex(0);
+    else if (index_ + 1 > maxIndex) setIndex(maxIndex);
+    else setIndex(index_);
   };
 
   useEffect(() => {
@@ -72,7 +72,7 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
         </button>
       )}
       <div
-        ref={carouselRef}
+        ref={carouselReference}
         className={styles.inner}
         style={{
           transform: `translateY(-${translatePosition}px)`,

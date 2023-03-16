@@ -13,13 +13,16 @@ export const actions = {
 // Reducer
 export const CartReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.ADD_CART:
+    case actions.ADD_CART: {
       return { ...state, cart: action.payload, isLoading: false };
+    }
 
-    case actions.IS_CART_LOADING:
+    case actions.IS_CART_LOADING: {
       return { ...state, isLoading: action.payload };
+    }
 
-    default:
+    default: {
       return state;
+    }
   }
 };

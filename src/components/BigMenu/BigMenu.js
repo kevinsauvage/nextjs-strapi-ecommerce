@@ -27,8 +27,8 @@ const BigMenu = ({ data, handleClose, collections }) => {
       <div
         className={styles.inner}
         role="presentation"
-        onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => e.stopPropagation()}
+        onClick={(event) => event.stopPropagation()}
+        onKeyDown={(event) => event.stopPropagation()}
       >
         <Container>
           <div className={styles.content}>

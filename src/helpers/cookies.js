@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-syntax */
+import { setCookie } from 'nookies';
+
 import config from '@/config/index';
 import getClient from '@/shopify/index';
-
-const { setCookie } = require('nookies');
 
 const COOKIE_EXPIRATION_TIME = 24 * 60 * 60; // 1 day in seconds
 const NODE_ENV_DEVELOPMENT = 'development';
@@ -21,7 +21,7 @@ export const handleSetCookies = (
   }
 
   try {
-    const expiresDate = new Date(new Date().getTime() + maxAge * 1000);
+    const expiresDate = new Date(Date.now() + maxAge * 1000);
     const cookieValue = JSON.stringify({ expiresDate, value });
 
     const options = {
@@ -39,16 +39,16 @@ export const handleSetCookies = (
   }
 };
 
+// eslint-disable-next-line consistent-return
 export const getCookieFront = (name) => {
   const cookies = document.cookie.split(';');
   // eslint-disable-next-line no-plusplus
   for (const cooky of cookies) {
     const cookie = cooky.trim();
     if (cookie.startsWith(`${name}=`)) {
-      return cookie.substring(name.length + 1);
+      return cookie.slice(Math.max(0, name.length + 1));
     }
   }
-  return null;
 };
 
 export const setCookieFront = (cName, cValue, expDays = 1, secure = true, sameSite = 'Lax') => {
@@ -69,7 +69,8 @@ export const setCookieFront = (cName, cValue, expDays = 1, secure = true, sameSi
   }
 
   try {
-    document.cookie = cookie;
+    // eslint-disable-next-line unicorn/no-document-cookie
+    if (typeof document !== 'undefined') document.cookie = cookie;
   } catch (error) {
     console.error(`Failed to set cookie: ${error}`);
   }
@@ -88,6 +89,7 @@ export const handleGetTokenCookies = async () => {
   let shopifyToken = getCookieFront(config.cookies.shopifyToken);
 
   const shopifyTokenExpire = getCookieFront(config.cookies.shopifyTokenExpire);
+  if (!shopifyTokenExpire) return;
 
   const data = new Date();
   const secondsNow = Math.abs(data.getTime());
@@ -98,11 +100,11 @@ export const handleGetTokenCookies = async () => {
   const needRefresh = expiresInSeconds < secondsNow - 60 * 60 * 1000;
 
   if (needRefresh && shopifyToken) {
-    const res = await getClient().storefront.customer.customerAccessTokenRenew({
+    const response = await getClient().storefront.customer.customerAccessTokenRenew({
       customerAccessToken: shopifyToken,
     });
 
-    const token = res?.customerAccessToken?.accessToken;
+    const token = response?.customerAccessToken?.accessToken;
 
     if (token) {
       shopifyToken = token;

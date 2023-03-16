@@ -26,12 +26,12 @@ const Password = ({ resetUrl }) => {
     if (!password || password.length < 8) return showToast.error(config.userFeedback.passwordLength);
     toggleLoading(true);
 
-    const resetRes = await getClient().storefront.customer.customerResetByUrl({ password, resetUrl });
+    const resetResponse = await getClient().storefront.customer.customerResetByUrl({ password, resetUrl });
 
     toggleLoading(false);
 
-    const accessToken = resetRes?.customerAccessToken?.accessToken;
-    const customerUserErrors = resetRes?.customerUserErrors;
+    const accessToken = resetResponse?.customerAccessToken?.accessToken;
+    const customerUserErrors = resetResponse?.customerUserErrors;
 
     if (accessToken) {
       showToast.success(config.userFeedback.resetPassword.success);

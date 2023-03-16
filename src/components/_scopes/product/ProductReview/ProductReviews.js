@@ -8,7 +8,7 @@ import Collapsible from '@/components/Collapsible/Collapsible';
 import config from '@/config/index';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import { nextApiHelper } from '@/helpers/apiNext';
+import { nextApiHelper } from '@/helpers/api-next';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 
 import Form from '../../forms/Form/Form';
@@ -36,7 +36,7 @@ const ProductReviews = ({ product }) => {
 
   const handleSetProductReview = useCallback(
     async (formData) => {
-      if (typeof rating === 'undefined') return showToast.error('Please select a rating');
+      if (rating === undefined) return showToast.error('Please select a rating');
       const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
@@ -48,7 +48,7 @@ const ProductReviews = ({ product }) => {
 
       const date = new Date();
 
-      const reviewObj = {
+      const reviewObject = {
         customerId: user.id,
         review: { message: formData.message, rating },
         customerFirstName: user.firstName,
@@ -57,7 +57,7 @@ const ProductReviews = ({ product }) => {
         id: uuidv4(),
       };
 
-      const newReviews = [...reviews, reviewObj];
+      const newReviews = [...reviews, reviewObject];
 
       const metafields = {
         metafields: [
@@ -96,8 +96,8 @@ const ProductReviews = ({ product }) => {
         });
       }
 
-      if (!review?.id) return null;
-      if (user?.id !== review.customerId) return null;
+      if (!review?.id) return false;
+      if (user?.id !== review.customerId) return false;
 
       const newReviews = reviews.filter((rev) => rev.id !== review.id);
 

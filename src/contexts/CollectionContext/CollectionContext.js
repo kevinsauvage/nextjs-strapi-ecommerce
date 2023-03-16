@@ -29,7 +29,7 @@ export const CollectionProvider = ({
   );
 
   const handleGetData = useCallback(
-    async (first, filters, sort, after = null) => {
+    async (first, filters, sort, after) => {
       dispatch({ type: actions.SET_LOADING, payload: true });
       const data = await getClient().storefront.collection.collection({
         handle: query.collectionSlug,
@@ -68,7 +68,7 @@ export const CollectionProvider = ({
 
     const newQuery = query.sort_key ? { sort_key: query.sort_key } : {};
     push({ pathname: asPath.split('?')[0], query: newQuery }, undefined, { shallow: true });
-    const data = await handleGetData(15, [], query.sort_key, null);
+    const data = await handleGetData(15, [], query.sort_key);
     dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
     handleSetFilterState(data);
   }, [asPath, handleGetData, handleSetFilterState, push, query]);
@@ -83,7 +83,7 @@ export const CollectionProvider = ({
 
     push(newUrl, undefined, { shallow: true });
     const filters = getFormattedFilter();
-    const data = await handleGetData(15, filters, query.sort_key, null);
+    const data = await handleGetData(15, filters, query.sort_key);
     handleSetFilterState(data);
   }, [
     asPath,
@@ -97,12 +97,12 @@ export const CollectionProvider = ({
 
   const handleSort = useCallback(
     async (value) => {
-      if (!value) return null;
+      if (!value) return;
       dispatch({ type: actions.SET_PRODUCTS, payload: [] });
       push({ pathname: to, query: { ...query, sort_key: value } }, undefined, { shallow: true });
       const filters = getFormattedFilter();
-      const data = await handleGetData(30, filters, value, null);
-      return handleSetFilterState(data);
+      const data = await handleGetData(30, filters, value);
+      handleSetFilterState(data);
     },
     [getFormattedFilter, handleGetData, handleSetFilterState, push, query, to]
   );

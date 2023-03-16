@@ -25,28 +25,28 @@ const QuantityUpdater = ({
   const addOne = () => {
     if (quantity >= quantityAvailable) return;
     onChange(Number(quantity + 1));
-    setQuantity((prev) => Number(prev) + 1);
+    setQuantity((previous) => Number(previous) + 1);
   };
 
   const removeOne = () => {
     if (quantity > 1) {
       onChange(Number(quantity - 1));
-      setQuantity((prev) => Number(prev) - 1);
+      setQuantity((previous) => Number(previous) - 1);
     }
   };
 
-  const handleChangeInput = (e) => {
-    const num = e.target.value;
-    if (Number(num) > quantityAvailable) {
+  const handleChangeInput = (event) => {
+    const number_ = event.target.value;
+    if (Number(number_) > quantityAvailable) {
       setQuantity(quantityAvailable);
       showToast.error(`There is Only ${quantityAvailable} variant available`);
       return;
     }
-    if (Number(num) <= Number(originalQuantity)) setQuantity(num);
+    if (Number(number_) <= Number(originalQuantity)) setQuantity(number_);
   };
 
-  const handleConfirmInput = (e) => {
-    if (!e.target.value) setQuantity(Number(originalQuantity));
+  const handleConfirmInput = (event) => {
+    if (!event.target.value) setQuantity(Number(originalQuantity));
     else if (quantity !== originalQuantity) onChange(Number(quantity));
   };
 
@@ -66,7 +66,7 @@ const QuantityUpdater = ({
           className={styles.input}
           onChange={handleChangeInput}
           onBlur={handleConfirmInput}
-          onKeyDown={(e) => e.key === 'Enter' && input.current.blur()}
+          onKeyDown={(event) => event.key === 'Enter' && input.current.blur()}
           value={quantity}
           disabled={quantity <= 1 && quantity >= quantityAvailable}
         />

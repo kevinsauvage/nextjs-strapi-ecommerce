@@ -39,7 +39,7 @@ const Address = ({
       </div>
 
       <div className={style.side}>
-        {displayButton ? (
+        {displayButton && (
           <div className={style.buttons}>
             <Tooltip text="Edit address">
               <button className={style.button} onClick={() => setEditAddress(true)} type="button">
@@ -52,7 +52,7 @@ const Address = ({
               </button>
             </Tooltip>
           </div>
-        ) : null}
+        )}
 
         {!isDefault && displayButton && (
           <button className={style['default-button']} onClick={() => handleSetAsDefault(id)} type="button">

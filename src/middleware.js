@@ -1,11 +1,12 @@
+/* eslint-disable unicorn/no-null */
 import { NextResponse } from 'next/server';
 
 import config from './config';
 
 const PUBLIC_FILE = /\.(.*)$/;
 
-const checkBasicAuth = (req) => {
-  const basicAuth = req?.headers?.get('authorization');
+const checkBasicAuth = (request) => {
+  const basicAuth = request?.headers?.get('authorization');
   if (basicAuth) {
     const authValue = basicAuth.split(' ')[1];
     const [user, pwd] = atob(authValue).split(':');

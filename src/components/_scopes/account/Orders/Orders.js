@@ -12,8 +12,6 @@ const Orders = ({ orders }) => {
       </ul>
     );
   }
-
-  return null;
 };
 
 export default Orders;

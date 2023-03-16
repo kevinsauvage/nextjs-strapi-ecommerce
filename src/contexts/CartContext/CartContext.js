@@ -32,12 +32,12 @@ export const CartProvider = ({ children }) => {
       if (!cartId) return console.error('Missing cart id storage');
 
       toggleLoading(true);
-      const removeLinesRes = await getClient().storefront.cart.cartLinesRemove({
+      const removeLinesResponse = await getClient().storefront.cart.cartLinesRemove({
         cartId,
         lines: [lineItemId],
       });
-      const newCart = removeLinesRes?.cart;
-      const userErrors = removeLinesRes?.userErrors;
+      const newCart = removeLinesResponse?.cart;
+      const userErrors = removeLinesResponse?.userErrors;
 
       toggleLoading(false);
 
@@ -62,13 +62,13 @@ export const CartProvider = ({ children }) => {
 
       toggleLoading(true);
 
-      const updateLinesRes = await getClient().storefront.cart.cartLinesUpdate({
+      const updateLinesResponse = await getClient().storefront.cart.cartLinesUpdate({
         cartId: cart.id,
         lines: lineItems,
       });
 
-      const newCart = updateLinesRes?.cart;
-      const userErrors = updateLinesRes?.userErrors;
+      const newCart = updateLinesResponse?.cart;
+      const userErrors = updateLinesResponse?.userErrors;
 
       toggleLoading(false);
 
@@ -90,34 +90,39 @@ export const CartProvider = ({ children }) => {
     async (variantId, quantity) => {
       const cartId = window.localStorage.getItem(cartIdStorageKey);
 
-      if (!cartId) return console.error('Missing cart id storage');
-
-      if (quantity > 0 && variantId) {
-        const lineItemsToAdd = [{ merchandiseId: variantId, quantity: parseInt(quantity, 10) }];
-
-        toggleLoading(true);
-        const addLineResponse = await getClient().storefront.cart.cartLinesAdd({
-          cartId,
-          lines: lineItemsToAdd,
-        });
-
-        toggleLoading(false);
-
-        const newCart = addLineResponse?.cart;
-        const userErrors = addLineResponse?.userErrors;
-
-        if (newCart?.id) {
-          dispatch({ type: actions.ADD_CART, payload: newCart });
-          return showToast.success('Product added successfully');
-        }
-
-        if (userErrors?.length) {
-          return userErrors.forEach((error) => showToast.error(error));
-        }
-
-        return showToast.error('Could not add the product variant to the cart');
+      if (!cartId) {
+        console.error('Missing cart id storage');
+        return;
       }
-      return null;
+
+      if (!(quantity > 0 && variantId)) {
+        return;
+      }
+      const lineItemsToAdd = [{ merchandiseId: variantId, quantity: Number.parseInt(quantity, 10) }];
+
+      toggleLoading(true);
+      const addLineResponse = await getClient().storefront.cart.cartLinesAdd({
+        cartId,
+        lines: lineItemsToAdd,
+      });
+
+      toggleLoading(false);
+
+      const newCart = addLineResponse?.cart;
+      const userErrors = addLineResponse?.userErrors;
+
+      if (newCart?.id) {
+        dispatch({ type: actions.ADD_CART, payload: newCart });
+        showToast.success('Product added successfully');
+        return;
+      }
+
+      if (userErrors?.length) {
+        userErrors.forEach((error) => showToast.error(error));
+        return;
+      }
+
+      showToast.error('Could not add the product variant to the cart');
     },
     [showToast, toggleLoading]
   );
@@ -149,7 +154,7 @@ export const CartProvider = ({ children }) => {
       if (newCart?.id) {
         handleSetCart(newCart);
       }
-      return null;
+      return false;
     },
     [cart?.buyerIdentity, cart?.id, handleSetCart]
   );
@@ -160,6 +165,8 @@ export const CartProvider = ({ children }) => {
       const cartId = window.localStorage.getItem(cartIdStorageKey);
 
       if (cartId) {
+        console.log('🚀 ~ file: CartContext.js:169 ~ handleRender ~ cartId:', cartId);
+
         const getCartResponse = await getClient().storefront.cart.cartQuery({ cartId });
 
         if (getCartResponse?.id) handleSetCart(getCartResponse);
@@ -167,11 +174,11 @@ export const CartProvider = ({ children }) => {
       }
 
       if (!cartId) {
-        const createCartRes = await getClient().storefront.cart.cartCreate({ input: {} });
+        const createCartResponse = await getClient().storefront.cart.cartCreate({ input: {} });
 
-        if (createCartRes?.cart?.id) {
-          window.localStorage.setItem(cartIdStorageKey, createCartRes.cart.id);
-          handleSetCart(createCartRes);
+        if (createCartResponse?.cart?.id) {
+          window.localStorage.setItem(cartIdStorageKey, createCartResponse.cart.id);
+          handleSetCart(createCartResponse);
         }
       }
     };

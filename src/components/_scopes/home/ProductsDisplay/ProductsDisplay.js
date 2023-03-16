@@ -17,12 +17,12 @@ const ProductsDisplay = ({ bestSelling, newArrival }) => {
         <SectionTitle first="OUR SELECTION OF" second="PRODUCTS" />
         <ul className={styles.nav}>
           {Array.isArray(nav) &&
-            nav.map((item, i) => (
+            nav.map((item, index_) => (
               <li key={item.title}>
                 <button
-                  className={`${styles.button} ${i === index && styles.active}`}
+                  className={`${styles.button} ${index_ === index && styles.active}`}
                   type="button"
-                  onClick={() => setIndex(i)}
+                  onClick={() => setIndex(index_)}
                 >
                   {item.title}
                 </button>

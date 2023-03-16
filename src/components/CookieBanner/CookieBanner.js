@@ -28,22 +28,22 @@ const CookieBanner = () => {
     analytics_storage: true,
   });
 
-  const tranformedSettings = useCallback((originalObj) => {
-    const transformedObj = {};
+  const tranformedSettings = useCallback((originalObject) => {
+    const transformedObject = {};
 
-    Object.keys(originalObj).forEach((key) => {
-      transformedObj[key] = originalObj[key] ? 'granted' : 'denied';
+    Object.keys(originalObject).forEach((key) => {
+      transformedObject[key] = originalObject[key] ? 'granted' : 'denied';
     });
 
-    return transformedObj;
+    return transformedObject;
   }, []);
 
   const handleSaveSettings = useCallback(
     (formData) => {
-      const transformedObj = tranformedSettings(formData);
+      const transformedObject = tranformedSettings(formData);
       // eslint-disable-next-line no-undef
-      gtag('consent', 'update', transformedObj);
-      setCookieFront('localConsent', JSON.stringify(transformedObj), 365);
+      gtag('consent', 'update', transformedObject);
+      setCookieFront('localConsent', JSON.stringify(transformedObject), 365);
       setShowModal(false);
       setConsent(true);
     },
@@ -51,15 +51,15 @@ const CookieBanner = () => {
   );
 
   const acceptAllCookie = useCallback(() => {
-    const transformedObj = tranformedSettings(settings);
-    setCookieFront('localConsent', JSON.stringify(transformedObj), 365);
+    const transformedObject = tranformedSettings(settings);
+    setCookieFront('localConsent', JSON.stringify(transformedObject), 365);
     // eslint-disable-next-line no-undef
-    gtag('consent', 'update', transformedObj);
+    gtag('consent', 'update', transformedObject);
     setConsent(true);
     setShowModal(false);
   }, [settings, tranformedSettings]);
 
-  if (consent === true) return null;
+  if (consent === true) return;
 
   return (
     <>

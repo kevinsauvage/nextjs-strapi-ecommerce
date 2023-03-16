@@ -18,9 +18,9 @@ const Footer = ({ menuFooter }) => (
               <li key={item.id}>
                 <b className={styles.title}>{item.title}</b>
                 <ul>
-                  {item?.items?.map((el) => (
-                    <li className={styles['nav-item']} key={el.id}>
-                      <ActiveLink url={el?.url}>{el?.title}</ActiveLink>
+                  {item?.items?.map((element) => (
+                    <li className={styles['nav-item']} key={element.id}>
+                      <ActiveLink url={element?.url}>{element?.title}</ActiveLink>
                     </li>
                   ))}
                 </ul>

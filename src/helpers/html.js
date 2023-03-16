@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 function processHtml(html) {
   // remove all style attributes
-  if (!html) return null;
+  if (!html) return '';
   html = html.replace(/style="[^"]*"/g, '');
 
   // remove <br> tags

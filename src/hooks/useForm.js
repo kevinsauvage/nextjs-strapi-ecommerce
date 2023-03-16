@@ -12,18 +12,18 @@ const useForm = (onSubmit, initialValues = {}, requiredFields = []) => {
     return initialFormData;
   });
 
-  const handleInputChange = useCallback((e) => {
+  const handleInputChange = useCallback((event) => {
     setMissing([]);
-    const { type, name, value, checked } = e.target;
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+    const { type, name, value, checked } = event.target;
+    setFormData((previousFormData) => ({
+      ...previousFormData,
       [name]: type === 'checkbox' ? checked : value,
     }));
   }, []);
 
   const handleSubmit = useCallback(
-    async (e) => {
-      e.preventDefault();
+    async (event) => {
+      event.preventDefault();
       setLoading(true);
       const missingItems = requiredFields.filter((field) => !formData[field]);
       setMissing(missingItems);

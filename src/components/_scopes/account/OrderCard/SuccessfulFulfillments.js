@@ -14,12 +14,12 @@ const SuccessfulFulfillments = ({ successfulFulfillments }) => (
       buttonTextActive="Hide tracking information"
       buttonTextInactive="Show tracking information"
     >
-      {successfulFulfillments.map((successfulFulfillment, i) => {
-        const { trackingInfo } = successfulFulfillment;
+      {successfulFulfillments.map((successfulFulfillment, index) => {
+        const { trackingInfo, trackingCompany } = successfulFulfillment;
         return (
           <div key={uuidv4()} className={styles.tracks}>
-            <h6>Tracking informations {successfulFulfillments.length > 1 && i + 1}</h6>
-            <AccountRow content={successfulFulfillment?.trackingCompany} title="Tracking Company" />
+            <h6>Tracking informations {successfulFulfillments.length > 1 && index + 1}</h6>
+            <AccountRow content={trackingCompany} title="Tracking Company" />
             {trackingInfo?.map((trackInfo) => {
               const { url, number } = trackInfo;
               return (

@@ -12,7 +12,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
   const [translatePosition, setTranslatePosition] = useState(0);
   const [carouselWidth, setCarouselWidth] = useState(0);
   const [itemDimension] = useState(100 / itemToShow);
-  const carouselRef = useRef(null);
+  const carouselReference = useRef(null);
   const { asPath } = useRouter();
   const [index, setIndex] = useState(0);
   const [maxIndex] = useState(Math.ceil(Children.count(children) / itemToShow - 1));
@@ -22,20 +22,20 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
   }, [asPath]);
 
   useEffect(() => {
-    if (!carouselRef?.current) {
+    if (!carouselReference?.current) {
       return;
     }
-    const width = carouselRef?.current?.getBoundingClientRect().width;
+    const width = carouselReference?.current?.getBoundingClientRect().width;
     const totalWidth = (width / 100) * itemDimension;
     const position = totalWidth * Children.count(children) - width;
     setMaxTranslatePosition(position);
     setCarouselWidth(width);
-  }, [children, itemDimension, carouselRef]);
+  }, [children, itemDimension, carouselReference]);
 
-  const handleChangeIndex = (i) => {
-    if (i < 0) setIndex(0);
-    else if (i + 1 > maxIndex) setIndex(maxIndex);
-    else setIndex(i);
+  const handleChangeIndex = (index_) => {
+    if (index_ < 0) setIndex(0);
+    else if (index_ + 1 > maxIndex) setIndex(maxIndex);
+    else setIndex(index_);
   };
 
   useEffect(() => {
@@ -61,7 +61,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
 
   return (
     <>
-      {title ? (
+      {title && (
         <div className={styles.header}>
           <b className={styles.title}>{title}</b>
           <Indicators
@@ -71,7 +71,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
             handleClick={handleChangeIndex}
           />
         </div>
-      ) : null}
+      )}
 
       <div className={styles.container}>
         {showButtons && (
@@ -88,7 +88,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
         )}
         <div {...handlers} className={`${styles.carousel}`}>
           <div
-            ref={carouselRef}
+            ref={carouselReference}
             className={styles.inner}
             style={{
               transform: `translateX(-${translatePosition}px)`,

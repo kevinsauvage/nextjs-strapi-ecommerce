@@ -10,7 +10,7 @@ const useProductSelection = ({ product }) => {
 
   const { handleAddToCart: handleAddToCartContext } = useCartContext();
 
-  const handleChangeInput = (num) => setQuantity(num);
+  const handleChangeInput = (number_) => setQuantity(number_);
 
   const handleSetSelectedProductOption = useCallback(
     (productOption) => {

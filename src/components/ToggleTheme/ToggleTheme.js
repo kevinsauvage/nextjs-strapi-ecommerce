@@ -24,9 +24,9 @@ const ToggleTheme = () => {
       window.localStorage.removeItem('isDarkTheme');
     } else {
       element.classList.add(darkTheme);
-      window.localStorage.setItem('isDarkTheme', null);
+      window.localStorage.setItem('isDarkTheme', 'true');
     }
-    setIsActive((prev) => !prev);
+    setIsActive((previous) => !previous);
   };
   return (
     <div

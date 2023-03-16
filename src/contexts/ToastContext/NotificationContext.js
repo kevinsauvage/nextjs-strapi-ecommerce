@@ -13,21 +13,25 @@ export const REMOVE_ALL = 'REMOVE_ALL';
 
 export const toastReducer = (state, action) => {
   switch (action.type) {
-    case ADD:
+    case ADD: {
       return [
         ...state,
         {
-          id: +new Date(),
+          id: Date.now(),
           content: action.payload.content,
           type: action.payload.type,
         },
       ];
-    case REMOVE:
+    }
+    case REMOVE: {
       return state.filter((t) => t.id !== action.payload.id);
-    case REMOVE_ALL:
+    }
+    case REMOVE_ALL: {
       return initialState;
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };
 

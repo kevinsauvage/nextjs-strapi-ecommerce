@@ -10,8 +10,8 @@ const ProductsList = ({ products, layout = 'grid', hasNextPage, handleNext, load
   Array.isArray(products) && (
     <div className={styles.list}>
       <ListDisplay layout={layout}>
-        {products.map((product, i) => (
-          <ProductCardDefault product={product} key={product.id} priority={i < 5} />
+        {products.map((product, index) => (
+          <ProductCardDefault product={product} key={product.id} priority={index < 5} />
         ))}
       </ListDisplay>
       {loading && <BlockLoader />}

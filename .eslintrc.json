@@ -48,10 +48,16 @@
     "eslint:recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:css-modules/recommended",
-    "plugin:sonarjs/recommended"
+    "plugin:sonarjs/recommended",
+    "plugin:unicorn/recommended"
   ],
 
   "rules": {
+    "unicorn/no-array-reduce": 0,
+    "unicorn/no-array-for-each": 0,
+    "unicorn/filename-case": 0,
+    "unicorn/no-new-array": 0,
+    "consistent-return": 0,
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": [
       "error",

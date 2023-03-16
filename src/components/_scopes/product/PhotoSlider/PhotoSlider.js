@@ -17,17 +17,17 @@ const PhotoSlider = ({ variants, selectedVariant }) => {
 
   useEffect(() => {
     if (variants?.length && selectedVariant?.id) {
-      variants.forEach((variant, i) => variant.id === selectedVariant.id && setIndex(i));
+      variants.forEach((variant, index_) => variant.id === selectedVariant.id && setIndex(index_));
     }
   }, [selectedVariant, variants]);
   const handlePrevious = () => {
     if (index <= 0) return;
-    setIndex((prev) => prev - 1);
+    setIndex((previous) => previous - 1);
   };
 
   const handleNext = () => {
     if (index >= variants.length - 1) return;
-    setIndex((prev) => prev + 1);
+    setIndex((previous) => previous + 1);
   };
 
   return (

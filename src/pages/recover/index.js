@@ -20,9 +20,9 @@ const ResetPassword = () => {
     const { email } = formData;
     if (!email) return showToast.error(config.userFeedback?.missingFields);
     toggleLoading(true);
-    const recoverRes = await getClient().storefront.customer.customerRecover({ email });
+    const recoverResponse = await getClient().storefront.customer.customerRecover({ email });
     toggleLoading(false);
-    const errors = recoverRes?.customerUserErrors || recoverRes?.errors;
+    const errors = recoverResponse?.customerUserErrors || recoverResponse?.errors;
     if (errors?.length) return errors.forEach((element) => showToast.error(element.message));
     return showToast.success(config.userFeedback.sendRecoverEmail.success);
   };

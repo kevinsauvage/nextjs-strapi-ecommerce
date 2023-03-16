@@ -12,7 +12,7 @@ const HeightAnimation = ({
   buttonTextActive = 'Show less',
   buttonTextInactive = 'Show more',
 }) => {
-  const refChildren = useRef();
+  const referenceChildren = useRef();
   const [maxHeight, setMaxHeight] = useState();
   const [actualHeight, setActualHeight] = useState(initialHeight);
 
@@ -24,18 +24,18 @@ const HeightAnimation = ({
   }, [animationType, initialHeight, isOpen, maxHeight]);
 
   function calculateHeight() {
-    if (refChildren.current) {
-      const newHeight = refChildren.current.scrollHeight;
+    if (referenceChildren.current) {
+      const newHeight = referenceChildren.current.scrollHeight;
       setMaxHeight(newHeight);
     }
   }
   useEffect(() => {
     let resizeObserver;
-    if (refChildren.current) {
+    if (referenceChildren.current) {
       resizeObserver = new ResizeObserver(() => {
         calculateHeight();
       });
-      resizeObserver.observe(refChildren.current);
+      resizeObserver.observe(referenceChildren.current);
     }
     return () => resizeObserver.disconnect();
   }, []);
@@ -44,7 +44,7 @@ const HeightAnimation = ({
     <>
       <div className={styles.animation} style={{ maxHeight: `${actualHeight}px` }}>
         <div
-          ref={refChildren}
+          ref={referenceChildren}
           onLoad={calculateHeight}
           className={` ${animationType === 'hover' && actualHeight !== maxHeight && styles.hover} `}
           onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
@@ -59,7 +59,9 @@ const HeightAnimation = ({
         <button
           type="button"
           className={styles.button}
-          onClick={() => setActualHeight((prev) => (prev === initialHeight ? maxHeight : initialHeight))}
+          onClick={() =>
+            setActualHeight((previous) => (previous === initialHeight ? maxHeight : initialHeight))
+          }
         >
           {actualHeight ? buttonTextActive : buttonTextInactive}
         </button>

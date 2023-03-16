@@ -1,10 +1,10 @@
 import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
-import { getInfoFromCtx } from '@/helpers/index';
+import { getInfoFromContext } from '@/helpers/index';
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import getClient from '@/shopify/index';
 
-const CollectionSlugPage = (props) => <CollectionPage {...props} />;
+const CollectionSlugPage = (properties) => <CollectionPage {...properties} />;
 
 export default CollectionSlugPage;
 
@@ -16,19 +16,20 @@ CollectionSlugPage.getLayout = function getLayout(page) {
   );
 };
 
-export async function getServerSideProps(ctx) {
-  const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } = getInfoFromCtx(ctx);
+export async function getServerSideProps(context) {
+  const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } = getInfoFromContext(context);
 
-  const filters = Object.keys(query).reduce((acc, key) => {
+  const filters = Object.keys(query).reduce((accumulator, key) => {
     if (key.startsWith('filter')) {
       const filter = query[key];
       if (Array.isArray(filter)) {
-        filter.forEach((f) => acc.push(JSON.parse(f)));
+        // eslint-disable-next-line no-restricted-syntax
+        for (const f of filter) accumulator.push(JSON.parse(f));
       } else {
-        acc.push(JSON.parse(filter));
+        accumulator.push(JSON.parse(filter));
       }
     }
-    return acc;
+    return accumulator;
   }, []);
 
   const data = await getClient(delegateToken, ip).storefront.collection.collection({

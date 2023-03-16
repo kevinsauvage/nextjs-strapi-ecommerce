@@ -19,13 +19,13 @@ const ModalProduct = ({ handleClose, selectedProduct }) => {
       // TODO: handle error here
       getClient()
         .storefront.product.getProductByHandle({ handle })
-        .then((res) => {
-          if (res?.handle) setProduct(res);
+        .then((response) => {
+          if (response?.handle) setProduct(response);
           setLoading(false);
         })
-        .catch((err) => {
+        .catch((error) => {
           setLoading(false);
-          console.error(err);
+          console.error(error);
         });
     }
   }, [selectedProduct]);

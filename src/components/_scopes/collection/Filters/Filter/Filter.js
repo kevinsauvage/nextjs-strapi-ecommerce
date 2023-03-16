@@ -10,7 +10,7 @@ const Filter = ({ filter, children }) => {
 
   return (
     <div className={`${styles.filter} ${open && styles.open}`} key={filter.label}>
-      <button type="button" className={styles.header} onClick={() => setOpen((prev) => !prev)}>
+      <button type="button" className={styles.header} onClick={() => setOpen((previous) => !previous)}>
         <b className={styles.label}>{filter.label}</b>
         <span className={styles.arrow}>{arrowRight}</span>
       </button>

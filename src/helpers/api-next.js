@@ -6,14 +6,14 @@ export const nextApiHelper = async (url, body = {}, method = 'POST') => {
     };
 
     if (body) object.body = JSON.stringify(body);
-    const res = await fetch(url, object);
-    return res?.json();
-  } catch (err) {
-    return console.error(err);
+    const response = await fetch(url, object);
+    return response?.json();
+  } catch (error) {
+    return console.error(error);
   }
 };
 
-export const generateDelegateToken = () => nextApiHelper('/api/delegateToken', null, 'GET');
+export const generateDelegateToken = () => nextApiHelper('/api/delegate-token', '', 'GET');
 
 export const sendMail = async (body) => {
   const apiUrl = '/api/email';

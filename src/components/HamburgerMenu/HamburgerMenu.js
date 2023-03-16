@@ -17,10 +17,10 @@ const HamburgerMenu = ({ headerMenu }) => {
   const router = useRouter();
 
   const renderMenuItem = (menuItem) => {
-    const { title, url, items } = menuItem;
+    const { title, url, items, id } = menuItem;
 
     return (
-      <li key={menuItem.id}>
+      <li key={id}>
         {items && items.length > 0 ? (
           <Collapsible title={title}>
             <ul className={styles['sub-menu']}>{items.map((item) => renderMenuItem(item))}</ul>
@@ -86,14 +86,15 @@ const HamburgerMenu = ({ headerMenu }) => {
             <li>
               <nav className={styles['user-nav']}>
                 <ul>
-                  {userMenuItems?.map((menuItem) =>
-                    menuItem.condition ? (
-                      <li key={menuItem.id} className={styles['user-nav-list-item']}>
-                        <Link href={menuItem.link}>
-                          {menuItem.icon} {menuItem.text}
-                        </Link>
-                      </li>
-                    ) : null
+                  {userMenuItems?.map(
+                    (menuItem) =>
+                      menuItem.condition && (
+                        <li key={menuItem.id} className={styles['user-nav-list-item']}>
+                          <Link href={menuItem.link}>
+                            {menuItem.icon} {menuItem.text}
+                          </Link>
+                        </li>
+                      )
                   )}
                 </ul>
               </nav>

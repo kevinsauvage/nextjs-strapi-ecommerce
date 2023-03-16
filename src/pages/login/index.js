@@ -16,7 +16,7 @@ import { handleSetTokenCookies } from '@/helpers/cookies';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-const { userFeedback } = config;
+const { userFeedback, routes } = config;
 
 const LoginPage = () => {
   const { toggleLoading } = useGlobalContext();
@@ -27,19 +27,19 @@ const LoginPage = () => {
     if (!email || !password) return showToast.error(userFeedback?.missingFields);
 
     toggleLoading(true);
-    const resLogin = await getClient().storefront.customer.customerAccessTokenCreate({
+    const responsesLogin = await getClient().storefront.customer.customerAccessTokenCreate({
       input: { email, password },
     });
     toggleLoading(false);
 
-    const customerUserErrors = resLogin?.customerUserErrors;
+    const customerUserErrors = responsesLogin?.customerUserErrors;
     if (customerUserErrors?.length) {
       return customerUserErrors.forEach((element) => showToast.error(element.message));
     }
 
-    const accessToken = resLogin?.customerAccessToken?.accessToken;
+    const accessToken = responsesLogin?.customerAccessToken?.accessToken;
     if (!accessToken) return showToast.error(userFeedback.login.error);
-    const nextUrl = query?.redirectUrl ? query.redirectUrl : config.routes.account;
+    const nextUrl = query.redirectUrl || routes.account;
     showToast.success(userFeedback.login.success);
 
     await new Promise((resolve) => {
@@ -75,8 +75,8 @@ const LoginPage = () => {
           />
           <Buttons text="Login">
             <Wrapper gap="6px">
-              <Link href={config.routes.register}>REGISTER</Link> or
-              <Link href={config.routes.emailResetPassword}>RESET PASSWORD</Link>
+              <Link href={routes.register}>REGISTER</Link> or
+              <Link href={routes.emailResetPassword}>RESET PASSWORD</Link>
             </Wrapper>
           </Buttons>
         </Form>

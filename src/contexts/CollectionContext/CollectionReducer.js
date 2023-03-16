@@ -25,47 +25,56 @@ export const actions = {
 // Reducer
 export const CollectionReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.SET_LOADING:
+    case actions.SET_LOADING: {
       return { ...state, loading: action.payload };
+    }
 
-    case actions.SET_SELECTED_FILTERS:
+    case actions.SET_SELECTED_FILTERS: {
       return { ...state, selectedFilters: action.payload };
+    }
 
-    case actions.SET_PAGE_INFO:
+    case actions.SET_PAGE_INFO: {
       return {
         ...state,
         pageInfo: action.payload,
       };
+    }
 
-    case actions.SET_PRODUCTS:
+    case actions.SET_PRODUCTS: {
       return {
         ...state,
         products: action.payload,
       };
+    }
 
-    case actions.SET_ALL_FILTERS:
+    case actions.SET_ALL_FILTERS: {
       return {
         ...state,
         allFilters: action.payload,
       };
+    }
 
-    case actions.SET_LAYOUT:
+    case actions.SET_LAYOUT: {
       return {
         ...state,
         layout: action.payload,
       };
-    case actions.SET_COLLECTION_NAVIGATION:
+    }
+    case actions.SET_COLLECTION_NAVIGATION: {
       return {
         ...state,
         collectionNav: action.payload,
       };
+    }
 
-    case actions.SET_COLLECTION:
+    case actions.SET_COLLECTION: {
       return {
         ...state,
         collection: action.payload,
       };
-    default:
+    }
+    default: {
       return state;
+    }
   }
 };

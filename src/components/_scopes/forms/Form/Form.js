@@ -25,25 +25,25 @@ const Form = ({
       if (!isValidElement(child)) return child;
 
       const value = formData?.[child.props.name];
-      const childProps = {
+      const childProperties = {
         ...child.props,
         onChange: handleInputChange,
         value,
         'aria-invalid': missing.includes(child.props.name) || false,
-        invalid: missing.includes(child.props.name) ? true : null,
+        invalid: missing.includes(child.props.name) ? true : '',
       };
 
       if (child.props.type === 'checkbox') {
-        childProps.checked = !!value;
+        childProperties.checked = !!value;
       }
       if (requiredFields.includes(child.props.name)) {
-        childProps.required = true;
+        childProperties.required = true;
       }
 
       if (child.props.children) {
-        childProps.children = iterateOverChildren(child.props.children);
+        childProperties.children = iterateOverChildren(child.props.children);
       }
-      return cloneElement(child, childProps);
+      return cloneElement(child, childProperties);
     });
 
   return (

@@ -8,7 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import seo from '@/data/seo';
-import { sendMail } from '@/helpers/apiNext';
+import { sendMail } from '@/helpers/api-next';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 
 const ContactPage = () => {
@@ -20,13 +20,14 @@ const ContactPage = () => {
     if (!email || !name || !message) return;
 
     toggleLoading(true);
-    const res = await sendMail({ email, name, message });
+    const response = await sendMail({ email, name, message });
     toggleLoading(false);
 
-    if (res?.ok) {
+    if (response?.ok) {
       const elements = document.querySelectorAll('input, textarea');
-      elements.forEach((e) => {
-        e.value = '';
+      elements.forEach((event) => {
+        // eslint-disable-next-line no-param-reassign
+        event.value = '';
       });
 
       showToast.success('Message sent successfully');

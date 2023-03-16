@@ -5,7 +5,7 @@ import { arrowRight2 } from '@/assets/svg';
 import styles from './Crumbs.module.scss';
 
 const Crumbs = ({ title, href, last, isNotClickable }) => {
-  if (isNotClickable) return null;
+  if (isNotClickable) return;
   if (last) {
     const t = decodeURIComponent(title)
       .replace('gid://shopify/Order/', '')

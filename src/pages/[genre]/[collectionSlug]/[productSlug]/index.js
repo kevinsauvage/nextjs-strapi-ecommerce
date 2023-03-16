@@ -30,14 +30,14 @@ const ProductPage = ({ product, recommendations = [] }) => {
 
   if (router.isFallback) return <PageLoader />;
 
-  const { title, description, descriptionHtml } = product;
+  const { title, description, descriptionHtml, variants } = product;
 
   return (
     <PageLayout title={title} description={description}>
       <Breadcrumbs lastElement={title} />
       <Container>
         <div className={styles.top}>
-          <PhotoGallery images={product?.variants?.map((variant) => variant.image)} />
+          <PhotoGallery images={variants?.map((item) => item.image)} />
           <ProductDescription
             product={product}
             quantity={quantity}
@@ -75,10 +75,10 @@ export async function getStaticProps({ params }) {
     (await getClient().storefront.product.getProductByHandle({
       handle: params.productSlug,
       identifiers: [{ key: 'reviews', namespace: 'custom' }],
-    })) || null;
+    })) || undefined;
 
   const recommendations =
-    (await getClient().storefront.product.productRecommendations({ productId: product?.id })) || null;
+    (await getClient().storefront.product.productRecommendations({ productId: product?.id })) || undefined;
   return { props: { product, recommendations }, revalidate: 10 };
 }
 

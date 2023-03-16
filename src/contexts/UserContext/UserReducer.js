@@ -45,7 +45,8 @@ export const UserReducer = (state = initialState, action) => {
     case actions.ADD_ORDERS_PAGEINFO: {
       return { ...state, ordersPageInfo: action.payload };
     }
-    default:
+    default: {
       return state;
+    }
   }
 };

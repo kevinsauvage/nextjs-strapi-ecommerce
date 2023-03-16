@@ -15,7 +15,7 @@ import { handleSetTokenCookies } from '@/helpers/cookies';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-const { userFeedback } = config;
+const { userFeedback, routes, localStorageKeys } = config;
 
 const RegisterPage = () => {
   const { toggleLoading } = useGlobalContext();
@@ -25,17 +25,17 @@ const RegisterPage = () => {
   const onSubmit = async (formData) => {
     const { email, password, firstName, lastName, passwordConfirmation } = formData;
     try {
-      if (!password || password.length < 8) throw new Error(config.userFeedback.passwordLength);
-      if (password !== passwordConfirmation) throw new Error(config.userFeedback.passwordDifferent);
+      if (!password || password.length < 8) throw new Error(userFeedback.passwordLength);
+      if (password !== passwordConfirmation) throw new Error(userFeedback.passwordDifferent);
       if (!email) throw new Error(userFeedback?.missingFields);
       toggleLoading(true);
 
       // Register the user
-      const registerRes = await getClient().storefront.customer.customerCreate({
+      const registerResponse = await getClient().storefront.customer.customerCreate({
         input: { email, password, firstName, lastName },
       });
-      if (!registerRes) throw new Error(userFeedback?.register.error);
-      const userErrors = registerRes?.userErrors;
+      if (!registerResponse) throw new Error(userFeedback?.register.error);
+      const userErrors = registerResponse?.userErrors;
       if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
       showToast.success(userFeedback?.register?.success);
 
@@ -47,23 +47,24 @@ const RegisterPage = () => {
       const accessToken = dataLogin?.customerAccessToken?.accessToken;
       if (!accessToken) {
         console.error('login failed after registration');
-        return push(config.routes.login);
+        return push(routes.login);
       }
       handleSetTokenCookies(accessToken);
 
       // Associate user to checkout
-      const checkoutId = localStorage.getItem(config.localStorageKeys.checkoutIdSorageKey);
+      const checkoutId = localStorage.getItem(localStorageKeys.checkoutIdSorageKey);
       if (checkoutId) {
-        const assosiateRes = await getClient().storefront.checkout.associateCustomerToCheckout(
+        const assosiateResponse = await getClient().storefront.checkout.associateCustomerToCheckout(
           checkoutId,
           accessToken
         );
-        if (assosiateRes?.email) console.error('Could not associate user to checkout', assosiateRes);
+        if (assosiateResponse?.email)
+          console.error('Could not associate user to checkout', assosiateResponse);
       } else {
         console.warn('Checkout id not fount');
       }
 
-      return push(config.routes.account);
+      return push(routes.account);
     } catch (error) {
       return showToast.error(error.message);
     } finally {
@@ -127,7 +128,7 @@ const RegisterPage = () => {
             autoComplete="off"
           />
           <Buttons text="REGISTER">
-            <Link href={config.routes.login}>LOGIN</Link>
+            <Link href={routes.login}>LOGIN</Link>
           </Buttons>
         </Form>
       </FormContainer>

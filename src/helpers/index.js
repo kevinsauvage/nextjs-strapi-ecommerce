@@ -3,23 +3,23 @@ import nookies from 'nookies';
 
 import config from '@/config/index';
 
-const getIpAddressFromCtx = (ctx) => {
-  const forwarded = ctx.req.headers['x-forwarded-for'];
+const getIpAddressFromContext = (context) => {
+  const forwarded = context.req.headers['x-forwarded-for'];
   if (forwarded) {
     return forwarded.split(/, /)[0];
   }
-  return ctx.req.socket.remoteAddress;
+  return context.req.socket.remoteAddress;
 };
 
-export const getInfoFromCtx = (ctx) => {
-  const cookies = nookies.get(ctx) || {};
+export const getInfoFromContext = (context) => {
+  const cookies = nookies.get(context) || {};
   return {
     delegateToken: cookies.shopifyDelegateToken,
-    startCursor: ctx.query?.startCursor,
-    sortKey: ctx.query?.sort_key,
-    collectionSlug: ctx.query?.collectionSlug,
-    ip: getIpAddressFromCtx(ctx),
-    query: ctx.query,
+    startCursor: context.query?.startCursor,
+    sortKey: context.query?.sort_key,
+    collectionSlug: context.query?.collectionSlug,
+    ip: getIpAddressFromContext(context),
+    query: context.query,
     shopifyToken: cookies?.[config?.cookies.shopifyToken],
   };
 };
@@ -27,25 +27,25 @@ export const getInfoFromCtx = (ctx) => {
 export const getSelectedFilter = (filters, query) => {
   if (!query) return [];
 
-  return filters.reduce((acc, filter) => {
+  return filters.reduce((accumulator, filter) => {
     const item = query[filter.id];
 
     if (item) {
       if (Array.isArray(item)) {
         item.forEach((queryFilter) => {
-          acc.push({ filterId: filter.id, input: queryFilter });
+          accumulator.push({ filterId: filter.id, input: queryFilter });
         });
       } else {
         [item].forEach((queryFilter) => {
-          acc.push({ filterId: filter.id, input: queryFilter });
+          accumulator.push({ filterId: filter.id, input: queryFilter });
         });
       }
     }
-    return acc;
+    return accumulator;
   }, []);
 };
 
-const colors = [
+const colors = new Set([
   'black',
   'blue',
   'brown',
@@ -81,7 +81,7 @@ const colors = [
   'peach',
   'salmon',
   'sienna',
-];
+]);
 
 export const extractUniqueColorNames = (data) => {
   const colorMap = new Map();
@@ -90,7 +90,7 @@ export const extractUniqueColorNames = (data) => {
     const color = item.label
       .toLowerCase()
       .split(' ')
-      .filter((word) => colors.includes(word));
+      .filter((word) => colors.has(word));
     if (color.length > 0) {
       colorMap.set(color[0], { ...item, label: color[0] });
     }

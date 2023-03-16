@@ -16,15 +16,15 @@ const Indicators = ({ itemsToShow, totalItems, handleClick, activeIndex }) => {
         >
           <IoIosArrowRoundBack />
         </button>
-        {Array.from(Array(total).keys()).map((item, i) => (
+        {[...new Array(total).keys()].map((item, index) => (
           <button
             type="button"
-            className={`${style.dot} ${activeIndex === i ? style.active : ''} ${
-              i === total - 1 ? style.last : ''
+            className={`${style.dot} ${activeIndex === index ? style.active : ''} ${
+              index === total - 1 ? style.last : ''
             }`}
             key={item}
             aria-label="button change slide"
-            onClick={() => handleClick(i)}
+            onClick={() => handleClick(index)}
           />
         ))}
         <button

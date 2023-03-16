@@ -1,10 +1,10 @@
 import CollectionPage from '@/components/_scopes/collection/CollectionPage/CollectionPage';
 import { CollectionProvider } from '@/contexts/CollectionContext/CollectionContext';
-import { getInfoFromCtx } from '@/helpers/index';
+import { getInfoFromContext } from '@/helpers/index';
 import CollectionLayout from '@/layout/CollectionLayout/CollectionLayout';
 import getClient from '@/shopify/index';
 
-const Shop = (props) => <CollectionPage {...props} />;
+const Shop = (properties) => <CollectionPage {...properties} />;
 
 export default Shop;
 
@@ -16,8 +16,8 @@ Shop.getLayout = function getLayout(page) {
   );
 };
 
-export async function getServerSideProps(ctx) {
-  const { delegateToken, ip, query } = getInfoFromCtx(ctx);
+export async function getServerSideProps(context) {
+  const { delegateToken, ip, query } = getInfoFromContext(context);
 
   const menuSlug = `collections-${query?.genre}`;
 

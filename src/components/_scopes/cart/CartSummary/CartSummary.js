@@ -1,4 +1,4 @@
-import CheckoutBtn from '@/components/CheckoutBtn/CheckoutBtn';
+import CheckoutButton from '@/components/CheckoutButton/CheckoutButton';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
 import styles from './CartSummary.module.scss';
@@ -31,7 +31,7 @@ const CartSummary = () => {
           content={`${cart?.cost?.subtotalAmount?.amount} ${cart?.cost?.subtotalAmount?.currencyCode}`}
         />
         <CartSummaryRow title="Total products" content={getTotalItems() || 0} />
-        <CheckoutBtn extraClass={styles.btn} checkoutUrl={cart?.checkoutUrl} />
+        <CheckoutButton extraClass={styles.btn} checkoutUrl={cart?.checkoutUrl} />
       </div>
     </div>
   );

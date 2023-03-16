@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const capitalizeFirstLetter = (str) => {
-  if (!str?.trim()) return '';
-  return str.charAt(0).toUpperCase() + str.slice(1);
+export const capitalizeFirstLetter = (string_) => {
+  if (!string_?.trim()) return '';
+  return string_.charAt(0).toUpperCase() + string_.slice(1);
 };

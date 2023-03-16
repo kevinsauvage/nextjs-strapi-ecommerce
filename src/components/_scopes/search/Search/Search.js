@@ -25,8 +25,8 @@ const Search = ({ size }) => {
     setQuery(value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (!query?.trim()) return;
     push({
       pathname: config.routes.search,

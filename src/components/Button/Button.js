@@ -38,8 +38,8 @@ const Button = ({
     <button
       {...rest}
       type={type || 'button'}
-      onClick={onClick || null}
-      onKeyDown={(e) => e.key === 'Enter' && (onClick || null)}
+      onClick={onClick || undefined}
+      onKeyDown={(event) => event.key === 'Enter' && (onClick || undefined)}
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()}`}
     >

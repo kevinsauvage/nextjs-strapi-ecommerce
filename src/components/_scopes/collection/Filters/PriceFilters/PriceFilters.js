@@ -31,32 +31,34 @@ const PriceFilters = ({ filter }) => {
     setMax(price.max);
   }, [filter?.id, filter?.values, query]);
 
-  const handleConfirm = (e) => {
-    e.preventDefault();
+  const handleConfirm = (event) => {
+    event.preventDefault();
     if (min < 0) return showToast.error('Minimum value must be greater than or equal to 0');
     if (min > max) return showToast.error('Min value must be greater than max');
     if (max > original?.max) return showToast.error(`Max value must be greater than ${original.max}`);
 
     return handleSetUniqueFilters(
       filter.id,
-      JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(max, 10) } })
+      JSON.stringify({ price: { min: Number.parseInt(min, 10), max: Number.parseInt(max, 10) } })
     );
   };
 
   return (
     original?.max && (
-      <form className={styles['price-filters']} onSubmit={(e) => handleConfirm(e)}>
+      <form className={styles['price-filters']} onSubmit={(event) => handleConfirm(event)}>
         <div className={styles['price-inputs']}>
           <label className={styles.label}>
             <small>From</small>
             <input
               type="number"
               value={min.toString()}
-              onChange={(e) => {
-                setMin(e.target.value);
+              onChange={(event) => {
+                setMin(event.target.value);
                 handleSetUniqueFilters(
                   filter.id,
-                  JSON.stringify({ price: { min: parseInt(e.target.value, 10), max: parseInt(max, 10) } })
+                  JSON.stringify({
+                    price: { min: Number.parseInt(event.target.value, 10), max: Number.parseInt(max, 10) },
+                  })
                 );
               }}
             />
@@ -68,11 +70,13 @@ const PriceFilters = ({ filter }) => {
             <input
               type="number"
               value={Math.ceil(max).toString()}
-              onChange={(e) => {
-                setMax(e.target.value);
+              onChange={(event) => {
+                setMax(event.target.value);
                 handleSetUniqueFilters(
                   filter.id,
-                  JSON.stringify({ price: { min: parseInt(min, 10), max: parseInt(e.target.value, 10) } })
+                  JSON.stringify({
+                    price: { min: Number.parseInt(min, 10), max: Number.parseInt(event.target.value, 10) },
+                  })
                 );
               }}
             />

@@ -1,4 +1,4 @@
-const env = process.env.NODE_ENV;
+const environment = process.env.NODE_ENV;
 
 const config = {
   baseUrl: 'http://localhost:3000',
@@ -89,7 +89,7 @@ config.cookies = {
   shopifyTokenExpire: 'shopify-access-token-expire',
 };
 
-if (env === 'production') {
+if (environment === 'production') {
   config.baseUrl = 'https://www.ecomtestshopi.xyz';
 }
 

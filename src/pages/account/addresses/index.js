@@ -32,11 +32,11 @@ const Addresses = () => {
 
   const fetchAddresses = useCallback(async () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-    const res = await getClient().storefront.customer.queryCustomerAddresses({
+    const response = await getClient().storefront.customer.queryCustomerAddresses({
       customerAccessToken: shopifyToken,
     });
     setIsLoading(false);
-    if (Array.isArray(res)) dispatch({ type: actions.ADD_ADDRESSES, payload: res });
+    if (Array.isArray(response)) dispatch({ type: actions.ADD_ADDRESSES, payload: response });
     else showToast.error(errorMessage);
   }, [dispatch, showToast]);
 
@@ -73,7 +73,7 @@ const Addresses = () => {
       });
       showToast.success('Address updated successfully');
     }
-    if (customerUserErrors) return customerUserErrors.map((err) => showToast.error(err.message));
+    if (customerUserErrors) return customerUserErrors.map((error) => showToast.error(error.message));
     return showToast.error('Something went wrong');
   };
 
@@ -82,11 +82,11 @@ const Addresses = () => {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const deleteRes = await getClient().storefront.customer.customerAddressDelete({
+      const deleteResponse = await getClient().storefront.customer.customerAddressDelete({
         customerAccessToken: shopifyToken,
         addressId: id,
       });
-      const { customerUserErrors, deletedCustomerAddressId } = deleteRes || {};
+      const { customerUserErrors, deletedCustomerAddressId } = deleteResponse || {};
 
       if (customerUserErrors?.length)
         return customerUserErrors.forEach((element) => showToast.error(element.message));
@@ -97,7 +97,7 @@ const Addresses = () => {
       }
 
       return showToast.error(errorMessage);
-    } catch (error) {
+    } catch {
       return showToast.error(errorMessage);
     } finally {
       toggleLoading(false);
@@ -109,11 +109,11 @@ const Addresses = () => {
       toggleLoading(true);
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
-      const res = await getClient().storefront.customer.customerDefaultAddressUpdate({
+      const response = await getClient().storefront.customer.customerDefaultAddressUpdate({
         customerAccessToken: shopifyToken,
         addressId: id,
       });
-      const { customer, customerUserErrors } = res || {};
+      const { customer, customerUserErrors } = response || {};
 
       if (customer?.id) {
         showToast.success('Address correctly set as default address');
@@ -121,7 +121,7 @@ const Addresses = () => {
       }
 
       return customerUserErrors.forEach((element) => showToast.error(element.message));
-    } catch (error) {
+    } catch {
       return showToast.error(errorMessage);
     } finally {
       toggleLoading(false);
@@ -158,9 +158,10 @@ const Addresses = () => {
         setShowCreateForm(false);
         return showToast.success('Address created successfully');
       }
-      if (customerUserErrors.length) return customerUserErrors.map((err) => showToast.error(err.message));
+      if (customerUserErrors.length > 0)
+        return customerUserErrors.map((error) => showToast.error(error.message));
       return showToast.error('Something went wrong');
-    } catch (err) {
+    } catch {
       return showToast.error('Error creating address, please try again later');
     } finally {
       toggleLoading(false);
@@ -185,10 +186,10 @@ const Addresses = () => {
         }
       >
         {Array.isArray(addresses) && addresses.length > 0 ? (
-          addresses.map((item, i) => (
+          addresses.map((item, index) => (
             <Address
               key={item.id}
-              title={`Address ${i + 1}`}
+              title={`Address ${index + 1}`}
               handleSetAsDefault={handleSetAsDefault}
               handleUpdateAddress={handleUpdateAddress}
               address={item}

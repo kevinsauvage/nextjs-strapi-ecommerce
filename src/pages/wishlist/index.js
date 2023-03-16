@@ -21,28 +21,31 @@ const Wishlist = () => {
 
   useEffect(() => {
     const getCustomer = async () => {
-      if (wishlist.length) return setLoading(false);
+      if (wishlist.length > 0) {
+        setLoading(false);
+        return;
+      }
 
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
         setUserWishlist([]);
-        return console.error('Missing shopify token to get customer wishlist');
+        console.error('Missing shopify token to get customer wishlist');
+        return;
       }
 
       setLoading(true);
-      const wishlistRes = await getClient().storefront.customer.queryCustomerMetafields({
+      const wishlistResponse = await getClient().storefront.customer.queryCustomerMetafields({
         customerAccessToken: shopifyToken,
         metafields: [{ key: 'wishlist', namespace: 'custom' }],
       });
       setLoading(false);
 
-      if (wishlistRes?.length > 0) {
-        const metafield = wishlistRes.filter((item) => item?.key === 'wishlist')?.[0]?.value;
+      if (wishlistResponse?.length > 0) {
+        const metafield = wishlistResponse.find((item) => item?.key === 'wishlist')?.value;
         const value = metafield && JSON.parse(metafield);
-        if (value) return setUserWishlist(Array.isArray(value) ? value : [value]);
+        if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
       }
-      return null;
     };
 
     getCustomer();

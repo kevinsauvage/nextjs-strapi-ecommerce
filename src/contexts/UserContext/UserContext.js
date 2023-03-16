@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import { useRouter } from 'next/router';
 
 import config from '@/config/index';
-import { nextApiHelper } from '@/helpers/apiNext';
+import { nextApiHelper } from '@/helpers/api-next';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
 
@@ -32,22 +32,24 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     const getCustomer = async () => {
-      if (user?.id) return null;
+      if (user?.id) return;
 
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
-        return dispatch({ type: actions.ADD_USER, payload: undefined });
+        dispatch({ type: actions.ADD_USER, payload: undefined });
+        return;
       }
 
-      const userRes = await getClient().storefront.customer.queryCustomer({
+      const userResponse = await getClient().storefront.customer.queryCustomer({
         customerAccessToken: shopifyToken,
       });
 
-      if (userRes?.id) {
-        return setUser(userRes);
+      if (userResponse?.id) {
+        setUser(userResponse);
+        return;
       }
-      return push(config.routes.logout);
+      push(config.routes.logout);
     };
     getCustomer();
   }, [user, showToast, setUser, push, dispatch]);
@@ -69,7 +71,7 @@ export const UserProvider = ({ children }) => {
       }
 
       const newWishList = isWishlist(product)
-        ? wishlist.filter((prod) => prod.id !== product.id)
+        ? wishlist.filter((production) => production.id !== product.id)
         : [...wishlist, product];
 
       const metafields = {

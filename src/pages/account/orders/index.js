@@ -25,7 +25,7 @@ const OrdersPage = () => {
     async (endCursor) => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setIsLoading(true);
-      const res = await getClient().storefront.customer.queryCustomerOrders({
+      const response = await getClient().storefront.customer.queryCustomerOrders({
         customerAccessToken: shopifyToken,
         first: 5,
         after: endCursor,
@@ -33,9 +33,9 @@ const OrdersPage = () => {
 
       setIsLoading(false);
 
-      if (res?.orders) {
-        dispatch({ type: actions.ADD_ORDERS, payload: res?.orders });
-        dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: res?.pageInfo });
+      if (response?.orders) {
+        dispatch({ type: actions.ADD_ORDERS, payload: response?.orders });
+        dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: response?.pageInfo });
       } else {
         showToast.error('Something went wrong, please try again later');
         setError(true);
@@ -53,7 +53,7 @@ const OrdersPage = () => {
 
   const renderContent = () => {
     if (error) return <p>Error</p>;
-    if (orders.length || isLoading) {
+    if (orders.length > 0 || isLoading) {
       return (
         <>
           <Orders orders={orders} />

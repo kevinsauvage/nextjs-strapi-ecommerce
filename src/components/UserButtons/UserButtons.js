@@ -56,15 +56,15 @@ const UserButtons = () => {
 
   return (
     <div className={styles.container}>
-      {data.map((el) => (
+      {data.map((element) => (
         <button
-          aria-label={el.name}
+          aria-label={element.name}
           type="button"
-          key={el.id}
-          onClick={() => el.onClick?.()}
-          className={`${styles.button} ${el.extraClass}`}
+          key={element.id}
+          onClick={() => element.onClick?.()}
+          className={`${styles.button} ${element.extraClass}`}
         >
-          {el.item}
+          {element.item}
         </button>
       ))}
     </div>

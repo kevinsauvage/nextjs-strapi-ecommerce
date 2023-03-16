@@ -1,35 +1,35 @@
 import getClient from '@/shopify/index';
 
-const handle = async (req, res) => {
+const handle = async (request, response) => {
   try {
-    const { method, body } = req;
+    const { method, body } = request;
 
     if (method === 'POST') {
       const { metafields } = body || {};
 
-      const response = await getClient().admin.customer.metafieldsSet({ metafields });
+      const responseMetafield = await getClient().admin.customer.metafieldsSet({ metafields });
 
-      if (!response) {
-        return res.status(500).json({ error: 'Could not set metafield' });
+      if (!responseMetafield) {
+        return response.status(500).json({ error: 'Could not set metafield' });
       }
 
-      const errors = response?.userErrors;
+      const errors = responseMetafield?.userErrors;
 
       if (errors?.length > 0) {
         console.error(errors);
-        return res.status(500).json({ message: 'Method not allowed' });
+        return response.status(500).json({ message: 'Method not allowed' });
       }
 
-      const value = response?.metafields?.filter((field) => field.key === 'wishlist')?.[0]?.value;
+      const value = responseMetafield?.metafields?.filter((field) => field.key === 'wishlist')?.[0]?.value;
 
-      const parsed = value ? JSON.parse(value) : null;
+      const parsed = value ? JSON.parse(value) : undefined;
 
-      if (parsed) return res.status(200).json({ ok: true, response: parsed });
-      return res.status(404).json({ ok: false, response: null });
+      if (parsed) return response.status(200).json({ ok: true, responseMetafield: parsed });
+      return response.status(404).json({ ok: false, responseMetafield: undefined });
     }
-    return res.status(500).json({ message: 'Method not allowed' });
+    return response.status(500).json({ message: 'Method not allowed' });
   } catch (error) {
-    return res.status(500).json({ error: error.message, stack: error.stack });
+    return response.status(500).json({ error: error.message, stack: error.stack });
   }
 };
 

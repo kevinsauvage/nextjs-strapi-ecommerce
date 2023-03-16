@@ -13,9 +13,9 @@ const Reviews = ({ reviews, handleRemoveProductReview }) => {
 
   const getAverage = useCallback(
     () =>
-      reviews.reduce((acc, curr) => {
-        let total = acc;
-        total += curr.review.rating;
+      reviews.reduce((accumulator, current) => {
+        let total = accumulator;
+        total += current.review.rating;
         return total;
       }, 0) / reviews.length,
     [reviews]

@@ -31,7 +31,7 @@ const PhotoGalleryWithCarousel = ({ images }) => {
         <Carousel itemToShow={8} showButtons spacing={0}>
           {images
             .filter((image) => image.width > 200)
-            .map((variant, i) => (
+            .map((variant, index) => (
               <button
                 key={variant.src}
                 type="button"
@@ -42,7 +42,7 @@ const PhotoGalleryWithCarousel = ({ images }) => {
               >
                 <Image
                   src={variant?.small}
-                  alt={variant?.altText || `variant ${i}`}
+                  alt={variant?.altText || `variant ${index}`}
                   width={variant?.width}
                   height={variant?.height}
                   blurDataURL={variant?.blurDataURL}
