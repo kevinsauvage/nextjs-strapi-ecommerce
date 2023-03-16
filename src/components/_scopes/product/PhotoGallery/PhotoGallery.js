@@ -19,28 +19,23 @@ const PhotoItem = ({ image }) => (
   </div>
 );
 
-const PhotoGallery = ({ images = [] }) => {
-  console.log('🚀 ~ file: PhotoGallery.js:24 ~ PhotoGallery ~ images:', images);
-
-  return (
-    Array.isArray(images) && (
-      <>
-        <div className={styles.gallery}>
-          <div className={styles.inner}>
-            {images.map((image) => (
-              <PhotoItem key={image?.src} image={image} />
-            ))}
-          </div>
+const PhotoGallery = ({ images = [] }) =>
+  Array.isArray(images) && (
+    <>
+      <div className={styles.gallery}>
+        <div className={styles.inner}>
+          {images.map((image) => (
+            <PhotoItem key={image?.src} image={image} />
+          ))}
         </div>
-        <div className={styles.carousel}>
-          <Carousel itemToShow={1} spacing={0}>
-            {images.map((image) => (
-              <PhotoItem key={image?.src} image={image} />
-            ))}
-          </Carousel>
-        </div>
-      </>
-    )
+      </div>
+      <div className={styles.carousel}>
+        <Carousel itemToShow={1} spacing={0}>
+          {images.map((image) => (
+            <PhotoItem key={image?.src} image={image} />
+          ))}
+        </Carousel>
+      </div>
+    </>
   );
-};
 export default PhotoGallery;

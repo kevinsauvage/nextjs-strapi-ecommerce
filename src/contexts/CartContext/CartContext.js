@@ -165,8 +165,6 @@ export const CartProvider = ({ children }) => {
       const cartId = window.localStorage.getItem(cartIdStorageKey);
 
       if (cartId) {
-        console.log('🚀 ~ file: CartContext.js:169 ~ handleRender ~ cartId:', cartId);
-
         const getCartResponse = await getClient().storefront.cart.cartQuery({ cartId });
 
         if (getCartResponse?.id) handleSetCart(getCartResponse);

@@ -22,8 +22,6 @@ const handle = async (request, response) => {
 
       const value = responseMetafield?.metafields?.filter((field) => field.key === 'wishlist')?.[0]?.value;
 
-      console.log('🚀 ~ file: wishlist.js:27 ~ handle ~ value:', value);
-
       const parsed = value ? JSON.parse(value) : undefined;
 
       if (parsed) return response.status(200).json({ ok: true, responseMetafield: parsed });
