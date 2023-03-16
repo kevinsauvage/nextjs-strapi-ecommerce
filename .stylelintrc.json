@@ -1,10 +1,6 @@
 {
   "plugins": ["stylelint-order"],
-  "extends": [
-    "stylelint-config-html",
-    "stylelint-config-idiomatic-order",
-    "stylelint-config-recommended-scss"
-  ],
+  "extends": ["stylelint-config-idiomatic-order", "stylelint-config-recommended-scss"],
   "rules": {
     "color-hex-length": "long",
     "color-function-notation": null,
