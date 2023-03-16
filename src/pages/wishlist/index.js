@@ -41,11 +41,12 @@ const Wishlist = () => {
       });
       setLoading(false);
 
-      if (wishlistResponse?.length > 0) {
-        const metafield = wishlistResponse.find((item) => item?.key === 'wishlist')?.value;
-        const value = metafield && JSON.parse(metafield);
-        if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
+      if (wishlistResponse?.length <= 0) {
+        return;
       }
+      const metafield = wishlistResponse.find((item) => item?.key === 'wishlist')?.value;
+      const value = metafield && JSON.parse(metafield);
+      if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
     };
 
     getCustomer();
