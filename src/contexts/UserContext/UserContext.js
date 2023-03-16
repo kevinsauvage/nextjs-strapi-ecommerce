@@ -88,11 +88,11 @@ export const UserProvider = ({ children }) => {
 
       const response = await nextApiHelper('/api/wishlist', metafields, 'POST');
 
-      if (response?.response) {
+      if (response?.responseMetafield) {
         if (newWishList.length < wishlist.length) {
           showToast.success('Product correctly removed from wishlist');
         } else showToast.success('Product correctly added to wishlist');
-        return setUserWishlist(response?.response);
+        return setUserWishlist(response?.responseMetafield);
       }
       return showToast.error("Couldn't set product to user wishlist");
     },
