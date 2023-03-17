@@ -42,11 +42,11 @@ const useForm = (onSubmit, initialValues = {}, requiredFields = []) => {
   return {
     formData,
     handleInputChange,
-    handleSubmit,
     handleReset,
-    setFormData,
+    handleSubmit,
     loading,
     missing,
+    setFormData,
   };
 };
 

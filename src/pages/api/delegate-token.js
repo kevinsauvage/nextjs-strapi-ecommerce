@@ -7,7 +7,7 @@ const delegateAccessScope = process.env.SHOPIFY_SCOPE;
 
 const expiresIn = 24 * 60 * 60;
 
-const getToken = async (request, response) => {
+const handler = async (request, response) => {
   try {
     const { method } = request;
 
@@ -36,10 +36,10 @@ const getToken = async (request, response) => {
 
       setCookie({ response }, 'shopifyDelegateToken', delegateToken, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== 'development',
-        sameSite: 'strict',
         maxAge: expiresIn,
         path: '/',
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV !== 'development',
       });
 
       return response.status(200).json({ ok: true });
@@ -50,4 +50,4 @@ const getToken = async (request, response) => {
   }
 };
 
-export default getToken;
+export default handler;

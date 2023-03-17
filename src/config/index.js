@@ -2,86 +2,86 @@ const environment = process.env.NODE_ENV;
 
 const config = {
   baseUrl: 'http://localhost:3000',
-  paymentUrl: 'https://checkout.ecomtestshopi.xyz',
-  name: 'Site Name',
   domain: 'https://ecomfashionstore.myshopify.com',
+  name: 'Site Name',
+  paymentUrl: 'https://checkout.ecomtestshopi.xyz',
 };
 
 config.userFeedback = {
-  missingFields: 'Fill in missing required fields',
-  passwordLength: 'Your password must be at least 8 characters',
-  passwordDifferent: 'The password are different.',
-  register: {
-    success: 'You were successfully registered',
-    error: 'There was an error trying to register',
+  addLinesToCart: {
+    error: 'Something went wrong adding the item to the cart, please try again',
+    success: 'Item correctly added to the cart',
   },
   login: {
-    success: 'You were successfully logged in',
     error: 'There was an error trying to login',
-  },
-  resetPassword: {
-    success: 'Your password was successfully reset, your are logged in',
-    error: 'There was an error trying to reset your password',
-  },
-  sendRecoverEmail: {
-    success: 'Your email was successfully sent',
+    success: 'You were successfully logged in',
   },
   logout: {
     error: 'An error occurred while logging out',
     success: 'You were successfully logged out',
   },
-  removeLinesFromCart: {
-    success: 'Item correctly removed from the cart',
-    error: 'Something went wrong removing the item from the cart, please try again',
+  missingFields: 'Fill in missing required fields',
+  passwordDifferent: 'The password are different.',
+  passwordLength: 'Your password must be at least 8 characters',
+  register: {
+    error: 'There was an error trying to register',
+    success: 'You were successfully registered',
   },
-  addLinesToCart: {
-    success: 'Item correctly added to the cart',
-    error: 'Something went wrong adding the item to the cart, please try again',
+  removeLinesFromCart: {
+    error: 'Something went wrong removing the item from the cart, please try again',
+    success: 'Item correctly removed from the cart',
+  },
+  resetPassword: {
+    error: 'There was an error trying to reset your password',
+    success: 'Your password was successfully reset, your are logged in',
+  },
+  sendRecoverEmail: {
+    success: 'Your email was successfully sent',
   },
   updateLines: {
-    success: 'Item correctly updated in the cart',
     error: 'Something went wrong updating the item in the cart, please try again',
+    success: 'Item correctly updated in the cart',
   },
 };
 
 config.routes = {
-  home: '/',
   about: '/about',
-  contact: '/contact',
+  account: '/account',
+  addresses: '/account/addresses',
+  cart: '/cart',
   collection: '/shop',
-  product: '/product',
-  search: '/search',
-  terms: '/pages/terms',
-  privacy: '/pages/privacy',
-  refound: '/pages/refound',
-  shipping: '/pages/shipping',
+  contact: '/contact',
+  createAddress: '/account/addresses/create',
+  emailResetPassword: '/recover',
+  home: '/',
   login: '/login',
   logout: '/logout',
-  register: '/register',
-
-  cart: '/cart',
-  wishlist: '/wishlist',
-  account: '/account',
-  emailResetPassword: '/recover',
-  resetPassword: '/reset',
   orders: '/account/orders',
-  addresses: '/account/addresses',
-  createAddress: '/account/addresses/create',
-  updateAddress: '/account/addresses',
+  privacy: '/pages/privacy',
+
+  product: '/product',
+  refound: '/pages/refound',
+  register: '/register',
+  resetPassword: '/reset',
+  search: '/search',
+  shipping: '/pages/shipping',
+  terms: '/pages/terms',
   updateAccount: '/account/update',
+  updateAddress: '/account/addresses',
+  wishlist: '/wishlist',
 };
 
 config.accountNav = [
-  { url: config.routes.account, title: 'Account overview' },
-  { url: config.routes.addresses, title: 'Address book' },
-  { url: config.routes.orders, title: 'My orders' },
-  { url: config.routes.updateAccount, title: 'My details' },
-  { url: config.routes.logout, title: 'Sign out ' },
+  { title: 'Account overview', url: config.routes.account },
+  { title: 'Address book', url: config.routes.addresses },
+  { title: 'My orders', url: config.routes.orders },
+  { title: 'My details', url: config.routes.updateAccount },
+  { title: 'Sign out ', url: config.routes.logout },
 ];
 
 config.localStorageKeys = {
-  checkoutIdSorageKey: 'shopifyCheckoutId',
   cartIdStorageKey: 'shopify-cart-id',
+  checkoutIdSorageKey: 'shopifyCheckoutId',
 };
 
 config.cookies = {

@@ -20,44 +20,20 @@ export const UserProvider = ({ children }) => {
   const { push, asPath } = useRouter();
   const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
 
-  const setUser = useCallback((payload) => {
-    if (payload?.id) dispatch({ type: actions.ADD_USER, payload });
-  }, []);
+  const setUser = useCallback(
+    (payload) => payload?.id && dispatch({ payload, type: actions.ADD_USER }),
+    []
+  );
 
-  const setUserWishlist = useCallback((payload) => {
-    if (payload) dispatch({ type: actions.ADD_USER_WISHLIST, payload });
-  }, []);
+  const setUserWishlist = useCallback(
+    (payload) => payload && dispatch({ payload, type: actions.ADD_USER_WISHLIST }),
+    []
+  );
 
-  const isWishlist = useCallback((product) => wishlist.some((item) => item.id === product.id), [wishlist]);
-
-  useEffect(() => {
-    const getCustomer = async () => {
-      if (user?.id) return;
-
-      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
-
-      if (!shopifyToken) {
-        dispatch({ type: actions.ADD_USER, payload: undefined });
-        return;
-      }
-
-      const userResponse = await getClient().storefront.customer.queryCustomer({
-        customerAccessToken: shopifyToken,
-      });
-
-      if (userResponse?.id) {
-        setUser(userResponse);
-        return;
-      }
-      push(config.routes.logout);
-    };
-    getCustomer();
-  }, [user, showToast, setUser, push, dispatch]);
-
-  useEffect(() => {
-    const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
-    if (shopifyToken && user?.id) updateCartBuyerIdentity(user, shopifyToken);
-  }, [updateCartBuyerIdentity, user, cart]);
+  const isWishlist = useCallback(
+    (product) => wishlist.some((item) => item.id === product.id),
+    [wishlist]
+  );
 
   const handleSetProductToWishList = useCallback(
     async (product) => {
@@ -99,17 +75,46 @@ export const UserProvider = ({ children }) => {
     [asPath, isWishlist, push, setUserWishlist, showToast, user?.id, wishlist]
   );
 
+  useEffect(() => {
+    const getCustomer = async () => {
+      if (user?.id) return;
+
+      const customerAccessToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      if (!customerAccessToken) {
+        dispatch({ payload: undefined, type: actions.ADD_USER });
+        return;
+      }
+
+      const userResponse = await getClient().storefront.customer.queryCustomer({
+        customerAccessToken,
+      });
+
+      if (userResponse?.id) {
+        setUser(userResponse);
+        return;
+      }
+      push(config.routes.logout);
+    };
+    getCustomer();
+  }, [user, showToast, setUser, push, dispatch]);
+
+  useEffect(() => {
+    const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
+    if (shopifyToken && user?.id) updateCartBuyerIdentity(user, shopifyToken);
+  }, [updateCartBuyerIdentity, user, cart]);
+
   const values = useMemo(
     () => ({
-      user,
       addresses,
+      dispatch,
+      handleSetProductToWishList,
+      isWishlist,
       orders,
       ordersPageInfo,
-      wishlist,
-      dispatch,
-      isWishlist,
-      handleSetProductToWishList,
       setUserWishlist,
+      user,
+      wishlist,
     }),
     [
       user,

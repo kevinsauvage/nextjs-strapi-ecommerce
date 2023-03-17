@@ -20,7 +20,7 @@ const ContactPage = () => {
     if (!email || !name || !message) return;
 
     toggleLoading(true);
-    const response = await sendMail({ email, name, message });
+    const response = await sendMail({ email, message, name });
     toggleLoading(false);
 
     if (response?.ok) {
@@ -45,7 +45,7 @@ const ContactPage = () => {
           onSubmit={onSubmit}
           action="submit"
           title={seo.pages.contact.title}
-          initialValues={[{ email: '', name: '', message: '' }]}
+          initialValues={[{ email: '', message: '', name: '' }]}
           requiredFields={['email', 'name', 'message']}
         >
           <Input

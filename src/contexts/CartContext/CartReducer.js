@@ -12,15 +12,15 @@ export const actions = {
 
 // Reducer
 export const CartReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case actions.ADD_CART: {
-      return { ...state, cart: action.payload, isLoading: false };
+      return { ...state, cart: payload, isLoading: false };
     }
-
     case actions.IS_CART_LOADING: {
-      return { ...state, isLoading: action.payload };
+      return { ...state, isLoading: payload };
     }
-
     default: {
       return state;
     }

@@ -26,10 +26,10 @@ export const handleSetCookies = (
 
     const options = {
       httpOnly,
-      secure: process.env.NODE_ENV !== NODE_ENV_DEVELOPMENT,
-      sameSite: COOKIE_SAME_SITE,
       maxAge,
       path: '/',
+      sameSite: COOKIE_SAME_SITE,
+      secure: process.env.NODE_ENV !== NODE_ENV_DEVELOPMENT,
     };
 
     setCookie({ res: response }, name, cookieValue, options);

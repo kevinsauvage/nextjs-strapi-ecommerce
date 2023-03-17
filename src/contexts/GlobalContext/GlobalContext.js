@@ -9,14 +9,25 @@ export const GlobalStoreContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
-  const router = useRouter();
-  const { searchOpen, selectedProduct, loading } = states;
-
-  const resetToggle = useCallback(() => dispatch({ type: actions.RESET_TOGGLE_STATES }), []);
+  const { asPath } = useRouter();
 
   const handleRender = useCallback(async () => {
     const response = await generateDelegateToken();
     if (!response?.ok) console.error("Couldn't  set delegate token");
+  }, []);
+
+  const toggleLoading = useCallback((payload) => {
+    dispatch({ payload, type: actions.TOGGLE_LOADING });
+  }, []);
+
+  const toggleSearch = useCallback((payload) => {
+    dispatch({ type: actions.RESET_TOGGLE_STATES });
+    dispatch({ payload, type: actions.TOGGLE_SEARCH });
+  }, []);
+
+  const setSelectedProduct = useCallback((payload) => {
+    dispatch({ type: actions.RESET_TOGGLE_STATES });
+    dispatch({ payload, type: actions.SET_SELECTED_PRODUCT });
   }, []);
 
   useEffect(() => {
@@ -24,32 +35,18 @@ export const GlobalProvider = ({ children }) => {
   }, [handleRender]);
 
   useEffect(() => {
-    resetToggle();
-  }, [router.asPath, resetToggle]);
+    dispatch({ type: actions.RESET_TOGGLE_STATES });
+  }, [asPath]);
 
   const values = useMemo(
     () => ({
-      searchOpen,
-      selectedProduct,
-      loading,
+      ...states,
 
-      toggleLoading: (payload) => {
-        dispatch({ type: actions.TOGGLE_LOADING, payload });
-      },
-
-      toggleSearch: (payload) => {
-        dispatch({ type: actions.RESET_TOGGLE_STATES });
-        dispatch({ type: actions.TOGGLE_SEARCH, payload });
-      },
-
-      setSelectedProduct: (payload) => {
-        dispatch({ type: actions.RESET_TOGGLE_STATES });
-        dispatch({ type: actions.SET_SELECTED_PRODUCT, payload });
-      },
-
-      resetToggle,
+      setSelectedProduct,
+      toggleLoading,
+      toggleSearch,
     }),
-    [searchOpen, selectedProduct, loading, resetToggle]
+    [setSelectedProduct, states, toggleLoading, toggleSearch]
   );
 
   return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;

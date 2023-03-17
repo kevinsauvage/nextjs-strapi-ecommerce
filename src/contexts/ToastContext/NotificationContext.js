@@ -17,8 +17,8 @@ export const toastReducer = (state, action) => {
       return [
         ...state,
         {
-          id: Date.now(),
           content: action.payload.content,
+          id: Date.now(),
           type: action.payload.type,
         },
       ];
@@ -41,47 +41,47 @@ export const ToastProvider = ({ children }) => {
 
   const showToast = useMemo(
     () => ({
-      success: (state) => {
-        toastDispatch({
-          type: 'ADD',
-          payload: {
-            content: state,
-            type: 'success',
-          },
-        });
-      },
       error: (state) => {
         toastDispatch({
-          type: 'ADD',
           payload: {
             content: state,
             type: 'error',
           },
-        });
-      },
-      warning: (state) => {
-        toastDispatch({
           type: 'ADD',
-          payload: {
-            content: state,
-            type: 'warning',
-          },
         });
       },
       info: (state) => {
         toastDispatch({
-          type: 'ADD',
           payload: {
             content: state,
             type: 'info',
           },
+          type: 'ADD',
+        });
+      },
+      success: (state) => {
+        toastDispatch({
+          payload: {
+            content: state,
+            type: 'success',
+          },
+          type: 'ADD',
+        });
+      },
+      warning: (state) => {
+        toastDispatch({
+          payload: {
+            content: state,
+            type: 'warning',
+          },
+          type: 'ADD',
         });
       },
     }),
     []
   );
 
-  const toastData = useMemo(() => ({ toasts, showToast }), [toasts, showToast]);
+  const toastData = useMemo(() => ({ showToast, toasts }), [toasts, showToast]);
 
   useEffect(() => {
     setMounted(true);

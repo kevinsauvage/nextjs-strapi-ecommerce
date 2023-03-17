@@ -39,7 +39,7 @@
   "globals": {
     "React": "writable"
   },
-  "plugins": ["react", "simple-import-sort", "css-modules", "sonarjs"],
+  "plugins": ["react", "simple-import-sort", "css-modules", "sonarjs", "sort-keys"],
   "extends": [
     "airbnb",
     "prettier",
@@ -57,6 +57,8 @@
     "unicorn/no-array-for-each": 0,
     "unicorn/filename-case": 0,
     "unicorn/no-new-array": 0,
+    "sort-keys": 0, // disable default eslint sort-keys
+    "sort-keys/sort-keys-fix": 1,
     "consistent-return": 0,
     "simple-import-sort/exports": "error",
     "simple-import-sort/imports": [

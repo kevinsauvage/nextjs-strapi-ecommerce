@@ -32,9 +32,9 @@ const SearchPage = () => {
       setLoading(true);
 
       const searchResponse = await getClient().storefront.product.getProducts({
-        query: `${searchTerm}*`,
-        first: 10,
         after: endCursor || undefined,
+        first: 10,
+        query: `${searchTerm}*`,
       });
 
       setLoading(false);

@@ -26,19 +26,17 @@ const Addresses = () => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
-  useEffect(() => {
-    if (addresses) setIsLoading(false);
-  }, [addresses]);
-
   const fetchAddresses = useCallback(async () => {
+    if (addresses) return setIsLoading(false);
+    setIsLoading(true);
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
     const response = await getClient().storefront.customer.queryCustomerAddresses({
       customerAccessToken: shopifyToken,
     });
     setIsLoading(false);
-    if (Array.isArray(response)) dispatch({ type: actions.ADD_ADDRESSES, payload: response });
+    if (Array.isArray(response)) dispatch({ payload: response, type: actions.ADD_ADDRESSES });
     else showToast.error(errorMessage);
-  }, [dispatch, showToast]);
+  }, [addresses, dispatch, showToast]);
 
   useEffect(() => {
     fetchAddresses();
@@ -61,19 +59,20 @@ const Addresses = () => {
     const { customerAddress, customerUserErrors } =
       await getClient().storefront.customer.customerAddressUpdate({
         address: formData,
-        customerAccessToken: shopifyToken,
         addressId,
+        customerAccessToken: shopifyToken,
       });
     toggleLoading(false);
 
     if (customerAddress) {
       dispatch({
-        type: actions.ADD_ADDRESSES,
         payload: addresses.map((address) => (address.id === addressId ? customerAddress : address)),
+        type: actions.ADD_ADDRESSES,
       });
       showToast.success('Address updated successfully');
     }
-    if (customerUserErrors) return customerUserErrors.map((error) => showToast.error(error.message));
+    if (customerUserErrors)
+      return customerUserErrors.map((error) => showToast.error(error.message));
     return showToast.error('Something went wrong');
   };
 
@@ -83,8 +82,8 @@ const Addresses = () => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       const deleteResponse = await getClient().storefront.customer.customerAddressDelete({
-        customerAccessToken: shopifyToken,
         addressId: id,
+        customerAccessToken: shopifyToken,
       });
       const { customerUserErrors, deletedCustomerAddressId } = deleteResponse || {};
 
@@ -110,14 +109,14 @@ const Addresses = () => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       const response = await getClient().storefront.customer.customerDefaultAddressUpdate({
-        customerAccessToken: shopifyToken,
         addressId: id,
+        customerAccessToken: shopifyToken,
       });
       const { customer, customerUserErrors } = response || {};
 
       if (customer?.id) {
         showToast.success('Address correctly set as default address');
-        return dispatch({ type: actions.ADD_USER, payload: customer });
+        return dispatch({ payload: customer, type: actions.ADD_USER });
       }
 
       return customerUserErrors.forEach((element) => showToast.error(element.message));
@@ -152,8 +151,8 @@ const Addresses = () => {
 
       if (customerAddress) {
         dispatch({
-          type: actions.ADD_ADDRESSES,
           payload: [...addresses, customerAddress],
+          type: actions.ADD_ADDRESSES,
         });
         setShowCreateForm(false);
         return showToast.success('Address created successfully');
@@ -168,7 +167,8 @@ const Addresses = () => {
     }
   };
 
-  const isDefault = (address) => address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
+  const isDefault = (address) =>
+    address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
 
   const description =
     'This page shows all of the addresses you have saved in your account. You can view and modify your addresses, including adding new ones, deleting old ones, and editing existing ones. This makes it easy to manage and update all of your addresses in one place. You can use this page to make sure all of your saved addresses are accurate and up-to-date.';
@@ -211,7 +211,11 @@ const Addresses = () => {
       </AccountLayout>
       {showCreateForm && (
         <Modal handleClose={() => setShowCreateForm(false)}>
-          <AddressForm title="Create address" buttonText="Create Address" onSubmit={handleCreateAddress} />
+          <AddressForm
+            title="Create address"
+            buttonText="Create Address"
+            onSubmit={handleCreateAddress}
+          />
         </Modal>
       )}
     </PageLayout>

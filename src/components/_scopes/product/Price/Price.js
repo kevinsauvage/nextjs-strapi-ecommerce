@@ -4,9 +4,9 @@ const Price = ({ compareAtPriceV2, priceV2, size = 'M' }) => {
   const isDiscount = compareAtPriceV2 && compareAtPriceV2?.amount !== priceV2?.amount;
 
   const sizeStyles = {
-    S: styles.small,
-    M: styles.medium,
     L: styles.large,
+    M: styles.medium,
+    S: styles.small,
   };
 
   return (

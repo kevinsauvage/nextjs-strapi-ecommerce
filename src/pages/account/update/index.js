@@ -32,23 +32,23 @@ const OrderDetail = () => {
     if (!formData.email || !formData.firstName || !formData.lastName || !formData.password) {
       return showToast.error('Please fill in all required fields');
     }
-    toggleLoading(true);
 
+    toggleLoading(true);
     const responseLogin = await getClient().storefront.customer.customerAccessTokenCreate({
       input: { email: user.email, password: formData.password },
     });
+    toggleLoading(false);
 
     if (!responseLogin || !responseLogin.customerAccessToken) {
-      toggleLoading(false);
       return showToast.error('Wrong current password');
     }
 
     const customerInput = {
+      acceptsMarketing: true,
       email: formData.email || '',
-      password: formData.newPassword || '',
       firstName: formData.firstName || '',
       lastName: formData.lastName || '',
-      acceptsMarketing: true,
+      password: formData.newPassword || '',
     };
 
     if (phone) customerInput.phone = phone;
@@ -56,8 +56,8 @@ const OrderDetail = () => {
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
     const updateResponse = await getClient().storefront.customer.customerUpdate({
-      customerAccessToken: shopifyToken,
       customer: customerInput,
+      customerAccessToken: shopifyToken,
     });
 
     toggleLoading(false);
@@ -70,7 +70,7 @@ const OrderDetail = () => {
     if (customer) {
       handleSetTokenCookies(customerAccessToken.accessToken);
       showToast.success('Customer information updated successfully');
-      return dispatch({ type: actions.ADD_USER, payload: customer });
+      return dispatch({ payload: customer, type: actions.ADD_USER });
     }
     return showToast.error('Something went wrong');
   };

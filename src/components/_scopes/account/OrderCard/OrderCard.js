@@ -13,10 +13,10 @@ function formatStatus(status) {
 
 const getDate = (timestamp) => {
   const options = {
+    day: 'numeric',
+    month: 'long',
     weekday: 'long',
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
   };
 
   const date = new Date(timestamp);

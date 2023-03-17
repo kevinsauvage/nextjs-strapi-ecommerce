@@ -1,37 +1,31 @@
 export const initialState = {
+  loading: false,
   searchOpen: false,
   selectedProduct: undefined,
-  loading: false,
-  filterOpen: false,
 };
 
 export const actions = {
-  TOGGLE_SEARCH: 'TOGGLE_SEARCH',
   RESET_TOGGLE_STATES: 'RESET_TOGGLE_STATES',
   SET_SELECTED_PRODUCT: 'SET_SELECTED_PRODUCT',
   TOGGLE_LOADING: 'TOGGLE_LOADING',
-  TOGGLE_FILTERS: 'TOGGLE_FILTERS',
+  TOGGLE_SEARCH: 'TOGGLE_SEARCH',
 };
 
 export const GlobalReducer = (state = initialState, action) => {
-  switch (action.type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case actions.TOGGLE_SEARCH: {
-      return { ...state, searchOpen: action.payload };
+      return { ...state, searchOpen: payload };
     }
     case actions.SET_SELECTED_PRODUCT: {
-      return { ...state, selectedProduct: action.payload };
+      return { ...state, selectedProduct: payload };
     }
-
     case actions.TOGGLE_LOADING: {
-      return { ...state, loading: action.payload };
+      return { ...state, loading: payload };
     }
-
-    case actions.TOGGLE_FILTERS: {
-      return { ...state, filterOpen: action.payload };
-    }
-
     case actions.RESET_TOGGLE_STATES: {
-      return { ...initialState, loading: action.loading };
+      return { ...initialState, loading: payload };
     }
     default: {
       return state;

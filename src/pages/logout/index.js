@@ -17,14 +17,14 @@ export const getServerSideProps = async (context) => {
     });
 
     return {
-      redirect: { permanent: false, destination: config.routes.login },
       props: {},
+      redirect: { destination: config.routes.login, permanent: false },
     };
   }
 
   return {
-    redirect: { permanent: false, destination: config.routes.account },
     props: {},
+    redirect: { destination: config.routes.account, permanent: false },
   };
 };
 

@@ -27,10 +27,10 @@ const Form = ({
       const value = formData?.[child.props.name];
       const childProperties = {
         ...child.props,
-        onChange: handleInputChange,
-        value,
         'aria-invalid': missing.includes(child.props.name) || false,
         invalid: missing.includes(child.props.name) ? true : '',
+        onChange: handleInputChange,
+        value,
       };
 
       if (child.props.type === 'checkbox') {

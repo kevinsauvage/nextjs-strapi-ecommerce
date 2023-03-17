@@ -21,25 +21,22 @@ export const CartProvider = ({ children }) => {
   const { toggleLoading } = useGlobalContext();
   const { showToast } = useToastContext();
 
-  const handleSetCart = useCallback((payload) => dispatch({ type: actions.ADD_CART, payload }), []);
+  const handleSetCart = useCallback((payload) => dispatch({ payload, type: actions.ADD_CART }), []);
+  const getTotalItems = useCallback(() => cart?.totalQuantity, [cart]);
 
   const removeFromCart = useCallback(
     async (lineItemId) => {
       if (!lineItemId) return console.error('Missing line item to delete');
-
-      const cartId = window.localStorage.getItem(cartIdStorageKey);
-
-      if (!cartId) return console.error('Missing cart id storage');
+      if (!cart?.id) return console.error('Missing cart id storage');
 
       toggleLoading(true);
       const removeLinesResponse = await getClient().storefront.cart.cartLinesRemove({
-        cartId,
+        cartId: cart?.id,
         lines: [lineItemId],
       });
-      const newCart = removeLinesResponse?.cart;
-      const userErrors = removeLinesResponse?.userErrors;
-
       toggleLoading(false);
+
+      const { cart: newCart, userErrors } = removeLinesResponse;
 
       if (newCart?.id) {
         showToast.success(userFeedback.removeLinesFromCart.success);
@@ -52,23 +49,22 @@ export const CartProvider = ({ children }) => {
 
       return showToast.error(userFeedback.removeLinesFromCart.error);
     },
-    [handleSetCart, showToast, toggleLoading]
+    [cart?.id, handleSetCart, showToast, toggleLoading]
   );
 
   const handleQuantityChange = useCallback(
-    async (lineItems, successCallback) => {
-      if (!lineItems) return console.error('Missing line items to update');
+    async (lines, successCallback) => {
+      if (!lines) return console.error('Missing line items to update');
       if (!cart?.id) return console.error('Missing cart id ');
 
       toggleLoading(true);
 
       const updateLinesResponse = await getClient().storefront.cart.cartLinesUpdate({
         cartId: cart.id,
-        lines: lineItems,
+        lines,
       });
 
-      const newCart = updateLinesResponse?.cart;
-      const userErrors = updateLinesResponse?.userErrors;
+      const { cart: newCart, userErrors } = updateLinesResponse;
 
       toggleLoading(false);
 
@@ -98,21 +94,22 @@ export const CartProvider = ({ children }) => {
       if (!(quantity > 0 && variantId)) {
         return;
       }
-      const lineItemsToAdd = [{ merchandiseId: variantId, quantity: Number.parseInt(quantity, 10) }];
+      const lineItemsToAdd = [
+        { merchandiseId: variantId, quantity: Number.parseInt(quantity, 10) },
+      ];
 
       toggleLoading(true);
       const addLineResponse = await getClient().storefront.cart.cartLinesAdd({
         cartId,
         lines: lineItemsToAdd,
       });
-
       toggleLoading(false);
 
       const newCart = addLineResponse?.cart;
       const userErrors = addLineResponse?.userErrors;
 
       if (newCart?.id) {
-        dispatch({ type: actions.ADD_CART, payload: newCart });
+        dispatch({ payload: newCart, type: actions.ADD_CART });
         showToast.success('Product added successfully');
         return;
       }
@@ -127,8 +124,6 @@ export const CartProvider = ({ children }) => {
     [showToast, toggleLoading]
   );
 
-  const getTotalItems = useCallback(() => cart?.totalQuantity, [cart]);
-
   const updateCartBuyerIdentity = useCallback(
     async (customer, token) => {
       if (!cart?.id) return console.warn('Missing cart');
@@ -136,24 +131,20 @@ export const CartProvider = ({ children }) => {
       if (!token) return console.warn('Missing token');
       if (cart?.buyerIdentity) return console.warn('Buyer identity already present');
 
-      console.warn('updateCartBuyerIdentity call happening');
-
       // TODO: ADD SHIPPING ADDRESS
-      const buyerInput = {
+      const buyerIdentity = {
         customerAccessToken: token,
         email: customer.email,
       };
 
       const updateResponse = await getClient().storefront.cart.cartBuyerIdentityUpdate({
-        buyerIdentity: buyerInput,
+        buyerIdentity,
         cartId: cart.id,
       });
 
       const newCart = updateResponse?.cart;
 
-      if (newCart?.id) {
-        handleSetCart(newCart);
-      }
+      if (newCart?.id) handleSetCart(newCart);
       return false;
     },
     [cart?.buyerIdentity, cart?.id, handleSetCart]
@@ -162,22 +153,20 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const handleRender = async () => {
       if (cart?.id) return;
+
       const cartId = window.localStorage.getItem(cartIdStorageKey);
 
       if (cartId) {
         const getCartResponse = await getClient().storefront.cart.cartQuery({ cartId });
-
         if (getCartResponse?.id) handleSetCart(getCartResponse);
         return;
       }
 
-      if (!cartId) {
-        const createCartResponse = await getClient().storefront.cart.cartCreate({ input: {} });
+      const createCartResponse = await getClient().storefront.cart.cartCreate({ input: {} });
 
-        if (createCartResponse?.cart?.id) {
-          window.localStorage.setItem(cartIdStorageKey, createCartResponse.cart.id);
-          handleSetCart(createCartResponse);
-        }
+      if (createCartResponse?.cart?.id) {
+        window.localStorage.setItem(cartIdStorageKey, createCartResponse.cart.id);
+        handleSetCart(createCartResponse);
       }
     };
     handleRender();
@@ -187,12 +176,12 @@ export const CartProvider = ({ children }) => {
     () => ({
       cart,
       dispatch,
-      isCartLoading: isLoading,
-      removeFromCart,
+      getTotalItems,
+      handleAddToCart,
       handleQuantityChange,
       handleSetCart,
-      handleAddToCart,
-      getTotalItems,
+      isCartLoading: isLoading,
+      removeFromCart,
       updateCartBuyerIdentity,
     }),
     [

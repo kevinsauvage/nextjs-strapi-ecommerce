@@ -16,28 +16,29 @@ const UserButtons = () => {
 
   const data = [
     {
-      item: search,
       id: 0,
+      item: search,
       name: 'Search',
       onClick: () => !pathname.startsWith('/search') && toggleSearch(!searchOpen),
     },
 
     {
-      item: heart,
-      id: 1,
-      name: 'Wishlist',
       extraClass: styles.wishlist,
+      id: 1,
+      item: heart,
+      name: 'Wishlist',
       onClick: () => push(config.routes.wishlist),
     },
 
     {
-      item: user,
-      id: 2,
       extraClass: styles.user,
-      onClick: () => push(config.routes.account),
+      id: 2,
+      item: user,
       name: 'User account',
+      onClick: () => push(config.routes.account),
     },
     {
+      id: 3,
       item: (
         <div className={styles.cart}>
           {bag}
@@ -48,9 +49,8 @@ const UserButtons = () => {
           )}
         </div>
       ),
-      id: 3,
-      onClick: () => push(config.routes.cart),
       name: 'Toggle Checkout',
+      onClick: () => push(config.routes.cart),
     },
   ];
 

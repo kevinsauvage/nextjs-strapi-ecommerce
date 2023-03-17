@@ -10,18 +10,17 @@ const useProductSelection = ({ product }) => {
 
   const { handleAddToCart: handleAddToCartContext } = useCartContext();
 
-  const handleChangeInput = (number_) => setQuantity(number_);
+  const handleChangeInput = useCallback((number_) => setQuantity(number_), []);
 
   const handleSetSelectedProductOption = useCallback(
     (productOption) => {
-      if (Array.isArray(productOption)) {
-        return setSelectedProductOption(productOption);
-      }
+      if (Array.isArray(productOption)) return setSelectedProductOption(productOption);
 
       const filtered =
         selectedProductOption?.filter(
           (option) => Object.values(option)[0] !== Object.values(productOption)[0]
         ) || [];
+
       return setSelectedProductOption([...filtered, productOption]);
     },
     [selectedProductOption]
@@ -100,11 +99,11 @@ const useProductSelection = ({ product }) => {
   }, [quantity, selectedVariant, selectedVariant?.id]);
 
   return {
-    isOptionSelected,
-    isOptionOutOfStock,
-    handleSetSelectedProductOption,
     handleAddToCart,
     handleChangeInput,
+    handleSetSelectedProductOption,
+    isOptionOutOfStock,
+    isOptionSelected,
     quantity,
     selectedProductOption,
     selectedVariant,

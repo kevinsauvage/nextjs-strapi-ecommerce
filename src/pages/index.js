@@ -32,11 +32,11 @@ const Home = ({ bestSelling, newArrival, homeData }) => {
 export default Home;
 
 export async function getStaticProps() {
-  const bestSelling = await getClient().storefront.product.getProducts({ sortKey: 'BEST_SELLING', first: 9 });
-  const newArrival = await getClient().storefront.product.getProducts({ sortKey: 'CREATED_AT', first: 9 });
+  const bestSelling = await getClient().storefront.product.getProducts({ first: 9, sortKey: 'BEST_SELLING' });
+  const newArrival = await getClient().storefront.product.getProducts({ first: 9, sortKey: 'CREATED_AT' });
   const homeData = await getClient().storefront.shop.getMetaObject({
-    handle: { type: 'page_data', handle: 'page-data-home' },
+    handle: { handle: 'page-data-home', type: 'page_data' },
   });
 
-  return { props: { bestSelling, newArrival, homeData }, revalidate: 60 };
+  return { props: { bestSelling, homeData, newArrival }, revalidate: 60 };
 }

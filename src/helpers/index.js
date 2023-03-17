@@ -14,13 +14,13 @@ const getIpAddressFromContext = (context) => {
 export const getInfoFromContext = (context) => {
   const cookies = nookies.get(context) || {};
   return {
-    delegateToken: cookies.shopifyDelegateToken,
-    startCursor: context.query?.startCursor,
-    sortKey: context.query?.sort_key,
     collectionSlug: context.query?.collectionSlug,
+    delegateToken: cookies.shopifyDelegateToken,
     ip: getIpAddressFromContext(context),
     query: context.query,
     shopifyToken: cookies?.[config?.cookies.shopifyToken],
+    sortKey: context.query?.sort_key,
+    startCursor: context.query?.startCursor,
   };
 };
 

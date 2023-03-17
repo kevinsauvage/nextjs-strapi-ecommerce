@@ -1,8 +1,8 @@
 export const nextApiHelper = async (url, body = {}, method = 'POST') => {
   try {
     const object = {
-      method,
       headers: { 'Content-Type': 'application/json' },
+      method,
     };
 
     if (body) object.body = JSON.stringify(body);

@@ -32,7 +32,7 @@ const RegisterPage = () => {
 
       // Register the user
       const registerResponse = await getClient().storefront.customer.customerCreate({
-        input: { email, password, firstName, lastName },
+        input: { email, firstName, lastName, password },
       });
       if (!registerResponse) throw new Error(userFeedback?.register.error);
       const userErrors = registerResponse?.userErrors;

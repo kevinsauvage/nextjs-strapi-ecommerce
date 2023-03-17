@@ -83,15 +83,15 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const data = await getClient().storefront.product.getProducts({ sortKey: 'BEST_SELLING', first: 200 });
+  const data = await getClient().storefront.product.getProducts({ first: 200, sortKey: 'BEST_SELLING' });
 
   const paths = data.products.map((product) => ({
     params: {
+      collectionSlug: product?.collections?.[0]?.handle,
       genre: product.productType,
       productSlug: product.handle,
-      collectionSlug: product?.collections?.[0]?.handle,
     },
   }));
 
-  return { paths, fallback: true };
+  return { fallback: true, paths };
 }

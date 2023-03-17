@@ -47,18 +47,18 @@ const HamburgerMenu = ({ headerMenu }) => {
     const setUserMenu = async () => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
       setUserMenuItems([
-        { icon: home, link: '/', text: 'Home', condition: true, id: 5 },
+        { condition: true, icon: home, id: 5, link: '/', text: 'Home' },
 
         {
+          condition: true,
           icon: user,
+          id: 1,
           link: shopifyToken ? config.routes.account : config.routes.login,
           text: shopifyToken ? 'Account' : 'Login',
-          condition: true,
-          id: 1,
         },
-        { icon: heart, link: config.routes.wishlist, text: 'Wishlist', condition: true, id: 2 },
-        { icon: bag, link: config.routes.cart, text: 'Cart', condition: true, id: 3 },
-        { icon: logout, link: config.routes.logout, text: 'Logout', condition: shopifyToken, id: 4 },
+        { condition: true, icon: heart, id: 2, link: config.routes.wishlist, text: 'Wishlist' },
+        { condition: true, icon: bag, id: 3, link: config.routes.cart, text: 'Cart' },
+        { condition: shopifyToken, icon: logout, id: 4, link: config.routes.logout, text: 'Logout' },
       ]);
     };
     setUserMenu();

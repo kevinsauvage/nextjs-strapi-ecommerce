@@ -48,7 +48,10 @@ const RootLayout = ({ children }) => {
       <Footer menuFooter={menuFooter} />
       {loading && <PageLoader />}
       {selectedProduct && (
-        <ModalProduct handleClose={() => setSelectedProduct(false)} selectedProduct={selectedProduct} />
+        <ModalProduct
+          handleClose={() => setSelectedProduct(false)}
+          selectedProduct={selectedProduct}
+        />
       )}
       <CookieBanner />
     </div>

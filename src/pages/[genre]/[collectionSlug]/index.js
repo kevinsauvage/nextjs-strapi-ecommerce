@@ -33,10 +33,10 @@ export async function getServerSideProps(context) {
   }, []);
 
   const data = await getClient(delegateToken, ip).storefront.collection.collection({
-    handle: collectionSlug,
+    after: startCursor,
     filters,
     first: 12,
-    after: startCursor,
+    handle: collectionSlug,
     sort: sortKey,
   });
 

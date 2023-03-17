@@ -53,8 +53,8 @@ const CarouselVertical = ({ children, itemToShow = 5, showButtons }) => {
   }, [carouselHeight, index, maxTranslatePosition, translatePosition]);
 
   const handlersObject = {
-    onSwipedUp: () => handleChangeIndex(index + 1),
     onSwipedDown: () => handleChangeIndex(index - 1),
+    onSwipedUp: () => handleChangeIndex(index + 1),
   };
 
   const handlers = useSwipeable({ ...handlersObject });

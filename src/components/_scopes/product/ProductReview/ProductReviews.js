@@ -49,12 +49,12 @@ const ProductReviews = ({ product }) => {
       const date = new Date();
 
       const reviewObject = {
-        customerId: user.id,
-        review: { message: formData.message, rating },
-        customerFirstName: user.firstName,
-        customerLastName: user.lastName,
         createdAt: date,
+        customerFirstName: user.firstName,
+        customerId: user.id,
+        customerLastName: user.lastName,
         id: uuidv4(),
+        review: { message: formData.message, rating },
       };
 
       const newReviews = [...reviews, reviewObject];

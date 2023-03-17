@@ -25,20 +25,7 @@ export async function getServerSideProps(context) {
 
   if (menu?.[0]) {
     const destination = new URL(menu[0]?.url)?.pathname;
-
-    return {
-      redirect: {
-        permanent: false,
-        destination,
-      },
-      props: {},
-    };
+    return { props: {}, redirect: { destination, permanent: false } };
   }
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/',
-    },
-    props: {},
-  };
+  return { props: {}, redirect: { destination: '/', permanent: false } };
 }

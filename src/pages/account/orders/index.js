@@ -19,26 +19,24 @@ const OrdersPage = () => {
   const { orders, dispatch, ordersPageInfo: pageInfo } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
   const { showToast } = useToastContext();
-  const [error, setError] = useState(false);
 
   const fetchOrders = useCallback(
     async (endCursor) => {
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
       setIsLoading(true);
       const response = await getClient().storefront.customer.queryCustomerOrders({
+        after: endCursor,
         customerAccessToken: shopifyToken,
         first: 5,
-        after: endCursor,
       });
-
       setIsLoading(false);
 
       if (response?.orders) {
-        dispatch({ type: actions.ADD_ORDERS, payload: response?.orders });
-        dispatch({ type: actions.ADD_ORDERS_PAGEINFO, payload: response?.pageInfo });
+        dispatch({ payload: response?.orders, type: actions.ADD_ORDERS });
+        dispatch({ payload: response?.pageInfo, type: actions.ADD_ORDERS_PAGEINFO });
       } else {
         showToast.error('Something went wrong, please try again later');
-        setError(true);
       }
     },
     [dispatch, showToast]
@@ -52,13 +50,16 @@ const OrdersPage = () => {
     'This page shows all of your previous orders in one place. You can see the order number, date, items purchased, and order status. This makes it easy to keep track of your orders and track their progress. You can use this page to view and manage your orders whenever you need to.';
 
   const renderContent = () => {
-    if (error) return <p>Error</p>;
     if (orders.length > 0 || isLoading) {
       return (
         <>
           <Orders orders={orders} />
           {pageInfo?.hasNextPage && (
-            <Button disabled={!pageInfo?.hasNextPage} primary onClick={() => fetchOrders(pageInfo.endCursor)}>
+            <Button
+              disabled={!pageInfo?.hasNextPage}
+              primary
+              onClick={() => fetchOrders(pageInfo.endCursor)}
+            >
               See more
             </Button>
           )}

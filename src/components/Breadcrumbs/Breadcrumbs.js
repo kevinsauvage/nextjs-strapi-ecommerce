@@ -21,8 +21,8 @@ const Breadcrumbs = ({ lastElement }) => {
       const title = subpath.split('-').join(' ').replaceAll('_', ' ');
       return {
         href,
-        title,
         isNotClickable: filterCrumb.has(title.toLowerCase()),
+        title,
       };
     });
 

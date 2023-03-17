@@ -8,24 +8,24 @@ import styles from './SecureBanner.module.scss';
 const SecureBanner = () => {
   const items = [
     {
-      text: 'Free shipping',
-      subtitle: 'Free shipping all order over $99',
       icon: <MdOutlineDeliveryDining />,
+      subtitle: 'Free shipping all order over $99',
+      text: 'Free shipping',
     },
     {
-      text: 'Money guaranteed',
-      subtitle: '30 days money back',
       icon: <MdOutlinePayments />,
+      subtitle: '30 days money back',
+      text: 'Money guaranteed',
     },
     {
-      text: 'Safe Payment',
-      subtitle: 'Secured payment protection',
       icon: <RiSecurePaymentLine />,
+      subtitle: 'Secured payment protection',
+      text: 'Safe Payment',
     },
     {
-      text: '100% safe',
-      subtitle: 'Secure shopping',
       icon: <MdOutlineLockOpen />,
+      subtitle: 'Secure shopping',
+      text: '100% safe',
     },
   ];
 

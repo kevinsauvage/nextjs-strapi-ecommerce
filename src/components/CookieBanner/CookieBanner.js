@@ -22,10 +22,10 @@ const CookieBanner = () => {
   }, []);
 
   const [settings] = useState({
-    functionality_storage: true,
-    personalization_storage: true,
     ad_storage: true,
     analytics_storage: true,
+    functionality_storage: true,
+    personalization_storage: true,
   });
 
   const tranformedSettings = useCallback((originalObject) => {
@@ -121,10 +121,10 @@ const CookieBanner = () => {
             <Form
               onSubmit={handleSaveSettings}
               initialValues={{
-                functionality_storage: true,
-                personalization_storage: true,
                 ad_storage: true,
                 analytics_storage: true,
+                functionality_storage: true,
+                personalization_storage: true,
               }}
             >
               <p className={styles['form-title']}>

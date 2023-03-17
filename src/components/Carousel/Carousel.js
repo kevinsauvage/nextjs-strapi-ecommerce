@@ -97,7 +97,7 @@ const Carousel = ({ children, title, itemToShow = 4, showButtons, spacing = 6 })
             {Children.map(children, (child) => (
               <div
                 className={`${styles.item}`}
-                style={{ width: `${itemDimension}%`, padding: `${spacing}px` }}
+                style={{ padding: `${spacing}px`, width: `${itemDimension}%` }}
               >
                 {cloneElement(child)}
               </div>

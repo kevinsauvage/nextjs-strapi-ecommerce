@@ -8,6 +8,10 @@ const PageLayout = ({ children, title, description }) => {
   const secundaryTitle = title ? `| ${title}` : '';
   const siteTitle = `${config.name} ${secundaryTitle}`;
 
+  if (!title) {
+    console.error('PageLayout: missing title');
+  }
+
   return (
     <div className={`${styles.page}`}>
       <Head>

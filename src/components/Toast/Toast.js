@@ -10,7 +10,7 @@ const ToastItem = ({ tranformY = 0, toast, toastDispatch }) => {
   }
   useEffect(() => {
     const timeOut = setTimeout(() => {
-      toastDispatch({ type: 'REMOVE', payload: { id: toast.id } });
+      toastDispatch({ payload: { id: toast.id }, type: 'REMOVE' });
     }, 5000);
 
     return () => clearTimeout(timeOut);

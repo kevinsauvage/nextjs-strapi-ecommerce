@@ -10,23 +10,23 @@ const handler = async (request, response) => {
     const { message, name, email } = request.body;
 
     if (!message) {
-      return response.status(401).send({ success: false, error: 'Error API' });
+      return response.status(401).send({ error: 'Error API', success: false });
     }
 
     if (!email) {
-      return response.status(401).send({ success: false, error: 'Error API' });
+      return response.status(401).send({ error: 'Error API', success: false });
     }
 
     const transporter = nodemailer.createTransport({
+      auth: { pass: EMAIL_PASSWORD, user: EMAIL_ADDRESS },
       service: 'gmail',
-      auth: { user: EMAIL_ADDRESS, pass: EMAIL_PASSWORD },
     });
 
     const mailOptions = {
-      from: { name, address: email },
-      to: 'kevinsauvage@outlook.com',
+      from: { address: email, name },
       subject: 'Request ECommerce _ {name shop}',
       text: message,
+      to: 'kevinsauvage@outlook.com',
     };
 
     try {

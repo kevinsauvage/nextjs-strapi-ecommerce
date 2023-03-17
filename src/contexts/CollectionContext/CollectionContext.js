@@ -19,8 +19,16 @@ export const CollectionProvider = ({
 }) => {
   const { products: initialProducts } = initialCollection || {};
   const [states, dispatch] = useReducer(CollectionReducer, initialState);
-  const { loading, selectedFilters, pageInfo, products, allFilters, layout, collectionNav, collection } =
-    states;
+  const {
+    loading,
+    selectedFilters,
+    pageInfo,
+    products,
+    allFilters,
+    layout,
+    collectionNav,
+    collection,
+  } = states;
   const { query, push, to, asPath } = useRouter();
 
   const getFormattedFilter = useCallback(
@@ -30,16 +38,16 @@ export const CollectionProvider = ({
 
   const handleGetData = useCallback(
     async (first, filters, sort, after) => {
-      dispatch({ type: actions.SET_LOADING, payload: true });
+      dispatch({ payload: true, type: actions.SET_LOADING });
       const data = await getClient().storefront.collection.collection({
-        handle: query.collectionSlug,
+        after,
         filters,
         first,
-        after,
+        handle: query.collectionSlug,
         sort,
       });
 
-      dispatch({ type: actions.SET_LOADING, payload: false });
+      dispatch({ payload: false, type: actions.SET_LOADING });
       return data;
     },
     [query.collectionSlug]
@@ -52,11 +60,11 @@ export const CollectionProvider = ({
         pageInfo: newPageInfo,
       } = data || {};
 
-      if (newPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: newPageInfo });
+      if (newPageInfo) dispatch({ payload: newPageInfo, type: actions.SET_PAGE_INFO });
       if (newProducts) {
         dispatch({
-          type: actions.SET_PRODUCTS,
           payload: concat ? [...products, ...newProducts] : newProducts,
+          type: actions.SET_PRODUCTS,
         });
       }
     },
@@ -64,17 +72,17 @@ export const CollectionProvider = ({
   );
 
   const resetFilters = useCallback(async () => {
-    dispatch({ type: actions.SET_PRODUCTS, payload: [] });
+    dispatch({ payload: [], type: actions.SET_PRODUCTS });
 
     const newQuery = query.sort_key ? { sort_key: query.sort_key } : {};
     push({ pathname: asPath.split('?')[0], query: newQuery }, undefined, { shallow: true });
     const data = await handleGetData(15, [], query.sort_key);
-    dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
+    dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });
     handleSetFilterState(data);
   }, [asPath, handleGetData, handleSetFilterState, push, query]);
 
   const applyFilters = useCallback(async () => {
-    dispatch({ type: actions.SET_PRODUCTS, payload: [] });
+    dispatch({ payload: [], type: actions.SET_PRODUCTS });
     const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
     if (selectedFilters.length > 0) {
       selectedFilters.forEach((item) => newUrl.searchParams.append(item.filterId, item.input));
@@ -98,7 +106,7 @@ export const CollectionProvider = ({
   const handleSort = useCallback(
     async (value) => {
       if (!value) return;
-      dispatch({ type: actions.SET_PRODUCTS, payload: [] });
+      dispatch({ payload: [], type: actions.SET_PRODUCTS });
       push({ pathname: to, query: { ...query, sort_key: value } }, undefined, { shallow: true });
       const filters = getFormattedFilter();
       const data = await handleGetData(30, filters, value);
@@ -133,13 +141,13 @@ export const CollectionProvider = ({
         });
 
         dispatch({
-          type: actions.SET_SELECTED_FILTERS,
           payload: newFilters,
+          type: actions.SET_SELECTED_FILTERS,
         });
       } else {
         dispatch({
-          type: actions.SET_SELECTED_FILTERS,
           payload: [...selectedFilters, { filterId, input }],
+          type: actions.SET_SELECTED_FILTERS,
         });
       }
     },
@@ -151,56 +159,50 @@ export const CollectionProvider = ({
       const newFilters = selectedFilters.filter((filter) => filter.filterId !== filterId);
 
       dispatch({
-        type: actions.SET_SELECTED_FILTERS,
         payload: [...newFilters, { filterId, input }],
+        type: actions.SET_SELECTED_FILTERS,
       });
     },
     [selectedFilters]
   );
 
   useEffect(() => {
-    if (initialProducts) dispatch({ type: actions.SET_PRODUCTS, payload: initialProducts });
-    if (initialPageInfo) dispatch({ type: actions.SET_PAGE_INFO, payload: initialPageInfo });
-    if (collectionFilters) dispatch({ type: actions.SET_ALL_FILTERS, payload: collectionFilters });
-    if (initialCollection) dispatch({ type: actions.SET_COLLECTION, payload: initialCollection });
-  }, [initialCollection, collectionFilters, initialPageInfo, initialProducts]);
+    if (initialProducts) dispatch({ payload: initialProducts, type: actions.SET_PRODUCTS });
+    if (initialPageInfo) dispatch({ payload: initialPageInfo, type: actions.SET_PAGE_INFO });
+    if (collectionFilters) dispatch({ payload: collectionFilters, type: actions.SET_ALL_FILTERS });
+    if (initialCollection) dispatch({ payload: initialCollection, type: actions.SET_COLLECTION });
+    if (menu) dispatch({ payload: menu, type: actions.SET_COLLECTION_NAVIGATION });
+    else push('/');
+  }, [initialCollection, collectionFilters, initialPageInfo, initialProducts, menu, push]);
 
   useEffect(() => {
-    dispatch({ type: actions.SET_SELECTED_FILTERS, payload: [] });
+    dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });
   }, [query.collectionSlug]);
 
   useEffect(() => {
     const filteredFilters = getSelectedFilter(allFilters, query);
-    if (Array.isArray(filteredFilters)) {
-      dispatch({ type: actions.SET_SELECTED_FILTERS, payload: filteredFilters });
-    }
+    dispatch({ payload: filteredFilters, type: actions.SET_SELECTED_FILTERS });
   }, [allFilters, query]);
-
-  useEffect(() => {
-    if (menu) {
-      dispatch({ type: actions.SET_COLLECTION_NAVIGATION, payload: menu });
-    } else push('/');
-  }, [menu, push]);
 
   const values = useMemo(
     () => ({
       allFilters,
-      pageInfo,
-      products,
-      loading,
-      layout,
-      dispatch,
       applyFilters,
-      resetFilters,
-      handleSort,
-      handleNext,
-      isSelectionDifferent,
+      collection,
       collectionNav,
-      isSelected,
+      dispatch,
+      getFormattedFilter,
+      handleNext,
       handleSetFilters,
       handleSetUniqueFilters,
-      collection,
-      getFormattedFilter,
+      handleSort,
+      isSelected,
+      isSelectionDifferent,
+      layout,
+      loading,
+      pageInfo,
+      products,
+      resetFilters,
     }),
     [
       allFilters,
