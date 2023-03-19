@@ -8,7 +8,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import seo from '@/data/seo';
-import { sendMail } from '@/helpers/api-next';
+import nextApiHelper from '@/helpers/api-next';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 
 const ContactPage = () => {
@@ -20,7 +20,7 @@ const ContactPage = () => {
     if (!email || !name || !message) return;
 
     toggleLoading(true);
-    const response = await sendMail({ email, message, name });
+    const response = await nextApiHelper('/api/email', { email, message, name }, 'POST');
     toggleLoading(false);
 
     if (response?.ok) {
@@ -56,7 +56,14 @@ const ContactPage = () => {
             input="true"
             required="true"
           />
-          <Input placeholder="Name" name="name" id="name" label="Name" input="true" required="true" />
+          <Input
+            placeholder="Name"
+            name="name"
+            id="name"
+            label="Name"
+            input="true"
+            required="true"
+          />
           <TextArea
             placeholder="Message"
             name="message"

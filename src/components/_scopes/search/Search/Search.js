@@ -7,6 +7,7 @@ import config from '@/config/index';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import { capitalizeFirstLetter } from '@/helpers/string';
 
+import analytics from '@/helpers/analytics';
 import styles from './Search.module.scss';
 
 const Search = ({ size }) => {
@@ -28,6 +29,12 @@ const Search = ({ size }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!query?.trim()) return;
+    analytics.event({
+      action: 'search',
+      params: {
+        search_term: query,
+      },
+    });
     push({
       pathname: config.routes.search,
       query: { query },

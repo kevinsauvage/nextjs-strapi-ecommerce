@@ -2,7 +2,7 @@ import { createContext, useCallback, useEffect, useMemo, useReducer } from 'reac
 import { useRouter } from 'next/router';
 
 import config from '@/config/index';
-import { nextApiHelper } from '@/helpers/api-next';
+import nextApiHelper from '@/helpers/api-next';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 import getClient from '@/shopify/index';
 

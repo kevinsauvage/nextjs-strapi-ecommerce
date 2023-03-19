@@ -8,7 +8,7 @@ import Collapsible from '@/components/Collapsible/Collapsible';
 import config from '@/config/index';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
-import { nextApiHelper } from '@/helpers/api-next';
+import nextApiHelper from '@/helpers/api-next';
 import { handleGetTokenCookies } from '@/helpers/cookies';
 
 import Form from '../../forms/Form/Form';
@@ -82,7 +82,17 @@ const ProductReviews = ({ product }) => {
       }
       return showToast.error("Couldn't add the review, please try again later");
     },
-    [asPath, product?.id, push, rating, reviews, showToast, user?.firstName, user?.id, user?.lastName]
+    [
+      asPath,
+      product?.id,
+      push,
+      rating,
+      reviews,
+      showToast,
+      user?.firstName,
+      user?.id,
+      user?.lastName,
+    ]
   );
 
   const handleRemoveProductReview = useCallback(
@@ -131,7 +141,9 @@ const ProductReviews = ({ product }) => {
   return (
     <div className={styles.reviews}>
       {loading && <AbsoluteLoader />}
-      <Collapsible title={<span>Reviews{totalReviews > 0 && <small> ({totalReviews})</small>}</span>}>
+      <Collapsible
+        title={<span>Reviews{totalReviews > 0 && <small> ({totalReviews})</small>}</span>}
+      >
         <div>
           <div className={styles['customer-reviews']}>
             {Array.isArray(reviews) && totalReviews > 0 ? (

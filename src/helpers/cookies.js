@@ -116,3 +116,13 @@ export const handleGetTokenCookies = async () => {
 
   return shopifyToken;
 };
+
+export const tranformedSettings = (originalObject) => {
+  const transformedObject = {};
+
+  Object.keys(originalObject).forEach((key) => {
+    transformedObject[key] = originalObject[key] ? 'granted' : 'denied';
+  });
+
+  return transformedObject;
+};

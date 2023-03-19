@@ -1,165 +1,86 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
+import Link from 'next/link';
 
-import { getCookieFront, setCookieFront } from '@/helpers/cookies';
-
-import Form from '../_scopes/forms/Form/Form';
-import HeightAnimation from '../HeightAnimation/HeightAnimation';
+import { close } from '@/assets/svg';
+import config from '@/config/index';
+import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
+import { setCookieFront, tranformedSettings } from '@/helpers/cookies';
 
 import styles from './CookieBanner.module.scss';
 
+const EXPIRY_COOKIE_TIME = 182;
+
 const CookieBanner = () => {
-  const [showModal, setShowModal] = useState(false);
-  const [consent, setConsent] = useState(true);
-
-  useEffect(() => {
-    const hasConsent = getCookieFront('localConsent');
-    if (hasConsent) {
-      // eslint-disable-next-line no-undef
-      gtag('consent', 'update', JSON.parse(hasConsent));
-      setConsent(true);
-    } else setConsent(false);
-  }, []);
-
-  const [settings] = useState({
-    ad_storage: true,
-    analytics_storage: true,
-    functionality_storage: true,
-    personalization_storage: true,
-  });
-
-  const tranformedSettings = useCallback((originalObject) => {
-    const transformedObject = {};
-
-    Object.keys(originalObject).forEach((key) => {
-      transformedObject[key] = originalObject[key] ? 'granted' : 'denied';
-    });
-
-    return transformedObject;
-  }, []);
-
-  const handleSaveSettings = useCallback(
-    (formData) => {
-      const transformedObject = tranformedSettings(formData);
-      // eslint-disable-next-line no-undef
-      gtag('consent', 'update', transformedObject);
-      setCookieFront('localConsent', JSON.stringify(transformedObject), 365);
-      setShowModal(false);
-      setConsent(true);
-    },
-    [tranformedSettings]
-  );
+  const { setShowBannerCookies, setShowModalCookies } = useGlobalContext();
 
   const acceptAllCookie = useCallback(() => {
-    const transformedObject = tranformedSettings(settings);
-    setCookieFront('localConsent', JSON.stringify(transformedObject), 365);
-    // eslint-disable-next-line no-undef
-    gtag('consent', 'update', transformedObject);
-    setConsent(true);
-    setShowModal(false);
-  }, [settings, tranformedSettings]);
+    const cookie = {
+      ad_storage: true,
+      analytics_storage: true,
+      functionality_storage: true,
+      personalization_storage: true,
+    };
+    const transformedObject = tranformedSettings(cookie);
+    setCookieFront('localConsent', JSON.stringify(cookie), EXPIRY_COOKIE_TIME);
+    setShowBannerCookies(false);
+    window.gtag('consent', 'update', transformedObject);
+    setShowModalCookies(false);
+  }, [setShowBannerCookies, setShowModalCookies]);
 
-  if (consent === true) return;
+  const rejectAllCookie = useCallback(() => {
+    const cookie = {
+      ad_storage: false,
+      analytics_storage: false,
+      functionality_storage: true,
+      personalization_storage: false,
+    };
+    const transformedObject = tranformedSettings(cookie);
+    window.gtag('consent', 'update', transformedObject);
+    setCookieFront('localConsent', JSON.stringify(cookie), EXPIRY_COOKIE_TIME);
+    setShowBannerCookies(false);
+    setShowModalCookies(false);
+  }, [setShowBannerCookies, setShowModalCookies]);
 
   return (
-    <>
-      <div className={styles['cookie-banner']}>
-        <p>We use cookies to enhance your experience on our website.</p>
-        <button type="button" className={styles['accept-btn']} onClick={acceptAllCookie}>
+    <div className={styles['cookie-banner']}>
+      <button onClick={() => setShowBannerCookies(false)} type="button" className={styles.close}>
+        {close}
+      </button>
+      <p>
+        We use cookies on our website to provide you with a better browsing experience and to help
+        us understand how you use our site. By clicking &quot;Accept&quot; you consent to the use of
+        cookies as described in our <Link href={config.routes.privacy}>Cookie Policy</Link>. If you
+        choose to close this banner without clicking &quot;Accept,&quot; we will assume that you do
+        not consent to the use of cookies on our site. Please note that some features of our website
+        may not function properly if cookies are not enabled. For more information about our use of
+        cookies and your choices, please see our{' '}
+        <Link href={config.routes.privacy}>Cookie Policy</Link>.
+      </p>
+      <div className={styles.buttons}>
+        <button
+          type="button"
+          className={`${styles['reject-btn']} ${styles.btn}`}
+          onClick={rejectAllCookie}
+        >
+          Reject All
+        </button>
+        <button
+          type="button"
+          className={`${styles['accept-btn']} ${styles.btn}`}
+          onClick={acceptAllCookie}
+        >
           Accept All
         </button>
-        <button type="button" className={styles['settings-btn']} onClick={() => setShowModal(true)}>
+        <button
+          type="button"
+          className={styles['settings-btn']}
+          onClick={() => setShowModalCookies(true)}
+        >
           Cookie Settings
         </button>
       </div>
-      {showModal && (
-        <div className={styles['cookie-settings-modal']}>
-          <div className={styles['modal-content']}>
-            <h2>Cookie Settings</h2>
-            <p className={styles['modal-subtitle']}>
-              We use cookies on our website to enhance your browsing experience and to provide you with
-              personalized content. We want to give you the option to choose which cookies you allow us to
-              use.
-            </p>
-            <HeightAnimation initialHeight={60} animationType="hover">
-              <ul className={`${styles['cookie-list']}`}>
-                <li>
-                  <strong>Strictly Necessary Cookies:</strong>{' '}
-                  <p>
-                    These cookies are essential for the website to function properly and cannot be turned off
-                    in our system. They are usually set in response to actions made by you which amount to a
-                    request for services, such as setting your privacy preferences, logging in, or filling in
-                    forms.
-                  </p>
-                </li>
-                <li>
-                  <strong>Analytics Cookies:</strong>{' '}
-                  <p>
-                    These cookies allow us to measure and analyze how our website is being used, in order to
-                    improve its performance and your browsing experience.
-                  </p>
-                </li>
-                <li>
-                  <strong>Personalized Cookies:</strong>{' '}
-                  <p>
-                    These cookies are used to personalize your experience on our website by remembering your
-                    preferences and settings. They may also be used to provide you with customized content and
-                    recommendations based on your activity on our website and other websites.
-                  </p>
-                </li>
-                <li>
-                  <strong>Advertising Cookies:</strong>{' '}
-                  <p>
-                    These cookies are used to make advertising messages more relevant to you and your
-                    interests. They are also used to limit the number of times you see an advertisement, as
-                    well as to help measure the effectiveness of advertising campaigns.
-                  </p>
-                </li>
-              </ul>
-            </HeightAnimation>
-
-            <Form
-              onSubmit={handleSaveSettings}
-              initialValues={{
-                ad_storage: true,
-                analytics_storage: true,
-                functionality_storage: true,
-                personalization_storage: true,
-              }}
-            >
-              <p className={styles['form-title']}>
-                <b>Please select which cookies you&apos;d like to allow:</b>
-              </p>
-              <div className={styles['input-wrapper']}>
-                <input
-                  type="checkbox"
-                  id="functionality_storage"
-                  name="functionality_storage"
-                  checked
-                  disabled
-                />
-                <label htmlFor="functionality_storage">Strictly Necessary Cookies</label>
-              </div>
-              <div className={styles['input-wrapper']}>
-                <input type="checkbox" id="analytics_storage" name="analytics_storage" />
-                <label htmlFor="analytics_storage">Analytics Cookies</label>
-              </div>
-              <div className={styles['input-wrapper']}>
-                <input type="checkbox" id="personalization_storage" name="personalization_storage" />
-                <label htmlFor="personalization_storage">Personalization Cookies</label>
-              </div>
-              <div className={styles['input-wrapper']}>
-                <input type="checkbox" id="ad_storage" name="ad_storage" />
-                <label htmlFor="ad_storage">Advertising Cookies</label>
-              </div>
-              <button type="submit" className={styles['save-btn']}>
-                Save Settings
-              </button>
-            </Form>
-          </div>
-        </div>
-      )}
-    </>
+    </div>
   );
 };
 

@@ -63,7 +63,7 @@ const HeightAnimation = ({
             setActualHeight((previous) => (previous === initialHeight ? maxHeight : initialHeight))
           }
         >
-          {actualHeight ? buttonTextActive : buttonTextInactive}
+          {actualHeight === maxHeight ? buttonTextActive : buttonTextInactive}
         </button>
       )}
     </>

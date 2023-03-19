@@ -12,7 +12,7 @@ const AccountLayout = ({
   loading,
   title,
   descriptionBannerChildren,
-  otherBannerChildrenContenct,
+  otherBannerChildrenContent,
 }) => (
   <div className={styles['account-layout']}>
     <PageBanner title={title} />
@@ -43,8 +43,8 @@ const AccountLayout = ({
                   {descriptionBannerChildren && (
                     <div className={styles['banner-children-description']}>{descriptionBannerChildren}</div>
                   )}
-                  {otherBannerChildrenContenct && (
-                    <div className={styles['banner-children-other']}>{otherBannerChildrenContenct}</div>
+                  {otherBannerChildrenContent && (
+                    <div className={styles['banner-children-other']}>{otherBannerChildrenContent}</div>
                   )}
                 </div>
               )}

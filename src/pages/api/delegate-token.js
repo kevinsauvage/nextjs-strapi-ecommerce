@@ -1,9 +1,9 @@
-// eslint-disable-next-line unicorn/filename-case
 import { setCookie } from 'nookies';
 
 import getClient from '@/shopify/index';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
+const domain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
 
 const expiresIn = 24 * 60 * 60;
 
@@ -24,6 +24,7 @@ const handler = async (request, response) => {
       }
 
       const delegateToken = responseToken?.delegateAccessToken?.accessToken;
+
       const errors = responseToken?.userErrors;
 
       if (errors.length > 0) {
@@ -34,11 +35,12 @@ const handler = async (request, response) => {
         return response.status(500).json({ error: 'Could not get delegate access token' });
       }
 
-      setCookie({ response }, 'shopifyDelegateToken', delegateToken, {
+      setCookie({ res: response }, 'shopifyDelegateToken', delegateToken, {
+        domain: process.env.NODE_ENV === 'development' ? 'localhost' : domain,
         httpOnly: true,
         maxAge: expiresIn,
         path: '/',
-        sameSite: 'strict',
+        sameSite: 'lax',
         secure: process.env.NODE_ENV !== 'development',
       });
 
@@ -46,7 +48,7 @@ const handler = async (request, response) => {
     }
     return response.status(500).json({ message: 'Method not allowed' });
   } catch (error) {
-    return response.status(500).json({ error: error.message, stack: error.stack });
+    return response.status(500).json({ stack: error.stack });
   }
 };
 

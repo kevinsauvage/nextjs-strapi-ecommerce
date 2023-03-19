@@ -5,25 +5,59 @@
   bottom: 0;
   left: 0;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: var(--space-2);
   border-top: 1px solid var(--on-surface-dark);
   background-color: var(--surface-dark-100);
 
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    padding: 2px;
+    border: none;
+    cursor: pointer;
+
+    path {
+      fill: var(--on-surface-dark);
+    }
+  }
+
   p {
     margin-right: 1rem;
+    margin-bottom: var(--space-1);
+    color: var(--on-surface-dark);
+    text-align: center;
+
+    a {
+      color: var(--primary-400);
+    }
+  }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .reject-btn {
+    border: 2px solid var(--primary-400);
+    margin-right: 1rem;
+    background-color: transparent;
     color: var(--on-surface-dark);
   }
 
   .accept-btn {
-    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 5px;
-    margin-right: 1rem;
     background-color: var(--primary-400);
     color: var(--on-surface-dark);
-    cursor: pointer;
   }
 
   .settings-btn {
@@ -32,76 +66,5 @@
     color: var(--primary-400);
     cursor: pointer;
     text-decoration: underline;
-  }
-}
-
-.cookie-list {
-  li {
-    margin-bottom: var(--space-1);
-  }
-}
-
-.modal-subtitle {
-  margin-bottom: var(--space-0);
-}
-
-.cookie-settings-modal {
-  position: fixed;
-  z-index: 9999;
-  top: 0;
-  left: 0;
-  display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  background-color: #000000cc;
-
-  .modal-content {
-    overflow: auto;
-    max-width: 700px;
-    max-height: 80vh;
-    padding: 2rem;
-    border-radius: 5px;
-    background-color: var(--surface-100);
-
-    h2 {
-      margin-bottom: var(--space-0);
-    }
-
-    form {
-      margin: 1rem 0;
-
-      div {
-        margin-bottom: 0.5rem;
-
-        input[type='checkbox'] {
-          margin-right: 0.5rem;
-        }
-
-        label {
-          font-size: 0.9rem;
-        }
-      }
-    }
-
-    .input-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
-    .save-btn {
-      padding: 0.5rem 1rem;
-      border: none;
-      border-radius: 5px;
-      margin-top: var(--space-1);
-      background-color: var(--primary-400);
-      color: var(--on-surface-dark);
-      cursor: pointer;
-    }
-  }
-
-  .form-title {
-    margin-bottom: var(--space-1);
   }
 }

@@ -1,7 +1,9 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
 
-import { generateDelegateToken } from '@/helpers/api-next';
+import analytics from '@/helpers/analytics';
+import nextApiHelper from '@/helpers/api-next';
+import { getCookieFront, tranformedSettings } from '@/helpers/cookies';
 
 import { actions, GlobalReducer, initialState } from './GlobalReducer';
 
@@ -9,10 +11,10 @@ export const GlobalStoreContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
-  const { asPath } = useRouter();
+  const { asPath, events } = useRouter();
 
   const handleRender = useCallback(async () => {
-    const response = await generateDelegateToken();
+    const response = await nextApiHelper('/api/delegate-token', '', 'GET');
     if (!response?.ok) console.error("Couldn't  set delegate token");
   }, []);
 
@@ -30,6 +32,14 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ payload, type: actions.SET_SELECTED_PRODUCT });
   }, []);
 
+  const setShowBannerCookies = useCallback((payload) => {
+    dispatch({ payload, type: actions.SHOW_BANNER_COOKIES });
+  }, []);
+
+  const setShowModalCookies = useCallback((payload) => {
+    dispatch({ payload, type: actions.SHOW_MODAL_COOKIES });
+  }, []);
+
   useEffect(() => {
     handleRender();
   }, [handleRender]);
@@ -38,15 +48,47 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
   }, [asPath]);
 
+  useEffect(() => {
+    const handleRouteChange = (url) => {
+      analytics.pageview(url);
+    };
+    events.on('routeChangeComplete', handleRouteChange);
+
+    return () => {
+      events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [events]);
+
+  useEffect(() => {
+    if (getCookieFront('localConsent')) {
+      window.gtag(
+        'consent',
+        'update',
+        JSON.parse(tranformedSettings(getCookieFront('localConsent')))
+      );
+    } else {
+      dispatch({ payload: true, type: actions.SHOW_BANNER_COOKIES });
+    }
+  }, []);
+
   const values = useMemo(
     () => ({
       ...states,
 
       setSelectedProduct,
+      setShowBannerCookies,
+      setShowModalCookies,
       toggleLoading,
       toggleSearch,
     }),
-    [setSelectedProduct, states, toggleLoading, toggleSearch]
+    [
+      setSelectedProduct,
+      setShowBannerCookies,
+      states,
+      toggleLoading,
+      toggleSearch,
+      setShowModalCookies,
+    ]
   );
 
   return <GlobalStoreContext.Provider value={values}>{children}</GlobalStoreContext.Provider>;

@@ -179,7 +179,7 @@ const Addresses = () => {
         loading={isLoading}
         title={seo.account.addresses.title}
         descriptionBannerChildren={addresses?.length > 0 && description}
-        otherBannerChildrenContenct={
+        otherBannerChildrenContent={
           <Button primary onClick={() => setShowCreateForm(true)}>
             Add new address
           </Button>

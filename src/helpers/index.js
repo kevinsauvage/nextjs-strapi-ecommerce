@@ -4,23 +4,24 @@ import nookies from 'nookies';
 import config from '@/config/index';
 
 const getIpAddressFromContext = (context) => {
-  const forwarded = context.req.headers['x-forwarded-for'];
-  if (forwarded) {
-    return forwarded.split(/, /)[0];
-  }
-  return context.req.socket.remoteAddress;
+  const { headers, socket } = context.req;
+  const forwarded = headers['x-forwarded-for'];
+  if (forwarded) return forwarded.split(/, /)[0];
+  return socket.remoteAddress;
 };
 
 export const getInfoFromContext = (context) => {
   const cookies = nookies.get(context) || {};
+
+  const { query } = context;
   return {
-    collectionSlug: context.query?.collectionSlug,
+    collectionSlug: query?.collectionSlug,
     delegateToken: cookies.shopifyDelegateToken,
     ip: getIpAddressFromContext(context),
-    query: context.query,
+    query,
     shopifyToken: cookies?.[config?.cookies.shopifyToken],
-    sortKey: context.query?.sort_key,
-    startCursor: context.query?.startCursor,
+    sortKey: query?.sort_key,
+    startCursor: query?.startCursor,
   };
 };
 
@@ -32,13 +33,13 @@ export const getSelectedFilter = (filters, query) => {
 
     if (item) {
       if (Array.isArray(item)) {
-        item.forEach((queryFilter) => {
-          accumulator.push({ filterId: filter.id, input: queryFilter });
-        });
+        item.forEach((queryFilter) =>
+          accumulator.push({ filterId: filter.id, input: queryFilter })
+        );
       } else {
-        [item].forEach((queryFilter) => {
-          accumulator.push({ filterId: filter.id, input: queryFilter });
-        });
+        [item].forEach((queryFilter) =>
+          accumulator.push({ filterId: filter.id, input: queryFilter })
+        );
       }
     }
     return accumulator;

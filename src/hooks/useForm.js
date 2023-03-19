@@ -27,11 +27,7 @@ const useForm = (onSubmit, initialValues = {}, requiredFields = []) => {
       setLoading(true);
       const missingItems = requiredFields.filter((field) => !formData[field]);
       setMissing(missingItems);
-
-      if (missingItems.length === 0) {
-        await onSubmit?.(formData);
-      }
-
+      if (missingItems.length === 0) await onSubmit?.(formData);
       setLoading(false);
     },
     [formData, onSubmit, requiredFields]

@@ -8,9 +8,7 @@ const PageLayout = ({ children, title, description }) => {
   const secundaryTitle = title ? `| ${title}` : '';
   const siteTitle = `${config.name} ${secundaryTitle}`;
 
-  if (!title) {
-    console.error('PageLayout: missing title');
-  }
+  if (!title) console.error('PageLayout: missing title');
 
   return (
     <div className={`${styles.page}`}>
@@ -18,7 +16,6 @@ const PageLayout = ({ children, title, description }) => {
         <title key="title">{siteTitle}</title>
         {description && <meta key="description" name="description" content={description} />}
       </Head>
-
       <div className={styles.children}>{children}</div>
     </div>
   );

@@ -1,4 +1,4 @@
-export const nextApiHelper = async (url, body = {}, method = 'POST') => {
+const nextApiHelper = async (url, body = {}, method = 'POST') => {
   try {
     const object = {
       headers: { 'Content-Type': 'application/json' },
@@ -13,9 +13,4 @@ export const nextApiHelper = async (url, body = {}, method = 'POST') => {
   }
 };
 
-export const generateDelegateToken = () => nextApiHelper('/api/delegate-token', '', 'GET');
-
-export const sendMail = async (body) => {
-  const apiUrl = '/api/email';
-  return nextApiHelper(apiUrl, body, 'POST');
-};
+export default nextApiHelper;

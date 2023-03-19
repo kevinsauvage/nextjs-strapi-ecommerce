@@ -17,8 +17,8 @@ CollectionSlugPage.getLayout = function getLayout(page) {
 };
 
 export async function getServerSideProps(context) {
-  const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } = getInfoFromContext(context);
-
+  const { delegateToken, ip, startCursor, sortKey, collectionSlug, query } =
+    getInfoFromContext(context);
   const filters = Object.keys(query).reduce((accumulator, key) => {
     if (key.startsWith('filter')) {
       const filter = query[key];

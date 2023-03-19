@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
+import ModalCookies from '@/components/_modals/ModalCookies/ModalCookies';
 import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
 import SearchBar from '@/components/_scopes/search/Search/SearchBar';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
@@ -12,7 +13,8 @@ import getClient from '@/shopify/index';
 import styles from './RootLayout.module.scss';
 
 const RootLayout = ({ children }) => {
-  const { selectedProduct, setSelectedProduct, loading } = useGlobalContext();
+  const { selectedProduct, setSelectedProduct, loading, showBannerCookies, showModalCookies } =
+    useGlobalContext();
   const [menuHeader, setMenuHeader] = useState();
   const [menuFooter, setMenuFooter] = useState();
   const [shopInfo, setShopInfo] = useState();
@@ -53,7 +55,8 @@ const RootLayout = ({ children }) => {
           selectedProduct={selectedProduct}
         />
       )}
-      <CookieBanner />
+      {showBannerCookies && <CookieBanner />}
+      {showModalCookies && <ModalCookies />}
     </div>
   );
 };
