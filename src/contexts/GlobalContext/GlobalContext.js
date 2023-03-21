@@ -1,7 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useReducer } from 'react';
 import { useRouter } from 'next/router';
 
-import analytics from '@/helpers/analytics';
 import nextApiHelper from '@/helpers/api-next';
 import { getCookieFront, tranformedSettings } from '@/helpers/cookies';
 
@@ -48,9 +47,16 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ type: actions.RESET_TOGGLE_STATES });
   }, [asPath]);
 
+  const handleCookies = () => {
+    const consent = getCookieFront('localConsent');
+    if (consent) window.gtag('consent', 'update', tranformedSettings(JSON.parse(consent)));
+    else dispatch({ payload: true, type: actions.SHOW_BANNER_COOKIES });
+  };
+
   useEffect(() => {
-    const handleRouteChange = (url) => {
-      analytics.pageview(url);
+    handleCookies();
+    const handleRouteChange = () => {
+      handleCookies();
     };
     events.on('routeChangeComplete', handleRouteChange);
 
@@ -58,18 +64,6 @@ export const GlobalProvider = ({ children }) => {
       events.off('routeChangeComplete', handleRouteChange);
     };
   }, [events]);
-
-  useEffect(() => {
-    if (getCookieFront('localConsent')) {
-      window.gtag(
-        'consent',
-        'update',
-        JSON.parse(tranformedSettings(getCookieFront('localConsent')))
-      );
-    } else {
-      dispatch({ payload: true, type: actions.SHOW_BANNER_COOKIES });
-    }
-  }, []);
 
   const values = useMemo(
     () => ({

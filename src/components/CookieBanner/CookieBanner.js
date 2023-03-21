@@ -32,7 +32,7 @@ const CookieBanner = () => {
     const cookie = {
       ad_storage: false,
       analytics_storage: false,
-      functionality_storage: true,
+      functionality_storage: false,
       personalization_storage: false,
     };
     const transformedObject = tranformedSettings(cookie);
