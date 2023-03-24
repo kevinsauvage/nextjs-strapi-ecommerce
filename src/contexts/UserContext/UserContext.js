@@ -143,22 +143,19 @@ export const UserProvider = ({ children }) => {
   }, [updateCartBuyerIdentity, user]);
 
   useEffect(() => {
+    console.log('🚀 ~ file: UserContext.js:150 ~ useEffect ~ handleRenderUser:');
     handleRenderUser();
   }, [handleRenderUser]);
 
-  console.log('🚀 ~ file: UserContext.js:150 ~ useEffect ~ handleRenderUser:');
-
   useEffect(() => {
+    console.log('🚀 ~ file: UserContext.js:157 ~ useEffect ~ getCustomer:');
     getCustomer();
   }, [getCustomer]);
 
-  console.log('🚀 ~ file: UserContext.js:157 ~ useEffect ~ getCustomer:');
-
   useEffect(() => {
     getCustomerWishlist();
+    console.log('🚀 ~ file: UserContext.js:164 ~ useEffect ~ getCustomerWishlist:');
   }, [getCustomerWishlist]);
-
-  console.log('🚀 ~ file: UserContext.js:164 ~ useEffect ~ getCustomerWishlist:');
 
   const values = useMemo(
     () => ({
