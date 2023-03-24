@@ -82,7 +82,6 @@ export const CollectionProvider = ({
   }, [asPath, handleGetData, handleSetFilterState, push, query]);
 
   const applyFilters = useCallback(async () => {
-    dispatch({ payload: [], type: actions.SET_PRODUCTS });
     const newUrl = new URL(config.baseUrl + asPath.split('?')[0]);
     if (selectedFilters.length > 0) {
       selectedFilters.forEach((item) => newUrl.searchParams.append(item.filterId, item.input));
@@ -91,6 +90,7 @@ export const CollectionProvider = ({
 
     push(newUrl, undefined, { shallow: true });
     const filters = getFormattedFilter();
+    dispatch({ payload: [], type: actions.SET_PRODUCTS });
     const data = await handleGetData(15, filters, query.sort_key);
     handleSetFilterState(data);
   }, [
@@ -167,13 +167,29 @@ export const CollectionProvider = ({
   );
 
   useEffect(() => {
-    if (initialProducts) dispatch({ payload: initialProducts, type: actions.SET_PRODUCTS });
-    if (initialPageInfo) dispatch({ payload: initialPageInfo, type: actions.SET_PAGE_INFO });
-    if (collectionFilters) dispatch({ payload: collectionFilters, type: actions.SET_ALL_FILTERS });
-    if (initialCollection) dispatch({ payload: initialCollection, type: actions.SET_COLLECTION });
-    if (menu) dispatch({ payload: menu, type: actions.SET_COLLECTION_NAVIGATION });
-    else push('/');
-  }, [initialCollection, collectionFilters, initialPageInfo, initialProducts, menu, push]);
+    if (initialProducts && !products)
+      dispatch({ payload: initialProducts, type: actions.SET_PRODUCTS });
+    if (initialPageInfo && !pageInfo)
+      dispatch({ payload: initialPageInfo, type: actions.SET_PAGE_INFO });
+    if (collectionFilters && !allFilters)
+      dispatch({ payload: collectionFilters, type: actions.SET_ALL_FILTERS });
+    if (initialCollection && !collection?.id)
+      dispatch({ payload: initialCollection, type: actions.SET_COLLECTION });
+    if (menu && !collectionNav)
+      dispatch({ payload: menu, type: actions.SET_COLLECTION_NAVIGATION });
+  }, [
+    initialCollection,
+    collectionFilters,
+    initialPageInfo,
+    initialProducts,
+    menu,
+    push,
+    products,
+    pageInfo,
+    collection?.id,
+    collectionNav,
+    allFilters,
+  ]);
 
   useEffect(() => {
     dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });

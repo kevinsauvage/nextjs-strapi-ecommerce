@@ -1,12 +1,12 @@
 // initial state
 export const initialState = {
-  allFilters: [],
-  collection: {},
-  collectionNav: [],
+  allFilters: undefined,
+  collection: undefined,
+  collectionNav: undefined,
   layout: 'grid',
   loading: false,
-  pageInfo: [],
-  products: [],
+  pageInfo: undefined,
+  products: undefined,
   selectedFilters: [],
 };
 
