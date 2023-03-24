@@ -81,7 +81,6 @@ config.accountNav = [
 
 config.localStorageKeys = {
   cartIdStorageKey: 'shopify-cart-id',
-  checkoutIdSorageKey: 'shopifyCheckoutId',
 };
 
 config.cookies = {

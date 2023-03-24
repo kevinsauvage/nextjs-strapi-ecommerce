@@ -5,6 +5,7 @@ export const initialState = {
   ordersPageInfo: {},
   user: undefined,
   wishlist: [],
+  wishlistLoading: true,
 };
 
 export const actions = {
@@ -15,6 +16,7 @@ export const actions = {
   ADD_USER_WISHLIST: 'ADD_USER_WISHLIST',
   CHANGE_LOADING: 'CHANGE_LOADING',
   REMOVE_USER: 'REMOVE_USER',
+  WISHLIST_LOADING: 'WISHLIST_LOADING',
 };
 
 export const UserReducer = (state = initialState, action) => {
@@ -41,6 +43,10 @@ export const UserReducer = (state = initialState, action) => {
     }
     case actions.ADD_ORDERS_PAGEINFO: {
       return { ...state, ordersPageInfo: payload };
+    }
+
+    case actions.WISHLIST_LOADING: {
+      return { ...state, wishlistLoading: payload };
     }
     default: {
       return state;

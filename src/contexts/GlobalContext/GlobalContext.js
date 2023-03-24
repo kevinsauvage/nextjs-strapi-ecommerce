@@ -10,7 +10,7 @@ export const GlobalStoreContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
   const [states, dispatch] = useReducer(GlobalReducer, initialState);
-  const { asPath, events } = useRouter();
+  const { events } = useRouter();
 
   const handleRender = useCallback(async () => {
     const response = await nextApiHelper('/api/delegate-token', '', 'GET');
@@ -39,31 +39,28 @@ export const GlobalProvider = ({ children }) => {
     dispatch({ payload, type: actions.SHOW_MODAL_COOKIES });
   }, []);
 
-  useEffect(() => {
-    handleRender();
-  }, [handleRender]);
-
-  useEffect(() => {
-    dispatch({ type: actions.RESET_TOGGLE_STATES });
-  }, [asPath]);
-
-  const handleCookies = () => {
+  const handleCookies = useCallback(() => {
     const consent = getCookieFront('localConsent');
     if (consent) window.gtag('consent', 'update', tranformedSettings(JSON.parse(consent)));
     else dispatch({ payload: true, type: actions.SHOW_BANNER_COOKIES });
-  };
+  }, []);
 
   useEffect(() => {
+    handleRender();
     handleCookies();
+  }, [handleRender, handleCookies]);
+
+  useEffect(() => {
     const handleRouteChange = () => {
       handleCookies();
+      dispatch({ type: actions.RESET_TOGGLE_STATES });
     };
     events.on('routeChangeComplete', handleRouteChange);
 
     return () => {
       events.off('routeChangeComplete', handleRouteChange);
     };
-  }, [events]);
+  }, [events, handleCookies]);
 
   const values = useMemo(
     () => ({

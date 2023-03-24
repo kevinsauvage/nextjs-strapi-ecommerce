@@ -15,7 +15,7 @@ import { handleSetTokenCookies } from '@/helpers/cookies';
 import PageLayout from '@/layout/PageLayout/PageLayout';
 import getClient from '@/shopify/index';
 
-const { userFeedback, routes, localStorageKeys } = config;
+const { userFeedback, routes } = config;
 
 const RegisterPage = () => {
   const { toggleLoading } = useGlobalContext();
@@ -36,7 +36,8 @@ const RegisterPage = () => {
       });
       if (!registerResponse) throw new Error(userFeedback?.register.error);
       const userErrors = registerResponse?.userErrors;
-      if (userErrors?.length) return userErrors.forEach((element) => showToast.error(element.message));
+      if (userErrors?.length)
+        return userErrors.forEach((element) => showToast.error(element.message));
       showToast.success(userFeedback?.register?.success);
 
       // Login the user
@@ -50,19 +51,6 @@ const RegisterPage = () => {
         return push(routes.login);
       }
       handleSetTokenCookies(accessToken);
-
-      // Associate user to checkout
-      const checkoutId = localStorage.getItem(localStorageKeys.checkoutIdSorageKey);
-      if (checkoutId) {
-        const assosiateResponse = await getClient().storefront.checkout.associateCustomerToCheckout(
-          checkoutId,
-          accessToken
-        );
-        if (assosiateResponse?.email)
-          console.error('Could not associate user to checkout', assosiateResponse);
-      } else {
-        console.warn('Checkout id not fount');
-      }
 
       return push(routes.account);
     } catch (error) {

@@ -1,43 +1,7 @@
 /* eslint-disable no-restricted-syntax */
-import { setCookie } from 'nookies';
 
 import config from '@/config/index';
 import getClient from '@/shopify/index';
-
-const COOKIE_EXPIRATION_TIME = 24 * 60 * 60; // 1 day in seconds
-const NODE_ENV_DEVELOPMENT = 'development';
-const COOKIE_SAME_SITE = 'strict';
-
-export const handleSetCookies = (
-  response,
-  name,
-  value,
-  maxAge = COOKIE_EXPIRATION_TIME,
-  httpOnly = false
-) => {
-  if (!value || !name || !response) {
-    console.error('Invalid arguments for setting cookie');
-    return;
-  }
-
-  try {
-    const expiresDate = new Date(Date.now() + maxAge * 1000);
-    const cookieValue = JSON.stringify({ expiresDate, value });
-
-    const options = {
-      httpOnly,
-      maxAge,
-      path: '/',
-      sameSite: COOKIE_SAME_SITE,
-      secure: process.env.NODE_ENV !== NODE_ENV_DEVELOPMENT,
-    };
-
-    setCookie({ res: response }, name, cookieValue, options);
-  } catch (error) {
-    console.error(`Error setting cookie: ${error}`);
-    throw error;
-  }
-};
 
 // eslint-disable-next-line consistent-return
 export const getCookieFront = (name) => {

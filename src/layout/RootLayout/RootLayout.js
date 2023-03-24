@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 
+import AbsoluteLoader from '@/components/_loaders/AbsoluteLoader/AbsoluteLoader';
 import PageLoader from '@/components/_loaders/PageLoader/PageLoader';
-import ModalCookies from '@/components/_modals/ModalCookies/ModalCookies';
-import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
-import SearchBar from '@/components/_scopes/search/Search/SearchBar';
-import CookieBanner from '@/components/CookieBanner/CookieBanner';
-import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import getClient from '@/shopify/index';
 
 import styles from './RootLayout.module.scss';
+
+const LazyCookieBanner = dynamic(() => import('@/components/CookieBanner/CookieBanner'));
+const LazyModalCookies = dynamic(() => import('@/components/_modals/ModalCookies/ModalCookies'), {
+  loading: () => <AbsoluteLoader />,
+});
+const LazyModalProduct = dynamic(() => import('@/components/_modals/modalProduct/ModalProduct'), {
+  loading: () => <AbsoluteLoader />,
+});
+const LazyFooter = dynamic(() => import('@/components/Footer/Footer'));
+const LazySearchBar = dynamic(() => import('@/components/_scopes/search/Search/SearchBar'));
 
 const RootLayout = ({ children }) => {
   const { selectedProduct, setSelectedProduct, loading, showBannerCookies, showModalCookies } =
@@ -44,19 +51,23 @@ const RootLayout = ({ children }) => {
 
   return (
     <div className={styles['root-layout']}>
-      <SearchBar />
+      {loading && <PageLoader />}
+
+      <LazySearchBar />
+
       <Header headerMenu={menuHeader} />
       {children}
-      <Footer menuFooter={menuFooter} />
-      {loading && <PageLoader />}
+
+      <LazyFooter menuFooter={menuFooter} />
+
       {selectedProduct && (
-        <ModalProduct
+        <LazyModalProduct
           handleClose={() => setSelectedProduct(false)}
           selectedProduct={selectedProduct}
         />
       )}
-      {showBannerCookies && <CookieBanner />}
-      {showModalCookies && <ModalCookies />}
+      {showBannerCookies && <LazyCookieBanner />}
+      {showModalCookies && <LazyModalCookies />}
     </div>
   );
 };

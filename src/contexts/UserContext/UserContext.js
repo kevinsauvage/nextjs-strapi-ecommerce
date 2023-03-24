@@ -16,9 +16,9 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
   const [states, dispatch] = useReducer(UserReducer, initialState);
   const { showToast } = useToastContext();
-  const { updateCartBuyerIdentity, cart } = useCartContext();
+  const { updateCartBuyerIdentity } = useCartContext();
   const { push, asPath } = useRouter();
-  const { user, addresses, orders, ordersPageInfo, wishlist } = states || {};
+  const { user, addresses, orders, ordersPageInfo, wishlist, wishlistLoading } = states || {};
 
   const setUser = useCallback(
     (payload) => payload?.id && dispatch({ payload, type: actions.ADD_USER }),
@@ -35,17 +35,12 @@ export const UserProvider = ({ children }) => {
     [wishlist]
   );
 
-  const handleSetProductToWishList = useCallback(
-    async (product) => {
-      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+  const setWishlistLoading = useCallback((payload) => {
+    if (payload) dispatch({ payload, type: actions.WISHLIST_LOADING });
+  }, []);
 
-      if (!shopifyToken) {
-        return push({
-          pathname: config.routes.login,
-          query: { redirectUrl: asPath },
-        });
-      }
-
+  const getMetafields = useCallback(
+    (product) => {
       const newWishList = isWishlist(product)
         ? wishlist.filter((production) => production.id !== product.id)
         : [...wishlist, product];
@@ -61,6 +56,20 @@ export const UserProvider = ({ children }) => {
           },
         ],
       };
+      return { metafields, newWishList };
+    },
+    [isWishlist, user?.id, wishlist]
+  );
+
+  const handleSetProductToWishList = useCallback(
+    async (product) => {
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      if (!shopifyToken) {
+        return push({ pathname: config.routes.login, query: { redirectUrl: asPath } });
+      }
+
+      const { metafields, newWishList } = getMetafields(product);
 
       const response = await nextApiHelper('/api/wishlist', metafields, 'POST');
 
@@ -72,11 +81,11 @@ export const UserProvider = ({ children }) => {
       }
       return showToast.error("Couldn't set product to user wishlist");
     },
-    [asPath, isWishlist, push, setUserWishlist, showToast, user?.id, wishlist]
+    [asPath, getMetafields, push, setUserWishlist, showToast, wishlist?.length]
   );
 
-  useEffect(() => {
-    const getCustomer = async () => {
+  const getCustomer = useCallback(async () => {
+    try {
       if (user?.id) return;
 
       const customerAccessToken = await handleGetTokenCookies(config.cookies.shopifyToken);
@@ -95,14 +104,47 @@ export const UserProvider = ({ children }) => {
         return;
       }
       push(config.routes.logout);
-    };
-    getCustomer();
-  }, [user, showToast, setUser, push, dispatch]);
+    } catch (error) {
+      console.error(`Error get customer ${error}`);
+    }
+  }, [push, setUser, user?.id]);
 
-  useEffect(() => {
+  const getCustomerWishlist = useCallback(async () => {
+    try {
+      const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
+
+      if (!shopifyToken) {
+        setUserWishlist([]);
+        console.error('Missing shopify token to get customer wishlist');
+        return;
+      }
+
+      setWishlistLoading(true);
+      const wishlistResponse = await getClient().storefront.customer.queryCustomerMetafields({
+        customerAccessToken: shopifyToken,
+        metafields: [{ key: 'wishlist', namespace: 'custom' }],
+      });
+      setWishlistLoading(false);
+
+      if (wishlistResponse?.length <= 0) {
+        return;
+      }
+      const metafield = wishlistResponse.find((item) => item?.key === 'wishlist')?.value;
+      const value = metafield && JSON.parse(metafield);
+      if (value) setUserWishlist(Array.isArray(value) ? value : [value]);
+    } catch (error) {
+      console.error(`Error getting user wishlist ${error}`);
+    }
+  }, [setUserWishlist, setWishlistLoading]);
+
+  const handleRenderUser = useCallback(async () => {
     const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
     if (shopifyToken && user?.id) updateCartBuyerIdentity(user, shopifyToken);
-  }, [updateCartBuyerIdentity, user, cart]);
+  }, [updateCartBuyerIdentity, user]);
+
+  useEffect(() => {
+    Promise.all([getCustomer(), getCustomerWishlist(), handleRenderUser()]);
+  }, [getCustomer, getCustomerWishlist, handleRenderUser]);
 
   const values = useMemo(
     () => ({
@@ -115,6 +157,7 @@ export const UserProvider = ({ children }) => {
       setUserWishlist,
       user,
       wishlist,
+      wishlistLoading,
     }),
     [
       user,
@@ -125,6 +168,7 @@ export const UserProvider = ({ children }) => {
       isWishlist,
       handleSetProductToWishList,
       setUserWishlist,
+      wishlistLoading,
     ]
   );
 

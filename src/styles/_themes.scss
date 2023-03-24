@@ -11,7 +11,7 @@ $success-dark: #2f9652;
 $error-dark: #ff5151;
 $complementary-dark: complement($primary-dark);
 $surface-dark-dark: #000000;
-$colors-light: ( 
+$colors-light: (
   primary-100: lighten($primary, 30%),
   primary-200: lighten($primary, 20%),
   primary-300: lighten($primary, 10%),
@@ -75,17 +75,15 @@ $colors-light: (
   on-surface-hight: #111111,
   on-surface-medium: #373737,
   on-surface-light: #747474,
-  on-surface-disabled: #464646);
+  on-surface-disabled: #6c6c6c,
+);
 
 @function hex-to-rgb($hex) {
-  @return red($hex),
-  green($hex),
-  blue($hex);
+  @return red($hex), green($hex), blue($hex);
 }
 
 @mixin generate-colors($colors) {
-  @each $color,
-  $value in $colors {
+  @each $color, $value in $colors {
     @if str-slice(#{$value}, 1, 1) == '#' {
       --#{$color}: #{$value};
     } @else {
@@ -93,8 +91,7 @@ $colors-light: (
     }
   }
 
-  @each $color,
-  $value in $colors {
+  @each $color, $value in $colors {
     @if str-slice(#{$value}, 1, 1) == '#' {
       --rgb-#{$color}: #{hex-to-rgb($value)};
     } @else {
