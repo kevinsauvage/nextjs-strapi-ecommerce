@@ -117,9 +117,15 @@ export const CollectionProvider = ({
 
   const handleNext = useCallback(async () => {
     const filters = getFormattedFilter();
-    const data = await handleGetData(30, filters, query.sort_key, pageInfo.endCursor);
+    const data = await handleGetData(30, filters, query.sort_key, pageInfo?.endCursor);
     handleSetFilterState(data, true);
-  }, [getFormattedFilter, handleGetData, handleSetFilterState, pageInfo.endCursor, query.sort_key]);
+  }, [
+    getFormattedFilter,
+    handleGetData,
+    handleSetFilterState,
+    pageInfo?.endCursor,
+    query.sort_key,
+  ]);
 
   const isSelectionDifferent = useCallback(() => {
     const filteredFilters = getSelectedFilter(allFilters, query);

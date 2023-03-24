@@ -61,7 +61,7 @@ const SearchPage = () => {
           {loading || search.length > 0 ? (
             <ProductsList
               hasNextPage={pageInfo?.hasNextPage}
-              handleNext={() => handleSearch(pageInfo.endCursor)}
+              handleNext={() => handleSearch(pageInfo?.endCursor)}
               loading={loading}
               layout="grid"
               products={search}

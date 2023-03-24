@@ -58,7 +58,7 @@ const OrdersPage = () => {
             <Button
               disabled={!pageInfo?.hasNextPage}
               primary
-              onClick={() => fetchOrders(pageInfo.endCursor)}
+              onClick={() => fetchOrders(pageInfo?.endCursor)}
             >
               See more
             </Button>
