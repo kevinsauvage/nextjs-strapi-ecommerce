@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/prefer-default-export
-export const numberOfDifferences = (array1, array2) => {
+export const numberOfDifferences = (array1 = [], array2 = []) => {
   const diff1 = array1.filter(
     (object1) => !array2.some((object2) => object2.input === object1.input)
   );
