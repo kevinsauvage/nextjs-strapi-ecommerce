@@ -87,6 +87,7 @@ export const UserProvider = ({ children }) => {
   const getCustomer = useCallback(async () => {
     try {
       if (user?.id) return;
+      console.log('🚀 ~ file: UserContext.js:89 ~ getCustomer ~ getCustomer:');
 
       const customerAccessToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
@@ -111,6 +112,9 @@ export const UserProvider = ({ children }) => {
 
   const getCustomerWishlist = useCallback(async () => {
     try {
+      if (wishlist.length > 0) return;
+      console.log('🚀 ~ file: UserContext.js:115 ~ getCustomerWishlist ~ getCustomerWishlist:');
+
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
@@ -135,7 +139,7 @@ export const UserProvider = ({ children }) => {
     } catch (error) {
       console.error(`Error getting user wishlist ${error}`);
     }
-  }, [setUserWishlist, setWishlistLoading]);
+  }, [setUserWishlist, setWishlistLoading, wishlist.length]);
 
   const handleRenderUser = useCallback(async () => {
     const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
@@ -143,18 +147,15 @@ export const UserProvider = ({ children }) => {
   }, [updateCartBuyerIdentity, user]);
 
   useEffect(() => {
-    console.log('🚀 ~ file: UserContext.js:150 ~ useEffect ~ handleRenderUser:');
     handleRenderUser();
   }, [handleRenderUser]);
 
   useEffect(() => {
-    console.log('🚀 ~ file: UserContext.js:157 ~ useEffect ~ getCustomer:');
     getCustomer();
   }, [getCustomer]);
 
   useEffect(() => {
     getCustomerWishlist();
-    console.log('🚀 ~ file: UserContext.js:164 ~ useEffect ~ getCustomerWishlist:');
   }, [getCustomerWishlist]);
 
   const values = useMemo(
