@@ -13,6 +13,8 @@ export const GlobalProvider = ({ children }) => {
   const { events } = useRouter();
 
   const handleRender = useCallback(async () => {
+    console.log('🚀 ~ file: GlobalContext.js:17 ~ handleRender ~ handleRender:');
+
     const response = await nextApiHelper('/api/delegate-token', '', 'GET');
     if (!response?.ok) console.error("Couldn't  set delegate token");
   }, []);
@@ -40,6 +42,8 @@ export const GlobalProvider = ({ children }) => {
   }, []);
 
   const handleCookies = useCallback(() => {
+    console.log('🚀 ~ file: GlobalContext.js:46 ~ handleCookies ~ handleCookies:');
+
     const consent = getCookieFront('localConsent');
     if (consent) window.gtag('consent', 'update', tranformedSettings(JSON.parse(consent)));
     else dispatch({ payload: true, type: actions.SHOW_BANNER_COOKIES });

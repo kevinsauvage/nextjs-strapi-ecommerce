@@ -170,6 +170,7 @@ export const CartProvider = ({ children }) => {
       }
     };
     handleRender();
+    console.log('🚀 ~ file: CartContext.js:175 ~ useEffect ~ handleRender:');
   }, [cart?.id, handleSetCart]);
 
   const values = useMemo(

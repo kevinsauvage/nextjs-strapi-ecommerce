@@ -143,8 +143,22 @@ export const UserProvider = ({ children }) => {
   }, [updateCartBuyerIdentity, user]);
 
   useEffect(() => {
-    Promise.all([getCustomer(), getCustomerWishlist(), handleRenderUser()]);
-  }, [getCustomer, getCustomerWishlist, handleRenderUser]);
+    handleRenderUser();
+  }, [handleRenderUser]);
+
+  console.log('🚀 ~ file: UserContext.js:150 ~ useEffect ~ handleRenderUser:');
+
+  useEffect(() => {
+    getCustomer();
+  }, [getCustomer]);
+
+  console.log('🚀 ~ file: UserContext.js:157 ~ useEffect ~ getCustomer:');
+
+  useEffect(() => {
+    getCustomerWishlist();
+  }, [getCustomerWishlist]);
+
+  console.log('🚀 ~ file: UserContext.js:164 ~ useEffect ~ getCustomerWishlist:');
 
   const values = useMemo(
     () => ({

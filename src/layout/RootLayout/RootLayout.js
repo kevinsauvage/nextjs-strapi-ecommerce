@@ -30,6 +30,7 @@ const RootLayout = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('🚀 ~ file: RootLayout.js:40 ~ useEffect ~ fetchData:');
       const header = await getClient().storefront.shop.getMenu({ handle: 'main-menu' });
       setMenuHeader(header);
     };
@@ -38,6 +39,8 @@ const RootLayout = ({ children }) => {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('🚀 ~ file: RootLayout.js:43 ~ fetchData ~ fetchData 2:');
+
       const [footer, shop] = await Promise.all([
         getClient().storefront.shop.getMenu({ handle: 'footer' }),
         getClient().storefront.shop.getShop(),
