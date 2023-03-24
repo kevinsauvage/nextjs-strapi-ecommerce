@@ -130,10 +130,6 @@ export const CartProvider = ({ children }) => {
       if (!customer) return console.warn('Missing customer');
       if (!token) return console.warn('Missing token');
       if (cart?.buyerIdentity) return console.warn('Buyer identity already present');
-      console.log(
-        '🚀 ~ file: CartContext.js:153 ~ CartProvider ~ updateCartBuyerIdentity:',
-        updateCartBuyerIdentity
-      );
 
       // TODO: ADD SHIPPING ADDRESS
       const buyerIdentity = {
@@ -157,7 +153,6 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     const handleRender = async () => {
       if (cart?.id) return;
-      console.log('🚀 ~ file: CartContext.js:175 ~ useEffect ~ handleRender:');
 
       const cartId = window.localStorage.getItem(cartIdStorageKey);
 

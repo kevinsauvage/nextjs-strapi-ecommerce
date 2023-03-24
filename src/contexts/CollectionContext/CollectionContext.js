@@ -199,19 +199,11 @@ export const CollectionProvider = ({
 
   useEffect(() => {
     dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });
-
-    console.log(
-      '🚀 ~ file: CollectionContext.js:203 ~ useEffect ~   dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });:'
-    );
   }, [query.collectionSlug]);
 
   useEffect(() => {
     const filteredFilters = getSelectedFilter(allFilters, query);
     dispatch({ payload: filteredFilters, type: actions.SET_SELECTED_FILTERS });
-
-    console.log(
-      '🚀 ~ file: CollectionContext.js:212 ~ useEffect ~   dispatch({ payload: filteredFilters, type: actions.SET_SELECTED_FILTERS });:'
-    );
   }, [allFilters, query]);
 
   const values = useMemo(

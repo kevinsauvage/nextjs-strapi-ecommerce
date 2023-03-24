@@ -87,8 +87,6 @@ export const UserProvider = ({ children }) => {
   const getCustomer = useCallback(async () => {
     try {
       if (user?.id) return;
-      console.log('🚀 ~ file: UserContext.js:89 ~ getCustomer ~ getCustomer:');
-
       const customerAccessToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!customerAccessToken) {
@@ -113,8 +111,6 @@ export const UserProvider = ({ children }) => {
   const getCustomerWishlist = useCallback(async () => {
     try {
       if (wishlist.length > 0) return;
-      console.log('🚀 ~ file: UserContext.js:115 ~ getCustomerWishlist ~ getCustomerWishlist:');
-
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
