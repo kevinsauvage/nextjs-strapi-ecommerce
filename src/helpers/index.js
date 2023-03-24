@@ -27,6 +27,7 @@ export const getInfoFromContext = (context) => {
 
 export const getSelectedFilter = (filters, query) => {
   if (!query) return [];
+  if (!Array.isArray(filters) || filters?.length === 0) return;
 
   return filters.reduce((accumulator, filter) => {
     const item = query[filter.id];
