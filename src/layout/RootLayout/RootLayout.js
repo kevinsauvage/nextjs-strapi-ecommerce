@@ -46,8 +46,6 @@ const RootLayout = ({ children }) => {
 
   return (
     <div className={styles['root-layout']}>
-      {loading && <PageLoader />}
-
       <LazySearchBar />
 
       <Header headerMenu={menuHeader} />
@@ -63,6 +61,7 @@ const RootLayout = ({ children }) => {
       )}
       {showBannerCookies && <LazyCookieBanner />}
       {showModalCookies && <LazyModalCookies />}
+      {loading && <PageLoader />}
     </div>
   );
 };

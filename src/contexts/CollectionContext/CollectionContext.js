@@ -32,7 +32,7 @@ export const CollectionProvider = ({
   const { query, push, to, asPath } = useRouter();
 
   const getFormattedFilter = useCallback(
-    () => selectedFilters.map((item) => JSON.parse(item.input)),
+    () => selectedFilters?.map((item) => JSON.parse(item.input)) || [],
     [selectedFilters]
   );
 
@@ -199,6 +199,10 @@ export const CollectionProvider = ({
 
   useEffect(() => {
     dispatch({ payload: [], type: actions.SET_SELECTED_FILTERS });
+    dispatch({ payload: undefined, type: actions.SET_PRODUCTS });
+    dispatch({ payload: undefined, type: actions.SET_PAGE_INFO });
+    dispatch({ payload: undefined, type: actions.SET_ALL_FILTERS });
+    dispatch({ payload: undefined, type: actions.SET_COLLECTION });
   }, [query.collectionSlug]);
 
   useEffect(() => {

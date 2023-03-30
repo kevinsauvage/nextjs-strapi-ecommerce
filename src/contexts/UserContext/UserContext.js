@@ -36,7 +36,7 @@ export const UserProvider = ({ children }) => {
   );
 
   const setWishlistLoading = useCallback((payload) => {
-    if (payload) dispatch({ payload, type: actions.WISHLIST_LOADING });
+    dispatch({ payload, type: actions.WISHLIST_LOADING });
   }, []);
 
   const getMetafields = useCallback(
@@ -110,15 +110,15 @@ export const UserProvider = ({ children }) => {
 
   const getCustomerWishlist = useCallback(async () => {
     try {
-      if (wishlist.length > 0) return;
       const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
 
       if (!shopifyToken) {
+        setWishlistLoading(false);
+
         setUserWishlist([]);
         console.error('Missing shopify token to get customer wishlist');
         return;
       }
-
       setWishlistLoading(true);
       const wishlistResponse = await getClient().storefront.customer.queryCustomerMetafields({
         customerAccessToken: shopifyToken,
@@ -135,7 +135,7 @@ export const UserProvider = ({ children }) => {
     } catch (error) {
       console.error(`Error getting user wishlist ${error}`);
     }
-  }, [setUserWishlist, setWishlistLoading, wishlist.length]);
+  }, [setUserWishlist, setWishlistLoading]);
 
   const handleRenderUser = useCallback(async () => {
     const shopifyToken = handleGetTokenCookies(config.cookies.shopifyToken);
@@ -151,8 +151,9 @@ export const UserProvider = ({ children }) => {
   }, [getCustomer]);
 
   useEffect(() => {
+    if (wishlist.length > 0) return setWishlistLoading(false);
     getCustomerWishlist();
-  }, [getCustomerWishlist]);
+  }, [getCustomerWishlist, setWishlistLoading, wishlist?.length]);
 
   const values = useMemo(
     () => ({

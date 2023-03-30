@@ -24,7 +24,7 @@ export async function getServerSideProps(context) {
       const filter = query[key];
       if (Array.isArray(filter)) {
         // eslint-disable-next-line no-restricted-syntax
-        for (const f of filter) accumulator.push(JSON.parse(f));
+        filter?.forEach((f) => accumulator.push(JSON.parse(f)));
       } else {
         accumulator.push(JSON.parse(filter));
       }

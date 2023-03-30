@@ -5,7 +5,7 @@ export const initialState = {
   ordersPageInfo: {},
   user: undefined,
   wishlist: [],
-  wishlistLoading: true,
+  wishlistLoading: false,
 };
 
 export const actions = {
@@ -46,6 +46,7 @@ export const UserReducer = (state = initialState, action) => {
     }
 
     case actions.WISHLIST_LOADING: {
+      console.log({ payload });
       return { ...state, wishlistLoading: payload };
     }
     default: {

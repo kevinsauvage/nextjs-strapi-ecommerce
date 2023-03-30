@@ -8,6 +8,5 @@
   height: 100vh;
   align-items: center;
   justify-content: center;
-  backdrop-filter: blur(12px);
-  background: rgb(var(--rgb-surface-100) 0.3);
+  background: rgba(var(--rgb-surface-900), 0.3);
 }

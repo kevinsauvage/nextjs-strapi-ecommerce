@@ -27,7 +27,6 @@ const Addresses = () => {
   const { showToast } = useToastContext();
 
   const fetchAddresses = useCallback(async () => {
-    if (addresses) return setIsLoading(false);
     setIsLoading(true);
     const shopifyToken = await handleGetTokenCookies(config.cookies.shopifyToken);
     const response = await getClient().storefront.customer.queryCustomerAddresses({
@@ -36,11 +35,12 @@ const Addresses = () => {
     setIsLoading(false);
     if (Array.isArray(response)) dispatch({ payload: response, type: actions.ADD_ADDRESSES });
     else showToast.error(errorMessage);
-  }, [addresses, dispatch, showToast]);
+  }, [dispatch, showToast]);
 
   useEffect(() => {
+    if (addresses) return setIsLoading(false);
     fetchAddresses();
-  }, [fetchAddresses]);
+  }, [addresses, fetchAddresses]);
 
   const handleUpdateAddress = async (formData, addressId) => {
     if (
@@ -86,6 +86,8 @@ const Addresses = () => {
         customerAccessToken: shopifyToken,
       });
       const { customerUserErrors, deletedCustomerAddressId } = deleteResponse || {};
+
+      console.log('🚀 ~ file: index.js:90 ~ handleDelete ~ deleteResponse:', deleteResponse);
 
       if (customerUserErrors?.length)
         return customerUserErrors.forEach((element) => showToast.error(element.message));
