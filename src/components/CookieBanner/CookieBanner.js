@@ -53,9 +53,7 @@ const CookieBanner = () => {
         cookies as described in our <Link href={config.routes.privacy}>Cookie Policy</Link>. If you
         choose to close this banner without clicking &quot;Accept,&quot; we will assume that you do
         not consent to the use of cookies on our site. Please note that some features of our website
-        may not function properly if cookies are not enabled. For more information about our use of
-        cookies and your choices, please see our{' '}
-        <Link href={config.routes.privacy}>Cookie Policy</Link>.
+        may not function properly if cookies are not enabled.
       </p>
       <div className={styles.buttons}>
         <button
