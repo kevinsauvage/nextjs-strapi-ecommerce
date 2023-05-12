@@ -79,7 +79,7 @@ const OrdersPage = () => {
       <AccountLayout
         loading={isLoading}
         title={seo.account.orders.title}
-        descriptionBannerChildren={orders?.length > 0 && description}
+        descriptionBannerChildren={orders?.length > 0 && <p>{description}</p>}
       >
         {renderContent()}
       </AccountLayout>

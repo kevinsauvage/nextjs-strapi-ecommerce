@@ -40,11 +40,9 @@ const AccountLayout = ({
               {descriptionBannerChildren && (
                 <div className={styles['banner-children']}>
                   <h2>{title}</h2>
-                  {descriptionBannerChildren && (
-                    <div className={styles['banner-children-description']}>
-                      <p> {descriptionBannerChildren}</p>
-                    </div>
-                  )}
+                  <div className={styles['banner-children-description']}>
+                    {descriptionBannerChildren}
+                  </div>
                   {otherBannerChildrenContent && (
                     <div className={styles['banner-children-other']}>
                       {otherBannerChildrenContent}

@@ -83,7 +83,7 @@ const OrderDetail = () => {
       <AccountLayout
         loading={isLoading || !id}
         title={seo.account.update.title}
-        descriptionBannerChildren={description}
+        descriptionBannerChildren={<p>{description}</p>}
       >
         <Form
           onSubmit={handleSubmit}

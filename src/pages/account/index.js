@@ -8,7 +8,7 @@ import PageLayout from '@/layout/PageLayout/PageLayout';
 const Account = () => {
   const { user } = useUserContext();
   const { firstName, lastName } = user || {};
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if (user?.id) setIsLoading(false);
@@ -26,9 +26,9 @@ const Account = () => {
             <b>
               {firstName} {lastName}
             </b>
-            , your account dashboard provides access to all of your important account information and
-            features, allowing you to manage your profile and view orders. You can update personal information
-            and view order history, all in one convenient place.
+            , your account dashboard provides access to all of your important account information
+            and features, allowing you to manage your profile and view orders. You can update
+            personal information and view order history, all in one convenient place.
           </p>
         }
       />
