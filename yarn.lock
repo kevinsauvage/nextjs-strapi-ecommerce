@@ -323,10 +323,10 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
-"@kevinsauvage/shopify-storefront-api@^1.1.14":
-  version "1.1.14"
-  resolved "https://registry.yarnpkg.com/@kevinsauvage/shopify-storefront-api/-/shopify-storefront-api-1.1.14.tgz#eca719f907ec34d8561613f6043148c7059c9899"
-  integrity sha512-AE8uwUpba5TYdsltEu5X+KfPd+oQWIXC91VB7QmtyBzvY0oYE/alSMOc2+k+xoDVrwrrCCodUgAxrAu1DTmapg==
+"@kevinsauvage/shopify-storefront-api@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@kevinsauvage/shopify-storefront-api/-/shopify-storefront-api-1.2.2.tgz#ee23f820e8545a59211e6e583b6af100ceca0ab3"
+  integrity sha512-LJQoPyxgbNarM3T0+bmqI/vLLsgCQi8qaECPYnDWXi28tO6aIht56AwkR5rjz8hAI8+9aVvl+lqueDA0QhBh7w==
 
 "@next/env@13.1.2":
   version "13.1.2"
