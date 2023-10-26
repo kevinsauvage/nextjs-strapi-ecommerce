@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@kevinsauvage/shopify-storefront-api": "1.2.4",
-    "next": "13.1.2",
+    "next": "13.5.0",
     "next-sitemap": "^4.0.5",
     "nodemailer": "^6.9.1",
     "nookies": "^2.5.2",
