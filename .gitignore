@@ -1,5 +1,7 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Created by https://www.toptal.com/developers/gitignore/api/nextjs
+# Edit at https://www.toptal.com/developers/gitignore?templates=nextjs
 
+### NextJS ###
 # dependencies
 /node_modules
 /.pnp
@@ -9,7 +11,7 @@
 /coverage
 
 # next.js
-/.next
+/.next/
 /out/
 
 # production
@@ -35,6 +37,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
-/public/sitemap*
-.dccache
+# End of https://www.toptal.com/developers/gitignore/api/nextjs
