@@ -1,8 +1,10 @@
+@use '@/styles/mixins' as *;
+
 .drop-down {
   position: relative;
   padding: 4px;
   border: 1px solid var(--surface-400);
-  border-radius: $radius;
+  border-radius: var(--radius);
   margin-left: 4px;
 }
 
@@ -14,7 +16,7 @@
   overflow: hidden;
   min-width: 190px;
   border: 1px solid var(--surface-400);
-  border-radius: $radius;
+  border-radius: var(--radius);
   background-color: var(--surface-100);
 }
 

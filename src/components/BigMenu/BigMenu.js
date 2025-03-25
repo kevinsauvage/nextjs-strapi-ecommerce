@@ -1,4 +1,5 @@
-import CollectionCard from '../_scopes/collection/CollectionCard/CollectionCard';
+import CollectionCard from '@/components/CollectionCard/CollectionCard';
+
 import ActiveLink from '../ActiveLink/ActiveLink';
 import Container from '../Container/Container';
 
@@ -23,7 +24,13 @@ const BigMenu = ({ data, handleClose, collections }) => {
   );
 
   return (
-    <div className={styles.menu} role="button" tabIndex={0} onClick={handleClose} onKeyDown={handleClose}>
+    <div
+      className={styles.menu}
+      role="button"
+      tabIndex={0}
+      onClick={handleClose}
+      onKeyDown={handleClose}
+    >
       <div
         className={styles.inner}
         role="presentation"

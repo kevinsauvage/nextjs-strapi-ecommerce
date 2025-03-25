@@ -1,4 +1,5 @@
-import { useRouter } from 'next/router';
+'use client';
+import { usePathname } from 'next/navigation';
 
 import Container from '../Container/Container';
 
@@ -7,14 +8,12 @@ import Crumbs from './Crumbs';
 import styles from './Breadcrumbs.module.scss';
 
 const Breadcrumbs = ({ lastElement }) => {
-  const router = useRouter();
+  const pathname = usePathname();
 
   const filterCrumb = new Set(['pages', 'reset']);
 
   function generateBreadcrumbs() {
-    const asPathWithoutQuery = router.asPath.split('?')[0];
-
-    const asPathNestedRoutes = asPathWithoutQuery.split('/').filter((v) => v.length > 0);
+    const asPathNestedRoutes = pathname.split('/').filter((v) => v.length > 0);
 
     const crumbList = asPathNestedRoutes.map((subpath, index) => {
       const href = `/${asPathNestedRoutes.slice(0, index + 1).join('/')}`;

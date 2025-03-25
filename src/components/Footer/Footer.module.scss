@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .container {
   display: flex;
   gap: var(--space-6);
@@ -23,6 +25,7 @@
 
 .about {
   max-width: 40%;
+  margin-bottom: var(--space-2);
 
   @include respond(mobile) {
     max-width: 100%;

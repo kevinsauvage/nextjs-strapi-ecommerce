@@ -1,5 +1,12 @@
+@use '@/styles/mixins' as *;
+
 .button {
   @include button;
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
 }
 
 .primary {

@@ -10,7 +10,7 @@
 .inner {
   display: flex;
   width: 100%;
-  height: $header-height;
+  height: var(--header-height);
   justify-content: space-between;
 }
 

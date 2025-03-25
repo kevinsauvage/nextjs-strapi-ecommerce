@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  min-width: 36px;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: var(--radius);
+  border-radius: 50%;
+  margin-right: 4px;
+  margin-bottom: 4px;
+  background-color: var(--surface-100);
+  color: var(--on-surface-hight);
+  font-size: 0.9rem;
+  opacity: 0.8;
+
+  &.selected {
+    opacity: 1;
+    outline: 2px solid var(--surface-dark-100);
+    outline-offset: 2px;
+  }
+
+  &:hover {
+    background-color: var(--surface-dark-200);
+    color: var(--on-surface-dark);
+  }
+}

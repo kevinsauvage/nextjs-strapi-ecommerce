@@ -5,8 +5,12 @@ const seo = {
         'The customer addresses page displays a list of saved addresses for quick and easy access. Add, edit, or delete addresses as needed.',
       title: 'My addresses',
     },
+
     description:
       'On the user account page, manage your personal information, update your password and view your account activity all in one place.',
+    logout: {
+      title: 'Login out',
+    },
 
     orders: {
       description:

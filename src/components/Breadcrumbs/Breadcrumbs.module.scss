@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .breadcrumbs {
   border-bottom: 1px solid var(--surface-400);
   background-color: var(--surface-100);

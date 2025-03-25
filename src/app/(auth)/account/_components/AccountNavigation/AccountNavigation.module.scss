@@ -1,0 +1,38 @@
+@use '@/styles/mixins' as *;
+
+.nav {
+  min-width: 230px;
+
+  @include respond(mobile) {
+    margin-bottom: var(--space-2);
+  }
+}
+
+.list {
+  position: sticky;
+  top: 2rem;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border-bottom: none;
+}
+
+.list-item {
+  width: 100%;
+  background-color: var(--surface-200);
+  text-transform: uppercase;
+
+  a {
+    width: 100%;
+    justify-content: flex-start;
+    padding: var(--space-1) var(--space-2);
+    border-bottom: 1px solid var(--surface-300);
+    border-left: 3px solid transparent;
+  }
+
+  .active {
+    border-left: 3px solid var(--complementary-500);
+    background-color: var(--surface-dark-200);
+    color: var(--on-surface-dark);
+  }
+}

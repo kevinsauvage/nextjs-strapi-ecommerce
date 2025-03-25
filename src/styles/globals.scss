@@ -15,7 +15,7 @@ button {
   justify-content: center;
   background-color: transparent;
   cursor: pointer;
-  font-family: $sans-serif;
+  font-family: var(--sans-serif);
 
   &:disabled,
   &[disabled='disabled'] {
@@ -39,7 +39,7 @@ button {
   animation-name: fadeIn;
 }
 
-@include keyframes(fadeIn) {
+@keyframes fadeIn {
   0% {
     opacity: 0;
   }

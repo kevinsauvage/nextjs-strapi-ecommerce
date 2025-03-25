@@ -1,0 +1,18 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin: var(--space-2) 0;
+  font-size: 1.1rem;
+
+  input {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+
+  p {
+    margin-left: 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}

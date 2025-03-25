@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .pagination {
   @include flex-center;
 }

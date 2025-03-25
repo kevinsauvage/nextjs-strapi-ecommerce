@@ -3,7 +3,7 @@ $gap: var(--space-4);
 .menu {
   position: absolute;
   z-index: 999;
-  top: $header-height;
+  top: var(--header-height);
   right: 0;
   bottom: 0;
   left: 0;
@@ -30,7 +30,7 @@ $gap: var(--space-4);
 }
 
 .navigation {
-  &>ul {
+  & > ul {
     display: flex;
     width: 100%;
     gap: $gap;

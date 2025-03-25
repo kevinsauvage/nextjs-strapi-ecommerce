@@ -24,7 +24,7 @@
 
 .header {
   display: flex;
-  height: $header-height;
+  height: var(--header-height);
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--space-1);
@@ -45,8 +45,6 @@
     }
   }
 }
-
-
 
 .backdrop {
   position: fixed;

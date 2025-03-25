@@ -1,12 +1,13 @@
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import Container from '@/components/Container/Container';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
 import siteMetadata from '@/data/siteMetadata';
+import getClient from '@/shopify';
 
 import styles from './Footer.module.scss';
 
-const Footer = ({ menuFooter }) => {
-  const { setShowModalCookies } = useGlobalContext();
+const Footer = async () => {
+  const menuFooter = await getClient().storefront.shop.getMenu({ handle: 'footer' });
+
   return (
     <>
       <footer className={styles.footer}>
@@ -16,8 +17,8 @@ const Footer = ({ menuFooter }) => {
             <p className={styles['nav-item']}>{siteMetadata?.about?.short}</p>
           </div>
           <ul className={styles['nav-list']}>
-            {Array.isArray(menuFooter) &&
-              menuFooter.map((item) => (
+            {Array.isArray(menuFooter?.items) &&
+              menuFooter?.items.map((item) => (
                 <li key={item.id}>
                   <b className={styles.title}>{item.title}</b>
                   <ul>
@@ -35,9 +36,6 @@ const Footer = ({ menuFooter }) => {
       <div className={styles.bottom}>
         <Container>
           <p>Copyright © 2022 All rights reserved.</p>
-          <button onClick={() => setShowModalCookies(true)} type="button">
-            Cookie settings
-          </button>
         </Container>
       </div>
     </>

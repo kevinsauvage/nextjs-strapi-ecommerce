@@ -1,5 +1,7 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 import { close } from '@/assets/svg';
 
@@ -7,13 +9,13 @@ import styles from './SlideIn.module.scss';
 
 const SlideIn = ({ children, title, animationPosition = 'right', headerTitle }) => {
   const [showMenu, setShowMenu] = useState(false);
-  const { asPath } = useRouter();
+  const pathname = usePathname();
 
   const toggleMenu = () => setShowMenu(!showMenu);
 
   useEffect(() => {
     setShowMenu(false);
-  }, [asPath]);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = showMenu ? 'hidden' : 'visible';

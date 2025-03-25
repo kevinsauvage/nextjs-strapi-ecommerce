@@ -1,4 +1,5 @@
-/* eslint-disable react/button-has-type */
+'use client';
+
 import Link from 'next/link';
 
 import styles from './Button.module.scss';
@@ -9,7 +10,7 @@ const Button = ({
   onClick,
   text,
   extraClass,
-  primary,
+  primary = true,
   secondary,
   contrast,
   outlined,
@@ -27,7 +28,11 @@ const Button = ({
 
   if (href) {
     return (
-      <Link href={href} className={`${styles.button} ${extraClass || ''} ${getStyle()} `}>
+      <Link
+        href={href}
+        className={`${styles.button} ${extraClass || ''} ${getStyle()} `}
+        disabled={disabled || false}
+      >
         {children}
         {text}
       </Link>
@@ -38,8 +43,8 @@ const Button = ({
     <button
       {...rest}
       type={type || 'button'}
-      onClick={onClick || undefined}
-      onKeyDown={(event) => event.key === 'Enter' && (onClick || undefined)}
+      onClick={() => onClick?.() || undefined}
+      onKeyDown={(event) => event.key === 'Enter' && (onClick?.() || undefined)}
       disabled={disabled || false}
       className={`${styles.button} ${extraClass || ''} ${getStyle()}`}
     >

@@ -1,7 +1,9 @@
+'use client';
+
 import { Children, cloneElement, useEffect, useRef, useState } from 'react';
 import { IoIosArrowDropleft, IoIosArrowDropright } from 'react-icons/io';
 import { useSwipeable } from 'react-swipeable';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import Indicators from './Indicators/Indicators';
 

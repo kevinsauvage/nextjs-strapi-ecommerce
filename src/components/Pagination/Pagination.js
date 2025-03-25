@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './Pagination.module.scss';
 /* eslint-disable no-plusplus */
 const Pagination = ({ currentPage, totalPages, onPageChange }) => {
@@ -12,7 +14,10 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <nav>
         <ul className={styles.pagination}>
           {pageNumbers.map((number) => (
-            <li key={number} className={`${styles.item} ${currentPage === number ? styles.active : ''}`}>
+            <li
+              key={number}
+              className={`${styles.item} ${currentPage === number ? styles.active : ''}`}
+            >
               <button type="button" onClick={() => onPageChange(number)} className="page-link">
                 {number}
               </button>

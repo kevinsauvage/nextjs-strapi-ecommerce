@@ -1,9 +1,8 @@
 import Link from 'next/link';
-import { withRouter } from 'next/router';
 
 import styles from './ActiveLink.module.scss';
 
-export default withRouter(({ router, children, as, url, scroll = true, isActive, activeStyle, ...rest }) => {
+const ActiveLink = ({ children, url, as, scroll = true, isActive, activeStyle, ...rest }) => {
   const path = url.includes('http') ? new URL(url)?.pathname : url;
 
   return (
@@ -12,11 +11,11 @@ export default withRouter(({ router, children, as, url, scroll = true, isActive,
       href={path.toLowerCase()}
       as={as}
       scroll={scroll}
-      className={`${styles.link}  ${
-        (router.asPath.split('?')[0] === path?.toLowerCase().split('?')[0] || isActive) && activeStyle
-      }`}
+      className={`${styles.link}  ${isActive && activeStyle}`}
     >
       {children}
     </Link>
   );
-});
+};
+
+export default ActiveLink;

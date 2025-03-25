@@ -41,7 +41,6 @@
   },
   "plugins": ["react", "simple-import-sort", "css-modules", "sonarjs", "sort-keys"],
   "extends": [
-    "airbnb",
     "prettier",
     "next",
     "next/core-web-vitals",

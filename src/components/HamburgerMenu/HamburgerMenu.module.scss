@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .hamburger-menu {
   display: none;
   visibility: hidden;
@@ -25,7 +27,7 @@
 .menu {
   height: 100%;
 
-  &>li {
+  & > li {
     margin-bottom: var(--space-1);
   }
 }

@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .banner {
   position: relative;
   overflow: hidden;
@@ -28,7 +30,7 @@
   width: 100%;
   height: 100%;
   justify-content: center;
-  border-radius: $radius;
+  border-radius: var(--radius);
 
   @include flex-column;
 }
@@ -72,7 +74,7 @@
     display: block;
     width: 60px;
     height: 3px;
-    border-radius: $radius;
+    border-radius: var(--radius);
     background-color: var(--on-surface-hight);
   }
 }

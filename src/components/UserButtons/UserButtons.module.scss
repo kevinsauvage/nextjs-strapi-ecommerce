@@ -1,3 +1,5 @@
+@use '@/styles/mixins' as *;
+
 .container {
   position: relative;
   display: flex;
@@ -7,7 +9,7 @@
 .button {
   position: relative;
   display: flex;
-  width: $header-height;
+  width: var(--header-height);
   align-items: center;
   justify-content: center;
   padding: 0;
@@ -28,7 +30,7 @@
   }
 
   @include respond(mobile) {
-    width: $header-height-mobile;
+    width: var(--header-height)-mobile;
   }
 
   &:hover {
@@ -61,24 +63,14 @@
 }
 
 .total-items {
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  min-width: 1rem;
-  min-height: 1rem;
-  padding: 3px;
-  border-radius: 50%;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin: -10px 0 0 0;
   background-color: var(--complementary-500);
-  color: var(--surface-900);
+  color: var(--surface-100);
+  font-size: 1rem;
+  text-decoration: none;
+  vertical-align: top;
 
   @include border-light(var(--RBG-primary), 1);
-
-  p {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--on-surface-dark);
-    font-size: 0.8rem;
-    line-height: 10px;
-  }
 }

@@ -1,0 +1,27 @@
+.button {
+  display: flex;
+  min-width: 36px;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--surface-dark-300);
+  border-radius: var(--radius);
+  background-color: var(--surface-100);
+  color: var(--on-surface-hight);
+  font-size: 0.9rem;
+
+  &:hover {
+    background-color: var(--surface-dark-200);
+    color: var(--on-surface-dark);
+  }
+}
+
+.selected {
+  background-color: var(--surface-dark-100);
+  color: var(--on-surface-dark);
+
+  &:hover {
+    background-color: var(--surface-100);
+    color: var(--on-surface-hight);
+  }
+}

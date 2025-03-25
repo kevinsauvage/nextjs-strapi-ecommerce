@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState } from 'react';
 
 import { arrowDown } from '@/assets/svg';
@@ -34,7 +36,12 @@ const Dropdown = ({ options, changeCallback, selected }) => {
         {arrowDown}
       </button>
       {open && (
-        <ul className={styles.menu} id="dropdown-menu" role="listbox" aria-labelledby="dropdown-button">
+        <ul
+          className={styles.menu}
+          id="dropdown-menu"
+          role="listbox"
+          aria-labelledby="dropdown-button"
+        >
           {options
             .filter((item) => item.label !== selectedOption.label)
             .map((option, index) => (

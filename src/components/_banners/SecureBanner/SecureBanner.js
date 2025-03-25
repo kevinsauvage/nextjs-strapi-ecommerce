@@ -32,8 +32,8 @@ const SecureBanner = () => {
   return (
     <div className={styles.container}>
       <Container>
-        {items.map((item) => (
-          <div key={item.text} className={styles.item}>
+        {items.map((item, index) => (
+          <div key={item.text + index} className={styles.item}>
             {item.icon}
             <div>
               <p className={styles.text}>{item.text}</p>

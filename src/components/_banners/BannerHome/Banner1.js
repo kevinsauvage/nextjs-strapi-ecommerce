@@ -12,8 +12,8 @@ const BannerHome = ({ data }) => {
       <Container>
         <div className={styles.inner}>
           <div className={styles.container} style={{ ...style }}>
-            {data?.items?.map((item) => (
-              <div key={item.title} className={styles.content}>
+            {data?.items?.map((item, index) => (
+              <div key={item.title + index} className={styles.content}>
                 <p className={styles['up-title']}>
                   <span />
                   {item.upTitle}
@@ -21,7 +21,7 @@ const BannerHome = ({ data }) => {
                 <h1 className={`${styles.title} big`}>{item.title}</h1>
                 <p className={styles.subtitle}>{item.description}</p>
                 <Link href={item.handle} className={styles.link}>
-                  Shop now
+                  Shop now puta
                 </Link>
               </div>
             ))}

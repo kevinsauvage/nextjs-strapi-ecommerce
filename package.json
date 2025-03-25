@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev ",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,23 +13,24 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
-    "@kevinsauvage/shopify-storefront-api": "1.2.4",
-    "next": "13.1.2",
+    "@kevinsauvage/shopify-storefront-api": "file:../shopify-storefront-api",
+    "next": "15.1.7",
     "next-sitemap": "^4.0.5",
     "nodemailer": "^6.9.1",
     "nookies": "^2.5.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-icons": "^4.4.0",
     "react-swipeable": "^7.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@babel/core": "^7.21.3",
     "@babel/eslint-parser": "^7.21.3",
     "eslint": "^8.36.0",
     "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-next": "13.1.2",
+    "eslint-config-next": "^15.1.7",
     "eslint-config-prettier": "^8.5.0",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-css-modules": "^2.11.0",

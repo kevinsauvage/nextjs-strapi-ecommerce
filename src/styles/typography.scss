@@ -1,14 +1,14 @@
 html {
-  font-family: $sans-serif, Helvetica, Arial, sans-serif;
+  font-family: var(--sans-serif), Helvetica, Arial, sans-serif;
   font-size: 13px;
   font-weight: 400;
   letter-spacing: 1px;
   line-height: calc(13px * 1.5);
   text-size-adjust: 100%;
-  
+
   @media (max-width: 1000px) {
-    font-size: calc(12px + .1vw);
-    line-height: calc(12px + .1vw * 1.5);
+    font-size: calc(12px + 0.1vw);
+    line-height: calc(12px + 0.1vw * 1.5);
   }
 }
 
@@ -20,7 +20,7 @@ h5,
 h6 {
   font-style: normal;
   font-weight: 600;
-  text-shadow: $text-shadow-100;
+  text-shadow: var(--text-shadow-100);
 }
 
 h1 {
@@ -84,7 +84,7 @@ a {
 input,
 textarea,
 select {
-  font-family: $sans-serif;
+  font-family: var(--sans-serif);
 }
 
 .big {

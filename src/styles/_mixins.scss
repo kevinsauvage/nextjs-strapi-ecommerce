@@ -1,5 +1,30 @@
-/* stylelint-disable at-rule-no-vendor-prefix */
-@import './responsive';
+@use 'sass:list';
+@use 'sass:map';
+
+$media-query-prefix: 'only screen and';
+$media-queries: (
+  'mobile': '(max-width: 767px)',
+  'tablet': '(min-width: 768px) and (max-width: 1023px)',
+  'laptop': '(min-width: 1024px) and (max-width: 1439px)',
+  'desktop': '(min-width: (1440px))',
+  'retina2': '(-webkit-min-device-pixel-ratio: 2) and (min-resolution: 192dpi)',
+  'retina3': '(-webkit-min-device-pixel-ratio: 3) and (min-resolution: 288dpi)',
+  'landscape': '(orientation:landscape)',
+  'portrait': '(orientation:portrait)',
+);
+
+@mixin respond($breakpoints) {
+  $conditions: ();
+
+  @each $breakpoint in $breakpoints {
+    $media-query: '#{$media_query_prefix} #{map.get($media_queries, $breakpoint)}';
+    $conditions: list.append($conditions, $media_query, comma);
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}
 
 @mixin text-shorten($numLines: 1) {
   overflow: hidden;
@@ -68,7 +93,7 @@
     width: 60%;
     max-width: 40px;
     height: 1px;
-    border-radius: $radius;
+    border-radius: var(--radius);
     background-color: $color;
     content: '';
   }

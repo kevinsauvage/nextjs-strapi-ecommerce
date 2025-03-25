@@ -1,0 +1,14 @@
+@use 'src/styles/mixins' as *;
+
+.cart {
+  display: grid;
+  padding: var(--space-2) 0;
+  margin: 0 auto;
+  gap: var(--space-2);
+  grid-template-columns: 1fr minmax(280px, 360px);
+
+  @include respond(mobile tablet) {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -1,6 +1,8 @@
+'use client';
 import { useCallback, useEffect, useState } from 'react';
 
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import { getDifference } from '@/utils/products';
 
 const useProductSelection = ({ product }) => {
   const [selectedProductOption, setSelectedProductOption] = useState([]);
@@ -24,42 +26,6 @@ const useProductSelection = ({ product }) => {
       return setSelectedProductOption([...filtered, productOption]);
     },
     [selectedProductOption]
-  );
-
-  const getDifference = useCallback((array1, array2) => {
-    const difference = array1?.filter(
-      (object1) =>
-        !array2?.some((object2) => object1.name === object2.name && object1.value === object2.value)
-    );
-
-    return !!difference?.length;
-  }, []);
-
-  const isOptionSelected = useCallback(
-    (optionName, optionValue) => {
-      if (selectedProductOption?.length) {
-        return selectedProductOption?.find(
-          (option) => option.name === optionName && option.value === optionValue
-        );
-      }
-      return false;
-    },
-    [selectedProductOption]
-  );
-
-  const isOptionOutOfStock = useCallback(
-    (optionName, optionValue) => {
-      const dif = product?.variants?.filter((variant) => {
-        const selection = selectedProductOption.map((option) => {
-          if (option.name === optionName) return { name: optionName, value: optionValue };
-          return option;
-        });
-
-        return !getDifference(variant.selectedOptions, selection);
-      }, {});
-      return !dif?.length;
-    },
-    [getDifference, product?.variants, selectedProductOption]
   );
 
   const handleAddToCart = useCallback(() => {
@@ -89,7 +55,7 @@ const useProductSelection = ({ product }) => {
       );
       setSelectedVariant(...dif);
     }
-  }, [selectedProductOption, product, setSelectedVariant, getDifference]);
+  }, [selectedProductOption, product, setSelectedVariant]);
 
   useEffect(() => {
     if (quantity && selectedVariant?.id) {
@@ -102,8 +68,6 @@ const useProductSelection = ({ product }) => {
     handleAddToCart,
     handleChangeInput,
     handleSetSelectedProductOption,
-    isOptionOutOfStock,
-    isOptionSelected,
     quantity,
     selectedProductOption,
     selectedVariant,

@@ -1,10 +1,12 @@
-/* eslint-disable sonarjs/no-duplicate-string */
+'use client';
+
 import { useCallback } from 'react';
 
-import Form from '@/components/_scopes/forms/Form/Form';
+import Form from '@/components/_forms/Form/Form';
 import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
-import useGlobalContext from '@/contexts/GlobalContext/useGlobalContext';
-import { getCookieFront, setCookieFront, tranformedSettings } from '@/helpers/cookies';
+import Wrapper from '@/components/Wrapper/Wrapper';
+import { transformedSettings } from '@/utils/consents';
+import { getCookieFront, setCookieFront } from '@/utils/cookies';
 
 import Modal from '../Modal/Modal';
 
@@ -12,12 +14,10 @@ import styles from './ModalCookies.module.scss';
 
 const EXPIRY_COOKIE_TIME = 182;
 
-const ModalCookies = () => {
-  const { setShowBannerCookies, setShowModalCookies } = useGlobalContext();
-
+const ModalCookies = ({ setShowBannerCookies, setShowModalCookies }) => {
   const handleSaveSettings = useCallback(
     (formData) => {
-      const transformedObject = tranformedSettings(formData);
+      const transformedObject = transformedSettings(formData);
 
       window.gtag('consent', 'update', transformedObject);
       setCookieFront('localConsent', JSON.stringify(formData), EXPIRY_COOKIE_TIME);
@@ -90,22 +90,22 @@ const ModalCookies = () => {
           <p className={styles['form-title']}>
             <b>Please select which cookies you&apos;d like to allow:</b>
           </p>
-          <div className={styles['input-wrapper']}>
+          <Wrapper>
             <input type="checkbox" id="functionality_storage" name="functionality_storage" />
             <label htmlFor="functionality_storage">Strictly Necessary Cookies</label>
-          </div>
-          <div className={styles['input-wrapper']}>
+          </Wrapper>
+          <Wrapper>
             <input type="checkbox" id="analytics_storage" name="analytics_storage" />
             <label htmlFor="analytics_storage">Analytics Cookies</label>
-          </div>
-          <div className={styles['input-wrapper']}>
+          </Wrapper>
+          <Wrapper>
             <input type="checkbox" id="personalization_storage" name="personalization_storage" />
             <label htmlFor="personalization_storage">Personalization Cookies</label>
-          </div>
-          <div className={styles['input-wrapper']}>
+          </Wrapper>
+          <Wrapper>
             <input type="checkbox" id="ad_storage" name="ad_storage" />
             <label htmlFor="ad_storage">Advertising Cookies</label>
-          </div>
+          </Wrapper>
           <button type="submit" className={styles['save-btn']}>
             Save Settings
           </button>

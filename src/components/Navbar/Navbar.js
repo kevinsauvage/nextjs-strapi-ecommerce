@@ -1,11 +1,13 @@
-import { useRouter } from 'next/router';
+'use client';
+
+import { usePathname } from 'next/navigation';
 
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 
 import styles from './Navbar.module.scss';
 
 const Navbar = ({ headerMenu }) => {
-  const { asPath } = useRouter();
+  const pathname = usePathname();
 
   return (
     <nav className={styles.nav}>
@@ -15,7 +17,7 @@ const Navbar = ({ headerMenu }) => {
             <li key={menuItem.id} className={styles.item}>
               <ActiveLink
                 activeStyle={styles.active}
-                isActive={asPath.startsWith(new URL(menuItem?.url)?.pathname)}
+                isActive={pathname.split('/')[1] === new URL(menuItem?.url)?.pathname.split('/')[1]}
                 url={menuItem?.url}
               >
                 {menuItem?.title}
