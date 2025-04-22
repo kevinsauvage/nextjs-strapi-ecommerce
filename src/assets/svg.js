@@ -76,7 +76,10 @@ export const search = (
 
 export const close = (
   <svg width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M0.259435 8.85506L9.11449 0L10 0.885506L1.14494 9.74056L0.259435 8.85506Z" fill="#767676" />
+    <path
+      d="M0.259435 8.85506L9.11449 0L10 0.885506L1.14494 9.74056L0.259435 8.85506Z"
+      fill="#767676"
+    />
     <path
       d="M0.885506 0.0889838L9.74057 8.94404L8.85506 9.82955L0 0.97449L0.885506 0.0889838Z"
       fill="#767676"
@@ -202,6 +205,11 @@ export const logout = (
 export const home = (
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M0.5 7L7 0.5L13.5 7" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
-    <path d="M2.5 8.5V13.5H11.5V8.5" stroke="#000001" strokeLinecap="round" strokeLinejoin="round" />
+    <path
+      d="M2.5 8.5V13.5H11.5V8.5"
+      stroke="#000001"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 );

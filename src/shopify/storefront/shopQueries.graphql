@@ -1,0 +1,184 @@
+query getShop($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    description
+    name
+    moneyFormat
+    shipsToCountries
+    primaryDomain {
+      host
+      url
+    }
+    brand {
+      shortDescription
+      slogan
+      logo {
+        image {
+          height
+          src
+          width
+          altText
+        }
+      }
+    }
+  }
+}
+
+query getPrivacyPolicy($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    privacyPolicy {
+      id
+      body
+      title
+    }
+  }
+}
+
+query getRefundPolicy($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    refundPolicy {
+      id
+      body
+      title
+    }
+  }
+}
+
+query getShippingPolicy($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    shippingPolicy {
+      id
+      body
+      title
+    }
+  }
+}
+
+query getTermsOfService($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    termsOfService {
+      id
+      body
+      title
+    }
+  }
+}
+
+query getSubscriptionPolicy($language: LanguageCode) @inContext(language: $language) {
+  shop {
+    subscriptionPolicy {
+      id
+      body
+      title
+    }
+  }
+}
+
+query getMenuByHandle($handle: String!, $language: LanguageCode) @inContext(language: $language) {
+  menu(handle: $handle) {
+    id
+    items {
+      id
+      resourceId
+      tags
+      title
+      type
+      url
+      items {
+        id
+        resourceId
+        tags
+        title
+        type
+        url
+        items {
+          id
+          resourceId
+          tags
+          title
+          type
+          url
+        }
+      }
+    }
+  }
+}
+
+query getPageByHandle($handle: String!, $language: LanguageCode) @inContext(language: $language) {
+  page(handle: $handle) {
+    bodySummary
+    handle
+    id
+    data: metafield(namespace: "custom", key: "data") {
+      value
+      type
+    }
+  }
+}
+
+query getShopMetaobjectByHandle($handle: MetaobjectHandleInput, $language: LanguageCode)
+@inContext(language: $language) {
+  metaobject(handle: $handle) {
+    fields {
+      key
+      value
+    }
+  }
+}
+
+query getShopMetaObjects($type: String!, $sortKey: String, $first: Int, $language: LanguageCode)
+@inContext(language: $language) {
+  metaobjects(type: $type, sortKey: $sortKey, first: $first) {
+    edges {
+      node {
+        id
+        fields {
+          key
+          value
+        }
+        handle
+        updatedAt
+        type
+      }
+    }
+  }
+}
+
+query getBlogByHandle($handle: String!, $language: LanguageCode) @inContext(language: $language) {
+  blog(handle: $handle) {
+    id
+    title
+    articles(first: 5) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
+  }
+}
+
+query getLocalization($countryCode: CountryCode) @inContext(country: $countryCode) {
+  localization {
+    availableCountries {
+      currency {
+        isoCode
+        name
+        symbol
+      }
+      isoCode
+      name
+      unitSystem
+    }
+    country {
+      currency {
+        isoCode
+        name
+        symbol
+      }
+      isoCode
+      name
+      unitSystem
+    }
+  }
+}

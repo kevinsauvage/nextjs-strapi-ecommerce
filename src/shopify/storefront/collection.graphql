@@ -1,0 +1,79 @@
+query collection(
+  $handle: String!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $filters: [ProductFilter!]
+  $sortKey: ProductCollectionSortKeys
+  $language: LanguageCode
+  $identifiers: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  collection(handle: $handle) {
+    ...CollectionFields
+    products(
+      first: $first
+      last: $last
+      after: $after
+      before: $before
+      filters: $filters
+      sortKey: $sortKey
+    ) {
+      edges {
+        cursor
+        node {
+          ...ProductFields
+        }
+      }
+      filters {
+        ...ProductFilterFields
+      }
+      pageInfo {
+        ...PageInfoFields
+      }
+    }
+  }
+}
+
+query collections(
+  $first: Int
+  $after: String
+  $before: String
+  $sortKey: CollectionSortKeys
+  $firstProducts: Int
+  $beforeProducts: String
+  $afterProducts: String
+  $productsSortKey: ProductCollectionSortKeys
+  $language: LanguageCode
+  $identifiers: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  collections(first: $first, after: $after, before: $before, sortKey: $sortKey) {
+    pageInfo {
+      ...PageInfoFields
+    }
+    edges {
+      node {
+        ...CollectionFields
+        products(
+          first: $firstProducts
+          after: $afterProducts
+          before: $beforeProducts
+          sortKey: $productsSortKey
+        ) {
+          edges {
+            cursor
+            node {
+              ...ProductFields
+            }
+          }
+          filters {
+            ...ProductFilterFields
+          }
+          pageInfo {
+            ...PageInfoFields
+          }
+        }
+      }
+    }
+  }
+}

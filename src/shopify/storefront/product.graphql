@@ -1,0 +1,69 @@
+query getProductByHandle(
+  $handle: String
+  $language: LanguageCode
+  $identifiers: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  product(handle: $handle) {
+    ...ProductFields
+  }
+}
+
+query productRecommendations(
+  $productId: ID!
+  $language: LanguageCode
+  $identifiers: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  productRecommendations(productId: $productId) {
+    ...ProductFields
+  }
+}
+
+query getProducts(
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $sortKey: ProductSortKeys
+  $query: String
+  $language: LanguageCode
+  $identifiers: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  products(
+    first: $first
+    last: $last
+    after: $after
+    before: $before
+    sortKey: $sortKey
+    query: $query
+  ) {
+    pageInfo {
+      ...PageInfoFields
+    }
+    edges {
+      cursor
+      node {
+        ...ProductFields
+      }
+    }
+  }
+}
+
+query getProductWithVariant(
+  $handle: String!
+  $selectedOptions: [SelectedOptionInput!]
+  $ignoreUnknownOptions: Boolean = true
+  $caseInsensitiveMatch: Boolean = false
+  $identifiers: [HasMetafieldsIdentifier!]!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  product(handle: $handle) {
+    ...ProductFields
+    selectedOrFirstAvailableVariant(
+      selectedOptions: $selectedOptions
+      ignoreUnknownOptions: $ignoreUnknownOptions
+      caseInsensitiveMatch: $caseInsensitiveMatch
+    ) {
+      ...ProductVariantFields
+    }
+  }
+}

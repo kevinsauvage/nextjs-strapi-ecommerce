@@ -1,0 +1,301 @@
+mutation customerAccessTokenCreate($input: CustomerAccessTokenCreateInput!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerAccessTokenCreate(input: $input) {
+    customerAccessToken {
+      accessToken
+      expiresAt
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerAccessTokenCreateWithMultipass($multipassToken: String!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerAccessTokenCreateWithMultipass(multipassToken: $multipassToken) {
+    customerAccessToken {
+      accessToken
+      expiresAt
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerAccessTokenDelete($customerAccessToken: String!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerAccessTokenDelete(customerAccessToken: $customerAccessToken) {
+    deletedAccessToken
+    deletedCustomerAccessTokenId
+    userErrors {
+      ...UserErrorsFields
+    }
+  }
+}
+
+mutation customerAccessTokenRenew($customerAccessToken: String!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerAccessTokenRenew(customerAccessToken: $customerAccessToken) {
+    customerAccessToken {
+      accessToken
+      expiresAt
+    }
+    userErrors {
+      ...UserErrorsFields
+    }
+  }
+}
+
+mutation customerActivate($id: ID!, $input: CustomerActivateInput!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerActivate(id: $id, input: $input) {
+    customer {
+      ...CustomerFields
+    }
+    customerAccessToken {
+      ...CustomerAccessTokenFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerActivateByUrl($activationUrl: URL!, $password: String!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerActivateByUrl(activationUrl: $activationUrl, password: $password) {
+    customer {
+      ...CustomerFields
+    }
+    customerAccessToken {
+      ...CustomerAccessTokenFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerAddressCreate(
+  $address: MailingAddressInput!
+  $customerAccessToken: String!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customerAddressCreate(address: $address, customerAccessToken: $customerAccessToken) {
+    customerAddress {
+      ...CustomerAddressFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerAddressDelete(
+  $customerAccessToken: String!
+  $addressId: ID!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customerAddressDelete(customerAccessToken: $customerAccessToken, id: $addressId) {
+    deletedCustomerAddressId
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerAddressUpdate(
+  $address: MailingAddressInput!
+  $customerAccessToken: String!
+  $addressId: ID!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customerAddressUpdate(
+    address: $address
+    customerAccessToken: $customerAccessToken
+    id: $addressId
+  ) {
+    customerAddress {
+      ...CustomerAddressFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+    userErrors {
+      ...UserErrorsFields
+    }
+  }
+}
+
+mutation customerCreate($input: CustomerCreateInput!) {
+  customerCreate(input: $input) {
+    customer {
+      ...CustomerFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+    userErrors {
+      ...UserErrorsFields
+    }
+  }
+}
+
+mutation customerDefaultAddressUpdate(
+  $addressId: ID!
+  $customerAccessToken: String!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customerDefaultAddressUpdate(addressId: $addressId, customerAccessToken: $customerAccessToken) {
+    customer {
+      ...CustomerFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerRecover($email: String!, $language: LanguageCode) @inContext(language: $language) {
+  customerRecover(email: $email) {
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerReset($id: ID!, $input: CustomerResetInput!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerReset(id: $id, input: $input) {
+    customer {
+      ...CustomerFields
+    }
+    customerAccessToken {
+      ...CustomerAccessTokenFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerResetByUrl($password: String!, $resetUrl: URL!, $language: LanguageCode)
+@inContext(language: $language) {
+  customerResetByUrl(password: $password, resetUrl: $resetUrl) {
+    customer {
+      ...CustomerFields
+    }
+    customerAccessToken {
+      ...CustomerAccessTokenFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+mutation customerUpdate(
+  $customer: CustomerUpdateInput!
+  $customerAccessToken: String!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customerUpdate(customer: $customer, customerAccessToken: $customerAccessToken) {
+    customer {
+      ...CustomerFields
+    }
+    customerAccessToken {
+      ...CustomerAccessTokenFields
+    }
+    customerUserErrors {
+      ...CustomerUserErrorFields
+    }
+  }
+}
+
+query getCustomer(
+  $customerAccessToken: String!
+  $language: LanguageCode
+  $metafields: [HasMetafieldsIdentifier!]!
+) @inContext(language: $language) {
+  customer(customerAccessToken: $customerAccessToken) {
+    ...CustomerFields
+    metafields(identifiers: $metafields) {
+      id
+      key
+      value
+      updatedAt
+    }
+  }
+}
+
+query getCustomerMetafields(
+  $customerAccessToken: String!
+  $metafields: [HasMetafieldsIdentifier!]!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customer(customerAccessToken: $customerAccessToken) {
+    metafields(identifiers: $metafields) {
+      key
+      value
+      updatedAt
+    }
+  }
+}
+
+query getCustomerAddresses(
+  $customerAccessToken: String!
+  $first: Int
+  $last: Int
+  $before: String
+  $after: String
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customer(customerAccessToken: $customerAccessToken) {
+    addresses(first: $first, last: $last, before: $before, after: $after) {
+      edges {
+        node {
+          ...CustomerAddressFields
+        }
+      }
+      pageInfo {
+        ...PageInfoFields
+      }
+    }
+  }
+}
+
+query getCustomerOrders(
+  $customerAccessToken: String!
+  $first: Int
+  $last: Int
+  $before: String
+  $after: String
+  $sortKey: OrderSortKeys
+  $reverse: Boolean
+  $identifiers: [HasMetafieldsIdentifier!]!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  customer(customerAccessToken: $customerAccessToken) {
+    orders(
+      first: $first
+      last: $last
+      before: $before
+      after: $after
+      sortKey: $sortKey
+      reverse: $reverse
+    ) {
+      edges {
+        node {
+          ...OrderFields
+        }
+        cursor
+      }
+      pageInfo {
+        ...PageInfoFields
+      }
+      totalCount
+    }
+  }
+}

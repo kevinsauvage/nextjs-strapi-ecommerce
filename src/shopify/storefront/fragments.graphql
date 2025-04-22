@@ -1,0 +1,553 @@
+fragment UserErrorsFields on UserError {
+  field
+  message
+}
+
+fragment CartUserErrors on CartUserError {
+  field
+  message
+  code
+}
+
+fragment PageInfoFields on PageInfo {
+  hasNextPage
+  hasPreviousPage
+  startCursor
+  endCursor
+}
+
+fragment CartLineFields on BaseCartLineConnection {
+  edges {
+    cursor
+    node {
+      id
+      quantity
+      merchandise {
+        ... on ProductVariant {
+          id
+          availableForSale
+          quantityAvailable
+          title
+          sku
+          weight
+          weightUnit
+
+          compareAtPrice {
+            amount
+            currencyCode
+          }
+          selectedOptions {
+            name
+            value
+          }
+          image {
+            ...ImageFields
+          }
+          price {
+            amount
+            currencyCode
+          }
+          product {
+            handle
+            title
+            productType
+            collections(first: 1) {
+              nodes {
+                handle
+              }
+            }
+          }
+        }
+      }
+      attributes {
+        key
+        value
+      }
+    }
+  }
+  pageInfo {
+    ...PageInfoFields
+  }
+}
+
+fragment ProductVariantFields on ProductVariant {
+  id
+  availableForSale
+  quantityAvailable
+  title
+  sku
+  weight
+  weightUnit
+  compareAtPrice {
+    ...MoneyFields
+  }
+  selectedOptions {
+    name
+    value
+  }
+  image {
+    ...ImageFields
+  }
+  price {
+    ...MoneyFields
+  }
+  product {
+    ...ProductDetails
+  }
+}
+
+fragment ProductDetails on Product {
+  handle
+  title
+  collections(first: 1) {
+    nodes {
+      handle
+    }
+  }
+}
+
+fragment MoneyFields on MoneyV2 {
+  amount
+  currencyCode
+}
+
+fragment AddressFields on MailingAddress {
+  id
+  name
+  address1
+  address2
+  city
+  country
+  company
+  countryCode
+  countryCodeV2
+  firstName
+  formattedArea
+  lastName
+  latitude
+  longitude
+  phone
+  province
+  provinceCode
+  zip
+}
+
+fragment CustomerDetails on Customer {
+  id
+  firstName
+  lastName
+  email
+  phone
+  acceptsMarketing
+  createdAt
+  updatedAt
+  defaultAddress {
+    ...AddressFields
+  }
+}
+
+fragment BuyerIdentityFields on CartBuyerIdentity {
+  email
+  phone
+  countryCode
+  customer {
+    ...CustomerDetails
+  }
+  deliveryAddressPreferences {
+    ... on MailingAddress {
+      ...AddressFields
+    }
+  }
+}
+
+fragment CartCostFields on CartCost {
+  totalAmount {
+    ...MoneyFields
+  }
+  subtotalAmount {
+    ...MoneyFields
+  }
+  totalTaxAmount {
+    ...MoneyFields
+  }
+  totalDutyAmount {
+    ...MoneyFields
+  }
+}
+
+fragment GiftCardFields on AppliedGiftCard {
+  id
+  amountUsed {
+    ...MoneyFields
+  }
+  balance {
+    ...MoneyFields
+  }
+  lastCharacters
+  presentmentAmountUsed {
+    ...MoneyFields
+  }
+}
+
+fragment CartFields on Cart {
+  id
+  createdAt
+  updatedAt
+  checkoutUrl
+  totalQuantity
+  note
+  appliedGiftCards {
+    ...GiftCardFields
+  }
+  lines(first: $first, last: $last, after: $after, before: $before) {
+    ...CartLineFields
+  }
+  attributes {
+    key
+    value
+  }
+  cost {
+    ...CartCostFields
+  }
+  discountCodes {
+    applicable
+    code
+  }
+  buyerIdentity {
+    ...BuyerIdentityFields
+  }
+}
+
+fragment ProductOptionFields on ProductOption {
+  id
+  name
+  optionValues {
+    firstSelectableVariant {
+      id
+    }
+    id
+    name
+    swatch {
+      color
+    }
+  }
+}
+
+fragment ProductImageConnection on ImageConnection {
+  edges {
+    node {
+      ...ImageFields
+    }
+  }
+}
+
+fragment ProductPriceRange on ProductPriceRange {
+  maxVariantPrice {
+    ...MoneyFields
+  }
+  minVariantPrice {
+    ...MoneyFields
+  }
+}
+
+fragment ProductVariantConnection on ProductVariantConnection {
+  edges {
+    node {
+      ...ProductVariantFields
+    }
+  }
+}
+
+fragment ProductFields on Product {
+  handle
+  id
+  title
+  availableForSale
+  descriptionHtml
+  images(first: 20) {
+    ...ProductImageConnection
+  }
+  priceRange {
+    ...ProductPriceRange
+  }
+  productType
+  tags
+  options {
+    ...ProductOptionFields
+  }
+  totalInventory
+  vendor
+  collections(first: 1) {
+    edges {
+      node {
+        handle
+      }
+    }
+  }
+  variants(first: 8) {
+    ...ProductVariantConnection
+  }
+  metafields(identifiers: $identifiers) {
+    ...MetafieldFields
+  }
+  seo {
+    description
+    title
+  }
+}
+
+fragment CollectionFields on Collection {
+  handle
+  description
+  title
+  id
+  image {
+    ...ImageFields
+  }
+  seo {
+    description
+    title
+  }
+}
+
+fragment ProductFilterFields on Filter {
+  id
+  label
+  type
+  values {
+    id
+    label
+    count
+    input
+  }
+}
+
+fragment CustomerAccessTokenFields on CustomerAccessToken {
+  accessToken
+  expiresAt
+}
+
+fragment CustomerAddressFields on MailingAddress {
+  id
+  name
+  address1
+  address2
+  city
+  country
+  company
+  countryCode
+  countryCodeV2
+  firstName
+  formattedArea
+  formatted
+  lastName
+  latitude
+  longitude
+  phone
+  province
+  provinceCode
+  zip
+}
+
+fragment CustomerFields on Customer {
+  id
+  firstName
+  lastName
+  email
+  phone
+  acceptsMarketing
+  createdAt
+  updatedAt
+  defaultAddress {
+    ...CustomerAddressFields
+  }
+}
+
+fragment CustomerUserErrorFields on CustomerUserError {
+  field
+  message
+  code
+}
+
+fragment ImageFields on Image {
+  src
+  altText
+  small: url(transform: { maxHeight: 100, maxWidth: 100, crop: CENTER, preferredContentType: WEBP })
+  medium: url(
+    transform: { maxHeight: 400, maxWidth: 400, crop: CENTER, preferredContentType: WEBP }
+  )
+  large: url(transform: { maxHeight: 600, maxWidth: 600, crop: CENTER, preferredContentType: WEBP })
+  blurDataURL: url(
+    transform: { maxHeight: 4, maxWidth: 4, crop: CENTER, preferredContentType: WEBP }
+  )
+  width
+  height
+}
+
+fragment OrderLineItemFields on OrderLineItem {
+  discountedTotalPrice {
+    amount
+    currencyCode
+  }
+  quantity
+  title
+  variant {
+    id
+    availableForSale
+    quantityAvailable
+    title
+    sku
+    weight
+    weightUnit
+    compareAtPrice {
+      amount
+      currencyCode
+    }
+    selectedOptions {
+      name
+      value
+    }
+    image {
+      ...ImageFields
+    }
+    price {
+      amount
+      currencyCode
+    }
+    product {
+      handle
+      title
+      collections(first: 1) {
+        nodes {
+          handle
+        }
+      }
+    }
+  }
+}
+
+fragment OrderFields on Order {
+  id
+  name
+  fulfillmentStatus
+  canceledAt
+  cancelReason
+  successfulFulfillments(first: 100) {
+    trackingCompany
+    trackingInfo(first: 100) {
+      number
+      url
+    }
+    fulfillmentLineItems(first: 100) {
+      edges {
+        node {
+          lineItem {
+            ...OrderLineItemFields
+          }
+        }
+      }
+    }
+  }
+  currencyCode
+  customerUrl
+  email
+  financialStatus
+  orderNumber
+  phone
+  processedAt
+  subtotalPrice {
+    amount
+    currencyCode
+  }
+  totalPrice {
+    amount
+    currencyCode
+  }
+  totalRefunded {
+    currencyCode
+    amount
+  }
+  totalShippingPrice {
+    amount
+    currencyCode
+  }
+  totalTaxV2 {
+    amount
+    currencyCode
+  }
+  customAttributes {
+    key
+    value
+  }
+  shippingAddress {
+    ...CustomerAddressFields
+  }
+  metafields(identifiers: $identifiers) {
+    ...MetafieldFields
+  }
+}
+
+fragment MetafieldFields on Metafield {
+  id
+  key
+  namespace
+  value
+  type
+  createdAt
+  updatedAt
+  parentResource {
+    ... on Article {
+      id
+      metafields(identifiers: $identifiers) {
+        id
+        key
+        value
+        type
+        createdAt
+        updatedAt
+      }
+    }
+    ... on Blog {
+      id
+    }
+    ... on Cart {
+      id
+    }
+    ... on Collection {
+      id
+    }
+    ... on Company {
+      id
+    }
+    ... on CompanyLocation {
+      id
+    }
+    ... on Customer {
+      id
+    }
+    ... on Location {
+      id
+    }
+    ... on Market {
+      id
+    }
+    ... on Order {
+      id
+    }
+    ... on Page {
+      id
+    }
+    ... on Product {
+      id
+    }
+    ... on ProductVariant {
+      id
+    }
+    ... on SellingPlan {
+      id
+    }
+    ... on Shop {
+      id
+    }
+  }
+}
