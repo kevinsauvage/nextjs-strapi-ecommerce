@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 
+import { filter } from '@/assets/svg';
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
@@ -71,6 +72,17 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     ...edge.node,
   })) as Array<ProductFieldsFragment>;
 
+  const sortingOptions = [
+    {
+      label: 'Relevance',
+      name: SearchSortKeys.Relevance,
+    },
+    {
+      label: 'Price, low to high',
+      name: SearchSortKeys.Price,
+    },
+  ];
+
   return (
     <div>
       <PageBanner title={seo.search.title} />
@@ -85,10 +97,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
                   ? searchParameters
                   : { sort_key: SearchSortKeys.Relevance }
               }
-              sortingOptions={Object.entries(SearchSortKeys).map(([key, value]) => ({
-                label: key,
-                name: value,
-              }))}
+              sortingOptions={sortingOptions}
             />
 
             <SlideIn
@@ -96,6 +105,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
               title={
                 <span className={styles.filter__button}>
                   <p>Filters</p>
+                  {filter}
                 </span>
               }
             >

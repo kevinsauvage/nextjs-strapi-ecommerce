@@ -15,6 +15,7 @@ const Sort = ({
   };
   sortingOptions: { label: string; name: string }[];
 }) => {
+  console.log('🟩🟪🟦-->  ~ sortingOptions:', sortingOptions);
   const router = useRouter();
 
   const handleChange = (value: string) => {

@@ -33,6 +33,21 @@ const CollectionPage = ({
 }) => {
   const { filters, pageInfo, edges } = collection?.products || {};
 
+  const sortingOptions = [
+    {
+      label: 'Best Selling',
+      name: ProductCollectionSortKeys.BestSelling,
+    },
+    {
+      label: 'Relevance',
+      name: ProductCollectionSortKeys.Relevance,
+    },
+    {
+      label: 'Price, low to high',
+      name: ProductCollectionSortKeys.Price,
+    },
+  ];
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
@@ -41,11 +56,12 @@ const CollectionPage = ({
             {(edges?.length > 0 || filters?.length > 0) && (
               <Wrapper gap={16}>
                 <Sort
-                  query={searchParameters}
-                  sortingOptions={Object.entries(ProductCollectionSortKeys).map(([key, value]) => ({
-                    label: key,
-                    name: value,
-                  }))}
+                  query={
+                    searchParameters?.sort_key
+                      ? searchParameters
+                      : { sort_key: ProductCollectionSortKeys.BestSelling }
+                  }
+                  sortingOptions={sortingOptions}
                 />
                 <SlideIn
                   headerTitle="Filters"

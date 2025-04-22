@@ -40,7 +40,7 @@ const Dropdown = ({
         aria-expanded={open}
         aria-controls="dropdown-menu"
       >
-        {selectedOption.name}
+        {selectedOption.label}
         {arrowDown}
       </button>
       {open && (
