@@ -2,26 +2,8 @@ import CollectionBanner from '@/app/[genre]/_components/CollectionBanner/Collect
 import CollectionPage from '@/app/[genre]/_components/CollectionPage/CollectionPage';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import { storefrontSdk } from '@/shopify';
-import { adjustPaginationVariables } from '@/shopify/helpers';
-import type { ProductFilter } from '@/shopify/storefront';
+import { adjustPaginationVariables, parseFiltersQuery } from '@/shopify/helpers';
 import { ProductCollectionSortKeys } from '@/shopify/storefront';
-
-const parseFiltersQuery = (filters: string | Array<string> | undefined): ProductFilter[] => {
-  if (!filters) return [];
-
-  if (!Array.isArray(filters) && typeof filters === 'string') {
-    const [, jsonPart] = filters.split(/:(.+)/);
-    return [JSON.parse(jsonPart) as ProductFilter];
-  }
-
-  return filters
-    .map((item): ProductFilter | undefined => {
-      const [, jsonPart] = item.split(/:(.+)/);
-      if (!jsonPart) return undefined;
-      return JSON.parse(jsonPart) as ProductFilter;
-    })
-    .filter((filter): filter is ProductFilter => filter !== undefined);
-};
 
 const CollectionLayout = async ({
   collectionSlug,

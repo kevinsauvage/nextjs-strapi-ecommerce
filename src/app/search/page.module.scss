@@ -1,3 +1,18 @@
 .search {
   margin-top: var(--space-1);
 }
+.search__header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: var(--space-1);
+  gap: var(--space-1);
+}
+
+.filter__button {
+  display: flex;
+  align-items: center;
+  padding: 5px var(--space-0);
+  border: 1px solid var(--surface-400);
+  border-radius: var(--radius);
+}

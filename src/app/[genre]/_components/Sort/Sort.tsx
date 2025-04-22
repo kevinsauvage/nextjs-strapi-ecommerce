@@ -8,10 +8,12 @@ import styles from './Sort.module.scss';
 
 const Sort = ({
   query,
+  sortingOptions,
 }: {
   query: {
     sort_key?: string;
   };
+  sortingOptions: { label: string; name: string }[];
 }) => {
   const router = useRouter();
 
@@ -22,19 +24,15 @@ const Sort = ({
     router.push(`${pathname}?${searchParameters.toString()}`);
   };
 
-  const sortingOptions = [
-    { label: 'RELEVANCE', name: 'Relevance' },
-    { label: 'BEST_SELLING', name: 'Best selling' },
-    { label: 'PRICE', name: 'Price Ascending' },
-  ];
-
   return (
     <div className={styles.sort}>
       <small>Sort by </small>
       <Dropdown
         options={sortingOptions}
         changeCallback={handleChange}
-        selected={sortingOptions.find((item) => item.label === query.sort_key)}
+        selected={sortingOptions.find(
+          (item) => item.name.toLowerCase() === query.sort_key.toLowerCase(),
+        )}
       />
     </div>
   );

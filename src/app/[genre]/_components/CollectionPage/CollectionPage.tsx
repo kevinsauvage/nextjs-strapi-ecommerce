@@ -5,7 +5,7 @@ import ProductEdgeList from '@/components/ProductEdgeList/ProductsEdgeList';
 import SlideIn from '@/components/SlideIn/SlideIn';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import type { Filter, PageInfo, ProductFieldsFragment } from '@/shopify/storefront';
-import { type CollectionFieldsFragment } from '@/shopify/storefront';
+import { type CollectionFieldsFragment, ProductCollectionSortKeys } from '@/shopify/storefront';
 
 import PageInfoPagination from '../../../../components/PageInfoPagination/PageInfoPagination';
 import Filters from '../Filters/Filters';
@@ -40,7 +40,13 @@ const CollectionPage = ({
           <Container>
             {(edges?.length > 0 || filters?.length > 0) && (
               <Wrapper gap={16}>
-                <Sort query={searchParameters} />
+                <Sort
+                  query={searchParameters}
+                  sortingOptions={Object.entries(ProductCollectionSortKeys).map(([key, value]) => ({
+                    label: key,
+                    name: value,
+                  }))}
+                />
                 <SlideIn
                   headerTitle="Filters"
                   title={

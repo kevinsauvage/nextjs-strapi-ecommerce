@@ -13926,6 +13926,205 @@ export type GetProductWithVariantQuery = {
   } | null;
 };
 
+export type PredictiveSearchQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+  types?: InputMaybe<Array<PredictiveSearchType> | PredictiveSearchType>;
+}>;
+
+export type PredictiveSearchQuery = {
+  __typename?: 'QueryRoot';
+  predictiveSearch?: {
+    __typename?: 'PredictiveSearchResult';
+    queries: Array<{ __typename?: 'SearchQuerySuggestion'; text: string }>;
+    collections: Array<{ __typename?: 'Collection'; id: string }>;
+    products: Array<{ __typename?: 'Product'; id: string }>;
+  } | null;
+};
+
+export type SearchProductsQueryVariables = Exact<{
+  query: Scalars['String']['input'];
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  identifiers?: InputMaybe<Array<HasMetafieldsIdentifier> | HasMetafieldsIdentifier>;
+  sortKey?: InputMaybe<SearchSortKeys>;
+  productFilters?: InputMaybe<Array<ProductFilter> | ProductFilter>;
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type SearchProductsQuery = {
+  __typename?: 'QueryRoot';
+  search: {
+    __typename?: 'SearchResultItemConnection';
+    edges: Array<{
+      __typename?: 'SearchResultItemEdge';
+      node:
+        | { __typename?: 'Article' }
+        | { __typename?: 'Page' }
+        | {
+            __typename?: 'Product';
+            handle: string;
+            id: string;
+            title: string;
+            availableForSale: boolean;
+            descriptionHtml: any;
+            productType: string;
+            tags: Array<string>;
+            totalInventory?: number | null;
+            vendor: string;
+            images: {
+              __typename?: 'ImageConnection';
+              edges: Array<{
+                __typename?: 'ImageEdge';
+                node: {
+                  __typename?: 'Image';
+                  src: any;
+                  altText?: string | null;
+                  width?: number | null;
+                  height?: number | null;
+                  small: any;
+                  medium: any;
+                  large: any;
+                  blurDataURL: any;
+                };
+              }>;
+            };
+            priceRange: {
+              __typename?: 'ProductPriceRange';
+              maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            };
+            options: Array<{
+              __typename?: 'ProductOption';
+              id: string;
+              name: string;
+              optionValues: Array<{
+                __typename?: 'ProductOptionValue';
+                id: string;
+                name: string;
+                firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
+                swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+              }>;
+            }>;
+            collections: {
+              __typename?: 'CollectionConnection';
+              edges: Array<{
+                __typename?: 'CollectionEdge';
+                node: { __typename?: 'Collection'; handle: string };
+              }>;
+            };
+            variants: {
+              __typename?: 'ProductVariantConnection';
+              edges: Array<{
+                __typename?: 'ProductVariantEdge';
+                node: {
+                  __typename?: 'ProductVariant';
+                  id: string;
+                  availableForSale: boolean;
+                  quantityAvailable?: number | null;
+                  title: string;
+                  sku?: string | null;
+                  weight?: number | null;
+                  weightUnit: WeightUnit;
+                  compareAtPrice?: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  } | null;
+                  selectedOptions: Array<{
+                    __typename?: 'SelectedOption';
+                    name: string;
+                    value: string;
+                  }>;
+                  image?: {
+                    __typename?: 'Image';
+                    src: any;
+                    altText?: string | null;
+                    width?: number | null;
+                    height?: number | null;
+                    small: any;
+                    medium: any;
+                    large: any;
+                    blurDataURL: any;
+                  } | null;
+                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  product: {
+                    __typename?: 'Product';
+                    handle: string;
+                    title: string;
+                    collections: {
+                      __typename?: 'CollectionConnection';
+                      nodes: Array<{ __typename?: 'Collection'; handle: string }>;
+                    };
+                  };
+                };
+              }>;
+            };
+            metafields: Array<{
+              __typename?: 'Metafield';
+              id: string;
+              key: string;
+              namespace: string;
+              value: string;
+              type: string;
+              createdAt: any;
+              updatedAt: any;
+              parentResource:
+                | {
+                    __typename?: 'Article';
+                    id: string;
+                    metafields: Array<{
+                      __typename?: 'Metafield';
+                      id: string;
+                      key: string;
+                      value: string;
+                      type: string;
+                      createdAt: any;
+                      updatedAt: any;
+                    } | null>;
+                  }
+                | { __typename?: 'Blog'; id: string }
+                | { __typename?: 'Cart'; id: string }
+                | { __typename?: 'Collection'; id: string }
+                | { __typename?: 'Company'; id: string }
+                | { __typename?: 'CompanyLocation'; id: string }
+                | { __typename?: 'Customer'; id: string }
+                | { __typename?: 'Location'; id: string }
+                | { __typename?: 'Market'; id: string }
+                | { __typename?: 'Order'; id: string }
+                | { __typename?: 'Page'; id: string }
+                | { __typename?: 'Product'; id: string }
+                | { __typename?: 'ProductVariant'; id: string }
+                | { __typename?: 'SellingPlan'; id: string }
+                | { __typename?: 'Shop'; id: string };
+            } | null>;
+            seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+          };
+    }>;
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    productFilters: Array<{
+      __typename?: 'Filter';
+      id: string;
+      label: string;
+      type: FilterType;
+      values: Array<{
+        __typename?: 'FilterValue';
+        id: string;
+        label: string;
+        count: number;
+        input: any;
+      }>;
+    }>;
+  };
+};
+
 export type GetShopQueryVariables = Exact<{
   language?: InputMaybe<LanguageCode>;
 }>;
@@ -15526,6 +15725,62 @@ export const GetProductWithVariantDocument = gql`
   ${ProductFieldsFragmentDoc}
   ${ProductVariantFieldsFragmentDoc}
 `;
+export const PredictiveSearchDocument = gql`
+  query predictiveSearch($query: String!, $types: [PredictiveSearchType!]) {
+    predictiveSearch(query: $query, types: $types) {
+      queries {
+        text
+      }
+      collections {
+        id
+      }
+      products {
+        id
+      }
+    }
+  }
+`;
+export const SearchProductsDocument = gql`
+  query searchProducts(
+    $query: String!
+    $first: Int
+    $last: Int
+    $after: String
+    $before: String
+    $identifiers: [HasMetafieldsIdentifier!] = []
+    $sortKey: SearchSortKeys
+    $productFilters: [ProductFilter!]
+    $language: LanguageCode
+  ) @inContext(language: $language) {
+    search(
+      query: $query
+      first: $first
+      types: [PRODUCT]
+      last: $last
+      after: $after
+      before: $before
+      productFilters: $productFilters
+      sortKey: $sortKey
+    ) {
+      edges {
+        node {
+          ... on Product {
+            ...ProductFields
+          }
+        }
+      }
+      pageInfo {
+        ...PageInfoFields
+      }
+      productFilters {
+        ...ProductFilterFields
+      }
+    }
+  }
+  ${ProductFieldsFragmentDoc}
+  ${PageInfoFieldsFragmentDoc}
+  ${ProductFilterFieldsFragmentDoc}
+`;
 export const GetShopDocument = gql`
   query getShop($language: LanguageCode) @inContext(language: $language) {
     shop {
@@ -16264,6 +16519,36 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'getProductWithVariant',
+        'query',
+        variables,
+      );
+    },
+    predictiveSearch(
+      variables: PredictiveSearchQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<PredictiveSearchQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<PredictiveSearchQuery>(PredictiveSearchDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'predictiveSearch',
+        'query',
+        variables,
+      );
+    },
+    searchProducts(
+      variables: SearchProductsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<SearchProductsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<SearchProductsQuery>(SearchProductsDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'searchProducts',
         'query',
         variables,
       );

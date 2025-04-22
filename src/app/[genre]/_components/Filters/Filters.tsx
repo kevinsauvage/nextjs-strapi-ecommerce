@@ -106,9 +106,6 @@ const Filters = ({
       ),
     };
 
-    if (!components[filter?.id as keyof typeof components]) {
-      return;
-    }
     const component = components[filter?.id as keyof typeof components];
 
     return (

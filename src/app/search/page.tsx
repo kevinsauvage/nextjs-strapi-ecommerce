@@ -1,3 +1,5 @@
+import { notFound } from 'next/navigation';
+
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
@@ -5,9 +7,15 @@ import EmptyState from '@/components/EmptyState/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination/PageInfoPagination';
 import ProductsList from '@/components/ProductList/ProductsList';
 import Search from '@/components/SearchForm/SearchForm';
+import SlideIn from '@/components/SlideIn/SlideIn';
 import seo from '@/data/seo';
+import { adjustPaginationVariables, parseFiltersQuery } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
-import { ProductSortKeys } from '@/shopify/storefront';
+import type { ProductFieldsFragment, SearchProductsQuery } from '@/shopify/storefront';
+import { SearchSortKeys } from '@/shopify/storefront';
+
+import Filters from '../[genre]/_components/Filters/Filters';
+import Sort from '../[genre]/_components/Sort/Sort';
 
 import styles from './page.module.scss';
 
@@ -16,26 +24,52 @@ type SearchParameters = {
   after?: string;
   before?: string;
   sort_key?: string;
+  filters?: string;
+  reverse?: boolean;
+};
+
+const buildShopifySearchQuery = (query: string) => {
+  if (!query) {
+    return '';
+  }
+  const trimmed = query.trim();
+
+  if (trimmed.includes(' ')) {
+    return `"${trimmed}"`;
+  }
+
+  return `${trimmed}*`;
 };
 
 const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> }) => {
   const searchParameters = await searchParams;
 
-  const searchResponse = await storefrontSdk().getProducts({
-    after: searchParameters.after || undefined,
-    before: searchParameters.before,
-    first: 10,
+  const sortKey = Object.keys(SearchSortKeys).find(
+    (key) => key.toLowerCase() === searchParameters.sort_key?.toLowerCase(),
+  ) as keyof typeof SearchSortKeys;
+
+  const response: SearchProductsQuery = await storefrontSdk().searchProducts({
+    ...adjustPaginationVariables({
+      after: searchParameters.after,
+      before: searchParameters.before,
+      first: 10,
+    }),
     identifiers: [],
-    query: `${searchParameters.searchQuery}*`,
-    sortKey:
-      ProductSortKeys[searchParameters.sort_key as keyof typeof ProductSortKeys] ||
-      ProductSortKeys.CreatedAt,
+    productFilters: parseFiltersQuery(searchParameters?.filters),
+    query: buildShopifySearchQuery(searchParameters.searchQuery),
+    sortKey: SearchSortKeys[sortKey] || SearchSortKeys.Relevance,
   });
 
-  const pageInfo = searchResponse.products.pageInfo;
-  const products = searchResponse.products.edges.map((edge) => ({
+  if (!response?.search?.edges) {
+    notFound();
+  }
+
+  const pageInfo = response.search.pageInfo;
+  const filters = response.search.productFilters;
+
+  const products = response.search?.edges.map((edge) => ({
     ...edge.node,
-  }));
+  })) as Array<ProductFieldsFragment>;
 
   return (
     <div>
@@ -44,6 +78,30 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
       <Search searchQuery={searchParameters.searchQuery} />
       <Container size="medium">
         <div className={styles.search}>
+          <div className={styles.search__header}>
+            <Sort
+              query={
+                searchParameters?.sort_key
+                  ? searchParameters
+                  : { sort_key: SearchSortKeys.Relevance }
+              }
+              sortingOptions={Object.entries(SearchSortKeys).map(([key, value]) => ({
+                label: key,
+                name: value,
+              }))}
+            />
+
+            <SlideIn
+              headerTitle="Filters"
+              title={
+                <span className={styles.filter__button}>
+                  <p>Filters</p>
+                </span>
+              }
+            >
+              <Filters filters={filters} query={searchParameters} />
+            </SlideIn>
+          </div>
           {products?.length > 0 ? (
             <>
               <ProductsList layout="grid" products={products} />

@@ -1,0 +1,50 @@
+query predictiveSearch($query: String!, $types: [PredictiveSearchType!]) {
+  predictiveSearch(query: $query, types: $types) {
+    queries {
+      text
+    }
+    collections {
+      id
+    }
+    products {
+      id
+    }
+  }
+}
+
+query searchProducts(
+  $query: String!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $identifiers: [HasMetafieldsIdentifier!] = []
+  $sortKey: SearchSortKeys
+  $productFilters: [ProductFilter!]
+  $language: LanguageCode
+) @inContext(language: $language) {
+  search(
+    query: $query
+    first: $first
+    types: [PRODUCT]
+    last: $last
+    after: $after
+    before: $before
+    productFilters: $productFilters
+    sortKey: $sortKey
+  ) {
+    edges {
+      node {
+        ... on Product {
+          ...ProductFields
+        }
+      }
+    }
+    pageInfo {
+      ...PageInfoFields
+    }
+    productFilters {
+      ...ProductFilterFields
+    }
+  }
+}
