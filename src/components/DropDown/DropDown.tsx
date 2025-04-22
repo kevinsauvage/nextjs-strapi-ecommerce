@@ -26,7 +26,7 @@ const Dropdown = ({
 
   const handleOptionSelect = (option: { label: string; name: string }) => () => {
     setSelectedOption(option);
-    changeCallback(option.label);
+    changeCallback(option.name);
     toggleOpen();
   };
 
@@ -62,7 +62,7 @@ const Dropdown = ({
                 aria-selected={option.label === selectedOption.label}
                 tabIndex={index}
               >
-                <p>{option.name}</p>
+                <p>{option.label}</p>
               </li>
             ))}
         </ul>
