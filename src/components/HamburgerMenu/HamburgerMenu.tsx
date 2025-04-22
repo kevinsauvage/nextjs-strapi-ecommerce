@@ -29,10 +29,7 @@ const HamburgerMenu = ({
         ) : (
           typeof menuItem.url === 'string' && (
             <Link
-              href={menuItem.url.replace(
-                'https://ecomfashionstore.myshopify.com',
-                global.window?.location.origin,
-              )}
+              href={menuItem.url.includes('http') ? new URL(menuItem.url)?.pathname : menuItem.url}
               className={styles['menu-link']}
             >
               {title}
