@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import type { Filter } from '@/shopify/storefront';
 
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { Filter } from '@/shopify/storefront';
 
 import styles from './PriceFilters.module.scss';
 

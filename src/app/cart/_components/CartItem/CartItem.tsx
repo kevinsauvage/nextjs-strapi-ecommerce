@@ -1,6 +1,5 @@
 'use client';
 
-import type { CartLineFieldsFragment } from '@/shopify/storefront';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -9,6 +8,7 @@ import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import { Row, TData } from '@/components/Table/Table';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import type { CartLineFieldsFragment } from '@/shopify/storefront';
 
 import styles from './CartItem.module.scss';
 

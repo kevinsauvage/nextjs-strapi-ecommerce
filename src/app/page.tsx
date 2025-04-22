@@ -1,4 +1,3 @@
-import { ProductSortKeys } from '@/shopify/storefront/index';
 import { notFound } from 'next/navigation';
 
 import CollectionGrid from '@/app/[genre]/_components/CollectionGrid/CollectionGrid';
@@ -8,6 +7,7 @@ import CollectionsRow from '@/components/CollectionsRow/CollectionsRow';
 import Container from '@/components/Container/Container';
 import ProductsDisplay from '@/components/ProductsDisplay/ProductsDisplay';
 import { storefrontSdk } from '@/shopify/index';
+import { ProductSortKeys } from '@/shopify/storefront/index';
 
 export type HomePageData = {
   banner: BannerHomeType;

@@ -1,8 +1,7 @@
 'use client';
 
-import type { ProductFieldsFragment } from '@/shopify/storefront';
-
 import ProductDescription from '@/components/ProductDescription/ProductDescription';
+import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 import Modal from '../Modal/Modal';
 

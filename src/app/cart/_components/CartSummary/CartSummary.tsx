@@ -1,6 +1,5 @@
-import type { GetCartQuery } from '@/shopify/storefront';
-
 import CheckoutButton from '@/components/CheckoutButton/CheckoutButton';
+import type { GetCartQuery } from '@/shopify/storefront';
 
 import styles from './CartSummary.module.scss';
 

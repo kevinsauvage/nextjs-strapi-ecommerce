@@ -1,8 +1,8 @@
 'use client';
 import { useCallback, useEffect, useState } from 'react';
-import type { GetProductByHandleQuery, ProductFieldsFragment } from '@/shopify/storefront';
 
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import type { GetProductByHandleQuery, ProductFieldsFragment } from '@/shopify/storefront';
 type OptionValues = ProductFieldsFragment['options'][number]['optionValues'][number];
 
 type SelectedProductOptionType = {

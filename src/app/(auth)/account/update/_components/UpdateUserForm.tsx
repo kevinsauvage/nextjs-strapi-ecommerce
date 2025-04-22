@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import type { CustomerUserError } from '@/shopify/storefront';
 
 import { updateUserAction } from '@/actions/usersActions';
 import Form from '@/components/_forms/Form/Form';
@@ -12,6 +11,7 @@ import Button from '@/components/Button/Button';
 import config from '@/config';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import type { CustomerUserError } from '@/shopify/storefront';
 
 import styles from './UpdateUserForm.module.scss';
 

@@ -1,13 +1,13 @@
 'use client';
 
 import { createContext, useCallback, useMemo } from 'react';
-import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
 import { redirect } from 'next/navigation';
 
 import {
   removeProductFromWishListAction,
   setProductToWishListAction,
 } from '@/actions/whishlistActions';
+import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
 
 import { useToastContext } from '../ToastContext/NotificationContext';
 

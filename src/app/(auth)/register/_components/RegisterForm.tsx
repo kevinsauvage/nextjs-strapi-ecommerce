@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import type { CustomerUserError } from '@/shopify/storefront';
 import Link from 'next/link';
 
 import { registerAction } from '@/actions/authActions';
@@ -11,6 +10,7 @@ import Input from '@/components/_forms/Input/Input';
 import Wrapper from '@/components/Wrapper/Wrapper';
 import config from '@/config/index';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { CustomerUserError } from '@/shopify/storefront';
 
 const { userFeedback, routes } = config;
 

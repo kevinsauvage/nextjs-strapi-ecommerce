@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import type { MailingAddress } from '@/shopify/storefront';
 
 import { updateAddressAction } from '@/actions/addressesActions';
 import Form from '@/components/_forms/Form/Form';
@@ -10,6 +9,7 @@ import Input from '@/components/_forms/Input/Input';
 import Row from '@/components/_forms/Row/Row';
 import Button from '@/components/Button/Button';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { MailingAddress } from '@/shopify/storefront';
 
 import styles from './EditAddressForm.module.scss';
 

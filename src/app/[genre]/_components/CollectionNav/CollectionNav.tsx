@@ -1,7 +1,6 @@
-import type { GetMenuByHandleQuery } from '@/shopify/storefront';
-
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
 import Container from '@/components/Container/Container';
+import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 
 import styles from './CollectionNav.module.scss';
 

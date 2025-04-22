@@ -1,7 +1,6 @@
-import type { ProductFieldsFragment } from '@/shopify/storefront';
-
 import BlockLoader from '@/components/_loaders/BlockLoader/BlockLoader';
 import ListDisplay from '@/components/ListDisplay/ListDisplay';
+import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 import ProductCardDefault from '../ProductCardDefault/ProductCardDefault';
 

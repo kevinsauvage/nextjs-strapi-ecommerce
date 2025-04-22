@@ -2,12 +2,12 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import type { CustomerUserError } from '@/shopify/storefront';
 
 import { recoverPasswordAction } from '@/actions/authActions';
 import Form from '@/components/_forms/Form/Form';
 import Input from '@/components/_forms/Input/Input';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { CustomerUserError } from '@/shopify/storefront';
 
 const SubmitButton = () => {
   const status = useFormStatus();

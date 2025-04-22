@@ -1,8 +1,8 @@
-import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
 import Link from 'next/link';
 
 import { bag, heart, home, logout, user } from '@/assets/svg';
 import config from '@/config/index';
+import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
 
 import Collapsible from '../Collapsible/Collapsible';
 import Logo from '../Logo/Logo';

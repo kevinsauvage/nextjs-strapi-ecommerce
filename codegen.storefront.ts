@@ -7,6 +7,7 @@ const config: CodegenConfig = {
       plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
     },
   },
+  hooks: { afterAllFileWrite: ['prettier --write'] },
   // Generate schema base on the Shopify Storefront API
   // https://shopify.dev/api/storefront/2025-01
   schema: [

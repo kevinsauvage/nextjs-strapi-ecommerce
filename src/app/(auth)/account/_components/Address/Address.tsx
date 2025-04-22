@@ -1,6 +1,5 @@
 'use client';
 
-import type { MailingAddress } from '@/shopify/storefront';
 import Link from 'next/link';
 
 import { deleteAddressAction, setDefaultAddressAction } from '@/actions/addressesActions';
@@ -8,6 +7,7 @@ import { edit, remove } from '@/assets/svg';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import config from '@/config';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { MailingAddress } from '@/shopify/storefront';
 
 import style from './Address.module.scss';
 

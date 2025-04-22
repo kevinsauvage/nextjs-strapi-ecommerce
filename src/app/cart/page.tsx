@@ -1,4 +1,3 @@
-import type { PageInfo } from '@/shopify/storefront';
 import { notFound } from 'next/navigation';
 
 import { getCartAction } from '@/actions/cartActions';
@@ -8,6 +7,7 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
 import EmptyState from '@/components/EmptyState/EmptyState';
 import seo from '@/data/seo';
+import type { PageInfo } from '@/shopify/storefront';
 
 import CartSummary from './_components/CartSummary/CartSummary';
 import CartTable from './_components/CartTable/CartTable';

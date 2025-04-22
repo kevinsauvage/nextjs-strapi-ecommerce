@@ -1,10 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import type { Filter as FilterType } from '@/shopify/storefront';
 
 import { arrowRight } from '@/assets/svg';
 import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
+import type { Filter as FilterType } from '@/shopify/storefront';
 
 import styles from './Filter.module.scss';
 

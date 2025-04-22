@@ -1,5 +1,3 @@
-import { ProductSortKeys } from '@/shopify/storefront';
-
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 import Container from '@/components/Container/Container';
@@ -9,6 +7,7 @@ import ProductsList from '@/components/ProductList/ProductsList';
 import Search from '@/components/SearchForm/SearchForm';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
+import { ProductSortKeys } from '@/shopify/storefront';
 
 import styles from './page.module.scss';
 

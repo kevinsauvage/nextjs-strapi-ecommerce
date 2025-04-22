@@ -39,3 +39,7 @@ next-env.d.ts
 /public/sitemap*
 .dccache
 .eslintrc.js
+
+
+/src/shopify/storefront/index.ts
+/src/shopify/admin/index.ts

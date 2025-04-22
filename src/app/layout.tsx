@@ -1,4 +1,3 @@
-import type { CartFieldsFragment } from '@/shopify/storefront';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { ToastProvider } from 'src/contexts/ToastContext/NotificationContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
@@ -9,6 +8,7 @@ import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { storefrontSdk } from '@/shopify';
+import type { CartFieldsFragment } from '@/shopify/storefront';
 import { getUser } from '@/utils/users';
 
 import LayoutContainer from './LayoutContainer';

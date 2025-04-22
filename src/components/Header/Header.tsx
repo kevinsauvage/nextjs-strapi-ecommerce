@@ -1,9 +1,8 @@
-import type { GetMenuByHandleQuery } from '@/shopify/storefront';
-
 import Container from '@/components/Container/Container';
 import Logo from '@/components/Logo/Logo';
 import Navbar from '@/components/Navbar/Navbar';
 import UserButtons from '@/components/UserButtons/UserButtons';
+import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 
 import HamburgerMenu from '../HamburgerMenu/HamburgerMenu';

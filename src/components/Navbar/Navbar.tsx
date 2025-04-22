@@ -1,9 +1,9 @@
 'use client';
 
-import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 import { usePathname } from 'next/navigation';
 
 import ActiveLink from '@/components/ActiveLink/ActiveLink';
+import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 
 import styles from './Navbar.module.scss';
 

@@ -1,7 +1,6 @@
-import type { GetCartQuery, PageInfo } from '@/shopify/storefront';
-
 import PageInfoPagination from '@/components/PageInfoPagination/PageInfoPagination';
 import Table, { Body, Head, Row, THead } from '@/components/Table/Table';
+import type { GetCartQuery, PageInfo } from '@/shopify/storefront';
 
 import CartItem from '../CartItem/CartItem';
 

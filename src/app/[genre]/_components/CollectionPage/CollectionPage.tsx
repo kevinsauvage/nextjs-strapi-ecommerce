@@ -1,12 +1,11 @@
-import type { Filter, PageInfo, ProductFieldsFragment } from '@/shopify/storefront';
-import { type CollectionFieldsFragment } from '@/shopify/storefront';
-
 import { filter } from '@/assets/svg';
 import Container from '@/components/Container/Container';
 import EmptyState from '@/components/EmptyState/EmptyState';
 import ProductEdgeList from '@/components/ProductEdgeList/ProductsEdgeList';
 import SlideIn from '@/components/SlideIn/SlideIn';
 import Wrapper from '@/components/Wrapper/Wrapper';
+import type { Filter, PageInfo, ProductFieldsFragment } from '@/shopify/storefront';
+import { type CollectionFieldsFragment } from '@/shopify/storefront';
 
 import PageInfoPagination from '../../../../components/PageInfoPagination/PageInfoPagination';
 import Filters from '../Filters/Filters';

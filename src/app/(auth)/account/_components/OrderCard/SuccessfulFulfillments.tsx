@@ -1,8 +1,8 @@
-import type { GetCustomerOrdersQuery } from '@/shopify/storefront';
 import Link from 'next/link';
 import { v4 as uuidv4 } from 'uuid';
 
 import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
+import type { GetCustomerOrdersQuery } from '@/shopify/storefront';
 
 import AccountRow from '../AccountRow/AccountRow';
 

@@ -1,7 +1,7 @@
-import type { CustomerAccessToken } from '@/shopify/storefront';
 import { cookies } from 'next/headers';
 
 import config from '@/config';
+import type { CustomerAccessToken } from '@/shopify/storefront';
 
 export const setShopifyToken = async (customerAccessToken: CustomerAccessToken) => {
   if (!customerAccessToken) return;

@@ -1,6 +1,5 @@
-import type { PageInfo } from '@/shopify/storefront';
-
 import Button from '@/components/Button/Button';
+import type { PageInfo } from '@/shopify/storefront';
 import { getCurrentUrlWithoutParameters } from '@/utils';
 
 import styles from './PageInfoPagination.module.scss';

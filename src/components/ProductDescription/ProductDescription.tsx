@@ -1,12 +1,11 @@
 'use client';
 
-import type { GetProductByHandleQuery } from '@/shopify/storefront';
-
 import { bag, heart } from '@/assets/svg';
 import Button from '@/components/Button/Button';
 import QuantityUpdater from '@/components/QuantityUpdater/QuantityUpdater';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
+import type { GetProductByHandleQuery } from '@/shopify/storefront';
 
 import Options from '../Options/Options';
 import PhotoGallery from '../PhotoGallery/PhotoGallery';

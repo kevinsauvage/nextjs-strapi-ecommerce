@@ -1,7 +1,6 @@
 'use client';
 
 import { createContext, useCallback, useMemo, useState } from 'react';
-import type { CartFieldsFragment } from '@/shopify/storefront';
 import { useSearchParams } from 'next/navigation';
 
 import {
@@ -9,6 +8,7 @@ import {
   cartLinesRemoveAction,
   cartLinesUpdateAction,
 } from '@/actions/cartActions';
+import type { CartFieldsFragment } from '@/shopify/storefront';
 
 import { useToastContext } from '../ToastContext/NotificationContext';
 

@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import type { ProductFieldsFragment } from '@/shopify/storefront';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,6 +10,7 @@ import ModalProduct from '@/components/_modals/modalProduct/ModalProduct';
 import ModalPortal from '@/components/ModalPortal/ModalPortal';
 import Tooltip from '@/components/Tooltip/Tooltip';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 import Price from '../Price/Price';
 

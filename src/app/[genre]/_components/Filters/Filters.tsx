@@ -1,11 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import type { Filter } from '@/shopify/storefront';
-import { FilterType } from '@/shopify/storefront';
 import { usePathname, useRouter } from 'next/navigation';
 
 import Button from '@/components/Button/Button';
+import type { Filter } from '@/shopify/storefront';
+import { FilterType } from '@/shopify/storefront';
 import { numberOfDifferences } from '@/utils/array';
 
 import ColorFilters from './ColorFilters/ColorFilters';

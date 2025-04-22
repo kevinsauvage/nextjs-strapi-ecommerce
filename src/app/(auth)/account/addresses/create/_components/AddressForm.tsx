@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import type { CustomerUserError } from '@/shopify/storefront';
 
 import { createAddressAction } from '@/actions/addressesActions';
 import Form from '@/components/_forms/Form/Form';
@@ -11,6 +10,7 @@ import Row from '@/components/_forms/Row/Row';
 import Button from '@/components/Button/Button';
 import config from '@/config';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import type { CustomerUserError } from '@/shopify/storefront';
 
 import styles from './AddressForm.module.scss';
 

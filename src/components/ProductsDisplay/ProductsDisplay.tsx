@@ -1,10 +1,10 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 import ProductsList from '@/components/ProductList/ProductsList';
 import SectionTitle from '@/components/SectionTitle/SectionTitle';
+import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 import styles from './ProductsDisplay.module.scss';
 

@@ -1,7 +1,6 @@
 'use client';
 
 import type { Filter } from '@/shopify/storefront';
-
 import { extractUniqueColorNames } from '@/utils/products';
 
 import styles from './ColorFilters.module.scss';
