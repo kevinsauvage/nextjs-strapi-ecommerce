@@ -16,7 +16,6 @@ const ProductsDisplay = ({
   newArrival: ProductFieldsFragment[];
 }) => {
   const [index, setIndex] = useState(0);
-  const [products] = useState([bestSelling, newArrival]);
   const nav = useMemo(() => [{ title: 'Best selling' }, { title: 'New Arrival' }], []);
 
   return (
@@ -38,7 +37,7 @@ const ProductsDisplay = ({
             ))}
         </ul>
       </div>
-      <ProductsList products={products[index]} layout="grid" />
+      <ProductsList products={[bestSelling, newArrival][index]} layout="grid" />
     </div>
   );
 };
