@@ -13,7 +13,6 @@ const DefaultFilters = ({
   handleSetFilters: (filterId: string, input: string) => void;
   isSelected: (filterId: string, input: string) => boolean;
 }) => {
-  console.log('🟩🟪🟦-->  ~ filter:', filter);
   return filter?.values?.map(
     (value) =>
       typeof value.input === 'string' && (
