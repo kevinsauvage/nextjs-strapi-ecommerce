@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import Toast from '@/components/Toast/Toast';
+import Toast from './_components/Toast/Toast';
 
 export const ToastContext = createContext<{
   showToast: ShowToast;

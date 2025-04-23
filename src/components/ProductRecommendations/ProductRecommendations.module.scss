@@ -1,0 +1,13 @@
+.recommendations {
+  margin: var(--space-4) 0;
+
+  li {
+    &:last-of-type {
+      display: none;
+    }
+  }
+}
+
+.title {
+  margin-bottom: var(--space-1);
+}

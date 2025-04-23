@@ -1,9 +1,9 @@
 import { filter } from '@/assets/svg';
 import Container from '@/components/Container/Container';
 import EmptyState from '@/components/EmptyState/EmptyState';
+import Flexbox from '@/components/Flexbox/Flexbox';
 import ProductEdgeList from '@/components/ProductEdgeList/ProductsEdgeList';
 import SlideIn from '@/components/SlideIn/SlideIn';
-import Wrapper from '@/components/Wrapper/Wrapper';
 import type { Filter, PageInfo, ProductFieldsFragment } from '@/shopify/storefront';
 import { type CollectionFieldsFragment, ProductCollectionSortKeys } from '@/shopify/storefront';
 
@@ -54,7 +54,7 @@ const CollectionPage = ({
         <div className={styles.header}>
           <Container>
             {(edges?.length > 0 || filters?.length > 0) && (
-              <Wrapper gap={16}>
+              <Flexbox gap={16}>
                 <Sort
                   query={
                     searchParameters?.sort_key
@@ -74,7 +74,7 @@ const CollectionPage = ({
                 >
                   <Filters filters={filters} query={searchParameters} />
                 </SlideIn>
-              </Wrapper>
+              </Flexbox>
             )}
           </Container>
         </div>

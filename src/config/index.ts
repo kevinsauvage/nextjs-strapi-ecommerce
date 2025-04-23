@@ -20,7 +20,7 @@ const config = {
   paymentUrl: 'https://checkout.ecomtestshopi.xyz',
   routes: {
     home: '/',
-    cart: '/cart?first=2',
+    cart: '/cart',
     about: '/about',
     login: '/login',
     collection: '/shop',

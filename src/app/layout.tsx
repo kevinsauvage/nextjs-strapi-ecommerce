@@ -12,8 +12,6 @@ import { storefrontSdk } from '@/shopify';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 import { getUser } from '@/utils/users';
 
-import LayoutContainer from './LayoutContainer';
-
 import '@/styles/reset.scss';
 import '@/styles/globals.scss';
 import '@/styles/typography.scss';
@@ -30,20 +28,21 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const userWishlist = await getWishlistAction();
 
   return (
-    <LayoutContainer>
-      <GtmScript />
-
-      <CookieBanner />
-      <ToastProvider>
-        <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
-          <UserProvider user={user} userWishlist={userWishlist}>
-            <Header headerMenu={headerMenu?.menu?.items} />
-            {children}
-            <Footer />
-          </UserProvider>
-        </CartProvider>
-      </ToastProvider>
-    </LayoutContainer>
+    <html lang="en">
+      <body>
+        <GtmScript />
+        <CookieBanner />
+        <ToastProvider>
+          <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
+            <UserProvider user={user} userWishlist={userWishlist}>
+              <Header headerMenu={headerMenu?.menu?.items} />
+              {children}
+              <Footer />
+            </UserProvider>
+          </CartProvider>
+        </ToastProvider>
+      </body>
+    </html>
   );
 };
 

@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { registerAction } from '@/actions/authActions';
 import Form from '@/components/_forms/Form/Form';
 import Input from '@/components/_forms/Input/Input';
-import Wrapper from '@/components/Wrapper/Wrapper';
+import Flexbox from '@/components/Flexbox/Flexbox';
 import config from '@/config/index';
 import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import type { CustomerUserError } from '@/shopify/storefront';
@@ -138,10 +138,10 @@ const RegisterForm = () => {
       />
 
       <SubmitButton />
-      <Wrapper gap="6px">
+      <Flexbox gap="6px">
         <Link href={routes.login}>LOGIN</Link> or
         <Link href={routes.emailResetPassword}>RESET PASSWORD</Link>
-      </Wrapper>
+      </Flexbox>
     </Form>
   );
 };

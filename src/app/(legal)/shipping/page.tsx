@@ -1,11 +1,10 @@
 /* eslint-disable react/no-danger */
 import PageBanner from '@/components/_banners/PageBanner/PageBanner';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Container from '@/components/Container/Container';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
 
-import styles from './page.module.scss';
+import MainContent from '../_components/MainContent/MainContent';
 
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});
@@ -16,11 +15,9 @@ const ShippingPage = async () => {
     <div>
       <PageBanner title={title} />
       <Breadcrumbs lastElement={title} />
-      <div className={styles.privacy}>
-        <Container>
-          <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
-        </Container>
-      </div>
+      <MainContent>
+        <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
+      </MainContent>
     </div>
   );
 };

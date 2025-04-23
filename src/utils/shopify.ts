@@ -30,8 +30,3 @@ export const getShopifyCartId = async () => {
   const cookieStore = await cookies();
   return cookieStore.get(config.cookies.cartId)?.value;
 };
-
-export const getShopifyDelegateToken = async () => {
-  const cookiesStore = await cookies();
-  return cookiesStore.get(config.cookies.delegateToken)?.value;
-};

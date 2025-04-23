@@ -124,6 +124,7 @@ module.exports = {
     'unicorn/no-array-for-each': 0,
     'unicorn/filename-case': 0,
     'unicorn/no-new-array': 0,
+    'unicorn/no-null': 0,
 
     // Sort Keys
     'sort-keys': 0,

@@ -3,8 +3,8 @@
 import { useCallback } from 'react';
 
 import Form from '@/components/_forms/Form/Form';
+import Flexbox from '@/components/Flexbox/Flexbox';
 import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
-import Wrapper from '@/components/Wrapper/Wrapper';
 import { transformedSettings } from '@/utils/consents';
 import { setCookieFront } from '@/utils/cookies';
 
@@ -98,22 +98,22 @@ const ModalCookies = ({
           <p className={styles['form-title']}>
             <b>Please select which cookies you&apos;d like to allow:</b>
           </p>
-          <Wrapper>
+          <Flexbox>
             <input type="checkbox" id="functionality_storage" name="functionality_storage" />
             <label htmlFor="functionality_storage">Strictly Necessary Cookies</label>
-          </Wrapper>
-          <Wrapper>
+          </Flexbox>
+          <Flexbox>
             <input type="checkbox" id="analytics_storage" name="analytics_storage" />
             <label htmlFor="analytics_storage">Analytics Cookies</label>
-          </Wrapper>
-          <Wrapper>
+          </Flexbox>
+          <Flexbox>
             <input type="checkbox" id="personalization_storage" name="personalization_storage" />
             <label htmlFor="personalization_storage">Personalization Cookies</label>
-          </Wrapper>
-          <Wrapper>
+          </Flexbox>
+          <Flexbox>
             <input type="checkbox" id="ad_storage" name="ad_storage" />
             <label htmlFor="ad_storage">Advertising Cookies</label>
-          </Wrapper>
+          </Flexbox>
           <button type="submit" className={styles['save-btn']}>
             Save Settings
           </button>

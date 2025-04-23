@@ -70,3 +70,16 @@ export const buildExtraHeaders = async (
     'Content-Type': 'application/json',
   };
 };
+
+export const buildShopifySearchQuery = (query: string) => {
+  if (!query) {
+    return '';
+  }
+  const trimmed = query.trim();
+
+  if (trimmed.includes(' ')) {
+    return `"${trimmed}"`;
+  }
+
+  return `${trimmed}*`;
+};

@@ -12,7 +12,7 @@ import { getUser } from '@/utils/users';
 
 import Address from '../_components/Address/Address';
 
-import styles from './page.module.scss';
+import AddNewButton from './_components/AddNewButton';
 
 const Addresses = async ({
   searchParams,
@@ -46,11 +46,7 @@ const Addresses = async ({
     <div>
       <Flexbox justify="between" align="center">
         <h2>Addresses</h2>
-        {Array.isArray(addresses) && addresses.length > 0 && (
-          <Button extraClass={styles.button} href={config.routes.createAddress}>
-            Add new address
-          </Button>
-        )}
+        {Array.isArray(addresses) && addresses.length > 0 && <AddNewButton />}
       </Flexbox>
 
       <div>
