@@ -1,3 +1,8 @@
+import { cookies } from 'next/headers';
+
+import globalConfig from '@/config';
+import config from '@/config';
+
 import type { ProductFilter } from './storefront';
 
 interface PaginationVariables {
@@ -44,4 +49,24 @@ export const parseFiltersQuery = (filters: string | Array<string> | undefined): 
       return JSON.parse(jsonPart) as ProductFilter;
     })
     .filter((filter): filter is ProductFilter => filter !== undefined);
+};
+
+export const buildExtraHeaders = async (
+  headers: Record<string, string>,
+): Promise<Record<string, string>> => {
+  const cookiesStore = await cookies();
+
+  const token = cookiesStore.get(config.cookies.delegateToken)?.value;
+  const userIp = cookiesStore.get(globalConfig.cookies.userIp)?.value;
+
+  const extraHeaders: Record<string, string> = {
+    'Shopify-Storefront-Buyer-IP': userIp || '',
+    'Shopify-Storefront-Private-Token': token || '',
+  };
+
+  return {
+    ...extraHeaders,
+    ...headers,
+    'Content-Type': 'application/json',
+  };
 };

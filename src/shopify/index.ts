@@ -1,7 +1,9 @@
 import { GraphQLClient } from 'graphql-request';
 
 import { getSdk as getAdminSdk } from './admin/index';
+import type { SdkFunctionWrapper } from './storefront/index';
 import { getSdk as getStorefrontSdk } from './storefront/index';
+import { buildExtraHeaders } from './helpers';
 
 const ACCESS_TOKEN = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
 const ADMIN_TOKEN = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
@@ -25,8 +27,38 @@ const headers = {
 
 const storefrontClient = new GraphQLClient(SHOPIFY_URL, headers);
 
+const defaultWrapper: SdkFunctionWrapper = async (
+  action,
+  _operationName,
+  _operationType,
+  _variables: Record<string, unknown>,
+) => {
+  const extraHeader = await buildExtraHeaders({});
+
+  try {
+    return action(extraHeader);
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(
+        'Error in GraphQL request:',
+        JSON.stringify(
+          {
+            _operationName,
+            _operationType,
+            _variables,
+            error,
+          },
+          undefined,
+          2,
+        ),
+      );
+      throw error;
+    }
+  }
+};
+
 export const storefrontSdk = () => {
-  return getStorefrontSdk(storefrontClient);
+  return getStorefrontSdk(storefrontClient, defaultWrapper);
 };
 
 const adminHeaders = {
