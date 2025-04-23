@@ -41,7 +41,7 @@ const Home = async () => {
   const newArrival = await storefrontSdk().getProducts({
     first: 9,
     identifiers: [],
-    sortKey: ProductSortKeys.CreatedAt,
+    sortKey: ProductSortKeys.BestSelling,
   });
 
   const homeData = await storefrontSdk().getShopMetaObjects({
