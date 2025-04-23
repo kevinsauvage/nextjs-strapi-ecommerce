@@ -6,6 +6,7 @@ import { getCartAction } from '@/actions/cartActions';
 import { getWishlistAction } from '@/actions/whishlistActions';
 import CookieBanner from '@/components/CookieBanner/CookieBanner';
 import Footer from '@/components/Footer/Footer';
+import GtmScript from '@/components/GtmScript/GtmScript';
 import Header from '@/components/Header/Header';
 import { storefrontSdk } from '@/shopify';
 import type { CartFieldsFragment } from '@/shopify/storefront';
@@ -30,6 +31,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <LayoutContainer>
+      <GtmScript />
+
       <CookieBanner />
       <ToastProvider>
         <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
