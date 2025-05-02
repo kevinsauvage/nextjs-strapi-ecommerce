@@ -1,18 +1,17 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import FormContainer from '@/components/_forms/FormContainer/FormContainer';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
 import RecoverForm from './_components/RecoverForm';
 
 const ResetPassword = () => {
+  const { title, description } = seo.recover || {};
   return (
     <div>
-      <PageBanner title={seo.recover.title} />
-      <Breadcrumbs />
-      <FormContainer>
-        <RecoverForm />
-      </FormContainer>
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs />
+      </PageBanner>
+      <RecoverForm />
     </div>
   );
 };

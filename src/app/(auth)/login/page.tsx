@@ -1,18 +1,27 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import FormContainer from '@/components/_forms/FormContainer/FormContainer';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Link from 'next/link';
+
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
 import LoginForm from './_components/LoginForm';
 
 const LoginPage = () => {
+  const { title, description } = seo.login || {};
   return (
-    <div>
-      <PageBanner title={seo.login.title} />
-      <Breadcrumbs />
-      <FormContainer>
+    <div className="flex flex-col items-center justify-center ">
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs />
+      </PageBanner>
+      <div className="bg-gray-100 w-full  pb-12 dark:bg-muted">
         <LoginForm />
-      </FormContainer>
+        <div className="text-sm text-center text-muted-foreground ">
+          Don’t have an account?{' '}
+          <Link href="/register" className="text-primary hover:underline">
+            Sign up
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

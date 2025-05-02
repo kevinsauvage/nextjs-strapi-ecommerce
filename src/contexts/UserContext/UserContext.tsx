@@ -2,14 +2,13 @@
 
 import { createContext, useCallback, useMemo } from 'react';
 import { redirect } from 'next/navigation';
+import { toast } from 'sonner';
 
 import {
   removeProductFromWishListAction,
   setProductToWishListAction,
 } from '@/actions/whishlistActions';
 import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
-
-import { useToastContext } from '../ToastContext/NotificationContext';
 
 export const UserContext = createContext({
   handleSetWishlist: async (_isWishlisted: boolean, _product: ProductFieldsFragment) => {
@@ -28,8 +27,6 @@ export const UserProvider = ({
   user: GetCustomerQuery['customer'] | null;
   userWishlist: Array<ProductFieldsFragment>;
 }) => {
-  const { showToast } = useToastContext();
-
   const handleSetWishlist = useCallback(
     async (isWishlisted: boolean, product: ProductFieldsFragment) => {
       if (!user) {
@@ -41,14 +38,14 @@ export const UserProvider = ({
         : setProductToWishListAction(userWishlist, product, user.id));
 
       if (response?.success) {
-        showToast.success(response.message);
+        toast.success(response.message);
       } else if (response?.message) {
-        showToast.error(response.message);
+        toast.error(response.message);
       } else {
-        showToast.error('Something went wrong');
+        toast.error('Something went wrong');
       }
     },
-    [user, userWishlist, showToast],
+    [user, userWishlist],
   );
 
   const values = useMemo(

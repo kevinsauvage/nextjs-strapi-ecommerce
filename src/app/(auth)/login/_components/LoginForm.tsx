@@ -1,29 +1,28 @@
 'use client';
 
 import { useActionState, useEffect } from 'react';
-import Link from 'next/link';
+import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 
 import { loginAction } from '@/actions/authActions';
-import Form from '@/components/_forms/Form/Form';
-import Input from '@/components/_forms/Input/Input';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import config from '@/config/index';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
-
-const { userFeedback, routes } = config;
-
-import { useFormStatus } from 'react-dom';
-
-import Flexbox from '@/components/Flexbox/Flexbox';
 import type { CustomerUserError } from '@/shopify/storefront';
+
+const { userFeedback } = config;
 
 const LoginButton = () => {
   const status = useFormStatus();
-  return <button type="submit">{status.pending ? 'Loading...' : 'Login'}</button>;
+  return (
+    <Button type="submit" className="w-full md:w-auto">
+      {status.pending ? 'Loading...' : 'Login'}
+    </Button>
+  );
 };
 
 const LoginForm = () => {
-  const { showToast } = useToastContext();
-
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -42,42 +41,47 @@ const LoginForm = () => {
   useEffect(() => {
     if (states.customerUserErrors?.length) {
       states.customerUserErrors.forEach((error: CustomerUserError) => {
-        showToast.error(error.message || userFeedback.login.error);
+        toast.error(error.message || userFeedback.login.error);
       });
+      return;
     }
 
     if (states.error) {
-      showToast.error(states.error);
+      toast.error(states.error);
     }
-  }, [showToast, states]);
+  }, [states]);
 
   return (
-    <Form action={action} title="Login">
-      <Input
-        id="email"
-        label="Email address"
-        type="email"
-        name="email"
-        placeholder="Email"
-        required={true}
-        autoComplete="username"
-      />
-      <Input
-        type="password"
-        name="password"
-        id="password"
-        label="Password"
-        autoComplete="current-password"
-        placeholder="Password"
-        required={true}
-      />
-
+    <form action={action} className="space-y-6 py-12 max-w-md mx-auto w-full px-4">
+      <h3 className="mb-8 text-2xl font-bold">Login</h3>
+      <div>
+        <Label htmlFor="email" className="mb-1">
+          Email address:
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          name="email"
+          placeholder="Email"
+          required={true}
+          autoComplete="username"
+        />
+      </div>
+      <div>
+        <Label htmlFor="password" className="mb-1">
+          Password:
+        </Label>
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          autoComplete="current-password"
+          placeholder="Password"
+          required={true}
+        />
+      </div>
       <LoginButton />
-      <Flexbox gap="6px">
-        <Link href={routes.register}>REGISTER</Link> or
-        <Link href={routes.emailResetPassword}>RESET PASSWORD</Link>
-      </Flexbox>
-    </Form>
+    </form>
   );
 };
 

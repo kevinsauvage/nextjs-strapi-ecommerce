@@ -182,3 +182,11 @@ query getLocalization($countryCode: CountryCode) @inContext(country: $countryCod
     }
   }
 }
+
+query getShopProductTags($language: LanguageCode) @inContext(language: $language) {
+  productTags(first: 100) {
+    edges {
+      node
+    }
+  }
+}

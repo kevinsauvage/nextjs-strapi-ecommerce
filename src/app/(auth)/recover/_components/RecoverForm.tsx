@@ -2,11 +2,11 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 
 import { recoverPasswordAction } from '@/actions/authActions';
-import Form from '@/components/_forms/Form/Form';
-import Input from '@/components/_forms/Input/Input';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 const SubmitButton = () => {
@@ -15,8 +15,6 @@ const SubmitButton = () => {
 };
 
 const RecoverForm = () => {
-  const { showToast } = useToastContext();
-
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -31,34 +29,31 @@ const RecoverForm = () => {
 
   useEffect(() => {
     if (states.error) {
-      showToast.error(states.error);
+      toast.error(states.error);
     }
 
     if (states.success) {
-      showToast.success(states.success);
+      toast.success(states.success);
     }
 
     if (states.customerUserErrors?.length) {
       states.customerUserErrors.forEach((error: CustomerUserError) => {
-        showToast.error(error.message || 'An error occurred while recovering the password.');
+        toast.error(error.message || 'An error occurred while recovering the password.');
       });
     }
-  }, [showToast, states]);
+  }, [states]);
 
   return (
-    <Form action={action} title="Recover password">
-      <Input
-        id="email"
-        label="Email address"
-        name="email"
-        type="email"
-        placeholder="Email"
-        required={true}
-        error={states.email}
-      />
+    <form action={action} title="Recover password">
+      <Label htmlFor="email" className="mb-2">
+        Email address
+      </Label>
+      <Input id="email" name="email" type="email" placeholder="Email" required={true} />
+
+      {states.error && <div className="text-red-500 text-sm mt-2">{states.error}</div>}
 
       <SubmitButton />
-    </Form>
+    </form>
   );
 };
 

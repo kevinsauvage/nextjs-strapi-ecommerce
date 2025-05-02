@@ -1,4 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
+import type { RequestConfig } from 'graphql-request/build/esm/types';
 
 import { getSdk as getAdminSdk } from './admin/index';
 import type { SdkFunctionWrapper } from './storefront/index';
@@ -18,14 +19,30 @@ if (!SHOPIFY_URL) {
   throw new Error('Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL');
 }
 
-const headers = {
+const options: RequestConfig = {
+  cache: 'force-cache',
+  fetch: async (url, parameters) => {
+    const response = await fetch(url, {
+      ...parameters,
+      next: { revalidate: 600 },
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch from Shopify: ${response.statusText}`);
+    }
+
+    return response;
+  },
   headers: {
     'Content-Type': 'application/json',
     'X-Shopify-Storefront-Access-Token': ACCESS_TOKEN,
   },
+  next: {
+    revalidate: 600,
+  },
 };
 
-const storefrontClient = new GraphQLClient(SHOPIFY_URL, headers);
+const storefrontClient = new GraphQLClient(SHOPIFY_URL, options);
 
 const defaultWrapper: SdkFunctionWrapper = async (
   action,

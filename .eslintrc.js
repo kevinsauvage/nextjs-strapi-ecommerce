@@ -15,7 +15,7 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  ignorePatterns: ['node_modules/', '.next/', '.turbo/', 'dist/'],
+  ignorePatterns: ['node_modules/', '.next/', '.turbo/', 'dist/', 'postcss.config.mjs'],
   globals: {
     React: 'writable',
   },
@@ -138,6 +138,7 @@ module.exports = {
         project: './tsconfig.json',
         tsconfigRootDir: '.',
       },
+
       extends: ['plugin:@typescript-eslint/recommended'],
     },
   ],

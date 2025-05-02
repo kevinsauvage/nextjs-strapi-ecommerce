@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useMemo, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { toast } from 'sonner';
 
 import {
   cartLinesAddAction,
@@ -10,18 +11,15 @@ import {
 } from '@/actions/cartActions';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 
-import { useToastContext } from '../ToastContext/NotificationContext';
-
 export const CartContext = createContext({
   cart: {} as CartFieldsFragment,
-  handleAddToCart: (_variantId: string, _quantity?: number) => {
+  handleAddToCart: async (_variantId: string, _quantity?: number) => {
     // noop
   },
-  handleQuantityChange: (_id: string, _quantity: number) => {
+  handleQuantityChange: async (_id: string, _quantity: number) => {
     // noop
   },
-  loading: false,
-  removeFromCart: (_lineItemId: string) => {
+  removeFromCart: async (_lineItemId: string) => {
     // noop
   },
 });
@@ -33,28 +31,24 @@ export const CartProvider = ({
   children: React.ReactNode;
   initialCart: CartFieldsFragment;
 }) => {
-  const [loading, setLoading] = useState(false);
   const [cart, setCart] = useState(initialCart);
-  const { showToast } = useToastContext();
   const parameters = useSearchParams();
 
   const handleResponse = useCallback(
     (response: { cart?: CartFieldsFragment; message?: string }) => {
       if (response.cart) {
         setCart(response.cart);
-        showToast.success(response.message);
+        toast.success(response.message);
       } else {
-        showToast.error(response.message);
+        toast.error(response.message);
       }
     },
-    [showToast],
+    [],
   );
 
   const removeFromCart = useCallback(
     async (lineItemId: string) => {
       if (!lineItemId) return console.error('Missing line item to delete');
-
-      setLoading(true);
 
       const response = await cartLinesRemoveAction(
         lineItemId,
@@ -65,8 +59,6 @@ export const CartProvider = ({
       );
 
       handleResponse(response);
-
-      setLoading(false);
     },
     [handleResponse, parameters],
   );
@@ -75,8 +67,6 @@ export const CartProvider = ({
     async (id: string, quantity: number) => {
       if (!id) return console.error('Missing line id to update');
       if (!quantity) return console.error('Missing quantity to update');
-
-      setLoading(true);
 
       const response = await cartLinesUpdateAction(
         [
@@ -92,8 +82,6 @@ export const CartProvider = ({
       );
 
       handleResponse(response);
-
-      setLoading(false);
     },
     [handleResponse, parameters],
   );
@@ -101,8 +89,6 @@ export const CartProvider = ({
   const handleAddToCart = useCallback(
     async (variantId: string, quantity: number = 1) => {
       if (!variantId) return console.error('Missing variant id to add');
-
-      setLoading(true);
 
       const lineItemsToAdd = [{ merchandiseId: variantId, quantity }];
 
@@ -115,8 +101,6 @@ export const CartProvider = ({
       );
 
       handleResponse(response);
-
-      setLoading(false);
     },
     [handleResponse, parameters],
   );
@@ -126,10 +110,9 @@ export const CartProvider = ({
       cart,
       handleAddToCart,
       handleQuantityChange,
-      loading,
       removeFromCart,
     }),
-    [cart, handleAddToCart, handleQuantityChange, removeFromCart, loading],
+    [cart, handleAddToCart, handleQuantityChange, removeFromCart],
   );
 
   return <CartContext.Provider value={values}>{children}</CartContext.Provider>;

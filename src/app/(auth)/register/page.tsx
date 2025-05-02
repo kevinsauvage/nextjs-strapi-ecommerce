@@ -1,18 +1,28 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import FormContainer from '@/components/_forms/FormContainer/FormContainer';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Link from 'next/link';
+
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
 import RegisterForm from './_components/RegisterForm';
 
 const RegisterPage = () => {
+  const { title, description } = seo.register;
+
   return (
-    <div>
-      <PageBanner title={seo.register.title} />
-      <Breadcrumbs />
-      <FormContainer>
+    <div className="flex flex-col items-center justify-center ">
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs />
+      </PageBanner>
+      <div className="bg-gray-100 w-full  pb-12">
         <RegisterForm />
-      </FormContainer>
+        <div className="text-sm text-center text-muted-foreground ">
+          Already have an account?{' '}
+          <Link href="/login" className="text-primary hover:underline">
+            Sign in
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

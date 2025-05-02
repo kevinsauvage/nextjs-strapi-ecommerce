@@ -2,21 +2,24 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import Link from 'next/link';
+import { toast } from 'sonner';
 
 import { registerAction } from '@/actions/authActions';
-import Form from '@/components/_forms/Form/Form';
-import Input from '@/components/_forms/Input/Input';
-import Flexbox from '@/components/Flexbox/Flexbox';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import config from '@/config/index';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import type { CustomerUserError } from '@/shopify/storefront';
 
-const { userFeedback, routes } = config;
+const { userFeedback } = config;
 
 const SubmitButton = () => {
   const status = useFormStatus();
-  return <button type="submit">{status.pending ? 'Loading...' : 'Register'}</button>;
+  return (
+    <Button type="submit" disabled={status.pending}>
+      {status.pending ? 'Loading...' : 'Register'}
+    </Button>
+  );
 };
 
 const RegisterForm = () => {
@@ -29,7 +32,6 @@ const RegisterForm = () => {
     passwordConfirm: '',
   };
   const [formData, setFormData] = useState(initialStates);
-  const { showToast } = useToastContext();
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>,
@@ -57,92 +59,117 @@ const RegisterForm = () => {
   useEffect(() => {
     if (states.customerUserErrors?.length) {
       states.customerUserErrors.forEach((error: CustomerUserError) => {
-        showToast.error(error.message || userFeedback.register.error);
+        toast.error(error.message || userFeedback.register.error);
       });
     }
     if (states.error) {
-      showToast.error(
-        typeof states.error === 'string' ? states.error : userFeedback.register.error,
-      );
+      toast.error(typeof states.error === 'string' ? states.error : userFeedback.register.error);
     }
-  }, [showToast, states]);
+  }, [states]);
 
   return (
-    <Form action={action} title="Register" autoComplete="off">
-      <Input
-        id="email"
-        label="Email address"
-        type="email"
-        name="email"
-        autoComplete="off"
-        placeholder="Email"
-        required={true}
-        error={states.email}
-        onChange={handleChange}
-        value={formData.email}
-        disabled={isPending}
-      />
+    <form
+      action={action}
+      title="Register"
+      autoComplete="off"
+      className="space-y-6 py-12 max-w-md mx-auto w-full px-4"
+    >
+      <h3 className="mb-8 text-2xl font-bold">Register</h3>
+      <div>
+        <Label htmlFor="email" className="mb-1">
+          Email address:
+        </Label>
+        <Input
+          id="email"
+          type="email"
+          name="email"
+          autoComplete="off"
+          placeholder="Email"
+          required={true}
+          onChange={handleChange}
+          value={formData.email}
+          disabled={isPending}
+        />
+        {states.email?.at(-1) && <p className="text-red-500 text-sm mt-1">{states.email.at(-1)}</p>}
+      </div>
+      <div>
+        <Label htmlFor="password" className="mb-1">
+          Password:
+        </Label>
+        <Input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="Password"
+          autoComplete="off"
+          required={true}
+          onChange={handleChange}
+          value={formData.password}
+          disabled={isPending}
+        />
+        {states.password?.at(-1) && (
+          <p className="text-red-500 text-sm mt-1">{states.password.at(-1)}</p>
+        )}
+      </div>
 
-      <Input
-        type="password"
-        name="password"
-        id="password"
-        label="Password"
-        placeholder="Password"
-        autoComplete="off"
-        required={true}
-        error={states.password}
-        onChange={handleChange}
-        value={formData.password}
-        disabled={isPending}
-      />
+      <div>
+        <Label htmlFor="passwordConfirm" className="mb-1">
+          Password Confirmation:
+        </Label>
+        <Input
+          placeholder="Password Confirmation"
+          type="password"
+          name="passwordConfirm"
+          id="passwordConfirm"
+          autoComplete="off"
+          required={true}
+          onChange={handleChange}
+          value={formData.passwordConfirm}
+          disabled={isPending}
+        />
+        {states.passwordConfirm?.at(-1) && (
+          <p className="text-red-500 text-sm mt-1">{states.passwordConfirm.at(-1)}</p>
+        )}
+      </div>
 
-      <Input
-        placeholder="Password Confirmation"
-        type="password"
-        name="passwordConfirm"
-        id="passwordConfirm"
-        label="Password Confirmation"
-        autoComplete="off"
-        required={true}
-        error={states.passwordConfirm?.at(-1)}
-        onChange={handleChange}
-        value={formData.passwordConfirm}
-        disabled={isPending}
-      />
+      <div>
+        <Label htmlFor="firstName" className="mb-1">
+          First name:
+        </Label>
+        <Input
+          placeholder="First name"
+          type="text"
+          name="firstName"
+          id="firstName"
+          autoComplete="off"
+          onChange={handleChange}
+          value={formData.name}
+          disabled={isPending}
+        />
+        {states.firstName?.at(-1) && (
+          <p className="text-red-500 text-sm mt-1">{states.firstName.at(-1)}</p>
+        )}
+      </div>
 
-      <Input
-        placeholder="First name"
-        type="text"
-        name="firstName"
-        id="firstName"
-        label="First name"
-        autoComplete="off"
-        error={states.firstName}
-        onChange={handleChange}
-        value={formData.name}
-        disabled={isPending}
-      />
-
-      <Input
-        placeholder="Last name"
-        type="text"
-        name="lastName"
-        id="lastName"
-        label="Last name"
-        autoComplete="off"
-        error={states.lastName}
-        onChange={handleChange}
-        value={formData.name}
-        disabled={isPending}
-      />
-
+      <div>
+        <Label htmlFor="lastName" className="mb-1">
+          Last name:
+        </Label>
+        <Input
+          placeholder="Last name"
+          type="text"
+          name="lastName"
+          id="lastName"
+          autoComplete="off"
+          onChange={handleChange}
+          value={formData.name}
+        />
+        {states.lastName?.at(-1) && (
+          <p className="text-red-500 text-sm mt-1">{states.lastName.at(-1)}</p>
+        )}
+      </div>
       <SubmitButton />
-      <Flexbox gap="6px">
-        <Link href={routes.login}>LOGIN</Link> or
-        <Link href={routes.emailResetPassword}>RESET PASSWORD</Link>
-      </Flexbox>
-    </Form>
+    </form>
   );
 };
 

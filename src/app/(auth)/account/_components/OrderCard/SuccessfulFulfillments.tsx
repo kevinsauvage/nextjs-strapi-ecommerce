@@ -4,16 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 import HeightAnimation from '@/components/HeightAnimation/HeightAnimation';
 import type { GetCustomerOrdersQuery } from '@/shopify/storefront';
 
-import AccountRow from '../AccountRow/AccountRow';
-
-import styles from './SuccessfulFulfillments.module.scss';
-
 const SuccessfulFulfillments = ({
   successfulFulfillments,
 }: {
   successfulFulfillments: GetCustomerOrdersQuery['customer']['orders']['edges'][number]['node']['successfulFulfillments'][number][];
 }) => (
-  <div className={styles.fulfillments}>
+  <div>
     <HeightAnimation
       animationType="button"
       buttonTextActive="Hide tracking information"
@@ -27,17 +23,30 @@ const SuccessfulFulfillments = ({
         }
 
         return (
-          <div key={uuidv4()} className={styles.tracks}>
+          <div key={uuidv4()} className="mt-2">
             <h6>Tracking information {successfulFulfillments.length > 1 && index + 1}</h6>
-            <AccountRow content={trackingCompany} title="Tracking Company" />
+
+            <div className="flex justify-between py-1 border-b border-gray-100">
+              <span className="text-sm text-gray-500">{trackingCompany}</span>
+              <span className="text-sm font-medium">{trackingInfo.length} items</span>
+            </div>
             {trackingInfo?.map((trackInfo) => {
               if (typeof trackInfo.url === 'string' && trackInfo.url.length > 0) {
                 return (
-                  <AccountRow
-                    key={trackInfo.number}
-                    content={<Link href={trackInfo.url}>{trackInfo.number}</Link>}
-                    title="Tracking number"
-                  />
+                  <div
+                    key={uuidv4()}
+                    className="flex justify-between py-1 border-b border-gray-100"
+                  >
+                    <span className="text-sm text-gray-500">{trackInfo.number}</span>
+                    <Link
+                      href={trackInfo.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-medium text-blue-600 hover:underline"
+                    >
+                      Track
+                    </Link>
+                  </div>
                 );
               }
 

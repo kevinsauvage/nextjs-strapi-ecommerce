@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -37,6 +38,7 @@ export async function createAddressAction(previousState: unknown, data: FormData
   const { customerUserErrors, customerAddress } = response?.customerAddressCreate || {};
 
   if (customerAddress) {
+    revalidatePath(config.routes.addresses);
     return redirect(config.routes.addresses);
   }
 
@@ -58,6 +60,7 @@ export async function deleteAddressAction(addressId: string) {
   const { customerUserErrors, deletedCustomerAddressId } = response?.customerAddressDelete || {};
 
   if (deletedCustomerAddressId) {
+    revalidatePath(config.routes.addresses);
     return redirect(config.routes.addresses);
   }
 
@@ -86,7 +89,13 @@ export async function setDefaultAddressAction(addressId: string) {
   if (customerUserErrors?.length) {
     return { customerUserErrors };
   }
-  return customer ? redirect(config.routes.addresses) : { error: defaultErrorMessage };
+
+  if (customer) {
+    revalidatePath(config.routes.addresses);
+    return redirect(config.routes.addresses);
+  }
+
+  return { error: defaultErrorMessage };
 }
 
 export async function updateAddressAction(previousState: unknown, data: FormData) {
@@ -109,7 +118,8 @@ export async function updateAddressAction(previousState: unknown, data: FormData
   }
 
   if (customerAddress) {
-    redirect(config.routes.addresses);
+    revalidatePath(`${config.routes.addresses}/edit?id=${id}`);
+    return redirect(config.routes.addresses);
   }
 
   return { error: defaultErrorMessage };

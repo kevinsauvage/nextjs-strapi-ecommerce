@@ -1,23 +1,23 @@
+import { Inter, Poppins } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
-import { ToastProvider } from 'src/contexts/ToastContext/NotificationContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
 import { getCartAction } from '@/actions/cartActions';
 import { getWishlistAction } from '@/actions/whishlistActions';
-import CookieBanner from '@/components/CookieBanner/CookieBanner';
-import Footer from '@/components/Footer/Footer';
-import GtmScript from '@/components/GtmScript/GtmScript';
-import Header from '@/components/Header/Header';
+import CookieBanner from '@/components/CookieBanner';
+import Footer from '@/components/Footer';
+import GtmScript from '@/components/GtmScript';
+import Header from '@/components/Header';
+import { ThemeProvider } from '@/components/theme-provider';
+import { Toaster } from '@/components/ui/sonner';
 import { storefrontSdk } from '@/shopify';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 import { getUser } from '@/utils/users';
 
-import '@/styles/reset.scss';
-import '@/styles/globals.scss';
-import '@/styles/typography.scss';
-import '@/styles/spacing.scss';
-import '@/styles/variables.scss';
-import '@/styles/themes.scss';
+import '../styles/globals.css';
+
+const inter = Inter({ subsets: ['latin'], variable: '--font-base' });
+const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading', weight: '600' });
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const headerMenu = await storefrontSdk().getMenuByHandle({
@@ -28,19 +28,25 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const userWishlist = await getWishlistAction();
 
   return (
-    <html lang="en">
-      <body>
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+      <body className="relative bg-background ">
         <GtmScript />
         <CookieBanner />
-        <ToastProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
             <UserProvider user={user} userWishlist={userWishlist}>
               <Header headerMenu={headerMenu?.menu?.items} />
-              {children}
+              <main>{children}</main>
+              <Toaster richColors />
               <Footer />
             </UserProvider>
           </CartProvider>
-        </ToastProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

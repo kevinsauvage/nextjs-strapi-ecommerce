@@ -1,82 +1,52 @@
-import { notFound } from 'next/navigation';
-
-import CollectionGrid from '@/app/[genre]/_components/CollectionGrid/CollectionGrid';
-import Banner1 from '@/components/_banners/BannerHome/Banner1';
-import CollectionBigBanner from '@/components/CollectionBigBanner/CollectionBigBanner';
-import CollectionsRow from '@/components/CollectionsRow/CollectionsRow';
-import Container from '@/components/Container/Container';
-import ProductsDisplay from '@/components/ProductsDisplay/ProductsDisplay';
+import PageBanner from '@/components/PageBanner';
+import ProductsList from '@/components/ProductsList';
+import SectionTitle from '@/components/SectionTitle';
 import { storefrontSdk } from '@/shopify/index';
-import { ProductSortKeys } from '@/shopify/storefront/index';
+import { CollectionSortKeys, ProductSortKeys } from '@/shopify/storefront/index';
 
-export type HomePageData = {
-  banner: BannerHomeType;
-  categories: BannerHomeCategories[];
-  featuredCollections: {
-    title: string;
-    handle: string;
-    image: {
-      url: string;
-      alt: string;
-    };
-  }[];
-  bigCardCollections: {
-    title: string;
-    subtitle: string;
-    handle: string;
-    image: {
-      url: string;
-      alt: string;
-    };
-  }[];
-};
+import CollectionGrid from '../components/CollectionGrid/CollectionGrid';
 
 const Home = async () => {
+  const collections = await storefrontSdk().collections({
+    first: 100,
+    firstProducts: 1,
+    identifiers: [
+      {
+        key: 'featured',
+        namespace: 'custom',
+      },
+    ],
+    sortKey: CollectionSortKeys?.Relevance,
+  });
+
   const bestSelling = await storefrontSdk().getProducts({
     first: 9,
     identifiers: [],
     sortKey: ProductSortKeys.BestSelling,
   });
-
   const newArrival = await storefrontSdk().getProducts({
     first: 9,
     identifiers: [],
     sortKey: ProductSortKeys.CreatedAt,
   });
 
-  const homeData = await storefrontSdk().getShopMetaObjects({
-    first: 100,
-    type: 'page_data',
-  });
-
-  if (!homeData?.metaobjects.edges) {
-    notFound();
-  }
-
-  const metaobjects = homeData?.metaobjects?.edges?.map((edge) => edge.node);
-
-  const homeDataParsed = (
-    metaobjects?.[0]?.fields?.[0]?.value
-      ? (JSON.parse(metaobjects[0].fields[0].value) as HomePageData)
-      : {}
-  ) as HomePageData;
+  const featuredCollections = collections.collections.edges.filter((collection) =>
+    collection.node.metafields.find((metafield) => metafield?.key === 'featured'),
+  );
 
   return (
-    <div>
-      {homeDataParsed.banner && <Banner1 data={homeDataParsed.banner} />}
-      <Container size="medium">
-        {homeDataParsed.categories && <CollectionsRow collections={homeDataParsed.categories} />}
-        {homeDataParsed.featuredCollections && (
-          <CollectionGrid collections={homeDataParsed.featuredCollections} />
-        )}
-        <ProductsDisplay
-          bestSelling={bestSelling.products.edges.map((edge) => edge.node)}
-          newArrival={newArrival.products.edges.map((edge) => edge.node)}
-        />
-        {homeDataParsed.bigCardCollections && (
-          <CollectionBigBanner collections={homeDataParsed.bigCardCollections} />
-        )}
-      </Container>
+    <div className="container mx-auto max-w-7xl px-4 py-8">
+      <PageBanner
+        title="Shop the Latest Trends"
+        description="Discover the latest trends and exclusive collections that will elevate your style. Shop
+        now and enjoy a seamless shopping experience with us. From fashion to home decor, we have
+        something for everyone."
+      />
+      {featuredCollections.length > 0 ? <CollectionGrid collections={featuredCollections} /> : null}
+      <SectionTitle>Featured Products</SectionTitle>
+      <ProductsList products={bestSelling.products.edges.map((edge) => edge.node)} layout="grid" />
+      <SectionTitle>New Arrival</SectionTitle>
+      <ProductsList products={newArrival.products.edges.map((edge) => edge.node)} layout="grid" />
     </div>
   );
 };

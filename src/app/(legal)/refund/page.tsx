@@ -1,18 +1,21 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
 
-import MainContent from '../_components/MainContent/MainContent';
+import MainContent from '../_components/MainContent';
 
 const RefoundPage = async () => {
   const response = await storefrontSdk().getRefundPolicy({});
   const refundPolicy = response.shop?.refundPolicy;
 
+  const { title, description } = seo.pages.refund || {};
+
   return (
     <div>
-      <PageBanner title={seo.pages.refund.title} />
-      <Breadcrumbs lastElement={seo.pages.refund.title} />
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs lastElement={title} />
+      </PageBanner>
       <MainContent>
         <div dangerouslySetInnerHTML={{ __html: refundPolicy.body }} />
       </MainContent>

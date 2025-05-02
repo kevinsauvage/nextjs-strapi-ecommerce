@@ -2,29 +2,30 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 
 import { updateUserAction } from '@/actions/usersActions';
-import Form from '@/components/_forms/Form/Form';
-import Input from '@/components/_forms/Input/Input';
-import Row from '@/components/_forms/Row/Row';
-import Button from '@/components/Button/Button';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import config from '@/config';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { CustomerUserError } from '@/shopify/storefront';
-
-import styles from './UpdateUserForm.module.scss';
 
 const { userFeedback } = config;
 
 const SubmitButton = () => {
   const status = useFormStatus();
-  return <Button type="submit" text={status.pending ? 'Loading...' : 'Update'} />;
+  return (
+    <Button type="submit" className="mt-8">
+      {status.pending ? 'Loading...' : 'Update'}
+    </Button>
+  );
 };
 
 const UpdateUserForm = () => {
   const { user } = useUserContext();
-  const { showToast } = useToastContext();
   const [states, action] = useActionState<
     {
       firstName?: string | string[];
@@ -37,60 +38,68 @@ const UpdateUserForm = () => {
     },
     undefined
   >(updateUserAction, user);
-  const [acceptsMarketing, setAcceptsMarketing] = useState(user.acceptsMarketing);
+  const [acceptsMarketing, setAcceptsMarketing] = useState(false);
 
   useEffect(() => {
     if (states?.error) {
-      showToast.error(states.error || userFeedback.login.error);
+      toast.error(states.error || userFeedback.login.error);
     }
 
     if (states?.success) {
-      showToast.success(states.success || userFeedback.login.success);
+      toast.success(states.success || userFeedback.login.success);
     }
 
     if (states?.customerUserErrors?.length) {
       states.customerUserErrors.forEach((error: CustomerUserError) => {
-        showToast.error(error.message || userFeedback.login.error);
+        toast.error(error.message || userFeedback.login.error);
       });
     }
-  }, [showToast, states, user]);
+  }, [states, user]);
+
+  useEffect(() => {
+    setAcceptsMarketing(user.acceptsMarketing);
+  }, [user.acceptsMarketing]);
 
   return (
-    <Form action={action}>
-      <Row>
-        <Input
-          id="firstName"
-          type="text"
-          label="First Name"
-          name="firstName"
-          defaultValue={user.firstName}
-        />
-        <Input
-          id="lastName"
-          type="text"
-          name="lastName"
-          label="Last Name"
-          defaultValue={user.lastName}
-        />
-      </Row>
-      <Row>
-        <Input id="email" type="email" label="Email Address" disabled defaultValue={user.email} />
-        <input type="hidden" name="email" value={user.email} />
-        <Input id="phone" type="text" name="phone" label="Phone" defaultValue={user.phone} />
-      </Row>
+    <form action={action} className="space-y-8">
+      <input type="hidden" name="email" value={user.email} />
 
-      <label htmlFor="acceptsMarketing" className={styles.checkbox}>
-        <input
-          type="checkbox"
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Label className="flex flex-col items-start">
+          <p>First Name</p>
+          <Input id="firstName" type="text" name="firstName" defaultValue={user.firstName} />
+        </Label>
+        <Label className="flex flex-col items-start">
+          <p>Last Name</p>
+          <Input id="lastName" type="text" name="lastName" defaultValue={user.lastName} />
+        </Label>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Label className="flex flex-col items-start">
+          <p>Email</p>
+          <Input id="email" type="email" disabled defaultValue={user.email} />
+        </Label>
+        <Label className="flex flex-col items-start">
+          <p>Phone</p>
+          <Input id="phone" type="text" name="phone" defaultValue={user.phone} />
+        </Label>
+      </div>
+
+      <Label htmlFor="acceptsMarketing">
+        <Checkbox
           name="acceptsMarketing"
           defaultChecked={acceptsMarketing}
-          onChange={(event) => setAcceptsMarketing(event.target.checked)}
           value={acceptsMarketing ? 'true' : 'false'}
+          checked={acceptsMarketing}
+          onCheckedChange={(checked) => {
+            setAcceptsMarketing(checked as boolean);
+          }}
+          id="acceptsMarketing"
         />
         <p>Check this case to receive our last update</p>
-      </label>
+      </Label>
       <SubmitButton />
-    </Form>
+    </form>
   );
 };
 

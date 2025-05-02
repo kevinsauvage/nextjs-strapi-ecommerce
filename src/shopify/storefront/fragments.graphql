@@ -308,6 +308,9 @@ fragment CollectionFields on Collection {
     description
     title
   }
+  metafields(identifiers: $identifiers) {
+    ...MetafieldFields
+  }
 }
 
 fragment ProductFilterFields on Filter {

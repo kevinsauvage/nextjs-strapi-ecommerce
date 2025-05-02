@@ -11105,6 +11105,44 @@ export type CollectionQuery = {
       blurDataURL: any;
     } | null;
     seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+    metafields: Array<{
+      __typename?: 'Metafield';
+      id: string;
+      key: string;
+      namespace: string;
+      value: string;
+      type: string;
+      createdAt: any;
+      updatedAt: any;
+      parentResource:
+        | {
+            __typename?: 'Article';
+            id: string;
+            metafields: Array<{
+              __typename?: 'Metafield';
+              id: string;
+              key: string;
+              value: string;
+              type: string;
+              createdAt: any;
+              updatedAt: any;
+            } | null>;
+          }
+        | { __typename?: 'Blog'; id: string }
+        | { __typename?: 'Cart'; id: string }
+        | { __typename?: 'Collection'; id: string }
+        | { __typename?: 'Company'; id: string }
+        | { __typename?: 'CompanyLocation'; id: string }
+        | { __typename?: 'Customer'; id: string }
+        | { __typename?: 'Location'; id: string }
+        | { __typename?: 'Market'; id: string }
+        | { __typename?: 'Order'; id: string }
+        | { __typename?: 'Page'; id: string }
+        | { __typename?: 'Product'; id: string }
+        | { __typename?: 'ProductVariant'; id: string }
+        | { __typename?: 'SellingPlan'; id: string }
+        | { __typename?: 'Shop'; id: string };
+    } | null>;
   } | null;
 };
 
@@ -11326,6 +11364,44 @@ export type CollectionsQuery = {
           blurDataURL: any;
         } | null;
         seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+        metafields: Array<{
+          __typename?: 'Metafield';
+          id: string;
+          key: string;
+          namespace: string;
+          value: string;
+          type: string;
+          createdAt: any;
+          updatedAt: any;
+          parentResource:
+            | {
+                __typename?: 'Article';
+                id: string;
+                metafields: Array<{
+                  __typename?: 'Metafield';
+                  id: string;
+                  key: string;
+                  value: string;
+                  type: string;
+                  createdAt: any;
+                  updatedAt: any;
+                } | null>;
+              }
+            | { __typename?: 'Blog'; id: string }
+            | { __typename?: 'Cart'; id: string }
+            | { __typename?: 'Collection'; id: string }
+            | { __typename?: 'Company'; id: string }
+            | { __typename?: 'CompanyLocation'; id: string }
+            | { __typename?: 'Customer'; id: string }
+            | { __typename?: 'Location'; id: string }
+            | { __typename?: 'Market'; id: string }
+            | { __typename?: 'Order'; id: string }
+            | { __typename?: 'Page'; id: string }
+            | { __typename?: 'Product'; id: string }
+            | { __typename?: 'ProductVariant'; id: string }
+            | { __typename?: 'SellingPlan'; id: string }
+            | { __typename?: 'Shop'; id: string };
+        } | null>;
       };
     }>;
   };
@@ -12959,6 +13035,44 @@ export type CollectionFieldsFragment = {
     blurDataURL: any;
   } | null;
   seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+  metafields: Array<{
+    __typename?: 'Metafield';
+    id: string;
+    key: string;
+    namespace: string;
+    value: string;
+    type: string;
+    createdAt: any;
+    updatedAt: any;
+    parentResource:
+      | {
+          __typename?: 'Article';
+          id: string;
+          metafields: Array<{
+            __typename?: 'Metafield';
+            id: string;
+            key: string;
+            value: string;
+            type: string;
+            createdAt: any;
+            updatedAt: any;
+          } | null>;
+        }
+      | { __typename?: 'Blog'; id: string }
+      | { __typename?: 'Cart'; id: string }
+      | { __typename?: 'Collection'; id: string }
+      | { __typename?: 'Company'; id: string }
+      | { __typename?: 'CompanyLocation'; id: string }
+      | { __typename?: 'Customer'; id: string }
+      | { __typename?: 'Location'; id: string }
+      | { __typename?: 'Market'; id: string }
+      | { __typename?: 'Order'; id: string }
+      | { __typename?: 'Page'; id: string }
+      | { __typename?: 'Product'; id: string }
+      | { __typename?: 'ProductVariant'; id: string }
+      | { __typename?: 'SellingPlan'; id: string }
+      | { __typename?: 'Shop'; id: string };
+  } | null>;
 };
 
 export type ProductFilterFieldsFragment = {
@@ -14361,6 +14475,18 @@ export type GetLocalizationQuery = {
   };
 };
 
+export type GetShopProductTagsQueryVariables = Exact<{
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type GetShopProductTagsQuery = {
+  __typename?: 'QueryRoot';
+  productTags: {
+    __typename?: 'StringConnection';
+    edges: Array<{ __typename?: 'StringEdge'; node: string }>;
+  };
+};
+
 export const UserErrorsFieldsFragmentDoc = gql`
   fragment UserErrorsFields on UserError {
     field
@@ -14797,8 +14923,12 @@ export const CollectionFieldsFragmentDoc = gql`
       description
       title
     }
+    metafields(identifiers: $identifiers) {
+      ...MetafieldFields
+    }
   }
   ${ImageFieldsFragmentDoc}
+  ${MetafieldFieldsFragmentDoc}
 `;
 export const ProductFilterFieldsFragmentDoc = gql`
   fragment ProductFilterFields on Filter {
@@ -15978,6 +16108,15 @@ export const GetLocalizationDocument = gql`
     }
   }
 `;
+export const GetShopProductTagsDocument = gql`
+  query getShopProductTags($language: LanguageCode) @inContext(language: $language) {
+    productTags(first: 100) {
+      edges {
+        node
+      }
+    }
+  }
+`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
@@ -16730,6 +16869,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'getLocalization',
+        'query',
+        variables,
+      );
+    },
+    getShopProductTags(
+      variables?: GetShopProductTagsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetShopProductTagsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetShopProductTagsQuery>(GetShopProductTagsDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'getShopProductTags',
         'query',
         variables,
       );

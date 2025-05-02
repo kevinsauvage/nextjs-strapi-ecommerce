@@ -1,10 +1,15 @@
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import { updateAddressAction } from '@/actions/addressesActions';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config';
 import { storefrontSdk } from '@/shopify';
 import { getShopifyToken } from '@/utils/shopify';
 
-import EditAddressForm from './_components/EditAddressForm';
+import AddressForm from '../_components/AddressForm';
 
 type PageProperties = {
   searchParams: Promise<{
@@ -12,6 +17,7 @@ type PageProperties = {
     customer_access_token: string;
   }>;
 };
+
 const EditAddress = async ({ searchParams }: PageProperties) => {
   const searchParameters = await searchParams;
 
@@ -45,10 +51,24 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
       .find((item) => item.id?.split('?')[0] === id.split('?')[0]);
 
   return (
-    <div>
-      <h2>Edit address</h2>
-      <EditAddressForm address={address} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Edit Addresses</CardTitle>
+        <CardDescription className="max-w-md">
+          <p>
+            Add a new address to your account. This will help us deliver your orders more
+            efficiently.
+          </p>
+          <Button variant="secondary" className="mt-4" size="sm">
+            <ArrowLeft size={16} />
+            <Link href={config.routes.addresses}>Back to addresses</Link>
+          </Button>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <AddressForm address={address} action={updateAddressAction} buttonText="Edit" />
+      </CardContent>
+    </Card>
   );
 };
 

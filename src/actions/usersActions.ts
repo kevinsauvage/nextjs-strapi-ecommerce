@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
@@ -10,7 +11,7 @@ import { getShopifyToken, setShopifyToken } from '@/utils/shopify';
 import { delCookieAction } from './cookiesActions';
 
 const userSchema = z.object({
-  acceptsMarketing: z.string(),
+  acceptsMarketing: z.string().optional(),
   company: z.string().optional(),
   email: z.string().email(),
   firstName: z.string(),
@@ -59,6 +60,7 @@ export async function updateUserAction(previousState: unknown, data: FormData) {
   }
 
   if (customer) {
+    revalidatePath(config.routes.updateAccount);
     return {
       customer,
       success: 'User updated successfully',

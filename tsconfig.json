@@ -32,7 +32,8 @@
     "**/*.tsx",
     "next-env.d.ts",
     ".next/types/**/*.ts",
-    "src/types/globals.d.ts"
+    "src/types/globals.d.ts",
+    "tailwind.config.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -88,7 +88,7 @@ export const accountNav = [
   { title: 'My wishlist', url: config.routes.wishlist },
   { title: 'My orders', url: config.routes.orders },
   { title: 'My details', url: config.routes.updateAccount },
-  { title: 'Sign out ', url: config.routes.logout },
+  { title: 'Sign out', url: config.routes.logout },
 ];
 
 if (environment === 'production') {

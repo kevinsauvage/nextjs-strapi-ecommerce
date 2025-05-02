@@ -1,7 +1,8 @@
 import { getWishlistAction } from '@/actions/whishlistActions';
 import NoFavoriteIllustration from '@/assets/NoFavoriteIllustration.png';
-import EmptyState from '@/components/EmptyState/EmptyState';
-import ProductsList from '@/components/ProductList/ProductsList';
+import EmptyState from '@/components/EmptyState';
+import ProductsList from '@/components/ProductsList';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 const Wishlist = async () => {
   const userWishlist = await getWishlistAction();
@@ -18,10 +19,17 @@ const Wishlist = async () => {
   }
 
   return (
-    <div>
-      <h2>Wishlist</h2>
-      <ProductsList loading={false} layout="grid" products={userWishlist} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>My Wishlist</CardTitle>
+        <CardDescription>
+          <p className="mb-4">Manage your wishlist for a better shopping experience.</p>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ProductsList loading={false} layout="grid" products={userWishlist} />
+      </CardContent>
+    </Card>
   );
 };
 

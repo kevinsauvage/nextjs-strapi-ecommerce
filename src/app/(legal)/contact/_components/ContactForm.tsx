@@ -2,14 +2,13 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 
 import { contactAction } from '@/actions/contactActions';
-import Form from '@/components/_forms/Form/Form';
-import FormContainer from '@/components/_forms/FormContainer/FormContainer';
-import Input from '@/components/_forms/Input/Input';
-import TextArea from '@/components/_forms/TextArea/TextArea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 import config from '@/config';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -17,8 +16,6 @@ const SubmitButton = () => {
 };
 
 const ContactForm = () => {
-  const { showToast } = useToastContext();
-
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -36,40 +33,29 @@ const ContactForm = () => {
 
   useEffect(() => {
     if (states.error) {
-      showToast.error(states.error || config.userFeedback.login.error);
+      toast.error(states.error || config.userFeedback.login.error);
     }
-  }, [showToast, states]);
+  }, [states]);
 
   return (
-    <FormContainer>
-      <Form action={action} title="Contact Us">
-        <Input
-          id="email"
-          label="Email address"
-          name="email"
-          placeholder="Email"
-          required={true}
-          error={states.email}
-        />
-        <Input
-          placeholder="Name"
-          name="name"
-          id="name"
-          label="Name"
-          required={true}
-          error={states.name}
-        />
-        <TextArea
-          placeholder="Message"
-          name="message"
-          id="message"
-          label="Message"
-          required={true}
-          error={states.message}
-        />
-        <SubmitButton />
-      </Form>
-    </FormContainer>
+    <form action={action} title="Contact Us">
+      <Label className="mb-2 flex flex-col" htmlFor="email">
+        Email address
+        <Input id="email" name="email" placeholder="Email" required={true} />
+        {states.email && <span className="text-red-500 text-sm">{states.email}</span>}
+      </Label>
+      <Label className="mb-2 flex flex-col" htmlFor="name">
+        Name
+        <Input placeholder="Name" name="name" id="name" required={true} />
+        {states.name && <span className="text-red-500 text-sm">{states.name}</span>}
+      </Label>
+      <Label className="mb-2 flex flex-col" htmlFor="message">
+        Message
+        <Textarea placeholder="Message" name="message" id="message" required={true} />
+        {states.message && <span className="text-red-500 text-sm">{states.message}</span>}
+      </Label>
+      <SubmitButton />
+    </form>
   );
 };
 

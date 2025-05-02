@@ -1,18 +1,20 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
 
-import MainContent from '../_components/MainContent/MainContent';
+import MainContent from '../_components/MainContent';
 
 const PrivacyPage = async () => {
   const shopInfo = await storefrontSdk().getPrivacyPolicy({});
   const privacyPolicy = shopInfo?.shop.privacyPolicy;
+  const { title, description } = seo.pages.privacy || {};
 
   return (
     <div>
-      <PageBanner title={seo.pages.privacy.title} />
-      <Breadcrumbs lastElement={seo.pages.privacy.title} />
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs lastElement={title} />
+      </PageBanner>
       <MainContent>
         <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
       </MainContent>

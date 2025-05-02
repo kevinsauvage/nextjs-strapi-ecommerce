@@ -1,7 +1,7 @@
 const siteMetadata = {
   about: {
     short:
-      '{{companyName}} is a fashion brand made for unisex use with an irreverent style. It started with jewelry, but has scaled up to something bigger and the reason for that is that we are fashion lovers.Our goal is to give you the best quality at an affordable price.',
+      'CRISP is a fashion brand made for unisex use with an irreverent style. It started with jewelry, but has scaled up to something bigger and the reason for that is that we are fashion lovers.Our goal is to give you the best quality at an affordable price.',
   },
   companyName: 'Example',
   email: 'yourName@example.com',

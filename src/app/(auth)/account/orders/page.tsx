@@ -1,11 +1,17 @@
-import EmptyState from '@/components/EmptyState/EmptyState';
-import PageInfoPagination from '@/components/PageInfoPagination/PageInfoPagination';
+import { ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+
+import EmptyState from '@/components/EmptyState';
+import PageInfoPagination from '@/components/PageInfoPagination';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import config from '@/config';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 
-import Orders from '../_components/Orders/Orders';
+import Orders from '../_components/Orders';
 
 const Page = async ({
   searchParams,
@@ -43,11 +49,22 @@ const Page = async ({
   const { edges, pageInfo } = response.customer.orders || {};
 
   return (
-    <div>
-      <h2>Orders ({response.customer?.orders?.totalCount})</h2>
-      <Orders orders={edges} />
-      <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>Orders ({response.customer?.orders?.totalCount})</CardTitle>
+        <CardDescription>
+          <p className="mb-4">Manage your addresses for a better shopping experience.</p>
+          <Button variant="secondary">
+            <ArrowLeft size={16} />
+            <Link href={config.routes.account}>Back to account</Link>
+          </Button>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Orders orders={edges} />
+        <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
+      </CardContent>
+    </Card>
   );
 };
 

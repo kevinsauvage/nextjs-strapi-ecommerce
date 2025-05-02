@@ -83,7 +83,9 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
 
   const handleAddToCart = useCallback(() => {
     if (selectedVariant?.id) {
-      handleAddToCartContext(selectedVariant.id, quantity);
+      handleAddToCartContext(selectedVariant.id, quantity).catch((error) => {
+        console.error('Error adding to cart:', error);
+      });
     }
   }, [handleAddToCartContext, quantity, selectedVariant?.id]);
 

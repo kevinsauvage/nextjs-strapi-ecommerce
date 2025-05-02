@@ -1,0 +1,150 @@
+'use client';
+
+import { useState } from 'react';
+import {
+  ChevronDown,
+  ChevronRight,
+  Heart,
+  Home,
+  LogOut,
+  Menu,
+  Search,
+  ShoppingBag,
+  User,
+} from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { v4 as uuid } from 'uuid';
+
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
+import config from '@/config/index';
+import { cn } from '@/lib/utils';
+import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
+
+const HamburgerMenu = ({
+  headerMenu,
+  shopifyToken,
+}: {
+  headerMenu: GetMenuByHandleQuery['menu']['items'];
+  shopifyToken: string | null;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState<{ [key: string]: boolean }>({});
+  const router = useRouter();
+
+  const toggleMenu = (id: string) => {
+    setExpandedMenus((previous) => ({
+      ...previous,
+      [id]: !previous[id],
+    }));
+  };
+
+  const userMenuItems = [
+    { icon: <Home />, id: uuid(), link: '/', text: 'Home' },
+    { icon: <Search />, id: uuid(), link: config.routes.search, text: 'Search' },
+
+    {
+      icon: <User />,
+      id: uuid(),
+      link: shopifyToken ? config.routes.account : config.routes.login,
+      text: shopifyToken ? 'Account' : 'Login',
+    },
+    { icon: <Heart />, id: uuid(), link: config.routes.wishlist, text: 'Wishlist' },
+    { icon: <ShoppingBag />, id: uuid(), link: config.routes.cart, text: 'Cart' },
+    shopifyToken && {
+      icon: <LogOut />,
+      id: uuid(),
+      link: config.routes.logout,
+      text: 'Logout',
+    },
+  ];
+
+  const renderMenuItem = (item: MenuItem, level = 0) => {
+    const hasChildren = item.items && item.items.length > 0;
+    const isExpanded = expandedMenus[item.id];
+
+    return (
+      <div key={item.id} className={`width-full`}>
+        <button
+          className={cn(
+            'flex w-full cursor-pointer items-center justify-between px-4 py-2 text-sm',
+            level === 0 ? 'font-medium' : '',
+            'hover:bg-accent hover:text-gray-950',
+            isExpanded ? 'bg-accent text-gray-950' : '',
+          )}
+          style={{ paddingLeft: `${level * 12 + 16}px` }}
+          onClick={() => {
+            if (hasChildren) {
+              toggleMenu(item.id);
+            } else if (typeof item.url === 'string') {
+              const pathname = new URL(item.url).pathname;
+              const parameters = new URL(item.url).searchParams;
+              router.push(`${pathname}?${parameters.toString()}`);
+              setOpen(false);
+            }
+          }}
+        >
+          <span>{item.title}</span>
+          {hasChildren && (
+            <span className="text-muted-foreground">
+              {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+            </span>
+          )}
+        </button>
+
+        {hasChildren && isExpanded && (
+          <div className="mt-1">{item.items.map((child) => renderMenuItem(child, level + 1))}</div>
+        )}
+      </div>
+    );
+  };
+
+  return (
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <button aria-label="Menu" type="button" className="md:mr-auto cursor-pointer">
+          <Menu size={40} />
+        </button>
+      </SheetTrigger>
+      <SheetContent side="left" className="p-0 w-full sm:max-w-md">
+        <div className="flex h-full flex-col">
+          <SheetHeader className="p-5 text-lg font-semibold">
+            <SheetTitle>Shop Categories</SheetTitle>
+          </SheetHeader>
+
+          <div className="flex-1 overflow-auto py-2">
+            {headerMenu.map((item: MenuItem) => renderMenuItem(item))}
+          </div>
+        </div>
+        <SheetFooter className="border-t">
+          {userMenuItems.map((item) => {
+            if (!item) return null;
+            return (
+              <button
+                key={item.id}
+                className="flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted/50"
+                onClick={() => {
+                  router.push(item.link);
+                  setOpen(false);
+                }}
+              >
+                <span className="flex items-center gap-2">
+                  {item.icon}
+                  {item.text}
+                </span>
+              </button>
+            );
+          })}
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
+  );
+};
+
+export default HamburgerMenu;

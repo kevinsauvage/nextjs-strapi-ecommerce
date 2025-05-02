@@ -2,8 +2,9 @@ import { cookies } from 'next/headers';
 
 import globalConfig from '@/config';
 import config from '@/config';
+import { getCurrentUrlWithoutParameters } from '@/utils';
 
-import type { ProductFilter } from './storefront';
+import type { PageInfo, ProductFilter } from './storefront';
 
 interface PaginationVariables {
   after?: string;
@@ -82,4 +83,43 @@ export const buildShopifySearchQuery = (query: string) => {
   }
 
   return `${trimmed}*`;
+};
+
+export const getNextPath = async (
+  pageInfo: PageInfo,
+  searchParameters: {
+    after?: string;
+    before?: string;
+    sort_key?: string;
+  },
+) => {
+  if (!pageInfo.hasNextPage) {
+    return '';
+  }
+
+  const currentUrl = await getCurrentUrlWithoutParameters();
+  const newSearchParameters = new URLSearchParams(searchParameters);
+  newSearchParameters.set('after', pageInfo.endCursor);
+  newSearchParameters.delete('before');
+
+  return `${currentUrl}?${newSearchParameters.toString()}`;
+};
+
+export const getPreviousPath = async (
+  pageInfo: PageInfo,
+  searchParameters: {
+    after?: string;
+    before?: string;
+    sort_key?: string;
+  },
+) => {
+  if (!pageInfo.hasPreviousPage) {
+    return '';
+  }
+  const currentUrl = await getCurrentUrlWithoutParameters();
+  const newSearchParameters = new URLSearchParams(searchParameters);
+  newSearchParameters.set('before', pageInfo.startCursor);
+  newSearchParameters.delete('after');
+
+  return `${currentUrl}?${newSearchParameters.toString()}`;
 };

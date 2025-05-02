@@ -2,12 +2,12 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 
 import { resetPasswordAction } from '@/actions/authActions';
-import Form from '@/components/_forms/Form/Form';
-import Input from '@/components/_forms/Input/Input';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import config from '@/config/index';
-import { useToastContext } from '@/contexts/ToastContext/NotificationContext';
 
 const { userFeedback } = config;
 
@@ -31,7 +31,6 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
     },
     undefined
   >(resetPasswordAction, initialStates);
-  const { showToast } = useToastContext();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -40,18 +39,20 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
 
   useEffect(() => {
     if (states.error) {
-      showToast.error(
+      toast.error(
         typeof states.error === 'string' ? states.error : userFeedback.resetPassword.error,
       );
     }
-  }, [showToast, states]);
+  }, [states]);
 
   return (
-    <Form action={action} title="Reset Password" autoComplete="off">
+    <form action={action} title="Reset Password" autoComplete="off">
       <input type="hidden" name="resetUrl" value={resetUrl} />
+      <Label htmlFor="password" className="mb-2">
+        New password
+      </Label>
       <Input
         id="password"
-        label="New password"
         name="password"
         type="password"
         placeholder="New password"
@@ -59,11 +60,10 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
         onChange={handleChange}
         value={formData.password}
         disabled={isPending}
-        error={states.password}
       />
-
+      {states.password && <div className="text-red-500 text-sm mt-2">{states.password}</div>}
       <ResetButton />
-    </Form>
+    </form>
   );
 };
 

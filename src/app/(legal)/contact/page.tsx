@@ -1,14 +1,16 @@
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
 import ContactForm from './_components/ContactForm';
 
 const ContactPage = () => {
+  const { title, description } = seo.pages.contact || {};
   return (
     <div>
-      <PageBanner title={seo.pages.contact.title} />
-      <Breadcrumbs />
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs />
+      </PageBanner>
       <ContactForm />
     </div>
   );

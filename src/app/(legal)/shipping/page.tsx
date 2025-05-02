@@ -1,20 +1,21 @@
 /* eslint-disable react/no-danger */
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
 
-import MainContent from '../_components/MainContent/MainContent';
+import MainContent from '../_components/MainContent';
 
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});
   const { shippingPolicy } = response?.shop || {};
-  const { title } = seo.pages.privacy || {};
+  const { title, description } = seo.pages.privacy || {};
 
   return (
     <div>
-      <PageBanner title={title} />
-      <Breadcrumbs lastElement={title} />
+      <PageBanner title={title} description={description}>
+        <Breadcrumbs lastElement={title} />
+      </PageBanner>
       <MainContent>
         <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
       </MainContent>

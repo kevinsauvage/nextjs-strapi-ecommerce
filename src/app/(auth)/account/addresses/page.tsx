@@ -1,8 +1,11 @@
+import { Plus } from 'lucide-react';
+import Link from 'next/link';
+
 import NoAddressIllustration from '@/assets/NoAddressIllustration.png';
-import Button from '@/components/Button/Button';
-import EmptyState from '@/components/EmptyState/EmptyState';
-import Flexbox from '@/components/Flexbox/Flexbox';
-import PageInfoPagination from '@/components/PageInfoPagination/PageInfoPagination';
+import EmptyState from '@/components/EmptyState';
+import PageInfoPagination from '@/components/PageInfoPagination';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config/index';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
@@ -10,9 +13,7 @@ import type { MailingAddress } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
-import Address from '../_components/Address/Address';
-
-import AddNewButton from './_components/AddNewButton';
+import Address from './_components/Address';
 
 const Addresses = async ({
   searchParams,
@@ -42,33 +43,47 @@ const Addresses = async ({
   const isDefault = (address: MailingAddress) =>
     address.id?.split('?')?.[0] === user?.defaultAddress?.id?.split('?')?.[0];
 
-  return (
-    <div>
-      <Flexbox justify="between" align="center">
-        <h2>Addresses</h2>
-        {Array.isArray(addresses) && addresses.length > 0 && <AddNewButton />}
-      </Flexbox>
+  const hasAddresses = Array.isArray(addresses) && addresses.length > 0;
 
-      <div>
-        {Array.isArray(addresses) && addresses.length > 0 ? (
-          <>
-            {addresses.map((item) => (
-              <Address key={item.id} address={item} isDefault={isDefault(item)} />
-            ))}
-            <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
-          </>
-        ) : (
-          <EmptyState
-            image={NoAddressIllustration}
-            title="No Address Yet"
-            subtitle="Please add your address for your better experience"
-            altText="No Address Yet"
-          >
-            <Button href={config.routes.createAddress}>Add new address</Button>
-          </EmptyState>
-        )}
+  if (!hasAddresses) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full">
+        <EmptyState
+          image={NoAddressIllustration}
+          title="No Address Yet"
+          subtitle="Please add your address for your better experience"
+          altText="No Address Yet"
+        >
+          <Button variant="secondary" className="mt-4">
+            <Link href={config.routes.createAddress}>Add new address</Link>
+            <Plus size={16} />
+          </Button>
+        </EmptyState>
       </div>
-    </div>
+    );
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Addresses</CardTitle>
+        <CardDescription>
+          <p className="mb-4">Manage your addresses for a better shopping experience.</p>
+          <Button variant="secondary">
+            <Link href={config.routes.createAddress}>Add new address</Link>
+            <Plus size={16} />
+          </Button>
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="grid grid-cols-1 gap-4 mb-6">
+          {addresses.map((item) => (
+            <Address key={item.id} address={item} isDefault={isDefault(item)} />
+          ))}
+        </div>
+        <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
+      </CardContent>
+    </Card>
   );
 };
 

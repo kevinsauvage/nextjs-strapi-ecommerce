@@ -13,44 +13,6 @@ import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
-export const getCartAction = async ({
-  first = 10,
-  last = 0,
-  after = '',
-  before = '',
-  reverse = false,
-}: {
-  first?: number;
-  last?: number;
-  after?: string;
-  before?: string;
-  reverse?: boolean;
-}) => {
-  const cartId = (await getCookieAction(config.cookies.cartId)) as {
-    value: string;
-  };
-
-  if (!cartId?.value) {
-    throw new Error(missingCartErrorName);
-  }
-
-  try {
-    const response = await storefrontSdk().getCart({
-      cartId: cartId?.value,
-      ...adjustPaginationVariables({ after, before, first, last, reverse }),
-    });
-
-    const { cart } = response || {};
-
-    if (cart?.id) return response;
-
-    throw new Error('Cart could not be found');
-  } catch (error) {
-    console.error('Error fetching cart:', JSON.stringify(error, undefined, 2));
-    throw new Error('Failed to fetch cart');
-  }
-};
-
 export const createCartAction = async () => {
   const cartId = await getCookieAction(config.cookies.cartId);
 
@@ -78,6 +40,44 @@ export const createCartAction = async () => {
   } catch (error) {
     console.error('Error creating cart:', JSON.stringify(error, undefined, 2));
     throw new Error('Failed to create cart');
+  }
+};
+
+export const getCartAction = async ({
+  first = 10,
+  last = 0,
+  after = '',
+  before = '',
+  reverse = false,
+}: {
+  first?: number;
+  last?: number;
+  after?: string;
+  before?: string;
+  reverse?: boolean;
+}) => {
+  const cartId = (await getCookieAction(config.cookies.cartId)) as {
+    value: string;
+  };
+
+  if (!cartId?.value) {
+    return;
+  }
+
+  try {
+    const response = await storefrontSdk().getCart({
+      cartId: cartId?.value,
+      ...adjustPaginationVariables({ after, before, first, last, reverse }),
+    });
+
+    const { cart } = response || {};
+
+    if (cart?.id) return cart;
+
+    throw new Error('Cart could not be found');
+  } catch (error) {
+    console.error('Error fetching cart:', JSON.stringify(error, undefined, 2));
+    throw new Error('Failed to fetch cart');
   }
 };
 
@@ -144,28 +144,28 @@ export const cartLinesUpdateAction = async (
     throw new Error(missingCartErrorName);
   }
 
-  try {
-    const updateLinesResponse = await storefrontSdk().cartLinesUpdate({
-      cartId,
-      lines,
-      ...adjustPaginationVariables({ after, before, first, last }),
-    });
-    const { cart, userErrors } = updateLinesResponse?.cartLinesUpdate || {};
+  const updateLinesResponse = await storefrontSdk().cartLinesUpdate({
+    cartId,
+    lines,
+    ...adjustPaginationVariables({ after, before, first, last }),
+  });
+  const { cart, userErrors } = updateLinesResponse?.cartLinesUpdate || {};
 
-    handleUserErrors(userErrors);
+  handleUserErrors(userErrors);
 
-    if (cart) {
-      revalidatePath('/');
+  if (cart) {
+    revalidatePath('/');
+    revalidatePath('/cart');
 
-      return {
-        cart,
-        message: 'Cart updated successfully',
-        success: true,
-      };
-    }
-  } catch (error) {
-    console.error('Error updating cart lines:', JSON.stringify(error, undefined, 2));
-    throw new Error('Failed to update cart lines');
+    return {
+      cart,
+      message: 'Cart updated successfully',
+      success: true,
+    };
+  } else {
+    return {
+      message: 'Failed to update cart',
+    };
   }
 };
 
@@ -182,28 +182,29 @@ export const cartLinesAddAction = async (
     throw new Error(missingCartErrorName);
   }
 
-  try {
-    const addLineResponse = await storefrontSdk().cartLinesAdd({
-      cartId,
-      lines,
-      ...adjustPaginationVariables({ after, before, first, last }),
-    });
+  const addLineResponse = await storefrontSdk().cartLinesAdd({
+    cartId,
+    lines,
+    ...adjustPaginationVariables({ after, before, first, last }),
+  });
 
-    const { cart, userErrors } = addLineResponse?.cartLinesAdd || {};
+  const { cart, userErrors } = addLineResponse?.cartLinesAdd || {};
 
-    handleUserErrors(userErrors);
+  handleUserErrors(userErrors);
 
-    if (cart) {
-      revalidatePath('/');
+  if (cart) {
+    revalidatePath('/');
+    revalidatePath('/cart');
 
-      return {
-        cart,
-        message: 'Product added successfully',
-      };
-    }
-  } catch (error) {
-    console.error('Error adding lines to cart:', JSON.stringify(error, undefined, 2));
-    throw new Error('Failed to add lines to cart');
+    return {
+      cart,
+      message: 'Product added successfully',
+      success: true,
+    };
+  } else {
+    return {
+      message: 'Failed to add product',
+    };
   }
 };
 
@@ -220,27 +221,27 @@ export const cartLinesRemoveAction = async (
     throw new Error(missingCartErrorName);
   }
 
-  try {
-    const removeLinesResponse = await storefrontSdk().cartLinesRemove({
-      cartId,
-      lineIds: [lineItemId],
-      ...adjustPaginationVariables({ after, before, first, last }),
-    });
+  const removeLinesResponse = await storefrontSdk().cartLinesRemove({
+    cartId,
+    lineIds: [lineItemId],
+    ...adjustPaginationVariables({ after, before, first, last }),
+  });
 
-    const { cart, userErrors } = removeLinesResponse?.cartLinesRemove || {};
+  const { cart, userErrors } = removeLinesResponse?.cartLinesRemove || {};
 
-    handleUserErrors(userErrors);
+  handleUserErrors(userErrors);
 
-    if (cart) {
-      revalidatePath('/');
+  if (cart) {
+    revalidatePath('/');
+    revalidatePath('/cart');
 
-      return {
-        cart,
-        message: 'Product removed successfully',
-      };
-    }
-  } catch (error) {
-    console.error('Error removing lines from cart:', JSON.stringify(error, undefined, 2));
-    throw new Error('Failed to remove lines from cart');
+    return {
+      cart,
+      message: 'Product removed successfully',
+    };
+  } else {
+    return {
+      message: 'Failed to remove product',
+    };
   }
 };

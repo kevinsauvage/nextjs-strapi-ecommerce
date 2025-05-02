@@ -1,13 +1,10 @@
-import { notFound } from 'next/navigation';
-
-import PageBanner from '@/components/_banners/PageBanner/PageBanner';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Container from '@/components/Container/Container';
-import EmptyState from '@/components/EmptyState/EmptyState';
-import PageInfoPagination from '@/components/PageInfoPagination/PageInfoPagination';
-import ProductsList from '@/components/ProductList/ProductsList';
-import ProductListHeader from '@/components/ProductListHeader/ProductListHeader';
-import Search from '@/components/SearchForm/SearchForm';
+import Breadcrumbs from '@/components/Breadcrumbs';
+import EmptyState from '@/components/EmptyState';
+import ListingHeader from '@/components/ListingHeader';
+import PageBanner from '@/components/PageBanner';
+import PageInfoPagination from '@/components/PageInfoPagination';
+import ProductsList from '@/components/ProductsList';
+import Search from '@/components/SearchForm';
 import seo from '@/data/seo';
 import {
   adjustPaginationVariables,
@@ -17,6 +14,9 @@ import {
 import { storefrontSdk } from '@/shopify/index';
 import type { ProductFieldsFragment, SearchProductsQuery } from '@/shopify/storefront';
 import { SearchSortKeys } from '@/shopify/storefront';
+
+import Filters from '../collections/_components/Filters';
+import Sort from '../collections/_components/Sort';
 
 type SearchParameters = {
   searchQuery: string;
@@ -38,7 +38,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     ...adjustPaginationVariables({
       after: searchParameters.after,
       before: searchParameters.before,
-      first: 10,
+      first: 16,
     }),
     identifiers: [],
     productFilters: parseFiltersQuery(searchParameters?.filters),
@@ -46,8 +46,14 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     sortKey: SearchSortKeys[sortKey] || SearchSortKeys.Relevance,
   });
 
-  if (!response?.search?.edges) {
-    notFound();
+  if (!response?.search?.edges?.length) {
+    return (
+      <EmptyState
+        title="Result Not Found"
+        subtitle="Please try again with another keywords or maybe use generic term"
+        altText="Result Not Found"
+      />
+    );
   }
 
   const pageInfo = response.search.pageInfo;
@@ -70,29 +76,21 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
 
   return (
     <div>
-      <PageBanner title={seo.search.title} />
-      <Breadcrumbs />
-      <Search searchQuery={searchParameters.searchQuery} />
-      <Container size="medium">
-        <ProductListHeader
-          searchParameters={searchParameters}
-          sortingOptions={sortingOptions}
-          filters={filters}
-          sortQuery={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
-        />
-        {products?.length > 0 ? (
-          <>
-            <ProductsList layout="grid" products={products} />
-            <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
-          </>
-        ) : (
-          <EmptyState
-            title="Result Not Found"
-            subtitle="Please try again with another keywords or maybe use generic term"
-            altText="Result Not Found"
+      <PageBanner title={seo.search.title} description={seo.search.description}>
+        <Breadcrumbs />
+        <Search searchQuery={searchParameters.searchQuery} />
+      </PageBanner>
+      <div className="container mx-auto mb-8 px-2">
+        <ListingHeader>
+          <Sort
+            query={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
+            sortingOptions={sortingOptions}
           />
-        )}
-      </Container>
+          <Filters filters={filters} query={searchParameters} />
+        </ListingHeader>
+        <ProductsList layout="grid" products={products} />
+        <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
+      </div>
     </div>
   );
 };

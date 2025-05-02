@@ -25354,7 +25354,7 @@ export enum MarketUserErrorCode {
   CatalogsWithVolumePricingOrQuantityRulesNotSupported = 'CATALOGS_WITH_VOLUME_PRICING_OR_QUANTITY_RULES_NOT_SUPPORTED',
   /** Catalog condition types must be the same for all conditions on a catalog. */
   CatalogConditionTypesMustBeTheSame = 'CATALOG_CONDITION_TYPES_MUST_BE_THE_SAME',
-  /** Catalogs cannot be added to a market with the specified condition types. */
+  /** Catalogs and condition types are not compatible with each other. */
   CatalogNotCompatibleWithConditionTypes = 'CATALOG_NOT_COMPATIBLE_WITH_CONDITION_TYPES',
   /** A market can only have market catalogs. */
   CatalogTypeNotSupported = 'CATALOG_TYPE_NOT_SUPPORTED',
@@ -25454,7 +25454,7 @@ export enum MarketUserErrorCode {
   UnsupportedCurrency = 'UNSUPPORTED_CURRENCY',
   /** The user doesn't have permission access to create or edit markets. */
   UserLacksPermission = 'USER_LACKS_PERMISSION',
-  /** Web presences cannot be added to a market with the specified condition types. */
+  /** Web presences and condition types are not compatible with each other. */
   WebPresenceNotCompatibleWithConditionTypes = 'WEB_PRESENCE_NOT_COMPATIBLE_WITH_CONDITION_TYPES',
   /** The market web presence wasn't found. */
   WebPresenceNotFound = 'WEB_PRESENCE_NOT_FOUND',
@@ -26568,11 +26568,13 @@ export type MediaImage = File & HasMetafields & Media & Node & {
    * A [custom field](https://shopify.dev/docs/apps/build/custom-data),
    * including its `namespace` and `key`, that's associated with a Shopify resource
    * for the purposes of adding and storing additional information.
+   * @deprecated No longer supported. Use metaobjects instead.
    */
   metafield?: Maybe<Metafield>;
   /**
    * A list of [custom fields](https://shopify.dev/docs/apps/build/custom-data)
    * that a merchant associates with a Shopify resource.
+   * @deprecated No longer supported. Use metaobjects instead.
    */
   metafields: MetafieldConnection;
   /** The MIME type of the image. */
@@ -28078,7 +28080,10 @@ export type MetafieldRelation = {
   namespace: Scalars['String']['output'];
   /** The resource making the reference. */
   referencer: MetafieldReferencer;
-  /** The referenced resource. */
+  /**
+   * The referenced resource.
+   * @deprecated No longer supported. Access the object directly instead.
+   */
   target: MetafieldReference;
 };
 
@@ -57417,9 +57422,9 @@ export enum WebhookSubscriptionTopic {
   ThemesPublish = 'THEMES_PUBLISH',
   /** The webhook topic for `themes/update` events. Occurs whenever a theme is updated. Does not occur when theme files are updated. Requires the `read_themes` scope. */
   ThemesUpdate = 'THEMES_UPDATE',
-  /** The webhook topic for `variants/in_stock` events. Occurs whenever a variant becomes in stock. Requires the `read_products` scope. */
+  /** The webhook topic for `variants/in_stock` events. Occurs whenever a variant becomes in stock. Online channels receive this webhook only when the variant becomes in stock online. Requires the `read_products` scope. */
   VariantsInStock = 'VARIANTS_IN_STOCK',
-  /** The webhook topic for `variants/out_of_stock` events. Occurs whenever a variant becomes out of stock. Requires the `read_products` scope. */
+  /** The webhook topic for `variants/out_of_stock` events. Occurs whenever a variant becomes out of stock. Online channels receive this webhook only when the variant becomes out of stock online. Requires the `read_products` scope. */
   VariantsOutOfStock = 'VARIANTS_OUT_OF_STOCK'
 }
 
@@ -57477,6 +57482,14 @@ export type MetafieldsSetMutation = { __typename?: 'Mutation', metafieldsSet?: {
 
 export type UserErrorsFieldsFragment = { __typename?: 'UserError', field?: Array<string> | null, message: string };
 
+export type GetProductsQueryVariables = Exact<{
+  first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetProductsQuery = { __typename?: 'QueryRoot', products: { __typename?: 'ProductConnection', edges: Array<{ __typename?: 'ProductEdge', node: { __typename?: 'Product', id: string, title: string, descriptionHtml: any, vendor: string, productType: string, tags: Array<string>, images: { __typename?: 'ImageConnection', edges: Array<{ __typename?: 'ImageEdge', node: { __typename?: 'Image', id?: string | null, originalSrc: any, altText?: string | null } }> } } }>, pageInfo: { __typename?: 'PageInfo', hasNextPage: boolean, endCursor?: string | null } } };
+
 export const UserErrorsFieldsFragmentDoc = gql`
     fragment UserErrorsFields on UserError {
   field
@@ -57514,6 +57527,35 @@ export const MetafieldsSetDocument = gql`
   }
 }
     `;
+export const GetProductsDocument = gql`
+    query getProducts($first: Int!, $after: String) {
+  products(first: $first, after: $after) {
+    edges {
+      node {
+        id
+        title
+        descriptionHtml
+        vendor
+        productType
+        tags
+        images(first: 1) {
+          edges {
+            node {
+              id
+              originalSrc
+              altText
+            }
+          }
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string, variables?: any) => Promise<T>;
 
@@ -57527,6 +57569,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     MetafieldsSet(variables: MetafieldsSetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MetafieldsSetMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<MetafieldsSetMutation>(MetafieldsSetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'MetafieldsSet', 'mutation', variables);
+    },
+    getProducts(variables: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProducts', 'query', variables);
     }
   };
 }
