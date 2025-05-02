@@ -1,6 +1,6 @@
 'use client';
 import { Search, ShoppingBag, User } from 'lucide-react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 import {
   Drawer,
@@ -22,7 +22,6 @@ const UserButtons = ({ className }: { className?: string }) => {
   const { cart } = useCartContext();
   const searchParameters = useSearchParams();
   const router = useRouter();
-  const pathname = usePathname();
 
   const data = [
     {
@@ -31,7 +30,7 @@ const UserButtons = ({ className }: { className?: string }) => {
     },
     {
       id: 'search',
-      item: !pathname.includes('/search') && (
+      item: (
         <Drawer>
           <DrawerTrigger asChild className="flex items-center justify-center">
             <button aria-label="Search" className="cursor-pointer">
@@ -115,9 +114,7 @@ const UserButtons = ({ className }: { className?: string }) => {
 
   return (
     <div className={`hidden md:flex md:items-center md:order-3 gap-2 lg:gap-4 ${className}`}>
-      {data.map((element) => (
-        <span key={element.id}>{element.item}</span>
-      ))}
+      {data.map((element) => element.item && <span key={element.id}>{element.item}</span>)}
     </div>
   );
 };

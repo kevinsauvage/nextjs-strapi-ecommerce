@@ -46,16 +46,6 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     sortKey: SearchSortKeys[sortKey] || SearchSortKeys.Relevance,
   });
 
-  if (!response?.search?.edges?.length) {
-    return (
-      <EmptyState
-        title="Result Not Found"
-        subtitle="Please try again with another keywords or maybe use generic term"
-        altText="Result Not Found"
-      />
-    );
-  }
-
   const pageInfo = response.search.pageInfo;
   const filters = response.search.productFilters;
 
@@ -80,17 +70,27 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
         <Breadcrumbs />
         <Search searchQuery={searchParameters.searchQuery} />
       </PageBanner>
-      <div className="container mx-auto mb-8 px-4">
-        <ListingHeader>
-          <Sort
-            query={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
-            sortingOptions={sortingOptions}
+      {products.length > 0 ? (
+        <div className="container mx-auto mb-8 px-4">
+          <ListingHeader>
+            <Sort
+              query={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
+              sortingOptions={sortingOptions}
+            />
+            <Filters filters={filters} query={searchParameters} />
+          </ListingHeader>
+          <ProductsList layout="grid" products={products} />
+          <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
+        </div>
+      ) : (
+        <div className="container mx-auto mb-8 px-4">
+          <EmptyState
+            title="Result Not Found"
+            subtitle="Please try again with another keywords or maybe use generic term"
+            altText="Result Not Found"
           />
-          <Filters filters={filters} query={searchParameters} />
-        </ListingHeader>
-        <ProductsList layout="grid" products={products} />
-        <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
-      </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@ import MainContent from '../_components/MainContent';
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});
   const { shippingPolicy } = response?.shop || {};
-  const { title, description } = seo.pages.privacy || {};
+  const { title, description } = seo.pages.shipping || {};
 
   return (
     <div>

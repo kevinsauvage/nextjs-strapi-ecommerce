@@ -23,7 +23,7 @@ const Footer = async () => {
                   {item?.items?.map((element) => (
                     <li className="font-light mb-1" key={element.id}>
                       {typeof element?.url === 'string' && (
-                        <Link href={element?.url} className="font-light text-sm">
+                        <Link href={new URL(element?.url)?.pathname} className="font-light text-sm">
                           {element?.title}
                         </Link>
                       )}
