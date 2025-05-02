@@ -88,7 +88,16 @@ const CollectionSlugPage = async ({
         />
         <Filters filters={filters} query={searchParameters} />
       </ListingHeader>
-      <ProductEdgeList products={edges} layout="grid" />
+
+      {edges.length > 0 ? (
+        <ProductEdgeList products={edges} layout="grid" />
+      ) : (
+        <EmptyState
+          title="No products found"
+          subtitle="Please try again with another collection"
+          altText="No products found"
+        />
+      )}
       <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
     </div>
   );
