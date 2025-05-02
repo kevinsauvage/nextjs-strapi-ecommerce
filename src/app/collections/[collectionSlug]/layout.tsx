@@ -69,7 +69,7 @@ const Layout = async ({
         <Breadcrumbs />
         <CollectionNav collectionSlug={collectionSlug} items={findNavItems()} />
       </PageBanner>
-      <div className="px-2">{children}</div>
+      <div className="px-4">{children}</div>
     </div>
   );
 };

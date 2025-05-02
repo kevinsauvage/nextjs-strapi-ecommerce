@@ -58,7 +58,7 @@ const Breadcrumbs = ({ lastElement }: { lastElement?: string }) => {
   return (
     breadcrumbs.length > 1 && (
       <div>
-        <nav className="hidden md:block container mx-auto">
+        <nav className="md:block container mx-auto">
           <ol className="flex items-center space-x-1">
             {breadcrumbs.map((crumb, index) => (
               <li key={crumb.href} className="flex items-center space-x-1 overflow-ellipsis">

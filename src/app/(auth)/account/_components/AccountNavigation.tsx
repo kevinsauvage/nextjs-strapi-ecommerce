@@ -19,7 +19,7 @@ const getLinkIcon = (title: string) => {
   return icons[title as keyof typeof icons] as React.ReactNode;
 };
 
-const AccountNavigation = () => {
+const AccountNavigation = ({ handleClose }: { handleClose?: () => void }) => {
   const currentPathname = usePathname();
 
   return (
@@ -33,6 +33,9 @@ const AccountNavigation = () => {
             className={`flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted transition-colors ${
               currentPathname === link.url ? 'bg-muted font-medium' : ''
             }`}
+            onClick={() => {
+              handleClose?.();
+            }}
           >
             {Icon}
             {link.title}

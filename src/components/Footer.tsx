@@ -8,13 +8,13 @@ const Footer = async () => {
   const menuFooter = response?.menu.items;
 
   return (
-    <footer className="flex flex-col px-2 py-10 gap-10 border-t">
-      <div className="container mx-auto flex flex-col justify-between md:grid grid-cols-2 gap-8">
-        <div className="flex flex-col mb-8">
+    <footer className="flex flex-col py-10 gap-10 border-t">
+      <div className="container mx-auto flex flex-col justify-between md:grid grid-cols-2 gap-8 px-4">
+        <div className="flex flex-col max-w-80 mb-8">
           <b className="text-lg font-bold pb-3">About</b>
           <p className="max-w-xl font-light text-sm">{siteMetadata?.about?.short}</p>
         </div>
-        <ul className="flex flex-wrap gap-8 mb-8 md:grid grid-cols-3">
+        <ul className="flex flex-wrap justify-between gap-8 mb-8 md:grid md:grid-cols-3 ">
           {Array.isArray(menuFooter) &&
             menuFooter.map((item) => (
               <li key={item.id}>

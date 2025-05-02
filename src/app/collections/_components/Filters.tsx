@@ -15,6 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -132,6 +133,7 @@ const Filters = ({
       <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
         <SheetHeader>
           <SheetTitle>Filters</SheetTitle>
+          <SheetDescription>Select filters to narrow down your search results.</SheetDescription>
         </SheetHeader>
         <div className="px-4">
           <Accordion

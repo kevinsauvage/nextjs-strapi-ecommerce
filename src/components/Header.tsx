@@ -9,7 +9,7 @@ const Header = async ({ headerMenu }: { headerMenu: GetMenuByHandleQuery['menu']
   const shopifyToken = await getShopifyToken();
   return (
     <header className="py-4">
-      <div className="container mx-auto px-2">
+      <div className="container mx-auto px-4">
         <div className=" w-full flex items-center justify-between md:grid md:grid-cols-3 md:justify-items-center">
           <Logo />
           <HamburgerMenu headerMenu={headerMenu} shopifyToken={shopifyToken} />

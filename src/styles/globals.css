@@ -170,6 +170,7 @@ th,
 td {
   padding: 0.2rem;
   border: 1px solid var(--foreground);
+  font-size: 0.8rem;
 }
 
 ul,

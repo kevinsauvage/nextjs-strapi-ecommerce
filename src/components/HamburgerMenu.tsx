@@ -18,6 +18,7 @@ import { v4 as uuid } from 'uuid';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -116,6 +117,7 @@ const HamburgerMenu = ({
         <div className="flex h-full flex-col">
           <SheetHeader className="p-5 text-lg font-semibold">
             <SheetTitle>Shop Categories</SheetTitle>
+            <SheetDescription>Explore our wide range of products and categories.</SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-auto py-2">

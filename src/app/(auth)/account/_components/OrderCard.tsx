@@ -5,7 +5,7 @@ import type {
   OrderFulfillmentStatus,
 } from '@/shopify/storefront';
 
-import SuccessfulFulfillments from './OrderCard/SuccessfulFulfillments';
+import SuccessfulFulfillments from './SuccessfulFulfillments';
 
 function formatStatus(status: OrderFulfillmentStatus | OrderFinancialStatus) {
   return status

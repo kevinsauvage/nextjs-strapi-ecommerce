@@ -35,7 +35,7 @@ const ProductPage = async ({ params }: PageProperties) => {
   const title = product?.title;
 
   return (
-    <div className="container mx-auto px-2">
+    <div className="container mx-auto px-4">
       <Breadcrumbs lastElement={title} />
       <ProductDescription product={product} isModal={false} />
 

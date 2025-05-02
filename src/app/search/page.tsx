@@ -80,7 +80,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
         <Breadcrumbs />
         <Search searchQuery={searchParameters.searchQuery} />
       </PageBanner>
-      <div className="container mx-auto mb-8 px-2">
+      <div className="container mx-auto mb-8 px-4">
         <ListingHeader>
           <Sort
             query={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
