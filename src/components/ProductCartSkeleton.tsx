@@ -16,11 +16,6 @@ const ProductCardSkeleton = () => {
         <Skeleton className="aspect-square w-full" />
       </div>
 
-      {/* Sale Badge Skeleton */}
-      <div className="absolute left-2 top-2 z-10">
-        <Skeleton className="h-5 w-10 rounded bg-red-500/60" />
-      </div>
-
       {/* Text Content */}
       <div className="py-4">
         <Skeleton className="mb-2 h-4 w-3/4" />
