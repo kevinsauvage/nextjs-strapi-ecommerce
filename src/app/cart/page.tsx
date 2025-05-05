@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 
 import { getCartAction } from '@/actions/cartActions';
 import CheckoutButton from '@/components/CheckoutButton';
+import PageBanner from '@/components/PageBanner';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -35,70 +36,78 @@ const CartPage = async ({
   if (!cart) notFound();
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-6">
-        <Link
-          href="/"
-          className="flex items-center text-sm text-muted-foreground hover:text-foreground"
-        >
-          <ChevronLeft className="h-4 w-4 mr-1" />
-          Continue Shopping
-        </Link>
-        <h1 className="text-2xl font-bold ml-auto">Your Cart</h1>
-        <div className="ml-auto flex items-center">
-          <ShoppingCart className="h-5 w-5 mr-2" />
-          <span className="font-medium">{cart.totalQuantity} Items</span>
+    <div className="pb-8">
+      <PageBanner title="Your Cart" className="w-full pb-4">
+        <div className="flex items-center justify-between gap-2 w-full">
+          <Link
+            href="/"
+            className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+          >
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            Continue Shopping
+          </Link>
+          <div className="flex items-center">
+            <ShoppingCart className="h-5 w-5 mr-2" />
+            <span className="font-medium">{cart.totalQuantity} Items</span>
+          </div>
         </div>
-      </div>
+      </PageBanner>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
               <CardTitle>Cart Items</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                {cart.lines.edges.map(({ node }) => (
-                  <div key={node.id} className="flex items-center space-x-4">
-                    <div className="flex-shrink-0">
-                      <Image
-                        src={node.merchandise.image.medium as string}
-                        alt={node.merchandise.product.title}
-                        width={80}
-                        height={80}
-                        className="rounded-md object-cover"
-                      />
+              <div className="space-y-2">
+                {cart.lines.edges.map(({ node }, index) => (
+                  <div key={node.id}>
+                    <div className="flex flex-col gap-2 md:flex-row md:items-center">
+                      <div className="flex gap-4 basis-1/2">
+                        <div className="flex-shrink-0">
+                          <Image
+                            src={node.merchandise.image.medium as string}
+                            alt={node.merchandise.product.title}
+                            width={80}
+                            height={80}
+                            className="rounded-md object-cover"
+                          />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+                            {node.merchandise.product.title}
+                          </p>
+                          <p className="text-sm text-muted-foreground">
+                            {node.merchandise.selectedOptions.map((option) => (
+                              <span key={option.name} className="mr-1 block">
+                                {option.name}: {option.value}
+                              </span>
+                            ))}
+                          </p>
+                          <p className="text-sm text-muted-foreground mt-1">
+                            $
+                            {typeof node.merchandise.price.amount === 'string'
+                              ? Number.parseFloat(node.merchandise.price.amount).toFixed(2)
+                              : node.merchandise.price.amount}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
+                        <QuantityUpdatedContainer
+                          originalQuantity={node.quantity}
+                          quantityAvailable={node.merchandise.quantityAvailable}
+                          id={node.id}
+                        />
+                        <div className="text-right">
+                          <p className="font-medium">
+                            ${(node.merchandise.price.amount * node.quantity).toFixed(2)}
+                          </p>
+                        </div>
+                        <CartRemove id={node.id} />
+                      </div>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
-                        {node.merchandise.product.title}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {node.merchandise.selectedOptions.map((option) => (
-                          <span key={option.name} className="mr-1 block">
-                            {option.name}: {option.value}
-                          </span>
-                        ))}
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        $
-                        {typeof node.merchandise.price.amount === 'string'
-                          ? Number.parseFloat(node.merchandise.price.amount).toFixed(2)
-                          : node.merchandise.price.amount}
-                      </p>
-                    </div>
-                    <QuantityUpdatedContainer
-                      originalQuantity={node.quantity}
-                      quantityAvailable={node.merchandise.quantityAvailable}
-                      id={node.id}
-                    />
-                    <div className="text-right min-w-[80px]">
-                      <p className="font-medium">
-                        ${(node.merchandise.price.amount * node.quantity).toFixed(2)}
-                      </p>
-                    </div>
-                    <CartRemove id={node.id} />
+                    {index < cart.lines.edges.length - 1 && <Separator className="my-4" />}
                   </div>
                 ))}
               </div>
