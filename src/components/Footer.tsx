@@ -35,7 +35,7 @@ const Footer = async () => {
         </ul>
       </div>
       <div className="text-center">
-        <p>Copyright © 2022 All rights reserved.</p>
+        <p>Copyright © 2025 All rights reserved.</p>
       </div>
     </footer>
   );
