@@ -10,10 +10,12 @@ const QuantityUpdater = ({
   quantityAvailable,
   productId,
   onChange,
+  disabled,
 }: {
   originalQuantity: number;
   quantityAvailable: number;
   productId: string;
+  disabled?: boolean;
   onChange:
     | ((_id: string, _quantity: number) => Promise<void>)
     | ((id: string, number_: number) => void);
@@ -48,7 +50,7 @@ const QuantityUpdater = ({
             // Handle error if needed
           });
         }}
-        disabled={loading || originalQuantity <= 1}
+        disabled={loading || disabled || originalQuantity <= 1}
       >
         <Minus className="h-3 w-3" />
         <span className="sr-only">Decrease quantity</span>
@@ -63,7 +65,7 @@ const QuantityUpdater = ({
             // Handle error if needed
           });
         }}
-        disabled={loading || originalQuantity >= quantityAvailable}
+        disabled={loading || disabled || originalQuantity >= quantityAvailable}
       >
         <Plus className="h-3 w-3" />
         <span className="sr-only">Increase quantity</span>
