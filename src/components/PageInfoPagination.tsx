@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { Button, buttonVariants } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { getNextPath, getPreviousPath } from '@/shopify/helpers';
 import type { PageInfo } from '@/shopify/storefront';
 
@@ -15,13 +15,19 @@ const PageInfoPagination = async ({
     sort_key?: string;
   };
 }) => {
+  const previousPath = await getPreviousPath(pageInfo, searchParameters);
+  const nextPath = await getNextPath(pageInfo, searchParameters);
   return (
     <div className="flex items-center justify-between gap-2">
-      <Link href={await getPreviousPath(pageInfo, searchParameters)}>
+      <Link
+        href={previousPath}
+        className={pageInfo.hasPreviousPage ? '' : 'cursor-default'}
+        aria-disabled={!pageInfo.hasPreviousPage}
+        aria-label="Previous Page"
+      >
         <Button
           disabled={!pageInfo.hasPreviousPage}
-          variant="default"
-          className={buttonVariants({ variant: 'default' })}
+          variant="secondary"
           size="default"
           asChild={false}
           aria-disabled={!pageInfo.hasPreviousPage}
@@ -31,8 +37,22 @@ const PageInfoPagination = async ({
         </Button>
       </Link>
 
-      <Link href={await getNextPath(pageInfo, searchParameters)}>
-        <Button disabled={!pageInfo.hasNextPage}>Next</Button>
+      <Link
+        href={nextPath}
+        className={pageInfo.hasNextPage ? '' : 'cursor-default'}
+        aria-disabled={!pageInfo.hasNextPage}
+        aria-label="Next Page"
+      >
+        <Button
+          disabled={!pageInfo.hasNextPage}
+          variant="secondary"
+          size="default"
+          asChild={false}
+          aria-disabled={!pageInfo.hasNextPage}
+          aria-label="Next Page"
+        >
+          Next
+        </Button>
       </Link>
     </div>
   );
