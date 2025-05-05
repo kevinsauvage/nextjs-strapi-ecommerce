@@ -61,55 +61,67 @@ const CartPage = async ({
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {cart.lines.edges.map(({ node }, index) => (
-                  <div key={node.id}>
-                    <div className="flex flex-col gap-2 md:flex-row md:items-center">
-                      <div className="flex gap-4 basis-1/2">
-                        <div className="flex-shrink-0">
-                          <Image
-                            src={node.merchandise.image.medium as string}
-                            alt={node.merchandise.product.title}
-                            width={80}
-                            height={80}
-                            className="rounded-md object-cover"
+                {cart.lines.edges?.length > 0 ? (
+                  cart.lines.edges.map(({ node }, index) => (
+                    <div key={node.id}>
+                      <div className="flex flex-col gap-2 md:flex-row md:items-center">
+                        <div className="flex gap-4 basis-1/2">
+                          <div className="flex-shrink-0">
+                            <Image
+                              src={node.merchandise.image.medium as string}
+                              alt={node.merchandise.product.title}
+                              width={80}
+                              height={80}
+                              className="rounded-md object-cover"
+                            />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+                              {node.merchandise.product.title}
+                            </p>
+                            <p className="text-sm text-muted-foreground">
+                              {node.merchandise.selectedOptions.map((option) => (
+                                <span key={option.name} className="mr-1 block">
+                                  {option.name}: {option.value}
+                                </span>
+                              ))}
+                            </p>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              $
+                              {typeof node.merchandise.price.amount === 'string'
+                                ? Number.parseFloat(node.merchandise.price.amount).toFixed(2)
+                                : node.merchandise.price.amount}
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
+                          <QuantityUpdatedContainer
+                            originalQuantity={node.quantity}
+                            quantityAvailable={node.merchandise.quantityAvailable}
+                            id={node.id}
                           />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
-                            {node.merchandise.product.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {node.merchandise.selectedOptions.map((option) => (
-                              <span key={option.name} className="mr-1 block">
-                                {option.name}: {option.value}
-                              </span>
-                            ))}
-                          </p>
-                          <p className="text-sm text-muted-foreground mt-1">
-                            $
-                            {typeof node.merchandise.price.amount === 'string'
-                              ? Number.parseFloat(node.merchandise.price.amount).toFixed(2)
-                              : node.merchandise.price.amount}
-                          </p>
+                          <div className="text-right">
+                            <p className="font-medium">
+                              ${(node.merchandise.price.amount * node.quantity).toFixed(2)}
+                            </p>
+                          </div>
+                          <CartRemove id={node.id} />
                         </div>
                       </div>
-                      <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
-                        <QuantityUpdatedContainer
-                          originalQuantity={node.quantity}
-                          quantityAvailable={node.merchandise.quantityAvailable}
-                          id={node.id}
-                        />
-                        <div className="text-right">
-                          <p className="font-medium">
-                            ${(node.merchandise.price.amount * node.quantity).toFixed(2)}
-                          </p>
-                        </div>
-                        <CartRemove id={node.id} />
-                      </div>
+                      {index < cart.lines.edges.length - 1 && <Separator className="my-4" />}
                     </div>
-                    {index < cart.lines.edges.length - 1 && <Separator className="my-4" />}
+                  ))
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-8">
+                    <p className="text-lg text-muted-foreground">Your cart is empty</p>
+                    <Link href="/" className="mt-4 text-sm hover:underline">
+                      <Button variant="secondary">
+                        <ChevronLeft className="h-4 w-4 mr-1" />
+                        Continue Shopping
+                      </Button>
+                    </Link>
                   </div>
-                ))}
+                )}
               </div>
             </CardContent>
             <CardFooter className="flex justify-between">
