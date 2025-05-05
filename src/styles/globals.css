@@ -163,6 +163,7 @@ button {
 }
 
 table {
+  width: 100%;
   border-collapse: collapse;
 }
 table,
@@ -178,4 +179,15 @@ ol,
 li {
   padding-left: 0;
   list-style: none;
+}
+button[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
 }
