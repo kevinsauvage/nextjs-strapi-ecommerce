@@ -7,13 +7,13 @@ type OptionValues = ProductFieldsFragment['options'][number]['optionValues'][num
 const Options = ({
   options,
   onClick,
-  isOptionSelected,
   isOptionOutOfStock,
   styles,
+  isOptionSelected,
 }: {
   options: ProductFieldsFragment['options'];
+  isOptionSelected?: (name: string, value: OptionValues) => boolean;
   onClick: (id: string, name: string, value: OptionValues) => void;
-  isOptionSelected: (id: string, value: OptionValues) => boolean;
   isOptionOutOfStock: (id: string, value: OptionValues) => boolean;
   styles?: string;
 }) =>
@@ -24,8 +24,8 @@ const Options = ({
           key={option.id}
           option={option}
           onClick={onClick}
-          isOptionSelected={isOptionSelected}
           isOptionOutOfStock={isOptionOutOfStock}
+          isOptionSelected={isOptionSelected}
         />
       ))}
     </div>

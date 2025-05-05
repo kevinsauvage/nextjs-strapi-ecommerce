@@ -1,4 +1,5 @@
 'use client';
+
 import { useCallback, useEffect, useState } from 'react';
 
 import useCartContext from '@/contexts/CartContext/useCartContext';
@@ -24,21 +25,15 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
 
   const { handleAddToCart: handleAddToCartContext } = useCartContext();
 
-  const handleChangeInput = useCallback((number_: number) => setQuantity(number_), []);
-
-  const handleSetSelectedProductOption = useCallback(
-    (id: string, name: string, optionValues: OptionValues) => {
-      setSelectedProductOption((previous) => {
-        const selectedOption = previous?.find((option) => option.id === id);
-        if (selectedOption) {
-          return previous?.map((option) =>
-            option.id === id ? { ...option, name, optionValues } : option,
-          );
-        }
-        return [...(previous || []), { id, name, optionValues }];
-      });
+  const handleChangeInput = useCallback(
+    (number_: number) => {
+      setQuantity(number_);
+      if (number_ && selectedVariant?.id) {
+        const amount = Number(selectedVariant?.price?.amount) * number_;
+        setTotalPrice(Number(amount.toFixed(2)));
+      }
     },
-    [setSelectedProductOption],
+    [selectedVariant],
   );
 
   const selectVariantByOptions = useCallback(
@@ -63,13 +58,18 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
     [product],
   );
 
-  const isOptionSelected = (id: string, optionValue: OptionValues) => {
-    const selectedOption = selectedProductOption?.find((option) => option.id === id);
-    if (selectedOption) {
-      return selectedOption.optionValues?.id === optionValue?.id;
-    }
-    return false;
-  };
+  const handleSetSelectedProductOption = useCallback(
+    (id: string, name: string, optionValues: OptionValues) => {
+      setSelectedProductOption((previous) => {
+        const newOptions = previous?.map((option) => {
+          return option?.name === name ? { ...option, id, optionValues } : option;
+        });
+        selectVariantByOptions(newOptions);
+        return newOptions;
+      });
+    },
+    [selectVariantByOptions],
+  );
 
   const isOptionOutOfStock = (name: string, optionValue: OptionValues) => {
     const isOUt = product?.variants?.edges?.some((variant) => {
@@ -79,6 +79,13 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
       );
     });
     return !isOUt;
+  };
+
+  const isOptionSelected = (name: string, value: OptionValues) => {
+    return selectedProductOption?.some(
+      (selectedOption) =>
+        selectedOption.name === name && selectedOption.optionValues.name === value.name,
+    );
   };
 
   const handleAddToCart = useCallback(() => {
@@ -98,20 +105,14 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
         optionValues: option.optionValues[0] as OptionValues,
       })) || [],
     );
-  }, [product]);
-
-  useEffect(() => {
-    if (quantity && selectedVariant?.id) {
-      const amount = Number(selectedVariant?.price?.amount) * quantity;
-      setTotalPrice(Number(amount.toFixed(2)));
-    }
-  }, [quantity, selectedVariant, selectedVariant?.id]);
-
-  useEffect(() => {
-    if (selectedProductOption?.length) {
-      selectVariantByOptions(selectedProductOption);
-    }
-  }, [selectedProductOption, selectVariantByOptions]);
+    selectVariantByOptions(
+      product?.options?.map((option) => ({
+        id: option.id,
+        name: option.name,
+        optionValues: option.optionValues[0] as OptionValues,
+      })) || [],
+    );
+  }, [product, selectVariantByOptions]);
 
   return {
     handleAddToCart,

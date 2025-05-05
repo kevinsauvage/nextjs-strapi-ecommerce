@@ -31,8 +31,8 @@ const ProductDescription = ({
     handleSetSelectedProductOption,
     quantity,
     handleChangeInput,
-    isOptionOutOfStock,
     isOptionSelected,
+    isOptionOutOfStock,
   } = useProductSelection({ product });
   const { productType, options, title, id, images } = product || {};
 
@@ -192,6 +192,7 @@ const ProductDescription = ({
                   originalQuantity={quantity || 1}
                   quantityAvailable={quantityAvailable}
                   productId={id}
+                  disabled={!availableForSale}
                   onChange={(_id, q) => {
                     handleChangeInput(q);
                   }}
