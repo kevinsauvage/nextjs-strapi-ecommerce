@@ -2033,10 +2033,18 @@ export enum ArticleUpdateUserErrorCode {
   UploadFailed = 'UPLOAD_FAILED'
 }
 
-/** Represents a generic custom attribute, such as whether an order is a customer's first. */
+/**
+ * A custom property. Attributes are used to store additional information about a Shopify resource, such as
+ * products, customers, or orders. Attributes are stored as key-value pairs.
+ *
+ * For example, a list of attributes might include whether a customer is a first-time buyer (`"customer_first_order": "true"`),
+ * whether an order is gift-wrapped (`"gift_wrapped": "true"`), a preferred delivery date
+ * (`"preferred_delivery_date": "2025-10-01"`), the discount applied (`"loyalty_discount_applied": "10%"`), and any
+ * notes provided by the customer (`"customer_notes": "Please leave at the front door"`).
+ */
 export type Attribute = {
   __typename?: 'Attribute';
-  /** The key or name of the attribute. For example, `"customersFirstOrder"`. */
+  /** The key or name of the attribute. For example, `"customer_first_order"`. */
   key: Scalars['String']['output'];
   /** The value of the attribute. For example, `"true"`. */
   value?: Maybe<Scalars['String']['output']>;
@@ -9143,8 +9151,8 @@ export enum CropRegion {
 }
 
 /**
- * The three-letter currency codes that represent the world currencies used in stores. These include standard ISO 4217 codes, legacy codes,
- * and non-standard codes.
+ * The three-letter currency codes that represent the world currencies used in stores. Currency codes include
+ * [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes, and non-standard codes.
  */
 export enum CurrencyCode {
   /** United Arab Emirates Dirham (AED). */
@@ -10400,6 +10408,8 @@ export enum CustomerMergeErrorFieldType {
   MergeInProgress = 'MERGE_IN_PROGRESS',
   /** The customer has a multipass identifier. */
   MultipassIdentifier = 'MULTIPASS_IDENTIFIER',
+  /** The override fields are invalid. */
+  OverrideFields = 'OVERRIDE_FIELDS',
   /** The customer has a pending data request. */
   PendingDataRequest = 'PENDING_DATA_REQUEST',
   /** The customer has a pending or completed redaction. */
@@ -13244,10 +13254,14 @@ export type DepositPercentage = {
 
 /** Digital wallet, such as Apple Pay, which can be used for accelerated checkouts. */
 export enum DigitalWallet {
+  /** Amazon Pay. */
+  AmazonPay = 'AMAZON_PAY',
   /** Android Pay. */
   AndroidPay = 'ANDROID_PAY',
   /** Apple Pay. */
   ApplePay = 'APPLE_PAY',
+  /** Facebook Pay. */
+  FacebookPay = 'FACEBOOK_PAY',
   /** Google Pay. */
   GooglePay = 'GOOGLE_PAY',
   /** Shopify Pay. */
@@ -15575,6 +15589,8 @@ export enum DiscountErrorCode {
   Conflict = 'CONFLICT',
   /** The input value is already present. */
   Duplicate = 'DUPLICATE',
+  /** The end date should be after the start date. */
+  EndDateBeforeStartDate = 'END_DATE_BEFORE_START_DATE',
   /** The input value should be equal to the value allowed. */
   EqualTo = 'EQUAL_TO',
   /** The value exceeded the maximum allowed value. */
@@ -25432,6 +25448,8 @@ export enum MarketUserErrorCode {
   ShopMustHavePrimaryDomainWebPresence = 'SHOP_MUST_HAVE_PRIMARY_DOMAIN_WEB_PRESENCE',
   /** Can't have more than 50 markets. */
   ShopReachedMarketsLimit = 'SHOP_REACHED_MARKETS_LIMIT',
+  /** Specified conditions cannot be empty. */
+  SpecifiedConditionsCannotBeEmpty = 'SPECIFIED_CONDITIONS_CANNOT_BE_EMPTY',
   /** With an ID list in input, SPECIFIED is not needed. */
   SpecifiedNotValidForInput = 'SPECIFIED_NOT_VALID_FOR_INPUT',
   /** The subfolder suffix is invalid, please provide a different value. */
@@ -29246,12 +29264,19 @@ export type MoneyInput = {
   currencyCode: CurrencyCode;
 };
 
-/** A monetary value with currency. */
+/** A precise monetary value and its associated currency. For example, 12.99 USD. */
 export type MoneyV2 = {
   __typename?: 'MoneyV2';
-  /** Decimal money amount. */
+  /**
+   * A monetary value in decimal format, allowing for precise representation of cents or fractional
+   * currency. For example, 12.99.
+   */
   amount: Scalars['Decimal']['output'];
-  /** Currency of the money. */
+  /**
+   * The three-letter currency code that represents a world currency used in a store. Currency codes
+   * include standard [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes,
+   * and non-standard codes. For example, USD.
+   */
   currencyCode: CurrencyCode;
 };
 
@@ -50581,6 +50606,8 @@ export type ShopResourceFeedbackCreateUserError = DisplayableError & {
 export enum ShopResourceFeedbackCreateUserErrorCode {
   /** The input value is blank. */
   Blank = 'BLANK',
+  /** The feedback date cannot be set in the future. */
+  FeedbackDateInFuture = 'FEEDBACK_DATE_IN_FUTURE',
   /** The input value is invalid. */
   Invalid = 'INVALID',
   /** The feedback for a later version of the resource was already accepted. */

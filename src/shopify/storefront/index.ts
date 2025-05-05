@@ -14893,7 +14893,7 @@ export const ProductFieldsFragmentDoc = gql`
         }
       }
     }
-    variants(first: 8) {
+    variants(first: 100) {
       ...ProductVariantConnection
     }
     metafields(identifiers: $identifiers) {

@@ -284,7 +284,7 @@ fragment ProductFields on Product {
       }
     }
   }
-  variants(first: 8) {
+  variants(first: 100) {
     ...ProductVariantConnection
   }
   metafields(identifiers: $identifiers) {
