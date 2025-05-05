@@ -71,7 +71,16 @@ const CartPage = async ({
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium">{node.merchandise.product.title}</p>
+                      <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
+                        {node.merchandise.product.title}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {node.merchandise.selectedOptions.map((option) => (
+                          <span key={option.name} className="mr-1 block">
+                            {option.name}: {option.value}
+                          </span>
+                        ))}
+                      </p>
                       <p className="text-sm text-muted-foreground mt-1">
                         $
                         {typeof node.merchandise.price.amount === 'string'
