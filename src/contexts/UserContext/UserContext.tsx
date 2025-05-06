@@ -29,6 +29,7 @@ export const UserProvider = ({
 }) => {
   const router = useRouter();
   const pathname = usePathname();
+
   const handleSetWishlist = useCallback(
     async (isWishlisted: boolean, product: ProductFieldsFragment) => {
       if (!user) {
@@ -49,7 +50,7 @@ export const UserProvider = ({
         toast.error('Something went wrong');
       }
     },
-    [user, userWishlist],
+    [pathname, router, user, userWishlist],
   );
 
   const values = useMemo(
