@@ -118,7 +118,9 @@ export async function updateAddressAction(previousState: unknown, data: FormData
   }
 
   if (customerAddress) {
-    revalidatePath(`${config.routes.addresses}/edit?id=${id}`);
+    revalidatePath(`${config.routes.addresses}/edit`);
+    revalidatePath(config.routes.addresses);
+
     return redirect(config.routes.addresses);
   }
 
