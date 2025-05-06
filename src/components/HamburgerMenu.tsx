@@ -113,7 +113,7 @@ const HamburgerMenu = ({
           <Menu size={40} />
         </button>
       </SheetTrigger>
-      <SheetContent side="left" className="p-0 w-full sm:max-w-md">
+      <SheetContent side="left" className="p-0 w-full sm:max-w-md overflow-scroll max-h-dvh">
         <div className="flex h-full flex-col">
           <SheetHeader className="p-5 text-lg font-semibold">
             <SheetTitle>Shop Categories</SheetTitle>
