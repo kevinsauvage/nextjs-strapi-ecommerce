@@ -7,10 +7,12 @@ const QuantityUpdatedContainer = ({
   originalQuantity,
   quantityAvailable,
   id,
+  disabled = false,
 }: {
   originalQuantity: number;
   quantityAvailable: number;
   id: string;
+  disabled?: boolean;
 }) => {
   const { handleQuantityChange } = useCartContext();
 
@@ -20,6 +22,7 @@ const QuantityUpdatedContainer = ({
       quantityAvailable={quantityAvailable}
       productId={id}
       onChange={handleQuantityChange}
+      disabled={disabled}
     />
   );
 };

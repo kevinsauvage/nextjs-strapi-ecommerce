@@ -245,3 +245,64 @@ export const cartLinesRemoveAction = async (
     };
   }
 };
+
+export const cartDiscountCodesUpdateAction = async (
+  previousState: unknown,
+  currentState: FormData,
+) => {
+  const cartId = await getShopifyCartId();
+
+  if (!cartId) {
+    throw new Error(missingCartErrorName);
+  }
+
+  let discountCodes = currentState.getAll('couponCode') as string[];
+  if (typeof discountCodes === 'string') {
+    discountCodes = [discountCodes];
+  }
+
+  if (!discountCodes || discountCodes.length === 0) {
+    return {
+      message: 'No discount codes provided',
+      success: false,
+    };
+  }
+  const updateDiscountCodesResponse = await storefrontSdk().cartDiscountCodesUpdate({
+    cartId,
+    discountCodes,
+    first: 100,
+  });
+
+  const { cart, userErrors, warnings } = updateDiscountCodesResponse?.cartDiscountCodesUpdate || {};
+  handleUserErrors(userErrors);
+
+  if (warnings && Array.isArray(warnings) && warnings?.length) {
+    console.warn('Warnings:', warnings);
+  }
+
+  if (cart) {
+    const discountCodesAnswer = cart.discountCodes[0];
+
+    if (discountCodesAnswer.applicable) {
+      revalidatePath('/');
+      revalidatePath('/cart');
+      return {
+        cart,
+        message: 'Discount codes updated successfully',
+        success: true,
+        warnings,
+      };
+    } else {
+      return {
+        message: 'Discount codes not applicable',
+        success: false,
+        warnings,
+      };
+    }
+  }
+
+  return {
+    message: 'Failed to update discount codes',
+    success: false,
+  };
+};

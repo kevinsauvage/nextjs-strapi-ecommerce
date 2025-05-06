@@ -8980,6 +8980,35 @@ export type CartAttributesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -9028,6 +9057,35 @@ export type CartAttributesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -9204,6 +9262,35 @@ export type CartBuyerIdentityUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -9252,6 +9339,35 @@ export type CartBuyerIdentityUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -9427,6 +9543,35 @@ export type CartCreateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -9475,6 +9620,35 @@ export type CartCreateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -9651,6 +9825,35 @@ export type CartDiscountCodesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -9699,6 +9902,35 @@ export type CartDiscountCodesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -9875,6 +10107,35 @@ export type CartLinesAddMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -9923,6 +10184,35 @@ export type CartLinesAddMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -10099,6 +10389,35 @@ export type CartLinesRemoveMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -10147,6 +10466,35 @@ export type CartLinesRemoveMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -10323,6 +10671,35 @@ export type CartLinesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -10371,6 +10748,35 @@ export type CartLinesUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -10547,6 +10953,35 @@ export type CartNoteUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               }
             | {
                 __typename?: 'ComponentizableCartLine';
@@ -10595,6 +11030,35 @@ export type CartNoteUpdateMutation = {
                   };
                 };
                 attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+                discountAllocations: Array<
+                  | {
+                      __typename?: 'CartAutomaticDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCodeDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                  | {
+                      __typename?: 'CartCustomDiscountAllocation';
+                      targetType: DiscountApplicationTargetType;
+                      discountedAmount: {
+                        __typename?: 'MoneyV2';
+                        amount: any;
+                        currencyCode: CurrencyCode;
+                      };
+                    }
+                >;
               };
         }>;
         pageInfo: {
@@ -10768,6 +11232,35 @@ export type GetCartQuery = {
                 };
               };
               attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+              discountAllocations: Array<
+                | {
+                    __typename?: 'CartAutomaticDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+                | {
+                    __typename?: 'CartCodeDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+                | {
+                    __typename?: 'CartCustomDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+              >;
             }
           | {
               __typename?: 'ComponentizableCartLine';
@@ -10816,6 +11309,35 @@ export type GetCartQuery = {
                 };
               };
               attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+              discountAllocations: Array<
+                | {
+                    __typename?: 'CartAutomaticDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+                | {
+                    __typename?: 'CartCodeDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+                | {
+                    __typename?: 'CartCustomDiscountAllocation';
+                    targetType: DiscountApplicationTargetType;
+                    discountedAmount: {
+                      __typename?: 'MoneyV2';
+                      amount: any;
+                      currencyCode: CurrencyCode;
+                    };
+                  }
+              >;
             };
       }>;
       pageInfo: {
@@ -12374,6 +12896,35 @@ export type CartLineFieldsFragment = {
             };
           };
           attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+          discountAllocations: Array<
+            | {
+                __typename?: 'CartAutomaticDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+            | {
+                __typename?: 'CartCodeDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+            | {
+                __typename?: 'CartCustomDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+          >;
         }
       | {
           __typename?: 'ComponentizableCartLine';
@@ -12418,6 +12969,35 @@ export type CartLineFieldsFragment = {
             };
           };
           attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+          discountAllocations: Array<
+            | {
+                __typename?: 'CartAutomaticDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+            | {
+                __typename?: 'CartCodeDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+            | {
+                __typename?: 'CartCustomDiscountAllocation';
+                targetType: DiscountApplicationTargetType;
+                discountedAmount: {
+                  __typename?: 'MoneyV2';
+                  amount: any;
+                  currencyCode: CurrencyCode;
+                };
+              }
+          >;
         };
   }>;
   pageInfo: {
@@ -12680,6 +13260,35 @@ export type CartFieldsFragment = {
               };
             };
             attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+            discountAllocations: Array<
+              | {
+                  __typename?: 'CartAutomaticDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+              | {
+                  __typename?: 'CartCodeDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+              | {
+                  __typename?: 'CartCustomDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+            >;
           }
         | {
             __typename?: 'ComponentizableCartLine';
@@ -12728,6 +13337,35 @@ export type CartFieldsFragment = {
               };
             };
             attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
+            discountAllocations: Array<
+              | {
+                  __typename?: 'CartAutomaticDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+              | {
+                  __typename?: 'CartCodeDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+              | {
+                  __typename?: 'CartCustomDiscountAllocation';
+                  targetType: DiscountApplicationTargetType;
+                  discountedAmount: {
+                    __typename?: 'MoneyV2';
+                    amount: any;
+                    currencyCode: CurrencyCode;
+                  };
+                }
+            >;
           };
     }>;
     pageInfo: {
@@ -14597,6 +15235,12 @@ export const CartLineFieldsFragmentDoc = gql`
           key
           value
         }
+        discountAllocations {
+          discountedAmount {
+            ...MoneyFields
+          }
+          targetType
+        }
       }
     }
     pageInfo {
@@ -14604,6 +15248,7 @@ export const CartLineFieldsFragmentDoc = gql`
     }
   }
   ${ImageFieldsFragmentDoc}
+  ${MoneyFieldsFragmentDoc}
   ${PageInfoFieldsFragmentDoc}
 `;
 export const CartCostFieldsFragmentDoc = gql`

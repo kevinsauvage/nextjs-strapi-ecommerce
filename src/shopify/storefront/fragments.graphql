@@ -63,6 +63,12 @@ fragment CartLineFields on BaseCartLineConnection {
         key
         value
       }
+      discountAllocations {
+        discountedAmount {
+          ...MoneyFields
+        }
+        targetType
+      }
     }
   }
   pageInfo {
@@ -213,6 +219,7 @@ fragment CartFields on Cart {
     applicable
     code
   }
+
   buyerIdentity {
     ...BuyerIdentityFields
   }
