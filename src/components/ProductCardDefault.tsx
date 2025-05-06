@@ -8,11 +8,11 @@ import Link from 'next/link';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 
-import Loader from './Loader/Loader';
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
 import Price from './Price';
 import ProductDescription from './ProductDescription';
+import SpinnerLoader from './SpinnerLoader';
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 
@@ -42,8 +42,8 @@ const ProductCardDefault = ({
   return (
     <li className="relative group overflow-hidden rounded-sm transition-all">
       {loading && (
-        <div className="absolute inset-0 z-10 flex items-center justify-center bg-white/80 dark:bg-gray-900/80">
-          <Loader />
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-background/80">
+          <SpinnerLoader />
         </div>
       )}
       <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
@@ -62,7 +62,7 @@ const ProductCardDefault = ({
             });
           }}
         >
-          <Heart color="currentColor" />
+          <Heart color="currentColor" className={isWishlisted ? 'fill-red-500' : ''} />
         </Button>
 
         <Dialog>
