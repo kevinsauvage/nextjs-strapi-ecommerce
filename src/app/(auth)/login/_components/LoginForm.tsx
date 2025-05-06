@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
+import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { loginAction } from '@/actions/authActions';
@@ -23,6 +24,7 @@ const LoginButton = () => {
 };
 
 const LoginForm = () => {
+  const searchParameters = useSearchParams();
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -53,6 +55,7 @@ const LoginForm = () => {
 
   return (
     <form action={action} className="space-y-6 py-12 max-w-md mx-auto w-full px-4">
+      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect')} />
       <h3 className="mb-8 text-2xl font-bold">Login</h3>
       <div>
         <Label htmlFor="email" className="mb-1">

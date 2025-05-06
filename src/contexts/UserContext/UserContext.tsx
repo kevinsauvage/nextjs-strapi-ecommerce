@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useCallback, useMemo } from 'react';
-import { redirect } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import {
@@ -27,10 +27,14 @@ export const UserProvider = ({
   user: GetCustomerQuery['customer'] | null;
   userWishlist: Array<ProductFieldsFragment>;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
   const handleSetWishlist = useCallback(
     async (isWishlisted: boolean, product: ProductFieldsFragment) => {
       if (!user) {
-        redirect('/login');
+        toast.info('You need to login to add products to your wishlist');
+        router.push(`/login?redirect=${pathname}`);
+        return;
       }
 
       const response = await (isWishlisted

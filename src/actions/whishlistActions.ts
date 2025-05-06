@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 import { adminSdk, storefrontSdk } from '@/shopify';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
@@ -30,7 +31,9 @@ export const setProductToWishListAction = async (
 ) => {
   const shopifyToken = await getShopifyToken();
 
-  if (!shopifyToken) return;
+  if (!shopifyToken) {
+    redirect('/login');
+  }
 
   const isWishlist = wishlist?.some((production) => production.id === product.id);
 
