@@ -9,7 +9,7 @@ const Orders = ({
 }) => {
   if (Array.isArray(orders)) {
     return (
-      <ul className="grid grid-cols-1 gap-4">
+      <ul className="grid grid-cols-1 gap-4 mb-4">
         {orders.map((order) => (
           <OrderCard key={order.node.id} order={order.node} />
         ))}
