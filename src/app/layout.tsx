@@ -41,7 +41,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
             <UserProvider user={user} userWishlist={userWishlist}>
               <Header headerMenu={headerMenu?.menu?.items} />
-              <main>{children}</main>
+              <main className="min-h-[calc(100vh-76px)]">{children}</main>
               <Toaster richColors />
               <Footer />
             </UserProvider>
