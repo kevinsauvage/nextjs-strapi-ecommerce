@@ -84,10 +84,10 @@ const config = {
 
 export const accountNav = [
   { title: 'Account overview', url: config.routes.account },
-  { title: 'Address book', url: config.routes.addresses },
-  { title: 'My wishlist', url: config.routes.wishlist },
-  { title: 'My orders', url: config.routes.orders },
   { title: 'My details', url: config.routes.updateAccount },
+  { title: 'Address book', url: config.routes.addresses },
+  { title: 'My orders', url: config.routes.orders },
+  { title: 'My wishlist', url: config.routes.wishlist },
   { title: 'Sign out', url: config.routes.logout },
 ];
 
