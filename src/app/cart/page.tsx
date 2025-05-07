@@ -74,10 +74,18 @@ const LineItem: React.FC<{
           id={node.id}
           disabled={finalPrice <= 0}
         />
-        <div className="text-right flex items-center gap-1">
-          <p className="font-medium">{finalPrice.toFixed(2)}</p>
-          <p className="font-medium">{node.merchandise.price.currencyCode}</p>
+        <div className="flex flex-col items-end">
+          <div className="text-right flex items-center gap-1">
+            <p className="font-medium">{finalPrice.toFixed(2)}</p>
+            <p className="font-medium">{node.merchandise.price.currencyCode}</p>
+          </div>
+          {finalPrice < totalPrice && (
+            <p className="text-sm text-red-500 line-through">
+              {totalPrice.toFixed(2)} {node.merchandise.price.currencyCode}
+            </p>
+          )}
         </div>
+
         <CartRemove id={node.id} />
       </div>
     </div>
@@ -106,7 +114,7 @@ const CartPage = async ({
   if (!cart) notFound();
 
   return (
-    <div className="pb-8">
+    <div className="pb-8 max-w-6xl mx-auto">
       <PageBanner title="Your Cart" className="w-full pb-4">
         <div className="flex items-center justify-between gap-2 w-full">
           <Link
