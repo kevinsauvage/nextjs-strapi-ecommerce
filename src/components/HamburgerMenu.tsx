@@ -76,8 +76,8 @@ const HamburgerMenu = ({
           className={cn(
             'flex w-full cursor-pointer items-center justify-between px-4 py-2 text-sm',
             level === 0 ? 'font-medium' : '',
-            'hover:bg-accent hover:text-gray-950',
-            isExpanded ? 'bg-accent text-gray-950' : '',
+            'hover:bg-muted hover:text-foreground',
+            isExpanded ? 'bg-muted text-foreground' : '',
           )}
           style={{ paddingLeft: `${level * 12 + 16}px` }}
           onClick={() => {
