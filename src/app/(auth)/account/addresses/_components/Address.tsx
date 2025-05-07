@@ -63,7 +63,7 @@ const Address = ({
 
   return (
     <Card className="overflow-hidden">
-      <CardContent className="px-4 flex flex-col md:flex-row justify-between gap-4">
+      <CardContent className="px-4 flex justify-between gap-4">
         <div className="space-y-1">
           <p className="font-medium">{name}</p>
           <p className="text-sm text-muted-foreground">
