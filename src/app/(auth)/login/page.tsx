@@ -13,13 +13,15 @@ const LoginPage = () => {
       <PageBanner title={title} description={description}>
         <Breadcrumbs />
       </PageBanner>
-      <div className="bg-gray-100 w-full  pb-12 dark:bg-muted">
-        <LoginForm />
-        <div className="text-sm text-center text-muted-foreground ">
-          Don’t have an account?{' '}
-          <Link href="/register" className="text-primary hover:underline">
-            Sign up
-          </Link>
+      <div className="bg-white dark:bg-black w-full">
+        <div className="bg-gray-100 w-full pb-12 dark:bg-background/70">
+          <LoginForm />
+          <div className="text-sm text-center text-muted-foreground ">
+            Don’t have an account?{' '}
+            <Link href="/register" className="text-primary hover:underline">
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
     </div>
