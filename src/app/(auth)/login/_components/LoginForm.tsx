@@ -55,7 +55,7 @@ const LoginForm = () => {
 
   return (
     <form action={action} className="space-y-6 py-12 max-w-md mx-auto w-full px-4">
-      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect')} />
+      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect') || ''} />
       <h3 className="mb-8 text-2xl font-bold">Login</h3>
       <div>
         <Label htmlFor="email" className="mb-1">
