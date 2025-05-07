@@ -13,6 +13,8 @@ import type { MailingAddress } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
+import BackButton from '../_components/BackButton';
+
 import Address from './_components/Address';
 
 const Addresses = async ({
@@ -54,7 +56,7 @@ const Addresses = async ({
           subtitle="Please add your address for your better experience"
           altText="No Address Yet"
         >
-          <Button variant="secondary" className="mt-4">
+          <Button variant="default" className="mt-4">
             <Link href={config.routes.createAddress}>Add new address</Link>
             <Plus size={16} />
           </Button>
@@ -69,10 +71,13 @@ const Addresses = async ({
         <CardTitle>Addresses</CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>
-          <Button variant="secondary">
-            <Link href={config.routes.createAddress}>Add new address</Link>
-            <Plus size={16} />
-          </Button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <BackButton />
+            <Button variant="default">
+              <Link href={config.routes.createAddress}>Add new address</Link>
+              <Plus size={16} />
+            </Button>
+          </div>
         </CardDescription>
       </CardHeader>
       <CardContent>

@@ -1,16 +1,12 @@
-import { ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import config from '@/config';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 
+import BackButton from '../_components/BackButton';
 import Orders from '../_components/Orders';
 
 const Page = async ({
@@ -54,10 +50,7 @@ const Page = async ({
         <CardTitle>Orders ({response.customer?.orders?.totalCount})</CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>
-          <Button variant="secondary">
-            <ArrowLeft size={16} />
-            <Link href={config.routes.account}>Back to account</Link>
-          </Button>
+          <BackButton />
         </CardDescription>
       </CardHeader>
       <CardContent>

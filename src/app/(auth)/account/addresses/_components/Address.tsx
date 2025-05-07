@@ -1,6 +1,6 @@
 'use client';
 
-import { Edit, Trash2 } from 'lucide-react';
+import { Edit, Heart, MoreVerticalIcon, Trash2 } from 'lucide-react';
 import Link from 'next/link';
 import { toast } from 'sonner';
 
@@ -8,7 +8,13 @@ import { deleteAddressAction, setDefaultAddressAction } from '@/actions/addresse
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import config from '@/config';
 import type { MailingAddress } from '@/shopify/storefront';
 
@@ -80,64 +86,61 @@ const Address = ({
 
         <div className="flex flex-col items-end justify-between gap-2">
           {displayButton && (
-            <div className="flex gap-2">
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button variant="secondary" size="icon" asChild>
-                      <Link href={`${config.routes.editAddress}?id=${id}`}>
-                        <Edit className="h-4 w-4" />
-                        <span className="sr-only">Edit address</span>
-                      </Link>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Edit address</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-
-              <TooltipProvider>
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => {
-                        handleDelete().catch((error) => {
-                          console.error('Error deleting address:', error);
-                        });
-                      }}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                      <span className="sr-only">Remove address</span>
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Remove address</p>
-                  </TooltipContent>
-                </Tooltip>
-              </TooltipProvider>
-            </div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+                  size="icon"
+                >
+                  <MoreVerticalIcon />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="">
+                <DropdownMenuItem>
+                  <Link
+                    href={`${config.routes.editAddress}?id=${id}`}
+                    className="flex items-center gap-2"
+                  >
+                    <Edit size={16} />
+                    <span>Edit address</span>
+                  </Link>
+                </DropdownMenuItem>
+                {!isDefault && (
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleSetAsDefault().catch((error) => {
+                        console.error('Error setting address as default:', error);
+                      });
+                    }}
+                  >
+                    <Heart size={16} />
+                    <span>Set as default</span>
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={() => {
+                    handleDelete().catch((error) => {
+                      console.error('Error deleting address:', error);
+                    });
+                  }}
+                >
+                  <Trash2 size={16} />
+                  <span className="whitespace-nowrap">Remove address</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           )}
 
-          {!isDefault && displayButton ? (
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => {
-                handleSetAsDefault().catch((error) => {
-                  console.error('Error setting address as default:', error);
-                });
-              }}
-            >
-              Set as default
-            </Button>
-          ) : isDefault ? (
-            <Badge variant="secondary" className="text-xs">
+          {isDefault && (
+            <Badge variant="outline" className="text-xs">
               Default address
             </Badge>
-          ) : null}
+          )}
         </div>
       </CardContent>
     </Card>

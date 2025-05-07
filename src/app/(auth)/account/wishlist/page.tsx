@@ -4,6 +4,8 @@ import EmptyState from '@/components/EmptyState';
 import ProductsList from '@/components/ProductsList';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
+import BackButton from '../_components/BackButton';
+
 const Wishlist = async () => {
   const userWishlist = await getWishlistAction();
 
@@ -24,6 +26,7 @@ const Wishlist = async () => {
         <CardTitle>My Wishlist</CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your wishlist for a better shopping experience.</p>
+          <BackButton />
         </CardDescription>
       </CardHeader>
       <CardContent>

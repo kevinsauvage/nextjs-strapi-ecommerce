@@ -18,7 +18,7 @@ const { userFeedback } = config;
 const SubmitButton = () => {
   const status = useFormStatus();
   return (
-    <Button type="submit" className="mt-8">
+    <Button type="submit" disabled={status.pending}>
       {status.pending ? 'Loading...' : 'Update'}
     </Button>
   );
@@ -62,6 +62,15 @@ const UpdateUserForm = () => {
 
   return (
     <form action={action} className="space-y-8">
+      <div className="">
+        <h3 className="text-2xl font-bold leading-tight tracking-tight">
+          Fill in the form below to update your profile. <br />
+        </h3>
+        <span className="text-sm text-muted-foreground">
+          You can update your profile information at any time.
+        </span>
+      </div>
+
       <input type="hidden" name="email" value={user.email} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
