@@ -211,13 +211,20 @@ const CartPage = async ({
             </CardFooter>
           </Card>
 
-          <div className="mt-6 space-y-4">
-            <div className="bg-muted p-4 rounded-lg">
-              <h3 className="font-medium mb-2">Promo Code</h3>
+          <Card className="mt-4">
+            <CardHeader>
+              <CardTitle>Promo Code</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Enter your promo code to get a discount on your order.
+              </p>
+            </CardHeader>
+            <CardContent>
               <CouponCodeForm />
+            </CardContent>
+            <CardFooter>
               <DiscountCodes discountCodes={cart.discountCodes} />
-            </div>
-          </div>
+            </CardFooter>
+          </Card>
         </div>
       </div>
     </div>
