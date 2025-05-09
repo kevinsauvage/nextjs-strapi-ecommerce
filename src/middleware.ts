@@ -7,16 +7,16 @@ import { setDelegateTokenAction } from './actions/delegateTokenActions';
 import globalConfig from './config';
 
 const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
-  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ checkBasicAuth:');
+  console.error('🟩🟪🟦-->  ~ checkBasicAuth ~ checkBasicAuth:');
   const authCookie = cookies.get('authorization');
-  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ authCookie:', authCookie);
+  console.error('🟩🟪🟦-->  ~ checkBasicAuth ~ authCookie:', authCookie);
 
   if (authCookie) {
     return authCookie.value === 'true';
   }
 
   const authorization = nextUrl?.searchParams.get('authorization');
-  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ authorization:', authorization);
+  console.error('🟩🟪🟦-->  ~ checkBasicAuth ~ authorization:', authorization);
 
   if (authorization) {
     return authorization === 'true';
@@ -27,14 +27,14 @@ const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
 async function middleware(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;
   const { searchParams, pathname } = nextUrl;
-  console.log('🟩🟪🟦-->  ~ middleware ~ nextUrl:', nextUrl);
+  console.error('🟩🟪🟦-->  ~ middleware ~ nextUrl:', nextUrl);
 
   const response = NextResponse.next();
 
   if (checkBasicAuth(nextUrl, cookies)) {
-    console.log('----------------------------------------------------');
-    console.log('Authorization cookie found, skipping authentication');
-    console.log('set authorization cookie');
+    console.error('----------------------------------------------------');
+    console.error('Authorization cookie found, skipping authentication');
+    console.error('set authorization cookie');
     response.cookies.set('authorization', 'true');
   } else {
     return new Response('Authentication required', { status: 401 });
