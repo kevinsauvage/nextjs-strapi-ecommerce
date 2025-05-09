@@ -1,5 +1,8 @@
+import Link from 'next/link';
+
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
@@ -43,6 +46,20 @@ const Page = async ({
   }
 
   const { edges, pageInfo } = response.customer.orders || {};
+
+  if (!edges?.length) {
+    return (
+      <EmptyState
+        title="No Orders Found"
+        subtitle="Looks like you haven’t made any orders yet"
+        altText="No Orders Found"
+      >
+        <Button variant="default" className="mt-4">
+          <Link href="/">Start Shopping</Link>
+        </Button>
+      </EmptyState>
+    );
+  }
 
   return (
     <Card>

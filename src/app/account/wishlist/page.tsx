@@ -1,7 +1,10 @@
+import Link from 'next/link';
+
 import { getWishlistAction } from '@/actions/whishlistActions';
 import NoFavoriteIllustration from '@/assets/NoFavoriteIllustration.png';
 import EmptyState from '@/components/EmptyState';
 import ProductsList from '@/components/ProductsList';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
 import BackButton from '../_components/BackButton';
@@ -16,7 +19,11 @@ const Wishlist = async () => {
         title="No Favorites"
         subtitle="You can add an item to your favorites by clicking the “Heart Icon”"
         altText="No Favorites"
-      />
+      >
+        <Button variant="default" className="mt-4">
+          <Link href="/">Start Shopping</Link>
+        </Button>
+      </EmptyState>
     );
   }
 
