@@ -27,6 +27,7 @@ const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
 async function middleware(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;
   const { searchParams, pathname } = nextUrl;
+  console.log('🟩🟪🟦-->  ~ middleware ~ nextUrl:', nextUrl);
 
   const response = NextResponse.next();
 
