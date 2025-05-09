@@ -1,3 +1,4 @@
+import type { RequestCookies } from 'next/dist/compiled/@edge-runtime/cookies';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -5,12 +6,21 @@ import { createCartAction } from './actions/cartActions';
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
 import globalConfig from './config';
 
-const checkBasicAuth = (headers: Headers) => {
-  const basicAuth = headers?.get('authorization');
-  if (basicAuth) {
-    const authValue = basicAuth.split(' ')[1];
-    const [user, pwd] = atob(authValue).split(':');
-    return user === 'kevin' && pwd === '50625062';
+const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
+  const authCookie = cookies.get('authorization');
+
+  if (authCookie) {
+    return authCookie.value === 'true';
+  }
+
+  const authorization = nextUrl?.searchParams.get('authorization');
+
+  if (authorization) {
+    const isAuthorized = authorization === 'true';
+    if (isAuthorized) {
+      cookies.set('authorization', 'true');
+    }
+    return isAuthorized;
   }
   return false;
 };
@@ -19,12 +29,14 @@ async function middleware(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;
   const { searchParams, pathname } = nextUrl;
 
-  if (!checkBasicAuth(headers)) {
+  const response = NextResponse.next();
+
+  if (checkBasicAuth(nextUrl, cookies)) {
+    response.cookies.set('authorization', 'true');
+  } else {
     nextUrl.pathname = '/api/basicAuth';
     return NextResponse.rewrite(nextUrl);
   }
-
-  const response = NextResponse.next();
 
   const userIp = headers.get('x-forwarded-for')?.split(',')[0] || 'Unknown';
 
