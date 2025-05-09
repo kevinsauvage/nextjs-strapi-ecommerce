@@ -34,9 +34,7 @@ async function middleware(request: NextRequest) {
   if (checkBasicAuth(nextUrl, cookies)) {
     response.cookies.set('authorization', 'true');
   } else {
-    return new Response('Authentication required', {
-      status: 401,
-    });
+    return new Response('Authentication required', { status: 401 });
   }
 
   const userIp = headers.get('x-forwarded-for')?.split(',')[0] || 'Unknown';
