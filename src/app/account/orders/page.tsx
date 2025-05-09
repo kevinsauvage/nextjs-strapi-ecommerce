@@ -49,15 +49,19 @@ const Page = async ({
 
   if (!edges?.length) {
     return (
-      <EmptyState
-        title="No Orders Found"
-        subtitle="Looks like you haven’t made any orders yet"
-        altText="No Orders Found"
-      >
-        <Button variant="default" className="mt-4">
-          <Link href="/">Start Shopping</Link>
-        </Button>
-      </EmptyState>
+      <Card>
+        <CardContent>
+          <EmptyState
+            title="No Orders Found"
+            subtitle="Looks like you haven’t made any orders yet"
+            altText="No Orders Found"
+          >
+            <Button variant="default" className="mt-4">
+              <Link href="/">Start Shopping</Link>
+            </Button>
+          </EmptyState>
+        </CardContent>
+      </Card>
     );
   }
 
