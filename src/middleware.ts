@@ -16,11 +16,7 @@ const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
   const authorization = nextUrl?.searchParams.get('authorization');
 
   if (authorization) {
-    const isAuthorized = authorization === 'true';
-    if (isAuthorized) {
-      cookies.set('authorization', 'true');
-    }
-    return isAuthorized;
+    return authorization === 'true';
   }
   return false;
 };
@@ -32,6 +28,9 @@ async function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   if (checkBasicAuth(nextUrl, cookies)) {
+    console.log('----------------------------------------------------');
+    console.log('Authorization cookie found, skipping authentication');
+    console.log('set authorization cookie');
     response.cookies.set('authorization', 'true');
   } else {
     return new Response('Authentication required', { status: 401 });
