@@ -61,9 +61,12 @@ const Breadcrumbs = ({ lastElement }: { lastElement?: string }) => {
         <nav className="md:block container mx-auto">
           <ol className="flex items-center space-x-1">
             {breadcrumbs.map((crumb, index) => (
-              <li key={crumb.href} className="flex items-center space-x-1 overflow-ellipsis">
+              <li
+                key={crumb.href}
+                className="flex items-center space-x-1 overflow-ellipsis overflow-hidden"
+              >
                 {lastElement && index === breadcrumbs.length - 1 ? (
-                  <p className="font-medium text-sm text-ellipsis  whitespace-nowrap">
+                  <p className="font-medium text-sm text-ellipsis  whitespace-nowrap overflow-hidden">
                     {lastElement}
                   </p>
                 ) : (
