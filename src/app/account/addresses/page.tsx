@@ -49,19 +49,21 @@ const Addresses = async ({
 
   if (!hasAddresses) {
     return (
-      <div className="flex flex-col items-center justify-center h-full">
-        <EmptyState
-          image={NoAddressIllustration}
-          title="No Address Yet"
-          subtitle="Please add your address for your better experience"
-          altText="No Address Yet"
-        >
-          <Button variant="default" className="mt-4">
-            <Link href={config.routes.createAddress}>Add new address</Link>
-            <Plus size={16} />
-          </Button>
-        </EmptyState>
-      </div>
+      <Card>
+        <CardContent>
+          <EmptyState
+            image={NoAddressIllustration}
+            title="No Address Yet"
+            subtitle="Please add your address for your better experience"
+            altText="No Address Yet"
+          >
+            <Button variant="default" className="mt-4">
+              <Link href={config.routes.createAddress}>Add new address</Link>
+              <Plus size={16} />
+            </Button>
+          </EmptyState>
+        </CardContent>
+      </Card>
     );
   }
 
