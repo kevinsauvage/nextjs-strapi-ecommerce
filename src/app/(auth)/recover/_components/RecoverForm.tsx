@@ -5,13 +5,16 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { recoverPasswordAction } from '@/actions/authActions';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import type { CustomerUserError } from '@/shopify/storefront';
 
+import Form from '../../_components/Form';
+
 const SubmitButton = () => {
   const status = useFormStatus();
-  return <button type="submit">{status.pending ? 'Loading...' : 'Send mail'}</button>;
+  return <Button type="submit">{status.pending ? 'Loading...' : 'Send mail'}</Button>;
 };
 
 const RecoverForm = () => {
@@ -44,16 +47,14 @@ const RecoverForm = () => {
   }, [states]);
 
   return (
-    <form action={action} title="Recover password">
+    <Form action={action} title="Recover password">
       <Label htmlFor="email" className="mb-2">
         Email address
       </Label>
       <Input id="email" name="email" type="email" placeholder="Email" required={true} />
-
       {states.error && <div className="text-red-500 text-sm mt-2">{states.error}</div>}
-
       <SubmitButton />
-    </form>
+    </Form>
   );
 };
 

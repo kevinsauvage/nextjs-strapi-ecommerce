@@ -2,6 +2,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
+import FormContainer from '../_components/FormContainer';
+
 import RecoverForm from './_components/RecoverForm';
 
 const ResetPassword = () => {
@@ -11,7 +13,9 @@ const ResetPassword = () => {
       <PageBanner title={title} description={description}>
         <Breadcrumbs />
       </PageBanner>
-      <RecoverForm />
+      <FormContainer>
+        <RecoverForm />
+      </FormContainer>
     </div>
   );
 };

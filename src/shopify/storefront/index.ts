@@ -12344,6 +12344,7 @@ export type CustomerRecoverMutation = {
       message: string;
       code?: CustomerErrorCode | null;
     }>;
+    userErrors: Array<{ __typename?: 'UserError'; field?: Array<string> | null; message: string }>;
   } | null;
 };
 
@@ -16260,6 +16261,10 @@ export const CustomerRecoverDocument = gql`
     customerRecover(email: $email) {
       customerUserErrors {
         ...CustomerUserErrorFields
+      }
+      userErrors {
+        field
+        message
       }
     }
   }

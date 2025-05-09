@@ -12,6 +12,8 @@ import { Label } from '@/components/ui/label';
 import config from '@/config/index';
 import type { CustomerUserError } from '@/shopify/storefront';
 
+import Form from '../../_components/Form';
+
 const { userFeedback } = config;
 
 const LoginButton = () => {
@@ -54,9 +56,9 @@ const LoginForm = () => {
   }, [states]);
 
   return (
-    <form action={action} className="space-y-6 py-12 max-w-md mx-auto w-full px-4">
-      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect') || ''} />
+    <Form action={action}>
       <h3 className="mb-8 text-2xl font-bold">Login</h3>
+      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect') || ''} />
       <div>
         <Label htmlFor="email" className="mb-1">
           Email address:
@@ -84,7 +86,7 @@ const LoginForm = () => {
         />
       </div>
       <LoginButton />
-    </form>
+    </Form>
   );
 };
 

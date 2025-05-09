@@ -5,6 +5,8 @@ import PageBanner from '@/components/PageBanner';
 import config from '@/config';
 import seo from '@/data/seo';
 
+import FormContainer from '../_components/FormContainer';
+
 import ResetForm from './_components/ResetPasswordForm';
 
 const ResetPasswordPage = async ({
@@ -30,7 +32,9 @@ const ResetPasswordPage = async ({
       <PageBanner title={title} description={description}>
         <Breadcrumbs />
       </PageBanner>
-      <ResetForm resetUrl={resetUrl} />
+      <FormContainer>
+        <ResetForm resetUrl={resetUrl} />
+      </FormContainer>
     </div>
   );
 };

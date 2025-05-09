@@ -11,6 +11,8 @@ import { Label } from '@/components/ui/label';
 import config from '@/config/index';
 import type { CustomerUserError } from '@/shopify/storefront';
 
+import Form from '../../_components/Form';
+
 const { userFeedback } = config;
 
 const SubmitButton = () => {
@@ -68,12 +70,7 @@ const RegisterForm = () => {
   }, [states]);
 
   return (
-    <form
-      action={action}
-      title="Register"
-      autoComplete="off"
-      className="space-y-6 py-12 max-w-md mx-auto w-full px-4"
-    >
+    <Form action={action} title="Register" autoComplete="off">
       <h3 className="mb-8 text-2xl font-bold">Register</h3>
       <div>
         <Label htmlFor="email" className="mb-1">
@@ -143,7 +140,7 @@ const RegisterForm = () => {
           id="firstName"
           autoComplete="off"
           onChange={handleChange}
-          value={formData.name}
+          value={formData.firstName}
           disabled={isPending}
         />
         {states.firstName?.at(-1) && (
@@ -162,14 +159,14 @@ const RegisterForm = () => {
           id="lastName"
           autoComplete="off"
           onChange={handleChange}
-          value={formData.name}
+          value={formData.lastName}
         />
         {states.lastName?.at(-1) && (
           <p className="text-red-500 text-sm mt-1">{states.lastName.at(-1)}</p>
         )}
       </div>
       <SubmitButton />
-    </form>
+    </Form>
   );
 };
 

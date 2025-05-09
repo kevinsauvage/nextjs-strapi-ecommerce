@@ -4,6 +4,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
+import FormContainer from '../_components/FormContainer';
+
 import LoginForm from './_components/LoginForm';
 
 const LoginPage = () => {
@@ -13,17 +15,20 @@ const LoginPage = () => {
       <PageBanner title={title} description={description}>
         <Breadcrumbs />
       </PageBanner>
-      <div className="bg-white dark:bg-black w-full">
-        <div className="bg-gray-100 w-full pb-12 dark:bg-background/70">
-          <LoginForm />
-          <div className="text-sm text-center text-muted-foreground ">
-            Don’t have an account?{' '}
-            <Link href="/register" className="text-primary hover:underline">
-              Sign up
-            </Link>
-          </div>
+      <FormContainer>
+        <LoginForm />
+        <div className="text-sm text-center text-muted-foreground ">
+          Don’t have an account?{' '}
+          <Link href="/register" className="text-primary hover:underline">
+            Sign up
+          </Link>
         </div>
-      </div>
+        <div className="text-sm text-center text-muted-foreground ">
+          <Link href="/recover" className="text-primary hover:underline">
+            Forgot password?
+          </Link>
+        </div>
+      </FormContainer>
     </div>
   );
 };

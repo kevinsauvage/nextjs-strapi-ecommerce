@@ -5,9 +5,12 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { resetPasswordAction } from '@/actions/authActions';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import config from '@/config/index';
+
+import Form from '../../_components/Form';
 
 const { userFeedback } = config;
 
@@ -17,7 +20,7 @@ const initialStates = {
 
 const ResetButton = () => {
   const status = useFormStatus();
-  return <button type="submit">{status.pending ? 'Loading...' : 'Reset'}</button>;
+  return <Button type="submit">{status.pending ? 'Loading...' : 'Reset'}</Button>;
 };
 
 const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
@@ -46,7 +49,7 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
   }, [states]);
 
   return (
-    <form action={action} title="Reset Password" autoComplete="off">
+    <Form action={action} title="Reset Password" autoComplete="off">
       <input type="hidden" name="resetUrl" value={resetUrl} />
       <Label htmlFor="password" className="mb-2">
         New password
@@ -63,7 +66,7 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
       />
       {states.password && <div className="text-red-500 text-sm mt-2">{states.password}</div>}
       <ResetButton />
-    </form>
+    </Form>
   );
 };
 

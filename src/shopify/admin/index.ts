@@ -33380,7 +33380,7 @@ export type MutationPubSubWebhookSubscriptionCreateArgs = {
 /** The schema's entry point for all mutation operations. */
 export type MutationPubSubWebhookSubscriptionUpdateArgs = {
   id: Scalars['ID']['input'];
-  webhookSubscription?: InputMaybe<PubSubWebhookSubscriptionInput>;
+  webhookSubscription: PubSubWebhookSubscriptionInput;
 };
 
 
@@ -43833,7 +43833,22 @@ export type QueryRoot = {
   nodes: Array<Maybe<Node>>;
   /** The shop's online store channel. */
   onlineStore: OnlineStore;
-  /** Returns an Order resource by ID. */
+  /**
+   * The `order` query retrieves an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/order) by its ID. This query provides access to comprehensive order information such as customer details, line items, financial data, and fulfillment status.
+   *
+   * Use the `order` query to retrieve information associated with the following processes:
+   *
+   * - [Order management and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+   * - [Financial reporting](https://help.shopify.com/manual/finance)
+   * - [Customer purchase history](https://help.shopify.com/manual/reports-and-analytics/shopify-reports/report-types/default-reports/customers-reports) and [transaction analysis](https://shopify.dev/docs/apps/launch/billing/view-charges-earnings#transaction-data-through-the-graphql-admin-api)
+   * - [Shipping](https://shopify.dev/docs/apps/build/checkout/delivery-shipping) and [inventory management](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps)
+   *
+   * You can only retrieve the last 60 days worth of orders from a store by default. If you want to access older orders, then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions).
+   *
+   * For large order datasets, consider using [bulk operations](https://shopify.dev/docs/api/usage/bulk-operations/queries).
+   * Bulk operations handle pagination automatically and allow you to retrieve data asynchronously without being constrained by API rate limits.
+   * Learn more about [creating orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/ordercreate) and [building order management apps](https://shopify.dev/docs/apps/build/orders-fulfillment).
+   */
   order?: Maybe<Order>;
   /** Returns a payment status by payment reference ID. Used to check the status of a deferred payment. */
   orderPaymentStatus?: Maybe<OrderPaymentStatus>;
@@ -46763,6 +46778,8 @@ export enum ReturnErrorCode {
   LessThan = 'LESS_THAN',
   /** The input value should be less than or equal to the maximum value allowed. */
   LessThanOrEqualTo = 'LESS_THAN_OR_EQUAL_TO',
+  /** The user does not have permission to perform the operation. */
+  MissingPermission = 'MISSING_PERMISSION',
   /** A requested notification could not be sent. */
   NotificationFailed = 'NOTIFICATION_FAILED',
   /** The input value is not a number. */
@@ -51216,6 +51233,8 @@ export enum ShopifyPaymentsDisputeReason {
   IncorrectAccountDetails = 'INCORRECT_ACCOUNT_DETAILS',
   /** The customer's bank account has insufficient funds. */
   InsufficientFunds = 'INSUFFICIENT_FUNDS',
+  /** The card issuer believes the disputed transaction doesn't conform to the network rules. These disputes occur when transactions don't meet card network requirements and may incur additional network fees if escalated for resolution. */
+  Noncompliant = 'NONCOMPLIANT',
   /** The customer claims they did not receive the products or services purchased. */
   ProductNotReceived = 'PRODUCT_NOT_RECEIVED',
   /** The product or service was received but was defective, damaged, or not as described. */
