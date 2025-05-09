@@ -12,7 +12,7 @@ import {
   ShoppingBag,
   User,
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { v4 as uuid } from 'uuid';
 
 import {
@@ -38,6 +38,7 @@ const HamburgerMenu = ({
   const [open, setOpen] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<{ [key: string]: boolean }>({});
   const router = useRouter();
+  const pathname = usePathname();
 
   const toggleMenu = (id: string) => {
     setExpandedMenus((previous) => ({
@@ -78,15 +79,18 @@ const HamburgerMenu = ({
             level === 0 ? 'font-medium' : '',
             'hover:bg-muted hover:text-foreground',
             isExpanded ? 'bg-muted text-foreground' : '',
+            pathname === new URL(typeof item.url === 'string' ? item.url : '').pathname
+              ? 'border'
+              : '',
           )}
           style={{ paddingLeft: `${level * 12 + 16}px` }}
           onClick={() => {
             if (hasChildren) {
               toggleMenu(item.id);
             } else if (typeof item.url === 'string') {
-              const pathname = new URL(item.url).pathname;
+              const path = new URL(item.url).pathname;
               const parameters = new URL(item.url).searchParams;
-              router.push(`${pathname}?${parameters.toString()}`);
+              router.push(`${path}?${parameters.toString()}`);
               setOpen(false);
             }
           }}
@@ -130,7 +134,10 @@ const HamburgerMenu = ({
             return (
               <button
                 key={item.id}
-                className="flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted/50"
+                className={cn(
+                  'flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted/50',
+                  pathname === item.link ? 'bg-muted text-foreground' : '',
+                )}
                 onClick={() => {
                   router.push(item.link);
                   setOpen(false);
