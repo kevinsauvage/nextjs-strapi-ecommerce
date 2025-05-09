@@ -7,13 +7,16 @@ import { setDelegateTokenAction } from './actions/delegateTokenActions';
 import globalConfig from './config';
 
 const checkBasicAuth = (nextUrl: URL, cookies: RequestCookies) => {
+  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ checkBasicAuth:');
   const authCookie = cookies.get('authorization');
+  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ authCookie:', authCookie);
 
   if (authCookie) {
     return authCookie.value === 'true';
   }
 
   const authorization = nextUrl?.searchParams.get('authorization');
+  console.log('🟩🟪🟦-->  ~ checkBasicAuth ~ authorization:', authorization);
 
   if (authorization) {
     return authorization === 'true';
