@@ -14,16 +14,20 @@ const Wishlist = async () => {
 
   if (!userWishlist?.length) {
     return (
-      <EmptyState
-        image={NoFavoriteIllustration}
-        title="No Favorites"
-        subtitle="You can add an item to your favorites by clicking the “Heart Icon”"
-        altText="No Favorites"
-      >
-        <Button variant="default" className="mt-4">
-          <Link href="/">Start Shopping</Link>
-        </Button>
-      </EmptyState>
+      <Card>
+        <CardContent>
+          <EmptyState
+            image={NoFavoriteIllustration}
+            title="No Favorites"
+            subtitle="You can add an item to your favorites by clicking the “Heart Icon”"
+            altText="No Favorites"
+          >
+            <Button variant="default" className="mt-4">
+              <Link href="/">Start Shopping</Link>
+            </Button>
+          </EmptyState>
+        </CardContent>
+      </Card>
     );
   }
 
