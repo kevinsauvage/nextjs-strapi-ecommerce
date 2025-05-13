@@ -33,7 +33,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       className={`${inter.variable} ${poppins.variable} font-display scroll-smooth antialiased tracking-tight`}
       suppressHydrationWarning
     >
-      <body className="relative bg-background">
+      <body className="relative bg-background min-h-screen flex flex-col">
         <GtmScript />
         <CookieBanner />
         <ThemeProvider
