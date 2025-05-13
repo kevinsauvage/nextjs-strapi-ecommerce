@@ -126,12 +126,10 @@ export const recoverPasswordAction = async (previousStates: unknown, data: FormD
   if (!result.success) return result.error.formErrors.fieldErrors;
 
   const { email } = result.data;
-  console.log('🟩🟪🟦-->  ~ recoverPasswordAction ~ email:', email);
 
   const recoverResponse = await storefrontSdk().customerRecover({ email });
 
   const { customerUserErrors } = recoverResponse?.customerRecover || {};
-  console.log('🟩🟪🟦-->  ~ recoverPasswordAction ~ customerUserErrors:', customerUserErrors);
 
   return customerUserErrors?.length
     ? { customerUserErrors }
