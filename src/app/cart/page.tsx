@@ -52,14 +52,15 @@ const LineItem: React.FC<{
           />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="font-medium text-ellipsis whitespace-nowrap overflow-hidden">
-            {node.merchandise.product.title}
-          </p>
-          <p className="text-sm text-muted-foreground">
-            {node.merchandise.selectedOptions.map((option) => (
-              <span key={option.name} className="mr-1 block">
-                {option.name}: {option.value}
-              </span>
+          <p className="font-medium">{node.merchandise.product.title}</p>
+          <p className="text-sm text-muted-foreground flex items-center">
+            {node.merchandise.selectedOptions.map((option, index) => (
+              <div key={option.name} className="flex items-center">
+                <span className="block">{option.value}</span>
+                {index < node.merchandise.selectedOptions.length - 1 && (
+                  <span className="block text-muted-foreground mx-2">/</span>
+                )}
+              </div>
             ))}
           </p>
           <p className="text-sm text-muted-foreground mt-1">
