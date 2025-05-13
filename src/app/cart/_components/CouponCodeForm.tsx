@@ -18,7 +18,11 @@ const SubmitButton = () => {
   );
 };
 
-const CouponCodeForm = () => {
+const CouponCodeForm = ({
+  discountCodes,
+}: {
+  discountCodes: CartDiscountCodesUpdateMutation['cartDiscountCodesUpdate']['cart']['discountCodes'];
+}) => {
   const [states, action] = useActionState<
     {
       couponCode?: string | string[];
@@ -39,6 +43,9 @@ const CouponCodeForm = () => {
 
   return (
     <form action={action} className="flex flex-col space-y-4">
+      {discountCodes?.map((code) => (
+        <input key={code.code} type="hidden" name="couponCode" value={code.code} />
+      ))}
       <div className="grid w-full items-center gap-1.5">
         <Label htmlFor="couponCode" className="sr-only">
           Coupon Code

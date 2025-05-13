@@ -219,7 +219,7 @@ const CartPage = async ({
               </p>
             </CardHeader>
             <CardContent>
-              <CouponCodeForm />
+              <CouponCodeForm discountCodes={cart.discountCodes} />
             </CardContent>
             <CardFooter>
               <DiscountCodes discountCodes={cart.discountCodes} />

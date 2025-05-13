@@ -261,12 +261,6 @@ export const cartDiscountCodesUpdateAction = async (
     discountCodes = [discountCodes];
   }
 
-  if (!discountCodes || discountCodes.length === 0) {
-    return {
-      message: 'No discount codes provided',
-      success: false,
-    };
-  }
   const updateDiscountCodesResponse = await storefrontSdk().cartDiscountCodesUpdate({
     cartId,
     discountCodes,
@@ -281,24 +275,14 @@ export const cartDiscountCodesUpdateAction = async (
   }
 
   if (cart) {
-    const discountCodesAnswer = cart.discountCodes[0];
-
-    if (discountCodesAnswer.applicable) {
-      revalidatePath('/');
-      revalidatePath('/cart');
-      return {
-        cart,
-        message: 'Discount codes updated successfully',
-        success: true,
-        warnings,
-      };
-    } else {
-      return {
-        message: 'Discount codes not applicable',
-        success: false,
-        warnings,
-      };
-    }
+    revalidatePath('/');
+    revalidatePath('/cart');
+    return {
+      cart,
+      message: 'Discount codes updated successfully',
+      success: true,
+      warnings,
+    };
   }
 
   return {
