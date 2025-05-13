@@ -21,7 +21,7 @@ const PageInfoPagination = async ({
     <div className="flex items-center justify-between gap-2">
       <Link
         href={previousPath}
-        className={pageInfo.hasPreviousPage ? '' : 'cursor-default'}
+        className={pageInfo.hasPreviousPage ? '' : 'cursor-not-allowed'}
         aria-disabled={!pageInfo.hasPreviousPage}
         aria-label="Previous Page"
       >
@@ -39,7 +39,7 @@ const PageInfoPagination = async ({
 
       <Link
         href={nextPath}
-        className={pageInfo.hasNextPage ? '' : 'cursor-default'}
+        className={pageInfo.hasNextPage ? '' : 'cursor-not-allowed'}
         aria-disabled={!pageInfo.hasNextPage}
         aria-label="Next Page"
       >
