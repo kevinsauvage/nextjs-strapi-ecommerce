@@ -12,7 +12,9 @@ const CreateAddresses = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Addresses</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Addresses</h2>
+        </CardTitle>
         <CardDescription className="max-w-md">
           <p>
             Add a new address to your account. This will help us deliver your orders more

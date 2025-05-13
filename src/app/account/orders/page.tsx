@@ -68,7 +68,11 @@ const Page = async ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Orders ({response.customer?.orders?.totalCount})</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">
+            Your Orders ({response.customer?.orders?.totalCount})
+          </h2>
+        </CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>
           <BackButton />

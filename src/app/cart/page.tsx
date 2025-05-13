@@ -53,16 +53,16 @@ const LineItem: React.FC<{
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-medium">{node.merchandise.product.title}</p>
-          <p className="text-sm text-muted-foreground flex items-center">
+          <div className="text-muted-foreground flex items-center">
             {node.merchandise.selectedOptions.map((option, index) => (
               <div key={option.name} className="flex items-center">
-                <span className="block">{option.value}</span>
+                <span className="block text-sm">{option.value}</span>
                 {index < node.merchandise.selectedOptions.length - 1 && (
-                  <span className="block text-muted-foreground mx-2">/</span>
+                  <span className="block text-sm text-muted-foreground mx-2">/</span>
                 )}
               </div>
             ))}
-          </p>
+          </div>
           <p className="text-sm text-muted-foreground mt-1">
             {unitPriceFormatted} {node.merchandise.price.currencyCode}
           </p>
@@ -136,7 +136,9 @@ const CartPage = async ({
         <div className="lg:col-span-2">
           <Card>
             <CardHeader>
-              <CardTitle>Cart Items</CardTitle>
+              <CardTitle>
+                <h2 className="text-lg font-medium">Cart Items</h2>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
@@ -172,7 +174,9 @@ const CartPage = async ({
         <div>
           <Card>
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>
+                <h2 className="text-lg font-medium">Order Summary</h2>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -214,7 +218,9 @@ const CartPage = async ({
 
           <Card className="mt-4">
             <CardHeader>
-              <CardTitle>Promo Code</CardTitle>
+              <CardTitle>
+                <h2 className="text-lg font-medium">Promo Code</h2>
+              </CardTitle>
               <p className="text-sm text-muted-foreground">
                 Enter your promo code to get a discount on your order.
               </p>

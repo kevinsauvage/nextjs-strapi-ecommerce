@@ -99,7 +99,7 @@ const AddressFormUI = ({
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h6 className="text-xl font-heading mb-4">Contact Information</h6>
+          <h6 className="text-xl mb-4">Contact Information</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
@@ -158,7 +158,7 @@ const AddressFormUI = ({
         </div>
 
         <div>
-          <h6 className="text-xl font-heading mb-4">Address</h6>
+          <h6 className="text-xl mb-4">Address</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2 w-full">
               <Label htmlFor="address1">Address 1</Label>

@@ -8,7 +8,9 @@ const Page = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Update Account</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Update Account</h2>
+        </CardTitle>
         <CardDescription>
           <p className="mb-4">
             Update your account information and preferences. Ensure your details are up to date for

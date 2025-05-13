@@ -16,7 +16,7 @@ import { getUser } from '@/utils/users';
 
 import '../styles/globals.css';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-base' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-display' });
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading', weight: '600' });
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -28,8 +28,12 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const userWishlist = await getWishlistAction();
 
   return (
-    <html lang="en" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
-      <body className="relative bg-background ">
+    <html
+      lang="en"
+      className={`${inter.variable} ${poppins.variable} font-display scroll-smooth antialiased tracking-tight`}
+      suppressHydrationWarning
+    >
+      <body className="relative bg-background">
         <GtmScript />
         <CookieBanner />
         <ThemeProvider

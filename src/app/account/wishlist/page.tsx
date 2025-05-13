@@ -34,7 +34,9 @@ const Wishlist = async () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>My Wishlist</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Wishlist</h2>
+        </CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your wishlist for a better shopping experience.</p>
           <BackButton />

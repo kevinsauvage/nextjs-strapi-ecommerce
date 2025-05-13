@@ -70,7 +70,9 @@ const Addresses = async ({
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Addresses</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Addresses</h2>
+        </CardTitle>
         <CardDescription>
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>
           <div className="flex items-center gap-2 flex-wrap">

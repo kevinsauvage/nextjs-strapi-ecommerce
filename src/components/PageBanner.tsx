@@ -12,7 +12,7 @@ const PageBanner = ({
   <div
     className={`container mx-auto flex flex-col items-center justify-center text-center py-12 px-4 space-y-8 ${className}`}
   >
-    <h1 className="font-heading text-4xl">{title}</h1>
+    <h1 className="text-4xl">{title}</h1>
     {description && (
       <p className="text-muted-foreground mb-8 max-w-xl line-clamp-4 overflow-hidden">
         {description}

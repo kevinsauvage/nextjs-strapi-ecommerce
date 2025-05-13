@@ -32,7 +32,9 @@ const Page = () => {
   return (
     <Card>
       <CardHeader className="text-center max-w-lg mx-auto w-full">
-        <CardTitle>Account Overview</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Account Overview</h2>
+        </CardTitle>
         <CardDescription>
           Welcome <UserFullName />, your account dashboard provides access to all of your important
           account information and features.

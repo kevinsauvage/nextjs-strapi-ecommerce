@@ -53,7 +53,9 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Edit Addresses</CardTitle>
+        <CardTitle>
+          <h2 className="text-lg font-medium">Edit Addresses</h2>
+        </CardTitle>
         <CardDescription className="max-w-md">
           <p>
             Add a new address to your account. This will help us deliver your orders more

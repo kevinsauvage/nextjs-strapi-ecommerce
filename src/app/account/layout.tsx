@@ -17,7 +17,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div className="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-6">
         <Card className="hidden md:block h-fit">
           <CardHeader className="mb-8">
-            <CardTitle>Navigation</CardTitle>
+            <CardTitle>
+              <h2 className="text-lg font-medium">Navigation</h2>
+            </CardTitle>
             <CardDescription>Manage your account</CardDescription>
           </CardHeader>
           <CardContent className="p-0">
