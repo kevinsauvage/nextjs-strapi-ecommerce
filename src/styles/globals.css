@@ -190,3 +190,28 @@ h6 {
 .animate-fadeSlideDown {
   animation: fadeSlideDown 0.15s ease-out;
 }
+
+.product-description {
+  ul {
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  li {
+    padding-left: 0.5rem;
+    list-style: disc;
+  }
+  p {
+    margin-bottom: 0.5rem;
+  }
+  table {
+    margin-bottom: 0.5rem;
+  }
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
+}

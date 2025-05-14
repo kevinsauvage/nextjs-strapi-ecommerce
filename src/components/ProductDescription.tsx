@@ -123,7 +123,10 @@ const ProductDescription = ({
             </TabsList>
             <TabsContent value="details" className="mt-4">
               {typeof product.descriptionHtml === 'string' ? (
-                <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+                <div
+                  className="product-description"
+                  dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                />
               ) : (
                 <p className="text-sm text-muted-foreground">
                   Experience premium quality and exceptional design with this product. Perfect for
