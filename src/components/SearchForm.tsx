@@ -51,7 +51,6 @@ const SearchForm = ({
           className="py-7 pl-8 pr-11"
           type="text"
           name="searchQuery"
-          defaultValue={value}
           placeholder="Search"
           aria-label="Search"
           autoComplete="off"
