@@ -89,6 +89,7 @@ const ProductCardDefault = ({
         className="block cursor-pointer"
         href={`/collections/products/${handle}`}
         aria-label={`View product details for ${title}`}
+        scroll
       >
         <div className="relative overflow-hidden">
           <Image
