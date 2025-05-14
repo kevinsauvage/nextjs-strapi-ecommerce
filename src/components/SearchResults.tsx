@@ -20,7 +20,7 @@ const Product = ({
     typeof featuredImage.url === 'string' && (
       <Link
         key={handle}
-        href={`/products/${handle}`}
+        href={`/collections/products/${handle}`}
         className="flex items-center gap-2 p-2 rounded hover:bg-muted overflow-hidden"
       >
         <Button variant="ghost" className="w-full justify-start gap-3 rounded-none" role="option">
