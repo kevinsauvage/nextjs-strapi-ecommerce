@@ -23,7 +23,13 @@ const SubmitButton = ({ ...properties }: React.ComponentProps<'button'>) => {
   );
 };
 
-const SearchForm = ({ searchQuery }: { searchQuery: string }) => {
+const SearchForm = ({
+  searchQuery,
+  onChange,
+}: {
+  searchQuery: string;
+  onChange: React.ChangeEventHandler<HTMLInputElement>;
+}) => {
   const [, action] = useActionState(searchAction, {
     searchQuery: '',
   });
@@ -42,6 +48,7 @@ const SearchForm = ({ searchQuery }: { searchQuery: string }) => {
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
+          onChange={onChange}
         />
       </Label>
       <SubmitButton />

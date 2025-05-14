@@ -23429,7 +23429,27 @@ export type LimitedPendingOrderCount = {
   count: Scalars['Int']['output'];
 };
 
-/** Represents individual products and quantities purchased in the associated order. */
+/**
+ * The `LineItem` object represents a single product or service that a customer purchased in an
+ * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+ * Each line item is associated with a
+ * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+ * and can have multiple [discount allocations](https://shopify.dev/docs/api/admin-graphql/latest/objects/DiscountAllocation).
+ * Line items contain details about what was purchased, including the product variant, quantity, pricing,
+ * and fulfillment status.
+ *
+ * Use the `LineItem` object to manage the following processes:
+ *
+ * - [Track the quantity of items](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/build-fulfillment-solutions) ordered, fulfilled, and unfulfilled.
+ * - [Calculate prices](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders), including discounts and taxes.
+ * - Manage fulfillment through [fulfillment services](https://shopify.dev/docs/apps/build/orders-fulfillment/fulfillment-service-apps).
+ * - Manage [returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management) and [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges).
+ * - Handle [subscriptions](https://shopify.dev/docs/apps/build/purchase-options/subscriptions) and recurring orders.
+ *
+ * Line items can also include custom attributes and properties, allowing merchants to add specific details
+ * about each item in an order. Learn more about
+ * [managing orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
+ */
 export type LineItem = Node & {
   __typename?: 'LineItem';
   /**
@@ -23535,7 +23555,7 @@ export type LineItem = Node & {
   product?: Maybe<Product>;
   /** The number of units ordered, including refunded and removed units. */
   quantity: Scalars['Int']['output'];
-  /** The number of units ordered, excluding refunded units. */
+  /** The number of units ordered, excluding refunded units and removed units. */
   refundableQuantity: Scalars['Int']['output'];
   /** Whether physical shipping is required for the variant. */
   requiresShipping: Scalars['Boolean']['output'];
@@ -23585,13 +23605,53 @@ export type LineItem = Node & {
 };
 
 
-/** Represents individual products and quantities purchased in the associated order. */
+/**
+ * The `LineItem` object represents a single product or service that a customer purchased in an
+ * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+ * Each line item is associated with a
+ * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+ * and can have multiple [discount allocations](https://shopify.dev/docs/api/admin-graphql/latest/objects/DiscountAllocation).
+ * Line items contain details about what was purchased, including the product variant, quantity, pricing,
+ * and fulfillment status.
+ *
+ * Use the `LineItem` object to manage the following processes:
+ *
+ * - [Track the quantity of items](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/build-fulfillment-solutions) ordered, fulfilled, and unfulfilled.
+ * - [Calculate prices](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders), including discounts and taxes.
+ * - Manage fulfillment through [fulfillment services](https://shopify.dev/docs/apps/build/orders-fulfillment/fulfillment-service-apps).
+ * - Manage [returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management) and [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges).
+ * - Handle [subscriptions](https://shopify.dev/docs/apps/build/purchase-options/subscriptions) and recurring orders.
+ *
+ * Line items can also include custom attributes and properties, allowing merchants to add specific details
+ * about each item in an order. Learn more about
+ * [managing orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
+ */
 export type LineItemDiscountedTotalSetArgs = {
   withCodeDiscounts?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** Represents individual products and quantities purchased in the associated order. */
+/**
+ * The `LineItem` object represents a single product or service that a customer purchased in an
+ * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+ * Each line item is associated with a
+ * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+ * and can have multiple [discount allocations](https://shopify.dev/docs/api/admin-graphql/latest/objects/DiscountAllocation).
+ * Line items contain details about what was purchased, including the product variant, quantity, pricing,
+ * and fulfillment status.
+ *
+ * Use the `LineItem` object to manage the following processes:
+ *
+ * - [Track the quantity of items](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/build-fulfillment-solutions) ordered, fulfilled, and unfulfilled.
+ * - [Calculate prices](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps/edit-orders), including discounts and taxes.
+ * - Manage fulfillment through [fulfillment services](https://shopify.dev/docs/apps/build/orders-fulfillment/fulfillment-service-apps).
+ * - Manage [returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management) and [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges).
+ * - Handle [subscriptions](https://shopify.dev/docs/apps/build/purchase-options/subscriptions) and recurring orders.
+ *
+ * Line items can also include custom attributes and properties, allowing merchants to add specific details
+ * about each item in an order. Learn more about
+ * [managing orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
+ */
 export type LineItemTaxLinesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -30721,7 +30781,34 @@ export type Mutation = {
    * or simply when it has been marked as returned in the system.
    */
   returnClose?: Maybe<ReturnClosePayload>;
-  /** Creates a return. */
+  /**
+   * Creates a return from an existing order that has at least one fulfilled
+   * [line item](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem)
+   * that hasn't yet been refunded. If you create a return on an archived order, then the order is automatically
+   * unarchived.
+   *
+   * Use the `returnCreate` mutation when your workflow involves
+   * [approving](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnApproveRequest) or
+   * [declining](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnDeclineRequest) requested returns
+   * outside of the Shopify platform.
+   *
+   * The `returnCreate` mutation performs the following actions:
+   *
+   * - Creates a return in the `OPEN` state, and assumes that the return request from the customer has already been
+   * approved
+   * - Creates a [reverse fulfillment order](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+   * and enables you to create a [reverse delivery](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+   * for the reverse fulfillment order
+   * - Creates a sales agreement with a `RETURN` reason, which links to all sales created for the return or exchange
+   * - Generates sales records that reverse the sales records for the items being returned
+   * - Generates sales records for any exchange line items
+   *
+   * After you've created a return, use the
+   * [`return`](https://shopify.dev/docs/api/admin-graphql/latest/queries/return) query to retrieve the
+   * return by its ID. Learn more about providing a
+   * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+   * for merchants.
+   */
   returnCreate?: Maybe<ReturnCreatePayload>;
   /**
    * Declines a return on an order.
@@ -41960,7 +42047,12 @@ export type ProductVariantAppendMediaPayload = {
   userErrors: Array<MediaUserError>;
 };
 
-/** A product variant component associated with a product variant. */
+/**
+ * A product variant component that is included within a bundle.
+ *
+ * These are the individual product variants that make up a bundle product,
+ * where each component has a specific required quantity.
+ */
 export type ProductVariantComponent = Node & {
   __typename?: 'ProductVariantComponent';
   /** A globally-unique ID. */
@@ -43960,7 +44052,22 @@ export type QueryRoot = {
   publishedProductsCount?: Maybe<Count>;
   /** Returns a Refund resource by ID. */
   refund?: Maybe<Refund>;
-  /** Returns a Return resource by ID. */
+  /**
+   * Retrieves a return by its ID. A return represents the intent of a buyer to ship one or more items from an
+   * order back to a merchant or a third-party fulfillment location.
+   *
+   * Use the `return` query to retrieve information associated with the following workflows:
+   *
+   * - [Managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+   * - [Processing exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges)
+   * - [Tracking reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders)
+   *
+   * A return is associated with an
+   * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+   * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+   * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+   * which indicates the state of the return.
+   */
   return?: Maybe<Return>;
   /** The calculated monetary value to be exchanged due to the return. */
   returnCalculate?: Maybe<CalculatedReturn>;
@@ -46527,7 +46634,24 @@ export type RestrictedForResource = {
   restrictedReason: Scalars['String']['output'];
 };
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type Return = Node & {
   __typename?: 'Return';
   /** Additional information about the declined return. */
@@ -46557,7 +46681,24 @@ export type Return = Node & {
 };
 
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type ReturnExchangeLineItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46568,7 +46709,24 @@ export type ReturnExchangeLineItemsArgs = {
 };
 
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type ReturnRefundsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46578,7 +46736,24 @@ export type ReturnRefundsArgs = {
 };
 
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type ReturnReturnLineItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46588,7 +46763,24 @@ export type ReturnReturnLineItemsArgs = {
 };
 
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type ReturnReverseFulfillmentOrdersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46598,7 +46790,24 @@ export type ReturnReverseFulfillmentOrdersArgs = {
 };
 
 
-/** Represents a return. */
+/**
+ * The `Return` object represents the intent of a buyer to ship one or more items from an order back to a merchant
+ * or a third-party fulfillment location. A return is associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can include multiple return [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem).
+ * Each return has a [status](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps#return-statuses),
+ * which indicates the state of the return.
+ *
+ * Use the `Return` object to capture the financial, logistical,
+ * and business intent of a return. For example, you can identify eligible items for a return and issue customers
+ * a refund for returned items on behalf of the merchant.
+ *
+ * Learn more about providing a
+ * [return management workflow](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+ * for merchants. You can also manage [exchanges](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-exchanges),
+ * [reverse fulfillment orders](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-fulfillment-orders),
+ * and [reverse deliveries](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/manage-reverse-deliveries)
+ * on behalf of merchants.
+ */
 export type ReturnSuggestedRefundArgs = {
   refundDuties?: InputMaybe<Array<RefundDutyInput>>;
   refundShipping?: InputMaybe<RefundShippingInput>;
@@ -56671,7 +56880,7 @@ export enum ValidationUserErrorCode {
   InvalidType = 'INVALID_TYPE',
   /** The value is invalid for the metafield type or for the definition options. */
   InvalidValue = 'INVALID_VALUE',
-  /** Cannot have more than 5 active validation functions. */
+  /** Cannot have more than 25 active validation functions. */
   MaxValidationsActivated = 'MAX_VALIDATIONS_ACTIVATED',
   /** Validation not found. */
   NotFound = 'NOT_FOUND',

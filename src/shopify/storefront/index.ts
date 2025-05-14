@@ -3954,6 +3954,7 @@ export type HasMetafieldsIdentifier = {
 
 /** Represents an image resource. */
 export type Image = {
+  small: string | StaticImport;
   __typename?: 'Image';
   /** A word or phrase to share the nature or contents of an image. */
   altText?: Maybe<Scalars['String']['output']>;
@@ -8958,6 +8959,7 @@ export type CartAttributesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9035,6 +9037,7 @@ export type CartAttributesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9240,6 +9243,7 @@ export type CartBuyerIdentityUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9317,6 +9321,7 @@ export type CartBuyerIdentityUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9521,6 +9526,7 @@ export type CartCreateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9598,6 +9604,7 @@ export type CartCreateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9803,6 +9810,7 @@ export type CartDiscountCodesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -9880,6 +9888,7 @@ export type CartDiscountCodesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10085,6 +10094,7 @@ export type CartLinesAddMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10162,6 +10172,7 @@ export type CartLinesAddMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10367,6 +10378,7 @@ export type CartLinesRemoveMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10444,6 +10456,7 @@ export type CartLinesRemoveMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10649,6 +10662,7 @@ export type CartLinesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10726,6 +10740,7 @@ export type CartLinesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -10931,6 +10946,7 @@ export type CartNoteUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -11008,6 +11024,7 @@ export type CartNoteUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -11210,6 +11227,7 @@ export type GetCartQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
+                  url: any;
                   src: any;
                   altText?: string | null;
                   width?: number | null;
@@ -11287,6 +11305,7 @@ export type GetCartQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
+                  url: any;
                   src: any;
                   altText?: string | null;
                   width?: number | null;
@@ -11465,12 +11484,25 @@ export type CollectionQuery = {
           tags: Array<string>;
           totalInventory?: number | null;
           vendor: string;
+          featuredImage?: {
+            __typename?: 'Image';
+            url: any;
+            src: any;
+            altText?: string | null;
+            width?: number | null;
+            height?: number | null;
+            small: any;
+            medium: any;
+            large: any;
+            blurDataURL: any;
+          } | null;
           images: {
             __typename?: 'ImageConnection';
             edges: Array<{
               __typename?: 'ImageEdge';
               node: {
                 __typename?: 'Image';
+                url: any;
                 src: any;
                 altText?: string | null;
                 width?: number | null;
@@ -11531,6 +11563,7 @@ export type CollectionQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
+                  url: any;
                   src: any;
                   altText?: string | null;
                   width?: number | null;
@@ -11617,6 +11650,7 @@ export type CollectionQuery = {
     };
     image?: {
       __typename?: 'Image';
+      url: any;
       src: any;
       altText?: string | null;
       width?: number | null;
@@ -11716,12 +11750,25 @@ export type CollectionsQuery = {
               tags: Array<string>;
               totalInventory?: number | null;
               vendor: string;
+              featuredImage?: {
+                __typename?: 'Image';
+                url: any;
+                src: any;
+                altText?: string | null;
+                width?: number | null;
+                height?: number | null;
+                small: any;
+                medium: any;
+                large: any;
+                blurDataURL: any;
+              } | null;
               images: {
                 __typename?: 'ImageConnection';
                 edges: Array<{
                   __typename?: 'ImageEdge';
                   node: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -11790,6 +11837,7 @@ export type CollectionsQuery = {
                     }>;
                     image?: {
                       __typename?: 'Image';
+                      url: any;
                       src: any;
                       altText?: string | null;
                       width?: number | null;
@@ -11876,6 +11924,7 @@ export type CollectionsQuery = {
         };
         image?: {
           __typename?: 'Image';
+          url: any;
           src: any;
           altText?: string | null;
           width?: number | null;
@@ -12344,7 +12393,6 @@ export type CustomerRecoverMutation = {
       message: string;
       code?: CustomerErrorCode | null;
     }>;
-    userErrors: Array<{ __typename?: 'UserError'; field?: Array<string> | null; message: string }>;
   } | null;
 };
 
@@ -12719,6 +12767,7 @@ export type GetCustomerOrdersQuery = {
                       }>;
                       image?: {
                         __typename?: 'Image';
+                        url: any;
                         src: any;
                         altText?: string | null;
                         width?: number | null;
@@ -12875,6 +12924,7 @@ export type CartLineFieldsFragment = {
             selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
             image?: {
               __typename?: 'Image';
+              url: any;
               src: any;
               altText?: string | null;
               width?: number | null;
@@ -12948,6 +12998,7 @@ export type CartLineFieldsFragment = {
             selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
             image?: {
               __typename?: 'Image';
+              url: any;
               src: any;
               altText?: string | null;
               width?: number | null;
@@ -13023,6 +13074,7 @@ export type ProductVariantFieldsFragment = {
   selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
   image?: {
     __typename?: 'Image';
+    url: any;
     src: any;
     altText?: string | null;
     width?: number | null;
@@ -13239,6 +13291,7 @@ export type CartFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
+                url: any;
                 src: any;
                 altText?: string | null;
                 width?: number | null;
@@ -13316,6 +13369,7 @@ export type CartFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
+                url: any;
                 src: any;
                 altText?: string | null;
                 width?: number | null;
@@ -13466,6 +13520,7 @@ export type ProductImageConnectionFragment = {
     __typename?: 'ImageEdge';
     node: {
       __typename?: 'Image';
+      url: any;
       src: any;
       altText?: string | null;
       width?: number | null;
@@ -13501,6 +13556,7 @@ export type ProductVariantConnectionFragment = {
       selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
       image?: {
         __typename?: 'Image';
+        url: any;
         src: any;
         altText?: string | null;
         width?: number | null;
@@ -13535,12 +13591,25 @@ export type ProductFieldsFragment = {
   tags: Array<string>;
   totalInventory?: number | null;
   vendor: string;
+  featuredImage?: {
+    __typename?: 'Image';
+    url: any;
+    src: any;
+    altText?: string | null;
+    width?: number | null;
+    height?: number | null;
+    small: any;
+    medium: any;
+    large: any;
+    blurDataURL: any;
+  } | null;
   images: {
     __typename?: 'ImageConnection';
     edges: Array<{
       __typename?: 'ImageEdge';
       node: {
         __typename?: 'Image';
+        url: any;
         src: any;
         altText?: string | null;
         width?: number | null;
@@ -13593,6 +13662,7 @@ export type ProductFieldsFragment = {
         selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
         image?: {
           __typename?: 'Image';
+          url: any;
           src: any;
           altText?: string | null;
           width?: number | null;
@@ -13664,6 +13734,7 @@ export type CollectionFieldsFragment = {
   id: string;
   image?: {
     __typename?: 'Image';
+    url: any;
     src: any;
     altText?: string | null;
     width?: number | null;
@@ -13800,6 +13871,7 @@ export type CustomerUserErrorFieldsFragment = {
 
 export type ImageFieldsFragment = {
   __typename?: 'Image';
+  url: any;
   src: any;
   altText?: string | null;
   width?: number | null;
@@ -13828,6 +13900,7 @@ export type OrderLineItemFieldsFragment = {
     selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
     image?: {
       __typename?: 'Image';
+      url: any;
       src: any;
       altText?: string | null;
       width?: number | null;
@@ -13908,6 +13981,7 @@ export type OrderFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
+                url: any;
                 src: any;
                 altText?: string | null;
                 width?: number | null;
@@ -14059,12 +14133,25 @@ export type GetProductByHandleQuery = {
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
+    featuredImage?: {
+      __typename?: 'Image';
+      url: any;
+      src: any;
+      altText?: string | null;
+      width?: number | null;
+      height?: number | null;
+      small: any;
+      medium: any;
+      large: any;
+      blurDataURL: any;
+    } | null;
     images: {
       __typename?: 'ImageConnection';
       edges: Array<{
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
+          url: any;
           src: any;
           altText?: string | null;
           width?: number | null;
@@ -14121,6 +14208,7 @@ export type GetProductByHandleQuery = {
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
+            url: any;
             src: any;
             altText?: string | null;
             width?: number | null;
@@ -14204,12 +14292,25 @@ export type ProductRecommendationsQuery = {
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
+    featuredImage?: {
+      __typename?: 'Image';
+      url: any;
+      src: any;
+      altText?: string | null;
+      width?: number | null;
+      height?: number | null;
+      small: any;
+      medium: any;
+      large: any;
+      blurDataURL: any;
+    } | null;
     images: {
       __typename?: 'ImageConnection';
       edges: Array<{
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
+          url: any;
           src: any;
           altText?: string | null;
           width?: number | null;
@@ -14266,6 +14367,7 @@ export type ProductRecommendationsQuery = {
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
+            url: any;
             src: any;
             altText?: string | null;
             width?: number | null;
@@ -14366,12 +14468,25 @@ export type GetProductsQuery = {
         tags: Array<string>;
         totalInventory?: number | null;
         vendor: string;
+        featuredImage?: {
+          __typename?: 'Image';
+          url: any;
+          src: any;
+          altText?: string | null;
+          width?: number | null;
+          height?: number | null;
+          small: any;
+          medium: any;
+          large: any;
+          blurDataURL: any;
+        } | null;
         images: {
           __typename?: 'ImageConnection';
           edges: Array<{
             __typename?: 'ImageEdge';
             node: {
               __typename?: 'Image';
+              url: any;
               src: any;
               altText?: string | null;
               width?: number | null;
@@ -14432,6 +14547,7 @@ export type GetProductsQuery = {
               }>;
               image?: {
                 __typename?: 'Image';
+                url: any;
                 src: any;
                 altText?: string | null;
                 width?: number | null;
@@ -14533,6 +14649,7 @@ export type GetProductWithVariantQuery = {
       selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
       image?: {
         __typename?: 'Image';
+        url: any;
         src: any;
         altText?: string | null;
         width?: number | null;
@@ -14553,12 +14670,25 @@ export type GetProductWithVariantQuery = {
         };
       };
     } | null;
+    featuredImage?: {
+      __typename?: 'Image';
+      url: any;
+      src: any;
+      altText?: string | null;
+      width?: number | null;
+      height?: number | null;
+      small: any;
+      medium: any;
+      large: any;
+      blurDataURL: any;
+    } | null;
     images: {
       __typename?: 'ImageConnection';
       edges: Array<{
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
+          url: any;
           src: any;
           altText?: string | null;
           width?: number | null;
@@ -14615,6 +14745,7 @@ export type GetProductWithVariantQuery = {
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
+            url: any;
             src: any;
             altText?: string | null;
             width?: number | null;
@@ -14682,6 +14813,7 @@ export type GetProductWithVariantQuery = {
 export type PredictiveSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
   types?: InputMaybe<Array<PredictiveSearchType> | PredictiveSearchType>;
+  identifiers?: InputMaybe<Array<HasMetafieldsIdentifier> | HasMetafieldsIdentifier>;
 }>;
 
 export type PredictiveSearchQuery = {
@@ -14689,8 +14821,213 @@ export type PredictiveSearchQuery = {
   predictiveSearch?: {
     __typename?: 'PredictiveSearchResult';
     queries: Array<{ __typename?: 'SearchQuerySuggestion'; text: string }>;
-    collections: Array<{ __typename?: 'Collection'; id: string }>;
-    products: Array<{ __typename?: 'Product'; id: string }>;
+    collections: Array<{
+      __typename?: 'Collection';
+      handle: string;
+      description: string;
+      title: string;
+      id: string;
+      image?: {
+        __typename?: 'Image';
+        url: any;
+        src: any;
+        altText?: string | null;
+        width?: number | null;
+        height?: number | null;
+        small: any;
+        medium: any;
+        large: any;
+        blurDataURL: any;
+      } | null;
+      seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+      metafields: Array<{
+        __typename?: 'Metafield';
+        id: string;
+        key: string;
+        namespace: string;
+        value: string;
+        type: string;
+        createdAt: any;
+        updatedAt: any;
+        parentResource:
+          | {
+              __typename?: 'Article';
+              id: string;
+              metafields: Array<{
+                __typename?: 'Metafield';
+                id: string;
+                key: string;
+                value: string;
+                type: string;
+                createdAt: any;
+                updatedAt: any;
+              } | null>;
+            }
+          | { __typename?: 'Blog'; id: string }
+          | { __typename?: 'Cart'; id: string }
+          | { __typename?: 'Collection'; id: string }
+          | { __typename?: 'Company'; id: string }
+          | { __typename?: 'CompanyLocation'; id: string }
+          | { __typename?: 'Customer'; id: string }
+          | { __typename?: 'Location'; id: string }
+          | { __typename?: 'Market'; id: string }
+          | { __typename?: 'Order'; id: string }
+          | { __typename?: 'Page'; id: string }
+          | { __typename?: 'Product'; id: string }
+          | { __typename?: 'ProductVariant'; id: string }
+          | { __typename?: 'SellingPlan'; id: string }
+          | { __typename?: 'Shop'; id: string };
+      } | null>;
+    }>;
+    products: Array<{
+      __typename?: 'Product';
+      handle: string;
+      id: string;
+      title: string;
+      availableForSale: boolean;
+      descriptionHtml: any;
+      productType: string;
+      tags: Array<string>;
+      totalInventory?: number | null;
+      vendor: string;
+      featuredImage?: {
+        __typename?: 'Image';
+        url: any;
+        src: any;
+        altText?: string | null;
+        width?: number | null;
+        height?: number | null;
+        small: any;
+        medium: any;
+        large: any;
+        blurDataURL: any;
+      } | null;
+      images: {
+        __typename?: 'ImageConnection';
+        edges: Array<{
+          __typename?: 'ImageEdge';
+          node: {
+            __typename?: 'Image';
+            url: any;
+            src: any;
+            altText?: string | null;
+            width?: number | null;
+            height?: number | null;
+            small: any;
+            medium: any;
+            large: any;
+            blurDataURL: any;
+          };
+        }>;
+      };
+      priceRange: {
+        __typename?: 'ProductPriceRange';
+        maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      };
+      options: Array<{
+        __typename?: 'ProductOption';
+        id: string;
+        name: string;
+        optionValues: Array<{
+          __typename?: 'ProductOptionValue';
+          id: string;
+          name: string;
+          firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
+          swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+        }>;
+      }>;
+      collections: {
+        __typename?: 'CollectionConnection';
+        edges: Array<{
+          __typename?: 'CollectionEdge';
+          node: { __typename?: 'Collection'; handle: string };
+        }>;
+      };
+      variants: {
+        __typename?: 'ProductVariantConnection';
+        edges: Array<{
+          __typename?: 'ProductVariantEdge';
+          node: {
+            __typename?: 'ProductVariant';
+            id: string;
+            availableForSale: boolean;
+            quantityAvailable?: number | null;
+            title: string;
+            sku?: string | null;
+            weight?: number | null;
+            weightUnit: WeightUnit;
+            compareAtPrice?: {
+              __typename?: 'MoneyV2';
+              amount: any;
+              currencyCode: CurrencyCode;
+            } | null;
+            selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
+            image?: {
+              __typename?: 'Image';
+              url: any;
+              src: any;
+              altText?: string | null;
+              width?: number | null;
+              height?: number | null;
+              small: any;
+              medium: any;
+              large: any;
+              blurDataURL: any;
+            } | null;
+            price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            product: {
+              __typename?: 'Product';
+              handle: string;
+              title: string;
+              collections: {
+                __typename?: 'CollectionConnection';
+                nodes: Array<{ __typename?: 'Collection'; handle: string }>;
+              };
+            };
+          };
+        }>;
+      };
+      metafields: Array<{
+        __typename?: 'Metafield';
+        id: string;
+        key: string;
+        namespace: string;
+        value: string;
+        type: string;
+        createdAt: any;
+        updatedAt: any;
+        parentResource:
+          | {
+              __typename?: 'Article';
+              id: string;
+              metafields: Array<{
+                __typename?: 'Metafield';
+                id: string;
+                key: string;
+                value: string;
+                type: string;
+                createdAt: any;
+                updatedAt: any;
+              } | null>;
+            }
+          | { __typename?: 'Blog'; id: string }
+          | { __typename?: 'Cart'; id: string }
+          | { __typename?: 'Collection'; id: string }
+          | { __typename?: 'Company'; id: string }
+          | { __typename?: 'CompanyLocation'; id: string }
+          | { __typename?: 'Customer'; id: string }
+          | { __typename?: 'Location'; id: string }
+          | { __typename?: 'Market'; id: string }
+          | { __typename?: 'Order'; id: string }
+          | { __typename?: 'Page'; id: string }
+          | { __typename?: 'Product'; id: string }
+          | { __typename?: 'ProductVariant'; id: string }
+          | { __typename?: 'SellingPlan'; id: string }
+          | { __typename?: 'Shop'; id: string };
+      } | null>;
+      seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+    }>;
   } | null;
 };
 
@@ -14726,12 +15063,25 @@ export type SearchProductsQuery = {
             tags: Array<string>;
             totalInventory?: number | null;
             vendor: string;
+            featuredImage?: {
+              __typename?: 'Image';
+              url: any;
+              src: any;
+              altText?: string | null;
+              width?: number | null;
+              height?: number | null;
+              small: any;
+              medium: any;
+              large: any;
+              blurDataURL: any;
+            } | null;
             images: {
               __typename?: 'ImageConnection';
               edges: Array<{
                 __typename?: 'ImageEdge';
                 node: {
                   __typename?: 'Image';
+                  url: any;
                   src: any;
                   altText?: string | null;
                   width?: number | null;
@@ -14792,6 +15142,7 @@ export type SearchProductsQuery = {
                   }>;
                   image?: {
                     __typename?: 'Image';
+                    url: any;
                     src: any;
                     altText?: string | null;
                     width?: number | null;
@@ -15163,6 +15514,7 @@ export const GiftCardFieldsFragmentDoc = gql`
 `;
 export const ImageFieldsFragmentDoc = gql`
   fragment ImageFields on Image {
+    url
     src
     altText
     small: url(
@@ -15519,6 +15871,9 @@ export const ProductFieldsFragmentDoc = gql`
     title
     availableForSale
     descriptionHtml
+    featuredImage {
+      ...ImageFields
+    }
     images(first: 20) {
       ...ProductImageConnection
     }
@@ -15550,6 +15905,7 @@ export const ProductFieldsFragmentDoc = gql`
       title
     }
   }
+  ${ImageFieldsFragmentDoc}
   ${ProductImageConnectionFragmentDoc}
   ${ProductPriceRangeFragmentDoc}
   ${ProductOptionFieldsFragmentDoc}
@@ -16262,10 +16618,6 @@ export const CustomerRecoverDocument = gql`
       customerUserErrors {
         ...CustomerUserErrorFields
       }
-      userErrors {
-        field
-        message
-      }
     }
   }
   ${CustomerUserErrorFieldsFragmentDoc}
@@ -16506,19 +16858,25 @@ export const GetProductWithVariantDocument = gql`
   ${ProductVariantFieldsFragmentDoc}
 `;
 export const PredictiveSearchDocument = gql`
-  query predictiveSearch($query: String!, $types: [PredictiveSearchType!]) {
+  query predictiveSearch(
+    $query: String!
+    $types: [PredictiveSearchType!]
+    $identifiers: [HasMetafieldsIdentifier!] = []
+  ) {
     predictiveSearch(query: $query, types: $types) {
       queries {
         text
       }
       collections {
-        id
+        ...CollectionFields
       }
       products {
-        id
+        ...ProductFields
       }
     }
   }
+  ${CollectionFieldsFragmentDoc}
+  ${ProductFieldsFragmentDoc}
 `;
 export const SearchProductsDocument = gql`
   query searchProducts(

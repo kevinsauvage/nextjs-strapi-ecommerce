@@ -1,13 +1,17 @@
-query predictiveSearch($query: String!, $types: [PredictiveSearchType!]) {
+query predictiveSearch(
+  $query: String!
+  $types: [PredictiveSearchType!]
+  $identifiers: [HasMetafieldsIdentifier!] = []
+) {
   predictiveSearch(query: $query, types: $types) {
     queries {
       text
     }
     collections {
-      id
+      ...CollectionFields
     }
     products {
-      id
+      ...ProductFields
     }
   }
 }

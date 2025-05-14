@@ -271,6 +271,9 @@ fragment ProductFields on Product {
   title
   availableForSale
   descriptionHtml
+  featuredImage {
+    ...ImageFields
+  }
   images(first: 20) {
     ...ProductImageConnection
   }
@@ -380,6 +383,7 @@ fragment CustomerUserErrorFields on CustomerUserError {
 }
 
 fragment ImageFields on Image {
+  url
   src
   altText
   small: url(transform: { maxHeight: 100, maxWidth: 100, crop: CENTER, preferredContentType: WEBP })

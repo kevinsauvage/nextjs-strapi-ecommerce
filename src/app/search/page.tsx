@@ -4,7 +4,7 @@ import ListingHeader from '@/components/ListingHeader';
 import PageBanner from '@/components/PageBanner';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import ProductsList from '@/components/ProductsList';
-import Search from '@/components/SearchForm';
+import Search from '@/components/Search';
 import seo from '@/data/seo';
 import {
   adjustPaginationVariables,
