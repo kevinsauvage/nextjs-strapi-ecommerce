@@ -16,6 +16,8 @@ const Product = ({
 }) => {
   const { featuredImage, title, handle, priceRange } = product as never as ProductType;
 
+  const image = featuredImage as never as ImageFields;
+
   return (
     typeof featuredImage.url === 'string' && (
       <Link
@@ -25,13 +27,13 @@ const Product = ({
       >
         <Button variant="ghost" className="w-full justify-start gap-3 rounded-none" role="option">
           <Image
-            src={featuredImage.small}
-            alt={featuredImage.altText || ''}
-            title={featuredImage.altText || ''}
+            src={image.small}
+            alt={image.altText || ''}
+            title={image.altText || ''}
             loading="lazy"
             width={48}
             height={48}
-            className="rounded-lg"
+            className="rounded-lg aspect-square object-contain"
           />
           <div className="flex flex-col items-start">
             <span className="font-semibold">{title}</span>
