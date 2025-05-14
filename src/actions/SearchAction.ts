@@ -1,4 +1,5 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import { storefrontSdk } from '@/shopify';
@@ -25,7 +26,13 @@ export const predictiveSearchAction = async (previousState: unknown, data: FormD
 
   const searchQueryString = searchQuery.toString().trim();
 
-  return await storefrontSdk().predictiveSearch({
+  const response = await storefrontSdk().predictiveSearch({
     query: searchQueryString,
   });
+
+  if (!response) {
+    return;
+  }
+  revalidatePath('/search');
+  return response;
 };

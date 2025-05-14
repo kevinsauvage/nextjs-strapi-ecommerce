@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { Search } from 'lucide-react';
@@ -30,9 +30,19 @@ const SearchForm = ({
   searchQuery: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }) => {
+  const [value, setValue] = useState(searchQuery);
   const [, action] = useActionState(searchAction, {
     searchQuery: '',
   });
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+    onChange(event);
+  };
+
+  useEffect(() => {
+    setValue(searchQuery);
+  }, [searchQuery]);
 
   return (
     <form action={action} className="relative w-full max-w-2xl mx-auto">
@@ -41,14 +51,15 @@ const SearchForm = ({
           className="py-7 pl-8 pr-11"
           type="text"
           name="searchQuery"
-          defaultValue={searchQuery}
+          defaultValue={value}
           placeholder="Search"
           aria-label="Search"
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
           spellCheck="false"
-          onChange={onChange}
+          onChange={handleChange}
+          value={value}
         />
       </Label>
       <SubmitButton />

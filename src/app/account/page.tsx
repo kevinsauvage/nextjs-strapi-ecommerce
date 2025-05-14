@@ -22,7 +22,9 @@ const AccountCardCTA = ({
       <h3 className="font-medium mb-2">{title}</h3>
       <p className="text-sm text-muted-foreground mb-4">{description}</p>
       <Button variant="secondary" size="sm" asChild>
-        <Link href={buttonLink}>{buttonText}</Link>
+        <Link href={buttonLink} scroll>
+          {buttonText}
+        </Link>
       </Button>
     </div>
   );
