@@ -3,7 +3,6 @@ import { Search } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { Card, CardContent } from '@/components/ui/card';
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import type { Product as ProductType } from '@/shopify/storefront';
 
@@ -81,8 +80,8 @@ const SearchResults = ({ results }: { results: PredictiveSearchQuery['predictive
   }
 
   return (
-    <Card className="absolute z-50 w-full mt-2 shadow-lg text-start overflow-hidden bg-background rounded-2xl animate-fadeSlideDown">
-      <CardContent className="p-2">
+    <div className="absolute border z-50 w-full mt-2 shadow-lg text-start overflow-hidden bg-background rounded-lg animate-fadeSlideDown">
+      <div className="p-2">
         <SectionTitle title="Suggestions" />
         <div className="pb-4">
           {results.queries.map((q) => (
@@ -96,8 +95,8 @@ const SearchResults = ({ results }: { results: PredictiveSearchQuery['predictive
             <Product key={product.id} product={product} />
           ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

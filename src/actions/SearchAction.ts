@@ -8,11 +8,7 @@ import { storefrontSdk } from '@/shopify';
 export const searchAction = async (previousState: unknown, data: FormData) => {
   const searchQuery = data.get('searchQuery') as string;
 
-  if (!searchQuery) {
-    return;
-  }
-
-  const searchQueryString = searchQuery.toString().trim();
+  const searchQueryString = searchQuery?.toString().trim();
 
   redirect(`/search?searchQuery=${searchQueryString}`);
 };
