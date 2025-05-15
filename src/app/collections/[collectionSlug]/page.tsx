@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import EmptyState from '@/components/EmptyState';
 import ListingHeader from '@/components/ListingHeader';
 import PageInfoPagination from '@/components/PageInfoPagination';
@@ -8,6 +10,27 @@ import { ProductCollectionSortKeys } from '@/shopify/storefront';
 
 import Filters from '../_components/Filters';
 import Sort from '../_components/Sort';
+
+type parametersType = { collectionSlug: string };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<parametersType>;
+}): Promise<Metadata> {
+  const { collectionSlug } = await params;
+
+  const collectionResponse = await storefrontSdk().getCollectionSeoByHandle({
+    handle: collectionSlug,
+  });
+
+  const { collection } = collectionResponse || {};
+
+  return {
+    description: collection.seo?.description || collection?.description,
+    title: collection.seo?.title || collection?.title,
+  };
+}
 
 const CollectionSlugPage = async ({
   params,

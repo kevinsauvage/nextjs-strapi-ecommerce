@@ -1,9 +1,11 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import seo from '@/data/seo';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
@@ -11,6 +13,11 @@ import { getShopifyToken } from '@/utils/shopify';
 
 import BackButton from '../_components/BackButton';
 import Orders from '../_components/Orders';
+
+export const metadata: Metadata = {
+  description: seo.account.orders.description,
+  title: seo.account.orders.title,
+};
 
 const Page = async ({
   searchParams,

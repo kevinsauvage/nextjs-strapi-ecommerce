@@ -1,10 +1,18 @@
+import type { Metadata } from 'next';
+
 import PageBanner from '@/components/PageBanner';
 import ProductsList from '@/components/ProductsList';
 import SectionTitle from '@/components/SectionTitle';
+import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
 import { CollectionSortKeys, ProductSortKeys } from '@/shopify/storefront/index';
 
 import CollectionGrid from '../components/CollectionGrid/CollectionGrid';
+
+export const metadata: Metadata = {
+  description: seo.home.description,
+  title: seo.home.title,
+};
 
 const Home = async () => {
   const collections = await storefrontSdk().collections({

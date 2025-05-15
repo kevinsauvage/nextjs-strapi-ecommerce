@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -7,6 +8,11 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 
 import LoginForm from './_components/LoginForm';
+
+export const metadata: Metadata = {
+  description: seo.login.description,
+  title: seo.login.title,
+};
 
 const LoginPage = () => {
   const { title, description } = seo.login || {};

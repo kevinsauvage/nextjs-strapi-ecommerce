@@ -5,13 +5,12 @@ const seo = {
         'The customer addresses page displays a list of saved addresses for quick and easy access. Add, edit, or delete addresses as needed.',
       title: 'My addresses',
     },
-
     description:
       'On the user account page, manage your personal information, update your password and view your account activity all in one place.',
+
     logout: {
       title: 'Login out',
     },
-
     orders: {
       description:
         'The orders page is where you can view your purchase history, track current orders, and manage returns or cancellations. Stay up-to-date on your orders',
@@ -24,6 +23,12 @@ const seo = {
       description:
         'Update your user information quickly and easily with our user info update form page. Change your name, email, phone number, and more in just a few clicks.',
       title: 'My details',
+    },
+
+    wishlist: {
+      description:
+        'Create a wishlist of your favorite items for future purchases. Our wishlist page makes it easy to save and track items you love. Start building your wishlist now.',
+      title: 'Wishlist',
     },
   },
   cart: {
@@ -86,11 +91,6 @@ const seo = {
     description:
       "Looking for something specific? Our search page makes it easy to find what you're looking for. Enter your search terms and browse through relevant results quickly. Start searching now.",
     title: 'Search',
-  },
-  wishlist: {
-    description:
-      'Create a wishlist of your favorite items for future purchases. Our wishlist page makes it easy to save and track items you love. Start building your wishlist now.',
-    title: 'Wishlist',
   },
 };
 

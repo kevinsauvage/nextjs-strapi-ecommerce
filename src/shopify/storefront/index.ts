@@ -3954,7 +3954,6 @@ export type HasMetafieldsIdentifier = {
 
 /** Represents an image resource. */
 export type Image = {
-  small: string | StaticImport;
   __typename?: 'Image';
   /** A word or phrase to share the nature or contents of an image. */
   altText?: Maybe<Scalars['String']['output']>;
@@ -11702,6 +11701,27 @@ export type CollectionQuery = {
   } | null;
 };
 
+export type GetCollectionSeoByHandleQueryVariables = Exact<{
+  handle: Scalars['String']['input'];
+}>;
+
+export type GetCollectionSeoByHandleQuery = {
+  __typename?: 'QueryRoot';
+  collection?: {
+    __typename?: 'Collection';
+    id: string;
+    title: string;
+    description: string;
+    image?: {
+      __typename?: 'Image';
+      id?: string | null;
+      originalSrc: any;
+      altText?: string | null;
+    } | null;
+    seo: { __typename?: 'SEO'; title?: string | null; description?: string | null };
+  } | null;
+};
+
 export type CollectionsQueryVariables = Exact<{
   first?: InputMaybe<Scalars['Int']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
@@ -14273,6 +14293,22 @@ export type GetProductByHandleQuery = {
   } | null;
 };
 
+export type GetProductSeoByHandleQueryVariables = Exact<{
+  handle?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type GetProductSeoByHandleQuery = {
+  __typename?: 'QueryRoot';
+  product?: {
+    __typename?: 'Product';
+    id: string;
+    title: string;
+    description: string;
+    seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+  } | null;
+};
+
 export type ProductRecommendationsQueryVariables = Exact<{
   productId: Scalars['ID']['input'];
   language?: InputMaybe<LanguageCode>;
@@ -16369,6 +16405,24 @@ export const CollectionDocument = gql`
   ${ProductFilterFieldsFragmentDoc}
   ${PageInfoFieldsFragmentDoc}
 `;
+export const GetCollectionSeoByHandleDocument = gql`
+  query getCollectionSeoByHandle($handle: String!) {
+    collection(handle: $handle) {
+      id
+      title
+      description
+      image {
+        id
+        originalSrc
+        altText
+      }
+      seo {
+        title
+        description
+      }
+    }
+  }
+`;
 export const CollectionsDocument = gql`
   query collections(
     $first: Int
@@ -16788,6 +16842,20 @@ export const GetProductByHandleDocument = gql`
     }
   }
   ${ProductFieldsFragmentDoc}
+`;
+export const GetProductSeoByHandleDocument = gql`
+  query getProductSeoByHandle($handle: String, $language: LanguageCode)
+  @inContext(language: $language) {
+    product(handle: $handle) {
+      id
+      title
+      description
+      seo {
+        description
+        title
+      }
+    }
+  }
 `;
 export const ProductRecommendationsDocument = gql`
   query productRecommendations(
@@ -17305,6 +17373,22 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
         variables,
       );
     },
+    getCollectionSeoByHandle(
+      variables: GetCollectionSeoByHandleQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetCollectionSeoByHandleQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetCollectionSeoByHandleQuery>(
+            GetCollectionSeoByHandleDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders },
+          ),
+        'getCollectionSeoByHandle',
+        'query',
+        variables,
+      );
+    },
     collections(
       variables: CollectionsQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders,
@@ -17621,6 +17705,21 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             ...wrappedRequestHeaders,
           }),
         'getProductByHandle',
+        'query',
+        variables,
+      );
+    },
+    getProductSeoByHandle(
+      variables?: GetProductSeoByHandleQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+    ): Promise<GetProductSeoByHandleQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetProductSeoByHandleQuery>(GetProductSeoByHandleDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        'getProductSeoByHandle',
         'query',
         variables,
       );

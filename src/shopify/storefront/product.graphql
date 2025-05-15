@@ -8,6 +8,19 @@ query getProductByHandle(
   }
 }
 
+query getProductSeoByHandle($handle: String, $language: LanguageCode)
+@inContext(language: $language) {
+  product(handle: $handle) {
+    id
+    title
+    description
+    seo {
+      description
+      title
+    }
+  }
+}
+
 query productRecommendations(
   $productId: ID!
   $language: LanguageCode

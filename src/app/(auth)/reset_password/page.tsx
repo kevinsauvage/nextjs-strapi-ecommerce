@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -8,6 +9,11 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 
 import ResetForm from './_components/ResetPasswordForm';
+
+export const metadata: Metadata = {
+  description: seo.reset.description,
+  title: seo.reset.title,
+};
 
 const ResetPasswordPage = async ({
   searchParams,

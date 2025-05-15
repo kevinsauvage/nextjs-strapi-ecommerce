@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { getWishlistAction } from '@/actions/whishlistActions';
@@ -6,8 +7,14 @@ import EmptyState from '@/components/EmptyState';
 import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import seo from '@/data/seo';
 
 import BackButton from '../_components/BackButton';
+
+export const metadata: Metadata = {
+  description: seo.account.wishlist.description,
+  title: seo.account.wishlist.title,
+};
 
 const Wishlist = async () => {
   const userWishlist = await getWishlistAction();

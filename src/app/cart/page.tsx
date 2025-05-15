@@ -1,4 +1,5 @@
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
+import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -10,12 +11,18 @@ import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import seo from '@/data/seo';
 import type { GetCartQuery } from '@/shopify/storefront';
 
 import CartRemove from './_components/CartRemove';
 import CouponCodeForm from './_components/CouponCodeForm';
 import DiscountCodes from './_components/DiscountCodes';
 import QuantityUpdatedContainer from './_components/QuantityUpdatedContainer';
+
+export const metadata: Metadata = {
+  description: seo.cart.description,
+  title: seo.cart.title,
+};
 
 const LineItem: React.FC<{
   node: GetCartQuery['cart']['lines']['edges'][0]['node'];

@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -7,6 +8,11 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 
 import RegisterForm from './_components/RegisterForm';
+
+export const metadata: Metadata = {
+  description: seo.register.description,
+  title: seo.register.title,
+};
 
 const RegisterPage = () => {
   const { title, description } = seo.register;

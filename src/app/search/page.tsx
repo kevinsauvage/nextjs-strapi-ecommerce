@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import Breadcrumbs from '@/components/Breadcrumbs';
 import EmptyState from '@/components/EmptyState';
 import ListingHeader from '@/components/ListingHeader';
@@ -17,6 +19,11 @@ import { SearchSortKeys } from '@/shopify/storefront';
 
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
+
+export const metadata: Metadata = {
+  description: seo.search.description,
+  title: seo.search.title,
+};
 
 type SearchParameters = {
   searchQuery: string;

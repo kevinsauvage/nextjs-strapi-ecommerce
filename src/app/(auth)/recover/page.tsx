@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
@@ -5,6 +7,11 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 
 import RecoverForm from './_components/RecoverForm';
+
+export const metadata: Metadata = {
+  description: seo.recover.description,
+  title: seo.recover.title,
+};
 
 const ResetPassword = () => {
   const { title, description } = seo.recover || {};

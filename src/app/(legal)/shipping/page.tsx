@@ -1,4 +1,6 @@
 /* eslint-disable react/no-danger */
+import type { Metadata } from 'next';
+
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
@@ -6,6 +8,10 @@ import { storefrontSdk } from '@/shopify';
 
 import MainContent from '../_components/MainContent';
 
+export const metadata: Metadata = {
+  description: seo.pages.shipping.description,
+  title: seo.pages.shipping.title,
+};
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});
   const { shippingPolicy } = response?.shop || {};

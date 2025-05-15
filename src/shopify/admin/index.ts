@@ -41378,7 +41378,7 @@ export type ProductResourceFeedbackInput = {
   feedbackGeneratedAt: Scalars['DateTime']['input'];
   /**
    * A concise set of copy strings to be displayed to merchants. Used to guide merchants in resolving problems that your app encounters when trying to make use of their products.
-   * You can specify up to four messages. Each message is limited to 100 characters.
+   * You can specify up to ten messages. Each message is limited to 100 characters.
    */
   messages?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The ID of the product that the feedback was created on. */
@@ -41573,6 +41573,8 @@ export enum ProductSetUserErrorCode {
   CannotCombineLinkedAndNonlinkedOptionValues = 'CANNOT_COMBINE_LINKED_AND_NONLINKED_OPTION_VALUES',
   /** The metafield violates a capability restriction. */
   CapabilityViolation = 'CAPABILITY_VIOLATION',
+  /** Duplicated metafield value for linked option. */
+  DuplicatedMetafieldValue = 'DUPLICATED_METAFIELD_VALUE',
   /** Duplicated option name. */
   DuplicatedOptionName = 'DUPLICATED_OPTION_NAME',
   /** Duplicated option value. */

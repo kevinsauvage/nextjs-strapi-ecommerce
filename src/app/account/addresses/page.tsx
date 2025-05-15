@@ -1,4 +1,5 @@
 import { Plus } from 'lucide-react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import NoAddressIllustration from '@/assets/NoAddressIllustration.png';
@@ -7,6 +8,7 @@ import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config/index';
+import seo from '@/data/seo';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import type { MailingAddress } from '@/shopify/storefront';
@@ -16,6 +18,11 @@ import { getUser } from '@/utils/users';
 import BackButton from '../_components/BackButton';
 
 import Address from './_components/Address';
+
+export const metadata: Metadata = {
+  description: seo.account.addresses.description,
+  title: seo.account.addresses.title,
+};
 
 const Addresses = async ({
   searchParams,

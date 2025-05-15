@@ -1,10 +1,17 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config';
+import seo from '@/data/seo';
 
 import UserFullName from './_components/UserFullName';
+
+export const metadata: Metadata = {
+  description: seo.account.description,
+  title: seo.account.title,
+};
 
 const AccountCardCTA = ({
   title,
