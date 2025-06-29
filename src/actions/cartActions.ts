@@ -13,10 +13,10 @@ import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
-export const createCartAction = async () => {
+export const createCartAction = async (newCart = false) => {
   const cartId = await getCookieAction(config.cookies.cartId);
 
-  if (cartId) return;
+  if (cartId && !newCart) return;
 
   try {
     const createCartResponse = await storefrontSdk().cartCreate({
@@ -77,7 +77,7 @@ export const getCartAction = async ({
     throw new Error('Cart could not be found');
   } catch (error) {
     if (error instanceof Error && error.message === 'Cart could not be found') {
-      return createCartAction();
+      return createCartAction(true);
     }
     console.error('Error fetching cart', JSON.stringify(error, undefined, 2));
     throw new Error(`Failed to fetch cart :${JSON.stringify(error, undefined, 2)}`);
