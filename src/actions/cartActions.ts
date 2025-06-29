@@ -9,14 +9,24 @@ import { adjustPaginationVariables } from '@/shopify/helpers';
 import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefront';
 import { getShopifyCartId } from '@/utils/shopify';
 
-import { getCookieAction, setCookieAction } from './cookiesActions';
+import { delCookieAction, getCookieAction, setCookieAction } from './cookiesActions';
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
-export const createCartAction = async (newCart = false) => {
+export const createCartAction = async (forced = false) => {
   const cartId = await getCookieAction(config.cookies.cartId);
 
-  if (cartId && !newCart) return;
+  // If a cartId exists and we are not forcing a new cart creation, we try to fetch the existing cart.
+  // If fetching fails, we create a new cart.
+  // This is useful for scenarios where the cart might be stale or not found.
+  if (cartId?.value && !forced) {
+    try {
+      await storefrontSdk().checkoutURL({ cartId: cartId.value });
+    } catch (error) {
+      console.error('Error fetching cart:', error);
+      await createCartAction(true);
+    }
+  }
 
   try {
     const createCartResponse = await storefrontSdk().cartCreate({
@@ -38,7 +48,7 @@ export const createCartAction = async (newCart = false) => {
       return cart;
     }
   } catch (error) {
-    console.error('Error creating cart:', JSON.stringify(error, undefined, 2));
+    console.log('createCartAction ~ error:', error);
     throw new Error('Failed to create cart');
   }
 };
@@ -74,12 +84,10 @@ export const getCartAction = async ({
 
     if (cart?.id) return cart;
 
+    await delCookieAction(config.cookies.cartId);
     throw new Error('Cart could not be found');
   } catch (error) {
-    if (error instanceof Error && error.message === 'Cart could not be found') {
-      return createCartAction(true);
-    }
-    console.error('Error fetching cart', JSON.stringify(error, undefined, 2));
+    console.log('getCartAction  ~ error:', error);
     throw new Error(`Failed to fetch cart :${JSON.stringify(error, undefined, 2)}`);
   }
 };

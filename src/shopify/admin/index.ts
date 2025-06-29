@@ -1114,7 +1114,7 @@ export type AppPurchaseOneTimeEdge = {
 export enum AppPurchaseStatus {
   /**
    * The app purchase has been approved by the merchant and is ready to be activated by the app. App purchases created through the GraphQL Admin API are activated upon approval.
-   * @deprecated As of API version 2021-01, when a merchant accepts an app purchase, the status immediately changes from `pending` to `active`.
+   * @deprecated When a merchant accepts an app purchase, the status immediately changes from `pending` to `active`.
    */
   Accepted = 'ACCEPTED',
   /** The app purchase was approved by the merchant and has been activated by the app. Active app purchases are charged to the merchant and are paid out to the partner. */
@@ -1445,7 +1445,7 @@ export enum AppSubscriptionSortKeys {
 export enum AppSubscriptionStatus {
   /**
    * The app subscription has been approved by the merchant and is ready to be activated by the app.
-   * @deprecated As of API version 2021-01, when a merchant approves an app subscription, the status immediately transitions from `pending` to `active`.
+   * @deprecated When a merchant approves an app subscription, the status immediately transitions from `pending` to `active`.
    */
   Accepted = 'ACCEPTED',
   /** The app subscription has been approved by the merchant. Active app subscriptions are billed to the shop. After payment, partners receive payouts. */
@@ -1651,7 +1651,7 @@ export type Article = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -1701,6 +1701,7 @@ export type ArticleCommentsArgs = {
 
 /** An article in the blogging system. */
 export type ArticleCommentsCountArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
   query?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -2328,7 +2329,7 @@ export type Blog = HasEvents & HasMetafieldDefinitions & HasMetafields & HasPubl
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -2362,6 +2363,15 @@ export type BlogArticlesArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   reverse?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+
+/**
+ * Shopify stores come with a built-in blogging engine, allowing a shop to have one or more blogs.  Blogs are meant
+ * to be used as a type of magazine or newsletter for the shop, with content that changes over time.
+ */
+export type BlogArticlesCountArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -4309,7 +4319,7 @@ export type Channel = Node & {
   productPublicationsV3: ResourcePublicationConnection;
   /** The list of products published to the channel. */
   products: ProductConnection;
-  /** The count of products published to the channel. Limited to a maximum of 10000. */
+  /** The count of products published to the channel. Limited to a maximum of 10000 by default. */
   productsCount?: Maybe<Count>;
   /** Whether the channel supports future publishing. */
   supportsFuturePublishing: Scalars['Boolean']['output'];
@@ -4425,7 +4435,10 @@ export type ChannelDefinition = Node & {
   isMarketplace: Scalars['Boolean']['output'];
   /** Name of the sub channel (e.g. Online Store, Instagram Shopping, TikTok Live). */
   subChannelName: Scalars['String']['output'];
-  /** Icon displayed when showing the channel in admin. */
+  /**
+   * Icon displayed when showing the channel in admin.
+   * @deprecated Use App.icon instead
+   */
   svgIcon?: Maybe<Scalars['String']['output']>;
 };
 
@@ -6055,11 +6068,36 @@ export enum CodeDiscountSortKeys {
 }
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type Collection = HasEvents & HasMetafieldDefinitions & HasMetafields & HasPublishedTranslations & Node & Publishable & {
   __typename?: 'Collection';
@@ -6102,7 +6140,7 @@ export type Collection = HasEvents & HasMetafieldDefinitions & HasMetafields & H
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -6202,11 +6240,36 @@ export type Collection = HasEvents & HasMetafieldDefinitions & HasMetafields & H
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionDescriptionArgs = {
   truncateAt?: InputMaybe<Scalars['Int']['input']>;
@@ -6214,11 +6277,36 @@ export type CollectionDescriptionArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionEventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6232,11 +6320,36 @@ export type CollectionEventsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionHasProductArgs = {
   id: Scalars['ID']['input'];
@@ -6244,11 +6357,36 @@ export type CollectionHasProductArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionMetafieldArgs = {
   key: Scalars['String']['input'];
@@ -6257,11 +6395,36 @@ export type CollectionMetafieldArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionMetafieldDefinitionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6277,11 +6440,36 @@ export type CollectionMetafieldDefinitionsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionMetafieldsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6295,11 +6483,36 @@ export type CollectionMetafieldsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionProductsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6312,11 +6525,36 @@ export type CollectionProductsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionPublicationCountArgs = {
   onlyPublished?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6324,11 +6562,36 @@ export type CollectionPublicationCountArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionPublicationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6341,11 +6604,36 @@ export type CollectionPublicationsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionPublishedOnChannelArgs = {
   channelId: Scalars['ID']['input'];
@@ -6353,11 +6641,36 @@ export type CollectionPublishedOnChannelArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionPublishedOnPublicationArgs = {
   publicationId: Scalars['ID']['input'];
@@ -6365,11 +6678,36 @@ export type CollectionPublishedOnPublicationArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionResourcePublicationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6382,11 +6720,36 @@ export type CollectionResourcePublicationsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionResourcePublicationsCountArgs = {
   onlyPublished?: InputMaybe<Scalars['Boolean']['input']>;
@@ -6394,11 +6757,36 @@ export type CollectionResourcePublicationsCountArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionResourcePublicationsV2Args = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6412,11 +6800,36 @@ export type CollectionResourcePublicationsV2Args = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionTranslationsArgs = {
   locale: Scalars['String']['input'];
@@ -6425,11 +6838,36 @@ export type CollectionTranslationsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionUnpublishedChannelsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -6441,11 +6879,36 @@ export type CollectionUnpublishedChannelsArgs = {
 
 
 /**
- * Represents a group of products that can be displayed in online stores and other sales channels in categories, which makes it easy for customers to find them. For example, an athletics store might create different collections for running attire, shoes, and accessories.
+ * The `Collection` object represents a group of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that merchants can organize to make their stores easier to browse and help customers find related products.
+ * Collections serve as the primary way to categorize and display products across
+ * [online stores](https://shopify.dev/docs/apps/build/online-store),
+ * [sales channels](https://shopify.dev/docs/apps/build/sales-channels), and marketing campaigns.
  *
- * Collections can be defined by conditions, such as whether they match certain product tags. These are called smart or automated collections.
+ * There are two types of collections:
  *
- * Collections can also be created for a custom group of products. These are called custom or manual collections.
+ * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+ * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically included in the collection.
+ *
+ * The `Collection` object provides information to:
+ *
+ * - Organize products by category, season, or promotion.
+ * - Automate product grouping using rules (for example, by tag, type, or price).
+ * - Configure product sorting and display order (for example, alphabetical, best-selling, price, or manual).
+ * - Manage collection visibility and publication across sales channels.
+ * - Add rich descriptions, images, and metadata to enhance discovery.
+ *
+ * > Note:
+ * > Collections are unpublished by default. To make them available to customers,
+ * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+ * mutation after creation.
+ *
+ * Collections can be displayed in a store with Shopify's theme system through [Liquid templates](https://shopify.dev/docs/storefronts/themes/architecture/templates/collection)
+ * and can be customized with [template suffixes](https://shopify.dev/docs/storefronts/themes/architecture/templates/alternate-templates)
+ * for unique layouts. They also support advanced features like translated content, resource feedback,
+ * and contextual publication for location-based catalogs.
+ *
+ * Learn about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
  */
 export type CollectionUnpublishedPublicationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -7368,7 +7831,7 @@ export type Company = CommentEventSubject & HasEvents & HasMetafieldDefinitions 
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -8009,7 +8472,7 @@ export type CompanyLocation = CommentEventSubject & HasEvents & HasMetafieldDefi
   buyerExperienceConfiguration?: Maybe<BuyerExperienceConfiguration>;
   /** The list of catalogs associated with the company location. */
   catalogs: CatalogConnection;
-  /** The number of catalogs associated with the company location. Limited to a maximum of 10000. */
+  /** The number of catalogs associated with the company location. Limited to a maximum of 10000 by default. */
   catalogsCount?: Maybe<Count>;
   /** The company that the company location belongs to. */
   company: Company;
@@ -8043,7 +8506,7 @@ export type CompanyLocation = CommentEventSubject & HasEvents & HasMetafieldDefi
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -9151,8 +9614,9 @@ export enum CropRegion {
 }
 
 /**
- * The three-letter currency codes that represent the world currencies used in stores. Currency codes include
- * [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes, and non-standard codes.
+ * The currency codes that represent the world currencies throughout the Admin API. Currency codes include
+ * [standard ISO 4217 codes](https://en.wikipedia.org/wiki/ISO_4217), legacy codes, non-standard codes,
+ * digital currency codes.
  */
 export enum CurrencyCode {
   /** United Arab Emirates Dirham (AED). */
@@ -9205,7 +9669,7 @@ export enum CurrencyCode {
   Byn = 'BYN',
   /**
    * Belarusian Ruble (BYR).
-   * @deprecated `BYR` is deprecated. Use `BYN` available from version `2021-01` onwards instead.
+   * @deprecated Use `BYN` instead.
    */
   Byr = 'BYR',
   /** Belize Dollar (BZD). */
@@ -9418,7 +9882,7 @@ export enum CurrencyCode {
   Ssp = 'SSP',
   /**
    * Sao Tome And Principe Dobra (STD).
-   * @deprecated `STD` is deprecated. Use `STN` available from version `2022-07` onwards instead.
+   * @deprecated Use `STN` instead.
    */
   Std = 'STD',
   /** Sao Tome And Principe Dobra (STN). */
@@ -9451,6 +9915,8 @@ export enum CurrencyCode {
   Ugx = 'UGX',
   /** United States Dollars (USD). */
   Usd = 'USD',
+  /** United States Dollars Coin (USDC). */
+  Usdc = 'USDC',
   /** Uruguayan Pesos (UYU). */
   Uyu = 'UYU',
   /** Uzbekistan som (UZS). */
@@ -9459,7 +9925,7 @@ export enum CurrencyCode {
   Ved = 'VED',
   /**
    * Venezuelan Bolivares (VEF).
-   * @deprecated `VEF` is deprecated. Use `VES` available from version `2020-10` onwards instead.
+   * @deprecated Use `VES` instead.
    */
   Vef = 'VEF',
   /** Venezuelan Bolivares Soberanos (VES). */
@@ -9599,7 +10065,7 @@ export type Customer = CommentEventSubject & HasEvents & HasMetafieldDefinitions
   firstName?: Maybe<Scalars['String']['output']>;
   /**
    * Whether the merchant has added timeline comments about the customer on the customer's page.
-   * @deprecated To query for comments on the timeline, use the events connection and a `query` argument containing `verb:comment`, or look for a `CommentEvent` in the `__typename` of events.
+   * @deprecated To query for comments on the timeline, use the `events` connection and a 'query' argument containing `verb:comment`, or look for a 'CommentEvent' in the `__typename` of `events`.
    */
   hasTimelineComment: Scalars['Boolean']['output'];
   /** A globally-unique ID. */
@@ -9632,7 +10098,7 @@ export type Customer = CommentEventSubject & HasEvents & HasMetafieldDefinitions
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -9970,7 +10436,9 @@ export enum CustomerCancelDataErasureErrorCode {
   /** Failed to cancel customer data erasure. */
   FailedToCancel = 'FAILED_TO_CANCEL',
   /** Customer's data is not scheduled for erasure. */
-  NotBeingErased = 'NOT_BEING_ERASED'
+  NotBeingErased = 'NOT_BEING_ERASED',
+  /** Only the original requester can cancel this data erasure. */
+  UnauthorizedCancellation = 'UNAUTHORIZED_CANCELLATION'
 }
 
 /** Return type for `customerCancelDataErasure` mutation. */
@@ -12249,7 +12717,7 @@ export type DeliveryCustomization = HasMetafieldDefinitions & HasMetafields & No
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -13268,7 +13736,7 @@ export enum DigitalWallet {
   ShopifyPay = 'SHOPIFY_PAY'
 }
 
-/** A discount. */
+/** A discount offers promotional value and can be applied by entering a code or automatically when conditions are met. Discounts can provide fixed amounts, percentage reductions, free shipping, or Buy X Get Y (BXGY) benefits on specific products or the entire order. For more complex scenarios, developers can use Function-backed discounts to create custom discount configurations. */
 export type Discount = DiscountAutomaticApp | DiscountAutomaticBasic | DiscountAutomaticBxgy | DiscountAutomaticFreeShipping | DiscountCodeApp | DiscountCodeBasic | DiscountCodeBxgy | DiscountCodeFreeShipping;
 
 /** An amount that's allocated to a line based on an associated discount application. */
@@ -14160,7 +14628,7 @@ export type DiscountAutomaticNode = HasEvents & HasMetafieldDefinitions & HasMet
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -15212,7 +15680,7 @@ export type DiscountCodeNode = HasEvents & HasMetafieldDefinitions & HasMetafiel
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -15515,11 +15983,19 @@ export type DiscountCustomerGetsValue = DiscountAmount | DiscountOnQuantity | Di
 
 /** The input fields for the quantity of items discounted and the discount value. */
 export type DiscountCustomerGetsValueInput = {
-  /** The value of the discount. */
+  /**
+   * The value of the discount.
+   *
+   * Note: BXGY doesn't support discountAmount.
+   */
   discountAmount?: InputMaybe<DiscountAmountInput>;
   /** The quantity of the items that are discounted and the discount value. */
   discountOnQuantity?: InputMaybe<DiscountOnQuantityInput>;
-  /** The percentage value of the discount. Value must be between 0.00 - 1.00. */
+  /**
+   * The percentage value of the discount. Value must be between 0.00 - 1.00.
+   *
+   * Note: BXGY doesn't support percentage.
+   */
   percentage?: InputMaybe<Scalars['Float']['input']>;
 };
 
@@ -15644,7 +16120,7 @@ export type DiscountItems = AllDiscountItems | DiscountCollections | DiscountPro
 
 /** The input fields for the items attached to a discount. You can specify the discount items by product ID or collection ID. */
 export type DiscountItemsInput = {
-  /** Whether all items should be selected. */
+  /** Whether all items should be selected for the discount. Not supported for Buy X get Y discounts. */
   all?: InputMaybe<Scalars['Boolean']['input']>;
   /** The collections that are attached to a discount. */
   collections?: InputMaybe<DiscountCollectionsInput>;
@@ -15724,7 +16200,7 @@ export type DiscountNode = HasEvents & HasMetafieldDefinitions & HasMetafields &
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -16238,7 +16714,6 @@ export type DomainLocalization = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16443,7 +16918,6 @@ export type DraftOrder = CommentEventSubject & HasEvents & HasLocalizationExtens
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16471,7 +16945,6 @@ export type DraftOrderEventsArgs = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16497,7 +16970,6 @@ export type DraftOrderLineItemsArgs = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16525,7 +16997,6 @@ export type DraftOrderLocalizationExtensionsArgs = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16553,7 +17024,6 @@ export type DraftOrderLocalizedFieldsArgs = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -16576,7 +17046,6 @@ export type DraftOrderMetafieldArgs = {
  * - Re-create orders manually from active sales channels.
  * - Sell products at discount or wholesale rates.
  * - Take pre-orders.
- * - Save an order as a draft and resume working on it later.
  *
  * For draft orders in multiple currencies `presentment_money` is the source of truth for what a customer is going to be charged and `shop_money` is an estimate of what the merchant might receive in their shop currency.
  *
@@ -17378,7 +17847,7 @@ export type EventBridgeWebhookSubscriptionInput = {
   filter?: InputMaybe<Scalars['String']['input']>;
   /** The format in which the webhook subscription should send the data. */
   format?: InputMaybe<WebhookSubscriptionFormat>;
-  /** The list of fields to be included in the webhook subscription. */
+  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads). */
   includeFields?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The list of namespaces for any metafields that should be included in the webhook subscription. */
   metafieldNamespaces?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -18046,6 +18515,10 @@ export enum FilesErrorCode {
   Invalid = 'INVALID',
   /** Duplicate resolution mode is not supported for this file type. */
   InvalidDuplicateModeForType = 'INVALID_DUPLICATE_MODE_FOR_TYPE',
+  /** Invalid duplicate resolution mode provided. */
+  InvalidDuplicateResolutionMode = 'INVALID_DUPLICATE_RESOLUTION_MODE',
+  /** File cannot be updated in a failed state. */
+  InvalidFailedMediaState = 'INVALID_FAILED_MEDIA_STATE',
   /** The provided filename is invalid. */
   InvalidFilename = 'INVALID_FILENAME',
   /** Invalid filename extension. */
@@ -21914,7 +22387,7 @@ export type HasLocalizedFieldsLocalizedFieldsArgs = {
 export type HasMetafieldDefinitions = {
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
 };
@@ -23503,7 +23976,7 @@ export type LineItem = Node & {
    *
    * If none of the above conditions are met, then the fulfillment service has the `manual` handle.
    * @deprecated
-   * The [relationship between a product variant and a fulfillment service was changed in the `2022-07` API version](/changelog/fulfillment-service-sku-sharing). A [ProductVariant](/api/admin-graphql/latest/objects/ProductVariant) can be stocked by multiple fulfillment services. As a result, we recommend that you use the [inventoryItem field](/api/admin-graphql/latest/objects/ProductVariant#field-productvariant-inventoryitem) if you need to determine where a product variant is stocked.
+   * The [relationship between a product variant and a fulfillment service was changed](/changelog/fulfillment-service-sku-sharing). A [ProductVariant](/api/admin-graphql/latest/objects/ProductVariant) can be stocked by multiple fulfillment services. As a result, we recommend that you use the [inventoryItem field](/api/admin-graphql/latest/objects/ProductVariant#field-productvariant-inventoryitem) if you need to determine where a product variant is stocked.
    *
    * If you need to determine whether a product is a gift card, then you should continue to use this field until an alternative is available.
    *
@@ -24149,7 +24622,7 @@ export type Location = HasMetafieldDefinitions & HasMetafields & LegacyInteroper
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -24428,6 +24901,8 @@ export enum LocationDeactivateUserErrorCode {
   DestinationLocationIsTheSameLocation = 'DESTINATION_LOCATION_IS_THE_SAME_LOCATION',
   /** Destination location is not found or inactive. */
   DestinationLocationNotFoundOrInactive = 'DESTINATION_LOCATION_NOT_FOUND_OR_INACTIVE',
+  /** Destination location is not Shopify managed. */
+  DestinationLocationNotShopifyManaged = 'DESTINATION_LOCATION_NOT_SHOPIFY_MANAGED',
   /** Failed to relocate active inventories to the destination location. */
   FailedToRelocateActiveInventories = 'FAILED_TO_RELOCATE_ACTIVE_INVENTORIES',
   /** Failed to relocate incoming movements to the destination location. */
@@ -24851,7 +25326,7 @@ export type Market = HasMetafieldDefinitions & HasMetafields & Node & {
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -25474,6 +25949,8 @@ export enum MarketUserErrorCode {
   ManagedMarketsCatalogNotAllowed = 'MANAGED_MARKETS_CATALOG_NOT_ALLOWED',
   /** A direct connection catalog can't be attached to a market. */
   MarketCantHaveDirectConnectionCatalog = 'MARKET_CANT_HAVE_DIRECT_CONNECTION_CATALOG',
+  /** Market and condition types are not compatible with each other. */
+  MarketNotCompatibleWithConditionTypes = 'MARKET_NOT_COMPATIBLE_WITH_CONDITION_TYPES',
   /** The market wasn't found. */
   MarketNotFound = 'MARKET_NOT_FOUND',
   /** Can't add another web presence to the market. */
@@ -25838,37 +26315,26 @@ export type MarketingActivityCreateExternalPayload = {
   userErrors: Array<MarketingActivityUserError>;
 };
 
-/** The input fields required to create a marketing activity. */
+/** The input fields required to create a marketing activity. Marketing activity app extensions are deprecated and will be removed in the near future. */
 export type MarketingActivityCreateInput = {
-  /** The budget for this marketing activity. */
-  budget?: InputMaybe<MarketingActivityBudgetInput>;
-  /** Encoded context containing marketing campaign id. */
-  context?: InputMaybe<Scalars['String']['input']>;
-  /** The form data in JSON serialized as a string. */
-  formData?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the marketing activity extension. */
   marketingActivityExtensionId: Scalars['ID']['input'];
-  /** The title of the marketing activity. */
-  marketingActivityTitle?: InputMaybe<Scalars['String']['input']>;
   /** The current state of the marketing activity. */
   status: MarketingActivityStatus;
-  /** Value for a query parameter that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Both the URL parameter value and UTM parameters can be set. */
-  urlParameterValue?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Specifies the
-   * [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters)
-   * that are associated with a related marketing campaign. UTMInput is required for all Marketing
-   * tactics except Storefront App.
-   */
-  utm?: InputMaybe<UtmInput>;
 };
 
 /** Return type for `marketingActivityCreate` mutation. */
 export type MarketingActivityCreatePayload = {
   __typename?: 'MarketingActivityCreatePayload';
-  /** The created marketing activity. */
+  /**
+   * The created marketing activity.
+   * @deprecated Marketing activity app extensions are deprecated and will be removed in the near future.
+   */
   marketingActivity?: Maybe<MarketingActivity>;
-  /** The path to return back to shopify admin from embedded editor. */
+  /**
+   * The path to return back to shopify admin from embedded editor.
+   * @deprecated Marketing activity app extensions are deprecated and will be removed in the near future.
+   */
   redirectPath?: Maybe<Scalars['String']['output']>;
   /** The list of errors that occurred from executing the mutation. */
   userErrors: Array<UserError>;
@@ -26037,49 +26503,10 @@ export type MarketingActivityUpdateExternalPayload = {
   userErrors: Array<MarketingActivityUserError>;
 };
 
-/** The input fields required to update a marketing activity. */
+/** The input fields required to update a marketing activity. Marketing activity app extensions are deprecated and will be removed in the near future. */
 export type MarketingActivityUpdateInput = {
-  /** The budget for the marketing activity. */
-  budget?: InputMaybe<MarketingActivityBudgetInput>;
-  /**
-   * The error messages that were generated when the app was trying to complete the activity.
-   * Learn more about the
-   * [JSON format expected for error messages](/api/marketing-activities/statuses#failed-status).
-   */
-  errors?: InputMaybe<Scalars['JSON']['input']>;
-  /**
-   * The form data of the marketing activity. This is only used if the marketing activity is
-   *               integrated with the external editor.
-   */
-  formData?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the marketing activity. */
   id: Scalars['ID']['input'];
-  /**
-   * A list of the item IDs that were marketed in this marketing activity. Valid types for these items are:
-   * * `Product`
-   * * `Shop`
-   */
-  marketedResources?: InputMaybe<Array<Scalars['ID']['input']>>;
-  /** The ID of the recommendation that the marketing activity was created from, if one exists. */
-  marketingRecommendationId?: InputMaybe<Scalars['ID']['input']>;
-  /**
-   * The current state of the marketing activity. Learn more about
-   * [marketing activities statuses](/api/marketing-activities/statuses).
-   */
-  status?: InputMaybe<MarketingActivityStatus>;
-  /** The target state that the marketing activity is transitioning to. Learn more about [marketing activities statuses](/api/marketing-activities/statuses). */
-  targetStatus?: InputMaybe<MarketingActivityStatus>;
-  /** The title of the marketing activity. */
-  title?: InputMaybe<Scalars['String']['input']>;
-  /** Value for a query parameter that gets inserted into storefront URLs for matching storefront traffic to this activity. This feature is currently available on a limited basis to some partners only. UTMs should continue to be used for most partners. Both the URL parameter value and UTM parameters can be set. */
-  urlParameterValue?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * Specifies the
-   * [Urchin Traffic Module (UTM) parameters](https://en.wikipedia.org/wiki/UTM_parameters)
-   * that are associated with a related marketing campaign. UTMInput is required for all Marketing
-   * tactics except Storefront App. The utm field can only be set once and never modified.
-   */
-  utm?: InputMaybe<UtmInput>;
 };
 
 /** Return type for `marketingActivityUpdate` mutation. */
@@ -26621,7 +27048,32 @@ export enum MediaHost {
   Youtube = 'YOUTUBE'
 }
 
-/** An image hosted on Shopify. */
+/**
+ * The `MediaImage` object represents an image hosted on Shopify's
+ * [content delivery network (CDN)](https://shopify.dev/docs/storefronts/themes/best-practices/performance/platform#shopify-cdn).
+ * Shopify CDN is a content system that serves as the primary way to store,
+ * manage, and deliver visual content for products, variants, and other resources across the Shopify platform.
+ *
+ * The `MediaImage` object provides information to:
+ *
+ * - Store and display product and variant images across online stores, admin interfaces, and mobile apps.
+ * - Retrieve visual branding elements, including logos, banners, favicons, and background images in checkout flows.
+ * - Retrieve signed URLs for secure, time-limited access to original image files.
+ *
+ * Each `MediaImage` object provides both the processed image data (with automatic optimization and CDN delivery)
+ * and access to the original source file. The image processing is handled asynchronously, so images
+ * might not be immediately available after upload. The
+ * [`status`](https://shopify.dev/docs/api/admin-graphql/latest/objects/mediaimage#field-MediaImage.fields.status)
+ * field indicates when processing is complete and the image is ready for use.
+ *
+ * The `MediaImage` object implements the [`Media`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Media)
+ * interface alongside other media types, like videos and 3D models.
+ *
+ * Learn about
+ * managing media for [products](https://shopify.dev/docs/apps/build/online-store/product-media),
+ * [product variants](https://shopify.dev/docs/apps/build/online-store/product-variant-media), and
+ * [asynchronous media management](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components#asynchronous-media-management).
+ */
 export type MediaImage = File & HasMetafields & Media & Node & {
   __typename?: 'MediaImage';
   /** A word or phrase to share the nature or contents of a media. */
@@ -26668,14 +27120,64 @@ export type MediaImage = File & HasMetafields & Media & Node & {
 };
 
 
-/** An image hosted on Shopify. */
+/**
+ * The `MediaImage` object represents an image hosted on Shopify's
+ * [content delivery network (CDN)](https://shopify.dev/docs/storefronts/themes/best-practices/performance/platform#shopify-cdn).
+ * Shopify CDN is a content system that serves as the primary way to store,
+ * manage, and deliver visual content for products, variants, and other resources across the Shopify platform.
+ *
+ * The `MediaImage` object provides information to:
+ *
+ * - Store and display product and variant images across online stores, admin interfaces, and mobile apps.
+ * - Retrieve visual branding elements, including logos, banners, favicons, and background images in checkout flows.
+ * - Retrieve signed URLs for secure, time-limited access to original image files.
+ *
+ * Each `MediaImage` object provides both the processed image data (with automatic optimization and CDN delivery)
+ * and access to the original source file. The image processing is handled asynchronously, so images
+ * might not be immediately available after upload. The
+ * [`status`](https://shopify.dev/docs/api/admin-graphql/latest/objects/mediaimage#field-MediaImage.fields.status)
+ * field indicates when processing is complete and the image is ready for use.
+ *
+ * The `MediaImage` object implements the [`Media`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Media)
+ * interface alongside other media types, like videos and 3D models.
+ *
+ * Learn about
+ * managing media for [products](https://shopify.dev/docs/apps/build/online-store/product-media),
+ * [product variants](https://shopify.dev/docs/apps/build/online-store/product-variant-media), and
+ * [asynchronous media management](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components#asynchronous-media-management).
+ */
 export type MediaImageMetafieldArgs = {
   key: Scalars['String']['input'];
   namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/** An image hosted on Shopify. */
+/**
+ * The `MediaImage` object represents an image hosted on Shopify's
+ * [content delivery network (CDN)](https://shopify.dev/docs/storefronts/themes/best-practices/performance/platform#shopify-cdn).
+ * Shopify CDN is a content system that serves as the primary way to store,
+ * manage, and deliver visual content for products, variants, and other resources across the Shopify platform.
+ *
+ * The `MediaImage` object provides information to:
+ *
+ * - Store and display product and variant images across online stores, admin interfaces, and mobile apps.
+ * - Retrieve visual branding elements, including logos, banners, favicons, and background images in checkout flows.
+ * - Retrieve signed URLs for secure, time-limited access to original image files.
+ *
+ * Each `MediaImage` object provides both the processed image data (with automatic optimization and CDN delivery)
+ * and access to the original source file. The image processing is handled asynchronously, so images
+ * might not be immediately available after upload. The
+ * [`status`](https://shopify.dev/docs/api/admin-graphql/latest/objects/mediaimage#field-MediaImage.fields.status)
+ * field indicates when processing is complete and the image is ready for use.
+ *
+ * The `MediaImage` object implements the [`Media`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Media)
+ * interface alongside other media types, like videos and 3D models.
+ *
+ * Learn about
+ * managing media for [products](https://shopify.dev/docs/apps/build/online-store/product-media),
+ * [product variants](https://shopify.dev/docs/apps/build/online-store/product-variant-media), and
+ * [asynchronous media management](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components#asynchronous-media-management).
+ */
 export type MediaImageMetafieldsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -27145,7 +27647,7 @@ export type MetafieldAccess = {
    * The explicit grants for this metafield definition, superseding the default admin access
    * for the specified grantees.
    * @deprecated Explicit grants are [deprecated](https://shopify.dev/changelog/deprecating-explicit-access-grants-for-app-owned-metafields).
-   *
+   *  This will be removed in 2025-07.
    */
   grants: Array<MetafieldAccessGrant>;
   /** The access permitted on the Storefront API. */
@@ -29447,7 +29949,32 @@ export type Mutation = {
   collectionAddProducts?: Maybe<CollectionAddProductsPayload>;
   /** Asynchronously adds a set of products to a given collection. It can take a long time to run. Instead of returning a collection, it returns a job which should be polled. */
   collectionAddProductsV2?: Maybe<CollectionAddProductsV2Payload>;
-  /** Creates a collection. */
+  /**
+   * Creates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+   * to group [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+   * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+   * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+   * For example, an athletics store might create different collections for running attire, shoes, and accessories.
+   *
+   * There are two types of collections:
+   *
+   * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You specify the products to include in a collection.
+   * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You define rules, and products matching those rules are automatically
+   * included in the collection.
+   *
+   * Use the `collectionCreate` mutation when you need to:
+   *
+   * - Create a new collection for a product launch or campaign
+   * - Organize products by category, season, or promotion
+   * - Automate product grouping using rules (for example, by tag, type, or price)
+   *
+   * > Note:
+   * > The created collection is unpublished by default. To make it available to customers,
+   * use the [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish)
+   * mutation after creation.
+   *
+   * Learn more about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
+   */
   collectionCreate?: Maybe<CollectionCreatePayload>;
   /** Deletes a collection. */
   collectionDelete?: Maybe<CollectionDeletePayload>;
@@ -29465,7 +29992,33 @@ export type Mutation = {
    * @deprecated Use `publishableUnpublish` instead.
    */
   collectionUnpublish?: Maybe<CollectionUnpublishPayload>;
-  /** Updates a collection. */
+  /**
+   * Updates a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection),
+   * modifying its properties, products, or publication settings. Collections help organize
+   * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) together
+   * in the [online store](https://shopify.dev/docs/apps/build/online-store) and
+   * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+   *
+   * Use the `collectionUpdate` mutation to programmatically modify collections in scenarios such as:
+   *
+   * - Updating collection details, like title, description, or image
+   * - Modifying SEO metadata for better search visibility
+   * - Changing which products are included (using rule updates for smart collections)
+   * - Publishing or unpublishing collections across different sales channels
+   * - Updating custom data using [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields)
+   *
+   * There are two types of collections with different update capabilities:
+   *
+   * - **[Custom (manual) collections](https://help.shopify.com/manual/products/collections/manual-shopify-collection)**: You can update collection properties, but rule sets can't be modified since products are manually selected.
+   * - **[Smart (automated) collections](https://help.shopify.com/manual/products/collections/automated-collections)**: You can update both collection properties and the rules that automatically determine which products are included.
+   * When updating [rule sets](https://shopify.dev/docs/api/admin-graphql/latest/objects/CollectionRuleConditions) for smart collections, the operation might be processed asynchronously. In these cases, the mutation returns a [`job`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Job) object that you can use to track the progress of the update.
+   *
+   * To publish or unpublish collections to specific sales channels, use the dedicated
+   * [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish) and
+   * [`publishableUnpublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishableUnpublish) mutations.
+   *
+   * Learn more about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
+   */
   collectionUpdate?: Maybe<CollectionUpdatePayload>;
   /**
    * Add, remove and update `CombinedListing`s of a given Product.
@@ -29571,7 +30124,7 @@ export type Mutation = {
   /** Add tax exemptions for the customer. */
   customerAddTaxExemptions?: Maybe<CustomerAddTaxExemptionsPayload>;
   /**
-   * Cancels a pending erasure of a customer's data.
+   * Cancels a pending erasure of a customer's data. Read more [here](https://help.shopify.com/manual/privacy-and-security/privacy/processing-customer-data-requests#cancel-customer-data-erasure).
    *
    * To request an erasure of a customer's data use the [customerRequestDataErasure mutation](https://shopify.dev/api/admin-graphql/unstable/mutations/customerRequestDataErasure).
    */
@@ -29922,9 +30475,53 @@ export type Mutation = {
    * such as total taxes or price without actually creating a draft order.
    */
   draftOrderCalculate?: Maybe<DraftOrderCalculatePayload>;
-  /** Completes a draft order and creates an order. */
+  /**
+   * Completes a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) and
+   * converts it into a [regular order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order).
+   * The order appears in the merchant's orders list, and the customer can be notified about their order.
+   *
+   * Use the `draftOrderComplete` mutation when a merchant is ready to finalize a draft order and create a real
+   * order in their store. The `draftOrderComplete` mutation also supports sales channel attribution for tracking
+   * order sources using the [`sourceName`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete#arguments-sourceName)
+   * argument, [cart validation](https://shopify.dev/docs/apps/build/checkout/cart-checkout-validation)
+   * controls for app integrations, and detailed error reporting for failed completions.
+   *
+   * You can complete a draft order with different [payment scenarios](https://help.shopify.com/manual/fulfillment/managing-orders/payments):
+   *
+   * - Mark the order as paid immediately.
+   * - Set the order as payment pending using [payment terms](https://shopify.dev/docs/api/admin-graphql/latest/objects/PaymentTerms).
+   * - Specify a custom payment amount.
+   * - Select a specific payment gateway.
+   *
+   * > Note:
+   * > When completing a draft order, inventory is [reserved](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventory-states)
+   * for the items in the order. This means the items will no longer be available for other customers to purchase.
+   * Make sure to verify inventory availability before completing the draft order.
+   */
   draftOrderComplete?: Maybe<DraftOrderCompletePayload>;
-  /** Creates a draft order. */
+  /**
+   * Creates a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder)
+   * with attributes such as customer information, line items, shipping and billing addresses, and payment terms.
+   * Draft orders are useful for merchants that need to:
+   *
+   * - Create new orders for sales made by phone, in person, by chat, or elsewhere. When a merchant accepts payment for a draft order, an order is created.
+   * - Send invoices to customers with a secure checkout link.
+   * - Use custom items to represent additional costs or products not in inventory.
+   * - Re-create orders manually from active sales channels.
+   * - Sell products at discount or wholesale rates.
+   * - Take pre-orders.
+   *
+   * After creating a draft order, you can:
+   * - Send an invoice to the customer using the [`draftOrderInvoiceSend`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderInvoiceSend) mutation.
+   * - Complete the draft order using the [`draftOrderComplete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete) mutation.
+   * - Update the draft order using the [`draftOrderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderUpdate) mutation.
+   * - Duplicate a draft order using the [`draftOrderDuplicate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDuplicate) mutation.
+   * - Delete the draft order using the [`draftOrderDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderDelete) mutation.
+   *
+   * > Note:
+   * > When you create a draft order, you can't [reserve or hold inventory](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps#inventory-states) for the items in the order by default.
+   * > However, you can reserve inventory using the [`reserveInventoryUntil`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderCreate#arguments-input.fields.reserveInventoryUntil) input.
+   */
   draftOrderCreate?: Maybe<DraftOrderCreatePayload>;
   /** Creates a draft order from order. */
   draftOrderCreateFromOrder?: Maybe<DraftOrderCreateFromOrderPayload>;
@@ -29972,21 +30569,115 @@ export type Mutation = {
   /** Acknowledges file update failure by resetting FAILED status to READY and clearing any media errors. */
   fileAcknowledgeUpdateFailed?: Maybe<FileAcknowledgeUpdateFailedPayload>;
   /**
-   * Creates file assets using an external URL or for files that were previously uploaded using the
-   * [stagedUploadsCreate mutation](https://shopify.dev/api/admin-graphql/latest/mutations/stageduploadscreate).
-   * These files are added to the [Files page](https://shopify.com/admin/settings/files) in Shopify admin.
+   * Creates file assets for a store from external URLs or files that were previously uploaded using the
+   * [`stagedUploadsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/stageduploadscreate)
+   * mutation.
    *
-   * Files are processed asynchronously. Some data is not available until processing is completed.
-   * Check [fileStatus](https://shopify.dev/api/admin-graphql/latest/interfaces/File#field-file-filestatus)
-   * to know when the files are READY or FAILED. See the [FileStatus](https://shopify.dev/api/admin-graphql/latest/enums/filestatus)
-   * for the complete set of possible fileStatus values.
+   * Use the `fileCreate` mutation to add various types of media and documents to your store. These files are added to the
+   * [**Files** page](https://shopify.com/admin/settings/files) in the Shopify admin and can be referenced by other
+   * resources in your store.
    *
-   * To get a list of all files, use the [files query](https://shopify.dev/api/admin-graphql/latest/queries/files).
+   * The `fileCreate` mutation supports multiple file types:
+   *
+   * - **Images**: Product photos, variant images, and general store imagery
+   * - **Videos**: Shopify-hosted videos for product demonstrations and marketing
+   * - **External videos**: YouTube and Vimeo videos for enhanced product experiences
+   * - **3D models**: Interactive 3D representations of products
+   * - **Generic files**: PDFs, documents, and other file types for store resources
+   *
+   * The mutation handles duplicate filenames using configurable resolution modes that automatically append UUIDs,
+   * replace existing files, or raise errors when conflicts occur.
+   *
+   * > Note:
+   * > Files are processed asynchronously. Check the
+   * > [`fileStatus`](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/File#fields-fileStatus)
+   * > field to monitor processing completion. The maximum number of files that can be created in a single batch is 250.
+   *
+   * After creating files, you can make subsequent updates using the following mutations:
+   *
+   * - [`fileUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileUpdate):
+   * Update file properties such as alt text or replace file contents while preserving the same URL.
+   * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+   * Remove files from your store when they are no longer needed.
+   *
+   * To list all files in your store, use the
+   * [`files`](https://shopify.dev/docs/api/admin-graphql/latest/queries/files) query.
+   *
+   * Learn how to manage
+   * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+   * in your app.
    */
   fileCreate?: Maybe<FileCreatePayload>;
-  /** Deletes existing file assets that were uploaded to Shopify. */
+  /**
+   * Deletes file assets that were previously uploaded to your store.
+   *
+   * Use the `fileDelete` mutation to permanently remove media and file assets from your store when they are no longer needed.
+   * This mutation handles the complete removal of files from both your store's file library and any associated references
+   * to products or other resources.
+   *
+   * The `fileDelete` mutation supports removal of multiple file types:
+   *
+   * - **Images**: Product photos, variant images, and general store imagery
+   * - **Videos**: Shopify-hosted videos for product demonstrations and marketing content
+   * - **External Videos**: YouTube and Vimeo videos linked to your products
+   * - **3D models**: Interactive 3D representations of products
+   * - **Generic files**: PDFs, documents, and other file types stored in your
+   * [**Files** page](https://shopify.com/admin/settings/files)
+   *
+   * When you delete files that are referenced by products, the mutation automatically removes those references and
+   * reorders any remaining media to maintain proper positioning. Product file references are database relationships
+   * managed through a media reference system, not just links in product descriptions. The Shopify admin provides a UI
+   * to manage these relationships, and when files are deleted, the system automatically cleans up all references.
+   * Files that are currently being processed by other operations are rejected to prevent conflicts.
+   *
+   * > Caution:
+   * > File deletion is permanent and can't be undone. When you delete a file that's being used in your store,
+   * > it will immediately stop appearing wherever it was displayed. For example, if you delete a product image,
+   * > that product will show a broken image or placeholder on your storefront and in the admin. The same applies
+   * > to any other files linked from themes, blog posts, or pages. Before deleting files, you can use the
+   * > [`files` query](https://shopify.dev/api/admin-graphql/latest/queries/files) to list and review
+   * > your store's file assets.
+   *
+   * Learn how to manage
+   * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+   * in your app.
+   */
   fileDelete?: Maybe<FileDeletePayload>;
-  /** Updates an existing file asset that was uploaded to Shopify. */
+  /**
+   * Updates properties, content, and metadata associated with an existing file asset that has already been uploaded to Shopify.
+   *
+   * Use the `fileUpdate` mutation to modify various aspects of files already stored in your store.
+   * Files can be updated individually or in batches.
+   *
+   * The `fileUpdate` mutation supports updating multiple file properties:
+   *
+   * - **Alt text**: Update accessibility descriptions for images and other media.
+   * - **File content**: Replace image or generic file content while maintaining the same URL.
+   * - **Filename**: Modify file names (extension must match the original).
+   * - **Product references**: Add or remove associations between files and products. Removing file-product associations
+   * deletes the file from the product's media gallery and clears the image from any product variants that were using it.
+   *
+   * The mutation handles different file types with specific capabilities:
+   *
+   * - **Images**: Update preview images, original source, filename, and alt text.
+   * - **Generic files**: Update original source, filename, and alt text.
+   * - **Videos and 3D models**: Update alt text and product references.
+   *
+   * > Note:
+   * > Files must be in `ready` state before they can be updated. The mutation includes file locking to prevent
+   * > conflicts during updates. You can't simultaneously update both `originalSource` and `previewImageSource`.
+   *
+   * After updating files, you can use related mutations for additional file management:
+   *
+   * - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+   * Create new file assets from external URLs or staged uploads.
+   * - [`fileDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileDelete):
+   * Remove files from your store when they are no longer needed.
+   *
+   * Learn how to manage
+   * [product media and file assets](https://shopify.dev/docs/apps/build/online-store/product-media)
+   * in your app.
+   */
   fileUpdate?: Maybe<FileUpdatePayload>;
   /** Generates a signature for a Flow action payload. */
   flowGenerateSignature?: Maybe<FlowGenerateSignaturePayload>;
@@ -30071,7 +30762,7 @@ export type Mutation = {
    * Moving a fulfillment order will fail in the following circumstances:
    *
    * * The fulfillment order is closed.
-   * * The destination location has never stocked the requested inventory item.
+   * * The destination location doesn't stock the requested inventory item.
    * * The API client doesn't have the correct permissions.
    *
    * Line items which have already been fulfilled can't be re-assigned
@@ -30282,13 +30973,13 @@ export type Mutation = {
   marketWebPresenceUpdate?: Maybe<MarketWebPresenceUpdatePayload>;
   /** Deletes all external marketing activities. Deletion is performed by a background job, as it may take a bit of time to complete if a large number of activities are to be deleted. Attempting to create or modify external activities before the job has completed will result in the create/update/upsert mutation returning an error. */
   marketingActivitiesDeleteAllExternal?: Maybe<MarketingActivitiesDeleteAllExternalPayload>;
-  /** Create new marketing activity. */
+  /** Create new marketing activity. Marketing activity app extensions are deprecated and will be removed in the near future. */
   marketingActivityCreate?: Maybe<MarketingActivityCreatePayload>;
   /** Creates a new external marketing activity. */
   marketingActivityCreateExternal?: Maybe<MarketingActivityCreateExternalPayload>;
   /** Deletes an external marketing activity. */
   marketingActivityDeleteExternal?: Maybe<MarketingActivityDeleteExternalPayload>;
-  /** Updates a marketing activity with the latest information. */
+  /** Updates a marketing activity with the latest information. Marketing activity app extensions are deprecated and will be removed in the near future. */
   marketingActivityUpdate?: Maybe<MarketingActivityUpdatePayload>;
   /** Update an external marketing activity. */
   marketingActivityUpdateExternal?: Maybe<MarketingActivityUpdateExternalPayload>;
@@ -30378,9 +31069,84 @@ export type Mutation = {
   mobilePlatformApplicationDelete?: Maybe<MobilePlatformApplicationDeletePayload>;
   /** Update a mobile platform application. */
   mobilePlatformApplicationUpdate?: Maybe<MobilePlatformApplicationUpdatePayload>;
-  /** Cancels an order. */
+  /**
+   * Cancels an order, with options for refunding, restocking inventory, and customer notification.
+   *
+   * > Caution:
+   * > Order cancellation is irreversible. An order that has been cancelled can't be restored to its original state.
+   *
+   * Use the `orderCancel` mutation to programmatically cancel orders in scenarios such as:
+   *
+   * - Customer-requested cancellations due to size, color, or other preference changes
+   * - Payment processing failures or declined transactions
+   * - Fraud detection and prevention
+   * - Insufficient inventory availability
+   * - Staff errors in order processing
+   * - Wholesale or B2B order management workflows
+   *
+   * The `orderCancel` mutation provides flexible refund options including refunding to original payment methods
+   * or issuing store credit. If a payment was only authorized (temporarily held) but not yet charged,
+   * that hold will be automatically released when the order is cancelled, even if you choose not to refund other payments.
+   *
+   * The mutation supports different cancellation reasons: customer requests, payment declines, fraud,
+   * inventory issues, staff errors, or other unspecified reasons. Each cancellation can include optional
+   * staff notes for internal documentation (notes aren't visible to customers).
+   *
+   * An order can only be cancelled if it meets the following criteria:
+   *
+   * - The order hasn't already been cancelled.
+   * - The order has no pending payment authorizations.
+   * - The order has no active returns in progress.
+   * - The order has no outstanding fulfillments that can't be cancelled.
+   *
+   * Orders might be assigned to locations that become
+   * [deactivated](https://help.shopify.com/manual/fulfillment/setup/locations-management#deactivate-and-reactivate-locations)
+   * after the order was created. When cancelling such orders, inventory behavior depends on payment status:
+   *
+   * - **Paid orders**: Cancellation will fail with an error if restocking is enabled, since inventory
+   * can't be returned to deactivated locations.
+   * - **Unpaid orders**: Cancellation succeeds but inventory is not restocked anywhere, even when the
+   * restock option is enabled. The committed inventory effectively becomes unavailable rather than being
+   * returned to stock at the deactivated location.
+   *
+   * After you cancel an order, you can still make limited updates to certain fields (like
+   * notes and tags) using the
+   * [`orderUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderUpdate).
+   *
+   * For partial refunds or more complex refund scenarios on active orders,
+   * such as refunding only specific line items while keeping the rest of the order fulfilled,
+   * consider using the [`refundCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate)
+   * mutation instead of full order cancellation.
+   *
+   * Learn how to build apps that integrate with
+   * [order management and fulfillment processes](https://shopify.dev/docs/apps/build/orders-fulfillment).
+   */
   orderCancel?: Maybe<OrderCancelPayload>;
-  /** Captures payment for an authorized transaction on an order. An order can only be captured if it has a successful authorization transaction. Capturing an order will claim the money reserved by the authorization. orderCapture can be used to capture multiple times as long as the OrderTransaction is multi-capturable. To capture a partial payment, the included `amount` value should be less than the total order amount. Multi-capture is available only to stores on a Shopify Plus plan. */
+  /**
+   * Captures payment for an authorized transaction on an order. Use this mutation to claim the money that was previously
+   * reserved by an authorization transaction.
+   *
+   * The `orderCapture` mutation can be used in the following scenarios:
+   *
+   * - To capture the full amount of an authorized transaction
+   * - To capture a partial payment by specifying an amount less than the total order amount
+   * - To perform multiple captures on the same order, as long as the order transaction is
+   * [multi-capturable](https://shopify.dev/docs/api/admin-graphql/latest/objects/ordertransaction#field-OrderTransaction.fields.multiCapturable)
+   *
+   * > Note:
+   * > Multi-capture functionality is only available to stores on a
+   * [Shopify Plus plan](https://help.shopify.com/manual/intro-to-shopify/pricing-plans/plans-features/shopify-plus-plan).
+   * For multi-currency orders, the [`currency`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/orderCapture#arguments-input.fields.currency)
+   * field is required and should match the presentment currency from the order.
+   *
+   * After capturing a payment, you can:
+   *
+   * - View the transaction details including status, amount, and processing information.
+   * - Track the captured amount in both shop and presentment currencies.
+   * - Monitor the transaction's settlement status.
+   *
+   * Learn more about [order transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction).
+   */
   orderCapture?: Maybe<OrderCapturePayload>;
   /** Closes an open order. */
   orderClose?: Maybe<OrderClosePayload>;
@@ -30454,7 +31220,30 @@ export type Mutation = {
   orderEditUpdateShippingLine?: Maybe<OrderEditUpdateShippingLinePayload>;
   /** Sends an email invoice for an order. */
   orderInvoiceSend?: Maybe<OrderInvoiceSendPayload>;
-  /** Marks an order as paid. You can only mark an order as paid if it isn't already fully paid. */
+  /**
+   * Marks an order as paid by recording a payment transaction for the outstanding amount.
+   *
+   * Use the `orderMarkAsPaid` mutation to record payments received outside the standard checkout
+   * process. The `orderMarkAsPaid` mutation is particularly useful in scenarios where:
+   *
+   * - Orders were created with manual payment methods (cash on delivery, bank deposit, money order)
+   * - Payments were received offline and need to be recorded in the system
+   * - Previously authorized payments need to be captured manually
+   * - Orders require manual payment reconciliation due to external payment processing
+   *
+   * The mutation validates that the order can be marked as paid before processing.
+   * An order can be marked as paid only if it has a positive outstanding balance and its
+   * [financial status](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.displayFinancialStatus)
+   * isn't already `PAID`. The mutation will either create a new sale transaction for the full
+   * outstanding amount or capture an existing authorized transaction, depending on the order's current payment state.
+   *
+   * After successfully marking an order as paid, the order's financial status is updated to
+   * reflect the payment, and payment events are logged for tracking and analytics
+   * purposes.
+   *
+   * Learn more about [managing orders](https://shopify.dev/docs/apps/build/orders-fulfillment/order-management-apps)
+   * in apps.
+   */
   orderMarkAsPaid?: Maybe<OrderMarkAsPaidPayload>;
   /** Opens a closed order. */
   orderOpen?: Maybe<OrderOpenPayload>;
@@ -30525,20 +31314,38 @@ export type Mutation = {
   productChangeStatus?: Maybe<ProductChangeStatusPayload>;
   /**
    * Creates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
-   * with attributes such as title, description, and vendor.
-   * You can use the `productCreate` mutation to define
-   * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
-   * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue)
-   * for products with
-   * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant),
-   * such as different sizes or colors.
+   * with attributes such as title, description, vendor, and media.
    *
+   * The `productCreate` mutation helps you create many products at once, avoiding the tedious or time-consuming
+   * process of adding them one by one in the Shopify admin. Common examples include creating products for a
+   * new collection, launching a new product line, or adding seasonal products.
+   *
+   * You can define product
+   * [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
+   * [values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue),
+   * allowing you to create products with different variations like sizes or colors. You can also associate media
+   * files to your products, including images and videos.
+   *
+   * The `productCreate` mutation only supports creating a product with its initial
+   * [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
    * To create multiple product variants for a single product and manage prices, use the
    * [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
    * mutation.
    *
-   * To create or update a product in a single request, use the
-   * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation.
+   * > Note:
+   * > The `productCreate` mutation has a [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+   * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no more than
+   * > 1,000 new product variants can be created per day.
+   *
+   * After you create a product, you can make subsequent edits to the product using one of the following mutations:
+   *
+   * - [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish):
+   * Used to publish the product and make it available to customers. The `productCreate` mutation creates products
+   * in an unpublished state by default, so you must perform a separate operation to publish the product.
+   * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+   * Used to update a single product, such as changing the product's title, description, vendor, or associated media.
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+   * Used to perform multiple operations on products, such as creating or modifying product options and variants.
    *
    * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
    * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
@@ -30550,15 +31357,50 @@ export type Mutation = {
    */
   productCreateMedia?: Maybe<ProductCreateMediaPayload>;
   /**
-   * Deletes a product, including all associated variants and media.
+   * Permanently deletes a product and all its associated data, including variants, media, publications, and inventory items.
    *
-   * As of API version `2023-01`, if you need to delete a large product, such as one that has many
-   * [variants](https://shopify.dev/api/admin-graphql/latest/input-objects/ProductVariantInput)
+   * Use the `productDelete` mutation to programmatically remove products from your store when they need to be
+   * permanently deleted from your catalog, such as when removing discontinued items, cleaning up test data, or
+   * synchronizing with external inventory management systems.
+   *
+   * The `productDelete` mutation removes the product from all associated collections,
+   * and removes all associated data for the product, including:
+   *
+   * - All product variants and their inventory items
+   * - Product media (images, videos) that are not referenced by other products
+   * - [Product options](https://shopify.dev/api/admin-graphql/latest/objects/ProductOption) and [option values](https://shopify.dev/api/admin-graphql/latest/objects/ProductOptionValue)
+   * - Product publications across all sales channels
+   * - Product tags and metadata associations
+   *
+   * The `productDelete` mutation also has the following effects on existing orders and transactions:
+   *
+   * - **Draft orders**: Existing draft orders that reference this product will retain the product information as stored data, but the product reference will be removed. Draft orders can still be completed with the stored product details.
+   * - **Completed orders and refunds**: Previously completed orders that included this product aren't affected. The product information in completed orders is preserved for record-keeping, and existing refunds for this product remain valid and processable.
+   *
+   * > Caution:
+   * > Product deletion is irreversible. After a product is deleted, it can't be recovered. Consider archiving
+   * > or unpublishing products instead if you might need to restore them later.
+   *
+   * If you need to delete a large product, such as one that has many
+   * [variants](https://shopify.dev/api/admin-graphql/latest/objects/ProductVariant)
    * that are active at several
-   * [locations](https://shopify.dev/api/admin-graphql/latest/input-objects/InventoryLevelInput),
-   * you may encounter timeout errors. To avoid these timeout errors, you can instead use the asynchronous
-   * [ProductDeleteAsync](https://shopify.dev/api/admin-graphql/latest/mutations/productDeleteAsync)
-   * mutation.
+   * [locations](https://shopify.dev/api/admin-graphql/latest/objects/Location),
+   * you might encounter timeout errors. To avoid these timeout errors, you can set the
+   * [`synchronous`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productDelete#arguments-synchronous)
+   * parameter to `false` to run the deletion asynchronously, which returns a
+   * [`ProductDeleteOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductDeleteOperation)
+   * that you can monitor for completion status.
+   *
+   * If you need more granular control over product cleanup, consider using these alternative mutations:
+   *
+   * - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+   * Update the product status to archived or unpublished instead of deleting.
+   * - [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkDelete):
+   * Delete specific variants while keeping the product.
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete):
+   * Delete the choices available for a product, such as size, color, or material.
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model).
    */
   productDelete?: Maybe<ProductDeletePayload>;
   /**
@@ -30594,36 +31436,178 @@ export type Mutation = {
   productJoinSellingPlanGroups?: Maybe<ProductJoinSellingPlanGroupsPayload>;
   /** Removes multiple groups from a product. */
   productLeaveSellingPlanGroups?: Maybe<ProductLeaveSellingPlanGroupsPayload>;
-  /** Updates a product option. */
+  /**
+   * Updates an [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+   * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+   * such as size, color, or material. Each option includes a name, position, and a list of values. The combination
+   * of a product option and value creates a [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+   *
+   * Use the `productOptionUpdate` mutation for the following use cases:
+   *
+   * - **Update product choices**: Modify an existing option, like "Size" (Small, Medium, Large) or
+   * "Color" (Red, Blue, Green), so customers can select their preferred variant.
+   * - **Enable personalization features**: Update an option (for example, "Engraving text") to let customers customize their purchase.
+   * - **Offer seasonal or limited edition products**: Update a value
+   * (for example, "Holiday red") on an existing option to support limited-time or seasonal variants.
+   * - **Integrate with apps that manage product configuration**: Allow third-party apps to update options, like
+   * "Bundle size", when customers select or customize
+   * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+   * - **Link options to metafields**: Associate a product option with a custom
+   * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+   * richer integrations with other systems or apps.
+   *
+   * > Note:
+   * > The `productOptionUpdate` mutation enforces strict data integrity for product options and variants.
+   * All option positions must be sequential, and every option should be used by at least one variant.
+   *
+   * After you update a product option, you can further manage a product's configuration using related mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+   */
   productOptionUpdate?: Maybe<ProductOptionUpdatePayload>;
-  /** Creates options on a product. */
+  /**
+   * Creates one or more [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+   * on a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+   * such as size, color, or material. Each option includes a name, position, and a list of values. The combination
+   * of a product option and value creates a [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+   *
+   * Use the `productOptionsCreate` mutation for the following use cases:
+   *
+   * - **Add product choices**: Add a new option, like "Size" (Small, Medium, Large) or
+   * "Color" (Red, Blue, Green), to an existing product so customers can select their preferred variant.
+   * - **Enable personalization features**: Add options such as "Engraving text" to let customers customize their purchase.
+   * - **Offer seasonal or limited edition products**: Add a new value
+   * (for example, "Holiday red") to an existing option to support limited-time or seasonal variants.
+   * - **Integrate with apps that manage product configuration**: Allow third-party apps to add options, like
+   * "Bundle size", when customers select or customize
+   * [product bundles](https://shopify.dev/docs/apps/build/product-merchandising/bundles).
+   * - **Link options to metafields**: Associate a product option with a custom
+   * [metafield](https://shopify.dev/docs/apps/build/custom-data), like "Fabric code", for
+   * richer integrations with other systems or apps.
+   *
+   * > Note:
+   * > The `productOptionsCreate` mutation enforces strict data integrity for product options and variants.
+   * All option positions must be sequential, and every option should be used by at least one variant.
+   * If you use the [`CREATE` variant strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate#arguments-variantStrategy.enums.CREATE), consider the maximum allowed number of variants for each product
+   * (100 by default, and 2,048 if you've
+   * [enabled the **Extended Variants** developer preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#create-a-development-store-that-allows-2-048-variants-per-product)).
+   *
+   * After you create product options, you can further manage a product's configuration using related mutations:
+   *
+   * - [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpdate)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   * - [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+   */
   productOptionsCreate?: Maybe<ProductOptionsCreatePayload>;
-  /** Deletes the specified options. */
+  /**
+   * Deletes one or more [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption)
+   * from a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product). Product options
+   * define the choices available for a product, such as size, color, or material.
+   *
+   * > Caution:
+   * > Removing an option can affect a product's
+   * > [variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) and their
+   * > configuration. Deleting an option might also delete associated option values and, depending on the chosen
+   * > [strategy](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productoptionsdelete#arguments-strategy),
+   * > might affect variants.
+   *
+   * Use the `productOptionsDelete` mutation for the following use cases:
+   *
+   * - **Simplify product configuration**: Remove obsolete or unnecessary options
+   * (for example, discontinue "Material" if all variants are now the same material).
+   * - **Clean up after seasonal or limited-time offerings**: Delete options that are no longer
+   * relevant (for example, "Holiday edition").
+   * - **Automate catalog management**: Enable apps or integrations to programmatically remove options as product
+   * data changes.
+   *
+   * > Note:
+   * > The `productOptionsDelete` mutation enforces strict data integrity for product options and variants.
+   * > All option positions must remain sequential, and every remaining option must be used by at least one variant.
+   *
+   * After you delete a product option, you can further manage a product's configuration using related mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpdate)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+   */
   productOptionsDelete?: Maybe<ProductOptionsDeletePayload>;
   /**
-   * Reorders options and option values on a product, causing product variants to alter their position.
+   * Reorders the [options](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption) and
+   * [option values](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOptionValue) on a
+   * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+   * updating the order in which [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+   * are presented to customers.
    *
-   * Options order take precedence over option values order. Depending on the existing product variants,
-   * some input orders might not be achieved.
+   * The `productOptionsReorder` mutation accepts a list of product options, each identified by `id` or `name`, and an
+   * optional list of values (also by `id` or `name`) specifying the new order. The order of options in the
+   * mutation's input determines their new positions (for example, the first option becomes `option1`).
+   * The order of values within each option determines their new positions. The mutation recalculates the order of
+   * variants based on the new option and value order.
    *
-   * Example:
-   *   Existing product variants:
-   *     ["Red / Small", "Green / Medium", "Blue / Small"].
+   * Suppose a product has the following variants:
    *
-   *   New order:
-   *     [
-   *       {
-   *         name: "Size", values: [{ name: "Small" }, { name: "Medium" }],
-   *         name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }]
-   *       }
-   *     ].
+   * 1. `"Red / Small"`
+   * 2. `"Green / Medium"`
+   * 3. `"Blue / Small"`
    *
-   *   Description:
-   *     Variants with "Green" value are expected to appear before variants with "Red" and "Blue" values.
-   *     However, "Size" option appears before "Color".
+   * You reorder options and values:
    *
-   *   Therefore, output will be:
-   *     ["Small / "Red", "Small / Blue", "Medium / Green"].
+   * ```
+   * options: [
+   *   { name: "Size", values: [{ name: "Small" }, { name: "Medium" }] },
+   *   { name: "Color", values: [{ name: "Green" }, { name: "Red" }, { name: "Blue" }] }
+   * ]
+   * ```
+   *
+   * The resulting variant order will be:
+   *
+   * 1. `"Small / Green"`
+   * 2. `"Small / Red"`
+   * 3. `"Small / Blue"`
+   * 4. `"Medium / Green"`
+   *
+   * Use the `productOptionsReorder` mutation for the following use cases:
+   *
+   * - **Change the order of product options**: For example, display "Color" before "Size" in a store.
+   * - **Reorder option values within an option**: For example, show "Red" before "Blue" in a color picker.
+   * - **Control the order of product variants**: The order of options and their values determines the sequence in which variants are listed and selected.
+   * - **Highlight best-selling options**: Present the most popular or relevant options and values first.
+   * - **Promote merchandising strategies**: Highlight seasonal colors, limited editions, or featured sizes.
+   *
+   * > Note:
+   * > The `productOptionsReorder` mutation enforces strict data integrity for product options and variants.
+   * > All option positions must be sequential, and every option should be used by at least one variant.
+   *
+   * After you reorder product options, you can further manage a product's configuration using related mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   * - [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [managing product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
    */
   productOptionsReorder?: Maybe<ProductOptionsReorderPayload>;
   /**
@@ -30634,46 +31618,48 @@ export type Mutation = {
   /** Asynchronously reorders the media attached to a product. */
   productReorderMedia?: Maybe<ProductReorderMediaPayload>;
   /**
-   * Creates or updates a product in a single request.
+   * Performs multiple operations to create or update products in a single request.
    *
-   * Use this mutation when syncing information from an external data source into Shopify.
+   * Use the `productSet` mutation to sync information from an external data source into Shopify, manage large
+   * product catalogs, and perform batch updates. The mutation is helpful for bulk product management, including price
+   * adjustments, inventory updates, and product lifecycle management.
    *
-   * When using this mutation to update a product, specify that product's `id` in the input.
+   * The behavior of `productSet` depends on the type of field it's modifying:
    *
-   * Any list field (e.g.
-   * [collections](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-productsetinput-collections),
-   * [metafields](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-productsetinput-metafields),
-   * [variants](https://shopify.dev/api/admin-graphql/current/input-objects/ProductSetInput#field-productsetinput-variants))
-   * will be updated so that all included entries are either created or updated, and all existing entries not
-   * included will be deleted.
+   * - **For list fields**: Creates new entries, updates existing entries, and deletes existing entries
+   * that aren't included in the mutation's input. Common examples of list fields include
+   * [`collections`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.fields.collections),
+   * [`metafields`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.fields.metafields),
+   * and [`variants`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet#arguments-input.fields.variants).
    *
-   * All other fields will be updated to the value passed. Omitted fields will not be updated.
+   * - **For all other field types**: Updates only the included fields. Any omitted fields will remain unchanged.
    *
-   * When run in synchronous mode, you will get the product back in the response.
-   * For versions `2024-04` and earlier, the synchronous mode has an input limit of 100 variants.
-   * This limit has been removed for versions `2024-07` and later.
+   * > Note:
+   * > By default, stores have a limit of 100 product variants for each product. You can create a development store and
+   * > [enable the **Extended Variants** developer preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#create-a-development-store-that-allows-2-048-variants-per-product)
+   * > to create or update a maximum of 2,048 product variants in a single operation.
    *
-   * In asynchronous mode, you will instead get a
-   * [ProductSetOperation](https://shopify.dev/api/admin-graphql/current/objects/ProductSetOperation)
-   * object back. You can then use the
-   * [productOperation](https://shopify.dev/api/admin-graphql/current/queries/productOperation) query to
-   * retrieve the updated product data. This query uses the `ProductSetOperation` object to
-   * check the status of the operation and to retrieve the details of the updated product and its variants.
+   * You can run `productSet` in one of the following modes:
    *
-   * If you need to update a subset of variants, use one of the bulk variant mutations:
-   * - [productVariantsBulkCreate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsBulkCreate)
-   * - [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsBulkUpdate)
-   * - [productVariantsBulkDelete](https://shopify.dev/api/admin-graphql/current/mutations/productVariantsBulkDelete)
+   * - **Synchronously**: Returns the updated product in the response.
+   * - **Asynchronously**: Returns a [`ProductSetOperation`](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductSetOperation) object.
+   * Use the [`productOperation`](https://shopify.dev/api/admin-graphql/latest/queries/productOperation) query to check the status of the operation and
+   * retrieve details of the updated product and its product variants.
    *
-   * If you need to update options, use one of the product option mutations:
-   * - [productOptionsCreate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsCreate)
-   * - [productOptionUpdate](https://shopify.dev/api/admin-graphql/current/mutations/productOptionUpdate)
-   * - [productOptionsDelete](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsDelete)
-   * - [productOptionsReorder](https://shopify.dev/api/admin-graphql/current/mutations/productOptionsReorder)
+   * If you need to only manage product variants, then use one of the following mutations:
    *
-   * See our guide to
-   * [sync product data from an external source](https://shopify.dev/api/admin/migrate/new-product-model/sync-data)
-   * for more.
+   * - [`productVariantsBulkCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkCreate)
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * - [`productVariantsBulkDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkDelete)
+   *
+   * If you need to only manage product options, then use one of the following mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpdate)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   *
+   * Learn more about [syncing product data from an external source](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/sync-data).
    */
   productSet?: Maybe<ProductSetPayload>;
   /**
@@ -30682,18 +31668,33 @@ export type Mutation = {
    */
   productUnpublish?: Maybe<ProductUnpublishPayload>;
   /**
-   * Updates a product.
+   * Updates a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+   * with attributes such as title, description, vendor, and media.
    *
-   * For versions `2024-01` and older:
-   * If you update a product and only include some variants in the update,
-   * then any variants not included will be deleted.
+   * The `productUpdate` mutation helps you modify many products at once, avoiding the tedious or time-consuming
+   * process of updating them one by one in the Shopify admin. Common examples including updating
+   * product details like status or tags.
    *
-   * To safely manage variants without the risk of
-   * deleting excluded variants, use
-   * [productVariantsBulkUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantsbulkupdate).
+   * The `productUpdate` mutation doesn't support updating
+   * [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant).
+   * To update multiple product variants for a single product and manage prices, use the
+   * [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate)
+   * mutation.
    *
-   * If you want to update a single variant, then use
-   * [productVariantUpdate](https://shopify.dev/api/admin-graphql/latest/mutations/productvariantupdate).
+   * > Note:
+   * > The `productUpdate` mutation has a [throttle](https://shopify.dev/docs/api/usage/rate-limits#resource-based-rate-limits)
+   * > that takes effect when a store has 50,000 product variants. After this threshold is reached, no more than
+   * > 1,000 new product variants can be updated per day.
+   *
+   * After updating a product, you can make additional changes using one of the following mutations:
+   *
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+   * Used to perform multiple operations on products, such as creating or modifying product options and variants.
+   * - [`publishablePublish`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/publishablePublish):
+   * Used to publish the product and make it available to customers, if the product is currently unpublished.
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
    */
   productUpdate?: Maybe<ProductUpdatePayload>;
   /**
@@ -30711,13 +31712,84 @@ export type Mutation = {
   productVariantLeaveSellingPlanGroups?: Maybe<ProductVariantLeaveSellingPlanGroupsPayload>;
   /** Creates new bundles, updates existing bundles, and removes bundle components for one or multiple bundles. */
   productVariantRelationshipBulkUpdate?: Maybe<ProductVariantRelationshipBulkUpdatePayload>;
-  /** Creates multiple variants in a single product. This mutation can be called directly or via the bulkOperation. */
+  /**
+   * Creates multiple [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+   * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one operation.
+   * You can run this mutation directly or as part of a [bulk operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+   * for large-scale catalog updates.
+   *
+   * Use the `productVariantsBulkCreate` mutation to efficiently add new product variants—such as different sizes,
+   * colors, or materials—to an existing product. The mutation is helpful if you need to add product variants in bulk,
+   * such as importing from an external system.
+   *
+   * The mutation supports:
+   *
+   * - Creating variants with custom options and values
+   * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+   * - Handling complex product configurations
+   *
+   * > Note:
+   * > By default, stores have a limit of 100 product variants for each product. You can create a development store and
+   * > [enable the **Extended Variants** developer preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#create-a-development-store-that-allows-2-048-variants-per-product)
+   * > to create a maximum of 2,048 product variants in a single operation.
+   *
+   * After creating variants, you can make additional changes using one of the following mutations:
+   *
+   * - [`productVariantsBulkUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productVariantsBulkUpdate):
+   * Updates multiple product variants for a single product in one operation.
+   * - [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet):
+   * Used to perform multiple operations on products, such as creating or modifying product options and variants.
+   *
+   * You can also specifically manage product options through related mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpdate)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+   */
   productVariantsBulkCreate?: Maybe<ProductVariantsBulkCreatePayload>;
   /** Deletes multiple variants in a single product. This mutation can be called directly or via the bulkOperation. */
   productVariantsBulkDelete?: Maybe<ProductVariantsBulkDeletePayload>;
   /** Reorders multiple variants in a single product. This mutation can be called directly or via the bulkOperation. */
   productVariantsBulkReorder?: Maybe<ProductVariantsBulkReorderPayload>;
-  /** Updates multiple variants in a single product. This mutation can be called directly or via the bulkOperation. */
+  /**
+   * Updates multiple [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+   * for a single [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) in one operation.
+   * You can run this mutation directly or as part of a [bulk operation](https://shopify.dev/docs/api/usage/bulk-operations/imports)
+   * for large-scale catalog updates.
+   *
+   * Use the `productVariantsBulkUpdate` mutation to efficiently modify product variants—such as different sizes,
+   * colors, or materials—associated with an existing product. The mutation is helpful if you need to update a
+   * product's variants in bulk, such as importing from an external system.
+   *
+   * The mutation supports:
+   *
+   * - Updating variants with custom options and values
+   * - Associating media (for example, images, videos, and 3D models) with the product or its variants
+   * - Handling complex product configurations
+   *
+   * > Note:
+   * > By default, stores have a limit of 100 product variants for each product. You can create a development store and
+   * > [enable the **Extended Variants** developer preview](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/migrate-and-test#create-a-development-store-that-allows-2-048-variants-per-product)
+   * > to update a maximum of 2,048 product variants in a single operation.
+   *
+   * After creating variants, you can make additional changes using the
+   * [`productSet`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productSet) mutation,
+   * which is used to perform multiple operations on products, such as creating or modifying product options and variants.
+   *
+   * You can also specifically manage product options through related mutations:
+   *
+   * - [`productOptionsCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsCreate)
+   * - [`productOptionUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionUpdate)
+   * - [`productOptionsReorder`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsReorder)
+   * - [`productOptionsDelete`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productOptionsDelete)
+   *
+   * Learn more about the [product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model)
+   * and [adding product data](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/add-data).
+   */
   productVariantsBulkUpdate?: Maybe<ProductVariantsBulkUpdatePayload>;
   /**
    * Updates the server pixel to connect to a Google PubSub endpoint.
@@ -30762,7 +31834,40 @@ export type Mutation = {
    * You can use the `quantityRulesDelete` mutation to delete a set of quantity rules from a price list.
    */
   quantityRulesDelete?: Maybe<QuantityRulesDeletePayload>;
-  /** Creates a refund. */
+  /**
+   * Creates a refund for an order, allowing you to process returns and issue payments back to customers.
+   *
+   * Use the `refundCreate` mutation to programmatically process refunds in scenarios where you need to
+   * return money to customers, such as when handling returns, processing chargebacks, or correcting
+   * order errors.
+   *
+   * The `refundCreate` mutation supports various refund scenarios:
+   *
+   * - Refunding line items with optional restocking
+   * - Refunding shipping costs
+   * - Refunding duties and import taxes
+   * - Refunding additional fees
+   * - Processing refunds through different payment methods
+   * - Issuing store credit refunds (when enabled)
+   *
+   * You can create both full and partial refunds, and optionally allow over-refunding in specific
+   * cases.
+   *
+   * After creating a refund, you can track its status and details through the order's
+   * [`refunds`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-Order.fields.refunds)
+   * field. The refund is associated with the order and can be used for reporting and reconciliation purposes.
+   *
+   * Learn more about
+   * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management)
+   * and [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties).
+   *
+   * > Note:
+   * > The refunding behavior of the `refundCreate` mutation is similar to the
+   * [`refundReturn`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/returnRefund)
+   * mutation. The key difference is that the `refundCreate` mutation lets you to specify restocking behavior
+   * for line items, whereas the `returnRefund` mutation focuses solely on handling the financial refund without
+   * any restocking input.
+   */
   refundCreate?: Maybe<RefundCreatePayload>;
   /**
    * Approves a customer's return request.
@@ -30816,9 +31921,15 @@ export type Mutation = {
    * Use the `ReturnCreate` or `ReturnRequest` mutation to initiate a new return.
    */
   returnDeclineRequest?: Maybe<ReturnDeclineRequestPayload>;
-  /** Removes return lines from a return. */
+  /**
+   * Removes return lines from a return.
+   * @deprecated Use `removeFromReturn` instead.
+   */
   returnLineItemRemoveFromReturn?: Maybe<ReturnLineItemRemoveFromReturnPayload>;
-  /** Refunds a return when its status is `OPEN` or `CLOSED` and associates it with the related return request. */
+  /**
+   * Refunds a return when its status is `OPEN` or `CLOSED` and associates it with the related return request.
+   * @deprecated Use `returnProcess` instead.
+   */
   returnRefund?: Maybe<ReturnRefundPayload>;
   /** Reopens a closed return. */
   returnReopen?: Maybe<ReturnReopenPayload>;
@@ -30842,7 +31953,7 @@ export type Mutation = {
   savedSearchUpdate?: Maybe<SavedSearchUpdatePayload>;
   /**
    * <div class="note"><h4>Theme app extensions</h4>
-   *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+   *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
    *
    * <div class="note"><h4>Script tag deprecation</h4>
    *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -30853,7 +31964,7 @@ export type Mutation = {
   scriptTagCreate?: Maybe<ScriptTagCreatePayload>;
   /**
    * <div class="note"><h4>Theme app extensions</h4>
-   *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+   *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
    *
    * <div class="note"><h4>Script tag deprecation</h4>
    *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -30864,7 +31975,7 @@ export type Mutation = {
   scriptTagDelete?: Maybe<ScriptTagDeletePayload>;
   /**
    * <div class="note"><h4>Theme app extensions</h4>
-   *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+   *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
    *
    * <div class="note"><h4>Script tag deprecation</h4>
    *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -30945,12 +32056,50 @@ export type Mutation = {
    */
   stagedUploadTargetsGenerate?: Maybe<StagedUploadTargetsGeneratePayload>;
   /**
-   * Creates staged upload targets for each input. This is the first step in the upload process.
-   * The returned staged upload targets' URL and parameter fields can be used to send a request
-   * to upload the file described in the corresponding input.
+   * Creates staged upload targets for file uploads such as images, videos, and 3D models.
    *
-   * For more information on the upload process, refer to
-   * [Upload media to Shopify](https://shopify.dev/apps/online-store/media/products#step-1-upload-media-to-shopify).
+   * Use the `stagedUploadsCreate` mutation instead of direct file creation mutations when:
+   *
+   * - **Uploading large files**: Files over a few MB benefit from staged uploads for better reliability
+   * - **Uploading media files**: Videos, 3D models, and high-resolution images
+   * - **Bulk importing**: CSV files, product catalogs, or other bulk data
+   * - **Using external file sources**: When files are stored remotely and need to be transferred to Shopify
+   *
+   * For small files or simple use cases, you can use [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate)
+   * directly by providing the file content inline.
+   *
+   * The `stagedUploadsCreate` mutation is the first step in Shopify's secure two-step upload process:
+   *
+   * **Step 1: Create staged upload targets** (this mutation)
+   * - Generate secure, temporary upload URLs for your files.
+   * - Receive authentication parameters for the upload.
+   *
+   * **Step 2: Upload files and create assets**
+   * - Upload your files directly to the provided URLs using the authentication parameters.
+   * - Use the returned `resourceUrl` as the `originalSource` in subsequent mutations like `fileCreate`.
+   *
+   * This approach provides better performance for large files, handles network interruptions gracefully,
+   * and ensures secure file transfers to Shopify's storage infrastructure.
+   *
+   * > Note:
+   * > File size is required when uploading
+   * > [`VIDEO`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploadResource#enums-VIDEO) or
+   * > [`MODEL_3D`](https://shopify.dev/docs/api/admin-graphql/latest/enums/StagedUploadTargetGenerateUploadResource#enums-MODEL_3D)
+   * > resources.
+   *
+   * After creating staged upload targets, complete the process by:
+   *
+   * 1. **Uploading files**: Send your files to the returned [`url`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#field-StagedMediaUploadTarget.fields.url) using the provided
+   * [`parameters`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#field-StagedMediaUploadTarget.fields.parameters)
+   * for authentication
+   * 2. **Creating file assets**: Use the [`resourceUrl`](https://shopify.dev/docs/api/admin-graphql/latest/objects/StagedMediaUploadTarget#field-StagedMediaUploadTarget.fields.resourceUrl)
+   * as the `originalSource` in mutations such as:
+   *    - [`fileCreate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/fileCreate):
+   *      Creates file assets from staged uploads
+   *    - [`productUpdate`](https://shopify.dev/docs/api/admin-graphql/latest/mutations/productUpdate):
+   *      Updates products with new media from staged uploads
+   *
+   * Learn more about [uploading media to Shopify](https://shopify.dev/apps/online-store/media/products).
    */
   stagedUploadsCreate?: Maybe<StagedUploadsCreatePayload>;
   /**
@@ -34675,93 +35824,119 @@ export type OptionValueUpdateInput = {
 };
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions & HasLocalizedFields & HasMetafieldDefinitions & HasMetafields & LegacyInteroperability & Node & {
   __typename?: 'Order';
-  /** A list of additional fees applied to the order. */
+  /** A list of additional fees applied to an order, such as duties, import fees, or [tax lines](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.additionalFees.taxLines). */
   additionalFees: Array<AdditionalFee>;
-  /** A list of sales agreements associated with the order. */
+  /** A list of sales agreements associated with the order, such as contracts defining payment terms, or delivery schedules between merchants and customers. */
   agreements: SalesAgreementConnection;
-  /** A list of messages that appear on the order page in the Shopify admin. */
+  /** A list of messages that appear on the **Orders** page in the Shopify admin. These alerts provide merchants with important information about an order's status or required actions. */
   alerts: Array<ResourceAlert>;
-  /** The application that created the order. */
-  app?: Maybe<OrderApp>;
-  /** The billing address of the customer. */
-  billingAddress?: Maybe<MailingAddress>;
-  /** Whether the billing address matches the shipping address. */
-  billingAddressMatchesShippingAddress: Scalars['Boolean']['output'];
-  /** Whether the order can be manually marked as paid. */
-  canMarkAsPaid: Scalars['Boolean']['output'];
-  /** Whether a customer email exists for the order. */
-  canNotifyCustomer: Scalars['Boolean']['output'];
   /**
-   * The reason provided when the order was canceled.
-   * Returns `null` if the order wasn't canceled.
+   * The application that created the order. For example, "Online Store", "Point of Sale", or a custom app name.
+   * Use this to identify the order source for attribution and fulfillment workflows.
+   * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
    */
+  app?: Maybe<OrderApp>;
+  /**
+   * The billing address associated with the payment method selected by the customer for an order.
+   * Returns `null` if no billing address was provided during checkout.
+   */
+  billingAddress?: Maybe<MailingAddress>;
+  /** Whether the billing address matches the [shipping address](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.shippingAddress). Returns `true` if both addresses are the same, and `false` if they're different or if an address is missing. */
+  billingAddressMatchesShippingAddress: Scalars['Boolean']['output'];
+  /** Whether an order can be manually marked as paid. Returns `false` if the order is already paid, is canceled, has pending [Shopify Payments](https://help.shopify.com/en/manual/payments/shopify-payments/payouts) transactions, or has a negative payment amount. */
+  canMarkAsPaid: Scalars['Boolean']['output'];
+  /**
+   * Whether order notifications can be sent to the customer.
+   * Returns `true` if the customer has a valid [email address](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.email).
+   */
+  canNotifyCustomer: Scalars['Boolean']['output'];
+  /** The reason provided for an order cancellation. For example, a merchant might cancel an order if there's insufficient inventory. Returns `null` if the order hasn't been canceled. */
   cancelReason?: Maybe<OrderCancelReason>;
-  /** Cancellation details for the order. */
+  /** Details of an order's cancellation, if it has been canceled. This includes the reason, date, and any [staff notes](https://shopify.dev/api/admin-graphql/latest/objects/OrderCancellation#field-OrderCancellation.fields.staffNote). */
   cancellation?: Maybe<OrderCancellation>;
   /**
-   * The date and time when the order was canceled.
-   * Returns `null` if the order wasn't canceled.
+   * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was canceled.
+   * Returns `null` if the order hasn't been canceled.
    */
   cancelledAt?: Maybe<Scalars['DateTime']['output']>;
-  /** Whether payment for the order can be captured. */
+  /**
+   * Whether an authorized payment for an order can be captured.
+   * Returns `true` if an authorized payment exists that hasn't been fully captured yet. Learn more about [capturing payments](https://help.shopify.com/en/manual/fulfillment/managing-orders/payments/capturing-payments).
+   */
   capturable: Scalars['Boolean']['output'];
   /**
-   * The total order-level discount amount, before returns, in shop currency.
+   * The total discount amount that applies to the entire order in shop currency, before returns, refunds, order edits, and cancellations.
    * @deprecated Use `cartDiscountAmountSet` instead.
    */
   cartDiscountAmount?: Maybe<Scalars['Money']['output']>;
-  /** The total order-level discount amount, before returns, in shop and presentment currencies. */
+  /** The total discount amount applied at the time the order was created, displayed in both shop and presentment currencies, before returns, refunds, order edits, and cancellations. This field only includes discounts applied to the entire order. */
   cartDiscountAmountSet?: Maybe<MoneyBag>;
   /**
-   * The channel that created the order.
+   * The sales channel from which an order originated, such as the [Online Store](https://shopify.dev/docs/apps/build/app-surfaces#online-store) or [Shopify POS](https://shopify.dev/docs/apps/build/app-surfaces#point-of-sale).
    * @deprecated Use `publication` instead.
    */
   channel?: Maybe<Channel>;
-  /** Details about the channel that created the order. */
-  channelInformation?: Maybe<ChannelInformation>;
-  /** The IP address of the API client that created the order. */
-  clientIp?: Maybe<Scalars['String']['output']>;
-  /** Whether the order is closed. */
-  closed: Scalars['Boolean']['output'];
   /**
-   * The date and time when the order was closed.
-   * Returns `null` if the order isn't closed.
+   * Details about the sales channel that created the order, such as the [channel app type](https://shopify.dev/docs/api/admin-graphql/latest/objects/channel#field-Channel.fields.channelType)
+   * and [channel name](https://shopify.dev/docs/api/admin-graphql/latest/objects/ChannelDefinition#field-ChannelDefinition.fields.channelName), which helps to track order sources.
    */
+  channelInformation?: Maybe<ChannelInformation>;
+  /** The IP address of the customer who placed the order. Useful for fraud detection and geographic analysis. */
+  clientIp?: Maybe<Scalars['String']['output']>;
+  /** Whether an order is closed. An order is considered closed if all its line items have been fulfilled or canceled, and all financial transactions are complete. */
+  closed: Scalars['Boolean']['output'];
+  /** The date and time [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was closed. Shopify automatically records this timestamp when all items have been fulfilled or canceled, and all financial transactions are complete. Returns `null` if the order isn't closed. */
   closedAt?: Maybe<Scalars['DateTime']['output']>;
   /**
-   * A randomly generated alpha-numeric identifier for the order that may be shown to the customer
-   * instead of the sequential order name. For example, "XPAV284CT", "R50KELTJP" or "35PKUN0UJ".
-   * This value isn't guaranteed to be unique.
+   * A customer-facing order identifier, often shown instead of the sequential order name.
+   * It uses a random alphanumeric format (for example, `XPAV284CT`) and isn't guaranteed to be unique across orders.
    */
   confirmationNumber?: Maybe<Scalars['String']['output']>;
-  /** Whether inventory has been reserved for the order. */
+  /**
+   * Whether inventory has been reserved for an order. Returns `true` if inventory quantities for an order's [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/LineItem) have been reserved.
+   * Learn more about [managing inventory quantities and states](https://shopify.dev/docs/apps/build/orders-fulfillment/inventory-management-apps/manage-quantities-states).
+   */
   confirmed: Scalars['Boolean']['output'];
-  /** Date and time when the order was created in Shopify. */
+  /** The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when an order was created. This timestamp is set when the customer completes checkout and remains unchanged throughout an order's lifecycle. */
   createdAt: Scalars['DateTime']['output'];
-  /** The shop currency when the order was placed. */
+  /** The shop currency when the order was placed. For example, "USD" or "CAD". */
   currencyCode: CurrencyCode;
-  /** The current order-level discount amount after all order updates, in shop and presentment currencies. */
+  /** The current total of all discounts applied to the entire order, after returns, refunds, order edits, and cancellations. This includes discount codes, automatic discounts, and other promotions that affect the whole order rather than individual line items. To get the original discount amount at the time of order creation, use the [`cartDiscountAmountSet`](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.cartDiscountAmountSet) field. */
   currentCartDiscountAmountSet: MoneyBag;
-  /** The current shipping price after applying refunds and discounts. If the parent `order.taxesIncluded` field is true, then this price includes taxes. Otherwise, this field is the pre-tax price. */
+  /**
+   * The current shipping price after applying refunds and discounts.
+   * If the parent `order.taxesIncluded` field is true, then this price includes taxes. Otherwise, this field is the pre-tax price.
+   */
   currentShippingPriceSet: MoneyBag;
-  /** The sum of the quantities for all line items that contribute to the order's current subtotal price. */
+  /** The current sum of the quantities for all line items that contribute to the order's subtotal price, after returns, refunds, order edits, and cancellations. */
   currentSubtotalLineItemsQuantity: Scalars['Int']['output'];
   /**
-   * The sum of the prices for all line items after discounts and returns, in shop and presentment currencies.
-   * If `taxesIncluded` is `true`, then the subtotal also includes tax.
+   * The total price of the order, after returns and refunds, in shop and presentment currencies.
+   * This includes taxes and discounts.
    */
   currentSubtotalPriceSet: MoneyBag;
   /**
@@ -34769,81 +35944,97 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * Tax line prices represent the total price for all tax lines with the same `rate` and `title`.
    */
   currentTaxLines: Array<TaxLine>;
-  /**
-   * The total amount of additional fees after returns, in shop and presentment currencies.
-   * Returns `null` if there are no additional fees for the order.
-   */
+  /** The current total of all additional fees for an order, after any returns or modifications. Modifications include returns, refunds, order edits, and cancellations. Additional fees can include charges such as duties, import fees, and special handling. */
   currentTotalAdditionalFeesSet?: Maybe<MoneyBag>;
   /**
-   * The total amount discounted on the order after returns, in shop and presentment currencies.
+   * The total amount discounted on the order after returns and refunds, in shop and presentment currencies.
    * This includes both order and line level discounts.
    */
   currentTotalDiscountsSet: MoneyBag;
-  /**
-   * The total amount of duties after returns, in shop and presentment currencies.
-   * Returns `null` if duties aren't applicable.
-   */
+  /** The current total duties amount for an order, after any returns or modifications. Modifications include returns, refunds, order edits, and cancellations. */
   currentTotalDutiesSet?: Maybe<MoneyBag>;
   /**
    * The total price of the order, after returns, in shop and presentment currencies.
    * This includes taxes and discounts.
    */
   currentTotalPriceSet: MoneyBag;
-  /** The sum of the prices of all tax lines applied to line items on the order, after returns, in shop and presentment currencies. */
+  /** The sum of the prices of all tax lines applied to line items on the order, after returns and refunds, in shop and presentment currencies. */
   currentTotalTaxSet: MoneyBag;
-  /** The total weight of the order after returns, in grams. */
+  /** The total weight of the order after returns and refunds, in grams. */
   currentTotalWeight: Scalars['UnsignedInt64']['output'];
-  /** A list of additional merchant-facing details that have been added to the order. For example, whether an order is a customer's first. */
+  /** A list of additional information that has been attached to the order. For example, gift message, delivery instructions, or internal notes. */
   customAttributes: Array<Attribute>;
-  /** The customer that placed the order. */
+  /**
+   * The customer who placed an order. Returns `null` if an order was created through a checkout without customer authentication, such as a guest checkout.
+   * Learn more about [customer accounts](https://help.shopify.com/manual/customers/customer-accounts).
+   */
   customer?: Maybe<Customer>;
-  /** Whether the customer agreed to receive marketing materials. */
+  /**
+   * Whether the customer agreed to receive marketing emails at the time of purchase.
+   * Use this to ensure compliance with marketing consent laws and to segment customers for email campaigns.
+   * Learn more about [building customer segments](https://shopify.dev/docs/apps/build/marketing-analytics/customer-segments).
+   */
   customerAcceptsMarketing: Scalars['Boolean']['output'];
   /**
    * The customer's visits and interactions with the online store before placing the order.
    * @deprecated Use `customerJourneySummary` instead.
    */
   customerJourney?: Maybe<CustomerJourney>;
-  /** The customer's visits and interactions with the online store before placing the order. */
+  /**
+   * The customer's visits and interactions with the online store before placing the order.
+   * Use this to understand customer behavior, attribution sources, and marketing effectiveness to optimize your sales funnel.
+   */
   customerJourneySummary?: Maybe<CustomerJourneySummary>;
-  /** A two-letter or three-letter language code, optionally followed by a region modifier. */
+  /**
+   * The customer's language and region preference at the time of purchase. For example, "en" for English, "fr-CA" for French (Canada), or "es-MX" for Spanish (Mexico).
+   * Use this to provide localized customer service and targeted marketing in the customer's preferred language.
+   */
   customerLocale?: Maybe<Scalars['String']['output']>;
-  /** A list of discounts that are applied to the order, not including order edits and refunds. */
+  /**
+   * A list of discounts that are applied to the order, excluding order edits and refunds.
+   * Includes discount codes, automatic discounts, and other promotions that reduce the order total.
+   */
   discountApplications: DiscountApplicationConnection;
-  /** The discount code used for the order. */
+  /** The discount code used for an order. Returns `null` if no discount code was applied. */
   discountCode?: Maybe<Scalars['String']['output']>;
-  /** The discount codes used for the order. */
+  /** The discount codes used for the order. Multiple codes can be applied to a single order. */
   discountCodes: Array<Scalars['String']['output']>;
   /**
-   * The primary address of the customer.
-   * Returns `null` if neither the shipping address nor the billing address was provided.
+   * The primary address of the customer, prioritizing shipping address over billing address when both are available.
+   * Returns `null` if neither shipping address nor billing address was provided.
    */
   displayAddress?: Maybe<MailingAddress>;
-  /**
-   * The financial status of the order that can be shown to the merchant.
-   * This field doesn't capture all the details of an order's financial state. It should only be used for display summary purposes.
-   */
+  /** An order's financial status for display in the Shopify admin. */
   displayFinancialStatus?: Maybe<OrderDisplayFinancialStatus>;
   /**
-   * The fulfillment status for the order that can be shown to the merchant.
-   * This field does not capture all the details of an order's fulfillment state. It should only be used for display summary purposes.
-   * For a more granular view of the fulfillment status, refer to the [FulfillmentOrder](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder) object.
+   * The order's fulfillment status that displays in the Shopify admin to merchants. For example, an order might be unfulfilled or scheduled.
+   * For detailed processing, use the [`FulfillmentOrder`](https://shopify.dev/docs/api/admin-graphql/latest/objects/FulfillmentOrder) object.
    */
   displayFulfillmentStatus: OrderDisplayFulfillmentStatus;
-  /** A list of the disputes associated with the order. */
+  /**
+   * A list of payment disputes associated with the order, such as chargebacks or payment inquiries.
+   * Disputes occur when customers challenge transactions with their bank or payment provider.
+   */
   disputes: Array<OrderDisputeSummary>;
-  /** Whether duties are included in the subtotal price of the order. */
+  /**
+   * Whether duties are included in the subtotal price of the order.
+   * Duties are import taxes charged by customs authorities when goods cross international borders.
+   */
   dutiesIncluded: Scalars['Boolean']['output'];
-  /** Whether the order has had any edits applied. */
+  /** Whether the order has had any edits applied. For example, adding or removing line items, updating quantities, or changing prices. */
   edited: Scalars['Boolean']['output'];
-  /** The email address associated with the customer. */
+  /**
+   * The email address associated with the customer for this order.
+   * Used for sending order confirmations, shipping notifications, and other order-related communications.
+   * Returns `null` if no email address was provided during checkout.
+   */
   email?: Maybe<Scalars['String']['output']>;
   /**
    * Whether taxes on the order are estimated.
    * This field returns `false` when taxes on the order are finalized and aren't subject to any changes.
    */
   estimatedTaxes: Scalars['Boolean']['output'];
-  /** A list of events associated with the order. */
+  /** A list of events associated with the order. Events track significant changes and activities related to the order, such as creation, payment, fulfillment, and cancellation. */
   events: EventConnection;
   /**
    * A list of ExchangeV2s for the order.
@@ -34857,23 +36048,17 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    */
   fulfillable: Scalars['Boolean']['output'];
   /**
-   * A list of fulfillment orders for a specific order.
-   *
-   * [FulfillmentOrder API access scopes](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder#api-access-scopes)
-   * govern which fulfillments orders are returned.
-   * An API client will only receive a subset of the fulfillment orders which belong to an order
-   * if they don't have the necessary access scopes to view all of the fulfillment orders.
-   * In the case that an API client does not have the access scopes necessary to view
-   * any of the fulfillment orders that belong to an order, an empty array will be returned.
+   * A list of [fulfillment orders](https://shopify.dev/apps/fulfillment/fulfillment-service-apps/fulfillment-order) for an order. Each fulfillment order groups [line items](https://shopify.dev/api/admin-graphql/latest/objects/OrderLineItem) that are fulfilled together,
+   * allowing an order to be processed in parts if needed.
    */
   fulfillmentOrders: FulfillmentOrderConnection;
-  /** List of shipments for the order. */
+  /** A list of shipments for the order. Fulfillments represent the physical shipment of products to customers. */
   fulfillments: Array<Fulfillment>;
-  /** The count of fulfillments including the cancelled fulfillments. */
+  /** The total number of fulfillments for the order, including canceled ones. */
   fulfillmentsCount?: Maybe<Count>;
-  /** Whether the order has been paid in full. */
+  /** Whether the order has been paid in full. This field returns `true` when the total amount received equals or exceeds the order total. */
   fullyPaid: Scalars['Boolean']['output'];
-  /** Whether the merchant added a timeline comment to the order. */
+  /** Whether the merchant has added a timeline comment to the order. */
   hasTimelineComment: Scalars['Boolean']['output'];
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
@@ -34889,7 +36074,7 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
   landingPageUrl?: Maybe<Scalars['URL']['output']>;
   /** The ID of the corresponding resource in the REST Admin API. */
   legacyResourceId: Scalars['UnsignedInt64']['output'];
-  /** A list of the order's line items. */
+  /** A list of the order's line items. Line items represent the individual products and quantities that make up the order. */
   lineItems: LineItemConnection;
   /**
    * List of localization extensions for the resource.
@@ -34898,13 +36083,16 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
   localizationExtensions: LocalizationExtensionConnection;
   /** List of localized fields for the resource. */
   localizedFields: LocalizedFieldConnection;
-  /** The merchant's business entity associated with the order. */
+  /**
+   * The legal business structure that the merchant operates under for this order, such as an LLC, corporation, or partnership.
+   * Used for tax reporting, legal compliance, and determining which business entity is responsible for the order.
+   */
   merchantBusinessEntity: BusinessEntity;
-  /** Whether the order can be edited by the merchant. For example, canceled orders can’t be edited. */
+  /** Whether the order can be edited by the merchant. Returns `false` for orders that can't be modified, such as canceled orders or orders with specific payment statuses. */
   merchantEditable: Scalars['Boolean']['output'];
-  /** A list of reasons why the order can't be edited. For example, "Canceled orders can't be edited". */
+  /** A list of reasons why the order can't be edited. For example, canceled orders can't be edited. */
   merchantEditableErrors: Array<Scalars['String']['output']>;
-  /** The application acting as the Merchant of Record for the order. */
+  /** The application acting as the Merchant of Record for the order. The Merchant of Record is responsible for tax collection and remittance. */
   merchantOfRecordApp?: Maybe<OrderApp>;
   /**
    * A [custom field](https://shopify.dev/docs/apps/build/custom-data),
@@ -34914,7 +36102,7 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -34923,9 +36111,9 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    */
   metafields: MetafieldConnection;
   /**
-   * The unique identifier for the order that appears on the order page in the Shopify admin and the <b>Order status</b> page.
+   * The unique identifier for the order that appears on the order page in the Shopify admin and the **Order status** page.
    * For example, "#1001", "EN1001", or "1001-A".
-   * This value isn't unique across multiple stores.
+   * This value isn't unique across multiple stores. Use this field to identify orders in the Shopify admin and for order tracking.
    */
   name: Scalars['String']['output'];
   /**
@@ -34941,30 +36129,41 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * For a more granular view of the fulfillment status, refer to the [FulfillmentOrder](https://shopify.dev/api/admin-graphql/latest/objects/FulfillmentOrder) object.
    */
   nonFulfillableLineItems: LineItemConnection;
-  /** The contents of the note associated with the order. */
+  /**
+   * The note associated with the order.
+   * Contains additional information or instructions added by merchants or customers during the order process.
+   * Commonly used for special delivery instructions, gift messages, or internal processing notes.
+   */
   note?: Maybe<Scalars['String']['output']>;
   /**
-   * The total amount of additional fees at the time of order creation, in shop and presentment currencies.
+   * The total amount of all additional fees, such as import fees or taxes, that were applied when an order was created.
    * Returns `null` if additional fees aren't applicable.
    */
   originalTotalAdditionalFeesSet?: Maybe<MoneyBag>;
-  /**
-   * The total amount of duties at the time of order creation, in shop and presentment currencies.
-   * Returns `null` if duties aren't applicable.
-   */
+  /** The total amount of duties calculated when an order was created, before any modifications. Modifications include returns, refunds, order edits, and cancellations. Use [`currentTotalDutiesSet`](https://shopify.dev/docs/api/admin-graphql/latest/objects/order#field-Order.fields.currentTotalDutiesSet) to retrieve the current duties amount after adjustments. */
   originalTotalDutiesSet?: Maybe<MoneyBag>;
-  /** The total price of the order at the time of order creation, in shop and presentment currencies. */
+  /**
+   * The total price of the order at the time of order creation, in shop and presentment currencies.
+   * Use this to compare the original order value against the current total after edits, returns, or refunds.
+   */
   originalTotalPriceSet: MoneyBag;
-  /** The payment collection details for the order. */
+  /**
+   * The payment collection details for the order, including payment status, outstanding amounts, and collection information.
+   * Use this to understand when and how payments should be collected, especially for orders with deferred or installment payment terms.
+   */
   paymentCollectionDetails: OrderPaymentCollectionDetails;
   /**
    * A list of the names of all payment gateways used for the order.
    * For example, "Shopify Payments" and "Cash on Delivery (COD)".
    */
   paymentGatewayNames: Array<Scalars['String']['output']>;
-  /** The payment terms associated with the order. */
+  /** The payment terms associated with the order, such as net payment due dates or early payment discounts. Payment terms define when and how an order should be paid. Returns `null` if no specific payment terms were set for the order. */
   paymentTerms?: Maybe<PaymentTerms>;
-  /** The phone number associated with the customer. */
+  /**
+   * The phone number associated with the customer for this order.
+   * Useful for contacting customers about shipping updates, delivery notifications, or order issues.
+   * Returns `null` if no phone number was provided during checkout.
+   */
   phone?: Maybe<Scalars['String']['output']>;
   /**
    * The fulfillment location that was assigned when the order was created.
@@ -34974,18 +36173,27 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * @deprecated Use `fulfillmentOrders` to get the fulfillment location for the order
    */
   physicalLocation?: Maybe<Location>;
-  /** The PO number associated with the order. */
+  /**
+   * The purchase order (PO) number that's associated with an order.
+   * This is typically provided by business customers who require a PO number for their procurement.
+   */
   poNumber?: Maybe<Scalars['String']['output']>;
-  /** The payment `CurrencyCode` of the customer for the order. */
+  /**
+   * The currency used by the customer when placing the order. For example, "USD", "EUR", or "CAD".
+   * This may differ from the shop's base currency when serving international customers or using multi-currency pricing.
+   */
   presentmentCurrencyCode: CurrencyCode;
   /**
-   * The date and time when the order was processed.
+   * The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when the order was processed.
    * This date and time might not match the date and time when the order was created.
    */
   processedAt: Scalars['DateTime']['output'];
-  /** The publication that the order was created from. */
+  /** The sales channel that the order was created from, such as the [Online Store](https://shopify.dev/docs/apps/build/app-surfaces#online-store) or [Shopify POS](https://shopify.dev/docs/apps/build/app-surfaces#point-of-sale). */
   publication?: Maybe<Publication>;
-  /** The purchasing entity for the order. */
+  /**
+   * The business entity that placed the order, including company details and purchasing relationships.
+   * Used for B2B transactions to track which company or organization is responsible for the purchase and payment terms.
+   */
   purchasingEntity?: Maybe<PurchasingEntity>;
   /**
    * The marketing referral code from the link that the customer clicked to visit the store.
@@ -35004,25 +36212,52 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * @deprecated Use `customerJourneySummary.lastVisit.referrerUrl` instead
    */
   referrerUrl?: Maybe<Scalars['URL']['output']>;
-  /** The difference between the suggested and actual refund amount of all refunds that have been applied to the order. A positive value indicates a difference in the merchant's favor, and a negative value indicates a difference in the customer's favor. */
+  /**
+   * The difference between the suggested and actual refund amount of all refunds that have been applied to the order.
+   * A positive value indicates a difference in the merchant's favor, and a negative value indicates a difference in the customer's favor.
+   */
   refundDiscrepancySet: MoneyBag;
-  /** Whether the order can be refunded. */
+  /**
+   * Whether the order can be refunded based on its payment transactions.
+   * Returns `false` for orders with no eligible payment transactions, such as fully refunded orders or orders with non-refundable payment methods.
+   */
   refundable: Scalars['Boolean']['output'];
-  /** A list of refunds that have been applied to the order. */
+  /**
+   * A list of refunds that have been applied to the order.
+   * Refunds represent money returned to customers for returned items, cancellations, or adjustments.
+   */
   refunds: Array<Refund>;
-  /** The URL of the source that the order originated from, if found in the domain registry. */
+  /** The URL of the source that the order originated from, if found in the domain registry. Returns `null` if the source URL isn't in the domain registry. */
   registeredSourceUrl?: Maybe<Scalars['URL']['output']>;
-  /** Whether the order has shipping lines or at least one line item on the order that requires shipping. */
+  /**
+   * Whether the order requires physical shipping to the customer.
+   * Returns `false` for digital-only orders (such as gift cards or downloadable products) and `true` for orders with physical products that need delivery.
+   * Use this to determine shipping workflows and logistics requirements.
+   */
   requiresShipping: Scalars['Boolean']['output'];
-  /** Whether any line item on the order can be restocked. */
+  /**
+   * Whether any line items on the order can be restocked into inventory.
+   * Returns `false` for digital products, custom items, or items that can't be resold.
+   */
   restockable: Scalars['Boolean']['output'];
-  /** The physical location where a retail order is created or completed, except for draft POS orders completed via the “mark as paid” flow in Admin, which return null. Transactions associated with the order might have been processed at a different location. */
+  /** The physical location where a retail order is created or completed, except for draft POS orders completed using the "mark as paid" flow in the Shopify admin, which return `null`. Transactions associated with the order might have been processed at a different location. */
   retailLocation?: Maybe<Location>;
-  /** The order's aggregated return status for display purposes. */
+  /**
+   * The order's aggregated return status for display purposes.
+   * Indicates the overall state of returns for the order, helping merchants track and manage the return process.
+   */
   returnStatus: OrderReturnStatus;
-  /** A list of returns for the order. */
+  /**
+   * The returns associated with the order.
+   * Contains information about items that customers have requested to return, including return reasons, status, and refund details.
+   * Use this to track and manage the return process for order items.
+   */
   returns: ReturnConnection;
-  /** The risk characteristics for the order. */
+  /**
+   * The risk assessment summary for the order.
+   * Provides fraud analysis and risk scoring to help you identify potentially fraudulent orders.
+   * Use this to make informed decisions about order fulfillment and payment processing.
+   */
   risk: OrderRiskSummary;
   /**
    * The fraud risk level of the order.
@@ -35034,26 +36269,53 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * @deprecated This field is deprecated in favor of OrderRiskAssessment, which provides enhanced capabilities such as distinguishing risks from their provider.
    */
   risks: Array<OrderRisk>;
-  /** The mailing address of the customer. */
+  /**
+   * The shipping address where the order will be delivered.
+   * Contains the customer's delivery location for fulfillment and shipping label generation.
+   * Returns `null` for digital orders or orders that don't require shipping.
+   */
   shippingAddress?: Maybe<MailingAddress>;
-  /** A summary of all shipping costs on the order. */
+  /**
+   * A summary of all shipping costs on the order.
+   * Aggregates shipping charges, discounts, and taxes to provide a single view of delivery costs.
+   */
   shippingLine?: Maybe<ShippingLine>;
-  /** A list of the order's shipping lines. */
+  /**
+   * The shipping methods applied to the order.
+   * Each shipping line represents a shipping option chosen during checkout, including the carrier, service level, and cost.
+   * Use this to understand shipping charges and delivery options for the order.
+   */
   shippingLines: ShippingLineConnection;
-  /** The Shopify Protect details for the order. If Shopify Protect is disabled for the shop, then this will be null. */
+  /**
+   * The Shopify Protect details for the order, including fraud protection status and coverage information.
+   * Shopify Protect helps protect eligible orders against fraudulent chargebacks.
+   * Returns `null` if Shopify Protect is disabled for the shop or the order isn't eligible for protection.
+   * Learn more about [Shopify Protect](https://www.shopify.com/protect).
+   */
   shopifyProtect?: Maybe<ShopifyProtectOrderSummary>;
   /**
    * A unique POS or third party order identifier.
-   * For example, "1234-12-1000" or "111-98567-54". The `receipt_number` field is derived from this value for POS orders.
+   * For example, "1234-12-1000" or "111-98567-54". The [`receiptNumber`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order#field-receiptNumber) field is derived from this value for POS orders.
    */
   sourceIdentifier?: Maybe<Scalars['String']['output']>;
-  /** The name of the source associated with the order. */
+  /** The name of the source associated with the order, such as "web", "mobile_app", or "pos". Use this field to identify the platform where the order was placed. */
   sourceName?: Maybe<Scalars['String']['output']>;
-  /** The staff member associated with the order. */
+  /**
+   * The staff member who created or is responsible for the order.
+   * Useful for tracking which team member handled phone orders, manual orders, or order modifications.
+   * Returns `null` for orders created directly by customers through the online store.
+   */
   staffMember?: Maybe<StaffMember>;
-  /** The URL where the customer can check the order's current status. */
+  /**
+   * The URL where customers can check their order's current status, including tracking information and delivery updates.
+   * Provides order tracking links in emails, apps, or customer communications.
+   */
   statusPageUrl: Scalars['URL']['output'];
-  /** The sum of the quantities for all line items that contribute to the order's subtotal price. */
+  /**
+   * The sum of quantities for all line items that contribute to the order's subtotal price.
+   * This excludes quantities for items like tips, shipping costs, or gift cards that don't affect the subtotal.
+   * Use this to quickly understand the total item count for pricing calculations.
+   */
   subtotalLineItemsQuantity: Scalars['Int']['output'];
   /**
    * The sum of the prices for all line items after discounts and before returns, in shop currency.
@@ -35066,7 +36328,10 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * If `taxesIncluded` is `true`, then the subtotal also includes tax.
    */
   subtotalPriceSet?: Maybe<MoneyBag>;
-  /** A suggested refund for the order. */
+  /**
+   * A calculated refund suggestion for the order based on specified line items, shipping, and duties.
+   * Use this to preview refund amounts, taxes, and processing fees before creating an actual refund.
+   */
   suggestedRefund?: Maybe<SuggestedRefund>;
   /**
    * A comma separated list of tags associated with the order. Updating `tags` overwrites
@@ -35075,14 +36340,21 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * mutation.
    */
   tags: Array<Scalars['String']['output']>;
-  /** Whether taxes are exempt on the order. */
+  /**
+   * Whether taxes are exempt on the order.
+   * Returns `true` for orders where the customer or business has a valid tax exemption, such as non-profit organizations or tax-free purchases.
+   * Use this to understand if tax calculations were skipped during checkout.
+   */
   taxExempt: Scalars['Boolean']['output'];
   /**
    * A list of all tax lines applied to line items on the order, before returns.
    * Tax line prices represent the total price for all tax lines with the same `rate` and `title`.
    */
   taxLines: Array<TaxLine>;
-  /** Whether taxes are included in the subtotal price of the order. */
+  /**
+   * Whether taxes are included in the subtotal price of the order.
+   * When `true`, the subtotal and line item prices include tax amounts. When `false`, taxes are calculated and displayed separately.
+   */
   taxesIncluded: Scalars['Boolean']['output'];
   /**
    * Whether the order is a test.
@@ -35101,7 +36373,7 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * This amount isn't adjusted for returns.
    */
   totalCapturableSet: MoneyBag;
-  /** The total rounding adjustment applied to payments or refunds for an Order involving cash payments. Applies to some countries where cash transactions are rounded to the nearest currency denomination. */
+  /** The total rounding adjustment applied to payments or refunds for an order involving cash payments. Applies to some countries where cash transactions are rounded to the nearest currency denomination. */
   totalCashRoundingAdjustment: CashRoundingAdjustment;
   /**
    * The total amount discounted on the order before returns, in shop currency.
@@ -35151,7 +36423,7 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
    * @deprecated Use `totalShippingPriceSet` instead.
    */
   totalShippingPrice: Scalars['Money']['output'];
-  /** The total shipping amount before discounts and returns, in shop and presentment currencies. */
+  /** The total shipping costs returned to the customer, in shop and presentment currencies. This includes fees and any related discounts that were refunded. */
   totalShippingPriceSet: MoneyBag;
   /**
    * The total tax amount before returns, in shop currency.
@@ -35175,22 +36447,33 @@ export type Order = CommentEventSubject & HasEvents & HasLocalizationExtensions 
   transactionsCount?: Maybe<Count>;
   /** Whether no payments have been made for the order. */
   unpaid: Scalars['Boolean']['output'];
-  /** The date and time when the order was modified last. */
+  /** The date and time in [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) when the order was last modified. */
   updatedAt: Scalars['DateTime']['output'];
 };
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderAgreementsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35203,16 +36486,27 @@ export type OrderAgreementsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderDiscountApplicationsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35224,16 +36518,27 @@ export type OrderDiscountApplicationsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderEventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35247,16 +36552,27 @@ export type OrderEventsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderExchangeV2sArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35269,16 +36585,27 @@ export type OrderExchangeV2sArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderFulfillmentOrdersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35292,16 +36619,27 @@ export type OrderFulfillmentOrdersArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderFulfillmentsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -35309,16 +36647,27 @@ export type OrderFulfillmentsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderLineItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35330,16 +36679,27 @@ export type OrderLineItemsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderLocalizationExtensionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35353,16 +36713,27 @@ export type OrderLocalizationExtensionsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderLocalizedFieldsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35376,16 +36747,27 @@ export type OrderLocalizedFieldsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderMetafieldArgs = {
   key: Scalars['String']['input'];
@@ -35394,16 +36776,27 @@ export type OrderMetafieldArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderMetafieldDefinitionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35419,16 +36812,27 @@ export type OrderMetafieldDefinitionsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderMetafieldsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35442,16 +36846,27 @@ export type OrderMetafieldsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderNonFulfillableLineItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35463,16 +36878,27 @@ export type OrderNonFulfillableLineItemsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderRefundsArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -35480,16 +36906,27 @@ export type OrderRefundsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderReturnsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35502,16 +36939,27 @@ export type OrderReturnsArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderRisksArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
@@ -35519,16 +36967,27 @@ export type OrderRisksArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderShippingLinesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
@@ -35541,16 +37000,27 @@ export type OrderShippingLinesArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderSuggestedRefundArgs = {
   refundDuties?: InputMaybe<Array<RefundDutyInput>>;
@@ -35562,16 +37032,27 @@ export type OrderSuggestedRefundArgs = {
 
 
 /**
- * An order is a customer's request to purchase one or more products from a shop. You can retrieve and update orders using the `Order` object.
- * Learn more about
- * [editing an existing order with the GraphQL Admin API](https://shopify.dev/apps/fulfillment/order-management-apps/order-editing).
+ * The `Order` object represents a customer's request to purchase one or more products from a store. Use the `Order` object to handle the complete purchase lifecycle from checkout to fulfillment.
  *
- * Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older orders,
- * then you need to [request access to all orders](https://shopify.dev/api/usage/access-scopes#orders-permissions). If your app is granted
- * access, then you can add the `read_all_orders` scope to your app along with `read_orders` or `write_orders`.
- * [Private apps](https://shopify.dev/apps/auth/basic-http) are not affected by this change and are automatically granted the scope.
+ * Use the `Order` object when you need to:
  *
- * **Caution:** Only use this data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/api/usage/access-scopes) for apps that don't have a legitimate use for the associated data.
+ * - Display order details on customer account pages or admin dashboards.
+ * - Create orders for phone sales, wholesale customers, or subscription services.
+ * - Update order information like shipping addresses, notes, or fulfillment status.
+ * - Process returns, exchanges, and partial refunds.
+ * - Generate invoices, receipts, and shipping labels.
+ *
+ * The `Order` object serves as the central hub connecting customer information, product details, payment processing, and fulfillment data within the GraphQL Admin API schema.
+ *
+ * > Note:
+ * > Only the last 60 days' worth of orders from a store are accessible from the `Order` object by default. If you want to access older records,
+ * > then you need to [request access to all orders](https://shopify.dev/docs/api/usage/access-scopes#orders-permissions). If your app is granted
+ * > access, then you can add the `read_all_orders`, `read_orders`, and `write_orders` scopes.
+ *
+ * > Caution:
+ * > Only use orders data if it's required for your app's functionality. Shopify will restrict [access to scopes](https://shopify.dev/docs/api/usage/access-scopes#requesting-specific-permissions) for apps that don't have a legitimate use for the associated data.
+ *
+ * Learn more about [building apps for orders and fulfillment](https://shopify.dev/docs/apps/build/orders-fulfillment).
  */
 export type OrderTransactionsArgs = {
   capturable?: InputMaybe<Scalars['Boolean']['input']>;
@@ -36983,7 +38464,7 @@ export enum OrderSortKeys {
   Relevance = 'RELEVANCE',
   /** Sort by the total quantity of all line items to identify large purchases or analyze inventory demand patterns. */
   TotalItemsQuantity = 'TOTAL_ITEMS_QUANTITY',
-  /** Sort by the `total_price` value. */
+  /** Sorts by the total sold price of an order in the shop currency, excluding any returns/refunds/removals. */
   TotalPrice = 'TOTAL_PRICE',
   /** Sort by the `updated_at` value. */
   UpdatedAt = 'UPDATED_AT'
@@ -37090,7 +38571,30 @@ export type OrderStagedChangeRemoveShippingLine = {
   shippingLine: ShippingLine;
 };
 
-/** A payment transaction in the context of an order. */
+/**
+ * The `OrderTransaction` object represents a payment transaction that's associated with an order. An order
+ * transaction is a specific action or event that happens within the context of an order, such as a customer paying
+ * for a purchase or receiving a refund, or other payment-related activity.
+ *
+ * Use the `OrderTransaction` object to capture the complete lifecycle of a payment, from initial
+ * authorization to final settlement, including refunds and currency exchanges. Common use cases for using the
+ * `OrderTransaction` object include:
+ *
+ * - Processing new payments for orders
+ * - Managing payment authorizations and captures
+ * - Processing refunds for returned items
+ * - Tracking payment status and errors
+ * - Managing multi-currency transactions
+ * - Handling payment gateway integrations
+ *
+ * Each `OrderTransaction` object has a [`kind`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionKind)
+ * that defines the type of transaction and a [`status`](https://shopify.dev/docs/api/admin-graphql/latest/enums/OrderTransactionStatus)
+ * that indicates the current state of the transaction. The object stores detailed information about payment
+ * methods, gateway processing, and settlement details.
+ *
+ * Learn more about [payment processing](https://help.shopify.com/manual/payments)
+ * and [payment gateway integrations](https://www.shopify.com/ca/payment-gateways).
+ */
 export type OrderTransaction = Node & {
   __typename?: 'OrderTransaction';
   /** The masked account number associated with the payment method. */
@@ -37370,7 +38874,7 @@ export type Page = HasEvents & HasMetafieldDefinitions & HasMetafields & HasPubl
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -37623,10 +39127,16 @@ export enum PageUpdateUserErrorCode {
   Blank = 'BLANK',
   /** Can’t set isPublished to true and also set a future publish date. */
   InvalidPublishDate = 'INVALID_PUBLISH_DATE',
+  /** The metafield type is invalid. */
+  InvalidType = 'INVALID_TYPE',
+  /** The value is invalid for the metafield type or for the definition options. */
+  InvalidValue = 'INVALID_VALUE',
   /** The record with the ID used as the input value couldn't be found. */
   NotFound = 'NOT_FOUND',
   /** The input value is already taken. */
   Taken = 'TAKEN',
+  /** The input value is too big. */
+  TooBig = 'TOO_BIG',
   /** The input value is too long. */
   TooLong = 'TOO_LONG'
 }
@@ -37650,7 +39160,7 @@ export type PaymentCustomization = HasMetafieldDefinitions & HasMetafields & Nod
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -39154,13 +40664,13 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
    * of the product in the shop's default currency.
    */
   compareAtPriceRange?: Maybe<ProductCompareAtPriceRange>;
-  /** The pricing that applies to a customer in a specific context. For example, a price might vary depending on the customer's location. As of API version 2025-04, only active markets are considered in the price resolution. */
+  /** The pricing that applies to a customer in a specific context. For example, a price might vary depending on the customer's location. Only active markets are considered in the price resolution. */
   contextualPricing: ProductContextualPricing;
   /** The date and time when the product was created. */
   createdAt: Scalars['DateTime']['output'];
   /**
    * The custom product type specified by the merchant.
-   * @deprecated Deprecated in API version 2022-10. Use `productType` instead.
+   * @deprecated Use `productType` instead.
    */
   customProductType?: Maybe<Scalars['String']['output']>;
   /** A default [cursor](https://shopify.dev/api/usage/pagination-graphql) that returns the single next record, sorted ascending by ID. */
@@ -39254,7 +40764,7 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -39276,7 +40786,7 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   options: Array<ProductOption>;
   /**
    * The price range of the product.
-   * @deprecated Deprecated in API version 2020-10. Use `priceRangeV2` instead.
+   * @deprecated Use `priceRangeV2` instead.
    */
   priceRange: ProductPriceRange;
   /**
@@ -39287,7 +40797,7 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   priceRangeV2: ProductPriceRangeV2;
   /**
    * The product category specified by the merchant.
-   * @deprecated Deprecated in API version 2024-04. Use `category` instead.
+   * @deprecated Use `category` instead.
    */
   productCategory?: Maybe<ProductCategory>;
   /**
@@ -39399,7 +40909,7 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   seo: Seo;
   /**
    * The standardized product type in the Shopify product taxonomy.
-   * @deprecated Deprecated in API version 2022-10. Use `productCategory` instead.
+   * @deprecated Use `productCategory` instead.
    */
   standardizedProductType?: Maybe<StandardizedProductType>;
   /**
@@ -39410,7 +40920,7 @@ export type Product = HasEvents & HasMetafieldDefinitions & HasMetafields & HasP
   /**
    * The Storefront GraphQL API ID of the `Product`.
    *
-   * As of the `2022-04` version release, the Storefront GraphQL API will no longer return Base64 encoded IDs to match the behavior of the Admin GraphQL API. Therefore, you can safely use the `id` field's value instead.
+   * The Storefront GraphQL API will no longer return Base64 encoded IDs to match the behavior of the Admin GraphQL API. Therefore, you can safely use the `id` field's value instead.
    * @deprecated Use `id` instead.
    */
   storefrontId: Scalars['StorefrontID']['output'];
@@ -41818,7 +43328,35 @@ export type ProductUpdatePayload = {
   userErrors: Array<UserError>;
 };
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariant = HasEvents & HasMetafieldDefinitions & HasMetafields & HasPublishedTranslations & LegacyInteroperability & Navigable & Node & {
   __typename?: 'ProductVariant';
   /** Whether the product variant is available for sale. */
@@ -41861,7 +43399,7 @@ export type ProductVariant = HasEvents & HasMetafieldDefinitions & HasMetafields
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -41913,7 +43451,7 @@ export type ProductVariant = HasEvents & HasMetafieldDefinitions & HasMetafields
   /**
    * The Storefront GraphQL API ID of the `ProductVariant`.
    *
-   * As of the `2022-04` version release, the Storefront GraphQL API will no longer return Base64 encoded IDs to match the behavior of the Admin GraphQL API. Therefore, you can safely use the `id` field's value instead.
+   * The Storefront GraphQL API will no longer return Base64 encoded IDs to match the behavior of the Admin GraphQL API. Therefore, you can safely use the `id` field's value instead.
    * @deprecated Use `id` instead.
    */
   storefrontId: Scalars['StorefrontID']['output'];
@@ -41932,13 +43470,69 @@ export type ProductVariant = HasEvents & HasMetafieldDefinitions & HasMetafields
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantContextualPricingArgs = {
   context: ContextualPricingContext;
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantEventsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -41950,7 +43544,35 @@ export type ProductVariantEventsArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantMediaArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -41960,14 +43582,70 @@ export type ProductVariantMediaArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantMetafieldArgs = {
   key: Scalars['String']['input'];
   namespace?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantMetafieldDefinitionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -41981,7 +43659,35 @@ export type ProductVariantMetafieldDefinitionsArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantMetafieldsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -41993,7 +43699,35 @@ export type ProductVariantMetafieldsArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantPresentmentPricesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -42004,7 +43738,35 @@ export type ProductVariantPresentmentPricesArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantProductVariantComponentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -42014,7 +43776,35 @@ export type ProductVariantProductVariantComponentsArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantSellingPlanGroupsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -42024,7 +43814,35 @@ export type ProductVariantSellingPlanGroupsArgs = {
 };
 
 
-/** Represents a product variant. */
+/**
+ * The `ProductVariant` object represents a version of a
+ * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+ * that comes in more than one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+ * such as size or color. For example, if a merchant sells t-shirts with options for size and color, then a small,
+ * blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+ *
+ * Use the `ProductVariant` object to manage the full lifecycle and configuration of a product's variants. Common
+ * use cases for using the `ProductVariant` object include:
+ *
+ * - Tracking inventory for each variant
+ * - Setting unique prices for each variant
+ * - Assigning barcodes and SKUs to connect variants to fulfillment services
+ * - Attaching variant-specific images and media
+ * - Setting delivery and tax requirements
+ * - Supporting product bundles, subscriptions, and selling plans
+ *
+ * A `ProductVariant` is associated with a parent
+ * [`Product`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) object.
+ * `ProductVariant` serves as the central link between a product's merchandising configuration, inventory,
+ * pricing, fulfillment, and sales channels within the GraphQL Admin API schema. Each variant
+ * can reference other GraphQL types such as:
+ *
+ * - [`InventoryItem`](https://shopify.dev/docs/api/admin-graphql/latest/objects/InventoryItem): Used for inventory tracking
+ * - [`Image`](https://shopify.dev/docs/api/admin-graphql/latest/objects/Image): Used for variant-specific images
+ * - [`SellingPlanGroup`](https://shopify.dev/docs/api/admin-graphql/latest/objects/SellingPlanGroup): Used for subscriptions and selling plans
+ *
+ * Learn more about [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+ */
 export type ProductVariantTranslationsArgs = {
   locale: Scalars['String']['input'];
   marketId?: InputMaybe<Scalars['ID']['input']>;
@@ -42714,7 +44532,7 @@ export type PubSubWebhookSubscriptionInput = {
   filter?: InputMaybe<Scalars['String']['input']>;
   /** The format in which the webhook subscription should send the data. */
   format?: InputMaybe<WebhookSubscriptionFormat>;
-  /** The list of fields to be included in the webhook subscription. */
+  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads). */
   includeFields?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The list of namespaces for any metafields that should be included in the webhook subscription. */
   metafieldNamespaces?: InputMaybe<Array<Scalars['String']['input']>>;
@@ -42747,7 +44565,9 @@ export type PubSubWebhookSubscriptionUpdateUserError = DisplayableError & {
 /** Possible error codes that can be returned by `PubSubWebhookSubscriptionUpdateUserError`. */
 export enum PubSubWebhookSubscriptionUpdateUserErrorCode {
   /** Invalid parameters provided. */
-  InvalidParameters = 'INVALID_PARAMETERS'
+  InvalidParameters = 'INVALID_PARAMETERS',
+  /** Address for this topic has already been taken. */
+  Taken = 'TAKEN'
 }
 
 /** A publication is a group of products and collections that is published to an app. */
@@ -43530,7 +45350,7 @@ export type QueryRoot = {
   __typename?: 'QueryRoot';
   /** List of abandoned checkouts. Includes checkouts that were recovered after being abandoned. */
   abandonedCheckouts: AbandonedCheckoutConnection;
-  /** Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000. */
+  /** Returns the count of abandoned checkouts for the given shop. Limited to a maximum of 10000 by default. */
   abandonedCheckoutsCount?: Maybe<Count>;
   /** Returns an abandonment by ID. */
   abandonment?: Maybe<Abandonment>;
@@ -43629,13 +45449,32 @@ export type QueryRoot = {
    * [perform a bulk operation](https://shopify.dev/docs/api/usage/bulk-operations/queries).
    */
   cashTrackingSessions: CashTrackingSessionConnection;
-  /** Returns a Catalog resource by ID. */
+  /**
+   * Retrieves a [catalog](https://shopify.dev/docs/api/admin-graphql/latest/interfaces/Catalog) by its ID.
+   * A catalog represents a list of products with publishing and pricing information,
+   * and can be associated with a context, such as a market, company location, or app.
+   *
+   * Use the `catalog` query to retrieve information associated with the following workflows:
+   *
+   * - Managing product publications across different contexts
+   * - Setting up contextual pricing with price lists
+   * - Managing market-specific product availability
+   * - Configuring B2B customer catalogs
+   *
+   * There are several types of catalogs:
+   *
+   * - [`MarketCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/MarketCatalog)
+   * - [`AppCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/AppCatalog)
+   * - [`CompanyLocationCatalog`](https://shopify.dev/docs/api/admin-graphql/latest/objects/CompanyLocationCatalog)
+   *
+   * Learn more about [catalogs for different markets](https://shopify.dev/docs/apps/build/markets/catalogs-different-markets).
+   */
   catalog?: Maybe<Catalog>;
   /** Returns the most recent catalog operations for the shop. */
   catalogOperations: Array<ResourceOperation>;
   /** The catalogs belonging to the shop. */
   catalogs: CatalogConnection;
-  /** The count of catalogs belonging to the shop. Limited to a maximum of 10000. */
+  /** The count of catalogs belonging to the shop. Limited to a maximum of 10000 by default. */
   catalogsCount?: Maybe<Count>;
   /**
    * Lookup a channel by ID.
@@ -43667,7 +45506,23 @@ export type QueryRoot = {
   codeDiscountNodes: DiscountCodeNodeConnection;
   /** List of the shop's code discount saved searches. */
   codeDiscountSavedSearches: SavedSearchConnection;
-  /** Returns a Collection resource by ID. */
+  /**
+   * Retrieves a [collection](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection) by its ID.
+   * A collection represents a grouping of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+   * that merchants can display and sell as a group in their [online store](https://shopify.dev/docs/apps/build/online-store) and
+   * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+   *
+   * Use the `collection` query when you need to:
+   *
+   * - Manage collection publishing across sales channels
+   * - Access collection metadata and SEO information
+   * - Work with collection rules and product relationships
+   *
+   * A collection can be either a custom ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+   * collection where products are manually added, or a smart ([automated](https://help.shopify.com/manual/products/collections/automated-collections))
+   * collection where products are automatically included based on defined rules. Each collection has associated metadata including
+   * title, description, handle, image, and [metafields](https://shopify.dev/docs/apps/build/custom-data/metafields).
+   */
   collection?: Maybe<Collection>;
   /**
    * Return a collection by its handle.
@@ -43678,9 +45533,38 @@ export type QueryRoot = {
   collectionRulesConditions: Array<CollectionRuleConditions>;
   /** Returns a list of the shop's collection saved searches. */
   collectionSavedSearches: SavedSearchConnection;
-  /** Returns a list of collections. */
+  /**
+   * Retrieves a list of [collections](https://shopify.dev/docs/api/admin-graphql/latest/objects/Collection)
+   * in a store. Collections are groups of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+   * that merchants can organize for display in their [online store](https://shopify.dev/docs/apps/build/online-store) and
+   * other [sales channels](https://shopify.dev/docs/apps/build/sales-channels).
+   * For example, an athletics store might create different collections for running attire, shoes, and accessories.
+   *
+   * Use the `collections` query when you need to:
+   *
+   * - Build a browsing interface for a store's product groupings.
+   * - Create collection searching, sorting, and filtering experiences (for example, by title, type, or published status).
+   * - Sync collection data with external systems.
+   * - Manage both custom ([manual](https://help.shopify.com/manual/products/collections/manual-shopify-collection))
+   * and smart ([automated](https://help.shopify.com/manual/products/collections/automated-collections)) collections.
+   *
+   * The `collections` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+   * for large catalogs and [saved searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/collections#arguments-savedSearchId)
+   * for frequently used collection queries.
+   *
+   * The `collections` query returns collections with their associated metadata, including:
+   *
+   * - Basic collection information (title, description, handle, and type)
+   * - Collection image and SEO metadata
+   * - Product count and product relationships
+   * - Collection rules (for smart collections)
+   * - Publishing status and publication details
+   * - Metafields and custom attributes
+   *
+   * Learn more about [using metafields with smart collections](https://shopify.dev/docs/apps/build/custom-data/metafields/use-metafield-capabilities).
+   */
   collections: CollectionConnection;
-  /** Count of collections. Limited to a maximum of 10000. */
+  /** Count of collections. Limited to a maximum of 10000 by default. */
   collectionsCount?: Maybe<Count>;
   /** Returns a Comment resource by ID. */
   comment?: Maybe<Comment>;
@@ -43706,7 +45590,7 @@ export type QueryRoot = {
   currentBulkOperation?: Maybe<BulkOperation>;
   /** The staff member making the API request. */
   currentStaffMember?: Maybe<StaffMember>;
-  /** Returns a Customer resource by ID. */
+  /** Returns a `Customer` resource by ID. */
   customer?: Maybe<Customer>;
   /** Returns a customer account page. */
   customerAccountPage?: Maybe<CustomerAccountPage>;
@@ -43766,7 +45650,7 @@ export type QueryRoot = {
   discountNode?: Maybe<DiscountNode>;
   /** Returns a list of discounts. */
   discountNodes: DiscountNodeConnection;
-  /** The total number of discounts for the shop. Limited to a maximum of 10000. */
+  /** The total number of discounts for the shop. Limited to a maximum of 10000 by default. */
   discountNodesCount?: Maybe<Count>;
   /** Returns a bulk code creation resource by ID. */
   discountRedeemCodeBulkCreation?: Maybe<DiscountRedeemCodeBulkCreation>;
@@ -43780,7 +45664,27 @@ export type QueryRoot = {
   disputes: ShopifyPaymentsDisputeConnection;
   /** Lookup a Domain by ID. */
   domain?: Maybe<Domain>;
-  /** Returns a DraftOrder resource by ID. */
+  /**
+   * Retrieves a [draft order](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder) by its ID.
+   * A draft order is an order created by a merchant on behalf of their
+   * customers. Draft orders contain all necessary order details (products, pricing, customer information)
+   * but require payment to be accepted before they can be converted into
+   * [completed orders](https://shopify.dev/docs/api/admin-graphql/latest/mutations/draftOrderComplete).
+   *
+   * Use the `draftOrder` query to retrieve information associated with the following workflows:
+   *
+   * - Creating orders for phone, in-person, or chat sales
+   * - Sending invoices to customers with secure checkout links
+   * - Managing custom items and additional costs
+   * - Selling products at discount or wholesale rates
+   * - Processing pre-orders and saving drafts for later completion
+   *
+   * A draft order is associated with a
+   * [customer](https://shopify.dev/docs/api/admin-graphql/latest/objects/Customer)
+   * and contains multiple [line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrderLineItem).
+   * Each draft order has a [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/DraftOrder#field-DraftOrder.fields.status),
+   * which indicates its progress through the sales workflow.
+   */
   draftOrder?: Maybe<DraftOrder>;
   /** List of the shop's draft order saved searches. */
   draftOrderSavedSearches: SavedSearchConnection;
@@ -43796,7 +45700,25 @@ export type QueryRoot = {
   eventsCount?: Maybe<Count>;
   /** A list of the shop's file saved searches. */
   fileSavedSearches: SavedSearchConnection;
-  /** Returns a paginated list of files that have been uploaded to Shopify. */
+  /**
+   * Retrieves a paginated list of files that have been uploaded to a Shopify store. Files represent digital assets
+   * that merchants can upload to their store for various purposes including product images, marketing materials,
+   * documents, and brand assets.
+   *
+   * Use the `files` query to retrieve information associated with the following workflows:
+   *
+   * - [Managing product media and images](https://shopify.dev/docs/apps/build/online-store/product-media)
+   * - [Theme development and asset management](https://shopify.dev/docs/storefronts/themes/store/success/brand-assets)
+   * - Brand asset management and [checkout branding](https://shopify.dev/docs/apps/build/checkout/styling/add-favicon)
+   *
+   * Files can include multiple [content types](https://shopify.dev/docs/api/admin-graphql/latest/enums/FileContentType),
+   * such as images, videos, 3D models, and generic files. Each file has
+   * properties like dimensions, file size, alt text for accessibility, and upload status. Files can be filtered
+   * by [media type](https://shopify.dev/docs/api/admin-graphql/latest/enums/MediaContentType) and can be associated with
+   * [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product),
+   * [themes](https://shopify.dev/docs/api/admin-graphql/latest/objects/OnlineStoreTheme),
+   * and other store resources.
+   */
   files: FileConnection;
   /** Returns a Fulfillment resource by ID. */
   fulfillment?: Maybe<Fulfillment>;
@@ -43824,7 +45746,7 @@ export type QueryRoot = {
   giftCard?: Maybe<GiftCard>;
   /** Returns a list of gift cards. */
   giftCards: GiftCardConnection;
-  /** The total number of gift cards issued for the shop. Limited to a maximum of 10000. */
+  /** The total number of gift cards issued for the shop. Limited to a maximum of 10000 by default. */
   giftCardsCount?: Maybe<Count>;
   /**
    * Returns an
@@ -43855,7 +45777,7 @@ export type QueryRoot = {
   locationsAvailableForDeliveryProfiles?: Maybe<Array<Location>>;
   /** Returns a list of all origin locations available for a delivery profile. */
   locationsAvailableForDeliveryProfilesConnection: LocationConnection;
-  /** Returns the count of locations for the given shop. Limited to a maximum of 10000. */
+  /** Returns the count of locations for the given shop. Limited to a maximum of 10000 by default. */
   locationsCount?: Maybe<Count>;
   /** Returns a list of fulfillment orders that are on hold. */
   manualHoldsFulfillmentOrders: FulfillmentOrderConnection;
@@ -43873,7 +45795,7 @@ export type QueryRoot = {
   marketingActivities: MarketingActivityConnection;
   /** Returns a MarketingActivity resource by ID. */
   marketingActivity?: Maybe<MarketingActivity>;
-  /** Returns a MarketingEvent resource by ID. */
+  /** Returns a `MarketingEvent` resource by ID. */
   marketingEvent?: Maybe<MarketingEvent>;
   /** A list of marketing events associated with the marketing app. */
   marketingEvents: MarketingEventConnection;
@@ -43954,7 +45876,7 @@ export type QueryRoot = {
    * [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-sortkey), and [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/orders#argument-query).
    */
   orders: OrderConnection;
-  /** Returns the count of orders for the given shop. Limited to a maximum of 10000. */
+  /** Returns the count of orders for the given shop. Limited to a maximum of 10000 by default. */
   ordersCount?: Maybe<Count>;
   /** Returns a Page resource by ID. */
   page?: Maybe<Page>;
@@ -43979,7 +45901,19 @@ export type QueryRoot = {
    * @deprecated Use `backupRegion` instead.
    */
   primaryMarket: Market;
-  /** Returns a Product resource by ID. */
+  /**
+   * Retrieves a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) by its ID.
+   * A product is an item that a merchant can sell in their store.
+   *
+   * Use the `product` query when you need to:
+   *
+   * - Access essential product data (for example, title, description, price, images, SEO metadata, and metafields).
+   * - Build product detail pages and manage inventory.
+   * - Handle international sales with localized pricing and content.
+   * - Manage product variants and product options.
+   *
+   * Learn more about working with [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+   */
   product?: Maybe<Product>;
   /**
    * Return a product by its handle.
@@ -44027,9 +45961,53 @@ export type QueryRoot = {
    * The maximum page size is 1000.
    */
   productTypes?: Maybe<StringConnection>;
-  /** Returns a ProductVariant resource by ID. */
+  /**
+   * Retrieves a [product variant](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant) by its ID.
+   *
+   * A product variant is a specific version of a
+   * [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product) that comes in more than
+   * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+   * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+   * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+   *
+   * Use the `productVariant` query when you need to:
+   *
+   * - Access essential product variant data (for example, title, price, image, and metafields).
+   * - Build product detail pages and manage inventory.
+   * - Handle international sales with localized pricing and content.
+   * - Manage product variants that are part of a bundle or selling plan.
+   *
+   * Learn more about working with [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+   */
   productVariant?: Maybe<ProductVariant>;
-  /** Returns a list of product variants. */
+  /**
+   * Retrieves a list of [product variants](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductVariant)
+   * associated with a [product](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product).
+   *
+   * A product variant is a specific version of a product that comes in more than
+   * one [option](https://shopify.dev/docs/api/admin-graphql/latest/objects/ProductOption),
+   * such as size or color. For example, if a merchant sells t-shirts with options for size and color,
+   * then a small, blue t-shirt would be one product variant and a large, blue t-shirt would be another.
+   *
+   * Use the `productVariants` query when you need to:
+   *
+   * - Search for product variants by attributes such as SKU, barcode, or inventory quantity.
+   * - Filter product variants by attributes, such as whether they're gift cards or have custom metafields.
+   * - Fetch product variants for bulk operations, such as updating prices or inventory.
+   * - Preload data for product variants, such as inventory items, selected options, or associated products.
+   *
+   * The `productVariants` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+   * to handle large product catalogs and [saved searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/productVariants#arguments-savedSearchId)
+   * for frequently used product variant queries.
+   *
+   * The `productVariants` query returns product variants with their associated metadata, including:
+   *
+   * - Basic product variant information (for example, title, SKU, barcode, price, and inventory)
+   * - Media attachments (for example, images and videos)
+   * - Associated products, selling plans, bundles, and metafields
+   *
+   * Learn more about working with [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+   */
   productVariants: ProductVariantConnection;
   /** Count of product variants. */
   productVariantsCount?: Maybe<Count>;
@@ -44038,7 +46016,32 @@ export type QueryRoot = {
    * The maximum page size is 1000.
    */
   productVendors?: Maybe<StringConnection>;
-  /** Returns a list of products. */
+  /**
+   * Retrieves a list of [products](https://shopify.dev/docs/api/admin-graphql/latest/objects/Product)
+   * in a store. Products are the items that merchants can sell in their store.
+   *
+   * Use the `products` query when you need to:
+   *
+   * - Build a browsing interface for a product catalog.
+   * - Create product [searching](https://shopify.dev/docs/api/usage/search-syntax), [sorting](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-sortKey), and [filtering](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-query) experiences.
+   * - Implement product recommendations.
+   * - Sync product data with external systems.
+   *
+   * The `products` query supports [pagination](https://shopify.dev/docs/api/usage/pagination-graphql)
+   * to handle large product catalogs and [saved searches](https://shopify.dev/docs/api/admin-graphql/latest/queries/products#arguments-savedSearchId)
+   * for frequently used product queries.
+   *
+   * The `products` query returns products with their associated metadata, including:
+   *
+   * - Basic product information (for example, title, description, vendor, and type)
+   * - Product options and product variants, with their prices and inventory
+   * - Media attachments (for example, images and videos)
+   * - SEO metadata
+   * - Product categories and tags
+   * - Product availability and publishing statuses
+   *
+   * Learn more about working with [Shopify's product model](https://shopify.dev/docs/apps/build/graphql/migrate/new-product-model/product-model-components).
+   */
   products: ProductConnection;
   /** Count of products. */
   productsCount?: Maybe<Count>;
@@ -44050,9 +46053,29 @@ export type QueryRoot = {
   publications: PublicationConnection;
   /** Count of publications. */
   publicationsCount?: Maybe<Count>;
-  /** Returns a count of published products by publication ID. */
+  /** Returns a count of published products by publication ID. Limited to a maximum of 10000 by default. */
   publishedProductsCount?: Maybe<Count>;
-  /** Returns a Refund resource by ID. */
+  /**
+   * Retrieves a [refund](https://shopify.dev/docs/api/admin-graphql/latest/objects/Refund) by its ID.
+   * A refund represents a financial record of money returned to a customer from an order.
+   * It provides a comprehensive view of all refunded amounts, transactions, and restocking
+   * instructions associated with returning products or correcting order issues.
+   *
+   * Use the `refund` query to retrieve information associated with the following workflows:
+   *
+   * - Displaying refund details in order management interfaces
+   * - Building customer service tools for reviewing refund history
+   * - Creating reports on refunded amounts and reasons
+   * - Auditing refund transactions and payment gateway records
+   * - Tracking inventory impacts from refunded items
+   *
+   * A refund is associated with an
+   * [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+   * and includes [refund line items](https://shopify.dev/docs/api/admin-graphql/latest/objects/RefundLineItem)
+   * that specify which items were refunded. Each refund processes through
+   * [order transactions](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+   * that handle the actual money transfer back to the customer.
+   */
   refund?: Maybe<Refund>;
   /**
    * Retrieves a return by its ID. A return represents the intent of a buyer to ship one or more items from an
@@ -44083,7 +46106,7 @@ export type QueryRoot = {
   reverseFulfillmentOrder?: Maybe<ReverseFulfillmentOrder>;
   /**
    * <div class="note"><h4>Theme app extensions</h4>
-   *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+   *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
    *
    * <div class="note"><h4>Script tag deprecation</h4>
    *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -44094,7 +46117,7 @@ export type QueryRoot = {
   scriptTag?: Maybe<ScriptTag>;
   /**
    * <div class="note"><h4>Theme app extensions</h4>
-   *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+   *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
    *
    * <div class="note"><h4>Script tag deprecation</h4>
    *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -44195,7 +46218,7 @@ export type QueryRoot = {
   urlRedirectSavedSearches: SavedSearchConnection;
   /** A list of redirects for a shop. */
   urlRedirects: UrlRedirectConnection;
-  /** Count of redirects. Limited to a maximum of 10000. */
+  /** Count of redirects. Limited to a maximum of 10000 by default. */
   urlRedirectsCount?: Maybe<Count>;
   /** Validation available on the shop. */
   validation?: Maybe<Validation>;
@@ -44222,7 +46245,7 @@ export type QueryRoot = {
   /**
    * The count of webhook subscriptions.
    *
-   * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to date by Shopify & require less maintenance. Please read [About managing webhook subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe). Limited to a maximum of 10000.
+   * Building an app? If you only use app-specific webhooks, you won't need this. App-specific webhook subscriptions specified in your `shopify.app.toml` may be easier. They are automatically kept up to date by Shopify & require less maintenance. Please read [About managing webhook subscriptions](https://shopify.dev/docs/apps/build/webhooks/subscribe). Limited to a maximum of 10000 by default.
    */
   webhookSubscriptionsCount?: Maybe<Count>;
 };
@@ -46042,7 +48065,43 @@ export type QueryRootWebhookSubscriptionsCountArgs = {
   query?: InputMaybe<Scalars['String']['input']>;
 };
 
-/** The record of the line items and transactions that were refunded to a customer, along with restocking instructions for refunded line items. */
+/**
+ * The `Refund` object represents a financial record of money returned to a customer from an order.
+ * It provides a comprehensive view of all refunded amounts, transactions, and restocking instructions
+ * associated with returning products or correcting order issues.
+ *
+ * The `Refund` object provides information to:
+ *
+ * - Process customer returns and issue payments back to customers
+ * - Handle partial or full refunds for line items with optional inventory restocking
+ * - Refund shipping costs, duties, and additional fees
+ * - Issue store credit refunds as an alternative to original payment method returns
+ * - Track and reconcile all financial transactions related to refunds
+ *
+ * Each `Refund` object maintains detailed records of what was refunded, how much was refunded,
+ * which payment transactions were involved, and any inventory restocking that occurred. The refund
+ * can include multiple components such as product line items, shipping charges, taxes, duties, and
+ * additional fees, all calculated with proper currency handling for international orders.
+ *
+ * Refunds are always associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can optionally be linked to a [return](https://shopify.dev/docs/api/admin-graphql/latest/objects/Return)
+ * if the refund was initiated through the returns process. The refund tracks both the presentment currency
+ * (what the customer sees) and the shop currency for accurate financial reporting.
+ *
+ * > Note:
+ * > The existence of a `Refund` object doesn't guarantee that the money has been returned to the customer.
+ * > The actual financial processing happens through associated
+ * > [`OrderTransaction`](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+ * > objects, which can be in various states, such as pending, processing, success, or failure.
+ * > To determine if money has actually been refunded, check the
+ * > [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction#field-OrderTransaction.fields.status)
+ * > of the associated transactions.
+ *
+ * Learn more about
+ * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management),
+ * [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties), and
+ * [processing refunds](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate).
+ */
 export type Refund = LegacyInteroperability & Node & {
   __typename?: 'Refund';
   /** The date and time when the refund was created. */
@@ -46081,7 +48140,43 @@ export type Refund = LegacyInteroperability & Node & {
 };
 
 
-/** The record of the line items and transactions that were refunded to a customer, along with restocking instructions for refunded line items. */
+/**
+ * The `Refund` object represents a financial record of money returned to a customer from an order.
+ * It provides a comprehensive view of all refunded amounts, transactions, and restocking instructions
+ * associated with returning products or correcting order issues.
+ *
+ * The `Refund` object provides information to:
+ *
+ * - Process customer returns and issue payments back to customers
+ * - Handle partial or full refunds for line items with optional inventory restocking
+ * - Refund shipping costs, duties, and additional fees
+ * - Issue store credit refunds as an alternative to original payment method returns
+ * - Track and reconcile all financial transactions related to refunds
+ *
+ * Each `Refund` object maintains detailed records of what was refunded, how much was refunded,
+ * which payment transactions were involved, and any inventory restocking that occurred. The refund
+ * can include multiple components such as product line items, shipping charges, taxes, duties, and
+ * additional fees, all calculated with proper currency handling for international orders.
+ *
+ * Refunds are always associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can optionally be linked to a [return](https://shopify.dev/docs/api/admin-graphql/latest/objects/Return)
+ * if the refund was initiated through the returns process. The refund tracks both the presentment currency
+ * (what the customer sees) and the shop currency for accurate financial reporting.
+ *
+ * > Note:
+ * > The existence of a `Refund` object doesn't guarantee that the money has been returned to the customer.
+ * > The actual financial processing happens through associated
+ * > [`OrderTransaction`](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+ * > objects, which can be in various states, such as pending, processing, success, or failure.
+ * > To determine if money has actually been refunded, check the
+ * > [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction#field-OrderTransaction.fields.status)
+ * > of the associated transactions.
+ *
+ * Learn more about
+ * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management),
+ * [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties), and
+ * [processing refunds](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate).
+ */
 export type RefundOrderAdjustmentsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46091,7 +48186,43 @@ export type RefundOrderAdjustmentsArgs = {
 };
 
 
-/** The record of the line items and transactions that were refunded to a customer, along with restocking instructions for refunded line items. */
+/**
+ * The `Refund` object represents a financial record of money returned to a customer from an order.
+ * It provides a comprehensive view of all refunded amounts, transactions, and restocking instructions
+ * associated with returning products or correcting order issues.
+ *
+ * The `Refund` object provides information to:
+ *
+ * - Process customer returns and issue payments back to customers
+ * - Handle partial or full refunds for line items with optional inventory restocking
+ * - Refund shipping costs, duties, and additional fees
+ * - Issue store credit refunds as an alternative to original payment method returns
+ * - Track and reconcile all financial transactions related to refunds
+ *
+ * Each `Refund` object maintains detailed records of what was refunded, how much was refunded,
+ * which payment transactions were involved, and any inventory restocking that occurred. The refund
+ * can include multiple components such as product line items, shipping charges, taxes, duties, and
+ * additional fees, all calculated with proper currency handling for international orders.
+ *
+ * Refunds are always associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can optionally be linked to a [return](https://shopify.dev/docs/api/admin-graphql/latest/objects/Return)
+ * if the refund was initiated through the returns process. The refund tracks both the presentment currency
+ * (what the customer sees) and the shop currency for accurate financial reporting.
+ *
+ * > Note:
+ * > The existence of a `Refund` object doesn't guarantee that the money has been returned to the customer.
+ * > The actual financial processing happens through associated
+ * > [`OrderTransaction`](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+ * > objects, which can be in various states, such as pending, processing, success, or failure.
+ * > To determine if money has actually been refunded, check the
+ * > [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction#field-OrderTransaction.fields.status)
+ * > of the associated transactions.
+ *
+ * Learn more about
+ * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management),
+ * [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties), and
+ * [processing refunds](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate).
+ */
 export type RefundRefundLineItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46101,7 +48232,43 @@ export type RefundRefundLineItemsArgs = {
 };
 
 
-/** The record of the line items and transactions that were refunded to a customer, along with restocking instructions for refunded line items. */
+/**
+ * The `Refund` object represents a financial record of money returned to a customer from an order.
+ * It provides a comprehensive view of all refunded amounts, transactions, and restocking instructions
+ * associated with returning products or correcting order issues.
+ *
+ * The `Refund` object provides information to:
+ *
+ * - Process customer returns and issue payments back to customers
+ * - Handle partial or full refunds for line items with optional inventory restocking
+ * - Refund shipping costs, duties, and additional fees
+ * - Issue store credit refunds as an alternative to original payment method returns
+ * - Track and reconcile all financial transactions related to refunds
+ *
+ * Each `Refund` object maintains detailed records of what was refunded, how much was refunded,
+ * which payment transactions were involved, and any inventory restocking that occurred. The refund
+ * can include multiple components such as product line items, shipping charges, taxes, duties, and
+ * additional fees, all calculated with proper currency handling for international orders.
+ *
+ * Refunds are always associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can optionally be linked to a [return](https://shopify.dev/docs/api/admin-graphql/latest/objects/Return)
+ * if the refund was initiated through the returns process. The refund tracks both the presentment currency
+ * (what the customer sees) and the shop currency for accurate financial reporting.
+ *
+ * > Note:
+ * > The existence of a `Refund` object doesn't guarantee that the money has been returned to the customer.
+ * > The actual financial processing happens through associated
+ * > [`OrderTransaction`](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+ * > objects, which can be in various states, such as pending, processing, success, or failure.
+ * > To determine if money has actually been refunded, check the
+ * > [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction#field-OrderTransaction.fields.status)
+ * > of the associated transactions.
+ *
+ * Learn more about
+ * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management),
+ * [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties), and
+ * [processing refunds](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate).
+ */
 export type RefundRefundShippingLinesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46111,7 +48278,43 @@ export type RefundRefundShippingLinesArgs = {
 };
 
 
-/** The record of the line items and transactions that were refunded to a customer, along with restocking instructions for refunded line items. */
+/**
+ * The `Refund` object represents a financial record of money returned to a customer from an order.
+ * It provides a comprehensive view of all refunded amounts, transactions, and restocking instructions
+ * associated with returning products or correcting order issues.
+ *
+ * The `Refund` object provides information to:
+ *
+ * - Process customer returns and issue payments back to customers
+ * - Handle partial or full refunds for line items with optional inventory restocking
+ * - Refund shipping costs, duties, and additional fees
+ * - Issue store credit refunds as an alternative to original payment method returns
+ * - Track and reconcile all financial transactions related to refunds
+ *
+ * Each `Refund` object maintains detailed records of what was refunded, how much was refunded,
+ * which payment transactions were involved, and any inventory restocking that occurred. The refund
+ * can include multiple components such as product line items, shipping charges, taxes, duties, and
+ * additional fees, all calculated with proper currency handling for international orders.
+ *
+ * Refunds are always associated with an [order](https://shopify.dev/docs/api/admin-graphql/latest/objects/Order)
+ * and can optionally be linked to a [return](https://shopify.dev/docs/api/admin-graphql/latest/objects/Return)
+ * if the refund was initiated through the returns process. The refund tracks both the presentment currency
+ * (what the customer sees) and the shop currency for accurate financial reporting.
+ *
+ * > Note:
+ * > The existence of a `Refund` object doesn't guarantee that the money has been returned to the customer.
+ * > The actual financial processing happens through associated
+ * > [`OrderTransaction`](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction)
+ * > objects, which can be in various states, such as pending, processing, success, or failure.
+ * > To determine if money has actually been refunded, check the
+ * > [status](https://shopify.dev/docs/api/admin-graphql/latest/objects/OrderTransaction#field-OrderTransaction.fields.status)
+ * > of the associated transactions.
+ *
+ * Learn more about
+ * [managing returns](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/build-return-management),
+ * [refunding duties](https://shopify.dev/docs/apps/build/orders-fulfillment/returns-apps/view-and-refund-duties), and
+ * [processing refunds](https://shopify.dev/docs/api/admin-graphql/latest/mutations/refundCreate).
+ */
 export type RefundTransactionsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -46676,7 +48879,10 @@ export type Return = Node & {
   reverseFulfillmentOrders: ReverseFulfillmentOrderConnection;
   /** The status of the return. */
   status: ReturnStatus;
-  /** A suggested refund for the return. */
+  /**
+   * A suggested refund for the return.
+   * @deprecated Use `suggestedFinancialOutcome` instead.
+   */
   suggestedRefund?: Maybe<SuggestedReturnRefund>;
   /** The sum of all return line item quantities for the return. */
   totalQuantity: Scalars['Int']['output'];
@@ -48049,7 +50255,7 @@ export type ScriptDiscountApplication = DiscountApplication & {
 
 /**
  * <div class="note"><h4>Theme app extensions</h4>
- *   <p>Your app might not pass App Store review if it uses script tags instead of theme app extensions. All new apps, and apps that integrate with Online Store 2.0 themes, should use theme app extensions, such as app blocks or app embed blocks. Script tags are an alternative you can use with only vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
+ *   <p>If your app integrates with a Shopify theme and you plan to submit it to the Shopify App Store, you must use theme app extensions instead of Script tags. Script tags can only be used with vintage themes. <a href="/apps/online-store#what-integration-method-should-i-use" target="_blank">Learn more</a>.</p></div>
  *
  * <div class="note"><h4>Script tag deprecation</h4>
  *   <p>Script tags will be sunset for the <b>Order status</b> page on August 28, 2025. <a href="https://www.shopify.com/plus/upgrading-to-checkout-extensibility">Upgrade to Checkout Extensibility</a> before this date. <a href="/docs/api/liquid/objects#script">Shopify Scripts</a> will continue to work alongside Checkout Extensibility until August 28, 2025.</p></div>
@@ -48121,7 +50327,7 @@ export enum ScriptTagDisplayScope {
   OnlineStore = 'ONLINE_STORE',
   /**
    * Include the script only on the <b>Order status</b> page.
-   * @deprecated `ORDER_STATUS` is deprecated and unavailable as a mutation input as of <b>2025-01</b>.
+   * @deprecated `ORDER_STATUS` is deprecated and unavailable as a mutation input.
    *
    */
   OrderStatus = 'ORDER_STATUS'
@@ -48619,7 +50825,7 @@ export type SellingPlan = HasMetafieldDefinitions & HasMetafields & HasPublished
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -49943,7 +52149,7 @@ export type Shop = HasMetafields & HasPublishedTranslations & Node & {
   alerts: Array<ShopAlert>;
   /**
    * A list of the shop's product categories. Limit: 1000 product categories.
-   * @deprecated Deprecated in API version 2024-07. Use `allProductCategoriesList` instead.
+   * @deprecated Use `allProductCategoriesList` instead.
    */
   allProductCategories: Array<ProductCategory>;
   /** A list of the shop's product categories. Limit: 1000 product categories. */
@@ -50110,7 +52316,7 @@ export type Shop = HasMetafields & HasPublishedTranslations & Node & {
   primaryDomain: Domain;
   /**
    * The list of all images of all products for the shop.
-   * @deprecated Use `files` instead. See [filesQuery](https://shopify.dev/docs/api/admin-graphql/latest/queries/files) and its [query](https://shopify.dev/docs/api/admin-graphql/2024-01/queries/files#argument-query) argument for more information.
+   * @deprecated Use `files` instead. See [filesQuery](https://shopify.dev/docs/api/admin-graphql/latest/queries/files) and its [query](https://shopify.dev/docs/api/admin-graphql/latest/queries/files#argument-query) argument for more information.
    */
   productImages: ImageConnection;
   /**
@@ -50622,9 +52828,21 @@ export type ShopFeatures = {
    * @deprecated All shops have international domains through Shopify Markets.
    */
   internationalDomains: Scalars['Boolean']['output'];
-  /** Whether a shop can enable international price overrides. */
+  /**
+   * Whether a shop can enable international price overrides.
+   * @deprecated Use the `markets` field on `EntitlementsType`.
+   * Each market entitlement has a `catalogs` field that indicates
+   * whether the shop's markets have access to catalogs and price overrides.
+   *
+   */
   internationalPriceOverrides: Scalars['Boolean']['output'];
-  /** Whether a shop can enable international price rules. */
+  /**
+   * Whether a shop can enable international price rules.
+   * @deprecated Use the `markets` field on `EntitlementsType`.
+   * Each market entitlement has a `catalogs` field that indicates
+   * whether the shop's markets have access to catalogs and price overrides.
+   *
+   */
   internationalPriceRules: Scalars['Boolean']['output'];
   /** Whether a shop has enabled a legacy subscription gateway to handle older subscriptions. */
   legacySubscriptionGatewayEnabled: Scalars['Boolean']['output'];
@@ -52957,12 +55175,12 @@ export type SubscriptionBillingAttempt = Node & {
   createdAt: Scalars['DateTime']['output'];
   /**
    * A code corresponding to a payment error during processing.
-   * @deprecated As of API version 2025-01, use `processingError.code` instead to get the errorCode
+   * @deprecated Use `processingError.code` instead to get the errorCode
    */
   errorCode?: Maybe<SubscriptionBillingAttemptErrorCode>;
   /**
    * A message describing a payment error during processing.
-   * @deprecated As of API version 2025-01, use `processingError.message` instead to get the errorMessage
+   * @deprecated Use `processingError.message` instead to get the errorMessage
    */
   errorMessage?: Maybe<Scalars['String']['output']>;
   /** A globally-unique ID. */
@@ -53059,6 +55277,8 @@ export enum SubscriptionBillingAttemptErrorCode {
   ExpiredPaymentMethod = 'EXPIRED_PAYMENT_METHOD',
   /** Fraud was suspected. */
   FraudSuspected = 'FRAUD_SUSPECTED',
+  /** Gift cards must have a price greater than zero. */
+  FreeGiftCardNotAllowed = 'FREE_GIFT_CARD_NOT_ALLOWED',
   /** Insufficient funds. */
   InsufficientFunds = 'INSUFFICIENT_FUNDS',
   /** Not enough inventory found. */
@@ -53538,7 +55758,7 @@ export type SubscriptionBillingCycleScheduleEditPayload = {
   userErrors: Array<SubscriptionBillingCycleUserError>;
 };
 
-/** The input fields to select SubscriptionBillingCycle by either date or index. */
+/** The input fields to select SubscriptionBillingCycle by either date or index. Both past and future billing cycles can be selected. */
 export type SubscriptionBillingCycleSelector = {
   /** Returns a billing cycle by date. */
   date?: InputMaybe<Scalars['DateTime']['input']>;
@@ -54408,7 +56628,36 @@ export enum SubscriptionDiscountRejectionReason {
 /** The value of the discount and how it will be applied. */
 export type SubscriptionDiscountValue = SubscriptionDiscountFixedAmountValue | SubscriptionDiscountPercentageValue;
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraft = Node & {
   __typename?: 'SubscriptionDraft';
   /** The billing cycle that the subscription contract will be associated with. */
@@ -54465,7 +56714,36 @@ export type SubscriptionDraft = Node & {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftConcatenatedBillingCyclesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54476,19 +56754,106 @@ export type SubscriptionDraftConcatenatedBillingCyclesArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftCustomerPaymentMethodArgs = {
   showRevoked?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftDeliveryOptionsArgs = {
   deliveryAddress?: InputMaybe<MailingAddressInput>;
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftDiscountsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54498,7 +56863,36 @@ export type SubscriptionDraftDiscountsArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftDiscountsAddedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54508,7 +56902,36 @@ export type SubscriptionDraftDiscountsAddedArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftDiscountsRemovedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54518,7 +56941,36 @@ export type SubscriptionDraftDiscountsRemovedArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftDiscountsUpdatedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54528,7 +56980,36 @@ export type SubscriptionDraftDiscountsUpdatedArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftLinesArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54538,7 +57019,36 @@ export type SubscriptionDraftLinesArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftLinesAddedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54548,7 +57058,36 @@ export type SubscriptionDraftLinesAddedArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftLinesRemovedArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
@@ -54558,7 +57097,36 @@ export type SubscriptionDraftLinesRemovedArgs = {
 };
 
 
-/** Represents a Subscription Draft. */
+/**
+ * The `SubscriptionDraft` object represents a draft version of a
+ * [subscription contract](https://shopify.dev/docs/api/admin-graphql/latest/objects/SubscriptionContract)
+ * before it's committed. It serves as a staging area for making changes to an existing subscription or creating
+ * a new one. The draft allows you to preview and modify various aspects of a subscription before applying the changes.
+ *
+ * Use the `SubscriptionDraft` object to:
+ *
+ * - Add, remove, or modify subscription lines and their quantities
+ * - Manage discounts (add, remove, or update manual and code-based discounts)
+ * - Configure delivery options and shipping methods
+ * - Set up billing and delivery policies
+ * - Manage customer payment methods
+ * - Add custom attributes and notes to generated orders
+ * - Configure billing cycles and next billing dates
+ * - Preview the projected state of the subscription
+ *
+ * Each `SubscriptionDraft` object maintains a projected state that shows how the subscription will look after the changes
+ * are committed. This allows you to preview the impact of your modifications before applying them. The draft can be
+ * associated with an existing subscription contract (for modifications) or used to create a new subscription.
+ *
+ * The draft remains in a draft state until it's committed, at which point the changes are applied to the subscription
+ * contract and the draft is no longer accessible.
+ *
+ * Learn more about
+ * [how subscription contracts work](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts)
+ * and how to [build](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/build-a-subscription-contract),
+ * [update](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/update-a-subscription-contract), and
+ * [combine](https://shopify.dev/docs/apps/build/purchase-options/subscriptions/contracts/combine-subscription-contracts) subscription contracts.
+ */
 export type SubscriptionDraftShippingOptionsArgs = {
   deliveryAddress?: InputMaybe<MailingAddressInput>;
 };
@@ -56714,7 +59282,7 @@ export type Validation = HasMetafieldDefinitions & HasMetafields & Node & {
   metafield?: Maybe<Metafield>;
   /**
    * List of metafield definitions.
-   * @deprecated This field will be removed in a future version. Use the root `metafieldDefinitions` field instead.
+   * @deprecated This field will be removed in a future version. Use `QueryRoot.metafieldDefinitions` instead.
    */
   metafieldDefinitions: MetafieldDefinitionConnection;
   /**
@@ -57137,7 +59705,7 @@ export type WebhookSubscription = LegacyInteroperability & Node & {
   format: WebhookSubscriptionFormat;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
-  /** An optional array of top-level resource fields that should be serialized and sent in the webhook message. If null, then all fields will be sent. */
+  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads). */
   includeFields: Array<Scalars['String']['output']>;
   /** The ID of the corresponding resource in the REST Admin API. */
   legacyResourceId: Scalars['UnsignedInt64']['output'];
@@ -57204,7 +59772,7 @@ export type WebhookSubscriptionInput = {
   filter?: InputMaybe<Scalars['String']['input']>;
   /** The format in which the webhook subscription should send the data. */
   format?: InputMaybe<WebhookSubscriptionFormat>;
-  /** The list of fields to be included in the webhook subscription. */
+  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads). */
   includeFields?: InputMaybe<Array<Scalars['String']['input']>>;
   /** The list of namespaces for any metafields that should be included in the webhook subscription. */
   metafieldNamespaces?: InputMaybe<Array<Scalars['String']['input']>>;
