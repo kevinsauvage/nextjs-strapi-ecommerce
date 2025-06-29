@@ -13,19 +13,14 @@ import { delCookieAction, getCookieAction, setCookieAction } from './cookiesActi
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
-export const createCartAction = async (forced = false) => {
+export const createCartAction = async () => {
   const cartId = await getCookieAction(config.cookies.cartId);
 
-  // If a cartId exists and we are not forcing a new cart creation, we try to fetch the existing cart.
-  // If fetching fails, we create a new cart.
-  // This is useful for scenarios where the cart might be stale or not found.
-  if (cartId?.value && !forced) {
-    try {
-      await storefrontSdk().checkoutURL({ cartId: cartId.value });
-    } catch (error) {
-      console.error('Error fetching cart:', error);
-      await createCartAction(true);
-    }
+  if (cartId?.value) {
+    // If a cart exists, we can return early
+    // We use checkoutURL since is faster than getCart and we don't need to fetch the entire cart data
+    const cart = await storefrontSdk().checkoutURL({ cartId: cartId.value });
+    if (cart?.cart?.checkoutUrl) return;
   }
 
   try {
