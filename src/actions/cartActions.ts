@@ -9,7 +9,7 @@ import { adjustPaginationVariables } from '@/shopify/helpers';
 import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefront';
 import { getShopifyCartId } from '@/utils/shopify';
 
-import { delCookieAction, getCookieAction, setCookieAction } from './cookiesActions';
+import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
@@ -79,7 +79,6 @@ export const getCartAction = async ({
 
     if (cart?.id) return cart;
 
-    await delCookieAction(config.cookies.cartId);
     throw new Error('Cart could not be found');
   } catch (error) {
     console.log('getCartAction  ~ error:', error);
