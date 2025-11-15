@@ -15,7 +15,7 @@
     "codegen:watch": "ts-node --project ./src/shopify/tsconfig.codegen.json --transpile-only --esm bin/run-codegen.ts --watch"
   },
   "dependencies": {
-    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/cli": "^6.0.0",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-graphql-request": "^6.2.0",
     "@radix-ui/react-accordion": "^1.2.8",
