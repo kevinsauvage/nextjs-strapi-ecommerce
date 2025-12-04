@@ -40,6 +40,7 @@ const nextConfig = {
   },
   images: {
     domains: ['res.cloudinary.com', 'cdn.shopify.com'],
+    unoptimized: true,
   },
   reactStrictMode: true,
 
