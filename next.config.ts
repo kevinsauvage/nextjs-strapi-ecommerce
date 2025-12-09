@@ -1,7 +1,6 @@
-/* eslint-disable unicorn/prefer-module */
-/** @type {import('next').NextConfig} */
+import type { NextConfig } from 'next';
 
-const nextConfig = {
+const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
@@ -14,7 +13,7 @@ const nextConfig = {
   },
 
   headers() {
-    return [
+    return Promise.resolve([
       {
         headers: [
           {
@@ -36,7 +35,7 @@ const nextConfig = {
         ],
         source: '/(.*)',
       },
-    ];
+    ]);
   },
   images: {
     domains: ['res.cloudinary.com', 'cdn.shopify.com'],
@@ -45,14 +44,14 @@ const nextConfig = {
   reactStrictMode: true,
 
   redirects() {
-    return [
+    return Promise.resolve([
       {
         destination: '/',
         permanent: true,
         source: '/404',
       },
-    ];
+    ]);
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;
