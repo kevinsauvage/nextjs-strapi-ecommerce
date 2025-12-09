@@ -1,9 +1,9 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
-import { useFormStatus } from 'react-dom';
 import { Label } from '@radix-ui/react-dropdown-menu';
 import { Search } from 'lucide-react';
+import { useActionState, useEffect, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 
 import { searchAction } from '@/actions/SearchAction';
 

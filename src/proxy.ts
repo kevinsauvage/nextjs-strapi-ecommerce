@@ -3,10 +3,10 @@ import { NextResponse } from 'next/server';
 
 import { createCartAction } from './actions/cartActions';
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
-import { DEFAULTS } from './config/constants';
 import globalConfig from './config';
+import { DEFAULTS } from './config/constants';
 
-async function middleware(request: NextRequest) {
+async function proxy(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;
   const { searchParams, pathname } = nextUrl;
 
@@ -38,7 +38,7 @@ async function middleware(request: NextRequest) {
   return response;
 }
 
-export default middleware;
+export default proxy;
 
 export const config = {
   matcher: [
@@ -52,3 +52,4 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
+

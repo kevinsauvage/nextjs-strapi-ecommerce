@@ -6,7 +6,6 @@ import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 
 import FormContainer from '../_components/FormContainer';
-
 import LoginForm from './_components/LoginForm';
 
 export const metadata: Metadata = {

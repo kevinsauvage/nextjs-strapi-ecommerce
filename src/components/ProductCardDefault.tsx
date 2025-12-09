@@ -1,20 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { Eye, Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
 import Price from './Price';
 import ProductDescription from './ProductDescription';
 import SpinnerLoader from './SpinnerLoader';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 

@@ -1,4 +1,4 @@
-/* eslint-disable sort-keys/sort-keys-fix */
+/* eslint-disable sort-keys */
 import type { MetadataRoute } from 'next';
 
 import { COOKIES, LOCAL_STORAGE_KEYS } from './constants';

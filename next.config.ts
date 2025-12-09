@@ -4,13 +4,6 @@ const nextConfig: NextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-  experimental: {
-    cpus: 1,
-    // This is experimental but can
-    // be enabled to allow parallel threads
-    // with nextjs automatic static generation
-    workerThreads: false,
-  },
 
   headers() {
     return Promise.resolve([
@@ -38,7 +31,16 @@ const nextConfig: NextConfig = {
     ]);
   },
   images: {
-    domains: ['res.cloudinary.com', 'cdn.shopify.com'],
+    remotePatterns: [
+      {
+        hostname: 'res.cloudinary.com',
+        protocol: 'https',
+      },
+      {
+        hostname: 'cdn.shopify.com',
+        protocol: 'https',
+      },
+    ],
     unoptimized: true,
   },
   reactStrictMode: true,

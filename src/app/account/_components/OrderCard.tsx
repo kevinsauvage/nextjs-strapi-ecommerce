@@ -1,9 +1,9 @@
 /* eslint-disable unicorn/consistent-destructuring */
 'use client';
 
-import { useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import Link from 'next/link';
+import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';

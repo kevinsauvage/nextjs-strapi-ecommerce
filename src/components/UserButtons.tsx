@@ -5,8 +5,8 @@ import Link from 'next/link';
 import config from '@/config/index';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
-import { Badge } from './ui/badge';
 import ThemeToggle from './ThemeToggle';
+import { Badge } from './ui/badge';
 
 const UserButtons = ({ className }: { className?: string }) => {
   const { cart } = useCartContext();

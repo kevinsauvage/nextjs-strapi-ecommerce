@@ -41,6 +41,9 @@ const HeightAnimation = ({
     }
   }
   useEffect(() => {
+    // Calculate initial height
+    calculateHeight();
+
     let resizeObserver = {} as ResizeObserver;
     if (referenceChildren.current) {
       resizeObserver = new ResizeObserver(() => {
@@ -56,7 +59,6 @@ const HeightAnimation = ({
       <div className={styles.animation} style={{ maxHeight: `${actualHeight}px` }}>
         <div
           ref={referenceChildren}
-          onLoad={calculateHeight}
           className={` ${animationType === 'hover' && actualHeight !== maxHeight && styles.hover} `}
           onMouseOver={() =>
             animationType === 'hover' && maxHeight !== undefined && setActualHeight(maxHeight)

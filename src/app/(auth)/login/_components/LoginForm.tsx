@@ -1,8 +1,8 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import { useSearchParams } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { loginAction } from '@/actions/authActions';

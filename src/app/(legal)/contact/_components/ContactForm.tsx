@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import config from '@/config';
+import { userFeedback } from '@/data/userFeedback';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -42,7 +42,7 @@ const ContactForm = () => {
 
   useEffect(() => {
     if (states.error) {
-      toast.error(states.error || config.userFeedback.login.error);
+      toast.error(states.error || userFeedback.login.error);
     }
   }, [states]);
 

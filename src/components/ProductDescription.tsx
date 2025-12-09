@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { Heart, Info, ShoppingBag, Star } from 'lucide-react';
+import { useState } from 'react';
 
 import QuantityUpdater from '@/components/QuantityUpdater';
 import useUserContext from '@/contexts/UserContext/useUserContext';
@@ -9,14 +9,14 @@ import useProductSelection from '@/hooks/useProductSelection';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
+import Options from './Options';
+import PhotoGallery from './PhotoGallery';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Separator } from './ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
-import Options from './Options';
-import PhotoGallery from './PhotoGallery';
 
 const ProductDescription = ({
   product,

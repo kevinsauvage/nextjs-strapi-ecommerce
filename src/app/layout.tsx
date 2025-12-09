@@ -1,3 +1,5 @@
+import '../styles/globals.css';
+
 import { Inter, Poppins } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
@@ -13,8 +15,6 @@ import { Toaster } from '@/components/ui/sonner';
 import { storefrontSdk } from '@/shopify';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 import { getUser } from '@/utils/users';
-
-import '../styles/globals.css';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-display' });
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading', weight: '600' });

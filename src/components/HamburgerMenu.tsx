@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import {
   ChevronDown,
   ChevronRight,
@@ -13,6 +12,7 @@ import {
   User,
 } from 'lucide-react';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import {

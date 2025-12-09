@@ -4,7 +4,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import seo from '@/data/seo';
 
 import BackButton from '../_components/BackButton';
-
 import UpdateUserForm from './_components/UpdateUserForm';
 
 export const metadata: Metadata = {

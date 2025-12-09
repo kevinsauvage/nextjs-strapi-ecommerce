@@ -1,5 +1,6 @@
 import type { ProductRecommendationsQuery } from '@/shopify/storefront';
 
+import ProductCardDefault from './ProductCardDefault';
 import {
   Carousel,
   CarouselContent,
@@ -7,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from './ui/carousel';
-import ProductCardDefault from './ProductCardDefault';
 
 const ProductRecommendations = ({
   recommendations,

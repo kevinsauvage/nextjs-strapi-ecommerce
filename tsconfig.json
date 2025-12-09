@@ -6,7 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -43,7 +43,8 @@
     "next-env.d.ts",
     ".next/types/**/*.ts",
     "src/types/globals.d.ts",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",

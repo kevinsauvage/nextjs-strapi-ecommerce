@@ -7,7 +7,6 @@ import config from '@/config';
 import seo from '@/data/seo';
 
 import FormContainer from '../_components/FormContainer';
-
 import ResetForm from './_components/ResetPasswordForm';
 
 export const metadata: Metadata = {

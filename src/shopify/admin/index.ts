@@ -62393,14 +62393,14 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    delegateAccessTokenCreate(variables: DelegateAccessTokenCreateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DelegateAccessTokenCreateMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<DelegateAccessTokenCreateMutation>(DelegateAccessTokenCreateDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'delegateAccessTokenCreate', 'mutation', variables);
+    delegateAccessTokenCreate(variables: DelegateAccessTokenCreateMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<DelegateAccessTokenCreateMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DelegateAccessTokenCreateMutation>({ document: DelegateAccessTokenCreateDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'delegateAccessTokenCreate', 'mutation', variables);
     },
-    MetafieldsSet(variables: MetafieldsSetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<MetafieldsSetMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<MetafieldsSetMutation>(MetafieldsSetDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'MetafieldsSet', 'mutation', variables);
+    MetafieldsSet(variables: MetafieldsSetMutationVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<MetafieldsSetMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<MetafieldsSetMutation>({ document: MetafieldsSetDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'MetafieldsSet', 'mutation', variables);
     },
-    getProducts(variables: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetProductsQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>(GetProductsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getProducts', 'query', variables);
+    getProducts(variables: GetProductsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders, signal?: RequestInit['signal']): Promise<GetProductsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetProductsQuery>({ document: GetProductsDocument, variables, requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders }, signal }), 'getProducts', 'query', variables);
     }
   };
 }
