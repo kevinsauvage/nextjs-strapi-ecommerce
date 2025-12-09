@@ -1,12 +1,15 @@
 import Link from 'next/link';
 
 import siteMetadata from '@/data/siteMetadata';
-import { storefrontSdk } from '@/shopify';
+import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 
-const Footer = async () => {
-  const response = await storefrontSdk().getMenuByHandle({ handle: 'footer' });
-  const menuFooter = response?.menu?.items;
+type MenuItem = NonNullable<GetMenuByHandleQuery['menu']>['items'][number];
 
+type FooterProps = {
+  menuItems: MenuItem[] | undefined;
+};
+
+const Footer = ({ menuItems }: FooterProps) => {
   return (
     <footer className="flex flex-col py-10 gap-10 border-t">
       <div className="container mx-auto flex flex-col justify-between md:grid grid-cols-2 gap-8 px-4">
@@ -15,8 +18,8 @@ const Footer = async () => {
           <p className="max-w-xl font-light text-sm">{siteMetadata?.about?.short}</p>
         </div>
         <ul className="flex flex-wrap justify-between gap-8 mb-8 md:grid md:grid-cols-3 ">
-          {Array.isArray(menuFooter) &&
-            menuFooter.map((item) => (
+          {Array.isArray(menuItems) &&
+            menuItems.map((item) => (
               <li key={item.id}>
                 <b className="text-md block font-semibold pb-3">{item.title}</b>
                 <ul>
