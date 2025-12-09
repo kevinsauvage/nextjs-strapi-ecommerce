@@ -4,8 +4,7 @@ import { redirect } from 'next/navigation';
 
 import { storefrontSdk } from '@/shopify';
 
-// eslint-disable-next-line @typescript-eslint/require-await
-export const searchAction = async (previousState: unknown, data: FormData) => {
+export const searchAction = (previousState: unknown, data: FormData) => {
   const searchQuery = data.get('searchQuery') as string;
 
   const searchQueryString = searchQuery?.toString().trim();

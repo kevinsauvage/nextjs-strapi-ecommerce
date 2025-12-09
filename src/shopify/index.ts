@@ -42,7 +42,6 @@ const options = {
   },
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const storefrontClient = new GraphQLClient(SHOPIFY_URL, options as RequestConfig);
 
 const defaultWrapper: SdkFunctionWrapper = async (

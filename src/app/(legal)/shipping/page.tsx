@@ -1,4 +1,3 @@
-/* eslint-disable react/no-danger */
 import type { Metadata } from 'next';
 
 import Breadcrumbs from '@/components/Breadcrumbs';

@@ -59,11 +59,10 @@ const Carousel = ({
   const [canScrollPrevious, setCanScrollPrevious] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
 
-  // eslint-disable-next-line no-shadow
-  const onSelect = React.useCallback((api: CarouselApi) => {
-    if (!api) return;
-    setCanScrollPrevious(api.canScrollPrev());
-    setCanScrollNext(api.canScrollNext());
+  const onSelect = React.useCallback((_api: CarouselApi) => {
+    if (!_api) return;
+    setCanScrollPrevious(_api.canScrollPrev());
+    setCanScrollNext(_api.canScrollNext());
   }, []);
 
   const scrollPrevious = React.useCallback(() => {

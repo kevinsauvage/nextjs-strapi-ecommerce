@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const logo = (
   <svg width="94" height="44" viewBox="0 0 94 44" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="1.5" y="10.5" width="82" height="32" stroke="currentColor" strokeWidth="3" />
