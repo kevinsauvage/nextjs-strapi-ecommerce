@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 
 import { createCartAction } from './actions/cartActions';
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
+import { DEFAULTS } from './config/constants';
 import globalConfig from './config';
 
 async function middleware(request: NextRequest) {
@@ -11,7 +12,7 @@ async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  const userIp = headers.get('x-forwarded-for')?.split(',')[0] || 'Unknown';
+  const userIp = headers.get('x-forwarded-for')?.split(',')[0] || DEFAULTS.ip;
 
   response.cookies.set(globalConfig.cookies.userIp, userIp);
   response.cookies.set(globalConfig.cookies.url, url);

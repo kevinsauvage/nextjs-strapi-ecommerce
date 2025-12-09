@@ -1,23 +1,15 @@
 /* eslint-disable sort-keys/sort-keys-fix */
 import type { MetadataRoute } from 'next';
 
+import { COOKIES, LOCAL_STORAGE_KEYS } from './constants';
+
 const environment = process.env.NODE_ENV;
 
 const config = {
   baseUrl: 'http://localhost:3000',
-  cookies: {
-    cartId: 'x-cart-id',
-    delegateToken: 'shopify-delegate-token',
-    searchParams: 'x-search-params',
-    shopifyToken: 'shopify-storefront-access-token',
-    shopifyTokenExpire: 'shopify-access-token-expire',
-    url: 'x-url',
-    userIp: 'x-user-ip',
-  },
+  cookies: COOKIES,
   domain: 'https://ecomfashionstore.myshopify.com',
-  localStorageKeys: {
-    cartIdStorageKey: 'shopify-cart-id',
-  },
+  localStorageKeys: LOCAL_STORAGE_KEYS,
   name: 'Site Name',
   paymentUrl: 'https://checkout.ecomtestshopi.xyz',
   routes: {

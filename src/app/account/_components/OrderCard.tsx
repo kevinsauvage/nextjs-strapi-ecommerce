@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { DEFAULTS } from '@/config/constants';
 import type {
   OrderFieldsFragment,
   OrderFinancialStatus,
@@ -20,7 +21,7 @@ function formatStatus(status?: OrderFulfillmentStatus | OrderFinancialStatus | n
         .toLowerCase()
         .replace(/_/g, ' ')
         .replace(/\b\w/g, (match) => match.toUpperCase())
-    : 'N/A';
+    : DEFAULTS.na;
 }
 
 const getDate = (timestamp: string | number | Date | undefined | null = new Date()) => {
@@ -90,7 +91,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
 
                 <Row label="Financial Status" value={formatStatus(financialStatus)} />
                 <Row label="Fulfillment Status" value={formatStatus(fulfillmentStatus)} />
-                <Row label="Email" value={email || 'N/A'} />
+                <Row label="Email" value={email || DEFAULTS.na} />
                 {phone && <Row label="Phone" value={phone} />}
                 {typeof order?.processedAt === 'string' && (
                   <Row label="Processed At" value={getDate(order.processedAt)} />
@@ -121,7 +122,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                       <div key={uuidv4()} className="space-y-2">
                         <div className={`flex justify-between py-1 border-b border-border `}>
                           <span className="text-sm text-muted-foreground">
-                            {trackingCompany || 'Unknown Carrier'}
+                            {trackingCompany || DEFAULTS.carrier}
                             {successfulFulfillments.length > 1 ? ` (${index + 1})` : ''}
                           </span>
                           <span className="text-sm font-medium">{trackingInfo.length} items</span>
@@ -133,7 +134,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                             className="flex justify-between py-1 border-b border-border"
                           >
                             <span className="text-sm text-muted-foreground">
-                              {trackInfo.number || 'No Tracking Number'}
+                              {trackInfo.number || DEFAULTS.trackingNumber}
                             </span>
                             {typeof trackInfo.url === 'string' ? (
                               <Link
@@ -145,7 +146,9 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                                 Track
                               </Link>
                             ) : (
-                              <span className="text-sm font-medium text-gray-400">No Link</span>
+                              <span className="text-sm font-medium text-gray-400">
+                                {DEFAULTS.link}
+                              </span>
                             )}
                           </div>
                         ))}
