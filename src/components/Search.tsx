@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { predictiveSearchAction } from '@/actions/SearchAction';
 import SearchForm from '@/components/SearchForm';
@@ -18,8 +18,7 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
   const reference = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(reference as RefObject<HTMLElement>, () => setResults(null));
 
-  const handleChange = async (value: string) => {
-    setSearchValue(value);
+  const handleChange = useCallback(async (value: string) => {
     if (value?.trim().length < 2) {
       setResults(null);
       return;
@@ -31,12 +30,20 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
     const response = await predictiveSearchAction(null, formData);
 
     setResults(response?.predictiveSearch || null);
-  };
+  }, []);
 
-  const debouncedHandleChange = debounce((value: unknown) => {
-    if (typeof value !== 'string') return;
-    void handleChange(value);
-  }, 500);
+  const debouncedHandleChange = useMemo(
+    () =>
+      debounce((value: unknown) => {
+        if (typeof value !== 'string') return;
+        void handleChange(value);
+      }, 500),
+    [handleChange],
+  );
+
+  useEffect(() => {
+    return () => debouncedHandleChange.cancel();
+  }, [debouncedHandleChange]);
 
   useEffect(() => {
     setResults(null);
@@ -47,9 +54,10 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
     <div className="relative w-full max-w-lg mx-auto" ref={reference}>
       <SearchForm
         searchQuery={searchValue}
-        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          debouncedHandleChange(event.target.value)
-        }
+        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+          setSearchValue(event.target.value);
+          debouncedHandleChange(event.target.value);
+        }}
       />
 
       {results && <SearchResults results={results} />}
