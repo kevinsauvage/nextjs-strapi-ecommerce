@@ -9,13 +9,14 @@ import { CollectionSortKeys, ProductSortKeys } from '@/shopify/storefront/index'
 
 import CollectionGrid from '../components/CollectionGrid/CollectionGrid';
 
+export const revalidate = 3600; // 1 hour
+
 export const metadata: Metadata = {
   description: seo.home.description,
   title: seo.home.title,
 };
 
 const Home = async () => {
-  // Fetch all data in parallel for better performance
   const [collections, bestSelling, newArrival] = await Promise.all([
     storefrontSdk().collections({
       first: 100,

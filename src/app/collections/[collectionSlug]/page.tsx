@@ -11,6 +11,8 @@ import { ProductCollectionSortKeys } from '@/shopify/storefront';
 import Filters from '../_components/Filters';
 import Sort from '../_components/Sort';
 
+export const revalidate = 3600; // Revalidate every hour
+
 type parametersType = { collectionSlug: string };
 
 export async function generateMetadata({

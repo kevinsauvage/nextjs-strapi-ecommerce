@@ -2,9 +2,12 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
+
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
 import { storefrontSdk } from '@/shopify/index';
+
+export const revalidate = 3600; // Revalidate every hour
 
 type parametersType = {
   genre: string;

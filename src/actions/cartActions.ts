@@ -159,7 +159,6 @@ export const cartLinesUpdateAction = async (
   handleUserErrors(userErrors);
 
   if (cart) {
-    revalidatePath('/');
     revalidatePath('/cart');
 
     return {
@@ -198,7 +197,6 @@ export const cartLinesAddAction = async (
   handleUserErrors(userErrors);
 
   if (cart) {
-    revalidatePath('/');
     revalidatePath('/cart');
 
     return {
@@ -237,7 +235,6 @@ export const cartLinesRemoveAction = async (
   handleUserErrors(userErrors);
 
   if (cart) {
-    revalidatePath('/');
     revalidatePath('/cart');
 
     return {
@@ -272,7 +269,6 @@ export const cartDiscountCodesUpdateAction = async (discountCodes: string[]) => 
   }
 
   if (cart) {
-    revalidatePath('/');
     revalidatePath('/cart');
     return {
       cart,
