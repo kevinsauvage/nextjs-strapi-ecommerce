@@ -42,16 +42,6 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   reactStrictMode: true,
-
-  redirects() {
-    return Promise.resolve([
-      {
-        destination: '/',
-        permanent: true,
-        source: '/404',
-      },
-    ]);
-  },
 };
 
 export default nextConfig;
