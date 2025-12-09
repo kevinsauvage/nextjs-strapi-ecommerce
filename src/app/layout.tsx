@@ -37,6 +37,10 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       className={`${inter.variable} ${poppins.variable} font-display scroll-smooth antialiased tracking-tight`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://cdn.shopify.com" />
+        <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+      </head>
       <body className="relative bg-background min-h-screen flex flex-col">
         <GtmScript />
         <CookieBanner />
