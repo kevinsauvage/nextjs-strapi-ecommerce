@@ -3,15 +3,10 @@ import type { MetadataRoute } from 'next';
 
 import { COOKIES, LOCAL_STORAGE_KEYS } from './constants';
 
-const environment = process.env.NODE_ENV;
-
 const config = {
-  baseUrl: 'http://localhost:3000',
   cookies: COOKIES,
-  domain: 'https://ecomfashionstore.myshopify.com',
   localStorageKeys: LOCAL_STORAGE_KEYS,
-  name: 'Site Name',
-  paymentUrl: 'https://checkout.ecomtestshopi.xyz',
+  name: 'Ecom Test Shopi',
   routes: {
     home: '/',
     cart: '/cart',
@@ -219,9 +214,5 @@ export const sitemap: MetadataRoute.Sitemap = [
     url: config.routes.orders,
   },
 ];
-
-if (environment === 'production') {
-  config.baseUrl = 'https://www.ecomtestshopi.xyz';
-}
 
 export default config;
