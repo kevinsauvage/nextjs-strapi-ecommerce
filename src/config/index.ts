@@ -25,7 +25,7 @@ const config = {
     logout: '/account/logout',
     orders: '/account/orders',
     privacy: '/privacy',
-    refound: '/refound',
+    refund: '/refund',
     register: '/register',
     resetPassword: '/reset',
     search: '/search',
@@ -121,7 +121,7 @@ export const sitemap: MetadataRoute.Sitemap = [
     changeFrequency: 'daily',
     lastModified: new Date().toISOString(),
     priority: 0.8,
-    url: config.routes.refound,
+    url: config.routes.refund,
   },
   {
     changeFrequency: 'daily',

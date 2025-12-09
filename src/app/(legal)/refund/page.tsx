@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: seo.pages.refund.title,
 };
 
-const RefoundPage = async () => {
+const RefundPage = async () => {
   const response = await storefrontSdk().getRefundPolicy({});
   const refundPolicy = response.shop?.refundPolicy;
 
@@ -30,4 +30,4 @@ const RefoundPage = async () => {
   );
 };
 
-export default RefoundPage;
+export default RefundPage;
