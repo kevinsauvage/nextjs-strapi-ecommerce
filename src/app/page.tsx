@@ -15,28 +15,25 @@ export const metadata: Metadata = {
 };
 
 const Home = async () => {
-  const collections = await storefrontSdk().collections({
-    first: 100,
-    firstProducts: 1,
-    identifiers: [
-      {
-        key: 'featured',
-        namespace: 'custom',
-      },
-    ],
-    sortKey: CollectionSortKeys?.Relevance,
-  });
-
-  const bestSelling = await storefrontSdk().getProducts({
-    first: 8,
-    identifiers: [],
-    sortKey: ProductSortKeys.BestSelling,
-  });
-  const newArrival = await storefrontSdk().getProducts({
-    first: 8,
-    identifiers: [],
-    sortKey: ProductSortKeys.CreatedAt,
-  });
+  // Fetch all data in parallel for better performance
+  const [collections, bestSelling, newArrival] = await Promise.all([
+    storefrontSdk().collections({
+      first: 100,
+      firstProducts: 1,
+      identifiers: [{ key: 'featured', namespace: 'custom' }],
+      sortKey: CollectionSortKeys?.Relevance,
+    }),
+    storefrontSdk().getProducts({
+      first: 8,
+      identifiers: [],
+      sortKey: ProductSortKeys.BestSelling,
+    }),
+    storefrontSdk().getProducts({
+      first: 8,
+      identifiers: [],
+      sortKey: ProductSortKeys.CreatedAt,
+    }),
+  ]);
 
   const featuredCollections = collections.collections.edges.filter((collection) =>
     collection.node.metafields.find((metafield) => metafield?.key === 'featured'),

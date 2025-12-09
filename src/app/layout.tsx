@@ -20,12 +20,13 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-display' });
 const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading', weight: '600' });
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const headerMenu = await storefrontSdk().getMenuByHandle({
-    handle: 'main-menu',
-  });
-  const cart = await getCartAction({});
-  const user = await getUser();
-  const userWishlist = await getWishlistAction();
+  // Fetch all data in parallel for better performance
+  const [headerMenu, cart, user, userWishlist] = await Promise.all([
+    storefrontSdk().getMenuByHandle({ handle: 'main-menu' }),
+    getCartAction({}),
+    getUser(),
+    getWishlistAction(),
+  ]);
 
   // If cart is undefined, createCartAction should have been called in middleware
   // But as a fallback, we'll create an empty cart structure
