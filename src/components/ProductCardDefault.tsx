@@ -5,7 +5,7 @@ import { Eye, Heart } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
@@ -27,13 +27,15 @@ const ProductDescription = dynamic(() => import('./ProductDescription'), {
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 
-const ProductCardDefault = ({
-  product,
-  priority,
-}: {
+type ProductCardDefaultProps = {
   product: ProductFieldsFragment;
   priority: boolean;
-}) => {
+};
+
+const ProductCardDefault = memo(function ProductCardDefault({
+  product,
+  priority,
+}: ProductCardDefaultProps) {
   const { title, images, handle, variants, id, priceRange } = product;
   const { price, compareAtPrice } = variants?.edges?.[0]?.node || {};
   const { userWishlist, handleSetWishlist } = useUserContext();
@@ -132,6 +134,6 @@ const ProductCardDefault = ({
       </Link>
     </li>
   );
-};
+});
 
 export default ProductCardDefault;
