@@ -12,17 +12,17 @@ const defaultErrorMessage = 'Something went wrong';
 const unauthenticatedErrorMessage = 'User not authenticated';
 
 const addressSchema = z.object({
-  address1: z.string().nonempty('Address is required'),
+  address1: z.string().min(1, 'Address is required'),
   address2: z.string().optional(),
-  city: z.string().nonempty('City is required'),
+  city: z.string().min(1, 'City is required'),
   company: z.string().optional(),
-  country: z.string().nonempty('Country is required'),
-  firstName: z.string().nonempty('First name is required'),
+  country: z.string().min(1, 'Country is required'),
+  firstName: z.string().min(1, 'First name is required'),
   id: z.string().optional(),
-  lastName: z.string().nonempty('Last name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
   phone: z.string().optional(),
   province: z.string().optional(),
-  zip: z.string().nonempty('Zip is required'),
+  zip: z.string().min(1, 'Zip is required'),
 });
 
 type AddressInput = z.infer<typeof addressSchema>;
