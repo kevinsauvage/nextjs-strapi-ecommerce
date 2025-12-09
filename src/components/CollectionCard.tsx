@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 import type { CollectionsQuery } from '@/shopify/storefront';
@@ -10,13 +11,18 @@ const CollectionCard = ({
   collection: CollectionsQuery['collections']['edges'][number]['node'];
 }) => {
   const { title, image, handle } = collection || {};
-  const backgroundStyle = { backgroundImage: `url(${image?.src})` };
 
   return (
-    <div
-      className="relative group overflow-hidden transition-all w-full h-full min-h-[300px] rounded-sm bg-cover bg-center"
-      style={{ ...backgroundStyle }}
-    >
+    <div className="relative group overflow-hidden transition-all w-full h-full min-h-[300px] rounded-sm">
+      {image?.src && (
+        <Image
+          src={image.src}
+          alt={image.altText || title || 'Collection image'}
+          fill
+          className="object-cover transition-transform duration-300 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
+      )}
       <div className="absolute inset-0 bg-black/50 flex flex-col gap-3 items-center justify-center text-center p-4 group-hover:bg-black/70 transition-all">
         <p className="text-2xl font-bold text-white">
           <span>{title} </span>
