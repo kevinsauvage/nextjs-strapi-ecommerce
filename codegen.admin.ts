@@ -9,6 +9,24 @@ const config: CodegenConfig = {
   generates: {
     'src/shopify/admin/index.ts': {
       plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
+      config: {
+        scalars: {
+          ARN: 'string',
+          BigInt: 'string',
+          Color: 'string',
+          Date: 'string',
+          DateTime: 'string',
+          Decimal: 'string',
+          FormattedString: 'string',
+          HTML: 'string',
+          JSON: 'any',
+          Money: 'string',
+          StorefrontID: 'string',
+          URL: 'string',
+          UnsignedInt64: 'string',
+          UtcOffset: 'string',
+        },
+      },
     },
   },
   overwrite: true,

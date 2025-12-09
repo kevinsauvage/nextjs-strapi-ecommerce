@@ -56,7 +56,7 @@ const LineItem: React.FC<{
         <div className="flex-shrink-0">
           {node.merchandise.image?.medium && (
             <Image
-              src={node.merchandise.image.medium as string}
+              src={String(node.merchandise.image.medium)}
               alt={node.merchandise.product.title}
               width={80}
               height={80}
@@ -208,11 +208,14 @@ const CartPage = async ({
                     {cart.cost.totalTaxAmount?.currencyCode}
                   </span>
                 </div>
-                {cart.cost.totalAmount.amount < cart.cost.subtotalAmount.amount && (
+                {Number(cart.cost.totalAmount.amount) < Number(cart.cost.subtotalAmount.amount) && (
                   <div className="flex justify-between">
                     <span>Discount</span>
                     <span>
-                      {(cart.cost.totalAmount.amount - cart.cost.subtotalAmount.amount).toFixed(2)}{' '}
+                      {(
+                        Number(cart.cost.totalAmount.amount) -
+                        Number(cart.cost.subtotalAmount.amount)
+                      ).toFixed(2)}{' '}
                       {cart.cost.subtotalAmount.currencyCode}
                     </span>
                   </div>

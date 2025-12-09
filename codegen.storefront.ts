@@ -4,6 +4,18 @@ const config: CodegenConfig = {
   documents: 'src/shopify/storefront/**/*.graphql',
   generates: {
     'src/shopify/storefront/index.ts': {
+      config: {
+        scalars: {
+          Color: 'string',
+          DateTime: 'string',
+          Decimal: 'string',
+          HTML: 'string',
+          ISO8601DateTime: 'string',
+          JSON: 'any',
+          URL: 'string',
+          UnsignedInt64: 'string',
+        },
+      },
       plugins: ['typescript', 'typescript-operations', 'typescript-graphql-request'],
     },
   },

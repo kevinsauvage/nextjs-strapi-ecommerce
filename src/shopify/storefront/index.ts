@@ -19,14 +19,14 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean };
   Int: { input: number; output: number };
   Float: { input: number; output: number };
-  Color: { input: any; output: any };
-  DateTime: { input: any; output: any };
-  Decimal: { input: any; output: any };
-  HTML: { input: any; output: any };
-  ISO8601DateTime: { input: any; output: any };
+  Color: { input: string; output: string };
+  DateTime: { input: string; output: string };
+  Decimal: { input: string; output: string };
+  HTML: { input: string; output: string };
+  ISO8601DateTime: { input: string; output: string };
   JSON: { input: any; output: any };
-  URL: { input: any; output: any };
-  UnsignedInt64: { input: any; output: any };
+  URL: { input: string; output: string };
+  UnsignedInt64: { input: string; output: string };
 };
 
 /**
@@ -4945,6 +4945,8 @@ export type MetafieldReferencesArgs = {
 
 /** Possible error codes that can be returned by `MetafieldDeleteUserError`. */
 export enum MetafieldDeleteErrorCode {
+  /** The current app is not authorized to perform this action. */
+  AppNotAuthorized = 'APP_NOT_AUTHORIZED',
   /** The owner ID is invalid. */
   InvalidOwner = 'INVALID_OWNER',
   /** Metafield not found. */
@@ -5055,6 +5057,8 @@ export type MetafieldsSetUserError = DisplayableError & {
 
 /** Possible error codes that can be returned by `MetafieldsSetUserError`. */
 export enum MetafieldsSetUserErrorCode {
+  /** The current app is not authorized to perform this action. */
+  AppNotAuthorized = 'APP_NOT_AUTHORIZED',
   /** The input value is blank. */
   Blank = 'BLANK',
   /** The input value isn't included in the list. */
@@ -8914,18 +8918,22 @@ export type CartAttributesUpdateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -8948,7 +8956,7 @@ export type CartAttributesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -8958,17 +8966,17 @@ export type CartAttributesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -8987,7 +8995,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -8996,7 +9004,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9005,7 +9013,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9026,7 +9034,7 @@ export type CartAttributesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9036,17 +9044,17 @@ export type CartAttributesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9065,7 +9073,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9074,7 +9082,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9083,7 +9091,7 @@ export type CartAttributesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9101,12 +9109,16 @@ export type CartAttributesUpdateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -9124,8 +9136,8 @@ export type CartAttributesUpdateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -9198,18 +9210,22 @@ export type CartBuyerIdentityUpdateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -9232,7 +9248,7 @@ export type CartBuyerIdentityUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9242,17 +9258,17 @@ export type CartBuyerIdentityUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9271,7 +9287,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9280,7 +9296,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9289,7 +9305,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9310,7 +9326,7 @@ export type CartBuyerIdentityUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9320,17 +9336,17 @@ export type CartBuyerIdentityUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9349,7 +9365,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9358,7 +9374,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9367,7 +9383,7 @@ export type CartBuyerIdentityUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9385,12 +9401,16 @@ export type CartBuyerIdentityUpdateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -9408,8 +9428,8 @@ export type CartBuyerIdentityUpdateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -9481,18 +9501,22 @@ export type CartCreateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -9515,7 +9539,7 @@ export type CartCreateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9525,17 +9549,17 @@ export type CartCreateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9554,7 +9578,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9563,7 +9587,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9572,7 +9596,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9593,7 +9617,7 @@ export type CartCreateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9603,17 +9627,17 @@ export type CartCreateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9632,7 +9656,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9641,7 +9665,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9650,7 +9674,7 @@ export type CartCreateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9668,12 +9692,16 @@ export type CartCreateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -9691,8 +9719,8 @@ export type CartCreateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -9765,18 +9793,22 @@ export type CartDiscountCodesUpdateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -9799,7 +9831,7 @@ export type CartDiscountCodesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9809,17 +9841,17 @@ export type CartDiscountCodesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9838,7 +9870,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9847,7 +9879,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9856,7 +9888,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9877,7 +9909,7 @@ export type CartDiscountCodesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -9887,17 +9919,17 @@ export type CartDiscountCodesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -9916,7 +9948,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9925,7 +9957,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9934,7 +9966,7 @@ export type CartDiscountCodesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -9952,12 +9984,16 @@ export type CartDiscountCodesUpdateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -9975,8 +10011,8 @@ export type CartDiscountCodesUpdateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -10049,18 +10085,22 @@ export type CartLinesAddMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -10083,7 +10123,7 @@ export type CartLinesAddMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10093,17 +10133,17 @@ export type CartLinesAddMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10122,7 +10162,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10131,7 +10171,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10140,7 +10180,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10161,7 +10201,7 @@ export type CartLinesAddMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10171,17 +10211,17 @@ export type CartLinesAddMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10200,7 +10240,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10209,7 +10249,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10218,7 +10258,7 @@ export type CartLinesAddMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10236,12 +10276,16 @@ export type CartLinesAddMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -10259,8 +10303,8 @@ export type CartLinesAddMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -10333,18 +10377,22 @@ export type CartLinesRemoveMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -10367,7 +10415,7 @@ export type CartLinesRemoveMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10377,17 +10425,17 @@ export type CartLinesRemoveMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10406,7 +10454,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10415,7 +10463,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10424,7 +10472,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10445,7 +10493,7 @@ export type CartLinesRemoveMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10455,17 +10503,17 @@ export type CartLinesRemoveMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10484,7 +10532,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10493,7 +10541,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10502,7 +10550,7 @@ export type CartLinesRemoveMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10520,12 +10568,16 @@ export type CartLinesRemoveMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -10543,8 +10595,8 @@ export type CartLinesRemoveMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -10617,18 +10669,22 @@ export type CartLinesUpdateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -10651,7 +10707,7 @@ export type CartLinesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10661,17 +10717,17 @@ export type CartLinesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10690,7 +10746,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10699,7 +10755,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10708,7 +10764,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10729,7 +10785,7 @@ export type CartLinesUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10739,17 +10795,17 @@ export type CartLinesUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10768,7 +10824,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10777,7 +10833,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10786,7 +10842,7 @@ export type CartLinesUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10804,12 +10860,16 @@ export type CartLinesUpdateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -10827,8 +10887,8 @@ export type CartLinesUpdateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -10901,18 +10961,22 @@ export type CartNoteUpdateMutation = {
     cart?: {
       __typename?: 'Cart';
       id: string;
-      createdAt: any;
-      updatedAt: any;
-      checkoutUrl: any;
+      createdAt: string;
+      updatedAt: string;
+      checkoutUrl: string;
       totalQuantity: number;
       note?: string | null;
       appliedGiftCards: Array<{
         __typename?: 'AppliedGiftCard';
         id: string;
         lastCharacters: string;
-        amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        presentmentAmountUsed: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        };
       }>;
       lines: {
         __typename?: 'BaseCartLineConnection';
@@ -10935,7 +10999,7 @@ export type CartNoteUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -10945,17 +11009,17 @@ export type CartNoteUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -10974,7 +11038,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10983,7 +11047,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -10992,7 +11056,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -11013,7 +11077,7 @@ export type CartNoteUpdateMutation = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -11023,17 +11087,17 @@ export type CartNoteUpdateMutation = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -11052,7 +11116,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -11061,7 +11125,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -11070,7 +11134,7 @@ export type CartNoteUpdateMutation = {
                       targetType: DiscountApplicationTargetType;
                       discountedAmount: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       };
                     }
@@ -11088,12 +11152,16 @@ export type CartNoteUpdateMutation = {
       attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
       cost: {
         __typename?: 'CartCost';
-        totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        totalTaxAmount?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         totalDutyAmount?: {
           __typename?: 'MoneyV2';
-          amount: any;
+          amount: string;
           currencyCode: CurrencyCode;
         } | null;
       };
@@ -11111,8 +11179,8 @@ export type CartNoteUpdateMutation = {
           email?: string | null;
           phone?: string | null;
           acceptsMarketing: boolean;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           defaultAddress?: {
             __typename?: 'MailingAddress';
             id: string;
@@ -11182,18 +11250,18 @@ export type GetCartQuery = {
   cart?: {
     __typename?: 'Cart';
     id: string;
-    createdAt: any;
-    updatedAt: any;
-    checkoutUrl: any;
+    createdAt: string;
+    updatedAt: string;
+    checkoutUrl: string;
     totalQuantity: number;
     note?: string | null;
     appliedGiftCards: Array<{
       __typename?: 'AppliedGiftCard';
       id: string;
       lastCharacters: string;
-      amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
     }>;
     lines: {
       __typename?: 'BaseCartLineConnection';
@@ -11216,7 +11284,7 @@ export type GetCartQuery = {
                 weightUnit: WeightUnit;
                 compareAtPrice?: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 } | null;
                 selectedOptions: Array<{
@@ -11226,17 +11294,17 @@ export type GetCartQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
-                  url: any;
-                  src: any;
+                  url: string;
+                  src: string;
                   altText?: string | null;
                   width?: number | null;
                   height?: number | null;
-                  small: any;
-                  medium: any;
-                  large: any;
-                  blurDataURL: any;
+                  small: string;
+                  medium: string;
+                  large: string;
+                  blurDataURL: string;
                 } | null;
-                price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                 product: {
                   __typename?: 'Product';
                   handle: string;
@@ -11255,7 +11323,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11264,7 +11332,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11273,7 +11341,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11294,7 +11362,7 @@ export type GetCartQuery = {
                 weightUnit: WeightUnit;
                 compareAtPrice?: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 } | null;
                 selectedOptions: Array<{
@@ -11304,17 +11372,17 @@ export type GetCartQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
-                  url: any;
-                  src: any;
+                  url: string;
+                  src: string;
                   altText?: string | null;
                   width?: number | null;
                   height?: number | null;
-                  small: any;
-                  medium: any;
-                  large: any;
-                  blurDataURL: any;
+                  small: string;
+                  medium: string;
+                  large: string;
+                  blurDataURL: string;
                 } | null;
-                price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                 product: {
                   __typename?: 'Product';
                   handle: string;
@@ -11333,7 +11401,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11342,7 +11410,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11351,7 +11419,7 @@ export type GetCartQuery = {
                     targetType: DiscountApplicationTargetType;
                     discountedAmount: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                   }
@@ -11369,10 +11437,18 @@ export type GetCartQuery = {
     attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
     cost: {
       __typename?: 'CartCost';
-      totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
-      totalDutyAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+      totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      totalTaxAmount?: {
+        __typename?: 'MoneyV2';
+        amount: string;
+        currencyCode: CurrencyCode;
+      } | null;
+      totalDutyAmount?: {
+        __typename?: 'MoneyV2';
+        amount: string;
+        currencyCode: CurrencyCode;
+      } | null;
     };
     discountCodes: Array<{ __typename?: 'CartDiscountCode'; applicable: boolean; code: string }>;
     buyerIdentity: {
@@ -11388,8 +11464,8 @@ export type GetCartQuery = {
         email?: string | null;
         phone?: string | null;
         acceptsMarketing: boolean;
-        createdAt: any;
-        updatedAt: any;
+        createdAt: string;
+        updatedAt: string;
         defaultAddress?: {
           __typename?: 'MailingAddress';
           id: string;
@@ -11444,7 +11520,7 @@ export type CheckoutUrlQueryVariables = Exact<{
 
 export type CheckoutUrlQuery = {
   __typename?: 'QueryRoot';
-  cart?: { __typename?: 'Cart'; checkoutUrl: any } | null;
+  cart?: { __typename?: 'Cart'; checkoutUrl: string } | null;
 };
 
 export type CollectionQueryVariables = Exact<{
@@ -11478,22 +11554,22 @@ export type CollectionQuery = {
           id: string;
           title: string;
           availableForSale: boolean;
-          descriptionHtml: any;
+          descriptionHtml: string;
           productType: string;
           tags: Array<string>;
           totalInventory?: number | null;
           vendor: string;
           featuredImage?: {
             __typename?: 'Image';
-            url: any;
-            src: any;
+            url: string;
+            src: string;
             altText?: string | null;
             width?: number | null;
             height?: number | null;
-            small: any;
-            medium: any;
-            large: any;
-            blurDataURL: any;
+            small: string;
+            medium: string;
+            large: string;
+            blurDataURL: string;
           } | null;
           images: {
             __typename?: 'ImageConnection';
@@ -11501,22 +11577,22 @@ export type CollectionQuery = {
               __typename?: 'ImageEdge';
               node: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               };
             }>;
           };
           priceRange: {
             __typename?: 'ProductPriceRange';
-            maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-            minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+            minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
           };
           options: Array<{
             __typename?: 'ProductOption';
@@ -11527,7 +11603,7 @@ export type CollectionQuery = {
               id: string;
               name: string;
               firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-              swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+              swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
             }>;
           }>;
           collections: {
@@ -11552,7 +11628,7 @@ export type CollectionQuery = {
                 weightUnit: WeightUnit;
                 compareAtPrice?: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 } | null;
                 selectedOptions: Array<{
@@ -11562,17 +11638,17 @@ export type CollectionQuery = {
                 }>;
                 image?: {
                   __typename?: 'Image';
-                  url: any;
-                  src: any;
+                  url: string;
+                  src: string;
                   altText?: string | null;
                   width?: number | null;
                   height?: number | null;
-                  small: any;
-                  medium: any;
-                  large: any;
-                  blurDataURL: any;
+                  small: string;
+                  medium: string;
+                  large: string;
+                  blurDataURL: string;
                 } | null;
-                price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                 product: {
                   __typename?: 'Product';
                   handle: string;
@@ -11592,8 +11668,8 @@ export type CollectionQuery = {
             namespace: string;
             value: string;
             type: string;
-            createdAt: any;
-            updatedAt: any;
+            createdAt: string;
+            updatedAt: string;
             parentResource:
               | {
                   __typename?: 'Article';
@@ -11604,8 +11680,8 @@ export type CollectionQuery = {
                     key: string;
                     value: string;
                     type: string;
-                    createdAt: any;
-                    updatedAt: any;
+                    createdAt: string;
+                    updatedAt: string;
                   } | null>;
                 }
               | { __typename?: 'Blog'; id: string }
@@ -11649,15 +11725,15 @@ export type CollectionQuery = {
     };
     image?: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     } | null;
     seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
     metafields: Array<{
@@ -11667,8 +11743,8 @@ export type CollectionQuery = {
       namespace: string;
       value: string;
       type: string;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       parentResource:
         | {
             __typename?: 'Article';
@@ -11679,8 +11755,8 @@ export type CollectionQuery = {
               key: string;
               value: string;
               type: string;
-              createdAt: any;
-              updatedAt: any;
+              createdAt: string;
+              updatedAt: string;
             } | null>;
           }
         | { __typename?: 'Blog'; id: string }
@@ -11715,7 +11791,7 @@ export type GetCollectionSeoByHandleQuery = {
     image?: {
       __typename?: 'Image';
       id?: string | null;
-      originalSrc: any;
+      originalSrc: string;
       altText?: string | null;
     } | null;
     seo: { __typename?: 'SEO'; title?: string | null; description?: string | null };
@@ -11765,22 +11841,22 @@ export type CollectionsQuery = {
               id: string;
               title: string;
               availableForSale: boolean;
-              descriptionHtml: any;
+              descriptionHtml: string;
               productType: string;
               tags: Array<string>;
               totalInventory?: number | null;
               vendor: string;
               featuredImage?: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               } | null;
               images: {
                 __typename?: 'ImageConnection';
@@ -11788,15 +11864,15 @@ export type CollectionsQuery = {
                   __typename?: 'ImageEdge';
                   node: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   };
                 }>;
               };
@@ -11804,12 +11880,12 @@ export type CollectionsQuery = {
                 __typename?: 'ProductPriceRange';
                 maxVariantPrice: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
                 minVariantPrice: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               };
@@ -11822,7 +11898,10 @@ export type CollectionsQuery = {
                   id: string;
                   name: string;
                   firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-                  swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+                  swatch?: {
+                    __typename?: 'ProductOptionValueSwatch';
+                    color?: string | null;
+                  } | null;
                 }>;
               }>;
               collections: {
@@ -11847,7 +11926,7 @@ export type CollectionsQuery = {
                     weightUnit: WeightUnit;
                     compareAtPrice?: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     } | null;
                     selectedOptions: Array<{
@@ -11857,17 +11936,17 @@ export type CollectionsQuery = {
                     }>;
                     image?: {
                       __typename?: 'Image';
-                      url: any;
-                      src: any;
+                      url: string;
+                      src: string;
                       altText?: string | null;
                       width?: number | null;
                       height?: number | null;
-                      small: any;
-                      medium: any;
-                      large: any;
-                      blurDataURL: any;
+                      small: string;
+                      medium: string;
+                      large: string;
+                      blurDataURL: string;
                     } | null;
-                    price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                    price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                     product: {
                       __typename?: 'Product';
                       handle: string;
@@ -11887,8 +11966,8 @@ export type CollectionsQuery = {
                 namespace: string;
                 value: string;
                 type: string;
-                createdAt: any;
-                updatedAt: any;
+                createdAt: string;
+                updatedAt: string;
                 parentResource:
                   | {
                       __typename?: 'Article';
@@ -11899,8 +11978,8 @@ export type CollectionsQuery = {
                         key: string;
                         value: string;
                         type: string;
-                        createdAt: any;
-                        updatedAt: any;
+                        createdAt: string;
+                        updatedAt: string;
                       } | null>;
                     }
                   | { __typename?: 'Blog'; id: string }
@@ -11944,15 +12023,15 @@ export type CollectionsQuery = {
         };
         image?: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         } | null;
         seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
         metafields: Array<{
@@ -11962,8 +12041,8 @@ export type CollectionsQuery = {
           namespace: string;
           value: string;
           type: string;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           parentResource:
             | {
                 __typename?: 'Article';
@@ -11974,8 +12053,8 @@ export type CollectionsQuery = {
                   key: string;
                   value: string;
                   type: string;
-                  createdAt: any;
-                  updatedAt: any;
+                  createdAt: string;
+                  updatedAt: string;
                 } | null>;
               }
             | { __typename?: 'Blog'; id: string }
@@ -12010,7 +12089,7 @@ export type CustomerAccessTokenCreateMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12033,7 +12112,7 @@ export type CustomerAccessTokenCreateWithMultipassMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12071,7 +12150,7 @@ export type CustomerAccessTokenRenewMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     userErrors: Array<{ __typename?: 'UserError'; field?: Array<string> | null; message: string }>;
   } | null;
@@ -12095,8 +12174,8 @@ export type CustomerActivateMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12123,7 +12202,7 @@ export type CustomerActivateMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12152,8 +12231,8 @@ export type CustomerActivateByUrlMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12180,7 +12259,7 @@ export type CustomerActivateByUrlMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12311,8 +12390,8 @@ export type CustomerCreateMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12364,8 +12443,8 @@ export type CustomerDefaultAddressUpdateMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12434,8 +12513,8 @@ export type CustomerResetMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12462,7 +12541,7 @@ export type CustomerResetMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12491,8 +12570,8 @@ export type CustomerResetByUrlMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12519,7 +12598,7 @@ export type CustomerResetByUrlMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12548,8 +12627,8 @@ export type CustomerUpdateMutation = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -12576,7 +12655,7 @@ export type CustomerUpdateMutation = {
     customerAccessToken?: {
       __typename?: 'CustomerAccessToken';
       accessToken: string;
-      expiresAt: any;
+      expiresAt: string;
     } | null;
     customerUserErrors: Array<{
       __typename?: 'CustomerUserError';
@@ -12603,14 +12682,14 @@ export type GetCustomerQuery = {
     email?: string | null;
     phone?: string | null;
     acceptsMarketing: boolean;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: string;
+    updatedAt: string;
     metafields: Array<{
       __typename?: 'Metafield';
       id: string;
       key: string;
       value: string;
-      updatedAt: any;
+      updatedAt: string;
     } | null>;
     defaultAddress?: {
       __typename?: 'MailingAddress';
@@ -12651,7 +12730,7 @@ export type GetCustomerMetafieldsQuery = {
       __typename?: 'Metafield';
       key: string;
       value: string;
-      updatedAt: any;
+      updatedAt: string;
     } | null>;
   } | null;
 };
@@ -12725,7 +12804,7 @@ export type GetCustomerOrdersQuery = {
     __typename?: 'Customer';
     orders: {
       __typename?: 'OrderConnection';
-      totalCount: any;
+      totalCount: string;
       edges: Array<{
         __typename?: 'OrderEdge';
         cursor: string;
@@ -12734,22 +12813,22 @@ export type GetCustomerOrdersQuery = {
           id: string;
           name: string;
           fulfillmentStatus: OrderFulfillmentStatus;
-          canceledAt?: any | null;
+          canceledAt?: string | null;
           cancelReason?: OrderCancelReason | null;
           currencyCode: CurrencyCode;
-          customerUrl?: any | null;
+          customerUrl?: string | null;
           email?: string | null;
           financialStatus?: OrderFinancialStatus | null;
           orderNumber: number;
           phone?: string | null;
-          processedAt: any;
+          processedAt: string;
           successfulFulfillments?: Array<{
             __typename?: 'Fulfillment';
             trackingCompany?: string | null;
             trackingInfo: Array<{
               __typename?: 'FulfillmentTrackingInfo';
               number?: string | null;
-              url?: any | null;
+              url?: string | null;
             }>;
             fulfillmentLineItems: {
               __typename?: 'FulfillmentLineItemConnection';
@@ -12763,7 +12842,7 @@ export type GetCustomerOrdersQuery = {
                     title: string;
                     discountedTotalPrice: {
                       __typename?: 'MoneyV2';
-                      amount: any;
+                      amount: string;
                       currencyCode: CurrencyCode;
                     };
                     variant?: {
@@ -12777,7 +12856,7 @@ export type GetCustomerOrdersQuery = {
                       weightUnit: WeightUnit;
                       compareAtPrice?: {
                         __typename?: 'MoneyV2';
-                        amount: any;
+                        amount: string;
                         currencyCode: CurrencyCode;
                       } | null;
                       selectedOptions: Array<{
@@ -12787,17 +12866,17 @@ export type GetCustomerOrdersQuery = {
                       }>;
                       image?: {
                         __typename?: 'Image';
-                        url: any;
-                        src: any;
+                        url: string;
+                        src: string;
                         altText?: string | null;
                         width?: number | null;
                         height?: number | null;
-                        small: any;
-                        medium: any;
-                        large: any;
-                        blurDataURL: any;
+                        small: string;
+                        medium: string;
+                        large: string;
+                        blurDataURL: string;
                       } | null;
-                      price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                      price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                       product: {
                         __typename?: 'Product';
                         handle: string;
@@ -12815,13 +12894,21 @@ export type GetCustomerOrdersQuery = {
           }> | null;
           subtotalPrice?: {
             __typename?: 'MoneyV2';
-            amount: any;
+            amount: string;
             currencyCode: CurrencyCode;
           } | null;
-          totalPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-          totalRefunded: { __typename?: 'MoneyV2'; currencyCode: CurrencyCode; amount: any };
-          totalShippingPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-          totalTaxV2?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+          totalPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+          totalRefunded: { __typename?: 'MoneyV2'; currencyCode: CurrencyCode; amount: string };
+          totalShippingPrice: {
+            __typename?: 'MoneyV2';
+            amount: string;
+            currencyCode: CurrencyCode;
+          };
+          totalTaxV2?: {
+            __typename?: 'MoneyV2';
+            amount: string;
+            currencyCode: CurrencyCode;
+          } | null;
           customAttributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
           shippingAddress?: {
             __typename?: 'MailingAddress';
@@ -12852,8 +12939,8 @@ export type GetCustomerOrdersQuery = {
             namespace: string;
             value: string;
             type: string;
-            createdAt: any;
-            updatedAt: any;
+            createdAt: string;
+            updatedAt: string;
             parentResource:
               | {
                   __typename?: 'Article';
@@ -12864,8 +12951,8 @@ export type GetCustomerOrdersQuery = {
                     key: string;
                     value: string;
                     type: string;
-                    createdAt: any;
-                    updatedAt: any;
+                    createdAt: string;
+                    updatedAt: string;
                   } | null>;
                 }
               | { __typename?: 'Blog'; id: string }
@@ -12938,23 +13025,23 @@ export type CartLineFieldsFragment = {
             weightUnit: WeightUnit;
             compareAtPrice?: {
               __typename?: 'MoneyV2';
-              amount: any;
+              amount: string;
               currencyCode: CurrencyCode;
             } | null;
             selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
             image?: {
               __typename?: 'Image';
-              url: any;
-              src: any;
+              url: string;
+              src: string;
               altText?: string | null;
               width?: number | null;
               height?: number | null;
-              small: any;
-              medium: any;
-              large: any;
-              blurDataURL: any;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
             } | null;
-            price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
             product: {
               __typename?: 'Product';
               handle: string;
@@ -12973,7 +13060,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -12982,7 +13069,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -12991,7 +13078,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -13012,23 +13099,23 @@ export type CartLineFieldsFragment = {
             weightUnit: WeightUnit;
             compareAtPrice?: {
               __typename?: 'MoneyV2';
-              amount: any;
+              amount: string;
               currencyCode: CurrencyCode;
             } | null;
             selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
             image?: {
               __typename?: 'Image';
-              url: any;
-              src: any;
+              url: string;
+              src: string;
               altText?: string | null;
               width?: number | null;
               height?: number | null;
-              small: any;
-              medium: any;
-              large: any;
-              blurDataURL: any;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
             } | null;
-            price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
             product: {
               __typename?: 'Product';
               handle: string;
@@ -13047,7 +13134,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -13056,7 +13143,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -13065,7 +13152,7 @@ export type CartLineFieldsFragment = {
                 targetType: DiscountApplicationTargetType;
                 discountedAmount: {
                   __typename?: 'MoneyV2';
-                  amount: any;
+                  amount: string;
                   currencyCode: CurrencyCode;
                 };
               }
@@ -13090,21 +13177,21 @@ export type ProductVariantFieldsFragment = {
   sku?: string | null;
   weight?: number | null;
   weightUnit: WeightUnit;
-  compareAtPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+  compareAtPrice?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
   selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
   image?: {
     __typename?: 'Image';
-    url: any;
-    src: any;
+    url: string;
+    src: string;
     altText?: string | null;
     width?: number | null;
     height?: number | null;
-    small: any;
-    medium: any;
-    large: any;
-    blurDataURL: any;
+    small: string;
+    medium: string;
+    large: string;
+    blurDataURL: string;
   } | null;
-  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
   product: {
     __typename?: 'Product';
     handle: string;
@@ -13128,7 +13215,7 @@ export type ProductDetailsFragment = {
 
 export type MoneyFieldsFragment = {
   __typename?: 'MoneyV2';
-  amount: any;
+  amount: string;
   currencyCode: CurrencyCode;
 };
 
@@ -13162,8 +13249,8 @@ export type CustomerDetailsFragment = {
   email?: string | null;
   phone?: string | null;
   acceptsMarketing: boolean;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: string;
+  updatedAt: string;
   defaultAddress?: {
     __typename?: 'MailingAddress';
     id: string;
@@ -13200,8 +13287,8 @@ export type BuyerIdentityFieldsFragment = {
     email?: string | null;
     phone?: string | null;
     acceptsMarketing: boolean;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: string;
+    updatedAt: string;
     defaultAddress?: {
       __typename?: 'MailingAddress';
       id: string;
@@ -13249,36 +13336,36 @@ export type BuyerIdentityFieldsFragment = {
 
 export type CartCostFieldsFragment = {
   __typename?: 'CartCost';
-  totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
-  totalDutyAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+  totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  totalTaxAmount?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
+  totalDutyAmount?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
 };
 
 export type GiftCardFieldsFragment = {
   __typename?: 'AppliedGiftCard';
   id: string;
   lastCharacters: string;
-  amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+  amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
 };
 
 export type CartFieldsFragment = {
   __typename?: 'Cart';
   id: string;
-  createdAt: any;
-  updatedAt: any;
-  checkoutUrl: any;
+  createdAt: string;
+  updatedAt: string;
+  checkoutUrl: string;
   totalQuantity: number;
   note?: string | null;
   appliedGiftCards: Array<{
     __typename?: 'AppliedGiftCard';
     id: string;
     lastCharacters: string;
-    amountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-    balance: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-    presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+    amountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+    balance: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+    presentmentAmountUsed: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
   }>;
   lines: {
     __typename?: 'BaseCartLineConnection';
@@ -13301,7 +13388,7 @@ export type CartFieldsFragment = {
               weightUnit: WeightUnit;
               compareAtPrice?: {
                 __typename?: 'MoneyV2';
-                amount: any;
+                amount: string;
                 currencyCode: CurrencyCode;
               } | null;
               selectedOptions: Array<{
@@ -13311,17 +13398,17 @@ export type CartFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               } | null;
-              price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
               product: {
                 __typename?: 'Product';
                 handle: string;
@@ -13340,7 +13427,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13349,7 +13436,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13358,7 +13445,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13379,7 +13466,7 @@ export type CartFieldsFragment = {
               weightUnit: WeightUnit;
               compareAtPrice?: {
                 __typename?: 'MoneyV2';
-                amount: any;
+                amount: string;
                 currencyCode: CurrencyCode;
               } | null;
               selectedOptions: Array<{
@@ -13389,17 +13476,17 @@ export type CartFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               } | null;
-              price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
               product: {
                 __typename?: 'Product';
                 handle: string;
@@ -13418,7 +13505,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13427,7 +13514,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13436,7 +13523,7 @@ export type CartFieldsFragment = {
                   targetType: DiscountApplicationTargetType;
                   discountedAmount: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   };
                 }
@@ -13454,10 +13541,10 @@ export type CartFieldsFragment = {
   attributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
   cost: {
     __typename?: 'CartCost';
-    totalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-    subtotalAmount: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-    totalTaxAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
-    totalDutyAmount?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+    totalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+    subtotalAmount: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+    totalTaxAmount?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
+    totalDutyAmount?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
   };
   discountCodes: Array<{ __typename?: 'CartDiscountCode'; applicable: boolean; code: string }>;
   buyerIdentity: {
@@ -13473,8 +13560,8 @@ export type CartFieldsFragment = {
       email?: string | null;
       phone?: string | null;
       acceptsMarketing: boolean;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       defaultAddress?: {
         __typename?: 'MailingAddress';
         id: string;
@@ -13530,7 +13617,7 @@ export type ProductOptionFieldsFragment = {
     id: string;
     name: string;
     firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-    swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+    swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
   }>;
 };
 
@@ -13540,23 +13627,23 @@ export type ProductImageConnectionFragment = {
     __typename?: 'ImageEdge';
     node: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     };
   }>;
 };
 
 export type ProductPriceRangeFragment = {
   __typename?: 'ProductPriceRange';
-  maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+  maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
 };
 
 export type ProductVariantConnectionFragment = {
@@ -13572,21 +13659,25 @@ export type ProductVariantConnectionFragment = {
       sku?: string | null;
       weight?: number | null;
       weightUnit: WeightUnit;
-      compareAtPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+      compareAtPrice?: {
+        __typename?: 'MoneyV2';
+        amount: string;
+        currencyCode: CurrencyCode;
+      } | null;
       selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
       image?: {
         __typename?: 'Image';
-        url: any;
-        src: any;
+        url: string;
+        src: string;
         altText?: string | null;
         width?: number | null;
         height?: number | null;
-        small: any;
-        medium: any;
-        large: any;
-        blurDataURL: any;
+        small: string;
+        medium: string;
+        large: string;
+        blurDataURL: string;
       } | null;
-      price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
       product: {
         __typename?: 'Product';
         handle: string;
@@ -13606,22 +13697,22 @@ export type ProductFieldsFragment = {
   id: string;
   title: string;
   availableForSale: boolean;
-  descriptionHtml: any;
+  descriptionHtml: string;
   productType: string;
   tags: Array<string>;
   totalInventory?: number | null;
   vendor: string;
   featuredImage?: {
     __typename?: 'Image';
-    url: any;
-    src: any;
+    url: string;
+    src: string;
     altText?: string | null;
     width?: number | null;
     height?: number | null;
-    small: any;
-    medium: any;
-    large: any;
-    blurDataURL: any;
+    small: string;
+    medium: string;
+    large: string;
+    blurDataURL: string;
   } | null;
   images: {
     __typename?: 'ImageConnection';
@@ -13629,22 +13720,22 @@ export type ProductFieldsFragment = {
       __typename?: 'ImageEdge';
       node: {
         __typename?: 'Image';
-        url: any;
-        src: any;
+        url: string;
+        src: string;
         altText?: string | null;
         width?: number | null;
         height?: number | null;
-        small: any;
-        medium: any;
-        large: any;
-        blurDataURL: any;
+        small: string;
+        medium: string;
+        large: string;
+        blurDataURL: string;
       };
     }>;
   };
   priceRange: {
     __typename?: 'ProductPriceRange';
-    maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-    minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+    maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+    minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
   };
   options: Array<{
     __typename?: 'ProductOption';
@@ -13655,7 +13746,7 @@ export type ProductFieldsFragment = {
       id: string;
       name: string;
       firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-      swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+      swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
     }>;
   }>;
   collections: {
@@ -13678,21 +13769,25 @@ export type ProductFieldsFragment = {
         sku?: string | null;
         weight?: number | null;
         weightUnit: WeightUnit;
-        compareAtPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+        compareAtPrice?: {
+          __typename?: 'MoneyV2';
+          amount: string;
+          currencyCode: CurrencyCode;
+        } | null;
         selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
         image?: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         } | null;
-        price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
         product: {
           __typename?: 'Product';
           handle: string;
@@ -13712,8 +13807,8 @@ export type ProductFieldsFragment = {
     namespace: string;
     value: string;
     type: string;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: string;
+    updatedAt: string;
     parentResource:
       | {
           __typename?: 'Article';
@@ -13724,8 +13819,8 @@ export type ProductFieldsFragment = {
             key: string;
             value: string;
             type: string;
-            createdAt: any;
-            updatedAt: any;
+            createdAt: string;
+            updatedAt: string;
           } | null>;
         }
       | { __typename?: 'Blog'; id: string }
@@ -13754,15 +13849,15 @@ export type CollectionFieldsFragment = {
   id: string;
   image?: {
     __typename?: 'Image';
-    url: any;
-    src: any;
+    url: string;
+    src: string;
     altText?: string | null;
     width?: number | null;
     height?: number | null;
-    small: any;
-    medium: any;
-    large: any;
-    blurDataURL: any;
+    small: string;
+    medium: string;
+    large: string;
+    blurDataURL: string;
   } | null;
   seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
   metafields: Array<{
@@ -13772,8 +13867,8 @@ export type CollectionFieldsFragment = {
     namespace: string;
     value: string;
     type: string;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: string;
+    updatedAt: string;
     parentResource:
       | {
           __typename?: 'Article';
@@ -13784,8 +13879,8 @@ export type CollectionFieldsFragment = {
             key: string;
             value: string;
             type: string;
-            createdAt: any;
-            updatedAt: any;
+            createdAt: string;
+            updatedAt: string;
           } | null>;
         }
       | { __typename?: 'Blog'; id: string }
@@ -13822,7 +13917,7 @@ export type ProductFilterFieldsFragment = {
 export type CustomerAccessTokenFieldsFragment = {
   __typename?: 'CustomerAccessToken';
   accessToken: string;
-  expiresAt: any;
+  expiresAt: string;
 };
 
 export type CustomerAddressFieldsFragment = {
@@ -13856,8 +13951,8 @@ export type CustomerFieldsFragment = {
   email?: string | null;
   phone?: string | null;
   acceptsMarketing: boolean;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: string;
+  updatedAt: string;
   defaultAddress?: {
     __typename?: 'MailingAddress';
     id: string;
@@ -13891,22 +13986,22 @@ export type CustomerUserErrorFieldsFragment = {
 
 export type ImageFieldsFragment = {
   __typename?: 'Image';
-  url: any;
-  src: any;
+  url: string;
+  src: string;
   altText?: string | null;
   width?: number | null;
   height?: number | null;
-  small: any;
-  medium: any;
-  large: any;
-  blurDataURL: any;
+  small: string;
+  medium: string;
+  large: string;
+  blurDataURL: string;
 };
 
 export type OrderLineItemFieldsFragment = {
   __typename?: 'OrderLineItem';
   quantity: number;
   title: string;
-  discountedTotalPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+  discountedTotalPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
   variant?: {
     __typename?: 'ProductVariant';
     id: string;
@@ -13916,21 +14011,21 @@ export type OrderLineItemFieldsFragment = {
     sku?: string | null;
     weight?: number | null;
     weightUnit: WeightUnit;
-    compareAtPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+    compareAtPrice?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
     selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
     image?: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     } | null;
-    price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+    price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
     product: {
       __typename?: 'Product';
       handle: string;
@@ -13948,22 +14043,22 @@ export type OrderFieldsFragment = {
   id: string;
   name: string;
   fulfillmentStatus: OrderFulfillmentStatus;
-  canceledAt?: any | null;
+  canceledAt?: string | null;
   cancelReason?: OrderCancelReason | null;
   currencyCode: CurrencyCode;
-  customerUrl?: any | null;
+  customerUrl?: string | null;
   email?: string | null;
   financialStatus?: OrderFinancialStatus | null;
   orderNumber: number;
   phone?: string | null;
-  processedAt: any;
+  processedAt: string;
   successfulFulfillments?: Array<{
     __typename?: 'Fulfillment';
     trackingCompany?: string | null;
     trackingInfo: Array<{
       __typename?: 'FulfillmentTrackingInfo';
       number?: string | null;
-      url?: any | null;
+      url?: string | null;
     }>;
     fulfillmentLineItems: {
       __typename?: 'FulfillmentLineItemConnection';
@@ -13977,7 +14072,7 @@ export type OrderFieldsFragment = {
             title: string;
             discountedTotalPrice: {
               __typename?: 'MoneyV2';
-              amount: any;
+              amount: string;
               currencyCode: CurrencyCode;
             };
             variant?: {
@@ -13991,7 +14086,7 @@ export type OrderFieldsFragment = {
               weightUnit: WeightUnit;
               compareAtPrice?: {
                 __typename?: 'MoneyV2';
-                amount: any;
+                amount: string;
                 currencyCode: CurrencyCode;
               } | null;
               selectedOptions: Array<{
@@ -14001,17 +14096,17 @@ export type OrderFieldsFragment = {
               }>;
               image?: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               } | null;
-              price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
               product: {
                 __typename?: 'Product';
                 handle: string;
@@ -14027,11 +14122,11 @@ export type OrderFieldsFragment = {
       }>;
     };
   }> | null;
-  subtotalPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
-  totalPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  totalRefunded: { __typename?: 'MoneyV2'; currencyCode: CurrencyCode; amount: any };
-  totalShippingPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-  totalTaxV2?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+  subtotalPrice?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
+  totalPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  totalRefunded: { __typename?: 'MoneyV2'; currencyCode: CurrencyCode; amount: string };
+  totalShippingPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+  totalTaxV2?: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode } | null;
   customAttributes: Array<{ __typename?: 'Attribute'; key: string; value?: string | null }>;
   shippingAddress?: {
     __typename?: 'MailingAddress';
@@ -14062,8 +14157,8 @@ export type OrderFieldsFragment = {
     namespace: string;
     value: string;
     type: string;
-    createdAt: any;
-    updatedAt: any;
+    createdAt: string;
+    updatedAt: string;
     parentResource:
       | {
           __typename?: 'Article';
@@ -14074,8 +14169,8 @@ export type OrderFieldsFragment = {
             key: string;
             value: string;
             type: string;
-            createdAt: any;
-            updatedAt: any;
+            createdAt: string;
+            updatedAt: string;
           } | null>;
         }
       | { __typename?: 'Blog'; id: string }
@@ -14102,8 +14197,8 @@ export type MetafieldFieldsFragment = {
   namespace: string;
   value: string;
   type: string;
-  createdAt: any;
-  updatedAt: any;
+  createdAt: string;
+  updatedAt: string;
   parentResource:
     | {
         __typename?: 'Article';
@@ -14114,8 +14209,8 @@ export type MetafieldFieldsFragment = {
           key: string;
           value: string;
           type: string;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
         } | null>;
       }
     | { __typename?: 'Blog'; id: string }
@@ -14148,22 +14243,22 @@ export type GetProductByHandleQuery = {
     id: string;
     title: string;
     availableForSale: boolean;
-    descriptionHtml: any;
+    descriptionHtml: string;
     productType: string;
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
     featuredImage?: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     } | null;
     images: {
       __typename?: 'ImageConnection';
@@ -14171,22 +14266,22 @@ export type GetProductByHandleQuery = {
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         };
       }>;
     };
     priceRange: {
       __typename?: 'ProductPriceRange';
-      maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
     };
     options: Array<{
       __typename?: 'ProductOption';
@@ -14197,7 +14292,7 @@ export type GetProductByHandleQuery = {
         id: string;
         name: string;
         firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
       }>;
     }>;
     collections: {
@@ -14222,23 +14317,23 @@ export type GetProductByHandleQuery = {
           weightUnit: WeightUnit;
           compareAtPrice?: {
             __typename?: 'MoneyV2';
-            amount: any;
+            amount: string;
             currencyCode: CurrencyCode;
           } | null;
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
-            url: any;
-            src: any;
+            url: string;
+            src: string;
             altText?: string | null;
             width?: number | null;
             height?: number | null;
-            small: any;
-            medium: any;
-            large: any;
-            blurDataURL: any;
+            small: string;
+            medium: string;
+            large: string;
+            blurDataURL: string;
           } | null;
-          price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+          price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
           product: {
             __typename?: 'Product';
             handle: string;
@@ -14258,8 +14353,8 @@ export type GetProductByHandleQuery = {
       namespace: string;
       value: string;
       type: string;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       parentResource:
         | {
             __typename?: 'Article';
@@ -14270,8 +14365,8 @@ export type GetProductByHandleQuery = {
               key: string;
               value: string;
               type: string;
-              createdAt: any;
-              updatedAt: any;
+              createdAt: string;
+              updatedAt: string;
             } | null>;
           }
         | { __typename?: 'Blog'; id: string }
@@ -14323,22 +14418,22 @@ export type ProductRecommendationsQuery = {
     id: string;
     title: string;
     availableForSale: boolean;
-    descriptionHtml: any;
+    descriptionHtml: string;
     productType: string;
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
     featuredImage?: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     } | null;
     images: {
       __typename?: 'ImageConnection';
@@ -14346,22 +14441,22 @@ export type ProductRecommendationsQuery = {
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         };
       }>;
     };
     priceRange: {
       __typename?: 'ProductPriceRange';
-      maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
     };
     options: Array<{
       __typename?: 'ProductOption';
@@ -14372,7 +14467,7 @@ export type ProductRecommendationsQuery = {
         id: string;
         name: string;
         firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
       }>;
     }>;
     collections: {
@@ -14397,23 +14492,23 @@ export type ProductRecommendationsQuery = {
           weightUnit: WeightUnit;
           compareAtPrice?: {
             __typename?: 'MoneyV2';
-            amount: any;
+            amount: string;
             currencyCode: CurrencyCode;
           } | null;
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
-            url: any;
-            src: any;
+            url: string;
+            src: string;
             altText?: string | null;
             width?: number | null;
             height?: number | null;
-            small: any;
-            medium: any;
-            large: any;
-            blurDataURL: any;
+            small: string;
+            medium: string;
+            large: string;
+            blurDataURL: string;
           } | null;
-          price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+          price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
           product: {
             __typename?: 'Product';
             handle: string;
@@ -14433,8 +14528,8 @@ export type ProductRecommendationsQuery = {
       namespace: string;
       value: string;
       type: string;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       parentResource:
         | {
             __typename?: 'Article';
@@ -14445,8 +14540,8 @@ export type ProductRecommendationsQuery = {
               key: string;
               value: string;
               type: string;
-              createdAt: any;
-              updatedAt: any;
+              createdAt: string;
+              updatedAt: string;
             } | null>;
           }
         | { __typename?: 'Blog'; id: string }
@@ -14499,22 +14594,22 @@ export type GetProductsQuery = {
         id: string;
         title: string;
         availableForSale: boolean;
-        descriptionHtml: any;
+        descriptionHtml: string;
         productType: string;
         tags: Array<string>;
         totalInventory?: number | null;
         vendor: string;
         featuredImage?: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         } | null;
         images: {
           __typename?: 'ImageConnection';
@@ -14522,22 +14617,22 @@ export type GetProductsQuery = {
             __typename?: 'ImageEdge';
             node: {
               __typename?: 'Image';
-              url: any;
-              src: any;
+              url: string;
+              src: string;
               altText?: string | null;
               width?: number | null;
               height?: number | null;
-              small: any;
-              medium: any;
-              large: any;
-              blurDataURL: any;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
             };
           }>;
         };
         priceRange: {
           __typename?: 'ProductPriceRange';
-          maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-          minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+          maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+          minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
         };
         options: Array<{
           __typename?: 'ProductOption';
@@ -14548,7 +14643,7 @@ export type GetProductsQuery = {
             id: string;
             name: string;
             firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-            swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+            swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
           }>;
         }>;
         collections: {
@@ -14573,7 +14668,7 @@ export type GetProductsQuery = {
               weightUnit: WeightUnit;
               compareAtPrice?: {
                 __typename?: 'MoneyV2';
-                amount: any;
+                amount: string;
                 currencyCode: CurrencyCode;
               } | null;
               selectedOptions: Array<{
@@ -14583,17 +14678,17 @@ export type GetProductsQuery = {
               }>;
               image?: {
                 __typename?: 'Image';
-                url: any;
-                src: any;
+                url: string;
+                src: string;
                 altText?: string | null;
                 width?: number | null;
                 height?: number | null;
-                small: any;
-                medium: any;
-                large: any;
-                blurDataURL: any;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
               } | null;
-              price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
               product: {
                 __typename?: 'Product';
                 handle: string;
@@ -14613,8 +14708,8 @@ export type GetProductsQuery = {
           namespace: string;
           value: string;
           type: string;
-          createdAt: any;
-          updatedAt: any;
+          createdAt: string;
+          updatedAt: string;
           parentResource:
             | {
                 __typename?: 'Article';
@@ -14625,8 +14720,8 @@ export type GetProductsQuery = {
                   key: string;
                   value: string;
                   type: string;
-                  createdAt: any;
-                  updatedAt: any;
+                  createdAt: string;
+                  updatedAt: string;
                 } | null>;
               }
             | { __typename?: 'Blog'; id: string }
@@ -14667,7 +14762,7 @@ export type GetProductWithVariantQuery = {
     id: string;
     title: string;
     availableForSale: boolean;
-    descriptionHtml: any;
+    descriptionHtml: string;
     productType: string;
     tags: Array<string>;
     totalInventory?: number | null;
@@ -14681,21 +14776,25 @@ export type GetProductWithVariantQuery = {
       sku?: string | null;
       weight?: number | null;
       weightUnit: WeightUnit;
-      compareAtPrice?: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode } | null;
+      compareAtPrice?: {
+        __typename?: 'MoneyV2';
+        amount: string;
+        currencyCode: CurrencyCode;
+      } | null;
       selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
       image?: {
         __typename?: 'Image';
-        url: any;
-        src: any;
+        url: string;
+        src: string;
         altText?: string | null;
         width?: number | null;
         height?: number | null;
-        small: any;
-        medium: any;
-        large: any;
-        blurDataURL: any;
+        small: string;
+        medium: string;
+        large: string;
+        blurDataURL: string;
       } | null;
-      price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
       product: {
         __typename?: 'Product';
         handle: string;
@@ -14708,15 +14807,15 @@ export type GetProductWithVariantQuery = {
     } | null;
     featuredImage?: {
       __typename?: 'Image';
-      url: any;
-      src: any;
+      url: string;
+      src: string;
       altText?: string | null;
       width?: number | null;
       height?: number | null;
-      small: any;
-      medium: any;
-      large: any;
-      blurDataURL: any;
+      small: string;
+      medium: string;
+      large: string;
+      blurDataURL: string;
     } | null;
     images: {
       __typename?: 'ImageConnection';
@@ -14724,22 +14823,22 @@ export type GetProductWithVariantQuery = {
         __typename?: 'ImageEdge';
         node: {
           __typename?: 'Image';
-          url: any;
-          src: any;
+          url: string;
+          src: string;
           altText?: string | null;
           width?: number | null;
           height?: number | null;
-          small: any;
-          medium: any;
-          large: any;
-          blurDataURL: any;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
         };
       }>;
     };
     priceRange: {
       __typename?: 'ProductPriceRange';
-      maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-      minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+      maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+      minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
     };
     options: Array<{
       __typename?: 'ProductOption';
@@ -14750,7 +14849,7 @@ export type GetProductWithVariantQuery = {
         id: string;
         name: string;
         firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+        swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
       }>;
     }>;
     collections: {
@@ -14775,23 +14874,23 @@ export type GetProductWithVariantQuery = {
           weightUnit: WeightUnit;
           compareAtPrice?: {
             __typename?: 'MoneyV2';
-            amount: any;
+            amount: string;
             currencyCode: CurrencyCode;
           } | null;
           selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
           image?: {
             __typename?: 'Image';
-            url: any;
-            src: any;
+            url: string;
+            src: string;
             altText?: string | null;
             width?: number | null;
             height?: number | null;
-            small: any;
-            medium: any;
-            large: any;
-            blurDataURL: any;
+            small: string;
+            medium: string;
+            large: string;
+            blurDataURL: string;
           } | null;
-          price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+          price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
           product: {
             __typename?: 'Product';
             handle: string;
@@ -14811,8 +14910,8 @@ export type GetProductWithVariantQuery = {
       namespace: string;
       value: string;
       type: string;
-      createdAt: any;
-      updatedAt: any;
+      createdAt: string;
+      updatedAt: string;
       parentResource:
         | {
             __typename?: 'Article';
@@ -14823,8 +14922,8 @@ export type GetProductWithVariantQuery = {
               key: string;
               value: string;
               type: string;
-              createdAt: any;
-              updatedAt: any;
+              createdAt: string;
+              updatedAt: string;
             } | null>;
           }
         | { __typename?: 'Blog'; id: string }
@@ -14865,15 +14964,15 @@ export type PredictiveSearchQuery = {
       id: string;
       image?: {
         __typename?: 'Image';
-        url: any;
-        src: any;
+        url: string;
+        src: string;
         altText?: string | null;
         width?: number | null;
         height?: number | null;
-        small: any;
-        medium: any;
-        large: any;
-        blurDataURL: any;
+        small: string;
+        medium: string;
+        large: string;
+        blurDataURL: string;
       } | null;
       seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
       metafields: Array<{
@@ -14883,8 +14982,8 @@ export type PredictiveSearchQuery = {
         namespace: string;
         value: string;
         type: string;
-        createdAt: any;
-        updatedAt: any;
+        createdAt: string;
+        updatedAt: string;
         parentResource:
           | {
               __typename?: 'Article';
@@ -14895,8 +14994,8 @@ export type PredictiveSearchQuery = {
                 key: string;
                 value: string;
                 type: string;
-                createdAt: any;
-                updatedAt: any;
+                createdAt: string;
+                updatedAt: string;
               } | null>;
             }
           | { __typename?: 'Blog'; id: string }
@@ -14921,22 +15020,22 @@ export type PredictiveSearchQuery = {
       id: string;
       title: string;
       availableForSale: boolean;
-      descriptionHtml: any;
+      descriptionHtml: string;
       productType: string;
       tags: Array<string>;
       totalInventory?: number | null;
       vendor: string;
       featuredImage?: {
         __typename?: 'Image';
-        url: any;
-        src: any;
+        url: string;
+        src: string;
         altText?: string | null;
         width?: number | null;
         height?: number | null;
-        small: any;
-        medium: any;
-        large: any;
-        blurDataURL: any;
+        small: string;
+        medium: string;
+        large: string;
+        blurDataURL: string;
       } | null;
       images: {
         __typename?: 'ImageConnection';
@@ -14944,22 +15043,22 @@ export type PredictiveSearchQuery = {
           __typename?: 'ImageEdge';
           node: {
             __typename?: 'Image';
-            url: any;
-            src: any;
+            url: string;
+            src: string;
             altText?: string | null;
             width?: number | null;
             height?: number | null;
-            small: any;
-            medium: any;
-            large: any;
-            blurDataURL: any;
+            small: string;
+            medium: string;
+            large: string;
+            blurDataURL: string;
           };
         }>;
       };
       priceRange: {
         __typename?: 'ProductPriceRange';
-        maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-        minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+        maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
       };
       options: Array<{
         __typename?: 'ProductOption';
@@ -14970,7 +15069,7 @@ export type PredictiveSearchQuery = {
           id: string;
           name: string;
           firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-          swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+          swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
         }>;
       }>;
       collections: {
@@ -14995,23 +15094,23 @@ export type PredictiveSearchQuery = {
             weightUnit: WeightUnit;
             compareAtPrice?: {
               __typename?: 'MoneyV2';
-              amount: any;
+              amount: string;
               currencyCode: CurrencyCode;
             } | null;
             selectedOptions: Array<{ __typename?: 'SelectedOption'; name: string; value: string }>;
             image?: {
               __typename?: 'Image';
-              url: any;
-              src: any;
+              url: string;
+              src: string;
               altText?: string | null;
               width?: number | null;
               height?: number | null;
-              small: any;
-              medium: any;
-              large: any;
-              blurDataURL: any;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
             } | null;
-            price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+            price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
             product: {
               __typename?: 'Product';
               handle: string;
@@ -15031,8 +15130,8 @@ export type PredictiveSearchQuery = {
         namespace: string;
         value: string;
         type: string;
-        createdAt: any;
-        updatedAt: any;
+        createdAt: string;
+        updatedAt: string;
         parentResource:
           | {
               __typename?: 'Article';
@@ -15043,8 +15142,8 @@ export type PredictiveSearchQuery = {
                 key: string;
                 value: string;
                 type: string;
-                createdAt: any;
-                updatedAt: any;
+                createdAt: string;
+                updatedAt: string;
               } | null>;
             }
           | { __typename?: 'Blog'; id: string }
@@ -15094,22 +15193,22 @@ export type SearchProductsQuery = {
             id: string;
             title: string;
             availableForSale: boolean;
-            descriptionHtml: any;
+            descriptionHtml: string;
             productType: string;
             tags: Array<string>;
             totalInventory?: number | null;
             vendor: string;
             featuredImage?: {
               __typename?: 'Image';
-              url: any;
-              src: any;
+              url: string;
+              src: string;
               altText?: string | null;
               width?: number | null;
               height?: number | null;
-              small: any;
-              medium: any;
-              large: any;
-              blurDataURL: any;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
             } | null;
             images: {
               __typename?: 'ImageConnection';
@@ -15117,22 +15216,30 @@ export type SearchProductsQuery = {
                 __typename?: 'ImageEdge';
                 node: {
                   __typename?: 'Image';
-                  url: any;
-                  src: any;
+                  url: string;
+                  src: string;
                   altText?: string | null;
                   width?: number | null;
                   height?: number | null;
-                  small: any;
-                  medium: any;
-                  large: any;
-                  blurDataURL: any;
+                  small: string;
+                  medium: string;
+                  large: string;
+                  blurDataURL: string;
                 };
               }>;
             };
             priceRange: {
               __typename?: 'ProductPriceRange';
-              maxVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
-              minVariantPrice: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+              maxVariantPrice: {
+                __typename?: 'MoneyV2';
+                amount: string;
+                currencyCode: CurrencyCode;
+              };
+              minVariantPrice: {
+                __typename?: 'MoneyV2';
+                amount: string;
+                currencyCode: CurrencyCode;
+              };
             };
             options: Array<{
               __typename?: 'ProductOption';
@@ -15143,7 +15250,7 @@ export type SearchProductsQuery = {
                 id: string;
                 name: string;
                 firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
-                swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: any | null } | null;
+                swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
               }>;
             }>;
             collections: {
@@ -15168,7 +15275,7 @@ export type SearchProductsQuery = {
                   weightUnit: WeightUnit;
                   compareAtPrice?: {
                     __typename?: 'MoneyV2';
-                    amount: any;
+                    amount: string;
                     currencyCode: CurrencyCode;
                   } | null;
                   selectedOptions: Array<{
@@ -15178,17 +15285,17 @@ export type SearchProductsQuery = {
                   }>;
                   image?: {
                     __typename?: 'Image';
-                    url: any;
-                    src: any;
+                    url: string;
+                    src: string;
                     altText?: string | null;
                     width?: number | null;
                     height?: number | null;
-                    small: any;
-                    medium: any;
-                    large: any;
-                    blurDataURL: any;
+                    small: string;
+                    medium: string;
+                    large: string;
+                    blurDataURL: string;
                   } | null;
-                  price: { __typename?: 'MoneyV2'; amount: any; currencyCode: CurrencyCode };
+                  price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
                   product: {
                     __typename?: 'Product';
                     handle: string;
@@ -15208,8 +15315,8 @@ export type SearchProductsQuery = {
               namespace: string;
               value: string;
               type: string;
-              createdAt: any;
-              updatedAt: any;
+              createdAt: string;
+              updatedAt: string;
               parentResource:
                 | {
                     __typename?: 'Article';
@@ -15220,8 +15327,8 @@ export type SearchProductsQuery = {
                       key: string;
                       value: string;
                       type: string;
-                      createdAt: any;
-                      updatedAt: any;
+                      createdAt: string;
+                      updatedAt: string;
                     } | null>;
                   }
                 | { __typename?: 'Blog'; id: string }
@@ -15277,7 +15384,7 @@ export type GetShopQuery = {
     name: string;
     moneyFormat: string;
     shipsToCountries: Array<CountryCode>;
-    primaryDomain: { __typename?: 'Domain'; host: string; url: any };
+    primaryDomain: { __typename?: 'Domain'; host: string; url: string };
     brand?: {
       __typename?: 'Brand';
       shortDescription?: string | null;
@@ -15287,7 +15394,7 @@ export type GetShopQuery = {
         image?: {
           __typename?: 'Image';
           height?: number | null;
-          src: any;
+          src: string;
           width?: number | null;
           altText?: string | null;
         } | null;
@@ -15378,7 +15485,7 @@ export type GetMenuByHandleQuery = {
       tags: Array<string>;
       title: string;
       type: MenuItemType;
-      url?: any | null;
+      url?: string | null;
       items: Array<{
         __typename?: 'MenuItem';
         id: string;
@@ -15386,7 +15493,7 @@ export type GetMenuByHandleQuery = {
         tags: Array<string>;
         title: string;
         type: MenuItemType;
-        url?: any | null;
+        url?: string | null;
         items: Array<{
           __typename?: 'MenuItem';
           id: string;
@@ -15394,7 +15501,7 @@ export type GetMenuByHandleQuery = {
           tags: Array<string>;
           title: string;
           type: MenuItemType;
-          url?: any | null;
+          url?: string | null;
         }>;
       }>;
     }>;
@@ -15447,7 +15554,7 @@ export type GetShopMetaObjectsQuery = {
         __typename?: 'Metaobject';
         id: string;
         handle: string;
-        updatedAt: any;
+        updatedAt: string;
         type: string;
         fields: Array<{ __typename?: 'MetaobjectField'; key: string; value?: string | null }>;
       };
