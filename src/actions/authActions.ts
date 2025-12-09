@@ -78,7 +78,7 @@ export async function registerAction(input: RegisterInput) {
 
   await setShopifyToken(customerAccessToken);
 
-  redirect(config.routes.login);
+  redirect(config.routes.account);
 }
 
 const loginSchema = z.object({
