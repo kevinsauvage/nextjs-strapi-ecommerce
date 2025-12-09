@@ -1,14 +1,16 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import type { RefObject } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
 import { predictiveSearchAction } from '@/actions/SearchAction';
 import SearchForm from '@/components/SearchForm';
-import SearchResults from '@/components/SearchResults';
 import useOnClickOutside from '@/hooks/useClickOutside';
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import debounce from '@/utils/debounce';
+
+const SearchResults = dynamic(() => import('@/components/SearchResults'));
 
 const Search = ({ searchQuery }: { searchQuery: string }) => {
   const [searchValue, setSearchValue] = useState(searchQuery);
