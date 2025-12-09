@@ -2,7 +2,6 @@ import { ChevronLeft, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
 import PageBanner from '@/components/PageBanner';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -118,4 +117,3 @@ const Loading = () => {
 };
 
 export default Loading;
-

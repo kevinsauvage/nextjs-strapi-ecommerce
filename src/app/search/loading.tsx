@@ -2,8 +2,8 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import ListDisplay from '@/components/ListDisplay';
 import ListingHeader from '@/components/ListingHeader';
 import PageBanner from '@/components/PageBanner';
-import seo from '@/data/seo';
 import { Skeleton } from '@/components/ui/skeleton';
+import seo from '@/data/seo';
 
 const Loading = () => {
   return (
@@ -31,4 +31,3 @@ const Loading = () => {
 };
 
 export default Loading;
-

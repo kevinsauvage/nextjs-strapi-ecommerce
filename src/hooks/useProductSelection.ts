@@ -56,7 +56,7 @@ const useProductSelection = ({
         value: option.optionValues.name,
       }));
 
-      const selected = product.variants.edges.find((variant) => {
+      const selected = product?.variants.edges.find((variant) => {
         const variantOptions = variant.node.selectedOptions;
         return selectedOptions.every((option) =>
           variantOptions.some(

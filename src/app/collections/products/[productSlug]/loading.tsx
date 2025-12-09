@@ -1,5 +1,3 @@
-import Breadcrumbs from '@/components/Breadcrumbs';
-import ProductRecommendations from '@/components/ProductRecommendations';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const Loading = () => {
@@ -41,4 +39,3 @@ const Loading = () => {
 };
 
 export default Loading;
-

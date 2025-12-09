@@ -1,6 +1,3 @@
-import Link from 'next/link';
-
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -47,4 +44,3 @@ const Loading = () => {
 };
 
 export default Loading;
-

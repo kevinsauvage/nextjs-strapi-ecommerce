@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { Eye, Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -8,8 +9,6 @@ import Link from 'next/link';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
-
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
