@@ -1,7 +1,3 @@
-import { Plus } from 'lucide-react';
-import Link from 'next/link';
-
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -16,12 +12,7 @@ const Loading = () => {
           <Skeleton className="h-4 w-full mb-4" />
           <div className="flex items-center gap-2 flex-wrap">
             <Skeleton className="h-9 w-24" />
-            <Button variant="default" disabled>
-              <Link href="#" onClick={(e) => e.preventDefault()}>
-                Add new address
-              </Link>
-              <Plus size={16} />
-            </Button>
+            <Skeleton className="h-9 w-40" />
           </div>
         </CardDescription>
       </CardHeader>
@@ -53,4 +44,3 @@ const Loading = () => {
 };
 
 export default Loading;
-
