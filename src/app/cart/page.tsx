@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import seo from '@/data/seo';
-import type { GetCartQuery } from '@/shopify/storefront';
+import type { CartFieldsFragment } from '@/shopify/storefront';
 
 import CartRemove from './_components/CartRemove';
 import CouponCodeForm from './_components/CouponCodeForm';
@@ -24,9 +24,13 @@ export const metadata: Metadata = {
   title: seo.cart.title,
 };
 
+type CartLineNode = CartFieldsFragment['lines']['edges'][number]['node'];
+
 const LineItem: React.FC<{
-  node: GetCartQuery['cart']['lines']['edges'][0]['node'];
+  node: CartLineNode;
 }> = ({ node }) => {
+  if (!('merchandise' in node)) return null;
+
   const unitPrice =
     typeof node.merchandise.price.amount === 'string'
       ? Number.parseFloat(node.merchandise.price.amount)
@@ -34,7 +38,7 @@ const LineItem: React.FC<{
   const totalPrice = unitPrice * node.quantity;
 
   const totalDiscount = node.discountAllocations.reduce(
-    (accumulator, allocation) =>
+    (accumulator: number, allocation) =>
       accumulator +
       Number.parseFloat(
         typeof allocation.discountedAmount.amount === 'string'
@@ -50,25 +54,29 @@ const LineItem: React.FC<{
     <div className="relative flex flex-col gap-2 md:flex-row md:items-center">
       <div className="flex gap-4 basis-1/2">
         <div className="flex-shrink-0">
-          <Image
-            src={node.merchandise.image.medium as string}
-            alt={node.merchandise.product.title}
-            width={80}
-            height={80}
-            className="rounded-md object-cover"
-          />
+          {node.merchandise.image?.medium && (
+            <Image
+              src={node.merchandise.image.medium as string}
+              alt={node.merchandise.product.title}
+              width={80}
+              height={80}
+              className="rounded-md object-cover"
+            />
+          )}
         </div>
         <div className="flex-1 min-w-0">
           <p className="font-medium">{node.merchandise.product.title}</p>
           <div className="text-muted-foreground flex items-center">
-            {node.merchandise.selectedOptions.map((option, index) => (
-              <div key={option.name} className="flex items-center">
-                <span className="block text-sm">{option.value}</span>
-                {index < node.merchandise.selectedOptions.length - 1 && (
-                  <span className="block text-sm text-muted-foreground mx-2">/</span>
-                )}
-              </div>
-            ))}
+            {node.merchandise.selectedOptions.map(
+              (option: { name: string; value: string }, index: number) => (
+                <div key={option.name} className="flex items-center">
+                  <span className="block text-sm">{option.value}</span>
+                  {index < node.merchandise.selectedOptions.length - 1 && (
+                    <span className="block text-sm text-muted-foreground mx-2">/</span>
+                  )}
+                </div>
+              ),
+            )}
           </div>
           <p className="text-sm text-muted-foreground mt-1">
             {unitPriceFormatted} {node.merchandise.price.currencyCode}
@@ -78,7 +86,7 @@ const LineItem: React.FC<{
       <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
         <QuantityUpdatedContainer
           originalQuantity={node.quantity}
-          quantityAvailable={node.merchandise.quantityAvailable}
+          quantityAvailable={node.merchandise.quantityAvailable ?? 0}
           id={node.id}
           disabled={finalPrice <= 0}
         />
@@ -149,7 +157,7 @@ const CartPage = async ({
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {cart.lines.edges?.length > 0 ? (
+                {cart.lines.edges && cart.lines.edges.length > 0 ? (
                   cart.lines.edges.map(({ node }, index) => (
                     <div key={node.id}>
                       <LineItem node={node} />
@@ -219,7 +227,7 @@ const CartPage = async ({
               </div>
             </CardContent>
             <CardFooter>
-              <CheckoutButton checkoutUrl={cart?.checkoutUrl as string} />
+              <CheckoutButton checkoutUrl={String(cart.checkoutUrl)} />
             </CardFooter>
           </Card>
 
@@ -233,7 +241,7 @@ const CartPage = async ({
               </p>
             </CardHeader>
             <CardContent>
-              <CouponCodeForm discountCodes={cart.discountCodes} />
+              <CouponCodeForm discountCodes={cart} />
             </CardContent>
             <CardFooter>
               <DiscountCodes discountCodes={cart.discountCodes} />

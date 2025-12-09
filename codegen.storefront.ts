@@ -10,16 +10,14 @@ const config: CodegenConfig = {
   hooks: { afterAllFileWrite: ['prettier --write'] },
   // Generate schema base on the Shopify Storefront API
   // https://shopify.dev/api/storefront/2025-01
-  schema: [
-    {
-      'https://ecomfashionstore.myshopify.com/api/2025-01/graphql.json': {
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN,
-        },
+  schema: {
+    'https://ecomfashionstore.myshopify.com/api/2025-01/graphql.json': {
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN || '',
       },
     },
-  ],
+  },
 };
 
 export default config;

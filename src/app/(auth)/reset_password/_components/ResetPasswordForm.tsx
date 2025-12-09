@@ -25,6 +25,12 @@ const ResetButton = () => {
 
 const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
   const [formData, setFormData] = useState(initialStates);
+
+  const handleSubmit = async (_previousState: unknown, formData_: FormData) => {
+    const password = formData_.get('password') as string;
+    return resetPasswordAction({ password, resetUrl });
+  };
+
   const [states, action, isPending] = useActionState<
     {
       password?: string | string[];
@@ -32,8 +38,8 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
       customerUserErrors?: { message?: string }[];
       error?: string;
     },
-    undefined
-  >(resetPasswordAction, initialStates);
+    FormData
+  >(handleSubmit, initialStates);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -50,7 +56,6 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
 
   return (
     <Form action={action} title="Reset Password" autoComplete="off">
-      <input type="hidden" name="resetUrl" value={resetUrl} />
       <Label htmlFor="password" className="mb-2">
         New password
       </Label>

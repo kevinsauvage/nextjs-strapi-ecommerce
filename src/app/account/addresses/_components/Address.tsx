@@ -30,11 +30,17 @@ const Address = ({
   const { id, address1, address2, name, city, country, province, zip, company, phone } =
     address || {};
 
-  const handleDelete = async () => {
+  const handleDelete = async (): Promise<void> => {
+    if (!id) {
+      toast.error('Address ID is missing');
+      return;
+    }
+
     const response = await deleteAddressAction(id);
 
     if (response.error) {
-      return toast.error(response.error);
+      toast.error(response.error);
+      return;
     }
     if (response?.customerUserErrors?.length) {
       response.customerUserErrors.forEach((error) => {
@@ -45,11 +51,17 @@ const Address = ({
     toast.success('Address deleted successfully');
   };
 
-  const handleSetAsDefault = async () => {
+  const handleSetAsDefault = async (): Promise<void> => {
+    if (!id) {
+      toast.error('Address ID is missing');
+      return;
+    }
+
     const response = await setDefaultAddressAction(id);
 
     if (response.error) {
-      return toast.error(response.error);
+      toast.error(response.error);
+      return;
     }
 
     if (response?.customerUserErrors?.length) {

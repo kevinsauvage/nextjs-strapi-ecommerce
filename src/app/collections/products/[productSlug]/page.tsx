@@ -25,9 +25,16 @@ export async function generateMetadata({
 
   const { product } = productResponse;
 
+  if (!product) {
+    return {
+      description: 'Product not found',
+      title: 'Product Not Found',
+    };
+  }
+
   return {
-    description: product.seo?.description || product?.description,
-    title: product.seo?.title || product?.title,
+    description: product.seo?.description || product.description || 'Product',
+    title: product.seo?.title || product.title || 'Product',
   };
 }
 

@@ -54,8 +54,8 @@ export const CartProvider = ({
         lineItemId,
         Number(parameters.get('first')),
         Number(parameters.get('last')),
-        parameters.get('after'),
-        parameters.get('before'),
+        parameters.get('after') || '',
+        parameters.get('before') || '',
       );
 
       handleResponse(response);
@@ -77,8 +77,8 @@ export const CartProvider = ({
         ],
         Number(parameters.get('first')),
         Number(parameters.get('last')),
-        parameters.get('after'),
-        parameters.get('before'),
+        parameters.get('after') || '',
+        parameters.get('before') || '',
       );
 
       handleResponse(response);
@@ -96,8 +96,8 @@ export const CartProvider = ({
         lineItemsToAdd,
         Number(parameters.get('first')),
         Number(parameters.get('last')),
-        parameters.get('after'),
-        parameters.get('before'),
+        parameters.get('after') || '',
+        parameters.get('before') || '',
       );
 
       handleResponse(response);

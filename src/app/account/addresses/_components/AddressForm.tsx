@@ -18,10 +18,19 @@ const SubmitButton = ({ buttonText }: { buttonText: string }) => {
   );
 };
 
-type actionType = (
-  previousState: unknown,
-  data: FormData,
-) => Promise<{
+type AddressAction = (input: {
+  address1: string;
+  address2?: string;
+  city: string;
+  company?: string;
+  country: string;
+  firstName: string;
+  id?: string;
+  lastName: string;
+  phone?: string;
+  province?: string;
+  zip: string;
+}) => Promise<{
   address1?: string | string[];
   address2?: string | string[];
   city?: string | string[];
@@ -42,7 +51,7 @@ const AddressFormUI = ({
   address,
   buttonText = 'Create',
 }: {
-  action: actionType;
+  action: AddressAction;
   address?: {
     address1?: string;
     address2?: string;
@@ -61,6 +70,35 @@ const AddressFormUI = ({
 
   buttonText: string;
 }) => {
+  // Wrapper function to extract FormData and call typed server action
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    const address1 = formData.get('address1') as string;
+    const address2 = formData.get('address2') as string;
+    const city = formData.get('city') as string;
+    const company = formData.get('company') as string;
+    const country = formData.get('country') as string;
+    const firstName = formData.get('firstName') as string;
+    const id = formData.get('id') as string;
+    const lastName = formData.get('lastName') as string;
+    const phone = formData.get('phone') as string;
+    const province = formData.get('province') as string;
+    const zip = formData.get('zip') as string;
+
+    return action({
+      address1,
+      address2: address2 || undefined,
+      city,
+      company: company || undefined,
+      country,
+      firstName,
+      id: id || undefined,
+      lastName,
+      phone: phone || undefined,
+      province: province || undefined,
+      zip,
+    });
+  };
+
   const [states, actionState] = useActionState<
     {
       address1?: string | string[];
@@ -77,8 +115,8 @@ const AddressFormUI = ({
       province?: string | string[];
       zip?: string | string[];
     },
-    undefined
-  >(action, {});
+    FormData
+  >(handleSubmit, {});
 
   useEffect(() => {
     if (states.customerUserErrors?.length) {

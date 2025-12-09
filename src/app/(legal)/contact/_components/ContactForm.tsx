@@ -17,6 +17,14 @@ const SubmitButton = () => {
 };
 
 const ContactForm = () => {
+  // Wrapper function to extract FormData and call typed server action
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    const email = formData.get('email') as string;
+    const name = formData.get('name') as string;
+    const message = formData.get('message') as string;
+    return contactAction({ email, message, name });
+  };
+
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -25,8 +33,8 @@ const ContactForm = () => {
       customerUserErrors?: { message?: string }[];
       error?: string;
     },
-    undefined
-  >(contactAction, {
+    FormData
+  >(handleSubmit, {
     email: '',
     message: '',
     name: '',

@@ -26,6 +26,19 @@ const SubmitButton = () => {
 
 const UpdateUserForm = () => {
   const { user } = useUserContext();
+
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    if (!user) return { error: 'User not found' };
+
+    const email = formData.get('email') as string;
+    const firstName = formData.get('firstName') as string;
+    const lastName = formData.get('lastName') as string;
+    const phone = formData.get('phone') as string;
+    const acceptsMarketing = formData.get('acceptsMarketing') as string;
+
+    return updateUserAction({ acceptsMarketing, email, firstName, lastName, phone });
+  };
+
   const [states, action] = useActionState<
     {
       firstName?: string | string[];
@@ -36,8 +49,8 @@ const UpdateUserForm = () => {
       error?: string;
       success?: string;
     },
-    undefined
-  >(updateUserAction, user);
+    FormData
+  >(handleSubmit, {});
   const [acceptsMarketing, setAcceptsMarketing] = useState(false);
 
   useEffect(() => {
@@ -54,11 +67,13 @@ const UpdateUserForm = () => {
         toast.error(error.message || userFeedback.login.error);
       });
     }
-  }, [states, user]);
+  }, [states]);
 
   useEffect(() => {
-    setAcceptsMarketing(user.acceptsMarketing);
-  }, [user.acceptsMarketing]);
+    if (user) {
+      setAcceptsMarketing(user.acceptsMarketing ?? false);
+    }
+  }, [user]);
 
   return (
     <form action={action} className="space-y-8">
@@ -71,28 +86,37 @@ const UpdateUserForm = () => {
         </span>
       </div>
 
-      <input type="hidden" name="email" value={user.email} />
+      {user && (
+        <>
+          <input type="hidden" name="email" value={user.email ?? ''} />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Label className="flex flex-col items-start">
-          <p>First Name</p>
-          <Input id="firstName" type="text" name="firstName" defaultValue={user.firstName} />
-        </Label>
-        <Label className="flex flex-col items-start">
-          <p>Last Name</p>
-          <Input id="lastName" type="text" name="lastName" defaultValue={user.lastName} />
-        </Label>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Label className="flex flex-col items-start">
-          <p>Email</p>
-          <Input id="email" type="email" disabled defaultValue={user.email} />
-        </Label>
-        <Label className="flex flex-col items-start">
-          <p>Phone</p>
-          <Input id="phone" type="text" name="phone" defaultValue={user.phone} />
-        </Label>
-      </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Label className="flex flex-col items-start">
+              <p>First Name</p>
+              <Input
+                id="firstName"
+                type="text"
+                name="firstName"
+                defaultValue={user.firstName ?? ''}
+              />
+            </Label>
+            <Label className="flex flex-col items-start">
+              <p>Last Name</p>
+              <Input id="lastName" type="text" name="lastName" defaultValue={user.lastName ?? ''} />
+            </Label>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <Label className="flex flex-col items-start">
+              <p>Email</p>
+              <Input id="email" type="email" disabled defaultValue={user.email ?? ''} />
+            </Label>
+            <Label className="flex flex-col items-start">
+              <p>Phone</p>
+              <Input id="phone" type="text" name="phone" defaultValue={user.phone ?? ''} />
+            </Label>
+          </div>
+        </>
+      )}
 
       <Label htmlFor="acceptsMarketing">
         <Checkbox

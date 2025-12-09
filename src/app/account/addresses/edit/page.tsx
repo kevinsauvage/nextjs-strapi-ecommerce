@@ -18,9 +18,75 @@ type PageProperties = {
   }>;
 };
 
+const normalizeAddressId = (id: string | null | undefined): string => {
+  return id?.split('?')[0] || '';
+};
+
+const mapAddressNodeToFormData = (addressNode: {
+  id?: string | null;
+  address1?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  company?: string | null;
+  country?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  phone?: string | null;
+  province?: string | null;
+  zip?: string | null;
+}) => ({
+  address1: addressNode.address1 ?? '',
+  address2: addressNode.address2 ?? undefined,
+  city: addressNode.city ?? '',
+  company: addressNode.company ?? undefined,
+  country: addressNode.country ?? '',
+  firstName: addressNode.firstName ?? '',
+  id: addressNode.id ?? '',
+  lastName: addressNode.lastName ?? '',
+  phone: addressNode.phone ?? undefined,
+  province: addressNode.province ?? undefined,
+  zip: addressNode.zip ?? '',
+});
+
+type AddressNode = {
+  id?: string | null;
+  address1?: string | null;
+  address2?: string | null;
+  city?: string | null;
+  company?: string | null;
+  country?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  phone?: string | null;
+  province?: string | null;
+  zip?: string | null;
+};
+
+const findAddressById = (
+  addresses:
+    | {
+        edges?: Array<{
+          node: AddressNode;
+        }>;
+      }
+    | null
+    | undefined,
+  id: string,
+) => {
+  if (!addresses?.edges || addresses.edges.length === 0) {
+    return null;
+  }
+
+  const normalizedId = normalizeAddressId(id);
+  const node = addresses.edges
+    .map((item) => item.node)
+    .find((n) => normalizeAddressId(n.id) === normalizedId);
+
+  return node || null;
+};
+
 const EditAddress = async ({ searchParams }: PageProperties) => {
   const searchParameters = await searchParams;
-
   const { id } = searchParameters;
 
   if (!id) {
@@ -28,7 +94,6 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
   }
 
   const customerAccessToken = await getShopifyToken();
-
   if (!customerAccessToken) {
     redirect(config.routes.login);
   }
@@ -38,17 +103,12 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
     first: 100,
   });
 
-  const { addresses } = response?.customer || {};
-
-  if (!addresses || !Array.isArray(addresses.edges) || addresses.edges.length === 0) {
+  const addressNode = findAddressById(response?.customer?.addresses, id);
+  if (!addressNode) {
     redirect(config.routes.addresses);
   }
 
-  const address =
-    Array.isArray(addresses.edges) &&
-    addresses?.edges
-      ?.map((item) => item.node)
-      .find((item) => item.id?.split('?')[0] === id.split('?')[0]);
+  const address = mapAddressNodeToFormData(addressNode);
 
   return (
     <Card>

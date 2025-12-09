@@ -18,6 +18,12 @@ const SubmitButton = () => {
 };
 
 const RecoverForm = () => {
+  // Wrapper function to extract FormData and call typed server action
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    const email = formData.get('email') as string;
+    return recoverPasswordAction({ email });
+  };
+
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -25,8 +31,8 @@ const RecoverForm = () => {
       customerUserErrors?: CustomerUserError[];
       success?: string;
     },
-    undefined
-  >(recoverPasswordAction, {
+    FormData
+  >(handleSubmit, {
     email: '',
   });
 

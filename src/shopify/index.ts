@@ -1,5 +1,5 @@
 import { GraphQLClient } from 'graphql-request';
-import type { RequestConfig } from 'graphql-request/build/esm/types';
+import type { RequestConfig } from 'node_modules/graphql-request/build/esm/types';
 
 import { getSdk as getAdminSdk } from './admin/index';
 import type { SdkFunctionWrapper } from './storefront/index';
@@ -19,9 +19,9 @@ if (!SHOPIFY_URL) {
   throw new Error('Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL');
 }
 
-const options: RequestConfig = {
+const options = {
   cache: 'force-cache',
-  fetch: async (url, parameters) => {
+  fetch: async (url: string, parameters: RequestInit) => {
     const response = await fetch(url, {
       ...parameters,
       next: { revalidate: 600 },
@@ -42,7 +42,8 @@ const options: RequestConfig = {
   },
 };
 
-const storefrontClient = new GraphQLClient(SHOPIFY_URL, options);
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const storefrontClient = new GraphQLClient(SHOPIFY_URL, options as RequestConfig);
 
 const defaultWrapper: SdkFunctionWrapper = async (
   action,
@@ -53,7 +54,7 @@ const defaultWrapper: SdkFunctionWrapper = async (
   const extraHeader = await buildExtraHeaders({});
 
   try {
-    return action(extraHeader);
+    return await action(extraHeader);
   } catch (error) {
     if (error instanceof Error) {
       console.error(
@@ -71,6 +72,7 @@ const defaultWrapper: SdkFunctionWrapper = async (
       );
       throw error;
     }
+    throw error;
   }
 };
 
@@ -81,11 +83,11 @@ export const storefrontSdk = () => {
 const adminHeaders = {
   headers: {
     'Content-Type': 'application/json',
-    'X-Shopify-Access-Token': ADMIN_TOKEN,
+    'X-Shopify-Access-Token': ADMIN_TOKEN || '',
   },
 };
 
-export const adminClient = new GraphQLClient(process.env.SHOPIFY_ADMIN_URL, adminHeaders);
+export const adminClient = new GraphQLClient(process.env.SHOPIFY_ADMIN_URL || '', adminHeaders);
 
 export const adminSdk = () => {
   return getAdminSdk(adminClient);

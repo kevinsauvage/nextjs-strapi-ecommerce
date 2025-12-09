@@ -7,8 +7,8 @@ const Price = ({
   price,
   priceRange,
 }: {
-  compareAtPrice: MoneyV2 | null;
-  price: MoneyV2 | null;
+  compareAtPrice: MoneyV2 | undefined | null;
+  price: MoneyV2 | undefined | null;
   priceRange?: ProductFieldsFragment['priceRange'];
 }) => {
   const isDiscount = compareAtPrice && compareAtPrice?.amount !== price?.amount;

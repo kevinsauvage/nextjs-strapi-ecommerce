@@ -5,7 +5,7 @@ import { storefrontSdk } from '@/shopify';
 
 const Footer = async () => {
   const response = await storefrontSdk().getMenuByHandle({ handle: 'footer' });
-  const menuFooter = response?.menu.items;
+  const menuFooter = response?.menu?.items;
 
   return (
     <footer className="flex flex-col py-10 gap-10 border-t">

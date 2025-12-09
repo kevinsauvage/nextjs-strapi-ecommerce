@@ -7,6 +7,9 @@ import Link from 'next/link';
 
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
+import { mapShopifyImagesToImageFields } from '@/utils/images';
+
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 
 import { Button } from './ui/button';
 import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
@@ -28,8 +31,7 @@ const ProductCardDefault = ({
   const { userWishlist, handleSetWishlist } = useUserContext();
   const [loading, setLoading] = useState(false);
 
-  const productImages =
-    (images?.edges?.map((image) => image.node) as unknown as ImageFields[]) || [];
+  const productImages = mapShopifyImagesToImageFields(images?.edges);
 
   const isWishlisted = userWishlist?.find((item) => item.id === id);
 
@@ -54,7 +56,7 @@ const ProductCardDefault = ({
             isWishlisted ? 'text-red-500' : ''
           }`}
           type="button"
-          onClick={(event) => {
+          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
             event.stopPropagation();
             event.preventDefault();
             handleWishlist().catch(() => {
@@ -77,7 +79,9 @@ const ProductCardDefault = ({
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-[900px] w-full max-h-[90vh] overflow-auto ">
-            <DialogTitle className="sr-only">Quick view for {title}</DialogTitle>
+            <VisuallyHidden.Root>
+              <DialogTitle>Quick view for {title}</DialogTitle>
+            </VisuallyHidden.Root>
             <div className="pr-3">
               <ProductDescription product={product} isModal />
             </div>

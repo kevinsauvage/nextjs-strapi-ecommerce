@@ -10,15 +10,11 @@ import type { CartDiscountCode } from '@/shopify/storefront';
 
 const DiscountCodes = ({ discountCodes }: { discountCodes: CartDiscountCode[] }) => {
   const handleRemoveCode = async (code: string) => {
-    const formData = new FormData();
     const newCoupons = discountCodes
       .filter((discountCode) => discountCode.code !== code)
       .map((discountCode) => discountCode.code);
-    newCoupons.forEach((c) => {
-      formData.append('couponCode', c);
-    });
 
-    const response = await cartDiscountCodesUpdateAction(null, formData);
+    const response = await cartDiscountCodesUpdateAction(newCoupons);
 
     if (response?.success) {
       toast.success(response?.message);

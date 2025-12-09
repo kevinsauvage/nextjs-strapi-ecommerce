@@ -39,8 +39,10 @@ const registerSchema = z
     }
   });
 
-export async function registerAction(previousState: unknown, data: FormData) {
-  const result = registerSchema.safeParse(Object.fromEntries(data.entries()));
+type RegisterInput = z.infer<typeof registerSchema>;
+
+export async function registerAction(input: RegisterInput) {
+  const result = registerSchema.safeParse(input);
   if (!result?.success) return result.error.formErrors.fieldErrors;
 
   const { email, password, firstName, lastName } = result.data;
@@ -70,6 +72,10 @@ export async function registerAction(previousState: unknown, data: FormData) {
     };
   }
 
+  if (!customerAccessToken) {
+    return { error: config.userFeedback.register.error };
+  }
+
   await setShopifyToken(customerAccessToken);
 
   redirect(config.routes.login);
@@ -81,16 +87,15 @@ const loginSchema = z.object({
   redirectUrl: z.string().optional(),
 });
 
-export async function loginAction(
-  previousState: unknown,
-  data: FormData,
-): Promise<{
+type LoginInput = z.infer<typeof loginSchema>;
+
+export async function loginAction(input: LoginInput): Promise<{
   customerUserErrors?: CustomerUserError[];
   email?: string[];
   error?: string;
   password?: string[];
 }> {
-  const result = loginSchema.safeParse(Object.fromEntries(data.entries()));
+  const result = loginSchema.safeParse(input);
   if (!result?.success) return result.error.formErrors.fieldErrors;
 
   const { email, password, redirectUrl } = result.data;
@@ -121,8 +126,10 @@ const recoverSchema = z.object({
   email: z.string().email(),
 });
 
-export const recoverPasswordAction = async (previousStates: unknown, data: FormData) => {
-  const result = recoverSchema.safeParse(Object.fromEntries(data.entries()));
+type RecoverPasswordInput = z.infer<typeof recoverSchema>;
+
+export const recoverPasswordAction = async (input: RecoverPasswordInput) => {
+  const result = recoverSchema.safeParse(input);
   if (!result.success) return result.error.formErrors.fieldErrors;
 
   const { email } = result.data;
@@ -141,8 +148,10 @@ const resetSchema = z.object({
   resetUrl: z.string(),
 });
 
-export const resetPasswordAction = async (previousStates: unknown, data: FormData) => {
-  const result = resetSchema.safeParse(Object.fromEntries(data.entries()));
+type ResetPasswordInput = z.infer<typeof resetSchema>;
+
+export const resetPasswordAction = async (input: ResetPasswordInput) => {
+  const result = resetSchema.safeParse(input);
   if (!result.success) return result.error.formErrors.fieldErrors;
 
   const { password, resetUrl } = result.data;
@@ -159,8 +168,8 @@ export const resetPasswordAction = async (previousStates: unknown, data: FormDat
     redirect(config.routes.account);
   }
 
-  if (customerUserErrors?.length) {
-    return { error: customerUserErrors[0].message };
+  if (customerUserErrors && customerUserErrors.length > 0) {
+    return { error: customerUserErrors[0]?.message ?? config.userFeedback.resetPassword.error };
   }
 
   return { error: config.userFeedback.resetPassword.error };

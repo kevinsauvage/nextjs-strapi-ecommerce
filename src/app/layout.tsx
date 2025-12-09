@@ -27,6 +27,68 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getUser();
   const userWishlist = await getWishlistAction();
 
+  // If cart is undefined, createCartAction should have been called in middleware
+  // But as a fallback, we'll create an empty cart structure
+  // The cart will be properly initialized when user adds items
+  if (!cart) {
+    // This should rarely happen as middleware creates cart, but handle it gracefully
+    console.warn('Cart not found, this should be handled by middleware');
+  }
+
+  // Use cart if available, otherwise create a minimal empty cart
+  // Note: In production, middleware should always create a cart
+  const initialCart: CartFieldsFragment =
+    cart ??
+    ({
+      __typename: 'Cart',
+      appliedGiftCards: [],
+      attributes: [],
+      buyerIdentity: {
+        __typename: 'CartBuyerIdentity',
+        countryCode: null,
+        deliveryAddressPreferences: [],
+        email: null,
+        phone: null,
+      },
+      checkoutUrl: '',
+      cost: {
+        __typename: 'CartCost',
+        subtotalAmount: {
+          __typename: 'MoneyV2',
+          amount: '0',
+          currencyCode: 'USD',
+        },
+        totalAmount: {
+          __typename: 'MoneyV2',
+          amount: '0',
+          currencyCode: 'USD',
+        },
+        totalDutyAmount: null,
+        totalTaxAmount: {
+          __typename: 'MoneyV2',
+          amount: '0',
+          currencyCode: 'USD',
+        },
+      },
+      createdAt: new Date().toISOString(),
+      discountCodes: [],
+      id: '',
+      lines: {
+        __typename: 'BaseCartLineConnection',
+        edges: [],
+        pageInfo: {
+          __typename: 'PageInfo',
+          endCursor: null,
+          hasNextPage: false,
+          hasPreviousPage: false,
+          startCursor: null,
+        },
+      },
+      note: null,
+      totalQuantity: 0,
+      updatedAt: new Date().toISOString(),
+    } as CartFieldsFragment);
+
   return (
     <html
       lang="en"
@@ -42,9 +104,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider initialCart={cart as unknown as CartFieldsFragment}>
+          <CartProvider initialCart={initialCart}>
             <UserProvider user={user} userWishlist={userWishlist}>
-              <Header headerMenu={headerMenu?.menu?.items} />
+              <Header headerMenu={headerMenu?.menu || null} />
               <main className="min-h-[calc(100vh-76px)]">{children}</main>
               <Toaster richColors />
               <Footer />

@@ -6,10 +6,12 @@ import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 import CollectionNav from '../_components/CollectionNav';
 
 const findRecursiveMenuItem = (
-  items: GetMenuByHandleQuery['menu']['items'],
+  items: GetMenuByHandleQuery['menu'] | null | undefined,
   collectionSlug: string,
 ) => {
-  for (const item of items) {
+  if (!items?.items) return false;
+
+  for (const item of items.items) {
     if (
       typeof item?.url === 'string' &&
       item.url.toLowerCase().includes(collectionSlug.toLowerCase())
@@ -17,7 +19,7 @@ const findRecursiveMenuItem = (
       return true;
     } else if (item?.items?.length) {
       const foundItem = findRecursiveMenuItem(
-        item.items as GetMenuByHandleQuery['menu']['items'],
+        { items: item.items } as GetMenuByHandleQuery['menu'],
         collectionSlug,
       );
       if (foundItem) {
@@ -50,24 +52,29 @@ const Layout = async ({
   const { title, description } = response.collection || {};
 
   const findNavItems = () => {
-    return (
-      responseMenu?.menu?.items?.find((item) => {
-        if (typeof item?.url === 'string') {
-          return findRecursiveMenuItem(
-            item.items as GetMenuByHandleQuery['menu']['items'],
-            collectionSlug,
-          );
-        }
-        return false;
-      })?.items || []
-    );
+    if (!responseMenu?.menu?.items) return [];
+
+    const foundItem = responseMenu.menu.items.find((item) => {
+      if (typeof item?.url === 'string') {
+        return findRecursiveMenuItem(
+          { items: item.items || [] } as GetMenuByHandleQuery['menu'],
+          collectionSlug,
+        );
+      }
+      return false;
+    });
+
+    return foundItem?.items || [];
   };
 
   return (
     <div>
-      <PageBanner title={title} description={description}>
+      <PageBanner title={title || 'Collection'} description={description}>
         <Breadcrumbs />
-        <CollectionNav collectionSlug={collectionSlug} items={findNavItems()} />
+        <CollectionNav
+          collectionSlug={collectionSlug}
+          items={{ items: findNavItems() } as GetMenuByHandleQuery['menu']}
+        />
       </PageBanner>
       <div className="container mx-auto px-4">{children}</div>
     </div>

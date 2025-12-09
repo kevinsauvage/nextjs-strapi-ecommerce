@@ -1,4 +1,5 @@
 export const getCookieFront = (name: string) => {
+  if (typeof document === 'undefined') return '';
   const cookies = document.cookie.split(';');
 
   for (const cooky of cookies) {
@@ -7,6 +8,8 @@ export const getCookieFront = (name: string) => {
       return cookie.slice(Math.max(0, name.length + 1));
     }
   }
+
+  return '';
 };
 
 export const setCookieFront = (
@@ -36,6 +39,6 @@ export const setCookieFront = (
     // eslint-disable-next-line unicorn/no-document-cookie
     if (typeof document !== 'undefined') document.cookie = cookie;
   } catch (error) {
-    console.error(`Failed to set cookie: ${error}`);
+    console.error(`Failed to set cookie: ${JSON.stringify(error, undefined, 2)}`);
   }
 };

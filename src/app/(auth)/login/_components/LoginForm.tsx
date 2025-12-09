@@ -27,6 +27,16 @@ const LoginButton = () => {
 
 const LoginForm = () => {
   const searchParameters = useSearchParams();
+
+  // Wrapper function to extract FormData and call typed server action
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+    const redirectUrl = searchParameters.get('redirect') || undefined;
+
+    return loginAction({ email, password, redirectUrl });
+  };
+
   const [states, action] = useActionState<
     {
       email?: string | string[];
@@ -34,8 +44,8 @@ const LoginForm = () => {
       customerUserErrors?: CustomerUserError[];
       error?: string;
     },
-    undefined
-  >(loginAction, {
+    FormData
+  >(handleSubmit, {
     customerUserErrors: [],
     email: [],
     error: '',
@@ -58,7 +68,6 @@ const LoginForm = () => {
   return (
     <Form action={action}>
       <h3 className="mb-8 text-2xl font-bold">Login</h3>
-      <input type="hidden" name="redirectUrl" value={searchParameters.get('redirect') || ''} />
       <div>
         <Label htmlFor="email" className="mb-1">
           Email address:

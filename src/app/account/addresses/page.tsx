@@ -1,6 +1,7 @@
 import { Plus } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import NoAddressIllustration from '@/assets/NoAddressIllustration.png';
 import EmptyState from '@/components/EmptyState';
@@ -32,21 +33,25 @@ const Addresses = async ({
   const searchParameters = await searchParams;
   const customerAccessToken = await getShopifyToken();
 
+  if (!customerAccessToken) {
+    redirect(config.routes.login);
+  }
+
   const response = await storefrontSdk().getCustomerAddresses({
     ...adjustPaginationVariables({
-      after: searchParameters.after,
-      before: searchParameters.before,
+      after: searchParameters.after || undefined,
+      before: searchParameters.before || undefined,
       first: 6,
     }),
     customerAccessToken,
   });
 
-  const addresses = response?.customer?.addresses.edges.map((edge) => ({
-    ...edge.node,
-  }));
+  const addresses =
+    response?.customer?.addresses?.edges?.map((edge) => ({
+      ...edge.node,
+    })) || [];
 
   const pageInfo = response?.customer?.addresses.pageInfo;
-
   const user = await getUser();
 
   const isDefault = (address: MailingAddress) =>
@@ -72,6 +77,10 @@ const Addresses = async ({
         </CardContent>
       </Card>
     );
+  }
+
+  if (!pageInfo) {
+    return null;
   }
 
   return (

@@ -23,7 +23,7 @@ const ShippingPage = async () => {
         <Breadcrumbs lastElement={title} />
       </PageBanner>
       <MainContent>
-        <div dangerouslySetInnerHTML={{ __html: shippingPolicy?.body }} />
+        {shippingPolicy?.body && <div dangerouslySetInnerHTML={{ __html: shippingPolicy.body }} />}
       </MainContent>
     </div>
   );

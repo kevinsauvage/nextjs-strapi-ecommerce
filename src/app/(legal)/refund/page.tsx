@@ -24,7 +24,7 @@ const RefoundPage = async () => {
         <Breadcrumbs lastElement={title} />
       </PageBanner>
       <MainContent>
-        <div dangerouslySetInnerHTML={{ __html: refundPolicy.body }} />
+        {refundPolicy?.body && <div dangerouslySetInnerHTML={{ __html: refundPolicy.body }} />}
       </MainContent>
     </div>
   );

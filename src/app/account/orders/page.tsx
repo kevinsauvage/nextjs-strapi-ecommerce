@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import config from '@/config';
 import seo from '@/data/seo';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
@@ -28,12 +30,16 @@ const Page = async ({
 
   const shopifyToken = await getShopifyToken();
 
+  if (!shopifyToken) {
+    redirect(config.routes.login);
+  }
+
   const response = await storefrontSdk().getCustomerOrders({
     customerAccessToken: shopifyToken,
     first: 5,
     ...adjustPaginationVariables({
-      after: searchParameters.after,
-      before: searchParameters.before,
+      after: searchParameters.after || undefined,
+      before: searchParameters.before || undefined,
       first: 5,
       last: undefined,
     }),
@@ -86,7 +92,7 @@ const Page = async ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Orders orders={edges} />
+        <Orders orders={response.customer} />
         <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
       </CardContent>
     </Card>

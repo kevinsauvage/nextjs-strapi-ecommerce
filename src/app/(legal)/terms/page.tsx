@@ -23,7 +23,7 @@ const TermsPage = async () => {
         <Breadcrumbs lastElement={title} />
       </PageBanner>
       <MainContent>
-        <div dangerouslySetInnerHTML={{ __html: termsOfService?.body }} />
+        {termsOfService?.body && <div dangerouslySetInnerHTML={{ __html: termsOfService.body }} />}
       </MainContent>
     </div>
   );

@@ -40,7 +40,7 @@ export const parseFiltersQuery = (filters: string | Array<string> | undefined): 
 
   if (!Array.isArray(filters) && typeof filters === 'string') {
     const [, jsonPart] = filters.split(/:(.+)/);
-    return [JSON.parse(jsonPart) as ProductFilter];
+    return [JSON.parse(jsonPart || '') as ProductFilter];
   }
 
   return filters
@@ -99,7 +99,9 @@ export const getNextPath = async (
 
   const currentUrl = await getCurrentUrlWithoutParameters();
   const newSearchParameters = new URLSearchParams(searchParameters);
-  newSearchParameters.set('after', pageInfo.endCursor);
+  if (pageInfo.endCursor) {
+    newSearchParameters.set('after', pageInfo.endCursor);
+  }
   newSearchParameters.delete('before');
 
   return `${currentUrl}?${newSearchParameters.toString()}`;
@@ -118,7 +120,9 @@ export const getPreviousPath = async (
   }
   const currentUrl = await getCurrentUrlWithoutParameters();
   const newSearchParameters = new URLSearchParams(searchParameters);
-  newSearchParameters.set('before', pageInfo.startCursor);
+  if (pageInfo.startCursor) {
+    newSearchParameters.set('before', pageInfo.startCursor);
+  }
   newSearchParameters.delete('after');
 
   return `${currentUrl}?${newSearchParameters.toString()}`;

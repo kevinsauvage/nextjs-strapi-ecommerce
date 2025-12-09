@@ -12,10 +12,22 @@ type SelectedProductOptionType = {
   optionValues: OptionValues;
 };
 
-const useProductSelection = ({ product }: { product: GetProductByHandleQuery['product'] }) => {
-  const [selectedVariant, setSelectedVariant] = useState<
-    GetProductByHandleQuery['product']['variants']['edges'][0]['node'] | undefined
-  >();
+type ProductVariant = NonNullable<GetProductByHandleQuery['product']>['variants'] extends {
+  edges: Array<{ node: infer T }>;
+}
+  ? T
+  : NonNullable<GetProductByHandleQuery['product']>['variants'] extends {
+        edges?: Array<{ node?: infer T }>;
+      }
+    ? T | undefined
+    : { id: string; price?: { amount: string } } | undefined;
+
+const useProductSelection = ({
+  product,
+}: {
+  product: GetProductByHandleQuery['product'] | null | undefined;
+}) => {
+  const [selectedVariant, setSelectedVariant] = useState<ProductVariant | undefined>();
   const [selectedProductOption, setSelectedProductOption] = useState<
     SelectedProductOptionType[] | undefined
   >([]);
@@ -28,8 +40,9 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
   const handleChangeInput = useCallback(
     (number_: number) => {
       setQuantity(number_);
-      if (number_ && selectedVariant?.id) {
-        const amount = Number(selectedVariant?.price?.amount) * number_;
+      if (number_ && selectedVariant && 'id' in selectedVariant && 'price' in selectedVariant) {
+        const variant = selectedVariant as { id: string; price: { amount: string } };
+        const amount = Number(variant.price.amount) * number_;
         setTotalPrice(Number(amount.toFixed(2)));
       }
     },
@@ -43,7 +56,7 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
         value: option.optionValues.name,
       }));
 
-      const selected = product?.variants?.edges?.find((variant) => {
+      const selected = product.variants.edges.find((variant) => {
         const variantOptions = variant.node.selectedOptions;
         return selectedOptions.every((option) =>
           variantOptions.some(
@@ -53,7 +66,9 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
         );
       });
 
-      setSelectedVariant(selected?.node);
+      if (selected?.node) {
+        setSelectedVariant(selected.node);
+      }
     },
     [product],
   );
@@ -64,15 +79,48 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
         const newOptions = previous?.map((option) => {
           return option?.name === name ? { ...option, id, optionValues } : option;
         });
-        selectVariantByOptions(newOptions);
+        if (newOptions) {
+          selectVariantByOptions(newOptions);
+        }
         return newOptions;
       });
     },
     [selectVariantByOptions],
   );
 
+  const handleAddToCart = useCallback(() => {
+    if (selectedVariant && typeof selectedVariant === 'object' && 'id' in selectedVariant) {
+      const variantId = String((selectedVariant as { id: string }).id);
+      handleAddToCartContext(variantId, quantity).catch((error) => {
+        console.error('Error adding to cart:', error);
+      });
+    }
+  }, [handleAddToCartContext, quantity, selectedVariant]);
+
+  useEffect(() => {
+    if (product?.variants.edges[0]?.node) {
+      setSelectedVariant(product.variants.edges[0].node);
+    }
+    const optionsArray = product?.options || [];
+    const mappedOptions = optionsArray.map((option) => {
+      if (!option) return { id: '', name: '', optionValues: {} as OptionValues };
+      const optionId = (option as { id?: string }).id || '';
+      const optionName = (option as { name?: string }).name || '';
+      const optionValuesArray =
+        (option as { optionValues?: Array<OptionValues> }).optionValues || [];
+      return {
+        id: optionId,
+        name: optionName,
+        optionValues: optionValuesArray[0] || ({} as OptionValues),
+      };
+    });
+
+    setSelectedProductOption(mappedOptions);
+    selectVariantByOptions(mappedOptions);
+  }, [product, selectVariantByOptions]);
+
   const isOptionOutOfStock = (name: string, optionValue: OptionValues) => {
-    const isOUt = product?.variants?.edges?.some((variant) => {
+    const isOUt = product?.variants.edges.some((variant) => {
       const selectedOptions = variant.node.selectedOptions;
       return selectedOptions.some(
         (option) => option.name === name && option.value === optionValue?.name,
@@ -82,37 +130,13 @@ const useProductSelection = ({ product }: { product: GetProductByHandleQuery['pr
   };
 
   const isOptionSelected = (name: string, value: OptionValues) => {
-    return selectedProductOption?.some(
-      (selectedOption) =>
-        selectedOption.name === name && selectedOption.optionValues.name === value.name,
+    return (
+      selectedProductOption?.some(
+        (selectedOption) =>
+          selectedOption.name === name && selectedOption.optionValues.name === value.name,
+      ) || false
     );
   };
-
-  const handleAddToCart = useCallback(() => {
-    if (selectedVariant?.id) {
-      handleAddToCartContext(selectedVariant.id, quantity).catch((error) => {
-        console.error('Error adding to cart:', error);
-      });
-    }
-  }, [handleAddToCartContext, quantity, selectedVariant?.id]);
-
-  useEffect(() => {
-    setSelectedVariant(product?.variants?.edges?.[0]?.node);
-    setSelectedProductOption(
-      product?.options?.map((option) => ({
-        id: option.id,
-        name: option.name,
-        optionValues: option.optionValues[0] as OptionValues,
-      })) || [],
-    );
-    selectVariantByOptions(
-      product?.options?.map((option) => ({
-        id: option.id,
-        name: option.name,
-        optionValues: option.optionValues[0] as OptionValues,
-      })) || [],
-    );
-  }, [product, selectVariantByOptions]);
 
   return {
     handleAddToCart,

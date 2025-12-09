@@ -16,13 +16,13 @@ export const getCurrentUrlWithoutParameters = async () => {
 
 export const getCurrentSearchParameters = async () => {
   const cookiesStore = await cookies();
-  const currentURL = new URL(cookiesStore.get(config.cookies.url)?.value);
+  const currentURL = new URL(cookiesStore.get(config.cookies.url)?.value || '');
   return currentURL.searchParams;
 };
 
 export const getCurrentPathname = async () => {
   const cookiesStore = await cookies();
-  const currentURL = new URL(cookiesStore.get(config.cookies.url)?.value);
+  const currentURL = new URL(cookiesStore.get(config.cookies.url)?.value || '');
   return currentURL.pathname;
 };
 

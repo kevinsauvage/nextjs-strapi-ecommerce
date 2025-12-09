@@ -31,10 +31,9 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
     setResults(response?.predictiveSearch || null);
   };
 
-  const debouncedHandleChange = debounce((value: string) => {
-    handleChange(value).catch((error) => {
-      console.error('Error fetching search results:', error);
-    });
+  const debouncedHandleChange = debounce((value: unknown) => {
+    if (typeof value !== 'string') return;
+    void handleChange(value);
   }, 500);
 
   useEffect(() => {

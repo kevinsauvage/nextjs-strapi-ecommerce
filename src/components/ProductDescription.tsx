@@ -7,6 +7,7 @@ import QuantityUpdater from '@/components/QuantityUpdater';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
+import { mapShopifyImagesToImageFields } from '@/utils/images';
 
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -34,11 +35,32 @@ const ProductDescription = ({
     isOptionSelected,
     isOptionOutOfStock,
   } = useProductSelection({ product });
-  const { productType, options, title, id, images } = product || {};
-
   const { userWishlist, handleSetWishlist } = useUserContext();
-  const isWishlisted = userWishlist?.find((item) => item.id === id);
   const [activeTab, setActiveTab] = useState('details');
+
+  if (!product) return null;
+
+  const productType = product.productType;
+  const options = product.options;
+  const title = product.title;
+  const id = product.id;
+  const images = product.images;
+  const descriptionHtml: string =
+    typeof product.descriptionHtml === 'string' ? product.descriptionHtml : '';
+
+  const isWishlisted = userWishlist?.find((item) => item.id === id);
+
+  const selectedVariantData = selectedVariant as
+    | {
+        quantityAvailable?: number | null;
+        availableForSale?: boolean;
+        price?: { amount: string; currencyCode: string };
+        sku?: string | null;
+        title?: string;
+        weight?: number | null;
+        weightUnit?: string;
+      }
+    | undefined;
 
   const {
     quantityAvailable,
@@ -48,16 +70,18 @@ const ProductDescription = ({
     title: variantTitle,
     weight,
     weightUnit,
-  } = selectedVariant || {};
+  } = selectedVariantData || {};
 
   const handleWishlist = async () => {
     await handleSetWishlist(!!isWishlisted, product);
   };
 
+  const productImages = mapShopifyImagesToImageFields(images?.edges);
+
   return (
     <div className="grid  md:grid-cols-7 relative gap-12">
       <div className="relative md:col-span-4">
-        <PhotoGallery images={images.edges.map((edge) => edge.node) as unknown as ImageFields[]} />
+        <PhotoGallery images={productImages} />
 
         {availableForSale ? null : (
           <Badge
@@ -122,10 +146,10 @@ const ProductDescription = ({
               <TabsTrigger value="specs">Specifications</TabsTrigger>
             </TabsList>
             <TabsContent value="details" className="mt-4">
-              {typeof product.descriptionHtml === 'string' ? (
+              {typeof descriptionHtml === 'string' ? (
                 <div
                   className="product-description"
-                  dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+                  dangerouslySetInnerHTML={{ __html: descriptionHtml }}
                 />
               ) : (
                 <p className="text-sm text-muted-foreground">
@@ -170,7 +194,7 @@ const ProductDescription = ({
             <div className="space-y-4">
               <div className="space-y-2">
                 <Options
-                  options={options}
+                  options={options || []}
                   onClick={handleSetSelectedProductOption}
                   isOptionSelected={isOptionSelected}
                   isOptionOutOfStock={isOptionOutOfStock}
@@ -193,8 +217,8 @@ const ProductDescription = ({
                 </div>
                 <QuantityUpdater
                   originalQuantity={quantity || 1}
-                  quantityAvailable={quantityAvailable}
-                  productId={id}
+                  quantityAvailable={quantityAvailable ?? 0}
+                  productId={id || ''}
                   disabled={!availableForSale}
                   onChange={(_id, q) => {
                     handleChangeInput(q);
@@ -209,7 +233,7 @@ const ProductDescription = ({
           <Button
             className="flex-1 gap-2"
             size="lg"
-            disabled={!availableForSale || quantityAvailable < quantity}
+            disabled={!availableForSale || (quantityAvailable ?? 0) < quantity}
             onClick={handleAddToCart}
           >
             <ShoppingBag className="h-5 w-5" color="currentColor" />

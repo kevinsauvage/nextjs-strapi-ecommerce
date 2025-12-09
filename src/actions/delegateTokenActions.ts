@@ -9,9 +9,14 @@ const delegateAccessScope = process.env.SHOPIFY_SCOPE;
 const expiresIn = 24 * 60 * 60;
 const domain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
 
-export const setDelegateTokenAction = async () => {
+export const setDelegateTokenAction = async (): Promise<void> => {
   const tokenCookie = await getCookieAction(config.cookies.delegateToken);
   if (tokenCookie?.value) return;
+
+  if (!delegateAccessScope) {
+    console.error('SHOPIFY_SCOPE environment variable is not set');
+    return;
+  }
 
   try {
     const responseToken = await adminSdk().delegateAccessTokenCreate({
@@ -23,7 +28,7 @@ export const setDelegateTokenAction = async () => {
 
     const { delegateAccessToken, userErrors } = responseToken?.delegateAccessTokenCreate || {};
 
-    if (userErrors?.length > 0) {
+    if (userErrors && userErrors.length > 0) {
       console.error(userErrors);
     }
 
@@ -36,8 +41,6 @@ export const setDelegateTokenAction = async () => {
         sameSite: 'lax',
         secure: process.env.NODE_ENV !== 'development',
       });
-
-      return delegateAccessToken;
     }
   } catch (error) {
     console.error('Error creating delegate access token:', JSON.stringify(error, undefined, 2));

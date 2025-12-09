@@ -9,6 +9,7 @@ import { storefrontSdk } from '@/shopify';
 import { getShopifyToken } from '@/utils/shopify';
 
 const defaultErrorMessage = 'Something went wrong';
+const unauthenticatedErrorMessage = 'User not authenticated';
 
 const addressSchema = z.object({
   address1: z.string().nonempty('Address is required'),
@@ -24,11 +25,16 @@ const addressSchema = z.object({
   zip: z.string().nonempty('Zip is required'),
 });
 
-export async function createAddressAction(previousState: unknown, data: FormData) {
-  const result = addressSchema.safeParse(Object.fromEntries(data.entries()));
+type AddressInput = z.infer<typeof addressSchema>;
+
+export async function createAddressAction(input: AddressInput) {
+  const result = addressSchema.safeParse(input);
   if (!result?.success) return result.error.formErrors.fieldErrors;
 
   const customerAccessToken = await getShopifyToken();
+  if (!customerAccessToken) {
+    return { error: unauthenticatedErrorMessage };
+  }
 
   const response = await storefrontSdk().customerAddressCreate({
     address: result.data,
@@ -51,6 +57,9 @@ export async function createAddressAction(previousState: unknown, data: FormData
 
 export async function deleteAddressAction(addressId: string) {
   const customerAccessToken = await getShopifyToken();
+  if (!customerAccessToken) {
+    return { error: unauthenticatedErrorMessage };
+  }
 
   const response = await storefrontSdk().customerAddressDelete({
     addressId,
@@ -73,6 +82,9 @@ export async function deleteAddressAction(addressId: string) {
 
 export async function setDefaultAddressAction(addressId: string) {
   const customerAccessToken = await getShopifyToken();
+  if (!customerAccessToken) {
+    return { error: unauthenticatedErrorMessage };
+  }
 
   let response;
   try {
@@ -98,12 +110,19 @@ export async function setDefaultAddressAction(addressId: string) {
   return { error: defaultErrorMessage };
 }
 
-export async function updateAddressAction(previousState: unknown, data: FormData) {
-  const result = addressSchema.safeParse(Object.fromEntries(data.entries()));
+export async function updateAddressAction(input: AddressInput) {
+  const result = addressSchema.safeParse(input);
   if (!result?.success) return result.error.formErrors.fieldErrors;
 
   const customerAccessToken = await getShopifyToken();
+  if (!customerAccessToken) {
+    return { error: unauthenticatedErrorMessage };
+  }
+
   const { id, ...address } = result.data;
+  if (!id) {
+    return { error: 'Address ID is required for update' };
+  }
 
   const response = await storefrontSdk().customerAddressUpdate({
     address,

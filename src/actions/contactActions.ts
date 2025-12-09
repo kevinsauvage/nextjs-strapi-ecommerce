@@ -25,8 +25,10 @@ const contactSchema = z.object({
     }),
 });
 
-export const contactAction = async (previousFormData: unknown, data: FormData) => {
-  const formData = contactSchema.safeParse(Object.fromEntries(data.entries()));
+type ContactInput = z.infer<typeof contactSchema>;
+
+export const contactAction = async (input: ContactInput) => {
+  const formData = contactSchema.safeParse(input);
   if (!formData.success) return formData.error.formErrors.fieldErrors;
 
   const { name, email, message } = formData.data;
@@ -45,6 +47,10 @@ export const contactAction = async (previousFormData: unknown, data: FormData) =
 
   try {
     await transporter.sendMail(mailOptions);
+    return {
+      message: 'Email sent successfully',
+      success: true,
+    };
   } catch {
     return {
       error: 'An error occurred while sending the email',

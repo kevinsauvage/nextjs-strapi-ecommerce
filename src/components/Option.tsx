@@ -27,7 +27,7 @@ const Option = ({
                 variant={
                   isOptionOutOfStock(option.name, value)
                     ? 'destructive'
-                    : isOptionSelected(option.name, value)
+                    : isOptionSelected?.(option.name, value)
                       ? 'default'
                       : 'outline'
                 }

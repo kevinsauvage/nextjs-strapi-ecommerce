@@ -9,6 +9,7 @@
     "lint": "next lint",
     "lint-ts": "tsc --noEmit",
     "lint-fix": "next lint --fix",
+    "type-check": "tsc --noEmit",
     "lint:css": "stylelint **/*.{scss,css}",
     "lint:css:fix": "stylelint --fix **/*.{scss,css}",
     "codegen": "ts-node --project ./src/shopify/tsconfig.codegen.json bin/run-codegen.ts",

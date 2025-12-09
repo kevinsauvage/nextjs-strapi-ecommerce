@@ -97,28 +97,42 @@ const Filters = ({
   useEffect(() => {
     const currentFilters_ = typeof query.filters === 'string' ? [query.filters] : query.filters;
 
-    const f = currentFilters_?.map((filter) => {
-      const [filterId, input] = filter.split(/:(.+)/);
-      return { filterId, input };
-    });
+    const f = currentFilters_
+      ?.map((filter) => {
+        const [filterId, input] = filter.split(/:(.+)/);
+        return { filterId: filterId || '', input: input || '' };
+      })
+      .filter(
+        (item): item is { filterId: string; input: string } =>
+          item.filterId !== undefined && item.input !== undefined,
+      );
 
     setSelectedFilters(f || []);
   }, [query.filters]);
 
-  const getMinMaxPrice = useCallback(() => {
+  const getMinMaxPrice = useCallback((): [number, number] | undefined => {
     const priceRangeFilter = filters?.find((filter) => filter.type === FilterType.PriceRange);
-    if (!priceRangeFilter) {
-      return;
+    if (!priceRangeFilter || !priceRangeFilter.values?.[0]) {
+      return undefined;
     }
     const input = priceRangeFilter.values[0].input as string;
-    const parsedInput = input && (JSON.parse(input) as { price: { min: number; max: number } });
-    const min = parsedInput?.price?.min || 0;
-    const max = parsedInput?.price?.max || 200;
-    return [min, max];
+    if (!input) return undefined;
+
+    try {
+      const parsedInput = JSON.parse(input) as { price?: { min?: number; max?: number } };
+      const min = parsedInput?.price?.min ?? 0;
+      const max = parsedInput?.price?.max ?? 200;
+      return [min, max];
+    } catch {
+      return undefined;
+    }
   }, [filters]);
 
   useEffect(() => {
-    setPriceRange(getMinMaxPrice());
+    const priceRange_ = getMinMaxPrice();
+    if (priceRange_) {
+      setPriceRange(priceRange_);
+    }
   }, [getMinMaxPrice]);
 
   return (
@@ -156,8 +170,8 @@ const Filters = ({
                         onValueChange={handlePriceChange}
                       />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">${priceRange[0].toFixed(2)}</span>
-                        <span className="text-sm">${priceRange[1].toFixed(2)}</span>
+                        <span className="text-sm">${(priceRange?.[0] ?? 0).toFixed(2)}</span>
+                        <span className="text-sm">${(priceRange?.[1] ?? 200).toFixed(2)}</span>
                       </div>
                     </div>
                   )}

@@ -13,7 +13,7 @@ import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const missingCartErrorName = 'Missing cartId cookie. Cart could not be found.';
 
-export const createCartAction = async () => {
+export const createCartAction = async (): Promise<void> => {
   const cartId = await getCookieAction(config.cookies.cartId);
 
   if (cartId?.value) {
@@ -40,7 +40,7 @@ export const createCartAction = async () => {
 
     if (cart) {
       await setCookieAction(config.cookies.cartId, cart.id);
-      return cart;
+      return;
     }
   } catch (error) {
     console.log('createCartAction ~ error:', error);
@@ -251,19 +251,11 @@ export const cartLinesRemoveAction = async (
   }
 };
 
-export const cartDiscountCodesUpdateAction = async (
-  previousState: unknown,
-  currentState: FormData,
-) => {
+export const cartDiscountCodesUpdateAction = async (discountCodes: string[]) => {
   const cartId = await getShopifyCartId();
 
   if (!cartId) {
     throw new Error(missingCartErrorName);
-  }
-
-  let discountCodes = currentState.getAll('couponCode') as string[];
-  if (typeof discountCodes === 'string') {
-    discountCodes = [discountCodes];
   }
 
   const updateDiscountCodesResponse = await storefrontSdk().cartDiscountCodesUpdate({

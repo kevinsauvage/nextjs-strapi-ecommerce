@@ -32,7 +32,7 @@ const HamburgerMenu = ({
   headerMenu,
   shopifyToken,
 }: {
-  headerMenu: GetMenuByHandleQuery['menu']['items'];
+  headerMenu: GetMenuByHandleQuery['menu'] | null | undefined;
   shopifyToken: string | null;
 }) => {
   const [open, setOpen] = useState(false);
@@ -66,6 +66,8 @@ const HamburgerMenu = ({
       text: 'Logout',
     },
   ];
+
+  const menuItems = headerMenu?.items || [];
 
   const renderMenuItem = (item: MenuItem, level = 0) => {
     const hasChildren = item.items && item.items.length > 0;
@@ -125,7 +127,7 @@ const HamburgerMenu = ({
           </SheetHeader>
 
           <div className="flex-1 overflow-auto py-2">
-            {headerMenu.map((item: MenuItem) => renderMenuItem(item))}
+            {menuItems.map((item) => renderMenuItem(item as MenuItem))}
           </div>
         </div>
         <SheetFooter className="border-t">

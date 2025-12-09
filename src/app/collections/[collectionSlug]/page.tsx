@@ -26,9 +26,16 @@ export async function generateMetadata({
 
   const { collection } = collectionResponse || {};
 
+  if (!collection) {
+    return {
+      description: 'Collection not found',
+      title: 'Collection Not Found',
+    };
+  }
+
   return {
-    description: collection.seo?.description || collection?.description,
-    title: collection.seo?.title || collection?.title,
+    description: collection.seo?.description || collection.description || 'Collection',
+    title: collection.seo?.title || collection.title || 'Collection',
   };
 }
 
@@ -46,20 +53,20 @@ const CollectionSlugPage = async ({
   }>;
 }) => {
   const { collectionSlug } = await params;
-  const searchParameters = await searchParams;
+  const searchParameters = (await searchParams) || {};
 
   const sortKey = Object.keys(ProductCollectionSortKeys).find(
-    (key) => key.toLowerCase() === searchParameters.sort_key?.toLowerCase(),
+    (key) => key.toLowerCase() === searchParameters?.sort_key?.toLowerCase(),
   ) as keyof typeof ProductCollectionSortKeys;
 
   const response = await storefrontSdk().collection({
     filters: parseFiltersQuery(searchParameters?.filters),
     ...adjustPaginationVariables({
-      after: searchParameters.after,
-      before: searchParameters.before,
+      after: searchParameters?.after || undefined,
+      before: searchParameters?.before || undefined,
       first: 16,
       last: 16,
-      reverse: searchParameters.reverse,
+      reverse: searchParameters?.reverse || false,
     }),
     handle: collectionSlug,
     identifiers: [],
@@ -68,6 +75,19 @@ const CollectionSlugPage = async ({
 
   const { products } = response.collection || {};
   const { filters, pageInfo, edges } = products || {};
+
+  const safeFilters = filters || [];
+  const safePageInfo = pageInfo || {
+    endCursor: null,
+    hasNextPage: false,
+    hasPreviousPage: false,
+    startCursor: null,
+  };
+  const safeSearchParameters = {
+    after: searchParameters?.after,
+    before: searchParameters?.before,
+    sort_key: searchParameters?.sort_key,
+  };
 
   if (!edges?.length) {
     return (
@@ -109,10 +129,10 @@ const CollectionSlugPage = async ({
           }
           sortingOptions={sortingOptions}
         />
-        <Filters filters={filters} query={searchParameters} />
+        <Filters filters={safeFilters} query={safeSearchParameters} />
       </ListingHeader>
 
-      {edges.length > 0 ? (
+      {edges && edges.length > 0 ? (
         <ProductEdgeList products={edges} layout="grid" />
       ) : (
         <EmptyState
@@ -121,7 +141,7 @@ const CollectionSlugPage = async ({
           altText="No products found"
         />
       )}
-      <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
+      <PageInfoPagination pageInfo={safePageInfo} searchParameters={safeSearchParameters} />
     </div>
   );
 };

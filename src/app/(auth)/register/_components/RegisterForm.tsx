@@ -42,6 +42,16 @@ const RegisterForm = () => {
     setFormData((previous) => ({ ...previous, [name]: value || '' }));
   };
 
+  const handleSubmit = async (_previousState: unknown, formData_: FormData) => {
+    const email = formData_.get('email') as string;
+    const firstName = formData_.get('firstName') as string;
+    const lastName = formData_.get('lastName') as string;
+    const password = formData_.get('password') as string;
+    const passwordConfirm = formData_.get('passwordConfirm') as string;
+
+    return registerAction({ email, firstName, lastName, password, passwordConfirm });
+  };
+
   const [states, action, isPending] = useActionState<
     {
       email?: string | string[];
@@ -55,8 +65,8 @@ const RegisterForm = () => {
       company?: string | string[];
       customerUserErrors?: CustomerUserError[];
     },
-    undefined
-  >(registerAction, initialStates);
+    FormData
+  >(handleSubmit, initialStates);
 
   useEffect(() => {
     if (states.customerUserErrors?.length) {

@@ -7,7 +7,7 @@ import { cartDiscountCodesUpdateAction } from '@/actions/cartActions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { CartDiscountCodesUpdateMutation } from '@/shopify/storefront';
+import type { CartFieldsFragment } from '@/shopify/storefront';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -18,20 +18,21 @@ const SubmitButton = () => {
   );
 };
 
-const CouponCodeForm = ({
-  discountCodes,
-}: {
-  discountCodes: CartDiscountCodesUpdateMutation['cartDiscountCodesUpdate']['cart']['discountCodes'];
-}) => {
+const CouponCodeForm = ({ discountCodes }: { discountCodes: CartFieldsFragment }) => {
+  const handleSubmit = async (_previousState: unknown, formData: FormData) => {
+    const discountCodesArray = formData.getAll('couponCode') as string[];
+    return cartDiscountCodesUpdateAction(discountCodesArray);
+  };
+
   const [states, action] = useActionState<
     {
       couponCode?: string | string[];
       success?: boolean;
       message?: string;
-      cart?: CartDiscountCodesUpdateMutation['cartDiscountCodesUpdate']['cart'];
+      cart?: CartFieldsFragment;
     },
-    undefined
-  >(cartDiscountCodesUpdateAction, {});
+    FormData
+  >(handleSubmit, {});
 
   useEffect(() => {
     if (states.success) {
@@ -41,9 +42,11 @@ const CouponCodeForm = ({
     }
   }, [states.message, states.success]);
 
+  const existingCodes = discountCodes?.discountCodes || [];
+
   return (
     <form action={action} className="flex flex-col space-y-4">
-      {discountCodes?.map((code) => (
+      {existingCodes.map((code) => (
         <input key={code.code} type="hidden" name="couponCode" value={code.code} />
       ))}
       <div className="grid w-full items-center gap-1.5">

@@ -9,18 +9,21 @@ const CollectionNav = ({
   items,
   collectionSlug,
 }: {
-  items:
-    | GetMenuByHandleQuery['menu']['items']
-    | GetMenuByHandleQuery['menu']['items'][number]['items']
-    | undefined;
+  items: GetMenuByHandleQuery['menu'] | null | undefined;
   collectionSlug: string;
 }) => {
+  const menuItems = (items?.items || []) as Array<{
+    id: string;
+    title: string;
+    url?: string | null;
+  }>;
+
   return (
     <div className="container mx-auto">
       <nav>
         <ul className="flex items-center flex-wrap gap-4">
-          {Array.isArray(items) &&
-            items.map(
+          {Array.isArray(menuItems) &&
+            menuItems.map(
               (menuItem) =>
                 typeof menuItem.url === 'string' && (
                   <li key={menuItem.id}>

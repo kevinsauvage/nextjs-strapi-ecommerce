@@ -1,6 +1,6 @@
 type FormProperties = {
   children: React.ReactNode;
-  action: (payload: undefined) => void;
+  action: (formData: FormData) => void | Promise<void>;
 } & React.HTMLProps<HTMLFormElement>;
 
 const Form = ({ children, action, ...rest }: FormProperties) => {

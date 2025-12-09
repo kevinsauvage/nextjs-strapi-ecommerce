@@ -4,54 +4,76 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
-import type { Product as ProductType } from '@/shopify/storefront';
 
 import { Button } from './ui/button';
 
-const Product = ({
-  product,
-}: {
-  product: PredictiveSearchQuery['predictiveSearch']['products'][number];
-}) => {
-  const { featuredImage, title, handle, priceRange } = product as never as ProductType;
+type ProductSearchItem = {
+  id: string;
+  featuredImage?: {
+    url?: string;
+    src?: string;
+    altText?: string | null;
+    width?: number | null;
+    height?: number | null;
+  } | null;
+  title?: string;
+  handle?: string;
+  priceRange?: { minVariantPrice: { amount: string; currencyCode: string } };
+};
 
-  const image = featuredImage as never as ImageFields;
+const Product = ({ product }: { product: ProductSearchItem }) => {
+  const { featuredImage, title, handle, priceRange } = product;
+
+  if (!featuredImage) return null;
+
+  // featuredImage is already an Image type, not an edge
+  const imageUrl = String(
+    (featuredImage as { url?: string; src?: string }).url ||
+      (featuredImage as { url?: string; src?: string }).src ||
+      '',
+  );
+  const image = {
+    altText: (featuredImage as { altText?: string | null }).altText ?? null,
+    blurDataURL: '',
+    height: (featuredImage as { height?: number | null }).height ?? null,
+    large: imageUrl,
+    medium: imageUrl,
+    small: imageUrl,
+    src: imageUrl,
+    width: (featuredImage as { width?: number | null }).width ?? null,
+  };
+
+  if (!image.src) return null;
 
   return (
-    typeof featuredImage.url === 'string' && (
-      <Link
-        key={handle}
-        href={`/collections/products/${handle}`}
-        className="flex items-center gap-2 p-2 rounded hover:bg-muted overflow-hidden"
-      >
-        <Button variant="ghost" className="w-full justify-start gap-3 rounded-none" role="option">
-          <Image
-            src={image.small}
-            alt={image.altText || ''}
-            title={image.altText || ''}
-            loading="lazy"
-            width={48}
-            height={48}
-            className="rounded-lg aspect-square object-contain"
-          />
-          <div className="flex flex-col items-start">
-            <span className="font-semibold">{title}</span>
+    <Link
+      key={handle}
+      href={`/collections/products/${handle}`}
+      className="flex items-center gap-2 p-2 rounded hover:bg-muted overflow-hidden"
+    >
+      <Button variant="ghost" className="w-full justify-start gap-3 rounded-none" role="option">
+        <Image
+          src={image.small}
+          alt={image.altText || ''}
+          title={image.altText || ''}
+          loading="lazy"
+          width={48}
+          height={48}
+          className="rounded-lg aspect-square object-contain"
+        />
+        <div className="flex flex-col items-start">
+          <span className="font-semibold">{title}</span>
 
-            <span className="text-sm text-muted-foreground">
-              {priceRange.minVariantPrice.amount} {priceRange.minVariantPrice.currencyCode}
-            </span>
-          </div>
-        </Button>
-      </Link>
-    )
+          <span className="text-sm text-muted-foreground">
+            {priceRange?.minVariantPrice?.amount} {priceRange?.minVariantPrice?.currencyCode}
+          </span>
+        </div>
+      </Button>
+    </Link>
   );
 };
 
-const Query = ({
-  query,
-}: {
-  query: PredictiveSearchQuery['predictiveSearch']['queries'][number];
-}) => {
+const Query = ({ query }: { query: { text: string } }) => {
   return (
     <Link
       key={query.text}
@@ -74,27 +96,50 @@ const SectionTitle = ({ title }: { title: string }) => {
   return <div className="px-4 pt-4 text-xs uppercase text-muted-foreground">{title}</div>;
 };
 
-const SearchResults = ({ results }: { results: PredictiveSearchQuery['predictiveSearch'] }) => {
-  if (results.products.length === 0 && results.queries.length === 0) {
+const SearchResults = ({
+  results,
+}: {
+  results: PredictiveSearchQuery['predictiveSearch'] | null | undefined;
+}) => {
+  if (!results) {
+    return null;
+  }
+
+  const resultsData = results as {
+    products?: Array<{ id: string }>;
+    queries?: Array<{ text: string }>;
+  };
+  const products = resultsData.products || [];
+  const queries = resultsData.queries || [];
+
+  if (products.length === 0 && queries.length === 0) {
     return null;
   }
 
   return (
     <div className="absolute border z-50 w-full mt-2 shadow-lg text-start overflow-hidden bg-background rounded-lg animate-fadeSlideDown">
       <div className="p-2">
-        <SectionTitle title="Suggestions" />
-        <div className="pb-4">
-          {results.queries.map((q) => (
-            <Query key={q.text} query={q} />
-          ))}
-        </div>
+        {queries.length > 0 && (
+          <>
+            <SectionTitle title="Suggestions" />
+            <div className="pb-4">
+              {queries.map((q) => (
+                <Query key={q.text} query={{ text: q.text }} />
+              ))}
+            </div>
+          </>
+        )}
 
-        <SectionTitle title="Products" />
-        <div className="pb-4">
-          {results.products.map((product) => (
-            <Product key={product.id} product={product} />
-          ))}
-        </div>
+        {products.length > 0 && (
+          <>
+            <SectionTitle title="Products" />
+            <div className="pb-4">
+              {products.map((product) => (
+                <Product key={product.id} product={product as ProductSearchItem} />
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

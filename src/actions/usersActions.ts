@@ -19,8 +19,10 @@ const userSchema = z.object({
   phone: z.string().optional(),
 });
 
-export async function updateUserAction(previousState: unknown, data: FormData) {
-  const result = userSchema.safeParse(Object.fromEntries(data.entries()));
+type UpdateUserInput = z.infer<typeof userSchema>;
+
+export async function updateUserAction(input: UpdateUserInput) {
+  const result = userSchema.safeParse(input);
 
   if (!result?.success) {
     return result.error.formErrors.fieldErrors;
@@ -66,6 +68,8 @@ export async function updateUserAction(previousState: unknown, data: FormData) {
       success: 'User updated successfully',
     };
   }
+
+  return { error: 'Failed to update user' };
 }
 
 export const logoutAction = async () => {

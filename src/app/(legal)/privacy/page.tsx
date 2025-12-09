@@ -23,7 +23,7 @@ const PrivacyPage = async () => {
         <Breadcrumbs lastElement={title} />
       </PageBanner>
       <MainContent>
-        <div dangerouslySetInnerHTML={{ __html: privacyPolicy?.body }} />
+        {privacyPolicy?.body && <div dangerouslySetInnerHTML={{ __html: privacyPolicy.body }} />}
       </MainContent>
     </div>
   );

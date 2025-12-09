@@ -27,8 +27,11 @@ const HeightAnimation = ({
 
   useEffect(() => {
     if (!animationType) {
-      if (isOpen) setActualHeight(maxHeight);
-      else setActualHeight(initialHeight);
+      if (isOpen && maxHeight !== undefined) {
+        setActualHeight(maxHeight);
+      } else {
+        setActualHeight(initialHeight);
+      }
     }
   }, [animationType, initialHeight, isOpen, maxHeight]);
 
@@ -55,9 +58,13 @@ const HeightAnimation = ({
           ref={referenceChildren}
           onLoad={calculateHeight}
           className={` ${animationType === 'hover' && actualHeight !== maxHeight && styles.hover} `}
-          onMouseOver={() => animationType === 'hover' && setActualHeight(maxHeight)}
+          onMouseOver={() =>
+            animationType === 'hover' && maxHeight !== undefined && setActualHeight(maxHeight)
+          }
           onMouseLeave={() => animationType === 'hover' && setActualHeight(initialHeight)}
-          onFocus={() => animationType === 'hover' && setActualHeight(maxHeight)}
+          onFocus={() =>
+            animationType === 'hover' && maxHeight !== undefined && setActualHeight(maxHeight)
+          }
           onBlur={() => animationType === 'hover' && setActualHeight(initialHeight)}
         >
           {children}
@@ -68,7 +75,9 @@ const HeightAnimation = ({
           type="button"
           className={styles.button}
           onClick={() =>
-            setActualHeight((previous) => (previous === initialHeight ? maxHeight : initialHeight))
+            setActualHeight((previous) =>
+              previous === initialHeight && maxHeight !== undefined ? maxHeight : initialHeight,
+            )
           }
         >
           {actualHeight === maxHeight ? buttonTextActive : buttonTextInactive}

@@ -48,7 +48,7 @@ export const setProductToWishListAction = async (
   const responseMetafield = await adminSdk().MetafieldsSet({ metafields });
   const errors = responseMetafield?.metafieldsSet?.userErrors;
 
-  if (errors?.length > 0) {
+  if (errors && errors?.length > 0) {
     console.error(errors);
     return {
       error: true,
@@ -94,7 +94,7 @@ export const removeProductFromWishListAction = async (
 
   const errors = responseMetafield?.metafieldsSet?.userErrors;
 
-  if (errors?.length > 0) {
+  if (errors && errors.length > 0) {
     console.error(errors);
     return {
       error: true,
