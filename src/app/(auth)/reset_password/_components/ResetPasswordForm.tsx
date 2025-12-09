@@ -8,11 +8,9 @@ import { resetPasswordAction } from '@/actions/authActions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import config from '@/config/index';
+import { userFeedback } from '@/data/userFeedback';
 
 import Form from '../../_components/Form';
-
-const { userFeedback } = config;
 
 const initialStates = {
   password: '',

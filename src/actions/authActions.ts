@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 import config from '@/config';
+import { userFeedback } from '@/data/userFeedback';
 import { storefrontSdk } from '@/shopify';
 import type { CustomerUserError, UserError } from '@/shopify/storefront';
 import { setShopifyToken } from '@/utils/shopify';
@@ -33,7 +34,7 @@ const registerSchema = z
     if (passwordConfirm !== password) {
       context.addIssue({
         code: 'custom',
-        message: config.userFeedback.passwordDifferent,
+        message: userFeedback.passwordDifferent,
         path: ['passwordConfirm'],
       });
     }
@@ -73,7 +74,7 @@ export async function registerAction(input: RegisterInput) {
   }
 
   if (!customerAccessToken) {
-    return { error: config.userFeedback.register.error };
+    return { error: userFeedback.register.error };
   }
 
   await setShopifyToken(customerAccessToken);
@@ -111,7 +112,7 @@ export async function loginAction(input: LoginInput): Promise<{
     return { customerUserErrors };
   }
 
-  if (!customerAccessToken) return { error: config.userFeedback.login.error };
+  if (!customerAccessToken) return { error: userFeedback.login.error };
 
   await setShopifyToken(customerAccessToken);
 
@@ -140,11 +141,11 @@ export const recoverPasswordAction = async (input: RecoverPasswordInput) => {
 
   return customerUserErrors?.length
     ? { customerUserErrors }
-    : { success: config.userFeedback.sendRecoverEmail.success };
+    : { success: userFeedback.sendRecoverEmail.success };
 };
 
 const resetSchema = z.object({
-  password: z.string().min(8, { message: config.userFeedback.passwordLength }),
+  password: z.string().min(8, { message: userFeedback.passwordLength }),
   resetUrl: z.string(),
 });
 
@@ -169,8 +170,8 @@ export const resetPasswordAction = async (input: ResetPasswordInput) => {
   }
 
   if (customerUserErrors && customerUserErrors.length > 0) {
-    return { error: customerUserErrors[0]?.message ?? config.userFeedback.resetPassword.error };
+    return { error: customerUserErrors[0]?.message || userFeedback.resetPassword.error };
   }
 
-  return { error: config.userFeedback.resetPassword.error };
+  return { error: userFeedback.resetPassword.error };
 };

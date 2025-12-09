@@ -9,11 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import config from '@/config';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import { userFeedback } from '@/data/userFeedback';
 import type { CustomerUserError } from '@/shopify/storefront';
-
-const { userFeedback } = config;
 
 const SubmitButton = () => {
   const status = useFormStatus();
