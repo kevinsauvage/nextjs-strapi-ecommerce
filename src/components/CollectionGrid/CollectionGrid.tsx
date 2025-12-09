@@ -2,8 +2,6 @@ import CollectionCard from '@/components/CollectionCard';
 import SectionTitle from '@/components/SectionTitle';
 import type { CollectionsQuery } from '@/shopify/storefront';
 
-import styles from './CollectionGrid.module.scss';
-
 const CollectionGrid = ({
   collections,
 }: {
@@ -11,10 +9,10 @@ const CollectionGrid = ({
 }) => (
   <section className="mb-20">
     <SectionTitle>Explore our collections</SectionTitle>
-    <ul className={styles.grid}>
+    <ul className="collection-grid">
       {Array.isArray(collections) &&
         collections.map((collection, index) => (
-          <li key={collection.node.title + index} className={styles.item}>
+          <li key={collection.node.title + index} className="collection-grid-item">
             <CollectionCard collection={collection.node} />
           </li>
         ))}
