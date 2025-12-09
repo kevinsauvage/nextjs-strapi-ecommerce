@@ -1,30 +1,62 @@
+'use client';
+
 import Script from 'next/script';
+import { useEffect, useState } from 'react';
+
+import { getCookieFront } from '@/utils/cookies';
+
+const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 
 const GtmScript = () => {
+  const [hasConsent, setHasConsent] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const consentCookie = getCookieFront('localConsent');
+    if (consentCookie) {
+      try {
+        const consent = JSON.parse(consentCookie);
+        setHasConsent(consent.analytics_storage || consent.ad_storage);
+      } catch {
+        setHasConsent(false);
+      }
+    } else {
+      setHasConsent(false);
+    }
+  }, []);
+
   return (
-    <Script
-      id="gtag"
-      strategy="afterInteractive"
-      dangerouslySetInnerHTML={{
-        __html: `
+    <>
+      <Script
+        id="gtag-stub"
+        strategy="beforeInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
             window.dataLayer = window.dataLayer || [];
-  
             function gtag(){dataLayer.push(arguments);}
-  
             gtag('consent', 'default', {
-              ad_storage: false,
-              analytics_storage: false,
-              functionality_storage: true,
-              personalization_storage: false,
-            });
-            
+              ad_storage: 'denied',
+              analytics_storage: 'denied',
+              functionality_storage: 'granted',
+              personalization_storage: 'denied',
+            });`,
+        }}
+      />
+
+      {hasConsent && GTM_ID && (
+        <Script
+          id="gtm"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}');`,
-      }}
-    />
+            })(window,document,'script','dataLayer', '${GTM_ID}');`,
+          }}
+        />
+      )}
+    </>
   );
 };
 
