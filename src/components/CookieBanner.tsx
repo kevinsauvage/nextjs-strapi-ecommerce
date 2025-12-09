@@ -1,6 +1,7 @@
 'use client';
 
-import { User, X } from 'lucide-react';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
+import { X } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -20,7 +21,7 @@ import { getCookieFront, setCookieFront } from '@/utils/cookies';
 
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './ui/sheet';
 
 const EXPIRY_COOKIE_TIME = 182;
 
@@ -99,13 +100,13 @@ const CookieBanner = () => {
   return (
     show && (
       <Sheet open={show}>
-        <SheetTrigger asChild>
-          <Button variant="outline" className="w-full flex justify-between">
-            <span>Account Navigation</span>
-            <User className="h-4 w-4 ml-2" />
-          </Button>
-        </SheetTrigger>
         <SheetContent side="bottom">
+          <VisuallyHidden.Root>
+            <SheetHeader>
+              <SheetTitle>Cookie Consent</SheetTitle>
+              <SheetDescription>Manage your cookie preferences for this website.</SheetDescription>
+            </SheetHeader>
+          </VisuallyHidden.Root>
           <div className="fixed bottom-0 left-0 w-full p-3 z-50 bg-background flex flex-col gap-3 border-t">
             <Button onClick={() => setShowBannerCookies(false)} type="button" size="icon">
               <X />
