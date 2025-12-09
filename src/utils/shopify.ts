@@ -3,10 +3,10 @@ import { cookies } from 'next/headers';
 import config from '@/config';
 import type { CustomerAccessToken } from '@/shopify/storefront';
 
-export const setShopifyToken = async (customerAccessToken: CustomerAccessToken) => {
+export const setShopifyToken = async (customerAccessToken: CustomerAccessToken): Promise<void> => {
   if (!customerAccessToken) return;
   const { accessToken } = customerAccessToken || {};
-  if (!accessToken) return { error: true };
+  if (!accessToken) return;
   const expiresAtDate = new Date(customerAccessToken.expiresAt as string);
 
   const cookieStore = await cookies();
