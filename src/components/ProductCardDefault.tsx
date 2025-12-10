@@ -1,8 +1,6 @@
 'use client';
 
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { Eye, Heart } from 'lucide-react';
-import dynamic from 'next/dynamic';
+import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { memo, useState } from 'react';
@@ -12,18 +10,9 @@ import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
 import Price from './Price';
+import QuickBuy from './QuickBuy';
 import SpinnerLoader from './SpinnerLoader';
 import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogTitle, DialogTrigger } from './ui/dialog';
-
-// Dynamically import heavy ProductDescription component (only loads when dialog opens)
-const ProductDescription = dynamic(() => import('./ProductDescription'), {
-  loading: () => (
-    <div className="flex items-center justify-center h-96">
-      <SpinnerLoader />
-    </div>
-  ),
-});
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 
@@ -77,26 +66,7 @@ const ProductCardDefault = memo(function ProductCardDefault({
           <Heart color="currentColor" className={isWishlisted ? 'fill-red-500' : ''} />
         </Button>
 
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button
-              variant="ghost"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition hover:bg-gray-100"
-              type="button"
-              aria-label="Quick view"
-            >
-              <Eye />
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-[900px] w-full max-h-[90vh] overflow-auto ">
-            <VisuallyHidden.Root>
-              <DialogTitle>Quick view for {title}</DialogTitle>
-            </VisuallyHidden.Root>
-            <div className="pr-3">
-              <ProductDescription product={product} isModal />
-            </div>
-          </DialogContent>
-        </Dialog>
+        <QuickBuy product={product} />
       </div>
 
       <Link
