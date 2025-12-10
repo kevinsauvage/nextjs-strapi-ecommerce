@@ -19,6 +19,8 @@ import { getUser } from '@/utils/users';
 import BackButton from '../_components/BackButton';
 import Address from './_components/Address';
 
+export const dynamic = 'force-dynamic'; // Addresses are user-specific
+
 export const metadata: Metadata = {
   description: seo.account.addresses.description,
   title: seo.account.addresses.title,

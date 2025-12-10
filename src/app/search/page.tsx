@@ -20,6 +20,8 @@ import { SearchSortKeys } from '@/shopify/storefront';
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
 
+export const revalidate = 300; // Revalidate every 5 minutes (search results change frequently)
+
 export const metadata: Metadata = {
   description: seo.search.description,
   title: seo.search.title,

@@ -11,6 +11,8 @@ import seo from '@/data/seo';
 
 import BackButton from '../_components/BackButton';
 
+export const dynamic = 'force-dynamic'; // Wishlist is user-specific
+
 export const metadata: Metadata = {
   description: seo.account.wishlist.description,
   title: seo.account.wishlist.title,

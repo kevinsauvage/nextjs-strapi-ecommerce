@@ -19,6 +19,8 @@ import CouponCodeForm from './_components/CouponCodeForm';
 import DiscountCodes from './_components/DiscountCodes';
 import QuantityUpdatedContainer from './_components/QuantityUpdatedContainer';
 
+export const dynamic = 'force-dynamic'; // Cart is user-specific and should not be cached
+
 export const metadata: Metadata = {
   description: seo.cart.description,
   title: seo.cart.title,

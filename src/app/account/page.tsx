@@ -8,6 +8,8 @@ import seo from '@/data/seo';
 
 import UserFullName from './_components/UserFullName';
 
+export const dynamic = 'force-dynamic'; // Account data is user-specific
+
 export const metadata: Metadata = {
   description: seo.account.description,
   title: seo.account.title,
