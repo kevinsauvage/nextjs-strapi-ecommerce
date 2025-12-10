@@ -41,10 +41,7 @@ const ProductDescription = ({
 
   const productImages = mapShopifyImagesToImageFields(images?.edges);
 
-  const {
-    quantityAvailable,
-    availableForSale,
-  } = defaultVariant;
+  const { quantityAvailable, availableForSale } = defaultVariant;
 
   return (
     <div className="grid md:grid-cols-7 relative gap-12">
