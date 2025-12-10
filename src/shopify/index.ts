@@ -20,7 +20,6 @@ if (!SHOPIFY_URL) {
 }
 
 const options = {
-  cache: 'force-cache',
   fetch: async (url: string, parameters: RequestInit) => {
     const response = await fetch(url, {
       ...parameters,
