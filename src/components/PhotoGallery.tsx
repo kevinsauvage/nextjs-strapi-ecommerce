@@ -20,9 +20,9 @@ const ProductImageGallery = ({ images }: ProductImageGalleryProperties) => {
             src={index === 0 ? image.src : image.large || '/placeholder.svg'}
             alt={image.altText || 'Product image'}
             placeholder="blur"
-            width={100}
-            height={100}
-            quality={60}
+            width={image.width || 100}
+            height={image.height || 100}
+            quality={75}
             blurDataURL={image.blurDataURL}
           />
         ))}
