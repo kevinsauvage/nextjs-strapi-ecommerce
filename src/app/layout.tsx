@@ -15,8 +15,19 @@ import { Toaster } from '@/components/ui/sonner';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-display' });
-const poppins = Poppins({ subsets: ['latin'], variable: '--font-heading', weight: '600' });
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-display',
+  display: 'swap',
+  preload: true,
+});
+const poppins = Poppins({
+  subsets: ['latin'],
+  variable: '--font-heading',
+  weight: '600',
+  display: 'swap',
+  preload: true,
+});
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const [headerMenu, footerMenu, cart, user, userWishlist] = await Promise.all([
