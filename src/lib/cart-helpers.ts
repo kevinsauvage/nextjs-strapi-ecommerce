@@ -23,7 +23,6 @@ export async function getOrCreateCartId(): Promise<string> {
 }
 
 export function revalidateCart(cartId: string): void {
-  revalidateTag('cart');
-  revalidateTag(`cart-${cartId}`);
+  revalidateTag('cart', '');
+  revalidateTag(`cart-${cartId}`, '');
 }
-
