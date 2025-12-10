@@ -30,10 +30,8 @@ const SearchForm = ({
   searchQuery: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }) => {
-  const [value, setValue] = useState(searchQuery);
-  const [, action] = useActionState(searchAction, {
-    searchQuery: '',
-  });
+  const [value, setValue] = useState(searchQuery || '');
+  const [, action] = useActionState(() => searchAction(value), searchQuery);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);

@@ -62,7 +62,7 @@ const defaultWrapper: SdkFunctionWrapper = async (
             _operationName,
             _operationType,
             _variables,
-            error,
+            error: error.message,
           },
           undefined,
           2,

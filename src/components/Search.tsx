@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import type { RefObject } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { predictiveSearchAction } from '@/actions/SearchAction';
 import SearchForm from '@/components/SearchForm';
 import useOnClickOutside from '@/hooks/useClickOutside';
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
@@ -24,12 +23,19 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('searchQuery', value);
+    try {
+      const response = await fetch(`/api/search/predictive?q=${encodeURIComponent(value.trim())}`);
 
-    const response = await predictiveSearchAction(null, formData);
+      if (!response.ok) {
+        throw new Error('Failed to fetch search results');
+      }
 
-    setResults(response?.predictiveSearch || null);
+      const data = await response.json();
+      setResults(data?.predictiveSearch || null);
+    } catch (error) {
+      console.error('Search error:', error);
+      setResults(null);
+    }
   }, []);
 
   const debouncedHandleChange = useMemo(
