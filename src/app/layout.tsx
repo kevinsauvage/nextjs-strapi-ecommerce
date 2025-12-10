@@ -20,11 +20,12 @@ const inter = Inter({
   variable: '--font-display',
   display: 'swap',
   preload: true,
+  weight: ['300', '400', '500', '600', '700'],
 });
 const poppins = Poppins({
   subsets: ['latin'],
   variable: '--font-heading',
-  weight: '600',
+  weight: ['600', '700'],
   display: 'swap',
   preload: true,
 });
