@@ -2,11 +2,10 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
-
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
 import { storefrontSdk } from '@/shopify/index';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 export const revalidate = 3600; // Revalidate every hour
 

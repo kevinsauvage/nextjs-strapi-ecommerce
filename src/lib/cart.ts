@@ -1,0 +1,40 @@
+import { handleUserErrors } from '@/helpers/shopify';
+import { storefrontSdk } from '@/shopify';
+import { adjustPaginationVariables } from '@/shopify/helpers';
+import type { CartFieldsFragment } from '@/shopify/storefront';
+
+export async function getCart(cartId: string): Promise<CartFieldsFragment | null> {
+  try {
+    const response = await storefrontSdk().getCart({
+      cartId,
+      ...adjustPaginationVariables({ first: 100 }),
+    });
+
+    return response?.cart || null;
+  } catch (error) {
+    console.error('getCart error:', error);
+    return null;
+  }
+}
+
+export async function createCart(): Promise<CartFieldsFragment> {
+  const createCartResponse = await storefrontSdk().cartCreate({
+    ...adjustPaginationVariables({ first: 1 }),
+  });
+
+  const { cart, userErrors, warnings } = createCartResponse.cartCreate || {};
+
+  if (warnings && Array.isArray(warnings) && warnings?.length) {
+    console.warn('Cart creation warnings:', warnings);
+  }
+
+  if (userErrors && Array.isArray(userErrors) && userErrors?.length) {
+    handleUserErrors(userErrors);
+  }
+
+  if (!cart?.id) {
+    throw new Error('Failed to create cart');
+  }
+
+  return cart;
+}

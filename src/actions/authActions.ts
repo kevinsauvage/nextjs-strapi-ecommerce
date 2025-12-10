@@ -7,10 +7,9 @@ import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
 import { storefrontSdk } from '@/shopify';
 import type { CustomerUserError, UserError } from '@/shopify/storefront';
+import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
-
-import { updateCartBuyerIdentityAction } from './cartActions';
 
 const handleUserError = (userError: UserError[] | undefined) => {
   if (!userError) return;
@@ -118,7 +117,18 @@ export async function loginAction(input: LoginInput): Promise<{
 
   const userResponse = await getUser();
 
-  await updateCartBuyerIdentityAction(customerAccessToken?.accessToken, userResponse, 0, 0, '', '');
+  try {
+    await api.patch('/api/cart/buyer-identity', {
+      customerAccessToken: customerAccessToken?.accessToken,
+      user: userResponse,
+      first: 0,
+      last: 0,
+      after: '',
+      before: '',
+    });
+  } catch (error) {
+    console.error('Failed to update cart buyer identity:', error);
+  }
 
   redirect(redirectUrl || config.routes.account);
 }

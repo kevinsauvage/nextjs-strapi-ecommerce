@@ -240,7 +240,9 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
 
           {/* Quantity Selector */}
           <div className="space-y-2">
-            <label className="text-sm font-medium">Quantity</label>
+            <label htmlFor="quantity" className="text-sm font-medium">
+              Quantity
+            </label>
             <div className="flex items-center gap-3">
               <div className="flex items-center border rounded-lg">
                 <Button

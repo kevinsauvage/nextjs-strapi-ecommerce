@@ -4,11 +4,10 @@ import Link from 'next/link';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import FormContainer from '../_components/FormContainer';
 import RegisterForm from './_components/RegisterForm';
-
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.register.title,

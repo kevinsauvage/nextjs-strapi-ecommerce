@@ -4,10 +4,9 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import MainContent from '../_components/MainContent';
-
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.privacy.title,

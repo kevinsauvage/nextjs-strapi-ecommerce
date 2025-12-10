@@ -4,7 +4,7 @@ import { Inter, Poppins } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
-import { getCartAction } from '@/actions/cartActions';
+import { getCartIdAction } from '@/actions/cartActions';
 import { getWishlistAction } from '@/actions/whishlistActions';
 import CookieBanner from '@/components/CookieBanner';
 import Footer from '@/components/Footer';
@@ -12,6 +12,7 @@ import GtmScript from '@/components/GtmScript';
 import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
+import { createCart, getCart } from '@/lib/cart';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
@@ -30,18 +31,24 @@ const poppins = Poppins({
   preload: true,
 });
 
+const handleCart = async () => {
+  const cartId = await getCartIdAction();
+  const cart = cartId ? await getCart(cartId) : null;
+
+  if (!cart) {
+    return await createCart();
+  }
+  return cart;
+};
+
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const [headerMenu, footerMenu, cart, user, userWishlist] = await Promise.all([
     storefrontSdk().getMenuByHandle({ handle: 'main-menu' }),
     storefrontSdk().getMenuByHandle({ handle: 'footer' }),
-    getCartAction({}),
+    handleCart(),
     getUser(),
     getWishlistAction(),
   ]);
-
-  if (!cart) {
-    throw new Error('Cart not found');
-  }
 
   return (
     <html

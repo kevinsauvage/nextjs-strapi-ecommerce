@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -9,8 +9,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import config from '@/config';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
-import { getShopifyToken } from '@/utils/shopify';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+import { getShopifyToken } from '@/utils/shopify';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.account.addresses.title,

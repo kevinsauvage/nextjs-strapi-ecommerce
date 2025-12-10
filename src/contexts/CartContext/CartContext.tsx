@@ -3,12 +3,8 @@
 import { createContext, useCallback, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
-import {
-  cartLinesAddAction,
-  cartLinesRemoveAction,
-  cartLinesUpdateAction,
-} from '@/actions/cartActions';
 import type { CartFieldsFragment } from '@/shopify/storefront';
+import { api } from '@/utils/apiClient';
 
 export const CartContext = createContext({
   cart: {} as CartFieldsFragment,
@@ -39,31 +35,26 @@ export const CartProvider = ({
 }) => {
   const [cart, setCart] = useState(initialCart);
 
-  const handleResponse = useCallback(
-    (response: { cart?: CartFieldsFragment; message?: string }) => {
-      if (response.cart) {
-        setCart(response.cart);
-        toast.success(response.message);
-      } else {
-        toast.error(response.message);
-      }
-    },
-    [],
-  );
+  const handleResponse = useCallback((response: { data: CartFieldsFragment; message?: string }) => {
+    setCart(response.data);
+    if (response.message) {
+      toast.success(response.message);
+    }
+  }, []);
 
   const removeFromCart = useCallback(
     async (lineItemId: string) => {
       if (!lineItemId) return console.error('Missing line item to delete');
 
-      const response = await cartLinesRemoveAction(
-        lineItemId,
-        DEFAULT_CART_PAGINATION.first,
-        DEFAULT_CART_PAGINATION.last,
-        DEFAULT_CART_PAGINATION.after,
-        DEFAULT_CART_PAGINATION.before,
-      );
+      try {
+        const response = await api.delete<{ data: CartFieldsFragment; message: string }>(
+          `/api/cart/lines?lineItemId=${encodeURIComponent(lineItemId)}&first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
+        );
 
-      handleResponse(response);
+        handleResponse(response);
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Failed to remove item');
+      }
     },
     [handleResponse],
   );
@@ -73,20 +64,19 @@ export const CartProvider = ({
       if (!id) return console.error('Missing line id to update');
       if (!quantity) return console.error('Missing quantity to update');
 
-      const response = await cartLinesUpdateAction(
-        [
+      try {
+        const response = await api.patch<{ data: CartFieldsFragment; message: string }>(
+          `/api/cart/lines?first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
           {
-            id,
-            quantity,
+            lines: [{ id, quantity }],
+            operation: 'update',
           },
-        ],
-        DEFAULT_CART_PAGINATION.first,
-        DEFAULT_CART_PAGINATION.last,
-        DEFAULT_CART_PAGINATION.after,
-        DEFAULT_CART_PAGINATION.before,
-      );
+        );
 
-      handleResponse(response);
+        handleResponse(response);
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Failed to update cart');
+      }
     },
     [handleResponse],
   );
@@ -95,17 +85,19 @@ export const CartProvider = ({
     async (variantId: string, quantity: number = 1) => {
       if (!variantId) return console.error('Missing variant id to add');
 
-      const lineItemsToAdd = [{ merchandiseId: variantId, quantity }];
+      try {
+        const response = await api.patch<{ data: CartFieldsFragment; message: string }>(
+          `/api/cart/lines?first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
+          {
+            addLines: [{ merchandiseId: variantId, quantity }],
+            operation: 'add',
+          },
+        );
 
-      const response = await cartLinesAddAction(
-        lineItemsToAdd,
-        DEFAULT_CART_PAGINATION.first,
-        DEFAULT_CART_PAGINATION.last,
-        DEFAULT_CART_PAGINATION.after,
-        DEFAULT_CART_PAGINATION.before,
-      );
-
-      handleResponse(response);
+        handleResponse(response);
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Failed to add to cart');
+      }
     },
     [handleResponse],
   );

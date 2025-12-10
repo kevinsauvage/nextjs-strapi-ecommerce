@@ -1,7 +1,6 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { createCartAction } from './actions/cartActions';
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
 import globalConfig from './config';
 import { DEFAULTS } from './config/constants';
@@ -19,7 +18,6 @@ async function proxy(request: NextRequest) {
   response.cookies.set(globalConfig.cookies.searchParams, searchParams.toString());
 
   await setDelegateTokenAction();
-  await createCartAction();
 
   const cookieShopify = cookies.get(globalConfig.cookies.shopifyToken);
 
@@ -52,4 +50,3 @@ export const config = {
     '/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)',
   ],
 };
-

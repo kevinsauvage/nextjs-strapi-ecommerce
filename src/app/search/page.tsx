@@ -16,11 +16,10 @@ import {
 import { storefrontSdk } from '@/shopify/index';
 import type { ProductFieldsFragment, SearchProductsQuery } from '@/shopify/storefront';
 import { SearchSortKeys } from '@/shopify/storefront';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
-
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 export const revalidate = 300; // Revalidate every 5 minutes (search results change frequently)
 

@@ -3,10 +3,10 @@
 import { X } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { cartDiscountCodesUpdateAction } from '@/actions/cartActions';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { CartDiscountCode } from '@/shopify/storefront';
+import { api } from '@/utils/apiClient';
 
 const DiscountCodes = ({ discountCodes }: { discountCodes: CartDiscountCode[] }) => {
   const handleRemoveCode = async (code: string) => {
@@ -14,12 +14,20 @@ const DiscountCodes = ({ discountCodes }: { discountCodes: CartDiscountCode[] })
       .filter((discountCode) => discountCode.code !== code)
       .map((discountCode) => discountCode.code);
 
-    const response = await cartDiscountCodesUpdateAction(newCoupons);
+    try {
+      const response = await api.patch<{
+        message: string;
+        success: boolean;
+        warnings?: unknown[];
+      }>('/api/cart/discount-codes', { discountCodes: newCoupons });
 
-    if (response?.success) {
-      toast.success(response?.message);
-    } else {
-      toast.error(response?.message);
+      if (response?.success !== false) {
+        toast.success(response?.message || 'Discount code removed successfully');
+      } else {
+        toast.error(response?.message || 'Failed to remove discount code');
+      }
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to remove discount code');
     }
   };
 

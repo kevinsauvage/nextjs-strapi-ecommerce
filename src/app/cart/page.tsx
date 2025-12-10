@@ -2,9 +2,8 @@ import { ChevronLeft, ShoppingCart } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 
-import { getCartAction } from '@/actions/cartActions';
+import { getCartIdAction } from '@/actions/cartActions';
 import CheckoutButton from '@/components/CheckoutButton';
 import PageBanner from '@/components/PageBanner';
 import PageInfoPagination from '@/components/PageInfoPagination';
@@ -12,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import seo from '@/data/seo';
+import { createCart, getCart } from '@/lib/cart';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 
 import CartRemove from './_components/CartRemove';
@@ -19,7 +19,7 @@ import CouponCodeForm from './_components/CouponCodeForm';
 import DiscountCodes from './_components/DiscountCodes';
 import QuantityUpdatedContainer from './_components/QuantityUpdatedContainer';
 
-export const dynamic = 'force-dynamic'; // Cart is user-specific and should not be cached
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   description: seo.cart.description,
@@ -110,6 +110,16 @@ const LineItem: React.FC<{
   );
 };
 
+const handleCart = async () => {
+  const cartId = await getCartIdAction();
+  const cart = cartId ? await getCart(cartId) : null;
+
+  if (!cart) {
+    return await createCart();
+  }
+  return cart;
+};
+
 const CartPage = async ({
   searchParams,
 }: {
@@ -122,14 +132,7 @@ const CartPage = async ({
 }) => {
   const searchParameters = await searchParams;
 
-  const cart = await getCartAction({
-    after: searchParameters.after,
-    before: searchParameters.before,
-    first: searchParameters.first ? Number.parseInt(searchParameters.first, 10) : undefined,
-    last: searchParameters.last ? Number.parseInt(searchParameters.last, 10) : undefined,
-  });
-
-  if (!cart) notFound();
+  const cart = await handleCart();
 
   return (
     <div className="pb-8 max-w-6xl mx-auto">
