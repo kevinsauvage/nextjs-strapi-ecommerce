@@ -20,12 +20,15 @@ import { SearchSortKeys } from '@/shopify/storefront';
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
 
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
 export const revalidate = 300; // Revalidate every 5 minutes (search results change frequently)
 
-export const metadata: Metadata = {
-  description: seo.search.description,
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.search.title,
-};
+  description: seo.search.description,
+  url: '/search',
+});
 
 type SearchParameters = {
   searchQuery: string;

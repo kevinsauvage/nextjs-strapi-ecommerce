@@ -15,6 +15,8 @@ export const revalidate = 3600; // Revalidate every hour
 
 type parametersType = { collectionSlug: string };
 
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
 export async function generateMetadata({
   params,
 }: {
@@ -29,16 +31,24 @@ export async function generateMetadata({
   const { collection } = collectionResponse || {};
 
   if (!collection) {
-    return {
-      description: 'Collection not found',
+    return generateMetadataUtil({
       title: 'Collection Not Found',
-    };
+      description: 'Collection not found',
+      url: `/collections/${collectionSlug}`,
+      noindex: true,
+    });
   }
 
-  return {
-    description: collection.seo?.description || collection.description || 'Collection',
-    title: collection.seo?.title || collection.title || 'Collection',
-  };
+  const title = collection.seo?.title || collection.title || 'Collection';
+  const description = collection.seo?.description || collection.description || 'Collection';
+  const collectionImage = collection.image?.originalSrc;
+
+  return generateMetadataUtil({
+    title,
+    description,
+    url: `/collections/${collectionSlug}`,
+    image: collectionImage,
+  });
 }
 
 const CollectionSlugPage = async ({

@@ -7,10 +7,13 @@ import { storefrontSdk } from '@/shopify/index';
 
 import MainContent from '../_components/MainContent';
 
-export const metadata: Metadata = {
-  description: seo.pages.privacy.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.privacy.title,
-};
+  description: seo.pages.privacy.description,
+  url: '/privacy',
+});
 
 const PrivacyPage = async () => {
   const shopInfo = await storefrontSdk().getPrivacyPolicy({});

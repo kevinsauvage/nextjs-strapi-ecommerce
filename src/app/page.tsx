@@ -11,10 +11,13 @@ import CollectionGrid from '../components/CollectionGrid/CollectionGrid';
 
 export const revalidate = 3600; // 1 hour
 
-export const metadata: Metadata = {
-  description: seo.home.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.home.title,
-};
+  description: seo.home.description,
+  url: '/',
+});
 
 const Home = async () => {
   const [collections, bestSelling, newArrival] = await Promise.all([

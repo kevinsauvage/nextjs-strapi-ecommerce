@@ -7,10 +7,13 @@ import { storefrontSdk } from '@/shopify/index';
 
 import MainContent from '../_components/MainContent';
 
-export const metadata: Metadata = {
-  description: seo.pages.terms.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.terms.title,
-};
+  description: seo.pages.terms.description,
+  url: '/terms',
+});
 
 const TermsPage = async () => {
   const response = await storefrontSdk().getTermsOfService({});

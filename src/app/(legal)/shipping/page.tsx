@@ -7,10 +7,13 @@ import { storefrontSdk } from '@/shopify';
 
 import MainContent from '../_components/MainContent';
 
-export const metadata: Metadata = {
-  description: seo.pages.shipping.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.shipping.title,
-};
+  description: seo.pages.shipping.description,
+  url: '/shipping',
+});
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});
   const { shippingPolicy } = response?.shop || {};

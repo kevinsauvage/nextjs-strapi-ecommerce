@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
@@ -29,16 +30,23 @@ export async function generateMetadata({
   const { product } = productResponse;
 
   if (!product) {
-    return {
-      description: 'Product not found',
+    return generateMetadataUtil({
       title: 'Product Not Found',
-    };
+      description: 'Product not found',
+      url: `/collections/products/${productSlug}`,
+      noindex: true,
+    });
   }
 
-  return {
-    description: product.seo?.description || product.description || 'Product',
-    title: product.seo?.title || product.title || 'Product',
-  };
+  const title = product.seo?.title || product.title || 'Product';
+  const description = product.seo?.description || product.description || 'Product';
+
+  return generateMetadataUtil({
+    title,
+    description,
+    url: `/collections/products/${productSlug}`,
+    type: 'website',
+  });
 }
 
 type PageProperties = {

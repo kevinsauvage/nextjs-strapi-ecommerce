@@ -8,10 +8,14 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 import RegisterForm from './_components/RegisterForm';
 
-export const metadata: Metadata = {
-  description: seo.register.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.register.title,
-};
+  description: seo.register.description,
+  url: '/register',
+  noindex: true, // Registration page shouldn't be indexed
+});
 
 const RegisterPage = () => {
   const { title, description } = seo.register;

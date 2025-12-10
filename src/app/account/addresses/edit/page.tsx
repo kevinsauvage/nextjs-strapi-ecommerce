@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -6,8 +7,17 @@ import { updateAddressAction } from '@/actions/addressesActions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config';
+import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
 import { getShopifyToken } from '@/utils/shopify';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
+  title: seo.account.addresses.title,
+  description: seo.account.addresses.description,
+  url: '/account/addresses/edit',
+  noindex: true, // Private page, don't index
+});
 
 import AddressForm from '../_components/AddressForm';
 

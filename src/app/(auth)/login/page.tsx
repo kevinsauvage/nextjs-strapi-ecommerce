@@ -8,10 +8,14 @@ import seo from '@/data/seo';
 import FormContainer from '../_components/FormContainer';
 import LoginForm from './_components/LoginForm';
 
-export const metadata: Metadata = {
-  description: seo.login.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.login.title,
-};
+  description: seo.login.description,
+  url: '/login',
+  noindex: true, // Login page shouldn't be indexed
+});
 
 const LoginPage = () => {
   const { title, description } = seo.login || {};

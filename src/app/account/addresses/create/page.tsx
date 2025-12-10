@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
@@ -5,6 +6,15 @@ import { createAddressAction } from '@/actions/addressesActions';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import config from '@/config';
+import seo from '@/data/seo';
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
+  title: seo.account.addresses.title,
+  description: seo.account.addresses.description,
+  url: '/account/addresses/create',
+  noindex: true, // Private page, don't index
+});
 
 import AddressFormUI from '../_components/AddressForm';
 

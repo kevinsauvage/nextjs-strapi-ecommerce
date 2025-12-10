@@ -7,10 +7,13 @@ import { storefrontSdk } from '@/shopify/index';
 
 import MainContent from '../_components/MainContent';
 
-export const metadata: Metadata = {
-  description: seo.pages.refund.description,
+import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.refund.title,
-};
+  description: seo.pages.refund.description,
+  url: '/refund',
+});
 
 const RefundPage = async () => {
   const response = await storefrontSdk().getRefundPolicy({});
