@@ -1,6 +1,5 @@
 'use client';
 
-import { useSearchParams } from 'next/navigation';
 import { createContext, useCallback, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
@@ -24,6 +23,13 @@ export const CartContext = createContext({
   },
 });
 
+const DEFAULT_CART_PAGINATION = {
+  first: 100,
+  last: 0,
+  after: '',
+  before: '',
+};
+
 export const CartProvider = ({
   children,
   initialCart,
@@ -32,7 +38,6 @@ export const CartProvider = ({
   initialCart: CartFieldsFragment;
 }) => {
   const [cart, setCart] = useState(initialCart);
-  const parameters = useSearchParams();
 
   const handleResponse = useCallback(
     (response: { cart?: CartFieldsFragment; message?: string }) => {
@@ -52,15 +57,15 @@ export const CartProvider = ({
 
       const response = await cartLinesRemoveAction(
         lineItemId,
-        Number(parameters.get('first')),
-        Number(parameters.get('last')),
-        parameters.get('after') || '',
-        parameters.get('before') || '',
+        DEFAULT_CART_PAGINATION.first,
+        DEFAULT_CART_PAGINATION.last,
+        DEFAULT_CART_PAGINATION.after,
+        DEFAULT_CART_PAGINATION.before,
       );
 
       handleResponse(response);
     },
-    [handleResponse, parameters],
+    [handleResponse],
   );
 
   const handleQuantityChange = useCallback(
@@ -75,15 +80,15 @@ export const CartProvider = ({
             quantity,
           },
         ],
-        Number(parameters.get('first')),
-        Number(parameters.get('last')),
-        parameters.get('after') || '',
-        parameters.get('before') || '',
+        DEFAULT_CART_PAGINATION.first,
+        DEFAULT_CART_PAGINATION.last,
+        DEFAULT_CART_PAGINATION.after,
+        DEFAULT_CART_PAGINATION.before,
       );
 
       handleResponse(response);
     },
-    [handleResponse, parameters],
+    [handleResponse],
   );
 
   const handleAddToCart = useCallback(
@@ -94,15 +99,15 @@ export const CartProvider = ({
 
       const response = await cartLinesAddAction(
         lineItemsToAdd,
-        Number(parameters.get('first')),
-        Number(parameters.get('last')),
-        parameters.get('after') || '',
-        parameters.get('before') || '',
+        DEFAULT_CART_PAGINATION.first,
+        DEFAULT_CART_PAGINATION.last,
+        DEFAULT_CART_PAGINATION.after,
+        DEFAULT_CART_PAGINATION.before,
       );
 
       handleResponse(response);
     },
-    [handleResponse, parameters],
+    [handleResponse],
   );
 
   const values = useMemo(
