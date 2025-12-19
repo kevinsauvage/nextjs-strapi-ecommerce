@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
 import globalConfig from './config';
 import { DEFAULTS } from './config/constants';
+import { getStandardCookieOptions } from './utils/cookie-security';
 
 async function proxy(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;
@@ -13,9 +14,10 @@ async function proxy(request: NextRequest) {
 
   const userIp = headers.get('x-forwarded-for')?.split(',')[0] || DEFAULTS.ip;
 
-  response.cookies.set(globalConfig.cookies.userIp, userIp);
-  response.cookies.set(globalConfig.cookies.url, url);
-  response.cookies.set(globalConfig.cookies.searchParams, searchParams.toString());
+  const cookieOptions = getStandardCookieOptions({ httpOnly: false });
+  response.cookies.set(globalConfig.cookies.userIp, userIp, cookieOptions);
+  response.cookies.set(globalConfig.cookies.url, url, cookieOptions);
+  response.cookies.set(globalConfig.cookies.searchParams, searchParams.toString(), cookieOptions);
 
   await setDelegateTokenAction();
 

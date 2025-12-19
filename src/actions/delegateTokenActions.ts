@@ -2,12 +2,12 @@
 
 import config from '@/config';
 import { adminSdk } from '@/shopify';
+import { getSecureCookieOptions } from '@/utils/cookie-security';
 
 import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
 const expiresIn = config.constants.delegateTokenExpirySeconds;
-const domain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
 
 export const setDelegateTokenAction = async (): Promise<void> => {
   const tokenCookie = await getCookieAction(config.cookies.delegateToken);
@@ -33,14 +33,11 @@ export const setDelegateTokenAction = async (): Promise<void> => {
     }
 
     if (delegateAccessToken) {
-      await setCookieAction(config.cookies.delegateToken, delegateAccessToken.accessToken, {
-        domain: process.env.NODE_ENV === 'development' ? config.constants.domains.localhost : domain,
-        httpOnly: true,
-        maxAge: expiresIn,
-        path: '/',
-        sameSite: 'lax',
-        secure: process.env.NODE_ENV !== 'development',
-      });
+      await setCookieAction(
+        config.cookies.delegateToken,
+        delegateAccessToken.accessToken,
+        getSecureCookieOptions({ maxAge: expiresIn }),
+      );
     }
   } catch (error) {
     console.error('Error creating delegate access token:', JSON.stringify(error, undefined, 2));

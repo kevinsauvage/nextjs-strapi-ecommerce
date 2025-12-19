@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 
 import config from '@/config';
 import type { CustomerAccessToken } from '@/shopify/storefront';
+import { getSecureCookieOptions } from '@/utils/cookie-security';
 
 export const setShopifyToken = async (customerAccessToken: CustomerAccessToken): Promise<void> => {
   if (!customerAccessToken) return;
@@ -12,10 +13,9 @@ export const setShopifyToken = async (customerAccessToken: CustomerAccessToken):
   const cookieStore = await cookies();
 
   cookieStore.set({
-    expires: expiresAtDate,
     name: config.cookies.shopifyToken,
-    path: '/',
     value: accessToken,
+    ...getSecureCookieOptions({ expires: expiresAtDate }),
   });
 };
 

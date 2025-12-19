@@ -17,7 +17,6 @@ export const setCookieFront = (
   cName: string,
   cValue: string,
   expDays: number = 1,
-  secure: boolean = true,
   sameSite: 'Lax' | 'Strict' | 'None' | undefined = 'Lax',
 ) => {
   if (typeof cName !== 'string' || typeof expDays !== 'number') {
@@ -28,8 +27,10 @@ export const setCookieFront = (
   date.setTime(date.getTime() + expDays * 24 * 60 * 60 * 1000);
   const expires = `expires=${date.toUTCString()}`;
 
+  const isProduction = process.env.NODE_ENV === 'production';
+
   let cookie = `${cName}=${cValue}; ${expires}; path=/`;
-  if (secure) {
+  if (isProduction) {
     cookie += '; Secure';
   }
   if (sameSite) {
