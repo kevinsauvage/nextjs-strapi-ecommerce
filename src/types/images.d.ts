@@ -1,5 +1,3 @@
-export {};
-
 type StaticImageData = {
   src: string;
   height: number;
