@@ -26,7 +26,7 @@ A modern, full-featured e-commerce application built with Next.js and Shopify St
 - 📱 Responsive design
 - 🌓 Dark mode support
 - 🍪 Cookie consent management
-- 📊 Google Analytics integration
+- 📊 Google Tag Manager (GTM) integration
 
 ## Prerequisites
 
@@ -72,8 +72,10 @@ SHOPIFY_SCOPE=unauthenticated_read_product_listings,unauthenticated_read_product
 NEXT_PUBLIC_SITE_DOMAIN=yourdomain.com
 NEXT_PUBLIC_BASE_URL=https://yourdomain.com
 
-# Optional: Google Analytics
-NEXT_PUBLIC_GOOGLE_ANALYTICS=G-XXXXXXXXXX
+# Optional: Google Tag Manager (GTM)
+# Note: GTM IDs start with "GTM-" (e.g., GTM-XXXXXXX)
+# For GA4 directly, you would use a different integration
+NEXT_PUBLIC_GTM_ID=GTM-XXXXXXX
 
 # Standard Next.js
 NODE_ENV=development
@@ -186,14 +188,14 @@ This project uses [GraphQL Code Generator](https://the-guild.dev/graphql/codegen
 
 ### Optional
 
-| Variable                          | Description                                            |
-| --------------------------------- | ------------------------------------------------------ |
-| `SHOPIFY_STORE_FRONT_ADMIN_TOKEN` | Shopify Admin API access token (for admin operations)  |
-| `SHOPIFY_ADMIN_URL`               | Shopify Admin API GraphQL endpoint URL                 |
-| `SHOPIFY_SCOPE`                   | Comma-separated list of delegate token scopes          |
-| `NEXT_PUBLIC_SITE_DOMAIN`         | Your site domain (for cookie settings)                 |
-| `NEXT_PUBLIC_BASE_URL`            | Base URL for the application (for robots.txt, sitemap) |
-| `NEXT_PUBLIC_GOOGLE_ANALYTICS`    | Google Analytics tracking ID                           |
+| Variable                          | Description                                             |
+| --------------------------------- | ------------------------------------------------------- |
+| `SHOPIFY_STORE_FRONT_ADMIN_TOKEN` | Shopify Admin API access token (for admin operations)   |
+| `SHOPIFY_ADMIN_URL`               | Shopify Admin API GraphQL endpoint URL                  |
+| `SHOPIFY_SCOPE`                   | Comma-separated list of delegate token scopes           |
+| `NEXT_PUBLIC_SITE_DOMAIN`         | Your site domain (for cookie settings)                  |
+| `NEXT_PUBLIC_BASE_URL`            | Base URL for the application (for robots.txt, sitemap)  |
+| `NEXT_PUBLIC_GTM_ID`              | Google Tag Manager container ID (format: `GTM-XXXXXXX`) |
 
 ## Deployment
 

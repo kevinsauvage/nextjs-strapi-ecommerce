@@ -15,6 +15,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import config from '@/config';
+import { withGtag } from '@/utils/analytics';
 import type { originalSettingsType } from '@/utils/consents';
 import { transformedSettings } from '@/utils/consents';
 import { getCookieFront, setCookieFront } from '@/utils/cookies';
@@ -34,13 +35,11 @@ const CookieBanner = () => {
 
   const handleCookies = useCallback(() => {
     const consent = getCookieFront('localConsent');
-    if (consent && typeof consent === 'string')
-      window.gtag(
-        'consent',
-        'update',
-        transformedSettings(JSON.parse(consent) as originalSettingsType),
-      );
-    else setShow(true);
+    if (consent && typeof consent === 'string') {
+      withGtag((gtag) => {
+        gtag('consent', 'update', transformedSettings(JSON.parse(consent) as originalSettingsType));
+      });
+    } else setShow(true);
   }, []);
 
   useEffect(() => {
@@ -57,7 +56,9 @@ const CookieBanner = () => {
     const transformedObject = transformedSettings(cookie);
     setCookieFront('localConsent', JSON.stringify(cookie), EXPIRY_COOKIE_TIME);
     setShowBannerCookies(false);
-    window.gtag('consent', 'update', transformedObject);
+    withGtag((gtag) => {
+      gtag('consent', 'update', transformedObject);
+    });
   }, [setShowBannerCookies]);
 
   const rejectAllCookie = useCallback(() => {
@@ -68,7 +69,9 @@ const CookieBanner = () => {
       personalization_storage: false,
     };
     const transformedObject = transformedSettings(cookie);
-    window.gtag('consent', 'update', transformedObject);
+    withGtag((gtag) => {
+      gtag('consent', 'update', transformedObject);
+    });
     setCookieFront('localConsent', JSON.stringify(cookie), EXPIRY_COOKIE_TIME);
     setShowBannerCookies(false);
   }, [setShowBannerCookies]);
@@ -91,7 +94,9 @@ const CookieBanner = () => {
 
       const transformedObject = transformedSettings(formData);
 
-      window.gtag('consent', 'update', transformedObject);
+      withGtag((gtag) => {
+        gtag('consent', 'update', transformedObject);
+      });
       setCookieFront('localConsent', JSON.stringify(formData), EXPIRY_COOKIE_TIME);
       setShowBannerCookies(false);
     },

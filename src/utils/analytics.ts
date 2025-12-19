@@ -1,19 +1,28 @@
-// Extend the Window interface to include gtag
 declare global {
   interface Window {
-    gtag: (command: string, eventName: string, parameters?: Record<string, unknown>) => void;
+    gtag?: (command: string, eventName: string, parameters?: Record<string, unknown>) => void;
+    dataLayer?: unknown[];
   }
 }
 
-// log the pageview with their URL
+export const withGtag = (callback: (gtag: NonNullable<Window['gtag']>) => void): void => {
+  if (typeof window !== 'undefined' && window.gtag) {
+    callback(window.gtag);
+  }
+};
+
 const pageview = (
   url: string | URL | undefined = window.location.pathname + window.location.search,
 ) => {
-  window.gtag('config', 'Page view', { page_path: url });
+  withGtag((gtag) => {
+    gtag('config', 'Page view', { page_path: url });
+  });
 };
 
 const event = ({ action, params }: { action: string; params?: Record<string, unknown> }) => {
-  window.gtag('event', action, params);
+  withGtag((gtag) => {
+    gtag('event', action, params);
+  });
 };
 
 const analytics = {

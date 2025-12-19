@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { getCookieFront } from '@/utils/cookies';
 
-const GTM_ID = process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
 const GtmScript = () => {
   const [hasConsent, setHasConsent] = useState<boolean | null>(null);
