@@ -8,7 +8,12 @@
     "alpha-value-notation": null,
     "at-rule-no-unknown": null,
     "order/order": ["custom-properties", "declarations"],
-    "scss/no-global-function-names": null
-  },
-  "processors": ["stylelint-checkstyle-formatter"]
+    "scss/no-global-function-names": null,
+    "scss/at-rule-no-unknown": [
+      true,
+      {
+        "ignoreAtRules": ["custom-variant", "theme", "tailwindcss"]
+      }
+    ]
+  }
 }
