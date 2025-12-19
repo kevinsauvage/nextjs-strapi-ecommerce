@@ -2,6 +2,26 @@ import type { Metadata } from 'next';
 
 import siteMetadata from '@/data/siteMetadata';
 
+export function getBaseUrl(): string {
+  const envBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+  if (envBaseUrl) {
+    // Remove trailing slash if present
+    return envBaseUrl.replace(/\/$/, '');
+  }
+
+  // Fallback to siteMetadata (useful for development)
+  if (siteMetadata.siteUrl) {
+    return siteMetadata.siteUrl;
+  }
+
+  // Last resort: throw error to make the issue explicit
+  throw new Error(
+    'NEXT_PUBLIC_BASE_URL is not set and siteMetadata.siteUrl is not configured. ' +
+      'Please set NEXT_PUBLIC_BASE_URL environment variable.',
+  );
+}
+
 type MetadataOptions = {
   title: string;
   description: string;

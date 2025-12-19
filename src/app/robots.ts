@@ -1,8 +1,10 @@
 import type { MetadataRoute } from 'next';
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+import { getBaseUrl } from '@/utils/metadata';
 
 export default function robots(): MetadataRoute.Robots {
+  const baseUrl = getBaseUrl();
+
   return {
     rules: {
       allow: '/',
