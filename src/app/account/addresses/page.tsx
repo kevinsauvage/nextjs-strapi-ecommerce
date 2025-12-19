@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import NoAddressIllustration from '@/assets/NoAddressIllustration.png';
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
@@ -15,7 +16,6 @@ import type { MailingAddress } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
-import NoAddressIllustration from '../../../assets/NoAddressIllustration.png';
 import BackButton from '../_components/BackButton';
 import Address from './_components/Address';
 
@@ -65,11 +65,7 @@ const Addresses = async ({
       <Card>
         <CardContent>
           <EmptyState
-            image={{
-              src: NoAddressIllustration.src,
-              width: NoAddressIllustration.width,
-              height: NoAddressIllustration.height,
-            }}
+            image={NoAddressIllustration}
             title="No Address Yet"
             subtitle="Please add your address for your better experience"
             altText="No Address Yet"
