@@ -2,6 +2,7 @@ import { GraphQLClient } from 'graphql-request';
 import type { RequestConfig } from 'node_modules/graphql-request/build/esm/types';
 
 import config from '@/config';
+
 import { getSdk as getAdminSdk } from './admin/index';
 import { buildExtraHeaders } from './helpers';
 import type { SdkFunctionWrapper } from './storefront/index';
