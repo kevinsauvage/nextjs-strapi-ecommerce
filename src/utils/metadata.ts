@@ -39,7 +39,8 @@ export function generateMetadata({
   type = 'website',
   noindex = false,
 }: MetadataOptions): Metadata {
-  const siteUrl = siteMetadata.siteUrl;
+  // Use getBaseUrl() to ensure consistency and proper env var handling
+  const siteUrl = getBaseUrl();
   const fullTitle = `${title} | ${siteMetadata.companyName}`;
   const imageUrl = image || siteMetadata.siteLogo;
   const pageUrl = url ? `${siteUrl}${url}` : siteUrl;

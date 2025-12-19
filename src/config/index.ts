@@ -3,10 +3,13 @@ import type { MetadataRoute } from 'next';
 
 import { COOKIES, LOCAL_STORAGE_KEYS } from './constants';
 
+// Export validation functions for optional use during app initialization
+export { validateConfig, validateSiteMetadata } from './validation';
+
 const config = {
   cookies: COOKIES,
   localStorageKeys: LOCAL_STORAGE_KEYS,
-  name: 'Ecom Test Shopi',
+  name: process.env.NEXT_PUBLIC_SITE_NAME,
   constants: {
     cookieExpiryDays: 182,
     delegateTokenExpirySeconds: 24 * 60 * 60, // 24 hours
