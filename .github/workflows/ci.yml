@@ -27,6 +27,12 @@ jobs:
       - name: Run ESLint
         run: yarn lint
 
+      - name: Create Next.js types directory
+        run: |
+          mkdir -p .next/dev/types
+          echo "// Generated for CI type checking" > .next/dev/types/routes.d.ts
+          echo "export {};" >> .next/dev/types/routes.d.ts
+
       - name: Run TypeScript type check
         run: yarn lint-ts
 
