@@ -7,12 +7,30 @@ const config = {
   cookies: COOKIES,
   localStorageKeys: LOCAL_STORAGE_KEYS,
   name: 'Ecom Test Shopi',
+  constants: {
+    cookieExpiryDays: 182,
+    delegateTokenExpirySeconds: 24 * 60 * 60, // 24 hours
+    revalidate: {
+      search: 300, // 5 minutes
+      product: 3600, // 1 hour
+      shopify: 600, // 10 minutes
+    },
+    pagination: {
+      productsPerPage: 16,
+    },
+    menuHandles: {
+      main: 'main-menu',
+      footer: 'footer',
+    },
+    domains: {
+      localhost: 'localhost',
+    },
+  },
   routes: {
     home: '/',
     cart: '/cart',
-    about: '/about',
     login: '/login',
-    collection: '/shop',
+    collection: '/collections',
     contact: '/contact',
     account: '/account',
     addresses: '/account/addresses',
@@ -27,7 +45,7 @@ const config = {
     privacy: '/privacy',
     refund: '/refund',
     register: '/register',
-    resetPassword: '/reset',
+    resetPassword: '/reset_password',
     search: '/search',
     shipping: '/shipping',
     terms: '/terms',
@@ -67,12 +85,6 @@ export const sitemap: MetadataRoute.Sitemap = [
     lastModified: new Date().toISOString(),
     priority: 0.8,
     url: config.routes.contact,
-  },
-  {
-    changeFrequency: 'daily',
-    lastModified: new Date().toISOString(),
-    priority: 0.8,
-    url: config.routes.about,
   },
   {
     changeFrequency: 'daily',

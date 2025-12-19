@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import config from '@/config';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
@@ -26,7 +27,7 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
 
       <Link
         className="block cursor-pointer"
-        href={`/collections/products/${handle}`}
+        href={`${config.routes.collection}/products/${handle}`}
         aria-label={`View product details for ${title}`}
         scroll
       >

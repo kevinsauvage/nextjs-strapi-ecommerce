@@ -1,6 +1,7 @@
 import { GraphQLClient } from 'graphql-request';
 import type { RequestConfig } from 'node_modules/graphql-request/build/esm/types';
 
+import config from '@/config';
 import { getSdk as getAdminSdk } from './admin/index';
 import { buildExtraHeaders } from './helpers';
 import type { SdkFunctionWrapper } from './storefront/index';
@@ -23,7 +24,7 @@ const options = {
   fetch: async (url: string, parameters: RequestInit) => {
     const response = await fetch(url, {
       ...parameters,
-      next: { revalidate: 600 },
+      next: { revalidate: config.constants.revalidate.shopify },
     });
 
     if (!response.ok) {
@@ -37,7 +38,7 @@ const options = {
     'X-Shopify-Storefront-Access-Token': ACCESS_TOKEN,
   },
   next: {
-    revalidate: 600,
+    revalidate: config.constants.revalidate.shopify,
   },
 };
 

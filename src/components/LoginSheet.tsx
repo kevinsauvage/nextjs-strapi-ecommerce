@@ -1,6 +1,7 @@
 import { User } from 'lucide-react';
 
 import LoginForm from '@/app/(auth)/login/_components/LoginForm';
+import config from '@/config';
 
 import {
   Sheet,
@@ -38,8 +39,8 @@ const LoginSheet = () => {
         </div>
         <SheetFooter className="border-t pt-4">
           <div className="text-sm text-center text-muted-foreground">
-            Don’t have an account?{' '}
-            <a href="/register" className="text-primary hover:underline">
+            Don&apos;t have an account?{' '}
+            <a href={config.routes.register} className="text-primary hover:underline">
               Sign up
             </a>
           </div>

@@ -7,6 +7,7 @@ import PageBanner from '@/components/PageBanner';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import ProductsList from '@/components/ProductsList';
 import Search from '@/components/Search';
+import config from '@/config';
 import seo from '@/data/seo';
 import {
   adjustPaginationVariables,
@@ -21,12 +22,12 @@ import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
 
-export const revalidate = 300; // Revalidate every 5 minutes (search results change frequently)
+export const revalidate = config.constants.revalidate.search; // Revalidate every 5 minutes (search results change frequently)
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.search.title,
   description: seo.search.description,
-  url: '/search',
+  url: config.routes.search,
 });
 
 type SearchParameters = {
@@ -49,7 +50,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     ...adjustPaginationVariables({
       after: searchParameters.after,
       before: searchParameters.before,
-      first: 16,
+      first: config.constants.pagination.productsPerPage,
     }),
     identifiers: [],
     productFilters: parseFiltersQuery(searchParameters?.filters),

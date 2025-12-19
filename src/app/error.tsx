@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
+import config from '@/config';
 
 const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) => {
   useEffect(() => {
@@ -23,7 +24,7 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button onClick={() => (window.location.href = '/')} variant="outline">
+          <Button onClick={() => (window.location.href = config.routes.home)} variant="outline">
             Go home
           </Button>
         </div>

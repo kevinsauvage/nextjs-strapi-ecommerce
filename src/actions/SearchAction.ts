@@ -2,6 +2,8 @@
 
 import { redirect } from 'next/navigation';
 
+import config from '@/config';
+
 export const searchAction = async (searchQuery: string) => {
-  redirect(`/search?searchQuery=${searchQuery}`);
+  redirect(`${config.routes.search}?searchQuery=${searchQuery}`);
 };

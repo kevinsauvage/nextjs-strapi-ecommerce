@@ -74,5 +74,5 @@ export async function updateUserAction(input: UpdateUserInput) {
 
 export const logoutAction = async () => {
   await delCookieAction(config.cookies.shopifyToken);
-  redirect('/login');
+  redirect(config.routes.login);
 };

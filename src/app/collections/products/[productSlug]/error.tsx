@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
+import config from '@/config';
 
 const ProductError = ({
   error,
@@ -29,7 +30,10 @@ const ProductError = ({
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button onClick={() => (window.location.href = '/collections')} variant="outline">
+          <Button
+            onClick={() => (window.location.href = config.routes.collection)}
+            variant="outline"
+          >
             Browse products
           </Button>
         </div>

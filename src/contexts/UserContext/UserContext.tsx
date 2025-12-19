@@ -8,6 +8,7 @@ import {
   removeProductFromWishListAction,
   setProductToWishListAction,
 } from '@/actions/whishlistActions';
+import config from '@/config';
 import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
 
 export const UserContext = createContext({
@@ -34,7 +35,7 @@ export const UserProvider = ({
     async (isWishlisted: boolean, product: ProductFieldsFragment) => {
       if (!user) {
         toast.info('You need to login to add products to your wishlist');
-        router.push(`/login?redirect=${pathname}`);
+        router.push(`${config.routes.login}?redirect=${pathname}`);
         return;
       }
 

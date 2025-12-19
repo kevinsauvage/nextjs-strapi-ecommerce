@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
+import config from '@/config';
 import seo from '@/data/seo';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
@@ -12,7 +13,7 @@ import LoginForm from './_components/LoginForm';
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.login.title,
   description: seo.login.description,
-  url: '/login',
+  url: config.routes.login,
   noindex: true, // Login page shouldn't be indexed
 });
 
@@ -26,13 +27,13 @@ const LoginPage = () => {
       <FormContainer>
         <LoginForm />
         <div className="text-sm text-center text-muted-foreground ">
-          Don’t have an account?{' '}
-          <Link href="/register" className="text-primary hover:underline">
+          Don&apos;t have an account?{' '}
+          <Link href={config.routes.register} className="text-primary hover:underline">
             Sign up
           </Link>
         </div>
         <div className="text-sm text-center text-muted-foreground ">
-          <Link href="/recover" className="text-primary hover:underline">
+          <Link href={config.routes.emailResetPassword} className="text-primary hover:underline">
             Forgot password?
           </Link>
         </div>

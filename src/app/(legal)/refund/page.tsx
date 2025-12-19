@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
+import config from '@/config';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify/index';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
@@ -11,7 +12,7 @@ import MainContent from '../_components/MainContent';
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.refund.title,
   description: seo.pages.refund.description,
-  url: '/refund',
+  url: config.routes.refund,
 });
 
 const RefundPage = async () => {

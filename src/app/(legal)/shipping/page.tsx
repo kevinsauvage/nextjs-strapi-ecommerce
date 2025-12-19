@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
+import config from '@/config';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
@@ -11,7 +12,7 @@ import MainContent from '../_components/MainContent';
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.pages.shipping.title,
   description: seo.pages.shipping.description,
-  url: '/shipping',
+  url: config.routes.shipping,
 });
 const ShippingPage = async () => {
   const response = await storefrontSdk().getShippingPolicy({});

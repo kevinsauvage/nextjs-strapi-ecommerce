@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
+import config from '@/config';
 import type { CollectionsQuery } from '@/shopify/storefront';
 
 import { Button } from './ui/button';
@@ -28,7 +29,7 @@ const CollectionCard = ({
           <span>{title} </span>
         </p>
         <Button variant="secondary">
-          <Link href={`/collections/${handle}`} className="flex items-center gap-2">
+          <Link href={`${config.routes.collection}/${handle}`} className="flex items-center gap-2">
             Shop now
           </Link>
         </Button>

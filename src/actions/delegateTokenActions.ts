@@ -6,7 +6,7 @@ import { adminSdk } from '@/shopify';
 import { getCookieAction, setCookieAction } from './cookiesActions';
 
 const delegateAccessScope = process.env.SHOPIFY_SCOPE;
-const expiresIn = 24 * 60 * 60;
+const expiresIn = config.constants.delegateTokenExpirySeconds;
 const domain = process.env.NEXT_PUBLIC_SITE_DOMAIN;
 
 export const setDelegateTokenAction = async (): Promise<void> => {
@@ -34,7 +34,7 @@ export const setDelegateTokenAction = async (): Promise<void> => {
 
     if (delegateAccessToken) {
       await setCookieAction(config.cookies.delegateToken, delegateAccessToken.accessToken, {
-        domain: process.env.NODE_ENV === 'development' ? 'localhost' : domain,
+        domain: process.env.NODE_ENV === 'development' ? config.constants.domains.localhost : domain,
         httpOnly: true,
         maxAge: expiresIn,
         path: '/',

@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
+import config from '@/config';
 import { adminSdk, storefrontSdk } from '@/shopify';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
@@ -32,7 +33,7 @@ export const setProductToWishListAction = async (
   const shopifyToken = await getShopifyToken();
 
   if (!shopifyToken) {
-    redirect('/login');
+    redirect(config.routes.login);
   }
 
   const isWishlist = wishlist?.some((production) => production.id === product.id);

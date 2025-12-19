@@ -14,7 +14,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import config from '@/config/index';
+import config from '@/config';
 import type { originalSettingsType } from '@/utils/consents';
 import { transformedSettings } from '@/utils/consents';
 import { getCookieFront, setCookieFront } from '@/utils/cookies';
@@ -23,7 +23,7 @@ import { Input } from './ui/input';
 import { Label } from './ui/label';
 import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './ui/sheet';
 
-const EXPIRY_COOKIE_TIME = 182;
+const EXPIRY_COOKIE_TIME = config.constants.cookieExpiryDays;
 
 const CookieBanner = () => {
   const [show, setShow] = useState<boolean | undefined>(false);

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import config from '@/config';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
 import { cn } from '@/lib/utils';
@@ -297,7 +298,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
         </div>
 
         <Link
-          href={`/collections/products/${product.handle}`}
+          href={`${config.routes.collection}/products/${product.handle}`}
           className="block w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           onClick={onClose}
         >

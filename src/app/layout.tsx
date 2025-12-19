@@ -12,6 +12,7 @@ import GtmScript from '@/components/GtmScript';
 import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
+import config from '@/config';
 import { createCart, getCart } from '@/lib/cart';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
@@ -43,8 +44,8 @@ const handleCart = async () => {
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   const [headerMenu, footerMenu, cart, user, userWishlist] = await Promise.all([
-    storefrontSdk().getMenuByHandle({ handle: 'main-menu' }),
-    storefrontSdk().getMenuByHandle({ handle: 'footer' }),
+    storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.main }),
+    storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.footer }),
     handleCart(),
     getUser(),
     getWishlistAction(),
