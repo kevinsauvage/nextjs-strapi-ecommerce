@@ -4,11 +4,10 @@ import { notFound } from 'next/navigation';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
-import config from '@/config';
 import { storefrontSdk } from '@/shopify/index';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
-export const revalidate = config.constants.revalidate.product; // Revalidate every hour
+export const revalidate = 3600;
 
 type parametersType = {
   genre: string;

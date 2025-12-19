@@ -22,7 +22,7 @@ import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';
 
-export const revalidate = config.constants.revalidate.search; // Revalidate every 5 minutes (search results change frequently)
+export const revalidate = 300;
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.search.title,
