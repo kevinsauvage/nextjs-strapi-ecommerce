@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import Link from 'next/link';
 
+import OptimizedImage from '@/components/OptimizedImage';
 import config from '@/config';
 import { CartFieldsFragment } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
@@ -47,11 +47,13 @@ const LineItem: React.FC<{
       <div className="flex gap-4 flex-1 min-w-0">
         <Link href={productHandle} className="shrink-0 hover:opacity-80 transition-opacity">
           {node.merchandise.image?.medium ? (
-            <Image
+            <OptimizedImage
               src={String(node.merchandise.image.medium)}
               alt={node.merchandise.product.title}
               width={120}
               height={120}
+              quality={75}
+              sizes="120px"
               className="rounded-lg object-cover border border-border"
             />
           ) : (

@@ -1,7 +1,6 @@
 'use client';
 
 import { ShoppingBag } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -10,12 +9,12 @@ import useCartContext from '@/contexts/CartContext/useCartContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Skeleton } from './ui/skeleton';
+import OptimizedImage from './OptimizedImage';
 import Price from './Price';
 import ProductCardActions from './ProductCardActions';
 import SpinnerLoader from './SpinnerLoader';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 
@@ -28,12 +27,12 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
   const { title, images, handle, variants, id, priceRange } = product;
   const { price, compareAtPrice, availableForSale, quantityAvailable } =
     variants?.edges?.[0]?.node || {};
-  const [imageLoading, setImageLoading] = useState(true);
   const [addingToCart, setAddingToCart] = useState(false);
   const { handleAddToCart } = useCartContext();
 
   const productImages = mapShopifyImagesToImageFields(images?.edges);
   const variantId = variants?.edges?.[0]?.node?.id;
+  const primaryImage = productImages?.[0];
 
   const handleQuickAddToCart = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -64,28 +63,24 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
         scroll
       >
         <div className="relative overflow-hidden aspect-square">
-          {imageLoading && <Skeleton className="absolute inset-0" />}
-          <Image
-            src={productImages?.[0]?.large || ''}
-            alt={productImages?.[0]?.altText || title}
+          <OptimizedImage
+            src={primaryImage?.large || primaryImage?.src || ''}
+            alt={primaryImage?.altText || title}
             width={800}
             height={800}
-            placeholder="blur"
-            blurDataURL={productImages?.[0]?.blurDataURL || ''}
+            blurDataURL={primaryImage?.blurDataURL}
             priority={priority}
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
+            quality={85}
+            className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             aria-label={`Image of ${title}`}
-            className={`w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110 ${
-              imageLoading ? 'opacity-0' : 'opacity-100'
-            }`}
-            onLoad={() => setImageLoading(false)}
-            onError={() => setImageLoading(false)}
           />
 
           {/* Discount Badge */}
           {compareAtPrice && price?.amount !== compareAtPrice?.amount && (
             <Badge
               variant="destructive"
-              className="absolute left-2 top-2 z-10 text-caption-sm font-semibold"
+              className="absolute left-2 top-2 z-10 text-body-sm font-bold px-2.5 py-1 shadow-lg backdrop-blur-sm bg-destructive/95 border-2 border-white/20"
             >
               -{isWhatPercentOf(Number(price?.amount), Number(compareAtPrice?.amount))}%
             </Badge>
@@ -95,7 +90,7 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
           {isSoldOut && (
             <Badge
               variant="destructive"
-              className="absolute right-2 top-2 z-10 text-caption-sm font-medium"
+              className="absolute right-2 top-2 z-10 text-body-sm font-bold px-2.5 py-1 shadow-lg backdrop-blur-sm bg-destructive/95 border-2 border-white/20"
             >
               Sold Out
             </Badge>
@@ -103,7 +98,7 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
           {isLowStock && !isSoldOut && (
             <Badge
               variant="secondary"
-              className="absolute right-2 top-2 z-10 text-caption-sm font-medium"
+              className="absolute right-2 top-2 z-10 text-body-sm font-bold px-2.5 py-1 shadow-lg backdrop-blur-sm bg-secondary/95 border-2 border-white/20"
             >
               Low Stock
             </Badge>

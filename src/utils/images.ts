@@ -1,5 +1,76 @@
 import type { ImageFieldsFragment } from '@/shopify/storefront';
 
+/**
+ * Converts Shopify image URL to optimized format with WebP/AVIF support
+ * Shopify CDN supports format conversion via URL parameters
+ */
+export function getOptimizedImageUrl(
+  url: string,
+  options?: {
+    width?: number;
+    height?: number;
+    format?: 'webp' | 'avif' | 'jpg' | 'png';
+    quality?: number;
+  },
+): string {
+  if (!url) return '';
+
+  const { width, height, format, quality = 85 } = options || {};
+
+  // Shopify CDN format conversion
+  // Format: ?format=webp or ?format=avif
+  // Size: ?width=800&height=800
+  const params = new URLSearchParams();
+
+  if (format) {
+    params.append('format', format);
+  }
+
+  if (width) {
+    params.append('width', width.toString());
+  }
+
+  if (height) {
+    params.append('height', height.toString());
+  }
+
+  if (quality && quality !== 85) {
+    params.append('quality', quality.toString());
+  }
+
+  const separator = url.includes('?') ? '&' : '?';
+  return params.toString() ? `${url}${separator}${params.toString()}` : url;
+}
+
+export function generateImageSrcSet(
+  baseUrl: string,
+  sizes: number[] = [400, 600, 800, 1200, 1600],
+  format?: 'webp' | 'avif',
+): string {
+  return sizes
+    .map((size) => {
+      const optimizedUrl = getOptimizedImageUrl(baseUrl, {
+        width: size,
+        format,
+      });
+      return `${optimizedUrl} ${size}w`;
+    })
+    .join(', ');
+}
+
+export function getImageSizeForViewport(viewport: 'mobile' | 'tablet' | 'desktop' | 'large'): {
+  width: number;
+  height?: number;
+} {
+  const sizes = {
+    mobile: { width: 400 },
+    tablet: { width: 600 },
+    desktop: { width: 800 },
+    large: { width: 1200 },
+  };
+  return sizes[viewport];
+}
+
 export function mapShopifyImageToImageFields(
   image: ImageFieldsFragment | null | undefined,
 ): ImageFields | null {

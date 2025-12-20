@@ -1,10 +1,10 @@
 import { Search } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 
+import OptimizedImage from './OptimizedImage';
 import { Button } from './ui/button';
 
 type ProductSearchItem = {
@@ -52,13 +52,13 @@ const Product = ({ product }: { product: ProductSearchItem }) => {
       className="flex items-center gap-2 p-2 rounded hover:bg-muted overflow-hidden"
     >
       <Button variant="ghost" className="w-full justify-start gap-3 rounded-none" role="option">
-        <Image
+        <OptimizedImage
           src={image.small}
           alt={image.altText || ''}
-          title={image.altText || ''}
-          loading="lazy"
           width={48}
           height={48}
+          quality={75}
+          sizes="48px"
           className="rounded-lg aspect-square object-contain"
         />
         <div className="flex flex-col items-start">
