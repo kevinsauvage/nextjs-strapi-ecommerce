@@ -1,6 +1,6 @@
 'use client';
 
-import { Settings, X } from 'lucide-react';
+import { Settings } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 

@@ -4,7 +4,8 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 import * as React from 'react';
 
 import { cn } from '@/lib/utils';
-import { Button, buttonVariants } from './button';
+
+import { buttonVariants } from './button';
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
@@ -46,7 +47,10 @@ const AlertDialogContent = React.forwardRef<
 AlertDialogContent.displayName = AlertDialogPrimitive.Content.displayName;
 
 const AlertDialogHeader = ({ className, ...properties }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...properties} />
+  <div
+    className={cn('flex flex-col space-y-2 text-center sm:text-left', className)}
+    {...properties}
+  />
 );
 AlertDialogHeader.displayName = 'AlertDialogHeader';
 
@@ -119,4 +123,3 @@ export {
   AlertDialogTitle,
   AlertDialogTrigger,
 };
-
