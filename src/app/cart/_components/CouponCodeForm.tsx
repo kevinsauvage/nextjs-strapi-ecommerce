@@ -35,19 +35,28 @@ const CouponCodeForm = () => {
   const existingCodes = cart?.discountCodes || [];
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4" ref={formRef}>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3" ref={formRef}>
       {existingCodes.map((code) => (
         <input key={code.code} type="hidden" name="couponCode" value={code.code} />
       ))}
-      <div className="grid w-full items-center gap-1.5">
-        <Label htmlFor="couponCode" className="sr-only">
-          Coupon Code
-        </Label>
-        <Input type="text" id="couponCode" name="couponCode" className="border border-gray-300" />
+      <div className="flex gap-2">
+        <div className="flex-1">
+          <Label htmlFor="couponCode" className="sr-only">
+            Coupon Code
+          </Label>
+          <Input
+            type="text"
+            id="couponCode"
+            name="couponCode"
+            placeholder="Enter promo code"
+            className="w-full"
+            disabled={isLoading}
+          />
+        </div>
+        <Button type="submit" disabled={isLoading} className="shrink-0">
+          {isLoading ? 'Applying...' : 'Apply'}
+        </Button>
       </div>
-      <Button type="submit" className="w-full md:w-auto" disabled={isLoading}>
-        {isLoading ? 'Loading...' : 'Apply Coupon'}
-      </Button>
     </form>
   );
 };

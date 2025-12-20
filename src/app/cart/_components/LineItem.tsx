@@ -1,6 +1,9 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
+import config from '@/config';
 import { CartFieldsFragment } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 
 import CartRemove from './CartRemove';
 import QuantityUpdatedContainer from './QuantityUpdatedContainer';
@@ -28,61 +31,95 @@ const LineItem: React.FC<{
       ),
     0,
   );
-  const unitPriceFormatted = unitPrice.toFixed(2);
   const finalPrice = totalPrice - totalDiscount > 0 ? totalPrice - totalDiscount : 0;
+  const hasDiscount = finalPrice < totalPrice;
+  const currencyCode = node.merchandise.price.currencyCode;
+
+  // Get product handle for link
+  const productHandle =
+    'product' in node.merchandise && node.merchandise.product?.handle
+      ? `${config.routes.collection}/products/${node.merchandise.product.handle}`
+      : '#';
 
   return (
-    <div className="relative flex flex-col gap-2 md:flex-row md:items-center">
-      <div className="flex gap-4 basis-1/2">
-        <div className="shrink-0">
-          {node.merchandise.image?.medium && (
+    <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:gap-6 group">
+      {/* Product Image & Info */}
+      <div className="flex gap-4 flex-1 min-w-0">
+        <Link href={productHandle} className="shrink-0 hover:opacity-80 transition-opacity">
+          {node.merchandise.image?.medium ? (
             <Image
               src={String(node.merchandise.image.medium)}
               alt={node.merchandise.product.title}
-              width={80}
-              height={80}
-              className="rounded-md object-cover"
+              width={120}
+              height={120}
+              className="rounded-lg object-cover border border-border"
             />
+          ) : (
+            <div className="w-[120px] h-[120px] rounded-lg bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground text-xs">No image</span>
+            </div>
           )}
-        </div>
+        </Link>
         <div className="flex-1 min-w-0">
-          <p className="font-medium">{node.merchandise.product.title}</p>
-          <div className="text-muted-foreground flex items-center">
-            {node.merchandise.selectedOptions.map(
-              (option: { name: string; value: string }, index: number) => (
-                <div key={option.name} className="flex items-center">
-                  <span className="block text-sm">{option.value}</span>
-                  {index < node.merchandise.selectedOptions.length - 1 && (
-                    <span className="block text-sm text-muted-foreground mx-2">/</span>
-                  )}
-                </div>
-              ),
+          <Link href={productHandle}>
+            <h3 className="font-semibold text-base mb-1 hover:text-primary transition-colors line-clamp-2">
+              {node.merchandise.product.title}
+            </h3>
+          </Link>
+          {node.merchandise.selectedOptions && node.merchandise.selectedOptions.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 mt-1.5 mb-2">
+              {node.merchandise.selectedOptions.map(
+                (option: { name: string; value: string }, index: number) => (
+                  <span key={option.name} className="text-sm text-muted-foreground">
+                    {option.name}: <span className="font-medium">{option.value}</span>
+                    {index < node.merchandise.selectedOptions.length - 1 && (
+                      <span className="mx-1.5">•</span>
+                    )}
+                  </span>
+                ),
+              )}
+            </div>
+          )}
+          <div className="flex items-center gap-2 mt-2">
+            <p className="text-sm text-muted-foreground">
+              Unit: {formatPrice(unitPrice, currencyCode)}
+            </p>
+            {hasDiscount && (
+              <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">
+                Discounted
+              </span>
             )}
           </div>
-          <p className="text-sm text-muted-foreground mt-1">
-            {unitPriceFormatted} {node.merchandise.price.currencyCode}
-          </p>
         </div>
       </div>
-      <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
-        <QuantityUpdatedContainer
-          originalQuantity={node.quantity}
-          quantityAvailable={node.merchandise.quantityAvailable ?? 0}
-          id={node.id}
-          disabled={finalPrice <= 0}
-        />
-        <div className="flex flex-col items-end">
-          <div className="text-right flex items-center gap-1">
-            <p className="font-medium">{finalPrice.toFixed(2)}</p>
-            <p className="font-medium">{node.merchandise.price.currencyCode}</p>
-          </div>
-          {finalPrice < totalPrice && (
-            <p className="text-sm text-red-500 line-through">
-              {totalPrice.toFixed(2)} {node.merchandise.price.currencyCode}
-            </p>
-          )}
-        </div>
 
+      {/* Quantity, Price & Remove */}
+      <div className="flex items-center justify-between sm:justify-end gap-4 sm:flex-col sm:items-end sm:gap-3">
+        <div className="flex items-center gap-4 sm:flex-col sm:items-end sm:gap-3">
+          <QuantityUpdatedContainer
+            originalQuantity={node.quantity}
+            quantityAvailable={node.merchandise.quantityAvailable ?? 0}
+            id={node.id}
+            disabled={finalPrice <= 0}
+          />
+          <div className="flex flex-col items-end min-w-[100px]">
+            <div className="text-right">
+              <p className="font-semibold text-lg">
+                {formatPrice(finalPrice, currencyCode)}
+              </p>
+              {hasDiscount && (
+                <p className="text-sm text-muted-foreground line-through mt-0.5">
+                  {formatPrice(totalPrice, currencyCode)}
+                </p>
+              )}
+            </div>
+            {node.quantity > 1 && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {formatPrice(unitPrice, currencyCode)} each
+              </p>
+            )}
+          </div>
+        </div>
         <CartRemove id={node.id} />
       </div>
     </div>

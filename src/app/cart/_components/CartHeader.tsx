@@ -2,15 +2,20 @@
 
 import { ShoppingCart } from 'lucide-react';
 
+import { Badge } from '@/components/ui/badge';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
 const CartHeader = () => {
   const { cart } = useCartContext();
+  const itemCount = cart.totalQuantity || 0;
+  const itemText = itemCount === 1 ? 'Item' : 'Items';
 
   return (
-    <div className="flex items-center">
-      <ShoppingCart className="h-5 w-5 mr-2" />
-      <span className="font-medium">{cart.totalQuantity} Items</span>
+    <div className="flex items-center gap-2">
+      <ShoppingCart className="h-5 w-5 text-muted-foreground" />
+      <Badge variant="secondary" className="font-semibold">
+        {itemCount} {itemText}
+      </Badge>
     </div>
   );
 };

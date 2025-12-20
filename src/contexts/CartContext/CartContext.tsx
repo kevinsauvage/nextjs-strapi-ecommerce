@@ -147,11 +147,6 @@ export const CartProvider = ({
         .map((code) => String(code).trim())
         .filter((code) => code.length > 0);
 
-      if (validCodes.length === 0) {
-        console.error('No valid discount codes provided');
-        return;
-      }
-
       try {
         const response = await api.patch<CartResponse>('/api/cart/discount-codes', {
           discountCodes: validCodes,

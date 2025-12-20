@@ -19,12 +19,12 @@ export const metadata: Metadata = {
 
 const CartPage = () => {
   return (
-    <div className="pb-8 max-w-6xl mx-auto">
-      <PageBanner title="Your Cart" className="w-full pb-4">
-        <div className="flex items-center justify-between gap-2 w-full">
+    <div className="pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <PageBanner title="Your Cart" className="w-full pb-6">
+        <div className="flex items-center justify-between gap-4 w-full flex-wrap">
           <Link
             href="/"
-            className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+            className="flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Continue Shopping
@@ -33,12 +33,12 @@ const CartPage = () => {
         </div>
       </PageBanner>
 
-      <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         <div className="lg:col-span-2">
           <CartItemsList />
         </div>
 
-        <div>
+        <div className="lg:col-span-1 space-y-6">
           <CartSummary />
           <CartPromoCode />
         </div>

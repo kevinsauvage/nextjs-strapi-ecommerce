@@ -1,4 +1,5 @@
 import type { MoneyV2, ProductFieldsFragment } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 
 import { Badge } from './ui/badge';
 
@@ -15,14 +16,14 @@ const Price = ({
 
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <Badge variant="secondary">
-        <span>{priceRange?.minVariantPrice?.amount}</span>
-        <span>{priceRange?.minVariantPrice?.currencyCode}</span>
-      </Badge>
-      {isDiscount && (
+      {priceRange?.minVariantPrice && (
+        <Badge variant="secondary">
+          {formatPrice(priceRange.minVariantPrice.amount, priceRange.minVariantPrice.currencyCode)}
+        </Badge>
+      )}
+      {isDiscount && compareAtPrice && (
         <p className="text-xs text-gray-500 line-through">
-          {compareAtPrice?.amount}
-          {compareAtPrice?.currencyCode}
+          {formatPrice(compareAtPrice.amount, compareAtPrice.currencyCode)}
         </p>
       )}
     </div>

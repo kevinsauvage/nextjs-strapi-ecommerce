@@ -10,6 +10,7 @@ import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
 import { cn } from '@/lib/utils';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
 import Options from './Options';
@@ -209,18 +210,20 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
             )}
             <h2 className="text-xl font-bold mt-1">{product.title}</h2>
             <div className="flex items-baseline gap-2 mt-2">
-              <span className="text-2xl font-bold">
-                {price?.currencyCode} {price?.amount}
-              </span>
-              {compareAtPrice && Number(price?.amount) < Number(compareAtPrice.amount) && (
+              {price && (
+                <span className="text-2xl font-bold">
+                  {formatPrice(price.amount, price.currencyCode)}
+                </span>
+              )}
+              {compareAtPrice && price && Number(price.amount) < Number(compareAtPrice.amount) && (
                 <span className="text-base text-muted-foreground line-through">
-                  {compareAtPrice.currencyCode} {compareAtPrice.amount}
+                  {formatPrice(compareAtPrice.amount, compareAtPrice.currencyCode)}
                 </span>
               )}
             </div>
-            {quantity > 1 && (
+            {quantity > 1 && price && (
               <p className="text-sm text-muted-foreground mt-1">
-                Total: {price?.currencyCode} {totalPrice}
+                Total: {formatPrice(totalPrice, price.currencyCode)}
               </p>
             )}
           </div>

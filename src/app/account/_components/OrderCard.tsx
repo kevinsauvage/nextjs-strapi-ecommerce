@@ -14,6 +14,7 @@ import type {
   OrderFinancialStatus,
   OrderFulfillmentStatus,
 } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 
 function formatStatus(status?: OrderFulfillmentStatus | OrderFinancialStatus | null) {
   return status
@@ -76,16 +77,23 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
               <div className="space-y-1">
                 <h6 className="font-medium text-base">Order Details</h6>
 
-                <Row
-                  label="Subtotal"
-                  value={`${subtotalPrice?.amount} ${subtotalPrice?.currencyCode}`}
-                />
-                <Row label="Total" value={`${totalPrice?.amount} ${totalPrice?.currencyCode}`} />
+                {subtotalPrice && (
+                  <Row
+                    label="Subtotal"
+                    value={formatPrice(subtotalPrice.amount, subtotalPrice.currencyCode)}
+                  />
+                )}
+                {totalPrice && (
+                  <Row
+                    label="Total"
+                    value={formatPrice(totalPrice.amount, totalPrice.currencyCode)}
+                  />
+                )}
 
                 {totalRefunded?.amount && Number(totalRefunded.amount) > 0 && (
                   <Row
                     label="Refunded"
-                    value={`${totalRefunded.amount} ${totalRefunded.currencyCode}`}
+                    value={formatPrice(totalRefunded.amount, totalRefunded.currencyCode)}
                   />
                 )}
 

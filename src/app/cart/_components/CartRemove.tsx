@@ -4,6 +4,12 @@ import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
 const CartRemove = ({ id }: { id: string }) => {
@@ -18,21 +24,30 @@ const CartRemove = ({ id }: { id: string }) => {
   };
 
   return (
-    <Button
-      variant="destructive"
-      size="icon"
-      onClick={() => {
-        handleRemove().catch(() => {
-          // Handle error if needed
-        });
-      }}
-      disabled={loading}
-      aria-label="Remove item from cart"
-      title="Remove item from cart"
-    >
-      <Trash2 className="h-4 w-4" />
-      <span className="sr-only">Remove item</span>
-    </Button>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => {
+              handleRemove().catch(() => {
+                // Handle error if needed
+              });
+            }}
+            disabled={loading}
+            aria-label="Remove item from cart"
+            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+          >
+            <Trash2 className="h-4 w-4" />
+            <span className="sr-only">Remove item</span>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>
+          <p>Remove from cart</p>
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   );
 };
 

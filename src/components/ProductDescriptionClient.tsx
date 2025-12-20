@@ -7,6 +7,7 @@ import QuantityUpdater from '@/components/QuantityUpdater';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 
 import Options from './Options';
 import { Badge } from './ui/badge';
@@ -94,12 +95,14 @@ const ProductDescriptionClient = ({
         <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
 
         <div className="mt-4 flex items-baseline gap-2">
-          <span className="text-2xl font-bold">
-            {price?.currencyCode} {price?.amount}
-          </span>
-          {quantity > 1 && (
+          {price && (
+            <span className="text-2xl font-bold">
+              {formatPrice(price.amount, price.currencyCode)}
+            </span>
+          )}
+          {quantity > 1 && price && (
             <span className="text-sm text-muted-foreground">
-              Total: {price?.currencyCode} {totalPrice}
+              Total: {formatPrice(totalPrice, price.currencyCode)}
             </span>
           )}
         </div>
@@ -230,4 +233,3 @@ const ProductDescriptionClient = ({
 };
 
 export default ProductDescriptionClient;
-

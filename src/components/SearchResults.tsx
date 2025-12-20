@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
+import { formatPrice } from '@/utils/format';
 
 import { Button } from './ui/button';
 
@@ -63,9 +64,14 @@ const Product = ({ product }: { product: ProductSearchItem }) => {
         <div className="flex flex-col items-start">
           <span className="font-semibold">{title}</span>
 
-          <span className="text-sm text-muted-foreground">
-            {priceRange?.minVariantPrice?.amount} {priceRange?.minVariantPrice?.currencyCode}
-          </span>
+          {priceRange?.minVariantPrice && (
+            <span className="text-sm text-muted-foreground">
+              {formatPrice(
+                priceRange.minVariantPrice.amount,
+                priceRange.minVariantPrice.currencyCode,
+              )}
+            </span>
+          )}
         </div>
       </Button>
     </Link>
