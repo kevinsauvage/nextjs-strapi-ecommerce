@@ -17,8 +17,8 @@ import Form from '../../_components/Form';
 const LoginButton = () => {
   const status = useFormStatus();
   return (
-    <Button type="submit" className="w-full md:w-auto">
-      {status.pending ? 'Loading...' : 'Login'}
+    <Button type="submit" className="w-full md:w-auto" loading={status.pending}>
+      Login
     </Button>
   );
 };

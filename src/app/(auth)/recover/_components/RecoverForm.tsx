@@ -14,7 +14,11 @@ import Form from '../../_components/Form';
 
 const SubmitButton = () => {
   const status = useFormStatus();
-  return <Button type="submit">{status.pending ? 'Loading...' : 'Send mail'}</Button>;
+  return (
+    <Button type="submit" loading={status.pending}>
+      Send mail
+    </Button>
+  );
 };
 
 const RecoverForm = () => {

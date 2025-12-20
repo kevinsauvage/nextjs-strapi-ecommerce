@@ -12,8 +12,8 @@ import type { CustomerUserError } from '@/shopify/storefront';
 const SubmitButton = ({ buttonText }: { buttonText: string }) => {
   const status = useFormStatus();
   return (
-    <Button type="submit" disabled={status.pending} className="w-full md:w-auto">
-      {status.pending ? 'Loading...' : buttonText}
+    <Button type="submit" loading={status.pending} className="w-full md:w-auto">
+      {buttonText}
     </Button>
   );
 };

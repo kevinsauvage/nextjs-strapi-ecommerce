@@ -13,7 +13,11 @@ import { userFeedback } from '@/data/userFeedback';
 
 const SubmitButton = () => {
   const status = useFormStatus();
-  return <Button type="submit">{status.pending ? 'Loading...' : 'Contact Us'}</Button>;
+  return (
+    <Button type="submit" loading={status.pending}>
+      Contact Us
+    </Button>
+  );
 };
 
 const ContactForm = () => {

@@ -18,7 +18,11 @@ const initialStates = {
 
 const ResetButton = () => {
   const status = useFormStatus();
-  return <Button type="submit">{status.pending ? 'Loading...' : 'Reset'}</Button>;
+  return (
+    <Button type="submit" loading={status.pending}>
+      Reset
+    </Button>
+  );
 };
 
 const ResetForm = ({ resetUrl }: { resetUrl: string }) => {

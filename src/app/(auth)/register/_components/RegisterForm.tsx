@@ -16,8 +16,8 @@ import Form from '../../_components/Form';
 const SubmitButton = () => {
   const status = useFormStatus();
   return (
-    <Button type="submit" disabled={status.pending}>
-      {status.pending ? 'Loading...' : 'Register'}
+    <Button type="submit" loading={status.pending}>
+      Register
     </Button>
   );
 };
