@@ -4,6 +4,7 @@ import { Minus, Plus } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 import SpinnerLoader from '@/components/SpinnerLoader';
+
 import { Button } from './ui/button';
 
 const QuantityUpdater = ({
@@ -59,11 +60,7 @@ const QuantityUpdater = ({
         }}
         disabled={loading || disabled || originalQuantity <= 1}
       >
-        {loading ? (
-          <SpinnerLoader size="sm" />
-        ) : (
-          <Minus className="h-3 w-3" />
-        )}
+        {loading ? <SpinnerLoader size="sm" /> : <Minus className="h-3 w-3" />}
         <span className="sr-only">Decrease quantity</span>
       </Button>
       <span className="w-8 text-center text-body-sm">{originalQuantity}</span>
@@ -76,11 +73,7 @@ const QuantityUpdater = ({
         }}
         disabled={loading || disabled || originalQuantity >= quantityAvailable}
       >
-        {loading ? (
-          <SpinnerLoader size="sm" />
-        ) : (
-          <Plus className="h-3 w-3" />
-        )}
+        {loading ? <SpinnerLoader size="sm" /> : <Plus className="h-3 w-3" />}
         <span className="sr-only">Increase quantity</span>
       </Button>
     </div>

@@ -33,12 +33,12 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
   };
 
   return (
-    <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+    <div className="absolute top-2 right-2 z-20 flex flex-col gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
       <Button
         variant="ghost"
         aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
         disabled={loading}
-        className={`flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-secondary transition hover:bg-muted ${
+        className={`flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/95 backdrop-blur-sm text-secondary transition-all duration-200 hover:bg-muted hover:scale-110 shadow-md ${
           isWishlisted ? 'text-destructive' : ''
         } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
         type="button"
