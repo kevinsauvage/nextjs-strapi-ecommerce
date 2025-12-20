@@ -24,30 +24,37 @@ const CartSummary = () => {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
-          <div className="flex justify-between text-body-sm">
+          <div className="flex justify-between items-center text-body-sm">
             <span className="text-secondary">Subtotal</span>
-            <span className="text-body font-medium">{formatPrice(subtotal, currencyCode)}</span>
+            <span className="text-body font-medium tabular-nums">{formatPrice(subtotal, currencyCode)}</span>
           </div>
           {hasDiscount && (
-            <div className="flex justify-between text-body-sm">
+            <div className="flex justify-between items-center text-body-sm animate-in fade-in slide-in-from-top-2 duration-300">
               <span className="text-secondary">Discount</span>
-              <span className="text-body font-medium text-green-600 dark:text-green-400">
+              <span className="text-body font-medium text-green-600 dark:text-green-400 tabular-nums">
                 -{formatPrice(discount, currencyCode)}
               </span>
             </div>
           )}
           {tax > 0 && (
-            <div className="flex justify-between text-body-sm">
+            <div className="flex justify-between items-center text-body-sm">
               <span className="text-secondary">Tax</span>
-              <span className="text-body font-medium">{formatPrice(tax, currencyCode)}</span>
+              <span className="text-body font-medium tabular-nums">{formatPrice(tax, currencyCode)}</span>
             </div>
           )}
         </div>
         <Separator />
         <div className="flex justify-between items-baseline pt-2">
           <span className="text-body-lg font-semibold">Total</span>
-          <span className="text-heading-3 text-primary">{formatPrice(total, currencyCode)}</span>
+          <span className="text-heading-3 text-primary tabular-nums">{formatPrice(total, currencyCode)}</span>
         </div>
+        {hasDiscount && (
+          <div className="pt-2">
+            <p className="text-caption-sm text-green-600 dark:text-green-400 text-center">
+              You saved {formatPrice(discount, currencyCode)}!
+            </p>
+          </div>
+        )}
       </CardContent>
       <CardFooter className="pt-6">
         <CheckoutButton checkoutUrl={String(cart.checkoutUrl)} />

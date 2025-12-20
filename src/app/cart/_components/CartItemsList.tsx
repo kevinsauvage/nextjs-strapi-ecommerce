@@ -28,11 +28,16 @@ const CartItemsList = () => {
             subtitle="Looks like you haven't added anything to your cart yet. Start shopping to fill it up!"
             altText="Empty shopping cart"
           >
-            <Link href="/" className="mt-6">
-              <Button size="lg" className="min-w-[200px]">
-                Start Shopping
-              </Button>
-            </Link>
+            <div className="mt-6 flex flex-col items-center gap-4">
+              <Link href="/">
+                <Button size="lg" className="min-w-[200px]">
+                  Start Shopping
+                </Button>
+              </Link>
+              <p className="text-body-sm text-secondary text-center max-w-md">
+                Browse our collections to discover amazing products. Add items to your cart and they&apos;ll appear here.
+              </p>
+            </div>
           </EmptyState>
         </CardContent>
       </Card>

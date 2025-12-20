@@ -54,7 +54,7 @@ const QuantityUpdater = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-8 w-8"
+        className="h-8 w-8 transition-all duration-200 hover:scale-110"
         onClick={() => {
           void removeOne();
         }}
@@ -63,11 +63,13 @@ const QuantityUpdater = ({
         {loading ? <SpinnerLoader size="sm" /> : <Minus className="h-3 w-3" />}
         <span className="sr-only">Decrease quantity</span>
       </Button>
-      <span className="w-8 text-center text-body-sm">{originalQuantity}</span>
+      <span className="w-8 text-center text-body-sm font-medium transition-all duration-200">
+        {originalQuantity}
+      </span>
       <Button
         variant="outline"
         size="icon"
-        className="h-8 w-8"
+        className="h-8 w-8 transition-all duration-200 hover:scale-110"
         onClick={() => {
           void addOne();
         }}

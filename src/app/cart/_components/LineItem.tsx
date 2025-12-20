@@ -120,7 +120,7 @@ const LineItem: React.FC<{
             )}
           </div>
         </div>
-        <CartRemove id={node.id} />
+        <CartRemove id={node.id} productTitle={node.merchandise.product.title} />
       </div>
     </div>
   );
