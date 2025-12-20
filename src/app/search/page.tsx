@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import EmptyState from '@/components/EmptyState';
@@ -7,6 +8,7 @@ import PageBanner from '@/components/PageBanner';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import ProductsList from '@/components/ProductsList';
 import Search from '@/components/Search';
+import { Button } from '@/components/ui/button';
 import config from '@/config';
 import seo from '@/data/seo';
 import {
@@ -97,10 +99,15 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
       ) : (
         <div className="container mx-auto mb-8 px-4">
           <EmptyState
-            title="Result Not Found"
-            subtitle="Please try again with another keywords or maybe use generic term"
-            altText="Result Not Found"
-          />
+            variant="search"
+            title="No results found"
+            subtitle="We couldn't find any products matching your search. Try adjusting your search terms or browse our collections."
+            altText="No search results"
+          >
+            <Link href="/collections" className="mt-4">
+              <Button variant="default">Browse Collections</Button>
+            </Link>
+          </EmptyState>
         </div>
       )}
     </div>

@@ -22,10 +22,16 @@ const GlobalError = ({
       <body>
         <div className="container mx-auto px-4 py-12 min-h-screen flex items-center justify-center">
           <EmptyState
+            variant="error"
             altText="Error illustration"
             image={NotFoundIllustration}
             subtitle="A critical error occurred. Please try refreshing the page or contact support if the problem persists."
             title="Critical Error"
+            tips={[
+              'Refresh the page',
+              'Clear browser cache and cookies',
+              'Contact support if the issue persists',
+            ]}
           >
             <div className="mt-6 flex gap-4">
               <Button onClick={reset} variant="default">

@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 import EmptyState from '@/components/EmptyState';
 import ListingHeader from '@/components/ListingHeader';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import ProductEdgeList from '@/components/ProductsEdgeList';
+import { Button } from '@/components/ui/button';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables, parseFiltersQuery } from '@/shopify/helpers';
 import { ProductCollectionSortKeys } from '@/shopify/storefront';
@@ -105,10 +107,15 @@ const CollectionSlugPage = async ({
     return (
       <div className="container mx-auto px-4 py-8">
         <EmptyState
+          variant="default"
           title="Collection Not Found"
-          subtitle="Please try again with another collection"
+          subtitle="This collection doesn't exist or has been removed. Browse our other collections to find what you're looking for."
           altText="Collection Not Found"
-        />
+        >
+          <Link href="/collections" className="mt-4">
+            <Button variant="default">Browse Collections</Button>
+          </Link>
+        </EmptyState>
       </div>
     );
   }
@@ -148,10 +155,15 @@ const CollectionSlugPage = async ({
         <ProductEdgeList products={edges} layout="grid" />
       ) : (
         <EmptyState
+          variant="default"
           title="No products found"
-          subtitle="Please try again with another collection"
+          subtitle="This collection doesn't have any products yet, or your filters are too specific. Try adjusting your filters or browse other collections."
           altText="No products found"
-        />
+        >
+          <Link href="/collections" className="mt-4">
+            <Button variant="outline">Browse All Collections</Button>
+          </Link>
+        </EmptyState>
       )}
       <PageInfoPagination pageInfo={safePageInfo} searchParameters={safeSearchParameters} />
     </div>

@@ -19,6 +19,7 @@ const CartItemsList = () => {
       <Card>
         <CardContent className="py-12">
           <EmptyState
+            variant="cart"
             image={{
               src: '/emptyCart.svg',
               width: 200,

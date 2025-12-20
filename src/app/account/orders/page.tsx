@@ -53,10 +53,15 @@ const Page = async ({
   if (response?.customer?.orders === undefined) {
     return (
       <EmptyState
+        variant="orders"
         title="Your Order List is Empty"
-        subtitle="Looks like you haven’t made any order yet"
+        subtitle="Looks like you haven't made any order yet. Start shopping to see your orders here!"
         altText="Order List is Empty"
-      />
+      >
+        <Link href="/" className="mt-4">
+          <Button variant="default">Start Shopping</Button>
+        </Link>
+      </EmptyState>
     );
   }
 
@@ -67,13 +72,14 @@ const Page = async ({
       <Card>
         <CardContent>
           <EmptyState
+            variant="orders"
             title="No Orders Found"
-            subtitle="Looks like you haven’t made any orders yet"
+            subtitle="Looks like you haven't made any orders yet. Start shopping to see your orders here!"
             altText="No Orders Found"
           >
-            <Button variant="default" className="mt-4">
-              <Link href="/">Start Shopping</Link>
-            </Button>
+            <Link href="/" className="mt-4">
+              <Button variant="default">Start Shopping</Button>
+            </Link>
           </EmptyState>
         </CardContent>
       </Card>

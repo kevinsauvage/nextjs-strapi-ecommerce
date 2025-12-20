@@ -21,10 +21,12 @@ const ProductError = ({
   return (
     <div className="container mx-auto px-4 py-12 min-h-[calc(100vh-76px)] flex items-center justify-center">
       <EmptyState
+        variant="error"
         altText="Product error illustration"
         image={NotFoundIllustration}
         subtitle="We couldn't load this product. Please try again or browse our other products."
         title="Unable to load product"
+        tips={['Try refreshing the page', 'Browse similar products', 'Check back later']}
       >
         <div className="mt-6 flex gap-4">
           <Button onClick={reset} variant="default">

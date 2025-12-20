@@ -15,10 +15,16 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
   return (
     <div className="container mx-auto px-4 py-12 min-h-[calc(100vh-76px)] flex items-center justify-center">
       <EmptyState
+        variant="error"
         altText="Error illustration"
         image={NotFoundIllustration}
         subtitle="Something went wrong. Please try again or contact support if the problem persists."
         title="Oops! Something went wrong"
+        tips={[
+          'Try refreshing the page',
+          'Clear your browser cache',
+          'Check your internet connection',
+        ]}
       >
         <div className="mt-6 flex gap-4">
           <Button onClick={reset} variant="default">

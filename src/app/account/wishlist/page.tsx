@@ -26,14 +26,15 @@ const Wishlist = async () => {
       <Card>
         <CardContent>
           <EmptyState
+            variant="wishlist"
             image={NoFavoriteIllustration}
-            title="No Favorites"
-            subtitle="You can add an item to your favorites by clicking the “Heart Icon”"
-            altText="No Favorites"
+            title="Your wishlist is empty"
+            subtitle="Start saving items you love! Click the heart icon on any product to add it to your wishlist."
+            altText="Empty wishlist"
           >
-            <Button variant="default" className="mt-4">
-              <Link href="/">Start Shopping</Link>
-            </Button>
+            <Link href="/" className="mt-4">
+              <Button variant="default">Start Shopping</Button>
+            </Link>
           </EmptyState>
         </CardContent>
       </Card>

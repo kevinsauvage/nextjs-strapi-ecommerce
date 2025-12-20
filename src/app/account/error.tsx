@@ -21,10 +21,12 @@ const AccountError = ({
   return (
     <div className="container mx-auto px-4 py-12 min-h-[calc(100vh-76px)] flex items-center justify-center">
       <EmptyState
+        variant="error"
         altText="Account error illustration"
         image={NotFoundIllustration}
         subtitle="We couldn't load your account information. Please try again or contact support if the problem persists."
         title="Unable to load account"
+        tips={['Try refreshing the page', 'Clear your browser cache', 'Contact support if the issue persists']}
       >
         <div className="mt-6 flex gap-4">
           <Button onClick={reset} variant="default">
