@@ -1,13 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import { getWishlistAction } from '@/actions/whishlistActions';
 import NoFavoriteIllustration from '@/assets/NoFavoriteIllustration.png';
 import EmptyState from '@/components/EmptyState';
 import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import seo from '@/data/seo';
+import { getWishlist } from '@/lib/wishlist';
 
 import BackButton from '../_components/BackButton';
 
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 const Wishlist = async () => {
-  const userWishlist = await getWishlistAction();
+  const userWishlist = await getWishlist();
 
   if (!userWishlist?.length) {
     return (

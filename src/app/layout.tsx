@@ -4,7 +4,6 @@ import { Inter, Poppins } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
-import { getWishlistAction } from '@/actions/whishlistActions';
 import CookieBanner from '@/components/CookieBanner';
 import Footer from '@/components/Footer';
 import GtmScript from '@/components/GtmScript';
@@ -14,6 +13,7 @@ import { Toaster } from '@/components/ui/sonner';
 import config from '@/config';
 import { getCart } from '@/lib/cart';
 import { getCartId } from '@/lib/cart-helpers';
+import { getWishlist } from '@/lib/wishlist';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
@@ -43,7 +43,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.footer }),
     handleInitialCart(),
     getUser(),
-    getWishlistAction(),
+    getWishlist(),
   ]);
 
   return (

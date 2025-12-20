@@ -4,11 +4,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import { createContext, useCallback, useMemo } from 'react';
 import { toast } from 'sonner';
 
-import {
-  removeProductFromWishListAction,
-  setProductToWishListAction,
-} from '@/actions/whishlistActions';
 import config from '@/config';
+import { addToWishlist, removeFromWishlist } from '@/lib/wishlist-client';
 import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
 
 export const UserContext = createContext({
@@ -39,16 +36,20 @@ export const UserProvider = ({
         return;
       }
 
-      const response = await (isWishlisted
-        ? removeProductFromWishListAction(userWishlist, product, user.id)
-        : setProductToWishListAction(userWishlist, product, user.id));
+      try {
+        const result = isWishlisted
+          ? await removeFromWishlist(product.id)
+          : await addToWishlist(product);
 
-      if (response?.success) {
-        toast.success(response.message);
-      } else if (response?.message) {
-        toast.error(response.message);
-      } else {
-        toast.error('Something went wrong');
+        if (result?.success && result.data) {
+          toast.success(result.message);
+          router.refresh();
+        } else {
+          toast.error(result?.message || 'Something went wrong');
+        }
+      } catch (error) {
+        console.error('Wishlist operation error:', error);
+        toast.error(error instanceof Error ? error.message : 'Something went wrong');
       }
     },
     [pathname, router, user, userWishlist],
