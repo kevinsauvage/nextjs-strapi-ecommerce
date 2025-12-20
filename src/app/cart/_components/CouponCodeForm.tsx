@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useState } from 'react';
 
+import SpinnerLoader from '@/components/SpinnerLoader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,20 +17,22 @@ const CouponCodeForm = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const discountCodesArray = formData
-      .getAll('couponCode')
-      .map((value) => String(value).trim())
-      .filter((code) => code.length > 0);
+    try {
+      const formData = new FormData(e.currentTarget);
+      const discountCodesArray = formData
+        .getAll('couponCode')
+        .map((value) => String(value).trim())
+        .filter((code) => code.length > 0);
 
-    if (discountCodesArray.length === 0) {
+      if (discountCodesArray.length === 0) {
+        return;
+      }
+
+      await updateDiscountCodes(discountCodesArray);
+      formRef.current?.reset();
+    } finally {
       setIsLoading(false);
-      return;
     }
-
-    await updateDiscountCodes(discountCodesArray);
-    formRef.current?.reset();
-    setIsLoading(false);
   };
 
   const existingCodes = cart?.discountCodes || [];
@@ -54,7 +57,14 @@ const CouponCodeForm = () => {
           />
         </div>
         <Button type="submit" disabled={isLoading} className="shrink-0">
-          {isLoading ? 'Applying...' : 'Apply'}
+          {isLoading ? (
+            <span className="flex items-center gap-2">
+              <SpinnerLoader size="sm" />
+              Applying...
+            </span>
+          ) : (
+            'Apply'
+          )}
         </Button>
       </div>
     </form>

@@ -33,32 +33,30 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
   };
 
   return (
-    <>
-      {loading && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-background/80">
-          <SpinnerLoader />
-        </div>
-      )}
-      <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
-        <Button
-          variant="ghost"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className={`flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-secondary transition hover:bg-muted ${
-            isWishlisted ? 'text-destructive' : ''
-          }`}
-          type="button"
-          onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-            event.stopPropagation();
-            event.preventDefault();
-            void handleWishlist();
-          }}
-        >
+    <div className="absolute top-2 right-2 z-20 flex flex-col gap-2">
+      <Button
+        variant="ghost"
+        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+        disabled={loading}
+        className={`flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-secondary transition hover:bg-muted ${
+          isWishlisted ? 'text-destructive' : ''
+        } ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        type="button"
+        onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          event.stopPropagation();
+          event.preventDefault();
+          void handleWishlist();
+        }}
+      >
+        {loading ? (
+          <SpinnerLoader size="sm" />
+        ) : (
           <Heart color="currentColor" className={isWishlisted ? 'fill-destructive' : ''} />
-        </Button>
+        )}
+      </Button>
 
-        <QuickBuy product={product} />
-      </div>
-    </>
+      <QuickBuy product={product} />
+    </div>
   );
 };
 

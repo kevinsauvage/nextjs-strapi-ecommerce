@@ -1,8 +1,24 @@
-const Loader = () => (
-  <div role="status">
+import { cn } from '@/lib/utils';
+
+type SpinnerLoaderProps = {
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+};
+
+const sizeClasses = {
+  sm: 'w-4 h-4',
+  md: 'w-8 h-8',
+  lg: 'w-12 h-12',
+};
+
+const SpinnerLoader = ({ size = 'md', className }: SpinnerLoaderProps) => (
+  <div role="status" className={cn('inline-flex items-center justify-center', className)}>
     <svg
       aria-hidden="true"
-      className="w-8 h-8 text-muted animate-spin dark:text-muted-foreground fill-primary"
+      className={cn(
+        'animate-spin text-muted fill-primary',
+        sizeClasses[size],
+      )}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -20,4 +36,4 @@ const Loader = () => (
   </div>
 );
 
-export default Loader;
+export default SpinnerLoader;

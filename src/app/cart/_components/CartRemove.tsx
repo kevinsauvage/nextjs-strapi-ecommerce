@@ -3,6 +3,7 @@
 import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
+import SpinnerLoader from '@/components/SpinnerLoader';
 import { Button } from '@/components/ui/button';
 import {
   Tooltip,
@@ -19,8 +20,11 @@ const CartRemove = ({ id }: { id: string }) => {
   const handleRemove = async () => {
     if (!id) return console.error('Missing line item to delete');
     setLoading(true);
-    await removeFromCart(id);
-    setLoading(false);
+    try {
+      await removeFromCart(id);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -31,15 +35,17 @@ const CartRemove = ({ id }: { id: string }) => {
             variant="ghost"
             size="icon"
             onClick={() => {
-              handleRemove().catch(() => {
-                // Handle error if needed
-              });
+              void handleRemove();
             }}
             disabled={loading}
             aria-label="Remove item from cart"
             className="text-secondary hover:text-destructive hover:bg-destructive/10 transition-colors"
           >
-            <Trash2 className="h-4 w-4" />
+            {loading ? (
+              <SpinnerLoader size="sm" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
             <span className="sr-only">Remove item</span>
           </Button>
         </TooltipTrigger>

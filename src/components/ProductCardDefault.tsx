@@ -1,10 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
 
 import config from '@/config';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
+import { Skeleton } from './ui/skeleton';
 import Price from './Price';
 import ProductCardActions from './ProductCardActions';
 
@@ -18,6 +22,7 @@ type ProductCardDefaultProps = {
 const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
   const { title, images, handle, variants, id, priceRange } = product;
   const { price, compareAtPrice } = variants?.edges?.[0]?.node || {};
+  const [imageLoading, setImageLoading] = useState(true);
 
   const productImages = mapShopifyImagesToImageFields(images?.edges);
 
@@ -32,6 +37,9 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
         scroll
       >
         <div className="relative overflow-hidden">
+          {imageLoading && (
+            <Skeleton className="absolute inset-0 aspect-square" />
+          )}
           <Image
             src={productImages?.[0]?.large || ''}
             alt={productImages?.[0]?.altText || title}
@@ -41,7 +49,11 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
             blurDataURL={productImages?.[0]?.blurDataURL || ''}
             priority={priority}
             aria-label={`Image of ${title}`}
-            className="aspect-square object-cover transition duration-300 group-hover:scale-105"
+            className={`aspect-square object-cover transition duration-300 group-hover:scale-105 ${
+              imageLoading ? 'opacity-0' : 'opacity-100'
+            }`}
+            onLoad={() => setImageLoading(false)}
+            onError={() => setImageLoading(false)}
           />
         </div>
 
