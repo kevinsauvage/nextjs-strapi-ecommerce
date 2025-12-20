@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { handleUserErrors } from '@/helpers/shopify';
-import { getOrCreateCartId, revalidateCart } from '@/lib/cart-helpers';
+import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefront';
@@ -9,7 +9,11 @@ import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefr
 export const dynamic = 'force-dynamic';
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getOrCreateCartId();
+  const cartId = await getCartId();
+
+  if (!cartId) {
+    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+  }
 
   try {
     const body = await request.json();
@@ -36,7 +40,7 @@ export async function PATCH(request: NextRequest) {
       phone: user.phone,
     } as CartBuyerIdentityInput;
 
-    const updateResponse = await storefrontSdk().cartBuyerIdentityUpdate({
+    const updateResponse = await storefrontSdk('no-store').cartBuyerIdentityUpdate({
       buyerIdentity,
       cartId,
       ...adjustPaginationVariables({
@@ -52,7 +56,7 @@ export async function PATCH(request: NextRequest) {
     handleUserErrors(userErrors);
 
     if (cart) {
-      revalidateCart(cartId);
+      revalidateCart();
 
       return NextResponse.json(
         { data: cart, message: 'Cart buyer identity updated successfully' },
@@ -69,4 +73,3 @@ export async function PATCH(request: NextRequest) {
     );
   }
 }
-

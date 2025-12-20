@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { handleUserErrors } from '@/helpers/shopify';
-import { getOrCreateCartId, revalidateCart } from '@/lib/cart-helpers';
+import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 
@@ -15,7 +15,11 @@ const DEFAULT_PAGINATION = {
 };
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getOrCreateCartId();
+  const cartId = await getCartId();
+
+  if (!cartId) {
+    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+  }
 
   try {
     const body = await request.json();
@@ -39,7 +43,7 @@ export async function PATCH(request: NextRequest) {
     let userErrors;
 
     if (operation === 'add' && body.addLines) {
-      const addLineResponse = await storefrontSdk().cartLinesAdd({
+      const addLineResponse = await storefrontSdk('no-store').cartLinesAdd({
         cartId,
         lines: body.addLines,
         ...adjustPaginationVariables({ after, before, first, last }),
@@ -48,7 +52,7 @@ export async function PATCH(request: NextRequest) {
       cart = addLineResponse?.cartLinesAdd?.cart;
       userErrors = addLineResponse?.cartLinesAdd?.userErrors;
     } else if (lines) {
-      const updateLinesResponse = await storefrontSdk().cartLinesUpdate({
+      const updateLinesResponse = await storefrontSdk('no-store').cartLinesUpdate({
         cartId,
         lines,
         ...adjustPaginationVariables({ after, before, first, last }),
@@ -63,14 +67,21 @@ export async function PATCH(request: NextRequest) {
     handleUserErrors(userErrors);
 
     if (cart) {
-      revalidateCart(cartId);
+      revalidateCart();
 
       return NextResponse.json(
         {
           data: cart,
           message: operation === 'add' ? 'Product added successfully' : 'Cart updated successfully',
         },
-        { status: 200 },
+        {
+          status: 200,
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            Pragma: 'no-cache',
+            Expires: '0',
+          },
+        },
       );
     }
 
@@ -90,7 +101,11 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const cartId = await getOrCreateCartId();
+  const cartId = await getCartId();
+
+  if (!cartId) {
+    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+  }
 
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -108,7 +123,7 @@ export async function DELETE(request: NextRequest) {
     const after = searchParams.get('after') || DEFAULT_PAGINATION.after;
     const before = searchParams.get('before') || DEFAULT_PAGINATION.before;
 
-    const removeLinesResponse = await storefrontSdk().cartLinesRemove({
+    const removeLinesResponse = await storefrontSdk('no-store').cartLinesRemove({
       cartId,
       lineIds: [lineItemId],
       ...adjustPaginationVariables({ after, before, first, last }),
@@ -119,7 +134,7 @@ export async function DELETE(request: NextRequest) {
     handleUserErrors(userErrors);
 
     if (cart) {
-      revalidateCart(cartId);
+      revalidateCart();
 
       return NextResponse.json(
         { data: cart, message: 'Product removed successfully' },

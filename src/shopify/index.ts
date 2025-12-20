@@ -21,29 +21,37 @@ if (!SHOPIFY_URL) {
   throw new Error('Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL');
 }
 
-const options = {
-  fetch: async (url: string, parameters: RequestInit) => {
-    const response = await fetch(url, {
-      ...parameters,
-      next: { revalidate: config.constants.revalidate.shopify },
-    });
+const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default') => {
+  const options = {
+    fetch: async (url: string, parameters: RequestInit) => {
+      const fetchOptions: RequestInit = {
+        ...parameters,
+      };
 
-    if (!response.ok) {
-      throw new Error(`Failed to fetch from Shopify: ${response.statusText}`);
-    }
+      if (cacheOption === 'no-store') {
+        fetchOptions.cache = 'no-store';
+      } else {
+        fetchOptions.next = { revalidate: config.constants.revalidate.shopify };
+      }
 
-    return response;
-  },
-  headers: {
-    'Content-Type': 'application/json',
-    'X-Shopify-Storefront-Access-Token': ACCESS_TOKEN,
-  },
-  next: {
-    revalidate: config.constants.revalidate.shopify,
-  },
+      const response = await fetch(url, fetchOptions);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch from Shopify: ${response.statusText}`);
+      }
+
+      return response;
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      'X-Shopify-Storefront-Access-Token': ACCESS_TOKEN,
+    },
+  };
+
+  return new GraphQLClient(SHOPIFY_URL, options as RequestConfig);
 };
 
-const storefrontClient = new GraphQLClient(SHOPIFY_URL, options as RequestConfig);
+const storefrontClient = createStorefrontClient('default');
 
 const defaultWrapper: SdkFunctionWrapper = async (
   action,
@@ -76,8 +84,9 @@ const defaultWrapper: SdkFunctionWrapper = async (
   }
 };
 
-export const storefrontSdk = () => {
-  return getStorefrontSdk(storefrontClient, defaultWrapper);
+export const storefrontSdk = (cacheOption: 'default' | 'no-store' = 'default') => {
+  const client = cacheOption === 'no-store' ? createStorefrontClient('no-store') : storefrontClient;
+  return getStorefrontSdk(client, defaultWrapper);
 };
 
 const adminHeaders = {

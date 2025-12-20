@@ -1,45 +1,41 @@
 'use client';
-import { useState } from 'react';
-import { toast } from 'sonner';
+import { useRef, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import type { CartFieldsFragment } from '@/shopify/storefront';
-import { api } from '@/utils/apiClient';
+import useCartContext from '@/contexts/CartContext/useCartContext';
 
-const CouponCodeForm = ({ discountCodes }: { discountCodes: CartFieldsFragment }) => {
+const CouponCodeForm = () => {
+  const { cart, updateDiscountCodes } = useCartContext();
   const [isLoading, setIsLoading] = useState(false);
+
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const discountCodesArray = formData.getAll('couponCode') as string[];
+    const discountCodesArray = formData
+      .getAll('couponCode')
+      .map((value) => String(value).trim())
+      .filter((code) => code.length > 0);
 
-    try {
-      const response = await api.patch<{
-        cart: CartFieldsFragment;
-        message: string;
-        warnings?: unknown[];
-      }>('/api/cart/discount-codes', { discountCodes: discountCodesArray });
-
-      toast.success(response.message || 'Discount code applied successfully');
-
-      // Reset form
-      e.currentTarget.reset();
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : 'Failed to update discount codes');
-    } finally {
+    if (discountCodesArray.length === 0) {
       setIsLoading(false);
+      return;
     }
+
+    await updateDiscountCodes(discountCodesArray);
+    formRef.current?.reset();
+    setIsLoading(false);
   };
 
-  const existingCodes = discountCodes?.discountCodes || [];
+  const existingCodes = cart?.discountCodes || [];
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <form onSubmit={handleSubmit} className="flex flex-col space-y-4" ref={formRef}>
       {existingCodes.map((code) => (
         <input key={code.code} type="hidden" name="couponCode" value={code.code} />
       ))}

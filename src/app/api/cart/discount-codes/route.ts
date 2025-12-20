@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
 import { handleUserErrors } from '@/helpers/shopify';
-import { getOrCreateCartId, revalidateCart } from '@/lib/cart-helpers';
+import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 
 export const dynamic = 'force-dynamic';
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getOrCreateCartId();
+  const cartId = await getCartId();
+
+  if (!cartId) {
+    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+  }
 
   try {
     const body = await request.json();
@@ -17,7 +21,7 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid discount codes format' }, { status: 400 });
     }
 
-    const updateDiscountCodesResponse = await storefrontSdk().cartDiscountCodesUpdate({
+    const updateDiscountCodesResponse = await storefrontSdk('no-store').cartDiscountCodesUpdate({
       cartId,
       discountCodes,
       first: 100,
@@ -33,7 +37,7 @@ export async function PATCH(request: NextRequest) {
     }
 
     if (cart) {
-      revalidateCart(cartId);
+      revalidateCart();
 
       return NextResponse.json(
         {

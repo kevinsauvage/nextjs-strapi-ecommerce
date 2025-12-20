@@ -1,29 +1,55 @@
 'use client';
 
-import { createContext, useCallback, useMemo, useState } from 'react';
+import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
+import { createCartAction } from '@/actions/cartActions';
+import cartMock from '@/mocks/cart';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 import { api } from '@/utils/apiClient';
 
-export const CartContext = createContext({
+type CartResponse = { data: CartFieldsFragment; message?: string };
+
+interface CartContextType {
+  cart: CartFieldsFragment;
+  handleAddToCart: (variantId: string, quantity?: number) => Promise<void>;
+  handleQuantityChange: (id: string, quantity: number) => Promise<void>;
+  removeFromCart: (lineItemId: string) => Promise<void>;
+  updateDiscountCodes: (discountCodes: string[]) => Promise<void>;
+}
+
+export const CartContext = createContext<CartContextType>({
   cart: {} as CartFieldsFragment,
-  handleAddToCart: async (_variantId: string, _quantity?: number) => {
-    // noop
-  },
-  handleQuantityChange: async (_id: string, _quantity: number) => {
-    // noop
-  },
-  removeFromCart: async (_lineItemId: string) => {
-    // noop
-  },
+  handleAddToCart: async () => {},
+  handleQuantityChange: async () => {},
+  removeFromCart: async () => {},
+  updateDiscountCodes: async () => {},
 });
 
-const DEFAULT_CART_PAGINATION = {
+const DEFAULT_PAGINATION = {
   first: 100,
   last: 0,
   after: '',
   before: '',
+};
+
+const buildCartLinesUrl = (params?: { lineItemId?: string }): string => {
+  const searchParams = new URLSearchParams({
+    first: String(DEFAULT_PAGINATION.first),
+    last: String(DEFAULT_PAGINATION.last),
+    after: DEFAULT_PAGINATION.after,
+    before: DEFAULT_PAGINATION.before,
+  });
+
+  if (params?.lineItemId) {
+    searchParams.set('lineItemId', params.lineItemId);
+  }
+
+  return `/api/cart/lines?${searchParams.toString()}`;
+};
+
+const getErrorMessage = (error: unknown, defaultMessage: string): string => {
+  return error instanceof Error ? error.message : defaultMessage;
 };
 
 export const CartProvider = ({
@@ -31,11 +57,22 @@ export const CartProvider = ({
   initialCart,
 }: {
   children: React.ReactNode;
-  initialCart: CartFieldsFragment;
+  initialCart: CartFieldsFragment | null;
 }) => {
-  const [cart, setCart] = useState(initialCart);
+  const [cart, setCart] = useState<CartFieldsFragment>(initialCart || cartMock);
 
-  const handleResponse = useCallback((response: { data: CartFieldsFragment; message?: string }) => {
+  useEffect(() => {
+    if (!initialCart) {
+      createCartAction()
+        .then(setCart)
+        .catch((error) => {
+          console.error('Failed to create cart:', error);
+          toast.error('Failed to initialize cart');
+        });
+    }
+  }, [initialCart]);
+
+  const handleResponse = useCallback((response: CartResponse) => {
     setCart(response.data);
     if (response.message) {
       toast.success(response.message);
@@ -44,16 +81,16 @@ export const CartProvider = ({
 
   const removeFromCart = useCallback(
     async (lineItemId: string) => {
-      if (!lineItemId) return console.error('Missing line item to delete');
+      if (!lineItemId) {
+        console.error('Missing line item ID');
+        return;
+      }
 
       try {
-        const response = await api.delete<{ data: CartFieldsFragment; message: string }>(
-          `/api/cart/lines?lineItemId=${encodeURIComponent(lineItemId)}&first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
-        );
-
+        const response = await api.delete<CartResponse>(buildCartLinesUrl({ lineItemId }));
         handleResponse(response);
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Failed to remove item');
+        toast.error(getErrorMessage(error, 'Failed to remove item'));
       }
     },
     [handleResponse],
@@ -61,56 +98,82 @@ export const CartProvider = ({
 
   const handleQuantityChange = useCallback(
     async (id: string, quantity: number) => {
-      if (!id) return console.error('Missing line id to update');
-      if (!quantity) return console.error('Missing quantity to update');
+      if (!id || !quantity) {
+        console.error('Missing required parameters: id or quantity');
+        return;
+      }
 
       try {
-        const response = await api.patch<{ data: CartFieldsFragment; message: string }>(
-          `/api/cart/lines?first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
-          {
-            lines: [{ id, quantity }],
-            operation: 'update',
-          },
-        );
-
+        const response = await api.patch<CartResponse>(buildCartLinesUrl(), {
+          lines: [{ id, quantity }],
+          operation: 'update',
+        });
         handleResponse(response);
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Failed to update cart');
+        toast.error(getErrorMessage(error, 'Failed to update cart'));
       }
     },
     [handleResponse],
   );
 
   const handleAddToCart = useCallback(
-    async (variantId: string, quantity: number = 1) => {
-      if (!variantId) return console.error('Missing variant id to add');
+    async (variantId: string, quantity = 1) => {
+      if (!variantId) {
+        console.error('Missing variant ID');
+        return;
+      }
 
       try {
-        const response = await api.patch<{ data: CartFieldsFragment; message: string }>(
-          `/api/cart/lines?first=${DEFAULT_CART_PAGINATION.first}&last=${DEFAULT_CART_PAGINATION.last}&after=${DEFAULT_CART_PAGINATION.after}&before=${DEFAULT_CART_PAGINATION.before}`,
-          {
-            addLines: [{ merchandiseId: variantId, quantity }],
-            operation: 'add',
-          },
-        );
-
+        const response = await api.patch<CartResponse>(buildCartLinesUrl(), {
+          addLines: [{ merchandiseId: variantId, quantity }],
+          operation: 'add',
+        });
         handleResponse(response);
       } catch (error) {
-        toast.error(error instanceof Error ? error.message : 'Failed to add to cart');
+        toast.error(getErrorMessage(error, 'Failed to add to cart'));
       }
     },
     [handleResponse],
   );
 
-  const values = useMemo(
+  const updateDiscountCodes = useCallback(
+    async (discountCodes: string[]) => {
+      if (!Array.isArray(discountCodes)) {
+        console.error('Invalid discount codes format');
+        return;
+      }
+
+      const validCodes = discountCodes
+        .map((code) => String(code).trim())
+        .filter((code) => code.length > 0);
+
+      if (validCodes.length === 0) {
+        console.error('No valid discount codes provided');
+        return;
+      }
+
+      try {
+        const response = await api.patch<CartResponse>('/api/cart/discount-codes', {
+          discountCodes: validCodes,
+        });
+        handleResponse(response);
+      } catch (error) {
+        toast.error(getErrorMessage(error, 'Failed to update discount codes'));
+      }
+    },
+    [handleResponse],
+  );
+
+  const value = useMemo<CartContextType>(
     () => ({
       cart,
       handleAddToCart,
       handleQuantityChange,
       removeFromCart,
+      updateDiscountCodes,
     }),
-    [cart, handleAddToCart, handleQuantityChange, removeFromCart],
+    [cart, handleAddToCart, handleQuantityChange, removeFromCart, updateDiscountCodes],
   );
 
-  return <CartContext.Provider value={values}>{children}</CartContext.Provider>;
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

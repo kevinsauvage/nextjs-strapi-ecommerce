@@ -5,7 +5,7 @@ import type { CartFieldsFragment } from '@/shopify/storefront';
 
 export async function getCart(cartId: string): Promise<CartFieldsFragment | null> {
   try {
-    const response = await storefrontSdk().getCart({
+    const response = await storefrontSdk('no-store').getCart({
       cartId,
       ...adjustPaginationVariables({ first: 100 }),
     });
@@ -18,8 +18,8 @@ export async function getCart(cartId: string): Promise<CartFieldsFragment | null
 }
 
 export async function createCart(): Promise<CartFieldsFragment> {
-  const createCartResponse = await storefrontSdk().cartCreate({
-    ...adjustPaginationVariables({ first: 1 }),
+  const createCartResponse = await storefrontSdk('no-store').cartCreate({
+    ...adjustPaginationVariables({ first: 100 }),
   });
 
   const { cart, userErrors, warnings } = createCartResponse.cartCreate || {};

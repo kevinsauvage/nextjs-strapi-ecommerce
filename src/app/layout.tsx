@@ -4,7 +4,6 @@ import { Inter, Poppins } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
-import { getCartIdAction } from '@/actions/cartActions';
 import { getWishlistAction } from '@/actions/whishlistActions';
 import CookieBanner from '@/components/CookieBanner';
 import Footer from '@/components/Footer';
@@ -13,7 +12,8 @@ import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import config from '@/config';
-import { createCart, getCart } from '@/lib/cart';
+import { getCart } from '@/lib/cart';
+import { getCartId } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
@@ -32,21 +32,16 @@ const poppins = Poppins({
   preload: true,
 });
 
-const handleCart = async () => {
-  const cartId = await getCartIdAction();
-  const cart = cartId ? await getCart(cartId) : null;
-
-  if (!cart) {
-    return await createCart();
-  }
-  return cart;
+const handleInitialCart = async () => {
+  const cartId = await getCartId();
+  return cartId ? await getCart(cartId) : null;
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
-  const [headerMenu, footerMenu, cart, user, userWishlist] = await Promise.all([
+  const [headerMenu, footerMenu, initialCart, user, userWishlist] = await Promise.all([
     storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.main }),
     storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.footer }),
-    handleCart(),
+    handleInitialCart(),
     getUser(),
     getWishlistAction(),
   ]);
@@ -70,7 +65,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           enableSystem
           disableTransitionOnChange
         >
-          <CartProvider initialCart={cart}>
+          <CartProvider initialCart={initialCart}>
             <UserProvider user={user} userWishlist={userWishlist}>
               <Header headerMenu={headerMenu?.menu || null} />
               <main className="min-h-[calc(100vh-76px)]">{children}</main>
