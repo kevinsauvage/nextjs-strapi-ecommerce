@@ -387,6 +387,27 @@ h6 {
   color: var(--primary);
 }
 
+/* Container Max-Widths - For better readability */
+.container-sm {
+  max-width: 28rem; /* 448px */
+}
+
+.container-md {
+  max-width: 42rem; /* 672px */
+}
+
+.container-lg {
+  max-width: 56rem; /* 896px */
+}
+
+.container-xl {
+  max-width: 72rem; /* 1152px */
+}
+
+.container-2xl {
+  max-width: 80rem; /* 1280px */
+}
+
 @keyframes fadeSlideDown {
   0% {
     opacity: 0;
