@@ -79,7 +79,7 @@ const ProductPage = async ({ params }: PageProperties) => {
       <ProductDescription product={product} isModal={false} />
 
       <div className="my-12">
-        <h3 className="text-2xl font-bold mb-4">Recommended Products</h3>
+        <h3 className="text-heading-2 mb-4">Recommended Products</h3>
         <ProductRecommendations recommendations={recommendations} />
       </div>
     </div>

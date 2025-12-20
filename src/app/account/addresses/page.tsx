@@ -88,9 +88,9 @@ const Addresses = async ({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-lg font-medium">Addresses</h2>
+          <h2 className="text-heading-3">Addresses</h2>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-body text-secondary">
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>
           <div className="flex items-center gap-2 flex-wrap">
             <BackButton />

@@ -55,17 +55,17 @@ const ContactForm = () => {
       <Label className="mb-2 flex flex-col items-start" htmlFor="email">
         Email address
         <Input id="email" name="email" placeholder="Email" required={true} />
-        {states.email && <span className="text-red-500 text-sm">{states.email}</span>}
+        {states.email && <span className="text-destructive text-body-sm">{states.email}</span>}
       </Label>
       <Label className="mb-2 flex flex-col items-start" htmlFor="name">
         Name
         <Input placeholder="Name" name="name" id="name" required={true} />
-        {states.name && <span className="text-red-500 text-sm">{states.name}</span>}
+        {states.name && <span className="text-destructive text-body-sm">{states.name}</span>}
       </Label>
       <Label className="mb-2 flex flex-col items-start" htmlFor="message">
         Message
         <Textarea placeholder="Message" name="message" id="message" required={true} />
-        {states.message && <span className="text-red-500 text-sm">{states.message}</span>}
+        {states.message && <span className="text-destructive text-body-sm">{states.message}</span>}
       </Label>
       <SubmitButton />
     </form>

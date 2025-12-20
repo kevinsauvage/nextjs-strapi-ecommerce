@@ -43,7 +43,7 @@ const CartItemsList = () => {
     <Card>
       <CardHeader className="pb-4">
         <CardTitle>
-          <h2 className="text-xl font-semibold">Cart Items</h2>
+          <h2 className="text-heading-4">Cart Items</h2>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -58,7 +58,7 @@ const CartItemsList = () => {
       </CardContent>
       {cart.lines.pageInfo.hasNextPage && (
         <CardFooter className="pt-4 border-t">
-          <p className="text-sm text-muted-foreground">More items available</p>
+          <p className="text-body-sm text-secondary">More items available</p>
         </CardFooter>
       )}
     </Card>

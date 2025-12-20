@@ -77,21 +77,21 @@ const Address = ({
     <Card className="overflow-hidden">
       <CardContent className="px-4 flex justify-between gap-4">
         <div className="space-y-1">
-          <p className="font-medium">{name}</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body font-medium">{name}</p>
+          <p className="text-body-sm text-secondary">
             {address1}
             {address2 && `, ${address2}`}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body-sm text-secondary">
             {zip}, {city}
           </p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-body-sm text-secondary">
             {province}, {country}
           </p>
           {(company || phone) && (
             <div className="pt-1">
-              {company && <p className="text-sm">{company}</p>}
-              {phone && <p className="text-sm">{phone}</p>}
+              {company && <p className="text-body-sm">{company}</p>}
+              {phone && <p className="text-body-sm">{phone}</p>}
             </div>
           )}
         </div>
@@ -149,7 +149,7 @@ const Address = ({
           )}
 
           {isDefault && (
-            <Badge variant="outline" className="text-xs">
+            <Badge variant="outline" className="text-caption-sm">
               Default address
             </Badge>
           )}

@@ -28,8 +28,8 @@ const AccountCardCTA = ({
 }) => {
   return (
     <div className="border rounded-lg p-4">
-      <h3 className="font-medium mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground mb-4">{description}</p>
+      <h3 className="text-heading-4 mb-2">{title}</h3>
+      <p className="text-body-sm text-secondary mb-4">{description}</p>
       <Button variant="secondary" size="sm" asChild>
         <Link href={buttonLink} scroll>
           {buttonText}
@@ -44,9 +44,9 @@ const Page = () => {
     <Card>
       <CardHeader className="text-center max-w-lg mx-auto w-full">
         <CardTitle>
-          <h2 className="text-lg font-medium">Account Overview</h2>
+          <h2 className="text-heading-3">Account Overview</h2>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-body text-secondary">
           Welcome <UserFullName />, your account dashboard provides access to all of your important
           account information and features.
         </CardDescription>

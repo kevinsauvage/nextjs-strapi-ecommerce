@@ -16,9 +16,9 @@ const Page = () => {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-lg font-medium">Update Account</h2>
+          <h2 className="text-heading-3">Update Account</h2>
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="text-body text-secondary">
           <p className="mb-4">
             Update your account information and preferences. Ensure your details are up to date for
             a better experience.

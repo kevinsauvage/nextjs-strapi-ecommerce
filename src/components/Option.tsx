@@ -18,7 +18,7 @@ const Option = ({
     Array.isArray(option.optionValues) &&
     option.optionValues.length > 1 && (
       <div className="mb-2">
-        <h3 className="text-sm font-medium">{option.name}:</h3>
+        <h3 className="text-label">{option.name}:</h3>
         <ul className="flex items-center gap-2 flex-wrap">
           {option.optionValues.map((value) => (
             <li key={value.id}>

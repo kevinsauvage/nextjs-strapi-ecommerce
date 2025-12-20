@@ -46,13 +46,13 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
         </div>
 
         {compareAtPrice && price?.amount !== compareAtPrice?.amount && (
-          <div className="absolute left-2 top-2 z-10 rounded bg-red-500 px-2 py-1 text-xs font-semibold text-white">
+          <div className="absolute left-2 top-2 z-10 rounded bg-red-500 px-2 py-1 text-caption-sm font-semibold text-white">
             {isWhatPercentOf(Number(price?.amount), Number(compareAtPrice?.amount))}%
           </div>
         )}
 
         <div className="py-4">
-          <div className="mb-2 text-sm font-medium">{title}</div>
+          <h3 className="text-heading-4 mb-2">{title}</h3>
           <div>
             <Price compareAtPrice={compareAtPrice} priceRange={priceRange} price={price} />
           </div>

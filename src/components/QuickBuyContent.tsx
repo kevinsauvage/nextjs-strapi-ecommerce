@@ -204,25 +204,25 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
           {/* Title & Price */}
           <div>
             {product.productType && (
-              <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              <span className="text-label-sm text-secondary">
                 {product.productType}
               </span>
             )}
-            <h2 className="text-xl font-bold mt-1">{product.title}</h2>
+            <h2 className="text-heading-4 mt-1">{product.title}</h2>
             <div className="flex items-baseline gap-2 mt-2">
               {price && (
-                <span className="text-2xl font-bold">
+                <span className="text-heading-3 text-primary">
                   {formatPrice(price.amount, price.currencyCode)}
                 </span>
               )}
               {compareAtPrice && price && Number(price.amount) < Number(compareAtPrice.amount) && (
-                <span className="text-base text-muted-foreground line-through">
+                <span className="text-body text-muted line-through">
                   {formatPrice(compareAtPrice.amount, compareAtPrice.currencyCode)}
                 </span>
               )}
             </div>
             {quantity > 1 && price && (
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="text-body-sm text-secondary mt-1">
                 Total: {formatPrice(totalPrice, price.currencyCode)}
               </p>
             )}
@@ -244,7 +244,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
 
           {/* Quantity Selector */}
           <div className="space-y-2">
-            <label htmlFor="quantity" className="text-sm font-medium">
+            <label htmlFor="quantity" className="text-label">
               Quantity
             </label>
             <div className="flex items-center gap-3">
@@ -258,7 +258,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                 >
                   <Minus className="h-4 w-4" />
                 </Button>
-                <span className="w-12 text-center font-medium">{quantity}</span>
+                <span className="w-12 text-center text-body font-medium">{quantity}</span>
                 <Button
                   variant="ghost"
                   size="icon"
@@ -270,7 +270,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                 </Button>
               </div>
               {quantityAvailable && (
-                <span className="text-sm text-muted-foreground">{quantityAvailable} available</span>
+                <span className="text-body-sm text-secondary">{quantityAvailable} available</span>
               )}
             </div>
           </div>
@@ -280,7 +280,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
       <SheetFooter className="flex-shrink-0 border-t">
         <div className="flex gap-2 w-full">
           <Button
-            className="flex-1 h-12 text-base font-semibold gap-2"
+            className="flex-1 h-12 text-body-lg font-semibold gap-2"
             size="lg"
             disabled={
               !availableForSale || (quantityAvailable ? quantity > quantityAvailable : false)
@@ -302,7 +302,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
 
         <Link
           href={`${config.routes.collection}/products/${product.handle}`}
-          className="block w-full text-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          className="block w-full text-center text-body-sm text-secondary hover:text-primary transition-colors"
           onClick={onClose}
         >
           View full details →

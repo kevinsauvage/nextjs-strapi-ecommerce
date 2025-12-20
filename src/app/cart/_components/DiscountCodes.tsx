@@ -29,7 +29,7 @@ const DiscountCodes = () => {
     <div className="flex flex-col gap-1 mt-2 space-y-4">
       {applicableCodes.length > 0 && (
         <div>
-          <span className="block mb-2"> Applied: </span>
+          <span className="block mb-2 text-body-sm text-secondary"> Applied: </span>
           <div className="flex flex-wrap gap-2">
             {applicableCodes.map((code) => {
               return (
@@ -58,7 +58,7 @@ const DiscountCodes = () => {
 
       {notApplicableCodes.length > 0 && (
         <div>
-          <span className="block mb-2"> Not Applicable: </span>
+          <span className="block mb-2 text-body-sm text-secondary"> Not Applicable: </span>
           <div className="flex flex-wrap gap-2">
             {notApplicableCodes.map((code) => {
               return (

@@ -26,14 +26,14 @@ const LoginPage = () => {
       </PageBanner>
       <FormContainer>
         <LoginForm />
-        <div className="text-sm text-center text-muted-foreground ">
+        <div className="text-body-sm text-center text-secondary">
           Don&apos;t have an account?{' '}
-          <Link href={config.routes.register} className="text-primary hover:underline">
+          <Link href={config.routes.register} className="text-accent hover:underline">
             Sign up
           </Link>
         </div>
-        <div className="text-sm text-center text-muted-foreground ">
-          <Link href={config.routes.emailResetPassword} className="text-primary hover:underline">
+        <div className="text-body-sm text-center text-secondary">
+          <Link href={config.routes.emailResetPassword} className="text-accent hover:underline">
             Forgot password?
           </Link>
         </div>

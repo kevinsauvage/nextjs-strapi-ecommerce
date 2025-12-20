@@ -27,8 +27,8 @@ const LoginSheet = () => {
       >
         <div>
           <SheetHeader className="mb-6 text-left border-b pb-4">
-            <SheetTitle className="text-2xl font-bold">Welcome Back</SheetTitle>
-            <SheetDescription className="text-muted-foreground">
+            <SheetTitle className="text-heading-2">Welcome Back</SheetTitle>
+            <SheetDescription className="text-body-sm text-secondary">
               Enter your credentials to access your account.
             </SheetDescription>
           </SheetHeader>
@@ -38,9 +38,9 @@ const LoginSheet = () => {
           </div>
         </div>
         <SheetFooter className="border-t pt-4">
-          <div className="text-sm text-center text-muted-foreground">
+          <div className="text-body-sm text-center text-secondary">
             Don&apos;t have an account?{' '}
-            <a href={config.routes.register} className="text-primary hover:underline">
+            <a href={config.routes.register} className="text-accent hover:underline">
               Sign up
             </a>
           </div>

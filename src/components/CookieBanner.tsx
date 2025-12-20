@@ -116,11 +116,11 @@ const CookieBanner = () => {
             <Button onClick={() => setShowBannerCookies(false)} type="button" size="icon">
               <X />
             </Button>
-            <p>
+            <p className="text-body text-secondary">
               We use cookies on our website to provide you with a better browsing experience and to
               help us understand how you use our site. By clicking &quot;Accept&quot; you consent to
               the use of cookies as described in our{' '}
-              <Link href={config.routes.privacy}>Cookie Policy</Link>. If you choose to close this
+              <Link href={config.routes.privacy} className="text-accent hover:underline">Cookie Policy</Link>. If you choose to close this
               banner without clicking &quot;Accept,&quot; we will assume that you do not consent to
               the use of cookies on our site. Please note that some features of our website may not
               function properly if cookies are not enabled.
@@ -152,10 +152,10 @@ const CookieBanner = () => {
                     </DialogDescription>
                   </DialogHeader>
                   <div className="border p-4 max-h-36 overflow-scroll ">
-                    <ul className="block text-sm">
+                    <ul className="block text-body-sm">
                       <li className="mb-3">
-                        <strong className="text-md">Strictly Necessary Cookies:</strong>{' '}
-                        <p>
+                        <strong className="text-body font-semibold">Strictly Necessary Cookies:</strong>{' '}
+                        <p className="text-body-sm text-secondary">
                           These cookies are essential for the website to function properly and
                           cannot be turned off in our system. They are usually set in response to
                           actions made by you which amount to a request for services, such as
@@ -163,15 +163,15 @@ const CookieBanner = () => {
                         </p>
                       </li>
                       <li className="mb-3">
-                        <strong className="text-md">Analytics Cookies:</strong>{' '}
-                        <p>
+                        <strong className="text-body font-semibold">Analytics Cookies:</strong>{' '}
+                        <p className="text-body-sm text-secondary">
                           These cookies allow us to measure and analyze how our website is being
                           used, in order to improve its performance and your browsing experience.
                         </p>
                       </li>
                       <li className="mb-3">
-                        <strong className="text-md">Personalized Cookies:</strong>{' '}
-                        <p>
+                        <strong className="text-body font-semibold">Personalized Cookies:</strong>{' '}
+                        <p className="text-body-sm text-secondary">
                           These cookies are used to personalize your experience on our website by
                           remembering your preferences and settings. They may also be used to
                           provide you with customized content and recommendations based on your
@@ -179,8 +179,8 @@ const CookieBanner = () => {
                         </p>
                       </li>
                       <li className="mb-3">
-                        <strong className="text-md">Advertising Cookies:</strong>{' '}
-                        <p>
+                        <strong className="text-body font-semibold">Advertising Cookies:</strong>{' '}
+                        <p className="text-body-sm text-secondary">
                           These cookies are used to make advertising messages more relevant to you
                           and your interests. They are also used to limit the number of times you
                           see an advertisement, as well as to help measure the effectiveness of
@@ -191,7 +191,7 @@ const CookieBanner = () => {
                   </div>
 
                   <form onSubmit={handleSaveSettings} className="space-y-3">
-                    <p className="text-xl font-medium">
+                    <p className="text-heading-4">
                       <b>Please select which cookies you&apos;d like to allow:</b>
                     </p>
                     <div className="space-y-0.5">

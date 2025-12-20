@@ -14,19 +14,22 @@ const Footer = ({ menuItems }: FooterProps) => {
     <footer className="flex flex-col py-10 gap-10 border-t">
       <div className="container mx-auto flex flex-col justify-between md:grid grid-cols-2 gap-8 px-4">
         <div className="flex flex-col max-w-80 mb-8">
-          <b className="text-lg font-bold pb-3">About</b>
-          <p className="max-w-xl font-light text-sm">{siteMetadata?.about?.short}</p>
+          <h3 className="text-heading-4 pb-3">About</h3>
+          <p className="max-w-xl text-body-sm text-secondary">{siteMetadata?.about?.short}</p>
         </div>
         <ul className="flex flex-wrap justify-between gap-8 mb-8 md:grid md:grid-cols-3 ">
           {Array.isArray(menuItems) &&
             menuItems.map((item) => (
               <li key={item.id}>
-                <b className="text-md block font-semibold pb-3">{item.title}</b>
+                <h4 className="text-heading-4 block pb-3">{item.title}</h4>
                 <ul>
                   {item?.items?.map((element) => (
-                    <li className="font-light mb-1" key={element.id}>
+                    <li className="mb-1" key={element.id}>
                       {typeof element?.url === 'string' && (
-                        <Link href={new URL(element?.url)?.pathname} className="font-light text-sm">
+                        <Link
+                          href={new URL(element?.url)?.pathname}
+                          className="text-body-sm text-secondary hover:text-primary transition-colors"
+                        >
                           {element?.title}
                         </Link>
                       )}
@@ -38,7 +41,7 @@ const Footer = ({ menuItems }: FooterProps) => {
         </ul>
       </div>
       <div className="text-center">
-        <p>Copyright © 2025 All rights reserved.</p>
+        <p className="text-caption text-secondary">Copyright © 2025 All rights reserved.</p>
       </div>
     </footer>
   );

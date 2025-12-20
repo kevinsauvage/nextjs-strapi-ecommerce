@@ -56,13 +56,13 @@ const LineItem: React.FC<{
             />
           ) : (
             <div className="w-[120px] h-[120px] rounded-lg bg-muted flex items-center justify-center">
-              <span className="text-muted-foreground text-xs">No image</span>
+              <span className="text-caption-sm text-secondary">No image</span>
             </div>
           )}
         </Link>
         <div className="flex-1 min-w-0">
           <Link href={productHandle}>
-            <h3 className="font-semibold text-base mb-1 hover:text-primary transition-colors line-clamp-2">
+            <h3 className="text-heading-4 mb-1 hover:text-primary transition-colors line-clamp-2">
               {node.merchandise.product.title}
             </h3>
           </Link>
@@ -70,7 +70,7 @@ const LineItem: React.FC<{
             <div className="flex flex-wrap items-center gap-1.5 mt-1.5 mb-2">
               {node.merchandise.selectedOptions.map(
                 (option: { name: string; value: string }, index: number) => (
-                  <span key={option.name} className="text-sm text-muted-foreground">
+                  <span key={option.name} className="text-body-sm text-secondary">
                     {option.name}: <span className="font-medium">{option.value}</span>
                     {index < node.merchandise.selectedOptions.length - 1 && (
                       <span className="mx-1.5">•</span>
@@ -81,11 +81,11 @@ const LineItem: React.FC<{
             </div>
           )}
           <div className="flex items-center gap-2 mt-2">
-            <p className="text-sm text-muted-foreground">
+            <p className="text-body-sm text-secondary">
               Unit: {formatPrice(unitPrice, currencyCode)}
             </p>
             {hasDiscount && (
-              <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">
+              <span className="text-caption-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">
                 Discounted
               </span>
             )}
@@ -104,17 +104,17 @@ const LineItem: React.FC<{
           />
           <div className="flex flex-col items-end min-w-[100px]">
             <div className="text-right">
-              <p className="font-semibold text-lg">
+              <p className="text-heading-4 font-semibold">
                 {formatPrice(finalPrice, currencyCode)}
               </p>
               {hasDiscount && (
-                <p className="text-sm text-muted-foreground line-through mt-0.5">
+                <p className="text-body-sm text-muted line-through mt-0.5">
                   {formatPrice(totalPrice, currencyCode)}
                 </p>
               )}
             </div>
             {node.quantity > 1 && (
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-caption-sm text-secondary mt-1">
                 {formatPrice(unitPrice, currencyCode)} each
               </p>
             )}

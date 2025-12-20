@@ -43,8 +43,8 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
         <Button
           variant="ghost"
           aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className={`flex h-9 w-9 items-center justify-center rounded-full border border-gray-300 bg-white text-gray-600 transition hover:bg-gray-100 ${
-            isWishlisted ? 'text-red-500' : ''
+          className={`flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background text-secondary transition hover:bg-muted ${
+            isWishlisted ? 'text-destructive' : ''
           }`}
           type="button"
           onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -53,7 +53,7 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
             void handleWishlist();
           }}
         >
-          <Heart color="currentColor" className={isWishlisted ? 'fill-red-500' : ''} />
+          <Heart color="currentColor" className={isWishlisted ? 'fill-destructive' : ''} />
         </Button>
 
         <QuickBuy product={product} />

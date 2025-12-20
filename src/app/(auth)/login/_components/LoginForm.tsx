@@ -65,7 +65,7 @@ const LoginForm = () => {
 
   return (
     <Form action={action}>
-      <h3 className="mb-8 text-2xl font-bold">Login</h3>
+      <h3 className="mb-8 text-heading-2">Login</h3>
       <div>
         <Label htmlFor="email" className="mb-1">
           Email address:

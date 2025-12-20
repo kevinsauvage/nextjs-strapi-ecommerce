@@ -77,7 +77,7 @@ const HamburgerMenu = ({
       <div key={item.id} className={`width-full`}>
         <button
           className={cn(
-            'flex w-full cursor-pointer items-center justify-between px-4 py-2 text-sm',
+            'flex w-full cursor-pointer items-center justify-between px-4 py-2 text-body-sm',
             level === 0 ? 'font-medium' : '',
             'hover:bg-muted hover:text-foreground',
             isExpanded ? 'bg-muted text-foreground' : '',
@@ -99,7 +99,7 @@ const HamburgerMenu = ({
         >
           <span>{item.title}</span>
           {hasChildren && (
-            <span className="text-muted-foreground">
+            <span className="text-secondary">
               {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
             </span>
           )}

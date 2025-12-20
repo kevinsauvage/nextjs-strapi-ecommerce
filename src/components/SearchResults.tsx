@@ -62,10 +62,10 @@ const Product = ({ product }: { product: ProductSearchItem }) => {
           className="rounded-lg aspect-square object-contain"
         />
         <div className="flex flex-col items-start">
-          <span className="font-semibold">{title}</span>
+          <span className="text-body font-semibold">{title}</span>
 
           {priceRange?.minVariantPrice && (
-            <span className="text-sm text-muted-foreground">
+            <span className="text-body-sm text-secondary">
               {formatPrice(
                 priceRange.minVariantPrice.amount,
                 priceRange.minVariantPrice.currencyCode,
@@ -87,7 +87,7 @@ const Query = ({ query }: { query: { text: string } }) => {
     >
       <Button
         variant="ghost"
-        className="w-full justify-start rounded-none  text-base font-medium"
+        className="w-full justify-start rounded-none text-body font-medium"
         role="option"
       >
         <Search className="mr-2 h-4 w-4 opacity-60" />
@@ -98,7 +98,7 @@ const Query = ({ query }: { query: { text: string } }) => {
 };
 
 const SectionTitle = ({ title }: { title: string }) => {
-  return <div className="px-4 pt-4 text-xs uppercase text-muted-foreground">{title}</div>;
+  return <div className="px-4 pt-4 text-label-sm text-secondary">{title}</div>;
 };
 
 const SearchResults = ({

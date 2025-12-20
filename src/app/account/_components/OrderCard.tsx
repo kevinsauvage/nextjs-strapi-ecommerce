@@ -38,8 +38,8 @@ const getDate = (timestamp: string | number | Date | undefined | null = new Date
 
 const Row = ({ label, value }: { label: string; value: string | number | null }) => (
   <div className="flex justify-between gap-4 py-1 border-b border-border last:border-none">
-    <span className="text-sm text-muted-foreground">{label}</span>
-    <span className="text-sm font-medium">{value}</span>
+    <span className="text-body-sm text-secondary">{label}</span>
+    <span className="text-body-sm font-medium">{value}</span>
   </div>
 );
 
@@ -66,7 +66,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
           <CardHeader className="flex flex-row items-center justify-between p-4 cursor-pointer">
             <CollapsibleTrigger asChild>
               <button className="flex items-center justify-between gap-2 w-full">
-                <h5 className="text-lg font-semibold">Order {order.name}</h5>
+                <h5 className="text-heading-4">Order {order.name}</h5>
                 {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
               </button>
             </CollapsibleTrigger>
@@ -75,7 +75,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
           <CollapsibleContent>
             <CardContent className="space-y-8">
               <div className="space-y-1">
-                <h6 className="font-medium text-base">Order Details</h6>
+                <h6 className="text-heading-4">Order Details</h6>
 
                 {subtotalPrice && (
                   <Row
@@ -119,7 +119,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
 
               {successfulFulfillments && successfulFulfillments.length > 0 && (
                 <div className="mt-4 space-y-3">
-                  <h6 className="font-medium text-base">Tracking Information</h6>
+                  <h6 className="text-heading-4">Tracking Information</h6>
 
                   {successfulFulfillments.map((fulfillment, index) => {
                     const { trackingInfo, trackingCompany } = fulfillment;
@@ -129,11 +129,11 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                     return (
                       <div key={uuidv4()} className="space-y-2">
                         <div className={`flex justify-between py-1 border-b border-border `}>
-                          <span className="text-sm text-muted-foreground">
+                          <span className="text-body-sm text-secondary">
                             {trackingCompany || DEFAULTS.carrier}
                             {successfulFulfillments.length > 1 ? ` (${index + 1})` : ''}
                           </span>
-                          <span className="text-sm font-medium">{trackingInfo.length} items</span>
+                          <span className="text-body-sm font-medium">{trackingInfo.length} items</span>
                         </div>
 
                         {trackingInfo.map((trackInfo) => (
@@ -141,7 +141,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                             key={uuidv4()}
                             className="flex justify-between py-1 border-b border-border"
                           >
-                            <span className="text-sm text-muted-foreground">
+                            <span className="text-body-sm text-secondary">
                               {trackInfo.number || DEFAULTS.trackingNumber}
                             </span>
                             {typeof trackInfo.url === 'string' ? (
@@ -149,12 +149,12 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                                 href={trackInfo.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm font-medium text-blue-600 hover:underline"
+                                className="text-body-sm font-medium text-accent hover:underline"
                               >
                                 Track
                               </Link>
                             ) : (
-                              <span className="text-sm font-medium text-gray-400">
+                              <span className="text-body-sm font-medium text-muted">
                                 {DEFAULTS.link}
                               </span>
                             )}

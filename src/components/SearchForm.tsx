@@ -18,7 +18,7 @@ const SubmitButton = ({ ...properties }: React.ComponentProps<'button'>) => {
       className="absolute right-3 top-1/2 -translate-y-1/2"
       {...properties}
     >
-      <Search className="text-muted-foreground" />
+      <Search className="text-secondary" />
     </button>
   );
 };

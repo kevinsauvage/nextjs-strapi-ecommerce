@@ -13,7 +13,7 @@ const Loading = () => {
         <div className="flex items-center justify-between gap-2 w-full">
           <Link
             href="/"
-            className="flex items-center text-sm text-muted-foreground hover:text-foreground"
+            className="flex items-center text-body-sm text-secondary hover:text-primary"
           >
             <ChevronLeft className="h-4 w-4 mr-1" />
             Continue Shopping
@@ -30,7 +30,7 @@ const Loading = () => {
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2 className="text-lg font-medium">Cart Items</h2>
+                <h2 className="text-heading-4">Cart Items</h2>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -39,7 +39,7 @@ const Loading = () => {
                   <div key={index}>
                     <div className="relative flex flex-col gap-2 md:flex-row md:items-center">
                       <div className="flex gap-4 basis-1/2">
-                        <div className="flex-shrink-0">
+                        <div className="shrink-0">
                           <Skeleton className="w-20 h-20 rounded-md" />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -71,7 +71,7 @@ const Loading = () => {
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2 className="text-lg font-medium">Order Summary</h2>
+                <h2 className="text-heading-4">Order Summary</h2>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -99,7 +99,7 @@ const Loading = () => {
           <Card className="mt-4">
             <CardHeader>
               <CardTitle>
-                <h2 className="text-lg font-medium">Promo Code</h2>
+                <h2 className="text-heading-4">Promo Code</h2>
               </CardTitle>
               <Skeleton className="h-4 w-full mt-2" />
             </CardHeader>

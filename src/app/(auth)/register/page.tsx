@@ -27,9 +27,9 @@ const RegisterPage = () => {
       </PageBanner>
       <FormContainer>
         <RegisterForm />
-        <div className="text-sm text-center text-muted-foreground">
+        <div className="text-body-sm text-center text-secondary">
           Already have an account?{' '}
-          <Link href={config.routes.login} className="text-primary hover:underline">
+          <Link href={config.routes.login} className="text-accent hover:underline">
             Sign in
           </Link>
         </div>

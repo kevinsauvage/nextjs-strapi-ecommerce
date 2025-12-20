@@ -86,22 +86,22 @@ const ProductDescriptionClient = ({
       <div>
         <div className="mb-2 flex items-center gap-2">
           {product.productType && (
-            <Badge variant="outline" className="text-xs font-normal">
+            <Badge variant="outline" className="text-caption-sm">
               {product.productType}
             </Badge>
           )}
         </div>
 
-        <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+        <h1 className="text-heading-1">{product.title}</h1>
 
         <div className="mt-4 flex items-baseline gap-2">
           {price && (
-            <span className="text-2xl font-bold">
+            <span className="text-heading-3 text-primary">
               {formatPrice(price.amount, price.currencyCode)}
             </span>
           )}
           {quantity > 1 && price && (
-            <span className="text-sm text-muted-foreground">
+            <span className="text-body-sm text-secondary">
               Total: {formatPrice(totalPrice, price.currencyCode)}
             </span>
           )}
@@ -128,36 +128,36 @@ const ProductDescriptionClient = ({
                 dangerouslySetInnerHTML={{ __html: descriptionHtml }}
               />
             ) : (
-              <p className="text-sm text-muted-foreground">
+              <p className="text-body-sm text-secondary">
                 Experience premium quality and exceptional design with this product. Perfect for
                 everyday use and special occasions alike.
               </p>
             )}
           </TabsContent>
           <TabsContent value="specs" className="mt-4">
-            <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="grid grid-cols-2 gap-2 text-body-sm">
               {sku && (
                 <div className="flex justify-between gap-2">
-                  <span className="font-medium">SKU:</span>
-                  <span className="text-muted-foreground">{sku}</span>
+                  <span className="text-label">SKU:</span>
+                  <span className="text-secondary">{sku}</span>
                 </div>
               )}
               {variantTitle && (
                 <div className="flex justify-between gap-2">
-                  <span className="font-medium">Variant:</span>
-                  <span className="text-muted-foreground">{variantTitle}</span>
+                  <span className="text-label">Variant:</span>
+                  <span className="text-secondary">{variantTitle}</span>
                 </div>
               )}
               {weight && (
                 <div className="flex justify-between gap-2">
-                  <span className="font-medium">Weight:</span>
-                  <span className="text-muted-foreground">{`${weight} ${weightUnit?.toLowerCase()}`}</span>
+                  <span className="text-label">Weight:</span>
+                  <span className="text-secondary">{`${weight} ${weightUnit?.toLowerCase()}`}</span>
                 </div>
               )}
               {quantityAvailable !== undefined && (
                 <div className="flex justify-between gap-2">
-                  <span className="font-medium">Available:</span>
-                  <span className="text-muted-foreground">{quantityAvailable}</span>
+                  <span className="text-label">Available:</span>
+                  <span className="text-secondary">{quantityAvailable}</span>
                 </div>
               )}
             </div>
@@ -179,11 +179,11 @@ const ProductDescriptionClient = ({
 
             <div className="space-y-2">
               <div className="flex items-center justify-start gap-2">
-                <h3 className="text-sm font-medium">Quantity:</h3>
+                <h3 className="text-label">Quantity:</h3>
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Info className="h-4 w-4 text-muted-foreground" />
+                      <Info className="h-4 w-4 text-secondary" />
                     </TooltipTrigger>
                     <TooltipContent>
                       <p>Maximum {quantityAvailable} units available</p>

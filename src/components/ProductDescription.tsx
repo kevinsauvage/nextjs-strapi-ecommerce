@@ -51,7 +51,7 @@ const ProductDescription = ({
         {!availableForSale && (
           <Badge
             variant="destructive"
-            className="absolute right-4 top-4 px-3 py-1.5 text-sm font-medium"
+            className="absolute right-4 top-4 px-3 py-1.5 text-body-sm font-medium"
           >
             Sold Out
           </Badge>
@@ -60,7 +60,7 @@ const ProductDescription = ({
         {quantityAvailable && quantityAvailable < 5 && availableForSale && (
           <Badge
             variant="secondary"
-            className="absolute right-4 top-4 px-3 py-1.5 text-sm font-medium"
+            className="absolute right-4 top-4 px-3 py-1.5 text-body-sm font-medium"
           >
             Low Stock: {quantityAvailable} left
           </Badge>

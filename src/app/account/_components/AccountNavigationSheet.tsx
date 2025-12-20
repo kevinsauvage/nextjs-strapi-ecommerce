@@ -39,8 +39,8 @@ const AccountNavigationSheet = () => {
         aria-describedby='"Account Navigation">'
       >
         <SheetHeader>
-          <SheetTitle>Account Navigation</SheetTitle>
-          <SheetDescription>
+          <SheetTitle className="text-heading-3">Account Navigation</SheetTitle>
+          <SheetDescription className="text-body-sm text-secondary">
             Navigate through your account settings and information.
           </SheetDescription>
         </SheetHeader>

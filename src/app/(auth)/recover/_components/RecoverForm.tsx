@@ -58,7 +58,7 @@ const RecoverForm = () => {
         Email address
       </Label>
       <Input id="email" name="email" type="email" placeholder="Email" required={true} />
-      {states.error && <div className="text-red-500 text-sm mt-2">{states.error}</div>}
+      {states.error && <div className="text-destructive text-body-sm mt-2">{states.error}</div>}
       <SubmitButton />
     </Form>
   );

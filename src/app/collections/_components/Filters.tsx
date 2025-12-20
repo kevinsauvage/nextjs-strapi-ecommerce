@@ -157,7 +157,7 @@ const Filters = ({
           >
             {filters.map((filter) => (
               <AccordionItem key={filter.id} value={filter.id}>
-                <AccordionTrigger className="text-sm font-medium">{filter.label}</AccordionTrigger>
+                <AccordionTrigger className="text-body-sm font-medium">{filter.label}</AccordionTrigger>
                 <AccordionContent>
                   {filter.type === FilterType.PriceRange && (
                     <div className="space-y-4 py-2">
@@ -170,8 +170,8 @@ const Filters = ({
                         onValueChange={handlePriceChange}
                       />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm">${(priceRange?.[0] ?? 0).toFixed(2)}</span>
-                        <span className="text-sm">${(priceRange?.[1] ?? 200).toFixed(2)}</span>
+                        <span className="text-body-sm">${(priceRange?.[0] ?? 0).toFixed(2)}</span>
+                        <span className="text-body-sm">${(priceRange?.[1] ?? 200).toFixed(2)}</span>
                       </div>
                     </div>
                   )}
@@ -190,7 +190,7 @@ const Filters = ({
                           />
                           <label
                             htmlFor={value.id}
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                            className="text-body-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                           >
                             {value.label} ({value.count})
                           </label>

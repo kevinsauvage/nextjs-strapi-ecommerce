@@ -19,34 +19,34 @@ const CartSummary = () => {
     <Card className="lg:sticky lg:top-4">
       <CardHeader className="pb-4">
         <CardTitle>
-          <h2 className="text-xl font-semibold">Order Summary</h2>
+          <h2 className="text-heading-4">Order Summary</h2>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-3">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">Subtotal</span>
-            <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
+          <div className="flex justify-between text-body-sm">
+            <span className="text-secondary">Subtotal</span>
+            <span className="text-body font-medium">{formatPrice(subtotal, currencyCode)}</span>
           </div>
           {hasDiscount && (
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Discount</span>
-              <span className="font-medium text-green-600 dark:text-green-400">
+            <div className="flex justify-between text-body-sm">
+              <span className="text-secondary">Discount</span>
+              <span className="text-body font-medium text-green-600 dark:text-green-400">
                 -{formatPrice(discount, currencyCode)}
               </span>
             </div>
           )}
           {tax > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Tax</span>
-              <span className="font-medium">{formatPrice(tax, currencyCode)}</span>
+            <div className="flex justify-between text-body-sm">
+              <span className="text-secondary">Tax</span>
+              <span className="text-body font-medium">{formatPrice(tax, currencyCode)}</span>
             </div>
           )}
         </div>
         <Separator />
         <div className="flex justify-between items-baseline pt-2">
-          <span className="text-base font-semibold">Total</span>
-          <span className="text-2xl font-bold">{formatPrice(total, currencyCode)}</span>
+          <span className="text-body-lg font-semibold">Total</span>
+          <span className="text-heading-3 text-primary">{formatPrice(total, currencyCode)}</span>
         </div>
       </CardContent>
       <CardFooter className="pt-6">

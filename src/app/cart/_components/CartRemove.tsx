@@ -37,7 +37,7 @@ const CartRemove = ({ id }: { id: string }) => {
             }}
             disabled={loading}
             aria-label="Remove item from cart"
-            className="text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+            className="text-secondary hover:text-destructive hover:bg-destructive/10 transition-colors"
           >
             <Trash2 className="h-4 w-4" />
             <span className="sr-only">Remove item</span>

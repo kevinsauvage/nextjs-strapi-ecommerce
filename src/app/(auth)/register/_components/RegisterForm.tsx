@@ -79,7 +79,7 @@ const RegisterForm = () => {
 
   return (
     <Form action={action} title="Register" autoComplete="off">
-      <h3 className="mb-8 text-2xl font-bold">Register</h3>
+      <h3 className="mb-8 text-heading-2">Register</h3>
       <div>
         <Label htmlFor="email" className="mb-1">
           Email address:
@@ -95,7 +95,7 @@ const RegisterForm = () => {
           value={formData.email}
           disabled={isPending}
         />
-        {states.email?.at(-1) && <p className="text-red-500 text-sm mt-1">{states.email.at(-1)}</p>}
+        {states.email?.at(-1) && <p className="text-destructive text-body-sm mt-1">{states.email.at(-1)}</p>}
       </div>
       <div>
         <Label htmlFor="password" className="mb-1">
@@ -113,7 +113,7 @@ const RegisterForm = () => {
           disabled={isPending}
         />
         {states.password?.at(-1) && (
-          <p className="text-red-500 text-sm mt-1">{states.password.at(-1)}</p>
+          <p className="text-destructive text-body-sm mt-1">{states.password.at(-1)}</p>
         )}
       </div>
 
@@ -133,7 +133,7 @@ const RegisterForm = () => {
           disabled={isPending}
         />
         {states.passwordConfirm?.at(-1) && (
-          <p className="text-red-500 text-sm mt-1">{states.passwordConfirm.at(-1)}</p>
+          <p className="text-destructive text-body-sm mt-1">{states.passwordConfirm.at(-1)}</p>
         )}
       </div>
 
@@ -152,7 +152,7 @@ const RegisterForm = () => {
           disabled={isPending}
         />
         {states.firstName?.at(-1) && (
-          <p className="text-red-500 text-sm mt-1">{states.firstName.at(-1)}</p>
+          <p className="text-destructive text-body-sm mt-1">{states.firstName.at(-1)}</p>
         )}
       </div>
 
@@ -170,7 +170,7 @@ const RegisterForm = () => {
           value={formData.lastName}
         />
         {states.lastName?.at(-1) && (
-          <p className="text-red-500 text-sm mt-1">{states.lastName.at(-1)}</p>
+          <p className="text-destructive text-body-sm mt-1">{states.lastName.at(-1)}</p>
         )}
       </div>
       <SubmitButton />

@@ -10,7 +10,7 @@ const Crumbs = ({ title, href, last }: { title: string; href: string; last: bool
       .replace('gid://shopify/MailingAddress/', '')
       .split('?')[0];
     return (
-      <strong className={`text-sm text-muted-foreground text-ellipsis whitespace-nowrap font-bold`}>
+      <strong className="text-body-sm text-secondary text-ellipsis whitespace-nowrap font-semibold">
         {t}
       </strong>
     );
@@ -20,11 +20,11 @@ const Crumbs = ({ title, href, last }: { title: string; href: string; last: bool
     <>
       <Link
         href={href}
-        className="text-sm text-muted-foreground font-medium text-ellipsis whitespace-nowrap"
+        className="text-body-sm text-secondary hover:text-primary transition-colors text-ellipsis whitespace-nowrap font-medium"
       >
         {decodeURIComponent(title)}
       </Link>
-      {!last && <ChevronRight size={16} className="text-muted-foreground " />}
+      {!last && <ChevronRight size={16} className="text-secondary" />}
     </>
   );
 };
@@ -66,7 +66,7 @@ const Breadcrumbs = ({ lastElement }: { lastElement?: string }) => {
                 className="flex items-center space-x-1 overflow-ellipsis overflow-hidden"
               >
                 {lastElement && index === breadcrumbs.length - 1 ? (
-                  <p className="font-medium text-sm text-ellipsis  whitespace-nowrap overflow-hidden">
+                  <p className="text-body-sm text-secondary font-medium text-ellipsis whitespace-nowrap overflow-hidden">
                     {lastElement}
                   </p>
                 ) : (

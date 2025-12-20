@@ -76,10 +76,10 @@ const UpdateUserForm = () => {
   return (
     <form action={action} className="space-y-8">
       <div className="">
-        <h3 className="text-2xl font-bold leading-tight tracking-tight">
+        <h3 className="text-heading-2">
           Fill in the form below to update your profile. <br />
         </h3>
-        <span className="text-sm text-muted-foreground">
+        <span className="text-body-sm text-secondary">
           You can update your profile information at any time.
         </span>
       </div>

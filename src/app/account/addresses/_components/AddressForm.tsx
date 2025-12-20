@@ -137,7 +137,7 @@ const AddressFormUI = ({
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h6 className="text-xl mb-4">Contact Information</h6>
+          <h6 className="text-heading-4 mb-4">Contact Information</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
@@ -150,7 +150,7 @@ const AddressFormUI = ({
                 defaultValue={address?.firstName}
               />
               {states?.firstName?.length && (
-                <p className="text-red-500 text-sm">{states?.firstName}</p>
+                <p className="text-destructive text-body-sm">{states?.firstName}</p>
               )}
             </div>
 
@@ -165,7 +165,7 @@ const AddressFormUI = ({
                 defaultValue={address?.lastName}
               />
               {states?.lastName?.length && (
-                <p className="text-red-500 text-sm">{states?.lastName}</p>
+                <p className="text-destructive text-body-sm">{states?.lastName}</p>
               )}
             </div>
 
@@ -178,7 +178,7 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.company}
               />
-              {states?.company?.length && <p className="text-red-500 text-sm">{states?.company}</p>}
+              {states?.company?.length && <p className="text-destructive text-body-sm">{states?.company}</p>}
             </div>
 
             <div className="space-y-2">
@@ -190,13 +190,13 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.phone}
               />
-              {states?.phone?.length && <p className="text-red-500 text-sm">{states?.phone}</p>}
+              {states?.phone?.length && <p className="text-destructive text-body-sm">{states?.phone}</p>}
             </div>
           </div>
         </div>
 
         <div>
-          <h6 className="text-xl mb-4">Address</h6>
+          <h6 className="text-heading-4 mb-4">Address</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2 w-full">
               <Label htmlFor="address1">Address 1</Label>
@@ -209,7 +209,7 @@ const AddressFormUI = ({
                 defaultValue={address?.address1}
               />
               {states?.address1?.length && (
-                <p className="text-red-500 text-sm">{states?.address1}</p>
+                <p className="text-destructive text-body-sm">{states?.address1}</p>
               )}
             </div>
             <div className="space-y-2 w-full">
@@ -222,7 +222,7 @@ const AddressFormUI = ({
                 defaultValue={address?.address2}
               />
               {states?.address2?.length && (
-                <p className="text-red-500 text-sm">{states?.address2}</p>
+                <p className="text-destructive text-body-sm">{states?.address2}</p>
               )}
             </div>
 
@@ -236,7 +236,7 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.city}
               />
-              {states?.city?.length && <p className="text-red-500 text-sm">{states?.city}</p>}
+              {states?.city?.length && <p className="text-destructive text-body-sm">{states?.city}</p>}
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="province">Province</Label>
@@ -249,7 +249,7 @@ const AddressFormUI = ({
                 defaultValue={address?.province}
               />
               {states?.province?.length && (
-                <p className="text-red-500 text-sm">{states?.province}</p>
+                <p className="text-destructive text-body-sm">{states?.province}</p>
               )}
             </div>
 
@@ -263,7 +263,7 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.country}
               />
-              {states?.country?.length && <p className="text-red-500 text-sm">{states?.country}</p>}
+              {states?.country?.length && <p className="text-destructive text-body-sm">{states?.country}</p>}
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="zip">Zip</Label>
@@ -275,7 +275,7 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.zip}
               />
-              {states?.zip?.length && <p className="text-red-500 text-sm">{states?.zip}</p>}
+              {states?.zip?.length && <p className="text-destructive text-body-sm">{states?.zip}</p>}
             </div>
           </div>
         </div>

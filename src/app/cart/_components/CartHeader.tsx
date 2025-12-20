@@ -12,7 +12,7 @@ const CartHeader = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <ShoppingCart className="h-5 w-5 text-muted-foreground" />
+      <ShoppingCart className="h-5 w-5 text-secondary" />
       <Badge variant="secondary" className="font-semibold">
         {itemCount} {itemText}
       </Badge>

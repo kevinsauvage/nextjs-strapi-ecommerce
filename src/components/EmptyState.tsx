@@ -27,8 +27,8 @@ const EmptyState = ({
       width={image.width}
       height={image.height}
     />
-    <h4 className="font-bold mb-1">{title}</h4>
-    <p className="max-w-2xs text-center text-muted-foreground">{subtitle}</p>
+    <h4 className="text-heading-4 mb-1">{title}</h4>
+    <p className="max-w-2xs text-center text-body-sm text-secondary">{subtitle}</p>
     {children}
   </div>
 );

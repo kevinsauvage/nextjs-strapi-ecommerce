@@ -30,7 +30,7 @@ const AccountNavigation = ({ handleClose }: { handleClose?: () => void }) => {
           <Link
             key={index}
             href={link.url}
-            className={`flex items-center gap-3 px-4 py-3 text-sm hover:bg-muted transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 text-body-sm hover:bg-muted transition-colors ${
               currentPathname === link.url ? 'bg-muted font-medium' : ''
             }`}
             onClick={() => {

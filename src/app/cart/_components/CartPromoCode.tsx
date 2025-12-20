@@ -12,10 +12,10 @@ const CartPromoCode = () => {
     <Card>
       <CardHeader className="pb-4">
         <CardTitle className="flex items-center gap-2">
-          <Tag className="h-5 w-5 text-muted-foreground" />
-          <h2 className="text-lg font-semibold">Promo Code</h2>
+          <Tag className="h-5 w-5 text-secondary" />
+          <h2 className="text-heading-4">Promo Code</h2>
         </CardTitle>
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-body-sm text-secondary mt-1">
           Enter your promo code to get a discount on your order.
         </p>
       </CardHeader>

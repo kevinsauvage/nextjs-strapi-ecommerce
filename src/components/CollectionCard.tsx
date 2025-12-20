@@ -25,7 +25,7 @@ const CollectionCard = ({
         />
       )}
       <div className="absolute inset-0 bg-black/50 flex flex-col gap-3 items-center justify-center text-center p-4 group-hover:bg-black/70 transition-all">
-        <p className="text-2xl font-bold text-white">
+        <p className="text-heading-2 text-white">
           <span>{title} </span>
         </p>
         <Button variant="secondary">

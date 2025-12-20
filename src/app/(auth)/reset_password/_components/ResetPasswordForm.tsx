@@ -67,7 +67,7 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
         value={formData.password}
         disabled={isPending}
       />
-      {states.password && <div className="text-red-500 text-sm mt-2">{states.password}</div>}
+      {states.password && <div className="text-destructive text-body-sm mt-2">{states.password}</div>}
       <ResetButton />
     </Form>
   );
