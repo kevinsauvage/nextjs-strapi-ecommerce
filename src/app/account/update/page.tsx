@@ -16,7 +16,7 @@ const Page = () => {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-heading-3">Update Account</h2>
+          <h3 className="text-heading-3">Update Account</h3>
         </CardTitle>
         <CardDescription className="text-body text-secondary">
           <p className="mb-4">

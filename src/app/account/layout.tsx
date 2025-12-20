@@ -18,7 +18,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <Card className="hidden md:block h-fit">
           <CardHeader className="mb-8">
             <CardTitle>
-              <h2 className="text-heading-4">Navigation</h2>
+              <h3 className="text-heading-4">Navigation</h3>
             </CardTitle>
             <CardDescription className="text-body-sm text-secondary">Manage your account</CardDescription>
           </CardHeader>

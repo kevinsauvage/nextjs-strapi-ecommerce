@@ -19,7 +19,7 @@ const CartSummary = () => {
     <Card className="lg:sticky lg:top-4">
       <CardHeader className="pb-4">
         <CardTitle>
-          <h2 className="text-heading-4">Order Summary</h2>
+          <h3 className="text-heading-4">Order Summary</h3>
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">

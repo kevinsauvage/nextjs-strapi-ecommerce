@@ -30,7 +30,7 @@ const Loading = () => {
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2 className="text-heading-4">Cart Items</h2>
+                <h3 className="text-heading-4">Cart Items</h3>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -71,7 +71,7 @@ const Loading = () => {
           <Card>
             <CardHeader>
               <CardTitle>
-                <h2 className="text-heading-4">Order Summary</h2>
+                <h3 className="text-heading-4">Order Summary</h3>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -99,7 +99,7 @@ const Loading = () => {
           <Card className="mt-4">
             <CardHeader>
               <CardTitle>
-                <h2 className="text-heading-4">Promo Code</h2>
+                <h3 className="text-heading-4">Promo Code</h3>
               </CardTitle>
               <Skeleton className="h-4 w-full mt-2" />
             </CardHeader>

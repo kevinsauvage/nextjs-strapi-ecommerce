@@ -49,7 +49,7 @@ const CartItemsList = () => {
     <Card>
       <CardHeader className="pb-4">
         <CardTitle>
-          <h2 className="text-heading-4">Cart Items</h2>
+          <h3 className="text-heading-4">Cart Items</h3>
         </CardTitle>
       </CardHeader>
       <CardContent>

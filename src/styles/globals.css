@@ -117,18 +117,7 @@
   --font-heading: var(--font-heading);
   --font-display: var(--font-display);
 
-  /* Typography Scale - Fluid Typography System */
-  /* Base font size: 16px (1rem) */
-  --font-size-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.8125rem); /* 12-13px */
-  --font-size-sm: clamp(0.875rem, 0.8rem + 0.375vw, 0.9375rem); /* 14-15px */
-  --font-size-base: clamp(1rem, 0.95rem + 0.25vw, 1.0625rem); /* 16-17px */
-  --font-size-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem); /* 18-20px */
-  --font-size-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem); /* 20-24px */
-  --font-size-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem); /* 24-30px */
-  --font-size-3xl: clamp(1.875rem, 1.5rem + 1.875vw, 2.25rem); /* 30-36px */
-  --font-size-4xl: clamp(2.25rem, 1.8rem + 2.25vw, 3rem); /* 36-48px */
-  --font-size-5xl: clamp(3rem, 2.2rem + 4vw, 3.75rem); /* 48-60px */
-  --font-size-6xl: clamp(3.75rem, 2.5rem + 6.25vw, 4.5rem); /* 60-72px */
+ 
 
   /* Line Height Scale - Optimal for readability */
   --line-height-tight: 1.25; /* For headings */
@@ -224,9 +213,9 @@ button[aria-disabled='true'] {
 /* Typography Hierarchy - Proper heading structure */
 h1 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-size: 2.5rem; /* 40px */
+  line-height: 3rem; /* 48px */
   letter-spacing: var(--letter-spacing-tight);
   color: var(--foreground);
   margin-bottom: 1rem;
@@ -234,9 +223,9 @@ h1 {
 
 h2 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.375rem; /* 38px */
   letter-spacing: var(--letter-spacing-tight);
   color: var(--foreground);
   margin-bottom: 0.875rem;
@@ -244,9 +233,9 @@ h2 {
 
 h3 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
   letter-spacing: var(--letter-spacing-normal);
   color: var(--foreground);
   margin-bottom: 0.75rem;
@@ -254,9 +243,9 @@ h3 {
 
 h4 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
   letter-spacing: var(--letter-spacing-normal);
   color: var(--foreground);
   margin-bottom: 0.625rem;
@@ -286,84 +275,82 @@ h6 {
 /* Text utility classes for consistent typography */
 .text-display {
   font-family: var(--font-heading);
-  font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-size: 3rem; /* 48px */
+  line-height: 3.5rem; /* 56px */
   letter-spacing: var(--letter-spacing-tighter);
 }
 
 .text-heading-1 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-size: 2.5rem; /* 40px */
+  line-height: 3rem; /* 48px */
   letter-spacing: var(--letter-spacing-tight);
 }
 
 .text-heading-2 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
+  font-size: 1.875rem; /* 30px */
+  line-height: 2.375rem; /* 38px */
   letter-spacing: var(--letter-spacing-tight);
 }
 
 .text-heading-3 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
 }
 
 .text-heading-4 {
   font-family: var(--font-heading);
-  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-snug);
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
 }
 
 .text-body-lg {
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-relaxed);
-  font-weight: var(--font-weight-normal);
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+  font-weight: var(--font-weight-normal); /* 400 */
 }
 
 .text-body {
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-normal);
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  font-weight: var(--font-weight-normal); /* 400 */
 }
 
 .text-body-sm {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-normal);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-normal); /* 400 */
 }
 
 .text-caption {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-normal);
-  color: var(--muted-foreground);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  font-weight: var(--font-weight-medium); /* meta only */
 }
 
 .text-caption-sm {
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-normal);
-  color: var(--muted-foreground);
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
+  font-weight: var(--font-weight-medium); /* 500, meta only */
 }
 
 .text-label {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
 }
 
 .text-label-sm {
-  font-size: var(--font-size-xs);
-  line-height: var(--line-height-normal);
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
   font-weight: var(--font-weight-medium);
   letter-spacing: var(--letter-spacing-wide);
   text-transform: uppercase;
@@ -380,7 +367,6 @@ h6 {
 
 .text-muted {
   color: var(--muted-foreground);
-  opacity: 0.8;
 }
 
 .text-accent {

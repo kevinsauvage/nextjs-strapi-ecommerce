@@ -90,9 +90,9 @@ const Page = async ({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-heading-3">
+          <h3 className="text-heading-3">
             Your Orders ({response.customer?.orders?.totalCount})
-          </h2>
+          </h3>
         </CardTitle>
         <CardDescription className="text-body text-secondary">
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>

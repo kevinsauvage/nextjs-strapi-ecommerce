@@ -102,7 +102,7 @@ const Address = ({
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex size-8 text-muted-foreground data-[state=open]:bg-muted"
+                  className="flex size-8 text-secondary data-[state=open]:bg-muted"
                   size="icon"
                 >
                   <MoreVerticalIcon />

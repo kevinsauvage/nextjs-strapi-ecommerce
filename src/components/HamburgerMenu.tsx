@@ -121,9 +121,11 @@ const HamburgerMenu = ({
       </SheetTrigger>
       <SheetContent side="left" className="p-0 w-full sm:max-w-md overflow-scroll max-h-dvh">
         <div className="flex h-full flex-col">
-          <SheetHeader className="p-5 text-lg font-semibold">
-            <SheetTitle>Shop Categories</SheetTitle>
-            <SheetDescription>Explore our wide range of products and categories.</SheetDescription>
+          <SheetHeader className="p-5">
+            <SheetTitle className="text-heading-4">Shop Categories</SheetTitle>
+            <SheetDescription className="text-body-sm text-secondary">
+              Explore our wide range of products and categories.
+            </SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-auto py-2">
@@ -137,7 +139,7 @@ const HamburgerMenu = ({
               <button
                 key={item.id}
                 className={cn(
-                  'flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-sm hover:bg-muted/50',
+                  'flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-body-sm hover:bg-muted/50',
                   pathname === item.link ? 'bg-muted text-foreground' : '',
                 )}
                 onClick={() => {

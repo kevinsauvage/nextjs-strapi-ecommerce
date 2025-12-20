@@ -91,7 +91,7 @@ const Addresses = async ({
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-heading-3">Addresses</h2>
+          <h3 className="text-heading-3">Addresses</h3>
         </CardTitle>
         <CardDescription className="text-body text-secondary">
           <p className="mb-4">Manage your addresses for a better shopping experience.</p>

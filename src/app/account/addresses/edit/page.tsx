@@ -124,7 +124,7 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
     <Card>
       <CardHeader>
         <CardTitle>
-          <h2 className="text-heading-3">Edit Addresses</h2>
+          <h3 className="text-heading-3">Edit Addresses</h3>
         </CardTitle>
         <CardDescription className="max-w-md text-body text-secondary">
           <p>

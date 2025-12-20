@@ -44,7 +44,7 @@ const Page = () => {
     <Card>
       <CardHeader className="text-center max-w-lg mx-auto w-full">
         <CardTitle>
-          <h2 className="text-heading-3">Account Overview</h2>
+          <h3 className="text-heading-3">Account Overview</h3>
         </CardTitle>
         <CardDescription className="text-body text-secondary">
           Welcome <UserFullName />, your account dashboard provides access to all of your important

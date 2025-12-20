@@ -3,7 +3,7 @@ import LogoutClientEffect from './_components/LogoutClientEffect';
 const Page = () => {
   return (
     <div>
-      <h2>Login out...</h2>
+      <p className="text-body text-secondary">Logging out...</p>
       <LogoutClientEffect />
     </div>
   );
