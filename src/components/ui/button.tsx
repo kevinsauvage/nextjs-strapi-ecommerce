@@ -19,32 +19,36 @@ const buttonVariants = cva(
         sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
       },
       variant: {
-        default: 'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 hover:shadow-sm active:bg-primary/95 active:shadow-xs',
+        default:
+          'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 hover:shadow-sm active:bg-primary/95 active:shadow-xs',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 hover:shadow-sm active:bg-destructive/95 active:shadow-xs focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
-        ghost: 'hover:bg-accent hover:text-accent-foreground active:bg-accent/80 dark:hover:bg-accent/50 dark:active:bg-accent/40',
+        ghost:
+          'hover:bg-accent hover:text-accent-foreground active:bg-accent/80 dark:hover:bg-accent/50 dark:active:bg-accent/40',
         link: 'text-primary underline-offset-4 hover:underline active:text-primary/80',
         outline:
           'border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground hover:shadow-sm active:bg-accent/80 active:shadow-xs dark:bg-input/30 dark:border-input dark:hover:bg-input/50 dark:active:bg-input/40',
-        secondary: 'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 hover:shadow-sm active:bg-secondary/70 active:shadow-xs',
+        secondary:
+          'bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80 hover:shadow-sm active:bg-secondary/70 active:shadow-xs',
       },
     },
   },
 );
 
 export interface ButtonProps
-  extends React.ComponentProps<'button'>,
-    VariantProps<typeof buttonVariants> {
+  extends React.ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, loading, disabled, children, ...properties }, ref) => {
+  (
+    { className, variant, size, asChild = false, loading, disabled, children, ...properties },
+    ref,
+  ) => {
     const Comp = asChild ? Slot : 'button';
     const isDisabled = disabled || loading;
 
-    // Inline spinner to avoid circular dependency
     const Spinner = loading ? (
       <svg
         className="animate-spin h-4 w-4 text-current"
