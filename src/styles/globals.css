@@ -423,6 +423,21 @@ h6 {
   animation: fadeSlideDown 0.15s ease-out;
 }
 
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.cookie-banner-enter {
+  animation: slideUp 0.3s ease-out;
+}
+
 .product-description {
   ul {
     padding-left: 1rem;

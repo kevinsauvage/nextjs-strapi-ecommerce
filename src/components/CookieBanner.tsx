@@ -1,11 +1,11 @@
 'use client';
 
-import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { X } from 'lucide-react';
+import { Settings, X } from 'lucide-react';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
@@ -14,15 +14,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import config from '@/config';
 import { withGtag } from '@/utils/analytics';
 import type { originalSettingsType } from '@/utils/consents';
 import { transformedSettings } from '@/utils/consents';
 import { getCookieFront, setCookieFront } from '@/utils/cookies';
-
-import { Input } from './ui/input';
-import { Label } from './ui/label';
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from './ui/sheet';
 
 const EXPIRY_COOKIE_TIME = config.constants.cookieExpiryDays;
 
@@ -39,7 +36,9 @@ const CookieBanner = () => {
       withGtag((gtag) => {
         gtag('consent', 'update', transformedSettings(JSON.parse(consent) as originalSettingsType));
       });
-    } else setShow(true);
+    } else {
+      setShow(true);
+    }
   }, []);
 
   useEffect(() => {
@@ -102,147 +101,192 @@ const CookieBanner = () => {
     },
     [setShowBannerCookies],
   );
+
+  if (!show) return null;
+
   return (
-    show && (
-      <Sheet open={show}>
-        <SheetContent side="bottom">
-          <VisuallyHidden.Root>
-            <SheetHeader>
-              <SheetTitle>Cookie Consent</SheetTitle>
-              <SheetDescription>Manage your cookie preferences for this website.</SheetDescription>
-            </SheetHeader>
-          </VisuallyHidden.Root>
-          <div className="fixed bottom-0 left-0 w-full p-3 z-50 bg-background flex flex-col gap-3 border-t">
-            <Button onClick={() => setShowBannerCookies(false)} type="button" size="icon">
-              <X />
-            </Button>
-            <p className="text-body text-secondary">
-              We use cookies on our website to provide you with a better browsing experience and to
-              help us understand how you use our site. By clicking &quot;Accept&quot; you consent to
-              the use of cookies as described in our{' '}
-              <Link href={config.routes.privacy} className="text-accent hover:underline">Cookie Policy</Link>. If you choose to close this
-              banner without clicking &quot;Accept,&quot; we will assume that you do not consent to
-              the use of cookies on our site. Please note that some features of our website may not
-              function properly if cookies are not enabled.
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 w-full border-t bg-background shadow-lg transition-transform duration-300 ease-out"
+      style={{
+        animation: 'slideUp 0.3s ease-out',
+      }}
+      role="dialog"
+      aria-labelledby="cookie-banner-title"
+      aria-describedby="cookie-banner-description"
+    >
+      <div className="container mx-auto px-4 py-4 sm:px-6 sm:py-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          {/* Content */}
+          <div className="flex-1 space-y-2">
+            <h3 id="cookie-banner-title" className="text-heading-4">
+              We use cookies
+            </h3>
+            <p id="cookie-banner-description" className="text-body-sm text-secondary">
+              We use cookies to enhance your browsing experience and analyze site traffic. By
+              clicking &quot;Accept All&quot;, you consent to our use of cookies.{' '}
+              <Link href={config.routes.privacy} className="text-accent hover:underline">
+                Learn more
+              </Link>
             </p>
-            <div className="flex items-center gap-2">
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            {/* Primary Actions */}
+            <div className="flex gap-2">
               <Button
-                size="sm"
-                variant="destructive"
                 type="button"
-                className=""
+                variant="outline"
+                size="sm"
                 onClick={rejectAllCookie}
+                className="flex-1 sm:flex-initial"
               >
                 Reject All
               </Button>
-              <Button type="button" variant="outline" onClick={acceptAllCookie}>
+              <Button
+                type="button"
+                size="sm"
+                onClick={acceptAllCookie}
+                className="flex-1 sm:flex-initial"
+              >
                 Accept All
               </Button>
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline">Cookie Settings</Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Cookie Settings</DialogTitle>
-                    <DialogDescription>
-                      We use cookies on our website to enhance your browsing experience and to
-                      provide you with personalized content. We want to give you the option to
-                      choose which cookies you allow us to use.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <div className="border p-4 max-h-36 overflow-scroll ">
-                    <ul className="block text-body-sm">
-                      <li className="mb-3">
-                        <strong className="text-body font-semibold">Strictly Necessary Cookies:</strong>{' '}
-                        <p className="text-body-sm text-secondary">
-                          These cookies are essential for the website to function properly and
-                          cannot be turned off in our system. They are usually set in response to
-                          actions made by you which amount to a request for services, such as
-                          setting your privacy preferences, logging in, or filling in forms.
-                        </p>
-                      </li>
-                      <li className="mb-3">
-                        <strong className="text-body font-semibold">Analytics Cookies:</strong>{' '}
-                        <p className="text-body-sm text-secondary">
-                          These cookies allow us to measure and analyze how our website is being
-                          used, in order to improve its performance and your browsing experience.
-                        </p>
-                      </li>
-                      <li className="mb-3">
-                        <strong className="text-body font-semibold">Personalized Cookies:</strong>{' '}
-                        <p className="text-body-sm text-secondary">
-                          These cookies are used to personalize your experience on our website by
-                          remembering your preferences and settings. They may also be used to
-                          provide you with customized content and recommendations based on your
-                          activity on our website and other websites.
-                        </p>
-                      </li>
-                      <li className="mb-3">
-                        <strong className="text-body font-semibold">Advertising Cookies:</strong>{' '}
-                        <p className="text-body-sm text-secondary">
-                          These cookies are used to make advertising messages more relevant to you
-                          and your interests. They are also used to limit the number of times you
-                          see an advertisement, as well as to help measure the effectiveness of
-                          advertising campaigns.
-                        </p>
-                      </li>
-                    </ul>
-                  </div>
+            </div>
 
-                  <form onSubmit={handleSaveSettings} className="space-y-3">
-                    <p className="text-heading-4">
-                      <b>Please select which cookies you&apos;d like to allow:</b>
-                    </p>
-                    <div className="space-y-0.5">
-                      <div className="flex gap-1.5">
-                        <Input
-                          type="checkbox"
-                          id="functionality_storage"
-                          name="functionality_storage"
-                          className="w-fit"
-                        />
-                        <Label htmlFor="functionality_storage">Strictly Necessary Cookies</Label>
-                      </div>
-                      <div className="flex gap-1.5">
-                        <Input
-                          type="checkbox"
-                          id="analytics_storage"
-                          name="analytics_storage"
-                          className="w-fit"
-                        />
-                        <Label htmlFor="analytics_storage">Analytics Cookies</Label>
-                      </div>
-                      <div className="flex gap-1.5">
-                        <Input
-                          className="w-fit"
-                          type="checkbox"
-                          id="personalization_storage"
-                          name="personalization_storage"
-                        />
-                        <Label htmlFor="personalization_storage">Personalization Cookies</Label>
-                      </div>
-                      <div className="flex gap-1.5">
-                        <Input
-                          type="checkbox"
-                          id="ad_storage"
-                          name="ad_storage"
-                          className="w-fit"
-                        />
-                        <Label htmlFor="ad_storage">Advertising Cookies</Label>
+            {/* Secondary Action - Cookie Settings */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  type="button"
+                  className="text-body-sm text-secondary hover:text-primary"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[500px]">
+                <DialogHeader>
+                  <DialogTitle className="text-heading-3">Cookie Settings</DialogTitle>
+                  <DialogDescription className="text-body-sm text-secondary">
+                    Choose which cookies you want to allow. You can change these settings at any
+                    time.
+                  </DialogDescription>
+                </DialogHeader>
+
+                <div className="space-y-4">
+                  {/* Cookie Information */}
+                  <div className="border rounded-lg p-4 space-y-3 max-h-64 overflow-y-auto">
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <h4 className="text-body font-semibold mb-1">
+                            Strictly Necessary Cookies
+                          </h4>
+                          <p className="text-body-sm text-secondary">
+                            Essential for the website to function. Cannot be disabled.
+                          </p>
+                        </div>
                       </div>
                     </div>
-                    <Button type="submit" variant="secondary">
-                      Save Settings
-                    </Button>
+
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <h4 className="text-body font-semibold mb-1">Analytics Cookies</h4>
+                          <p className="text-body-sm text-secondary">
+                            Help us understand how visitors interact with our website.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <h4 className="text-body font-semibold mb-1">Personalization Cookies</h4>
+                          <p className="text-body-sm text-secondary">
+                            Remember your preferences and provide personalized content.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <h4 className="text-body font-semibold mb-1">Advertising Cookies</h4>
+                          <p className="text-body-sm text-secondary">
+                            Used to deliver relevant advertisements and measure campaign
+                            effectiveness.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Cookie Preferences Form */}
+                  <form onSubmit={handleSaveSettings} className="space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          id="functionality_storage"
+                          name="functionality_storage"
+                          defaultChecked
+                          disabled
+                        />
+                        <Label
+                          htmlFor="functionality_storage"
+                          className="text-body-sm cursor-not-allowed opacity-60"
+                        >
+                          Strictly Necessary Cookies
+                          <span className="text-caption-sm text-muted ml-1">(Required)</span>
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Checkbox id="analytics_storage" name="analytics_storage" defaultChecked />
+                        <Label htmlFor="analytics_storage" className="text-body-sm cursor-pointer">
+                          Analytics Cookies
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Checkbox
+                          id="personalization_storage"
+                          name="personalization_storage"
+                          defaultChecked
+                        />
+                        <Label
+                          htmlFor="personalization_storage"
+                          className="text-body-sm cursor-pointer"
+                        >
+                          Personalization Cookies
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center gap-3">
+                        <Checkbox id="ad_storage" name="ad_storage" defaultChecked />
+                        <Label htmlFor="ad_storage" className="text-body-sm cursor-pointer">
+                          Advertising Cookies
+                        </Label>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-2">
+                      <Button type="submit" className="flex-1">
+                        Save Preferences
+                      </Button>
+                    </div>
                   </form>
-                </DialogContent>
-              </Dialog>
-            </div>
+                </div>
+              </DialogContent>
+            </Dialog>
           </div>
-        </SheetContent>
-      </Sheet>
-    )
+        </div>
+      </div>
+    </div>
   );
 };
 
