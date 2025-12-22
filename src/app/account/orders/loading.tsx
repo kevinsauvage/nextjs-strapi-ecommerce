@@ -1,18 +1,15 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import CardHeaderPattern from '@/components/CardHeaderPattern';
+import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const Loading = () => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <Skeleton className="h-6 w-40" />
-        </CardTitle>
-        <CardDescription>
-          <Skeleton className="h-4 w-full mb-4" />
-          <Skeleton className="h-9 w-24" />
-        </CardDescription>
-      </CardHeader>
+      <CardHeaderPattern
+        title={<Skeleton className="h-6 w-40" />}
+        description={<Skeleton className="h-4 w-full" />}
+        actions={<Skeleton className="h-9 w-24" />}
+      />
       <CardContent>
         <div className="space-y-4">
           {new Array(3).fill(0).map((_, index) => (

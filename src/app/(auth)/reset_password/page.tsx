@@ -1,12 +1,11 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import Breadcrumbs from '@/components/Breadcrumbs';
-import PageBanner from '@/components/PageBanner';
+import AuthShell from '@/app/(auth)/_components/AuthShell';
 import config from '@/config';
 import seo from '@/data/seo';
 
-import FormContainer from '../_components/FormContainer';
 import ResetForm from './_components/ResetPasswordForm';
 
 export const metadata: Metadata = {
@@ -33,14 +32,19 @@ const ResetPasswordPage = async ({
   const { title, description } = seo.reset || {};
 
   return (
-    <div>
-      <PageBanner title={title} description={description}>
-        <Breadcrumbs />
-      </PageBanner>
-      <FormContainer>
-        <ResetForm resetUrl={resetUrl} />
-      </FormContainer>
-    </div>
+    <AuthShell
+      title={title}
+      description={description}
+      footer={
+        <div className="pt-4 text-body-sm text-center text-secondary">
+          <Link href={config.routes.login} className="link">
+            Back to login
+          </Link>
+        </div>
+      }
+    >
+      <ResetForm resetUrl={resetUrl} />
+    </AuthShell>
   );
 };
 

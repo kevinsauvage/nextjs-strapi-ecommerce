@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
 import { adjustPaginationVariables } from '@/shopify/helpers';
@@ -88,17 +89,12 @@ const Page = async ({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-heading-3">
-            Your Orders ({response.customer?.orders?.totalCount})
-          </h3>
-        </CardTitle>
-        <CardDescription className="text-body text-secondary">
-          <p className="mb-4">Manage your addresses for a better shopping experience.</p>
-          <BackButton />
-        </CardDescription>
-      </CardHeader>
+      <CardHeaderPattern
+        title={`Your Orders (${response.customer?.orders?.totalCount})`}
+        size={3}
+        actions={<BackButton />}
+        description="Manage your orders for a better shopping experience."
+      />
       <CardContent>
         <Orders orders={response.customer} />
         <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />

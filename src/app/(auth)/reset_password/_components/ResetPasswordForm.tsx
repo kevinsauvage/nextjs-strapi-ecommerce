@@ -6,11 +6,10 @@ import { toast } from 'sonner';
 
 import { resetPasswordAction } from '@/actions/authActions';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { userFeedback } from '@/data/userFeedback';
 
 import Form from '../../_components/Form';
+import PasswordField from '../../_components/PasswordField';
 
 const initialStates = {
   password: '',
@@ -57,21 +56,24 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
   }, [states]);
 
   return (
-    <Form action={action} title="Reset Password" autoComplete="off">
-      <Label htmlFor="password" className="mb-2">
-        New password
-      </Label>
-      <Input
+    <Form action={action} autoComplete="off" className="space-y-5">
+      <PasswordField
         id="password"
         name="password"
-        type="password"
-        placeholder="New password"
+        label="New password"
+        placeholder="Create a new password"
+        autoComplete="new-password"
         required={true}
         onChange={handleChange}
         value={formData.password}
         disabled={isPending}
       />
-      {states.password && <div className="text-destructive text-body-sm mt-2">{states.password}</div>}
+      <p className="text-body-sm text-secondary">
+        Use at least 8 characters. Consider mixing letters, numbers, and symbols.
+      </p>
+      {states.password && (
+        <div className="text-destructive text-body-sm mt-2">{states.password}</div>
+      )}
       <ResetButton />
     </Form>
   );

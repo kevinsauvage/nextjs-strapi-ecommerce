@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import NoAddressIllustration from '@/assets/NoAddressIllustration.png';
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import EmptyState from '@/components/EmptyState';
 import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config/index';
 import seo from '@/data/seo';
 import { adjustPaginationVariables } from '@/shopify/helpers';
@@ -89,21 +90,22 @@ const Addresses = async ({
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-heading-3">Addresses</h3>
-        </CardTitle>
-        <CardDescription className="text-body text-secondary">
-          <p className="mb-4">Manage your addresses for a better shopping experience.</p>
-          <div className="flex items-center gap-2 flex-wrap">
+      <CardHeaderPattern
+        title="Addresses"
+        size={3}
+        actions={
+          <div className="flex items-center gap-2 flex-wrap justify-end">
             <BackButton />
-            <Button variant="default">
-              <Link href={config.routes.createAddress}>Add new address</Link>
-              <Plus size={16} />
+            <Button variant="default" asChild>
+              <Link href={config.routes.createAddress} className="gap-2">
+                Add new address
+                <Plus size={16} />
+              </Link>
             </Button>
           </div>
-        </CardDescription>
-      </CardHeader>
+        }
+        description="Manage your addresses for a better shopping experience."
+      />
       <CardContent>
         <div className="grid grid-cols-1 gap-4 mb-6">
           {addresses.map((item) => (

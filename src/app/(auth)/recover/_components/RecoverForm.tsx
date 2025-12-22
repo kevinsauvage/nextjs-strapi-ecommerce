@@ -57,11 +57,14 @@ const RecoverForm = () => {
   }, [states]);
 
   return (
-    <Form action={action} title="Recover password">
-      <Label htmlFor="email" className="mb-2">
-        Email address
-      </Label>
-      <Input id="email" name="email" type="email" placeholder="Email" required={true} />
+    <Form action={action} className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email address</Label>
+        <Input id="email" name="email" type="email" placeholder="name@company.com" required={true} />
+        <p className="text-body-sm text-secondary">
+          We&apos;ll email you a secure link to reset your password.
+        </p>
+      </div>
       {states.error && <div className="text-destructive text-body-sm mt-2">{states.error}</div>}
       <SubmitButton />
     </Form>

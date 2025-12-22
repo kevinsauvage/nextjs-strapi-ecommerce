@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import CardHeaderPattern from '@/components/CardHeaderPattern';
+import { Card, CardContent } from '@/components/ui/card';
 import seo from '@/data/seo';
 
 import BackButton from '../_components/BackButton';
@@ -14,18 +15,12 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-heading-3">Update Account</h3>
-        </CardTitle>
-        <CardDescription className="text-body text-secondary">
-          <p className="mb-4">
-            Update your account information and preferences. Ensure your details are up to date for
-            a better experience.
-          </p>
-          <BackButton />
-        </CardDescription>
-      </CardHeader>
+      <CardHeaderPattern
+        title="Update Account"
+        size={3}
+        actions={<BackButton />}
+        description="Update your account information and preferences. Ensure your details are up to date for a better experience."
+      />
       <CardContent>
         <UpdateUserForm />
       </CardContent>

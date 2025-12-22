@@ -12,6 +12,7 @@ import { userFeedback } from '@/data/userFeedback';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
+import PasswordField from '../../_components/PasswordField';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -78,35 +79,31 @@ const RegisterForm = () => {
   }, [states]);
 
   return (
-    <Form action={action} title="Register" autoComplete="off">
-      <h3 className="mb-8 text-heading-2">Register</h3>
-      <div>
-        <Label htmlFor="email" className="mb-1">
-          Email address:
-        </Label>
+    <Form action={action} autoComplete="off" className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email address</Label>
         <Input
           id="email"
           type="email"
           name="email"
           autoComplete="off"
-          placeholder="Email"
+          placeholder="name@company.com"
           required={true}
           onChange={handleChange}
           value={formData.email}
           disabled={isPending}
         />
-        {states.email?.at(-1) && <p className="text-destructive text-body-sm mt-1">{states.email.at(-1)}</p>}
+        {states.email?.at(-1) && (
+          <p className="text-destructive text-body-sm mt-1">{states.email.at(-1)}</p>
+        )}
       </div>
-      <div>
-        <Label htmlFor="password" className="mb-1">
-          Password:
-        </Label>
-        <Input
-          type="password"
-          name="password"
+      <div className="space-y-2">
+        <PasswordField
           id="password"
-          placeholder="Password"
-          autoComplete="off"
+          name="password"
+          label="Password"
+          placeholder="Create a password"
+          autoComplete="new-password"
           required={true}
           onChange={handleChange}
           value={formData.password}
@@ -117,16 +114,13 @@ const RegisterForm = () => {
         )}
       </div>
 
-      <div>
-        <Label htmlFor="passwordConfirm" className="mb-1">
-          Password Confirmation:
-        </Label>
-        <Input
-          placeholder="Password Confirmation"
-          type="password"
-          name="passwordConfirm"
+      <div className="space-y-2">
+        <PasswordField
           id="passwordConfirm"
-          autoComplete="off"
+          name="passwordConfirm"
+          label="Confirm password"
+          placeholder="Repeat your password"
+          autoComplete="new-password"
           required={true}
           onChange={handleChange}
           value={formData.passwordConfirm}
@@ -137,12 +131,10 @@ const RegisterForm = () => {
         )}
       </div>
 
-      <div>
-        <Label htmlFor="firstName" className="mb-1">
-          First name:
-        </Label>
+      <div className="space-y-2">
+        <Label htmlFor="firstName">First name</Label>
         <Input
-          placeholder="First name"
+          placeholder="John"
           type="text"
           name="firstName"
           id="firstName"
@@ -156,12 +148,10 @@ const RegisterForm = () => {
         )}
       </div>
 
-      <div>
-        <Label htmlFor="lastName" className="mb-1">
-          Last name:
-        </Label>
+      <div className="space-y-2">
+        <Label htmlFor="lastName">Last name</Label>
         <Input
-          placeholder="Last name"
+          placeholder="Doe"
           type="text"
           name="lastName"
           id="lastName"

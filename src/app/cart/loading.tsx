@@ -1,8 +1,9 @@
 import { ChevronLeft, ShoppingCart } from 'lucide-react';
 import Link from 'next/link';
 
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import PageBanner from '@/components/PageBanner';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -28,11 +29,7 @@ const Loading = () => {
       <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           <Card>
-            <CardHeader>
-              <CardTitle>
-                <h3 className="text-heading-4">Cart Items</h3>
-              </CardTitle>
-            </CardHeader>
+            <CardHeaderPattern title="Cart Items" size={4} />
             <CardContent>
               <div className="space-y-2">
                 {new Array(3).fill(0).map((_, index) => (
@@ -69,11 +66,7 @@ const Loading = () => {
 
         <div>
           <Card>
-            <CardHeader>
-              <CardTitle>
-                <h3 className="text-heading-4">Order Summary</h3>
-              </CardTitle>
-            </CardHeader>
+            <CardHeaderPattern title="Order Summary" size={4} />
             <CardContent>
               <div className="space-y-4">
                 <div className="flex justify-between">
@@ -97,12 +90,11 @@ const Loading = () => {
           </Card>
 
           <Card className="mt-4">
-            <CardHeader>
-              <CardTitle>
-                <h3 className="text-heading-4">Promo Code</h3>
-              </CardTitle>
-              <Skeleton className="h-4 w-full mt-2" />
-            </CardHeader>
+            <CardHeaderPattern
+              title="Promo Code"
+              size={4}
+              description={<Skeleton className="h-4 w-full" />}
+            />
             <CardContent>
               <Skeleton className="h-10 w-full" />
             </CardContent>

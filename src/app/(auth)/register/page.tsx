@@ -1,13 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
-import Breadcrumbs from '@/components/Breadcrumbs';
-import PageBanner from '@/components/PageBanner';
+import AuthShell from '@/app/(auth)/_components/AuthShell';
 import config from '@/config';
 import seo from '@/data/seo';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
-import FormContainer from '../_components/FormContainer';
 import RegisterForm from './_components/RegisterForm';
 
 export const metadata: Metadata = generateMetadataUtil({
@@ -21,20 +19,20 @@ const RegisterPage = () => {
   const { title, description } = seo.register;
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <PageBanner title={title} description={description}>
-        <Breadcrumbs />
-      </PageBanner>
-      <FormContainer>
-        <RegisterForm />
-        <div className="text-body-sm text-center text-secondary">
+    <AuthShell
+      title={title}
+      description={description}
+      footer={
+        <div className="pt-4 text-body-sm text-center text-secondary">
           Already have an account?{' '}
-          <Link href={config.routes.login} className="text-accent hover:underline">
+          <Link href={config.routes.login} className="link">
             Sign in
           </Link>
         </div>
-      </FormContainer>
-    </div>
+      }
+    >
+      <RegisterForm />
+    </AuthShell>
   );
 };
 

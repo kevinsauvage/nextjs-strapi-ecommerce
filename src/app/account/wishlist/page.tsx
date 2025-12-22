@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 import NoFavoriteIllustration from '@/assets/NoFavoriteIllustration.png';
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import EmptyState from '@/components/EmptyState';
 import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import seo from '@/data/seo';
 import { getWishlist } from '@/lib/wishlist';
 
@@ -43,15 +44,12 @@ const Wishlist = async () => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-heading-3">Wishlist</h3>
-        </CardTitle>
-        <CardDescription className="text-body text-secondary">
-          <p className="mb-4">Manage your wishlist for a better shopping experience.</p>
-          <BackButton />
-        </CardDescription>
-      </CardHeader>
+      <CardHeaderPattern
+        title="Wishlist"
+        size={3}
+        actions={<BackButton />}
+        description="Manage your wishlist for a better shopping experience."
+      />
       <CardContent>
         <ProductsList loading={false} layout="grid" products={userWishlist} />
       </CardContent>

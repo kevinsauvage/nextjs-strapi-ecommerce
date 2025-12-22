@@ -1,7 +1,8 @@
 'use client';
 
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import CheckoutButton from '@/components/CheckoutButton';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import { formatPrice } from '@/utils/format';
@@ -17,11 +18,7 @@ const CartSummary = () => {
 
   return (
     <Card className="lg:sticky lg:top-4">
-      <CardHeader className="pb-4">
-        <CardTitle>
-          <h3 className="text-heading-4">Order Summary</h3>
-        </CardTitle>
-      </CardHeader>
+      <CardHeaderPattern className="pb-4" title="Order Summary" size={4} />
       <CardContent className="space-y-4">
         <div className="space-y-3">
           <div className="flex justify-between items-center text-body-sm">

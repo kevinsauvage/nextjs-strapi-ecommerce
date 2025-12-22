@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
-import Breadcrumbs from '@/components/Breadcrumbs';
-import PageBanner from '@/components/PageBanner';
+import AuthShell from '@/app/(auth)/_components/AuthShell';
+import config from '@/config';
 import seo from '@/data/seo';
 
-import FormContainer from '../_components/FormContainer';
 import RecoverForm from './_components/RecoverForm';
 
 export const metadata: Metadata = {
@@ -15,14 +15,20 @@ export const metadata: Metadata = {
 const ResetPassword = () => {
   const { title, description } = seo.recover || {};
   return (
-    <div>
-      <PageBanner title={title} description={description}>
-        <Breadcrumbs />
-      </PageBanner>
-      <FormContainer>
-        <RecoverForm />
-      </FormContainer>
-    </div>
+    <AuthShell
+      title={title}
+      description={description}
+      footer={
+        <div className="pt-4 text-body-sm text-center text-secondary">
+          Remembered your password?{' '}
+          <Link href={config.routes.login} className="link">
+            Back to login
+          </Link>
+        </div>
+      }
+    >
+      <RecoverForm />
+    </AuthShell>
   );
 };
 

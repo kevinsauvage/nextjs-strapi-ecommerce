@@ -2,9 +2,10 @@
 
 import Link from 'next/link';
 
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import EmptyState from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
@@ -36,7 +37,8 @@ const CartItemsList = () => {
                 </Button>
               </Link>
               <p className="text-body-sm text-secondary text-center max-w-md">
-                Browse our collections to discover amazing products. Add items to your cart and they&apos;ll appear here.
+                Browse our collections to discover amazing products. Add items to your cart and
+                they&apos;ll appear here.
               </p>
             </div>
           </EmptyState>
@@ -47,11 +49,7 @@ const CartItemsList = () => {
 
   return (
     <Card>
-      <CardHeader className="pb-4">
-        <CardTitle>
-          <h3 className="text-heading-4">Cart Items</h3>
-        </CardTitle>
-      </CardHeader>
+      <CardHeaderPattern className="pb-4" title="Cart Items" size={4} />
       <CardContent>
         <div className="space-y-6">
           {cart.lines.edges.map(({ node }, index) => (
@@ -72,4 +70,3 @@ const CartItemsList = () => {
 };
 
 export default CartItemsList;
-

@@ -7,6 +7,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Separator } from '@/components/ui/separator';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 const SubmitButton = ({ buttonText }: { buttonText: string }) => {
@@ -137,7 +138,6 @@ const AddressFormUI = ({
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">
-          <h6 className="text-heading-4 mb-4">Contact Information</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="firstName">First Name</Label>
@@ -178,7 +178,9 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.company}
               />
-              {states?.company?.length && <p className="text-destructive text-body-sm">{states?.company}</p>}
+              {states?.company?.length && (
+                <p className="text-destructive text-body-sm">{states?.company}</p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -190,13 +192,14 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.phone}
               />
-              {states?.phone?.length && <p className="text-destructive text-body-sm">{states?.phone}</p>}
+              {states?.phone?.length && (
+                <p className="text-destructive text-body-sm">{states?.phone}</p>
+              )}
             </div>
           </div>
         </div>
-
+        <Separator />
         <div>
-          <h6 className="text-heading-4 mb-4">Address</h6>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2 w-full">
               <Label htmlFor="address1">Address 1</Label>
@@ -236,7 +239,9 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.city}
               />
-              {states?.city?.length && <p className="text-destructive text-body-sm">{states?.city}</p>}
+              {states?.city?.length && (
+                <p className="text-destructive text-body-sm">{states?.city}</p>
+              )}
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="province">Province</Label>
@@ -263,7 +268,9 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.country}
               />
-              {states?.country?.length && <p className="text-destructive text-body-sm">{states?.country}</p>}
+              {states?.country?.length && (
+                <p className="text-destructive text-body-sm">{states?.country}</p>
+              )}
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="zip">Zip</Label>
@@ -275,7 +282,9 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.zip}
               />
-              {states?.zip?.length && <p className="text-destructive text-body-sm">{states?.zip}</p>}
+              {states?.zip?.length && (
+                <p className="text-destructive text-body-sm">{states?.zip}</p>
+              )}
             </div>
           </div>
         </div>

@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
 
@@ -42,15 +43,17 @@ const AccountCardCTA = ({
 const Page = () => {
   return (
     <Card>
-      <CardHeader className="text-center max-w-lg mx-auto w-full">
-        <CardTitle>
-          <h3 className="text-heading-3">Account Overview</h3>
-        </CardTitle>
-        <CardDescription className="text-body text-secondary">
-          Welcome <UserFullName />, your account dashboard provides access to all of your important
-          account information and features.
-        </CardDescription>
-      </CardHeader>
+      <CardHeaderPattern
+        className="w-full"
+        title="Account Overview"
+        size={3}
+        description={
+          <>
+            Welcome <UserFullName />, your account dashboard provides access to all of your
+            important account information and features.
+          </>
+        }
+      />
       <CardContent>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 justify-items-stretch">
           <AccountCardCTA

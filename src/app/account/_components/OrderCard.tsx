@@ -149,7 +149,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                                 href={trackInfo.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-body-sm font-medium text-accent hover:underline"
+                                className="text-body-sm font-medium link"
                               >
                                 Track
                               </Link>

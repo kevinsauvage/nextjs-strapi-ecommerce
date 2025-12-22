@@ -4,8 +4,9 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { updateAddressAction } from '@/actions/addressesActions';
+import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
@@ -122,21 +123,20 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>
-          <h3 className="text-heading-3">Edit Addresses</h3>
-        </CardTitle>
-        <CardDescription className="max-w-md text-body text-secondary">
-          <p>
-            Add a new address to your account. This will help us deliver your orders more
-            efficiently.
-          </p>
-          <Button variant="secondary" className="mt-4" size="sm">
-            <ArrowLeft size={16} />
-            <Link href={config.routes.addresses}>Back to addresses</Link>
+      <CardHeaderPattern
+        title="Edit Addresses"
+        size={3}
+        descriptionClassName="max-w-md"
+        description="Update an existing address for your account. This will help us deliver your orders more efficiently."
+        actions={
+          <Button variant="secondary" size="sm" asChild>
+            <Link href={config.routes.addresses} className="gap-2">
+              <ArrowLeft size={16} />
+              Back to addresses
+            </Link>
           </Button>
-        </CardDescription>
-      </CardHeader>
+        }
+      />
       <CardContent>
         <AddressForm address={address} action={updateAddressAction} buttonText="Edit" />
       </CardContent>

@@ -13,6 +13,7 @@ import { userFeedback } from '@/data/userFeedback';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
+import PasswordField from '../../_components/PasswordField';
 
 const LoginButton = () => {
   const status = useFormStatus();
@@ -64,34 +65,26 @@ const LoginForm = () => {
   }, [states]);
 
   return (
-    <Form action={action}>
-      <h3 className="mb-8 text-heading-2">Login</h3>
-      <div>
-        <Label htmlFor="email" className="mb-1">
-          Email address:
-        </Label>
+    <Form action={action} className="space-y-5">
+      <div className="space-y-2">
+        <Label htmlFor="email">Email address</Label>
         <Input
           id="email"
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="name@company.com"
           required={true}
           autoComplete="username"
         />
       </div>
-      <div>
-        <Label htmlFor="password" className="mb-1">
-          Password:
-        </Label>
-        <Input
-          type="password"
-          name="password"
-          id="password"
-          autoComplete="current-password"
-          placeholder="Password"
-          required={true}
-        />
-      </div>
+      <PasswordField
+        id="password"
+        name="password"
+        label="Password"
+        placeholder="Your password"
+        autoComplete="current-password"
+        required={true}
+      />
       <LoginButton />
     </Form>
   );

@@ -76,7 +76,7 @@ const UpdateUserForm = () => {
   return (
     <form action={action} className="space-y-8">
       <div className="">
-        <h3 className="text-heading-2">
+        <h3 className="text-heading-3">
           Fill in the form below to update your profile. <br />
         </h3>
         <span className="text-body-sm text-secondary">

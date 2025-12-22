@@ -40,7 +40,7 @@ const LoginSheet = () => {
         <SheetFooter className="border-t pt-4">
           <div className="text-body-sm text-center text-secondary">
             Don&apos;t have an account?{' '}
-            <a href={config.routes.register} className="text-accent hover:underline">
+            <a href={config.routes.register} className="link">
               Sign up
             </a>
           </div>
