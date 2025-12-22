@@ -75,19 +75,9 @@ const UpdateUserForm = () => {
 
   return (
     <form action={action} className="space-y-8">
-      <div className="">
-        <h3 className="text-heading-3">
-          Fill in the form below to update your profile. <br />
-        </h3>
-        <span className="text-body-sm text-secondary">
-          You can update your profile information at any time.
-        </span>
-      </div>
-
       {user && (
         <>
           <input type="hidden" name="email" value={user.email ?? ''} />
-
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Label className="flex flex-col items-start">
               <p>First Name</p>
