@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 
-import { Inter, Poppins } from 'next/font/google';
+import { Inter } from 'next/font/google';
 import { CartProvider } from 'src/contexts/CartContext/CartContext';
 import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
@@ -19,17 +19,10 @@ import { getUser } from '@/utils/users';
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-display',
+  variable: '--font-sans',
   display: 'swap',
   preload: true,
-  weight: ['300', '400', '500', '600', '700'],
-});
-const poppins = Poppins({
-  subsets: ['latin'],
-  variable: '--font-heading',
-  weight: ['600', '700'],
-  display: 'swap',
-  preload: true,
+  weight: ['400', '500', '600', '700'], // Body: 400-500, Headings: 600-700
 });
 
 const handleInitialCart = async () => {
@@ -49,7 +42,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${poppins.variable} font-display scroll-smooth antialiased tracking-tight`}
+      className={`${inter.variable} font-sans scroll-smooth antialiased`}
       suppressHydrationWarning
     >
       <head>
