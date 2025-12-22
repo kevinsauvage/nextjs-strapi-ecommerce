@@ -1,3 +1,4 @@
+import { cn } from '@/lib/utils';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
@@ -5,13 +6,13 @@ import PhotoGallery from './PhotoGallery';
 import ProductDescriptionClient from './ProductDescriptionClient';
 import { Badge } from './ui/badge';
 
-const ProductDescription = ({
-  product,
-  isModal,
-}: {
+type ProductDescriptionProps = {
   product: GetProductByHandleQuery['product'];
   isModal?: boolean;
-}) => {
+  className?: string;
+};
+
+const ProductDescription = ({ product, isModal, className }: ProductDescriptionProps) => {
   if (!product) return null;
 
   const images = product.images;
@@ -24,6 +25,7 @@ const ProductDescription = ({
         quantityAvailable: product.variants.edges[0].node.quantityAvailable,
         availableForSale: product.variants.edges[0].node.availableForSale,
         price: product.variants.edges[0].node.price,
+        compareAtPrice: product.variants.edges[0].node.compareAtPrice,
         sku: product.variants.edges[0].node.sku,
         title: product.variants.edges[0].node.title,
         weight: product.variants.edges[0].node.weight,
@@ -33,6 +35,7 @@ const ProductDescription = ({
         quantityAvailable: null,
         availableForSale: false,
         price: undefined,
+        compareAtPrice: undefined,
         sku: null,
         title: undefined,
         weight: null,
@@ -44,14 +47,19 @@ const ProductDescription = ({
   const { quantityAvailable, availableForSale } = defaultVariant;
 
   return (
-    <div className="grid md:grid-cols-7 relative gap-12">
-      <div className="relative md:col-span-4">
+    <div
+      className={cn(
+        'grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 lg:gap-12 relative',
+        className,
+      )}
+    >
+      <div className="relative lg:col-span-7">
         <PhotoGallery images={productImages} />
 
         {!availableForSale && (
           <Badge
             variant="destructive"
-            className="absolute right-4 top-4 px-3 py-1.5 text-body-sm font-medium"
+            className="absolute right-4 top-4 z-10 px-3 py-1.5 text-body-sm font-medium shadow-md"
           >
             Sold Out
           </Badge>
@@ -60,7 +68,7 @@ const ProductDescription = ({
         {quantityAvailable && quantityAvailable < 5 && availableForSale && (
           <Badge
             variant="secondary"
-            className="absolute right-4 top-4 px-3 py-1.5 text-body-sm font-medium"
+            className="absolute right-4 top-4 z-10 px-3 py-1.5 text-body-sm font-medium shadow-md"
           >
             Low Stock: {quantityAvailable} left
           </Badge>

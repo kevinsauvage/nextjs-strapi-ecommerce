@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -42,6 +42,17 @@ const OptimizedImage = ({
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const [currentSrc, setCurrentSrc] = useState(src);
+  const prevSrcRef = useRef(src);
+
+  // Update currentSrc when src prop changes
+  useEffect(() => {
+    if (src !== prevSrcRef.current) {
+      prevSrcRef.current = src;
+      setCurrentSrc(src);
+      setImageLoading(true);
+      setImageError(false);
+    }
+  }, [src]);
 
   const handleError = () => {
     setImageError(true);
@@ -65,7 +76,7 @@ const OptimizedImage = ({
   const defaultHeight = height || 800;
 
   const containerClassName = fill
-    ? cn('relative overflow-hidden', className)
+    ? cn('absolute inset-0 overflow-hidden', className)
     : cn('relative overflow-hidden', className);
 
   return (

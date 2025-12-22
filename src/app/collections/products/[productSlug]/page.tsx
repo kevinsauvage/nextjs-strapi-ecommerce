@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import HomeSection from '@/app/_components/HomeSection';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
@@ -72,17 +73,27 @@ const ProductPage = async ({ params }: PageProperties) => {
   });
 
   const title = product?.title;
+  const hasRecommendations =
+    recommendations?.productRecommendations && recommendations.productRecommendations.length > 0;
 
   return (
-    <div className="container mx-auto px-4">
-      <Breadcrumbs lastElement={title} />
-      <ProductDescription product={product} isModal={false} />
-
-      <div className="my-12">
-        <h3 className="text-heading-2 mb-4">Recommended Products</h3>
-        <ProductRecommendations recommendations={recommendations} />
+    <main className="min-h-[calc(100vh-76px)]">
+      <div className="container mx-auto px-4 md:px-6 py-6 md:py-8">
+        <Breadcrumbs lastElement={title} />
       </div>
-    </div>
+
+      <section className="container mx-auto px-4 md:px-6 pb-8 md:pb-12">
+        <ProductDescription product={product} isModal={false} />
+      </section>
+
+      {hasRecommendations && (
+        <section className="container mx-auto px-4 md:px-6 pb-12 md:pb-16">
+          <HomeSection title="Recommended Products">
+            <ProductRecommendations recommendations={recommendations} />
+          </HomeSection>
+        </section>
+      )}
+    </main>
   );
 };
 
