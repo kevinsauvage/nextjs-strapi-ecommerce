@@ -58,11 +58,17 @@ const Page = async ({
         title="Your Order List is Empty"
         subtitle="Looks like you haven't made any order yet. Start shopping to see your orders here!"
         altText="Order List is Empty"
-      >
-        <Link href="/" className="mt-4">
-          <Button variant="default">Start Shopping</Button>
-        </Link>
-      </EmptyState>
+        primaryAction={
+          <Link href="/">
+            <Button variant="default">Start Shopping</Button>
+          </Link>
+        }
+        secondaryAction={
+          <Link href="/collections" className="link">
+            Browse collections
+          </Link>
+        }
+      />
     );
   }
 
@@ -77,11 +83,17 @@ const Page = async ({
             title="No Orders Found"
             subtitle="Looks like you haven't made any orders yet. Start shopping to see your orders here!"
             altText="No Orders Found"
-          >
-            <Link href="/" className="mt-4">
-              <Button variant="default">Start Shopping</Button>
-            </Link>
-          </EmptyState>
+            primaryAction={
+              <Link href="/">
+                <Button variant="default">Start Shopping</Button>
+              </Link>
+            }
+            secondaryAction={
+              <Link href="/collections" className="link">
+                Browse collections
+              </Link>
+            }
+          />
         </CardContent>
       </Card>
     );

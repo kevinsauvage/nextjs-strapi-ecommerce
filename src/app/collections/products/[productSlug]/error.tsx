@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
@@ -27,19 +28,17 @@ const ProductError = ({
         subtitle="We couldn't load this product. Please try again or browse our other products."
         title="Unable to load product"
         tips={['Try refreshing the page', 'Browse similar products', 'Check back later']}
-      >
-        <div className="mt-6 flex gap-4">
+        primaryAction={
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button
-            onClick={() => (window.location.href = config.routes.collection)}
-            variant="outline"
-          >
+        }
+        secondaryAction={
+          <Link href={config.routes.collection} className="link">
             Browse products
-          </Button>
-        </div>
-      </EmptyState>
+          </Link>
+        }
+      />
     </div>
   );
 };

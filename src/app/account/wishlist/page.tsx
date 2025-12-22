@@ -32,11 +32,17 @@ const Wishlist = async () => {
             title="Your wishlist is empty"
             subtitle="Start saving items you love! Click the heart icon on any product to add it to your wishlist."
             altText="Empty wishlist"
-          >
-            <Link href="/" className="mt-4">
-              <Button variant="default">Start Shopping</Button>
-            </Link>
-          </EmptyState>
+            primaryAction={
+              <Link href="/">
+                <Button variant="default">Start Shopping</Button>
+              </Link>
+            }
+            secondaryAction={
+              <Link href="/collections" className="link">
+                Browse collections
+              </Link>
+            }
+          />
         </CardContent>
       </Card>
     );

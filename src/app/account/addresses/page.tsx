@@ -71,14 +71,15 @@ const Addresses = async ({
             title="No Address Yet"
             subtitle="Add your shipping addresses to make checkout faster and easier. You can add multiple addresses and set a default."
             altText="No Address Yet"
-          >
-            <Link href={config.routes.createAddress} className="mt-4">
-              <Button variant="default" className="gap-2">
-                <Plus size={16} />
-                Add new address
-              </Button>
-            </Link>
-          </EmptyState>
+            primaryAction={
+              <Link href={config.routes.createAddress}>
+                <Button variant="default" className="gap-2">
+                  <Plus size={16} />
+                  Add new address
+                </Button>
+              </Link>
+            }
+          />
         </CardContent>
       </Card>
     );

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
@@ -19,17 +20,22 @@ const CartError = ({ error, reset }: { error: Error & { digest?: string }; reset
         image={NotFoundIllustration}
         subtitle="We couldn't load your cart. Please try again or contact support if the problem persists."
         title="Unable to load cart"
-        tips={['Try refreshing the page', 'Your cart items are saved', 'Contact support if the issue persists']}
-      >
-        <div className="mt-6 flex gap-4">
+        tips={[
+          'Try refreshing the page',
+          'Your cart items are saved',
+          'Contact support if the issue persists',
+        ]}
+        primaryAction={
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button onClick={() => (window.location.href = '/')} variant="outline">
+        }
+        secondaryAction={
+          <Link href="/" className="link">
             Continue shopping
-          </Button>
-        </div>
-      </EmptyState>
+          </Link>
+        }
+      />
     </div>
   );
 };

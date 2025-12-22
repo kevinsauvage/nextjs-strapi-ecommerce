@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
@@ -25,16 +26,17 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
           'Clear your browser cache',
           'Check your internet connection',
         ]}
-      >
-        <div className="mt-6 flex gap-4">
+        primaryAction={
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button onClick={() => (window.location.href = config.routes.home)} variant="outline">
+        }
+        secondaryAction={
+          <Link href={config.routes.home} className="link">
             Go home
-          </Button>
-        </div>
-      </EmptyState>
+          </Link>
+        }
+      />
     </div>
   );
 };

@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
@@ -26,17 +27,22 @@ const AccountError = ({
         image={NotFoundIllustration}
         subtitle="We couldn't load your account information. Please try again or contact support if the problem persists."
         title="Unable to load account"
-        tips={['Try refreshing the page', 'Clear your browser cache', 'Contact support if the issue persists']}
-      >
-        <div className="mt-6 flex gap-4">
+        tips={[
+          'Try refreshing the page',
+          'Clear your browser cache',
+          'Contact support if the issue persists',
+        ]}
+        primaryAction={
           <Button onClick={reset} variant="default">
             Try again
           </Button>
-          <Button onClick={() => (window.location.href = config.routes.home)} variant="outline">
+        }
+        secondaryAction={
+          <Link href={config.routes.home} className="link">
             Go home
-          </Button>
-        </div>
-      </EmptyState>
+          </Link>
+        }
+      />
     </div>
   );
 };

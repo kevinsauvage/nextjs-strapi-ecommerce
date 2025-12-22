@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect } from 'react';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
@@ -32,16 +33,17 @@ const GlobalError = ({
               'Clear browser cache and cookies',
               'Contact support if the issue persists',
             ]}
-          >
-            <div className="mt-6 flex gap-4">
+            primaryAction={
               <Button onClick={reset} variant="default">
                 Try again
               </Button>
-              <Button onClick={() => (window.location.href = '/')} variant="outline">
+            }
+            secondaryAction={
+              <Link href="/" className="link">
                 Go home
-              </Button>
-            </div>
-          </EmptyState>
+              </Link>
+            }
+          />
         </div>
       </body>
     </html>

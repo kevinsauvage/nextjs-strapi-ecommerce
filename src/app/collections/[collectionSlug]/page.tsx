@@ -111,11 +111,17 @@ const CollectionSlugPage = async ({
           title="Collection Not Found"
           subtitle="This collection doesn't exist or has been removed. Browse our other collections to find what you're looking for."
           altText="Collection Not Found"
-        >
-          <Link href="/collections" className="mt-4">
-            <Button variant="default">Browse Collections</Button>
-          </Link>
-        </EmptyState>
+          primaryAction={
+            <Link href="/collections">
+              <Button variant="default">Browse Collections</Button>
+            </Link>
+          }
+          secondaryAction={
+            <Link href="/" className="link">
+              Go home
+            </Link>
+          }
+        />
       </div>
     );
   }
@@ -159,11 +165,17 @@ const CollectionSlugPage = async ({
           title="No products found"
           subtitle="This collection doesn't have any products yet, or your filters are too specific. Try adjusting your filters or browse other collections."
           altText="No products found"
-        >
-          <Link href="/collections" className="mt-4">
-            <Button variant="outline">Browse All Collections</Button>
-          </Link>
-        </EmptyState>
+          primaryAction={
+            <Link href="/collections">
+              <Button variant="default">Browse All Collections</Button>
+            </Link>
+          }
+          secondaryAction={
+            <Link href="/" className="link">
+              Go home
+            </Link>
+          }
+        />
       )}
       <PageInfoPagination pageInfo={safePageInfo} searchParameters={safeSearchParameters} />
     </div>
