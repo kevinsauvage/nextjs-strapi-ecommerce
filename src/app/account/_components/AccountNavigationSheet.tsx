@@ -35,16 +35,18 @@ const AccountNavigationSheet = () => {
       </SheetTrigger>
       <SheetContent
         side="left"
-        className="w-full sm:max-w-md"
+        className="w-full sm:max-w-md p-0"
         aria-describedby='"Account Navigation">'
       >
-        <SheetHeader>
+        <SheetHeader className="px-4 pt-6 pb-4">
           <SheetTitle className="text-heading-3">Account Navigation</SheetTitle>
           <SheetDescription className="text-body-sm text-secondary">
             Navigate through your account settings and information.
           </SheetDescription>
         </SheetHeader>
-        <AccountNavigation handleClose={handleClose} />
+        <div className="px-0">
+          <AccountNavigation handleClose={handleClose} />
+        </div>
       </SheetContent>
     </Sheet>
   );
