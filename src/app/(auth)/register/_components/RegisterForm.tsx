@@ -158,6 +158,7 @@ const RegisterForm = () => {
           autoComplete="off"
           onChange={handleChange}
           value={formData.lastName}
+          disabled={isPending}
         />
         {states.lastName?.at(-1) && (
           <p className="text-destructive text-body-sm mt-1">{states.lastName.at(-1)}</p>

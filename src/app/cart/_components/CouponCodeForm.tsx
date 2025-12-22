@@ -1,7 +1,6 @@
 'use client';
 import { useRef, useState } from 'react';
 
-import SpinnerLoader from '@/components/SpinnerLoader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -56,15 +55,8 @@ const CouponCodeForm = () => {
             disabled={isLoading}
           />
         </div>
-        <Button type="submit" disabled={isLoading} className="shrink-0">
-          {isLoading ? (
-            <span className="flex items-center gap-2">
-              <SpinnerLoader size="sm" />
-              Applying...
-            </span>
-          ) : (
-            'Apply'
-          )}
+        <Button type="submit" loading={isLoading} className="shrink-0">
+          Apply
         </Button>
       </div>
     </form>

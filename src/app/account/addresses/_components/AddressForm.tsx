@@ -100,7 +100,7 @@ const AddressFormUI = ({
     });
   };
 
-  const [states, actionState] = useActionState<
+  const [states, actionState, isPending] = useActionState<
     {
       address1?: string | string[];
       address2?: string | string[];
@@ -148,6 +148,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.firstName}
+                disabled={isPending}
               />
               {states?.firstName?.length && (
                 <p className="text-destructive text-body-sm">{states?.firstName}</p>
@@ -163,6 +164,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.lastName}
+                disabled={isPending}
               />
               {states?.lastName?.length && (
                 <p className="text-destructive text-body-sm">{states?.lastName}</p>
@@ -177,6 +179,7 @@ const AddressFormUI = ({
                 placeholder="Company"
                 type="text"
                 defaultValue={address?.company}
+                disabled={isPending}
               />
               {states?.company?.length && (
                 <p className="text-destructive text-body-sm">{states?.company}</p>
@@ -191,6 +194,7 @@ const AddressFormUI = ({
                 placeholder="Phone"
                 type="text"
                 defaultValue={address?.phone}
+                disabled={isPending}
               />
               {states?.phone?.length && (
                 <p className="text-destructive text-body-sm">{states?.phone}</p>
@@ -210,6 +214,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.address1}
+                disabled={isPending}
               />
               {states?.address1?.length && (
                 <p className="text-destructive text-body-sm">{states?.address1}</p>
@@ -223,6 +228,7 @@ const AddressFormUI = ({
                 placeholder="Address 2"
                 type="text"
                 defaultValue={address?.address2}
+                disabled={isPending}
               />
               {states?.address2?.length && (
                 <p className="text-destructive text-body-sm">{states?.address2}</p>
@@ -238,6 +244,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.city}
+                disabled={isPending}
               />
               {states?.city?.length && (
                 <p className="text-destructive text-body-sm">{states?.city}</p>
@@ -252,6 +259,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.province}
+                disabled={isPending}
               />
               {states?.province?.length && (
                 <p className="text-destructive text-body-sm">{states?.province}</p>
@@ -267,6 +275,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.country}
+                disabled={isPending}
               />
               {states?.country?.length && (
                 <p className="text-destructive text-body-sm">{states?.country}</p>
@@ -281,6 +290,7 @@ const AddressFormUI = ({
                 required={true}
                 type="text"
                 defaultValue={address?.zip}
+                disabled={isPending}
               />
               {states?.zip?.length && (
                 <p className="text-destructive text-body-sm">{states?.zip}</p>

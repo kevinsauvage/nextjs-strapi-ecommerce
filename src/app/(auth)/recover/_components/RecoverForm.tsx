@@ -28,7 +28,7 @@ const RecoverForm = () => {
     return recoverPasswordAction({ email });
   };
 
-  const [states, action] = useActionState<
+  const [states, action, isPending] = useActionState<
     {
       email?: string | string[];
       error?: string;
@@ -60,7 +60,14 @@ const RecoverForm = () => {
     <Form action={action} className="space-y-5">
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
-        <Input id="email" name="email" type="email" placeholder="name@company.com" required={true} />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="name@company.com"
+          required={true}
+          disabled={isPending}
+        />
         <p className="text-body-sm text-secondary">
           We&apos;ll email you a secure link to reset your password.
         </p>

@@ -37,7 +37,7 @@ const UpdateUserForm = () => {
     return updateUserAction({ acceptsMarketing, email, firstName, lastName, phone });
   };
 
-  const [states, action] = useActionState<
+  const [states, action, isPending] = useActionState<
     {
       firstName?: string | string[];
       lastName?: string | string[];
@@ -86,11 +86,18 @@ const UpdateUserForm = () => {
                 type="text"
                 name="firstName"
                 defaultValue={user.firstName ?? ''}
+                disabled={isPending}
               />
             </Label>
             <Label className="flex flex-col items-start">
               <p>Last Name</p>
-              <Input id="lastName" type="text" name="lastName" defaultValue={user.lastName ?? ''} />
+              <Input
+                id="lastName"
+                type="text"
+                name="lastName"
+                defaultValue={user.lastName ?? ''}
+                disabled={isPending}
+              />
             </Label>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -100,7 +107,13 @@ const UpdateUserForm = () => {
             </Label>
             <Label className="flex flex-col items-start">
               <p>Phone</p>
-              <Input id="phone" type="text" name="phone" defaultValue={user.phone ?? ''} />
+              <Input
+                id="phone"
+                type="text"
+                name="phone"
+                defaultValue={user.phone ?? ''}
+                disabled={isPending}
+              />
             </Label>
           </div>
         </>
@@ -116,6 +129,7 @@ const UpdateUserForm = () => {
             setAcceptsMarketing(checked as boolean);
           }}
           id="acceptsMarketing"
+          disabled={isPending}
         />
         <p>Check this case to receive our last update</p>
       </Label>

@@ -36,7 +36,7 @@ const LoginForm = () => {
     return loginAction({ email, password, redirectUrl });
   };
 
-  const [states, action] = useActionState<
+  const [states, action, isPending] = useActionState<
     {
       email?: string | string[];
       password?: string | string[];
@@ -75,6 +75,7 @@ const LoginForm = () => {
           placeholder="name@company.com"
           required={true}
           autoComplete="username"
+          disabled={isPending}
         />
       </div>
       <PasswordField
@@ -84,6 +85,7 @@ const LoginForm = () => {
         placeholder="Your password"
         autoComplete="current-password"
         required={true}
+        disabled={isPending}
       />
       <LoginButton />
     </Form>

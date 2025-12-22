@@ -29,7 +29,7 @@ const ContactForm = () => {
     return contactAction({ email, message, name });
   };
 
-  const [states, action] = useActionState<
+  const [states, action, isPending] = useActionState<
     {
       email?: string | string[];
       message?: string | string[];
@@ -58,17 +58,29 @@ const ContactForm = () => {
     >
       <Label className="mb-2 flex flex-col items-start" htmlFor="email">
         Email address
-        <Input id="email" name="email" placeholder="Email" required={true} />
+        <Input id="email" name="email" placeholder="Email" required={true} disabled={isPending} />
         {states.email && <span className="text-destructive text-body-sm">{states.email}</span>}
       </Label>
       <Label className="mb-2 flex flex-col items-start" htmlFor="name">
         Name
-        <Input placeholder="Name" name="name" id="name" required={true} />
+        <Input
+          placeholder="Name"
+          name="name"
+          id="name"
+          required={true}
+          disabled={isPending}
+        />
         {states.name && <span className="text-destructive text-body-sm">{states.name}</span>}
       </Label>
       <Label className="mb-2 flex flex-col items-start" htmlFor="message">
         Message
-        <Textarea placeholder="Message" name="message" id="message" required={true} />
+        <Textarea
+          placeholder="Message"
+          name="message"
+          id="message"
+          required={true}
+          disabled={isPending}
+        />
         {states.message && <span className="text-destructive text-body-sm">{states.message}</span>}
       </Label>
       <SubmitButton />
