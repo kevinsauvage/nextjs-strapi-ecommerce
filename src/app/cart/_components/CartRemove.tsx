@@ -1,6 +1,5 @@
 'use client';
 
-import { Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import SpinnerLoader from '@/components/SpinnerLoader';
@@ -23,6 +22,8 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+
+import { Trash2 } from 'lucide-react';
 
 const CartRemove = ({ id, productTitle }: { id: string; productTitle?: string }) => {
   const [loading, setLoading] = useState(false);

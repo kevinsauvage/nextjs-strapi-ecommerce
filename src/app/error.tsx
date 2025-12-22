@@ -1,7 +1,7 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect } from 'react';
+import Link from 'next/link';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 import EmptyState from '@/components/EmptyState';

@@ -1,19 +1,7 @@
 'use client';
 
-import {
-  ChevronDown,
-  ChevronRight,
-  Heart,
-  Home,
-  LogOut,
-  Menu,
-  Search,
-  ShoppingBag,
-  User,
-} from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
   Sheet,
@@ -27,6 +15,19 @@ import {
 import config from '@/config/index';
 import { cn } from '@/lib/utils';
 import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
+
+import {
+  ChevronDown,
+  ChevronRight,
+  Heart,
+  Home,
+  LogOut,
+  Menu,
+  Search,
+  ShoppingBag,
+  User,
+} from 'lucide-react';
+import { v4 as uuid } from 'uuid';
 
 const HamburgerMenu = ({
   headerMenu,

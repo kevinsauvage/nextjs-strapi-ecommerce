@@ -1,11 +1,12 @@
 'use client';
 
-import { Minus, Plus } from 'lucide-react';
 import { useCallback, useState } from 'react';
 
 import SpinnerLoader from '@/components/SpinnerLoader';
 
 import { Button } from './ui/button';
+
+import { Minus, Plus } from 'lucide-react';
 
 const QuantityUpdater = ({
   originalQuantity,
@@ -56,7 +57,7 @@ const QuantityUpdater = ({
         size="icon"
         className="h-8 w-8 transition-all duration-200 hover:scale-110"
         onClick={() => {
-          void removeOne();
+          removeOne();
         }}
         disabled={loading || disabled || originalQuantity <= 1}
         aria-label="Decrease quantity"
@@ -71,7 +72,7 @@ const QuantityUpdater = ({
         size="icon"
         className="h-8 w-8 transition-all duration-200 hover:scale-110"
         onClick={() => {
-          void addOne();
+          addOne();
         }}
         disabled={loading || disabled || originalQuantity >= quantityAvailable}
         aria-label="Increase quantity"

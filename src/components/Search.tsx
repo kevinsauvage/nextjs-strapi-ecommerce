@@ -1,8 +1,8 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import type { RefObject } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import SearchForm from '@/components/SearchForm';
 import useOnClickOutside from '@/hooks/useClickOutside';
@@ -42,7 +42,7 @@ const Search = ({ searchQuery }: { searchQuery: string }) => {
     () =>
       debounce((value: unknown) => {
         if (typeof value !== 'string') return;
-        void handleChange(value);
+        handleChange(value);
       }, 500),
     [handleChange],
   );

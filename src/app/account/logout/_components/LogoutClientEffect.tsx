@@ -6,7 +6,7 @@ import { logoutAction } from '@/actions/usersActions';
 
 const LogoutClientEffect = () => {
   useEffect(() => {
-    void logoutAction();
+    logoutAction();
   }, []);
 
   return <></>;

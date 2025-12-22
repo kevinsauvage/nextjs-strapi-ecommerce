@@ -1,7 +1,6 @@
 import type * as React from 'react';
 
 import CardHeaderPattern from '@/components/CardHeaderPattern';
-import Logo from '@/components/Logo';
 import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 

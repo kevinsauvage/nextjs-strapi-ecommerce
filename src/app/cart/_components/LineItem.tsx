@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import OptimizedImage from '@/components/OptimizedImage';
 import config from '@/config';
-import { CartFieldsFragment } from '@/shopify/storefront';
+import { type CartFieldsFragment } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 
 import CartRemove from './CartRemove';
@@ -33,7 +33,7 @@ const LineItem: React.FC<{
   );
   const finalPrice = totalPrice - totalDiscount > 0 ? totalPrice - totalDiscount : 0;
   const hasDiscount = finalPrice < totalPrice;
-  const currencyCode = node.merchandise.price.currencyCode;
+  const {currencyCode} = node.merchandise.price;
 
   // Get product handle for link
   const productHandle =

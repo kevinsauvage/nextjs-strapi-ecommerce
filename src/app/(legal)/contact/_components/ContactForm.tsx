@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
 
 import { contactAction } from '@/actions/contactActions';
 import FormFieldError from '@/components/FormFieldError';
@@ -11,6 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { userFeedback } from '@/data/userFeedback';
+
+import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();

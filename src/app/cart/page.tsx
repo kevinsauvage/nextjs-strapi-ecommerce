@@ -1,4 +1,3 @@
-import { ChevronLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -12,6 +11,8 @@ import CartHeader from './_components/CartHeader';
 import CartItemsList from './_components/CartItemsList';
 import CartPromoCode from './_components/CartPromoCode';
 import CartSummary from './_components/CartSummary';
+
+import { ChevronLeft } from 'lucide-react';
 
 export const dynamic = 'force-dynamic';
 

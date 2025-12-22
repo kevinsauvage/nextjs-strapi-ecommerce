@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
 
 import { resetPasswordAction } from '@/actions/authActions';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import { userFeedback } from '@/data/userFeedback';
 
 import Form from '../../_components/Form';
 import PasswordField from '../../_components/PasswordField';
+
+import { toast } from 'sonner';
 
 const initialStates = {
   password: '',

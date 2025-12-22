@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
 
 import { registerAction } from '@/actions/authActions';
 import FormFieldError from '@/components/FormFieldError';
@@ -14,6 +13,8 @@ import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
 import PasswordField from '../../_components/PasswordField';
+
+import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();

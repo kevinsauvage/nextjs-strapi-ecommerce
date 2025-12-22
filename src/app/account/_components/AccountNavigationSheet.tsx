@@ -1,6 +1,5 @@
 'use client';
 
-import { User } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,8 @@ import {
 } from '@/components/ui/sheet';
 
 import AccountNavigation from './AccountNavigation';
+
+import { User } from 'lucide-react';
 
 const AccountNavigationSheet = () => {
   const [isOpen, setIsOpen] = useState(false);

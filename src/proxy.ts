@@ -2,9 +2,9 @@ import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
 import { setDelegateTokenAction } from './actions/delegateTokenActions';
-import globalConfig from './config';
 import { DEFAULTS } from './config/constants';
 import { getStandardCookieOptions } from './utils/cookie-security';
+import globalConfig from './config';
 
 async function proxy(request: NextRequest) {
   const { nextUrl, cookies, headers, url } = request;

@@ -1,7 +1,7 @@
 'use client';
 
-import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import Script from 'next/script';
 
 import { getCookieFront } from '@/utils/cookies';
 
@@ -15,12 +15,18 @@ const GtmScript = () => {
     if (consentCookie) {
       try {
         const consent = JSON.parse(consentCookie);
-        setHasConsent(consent.analytics_storage || consent.ad_storage);
+        setTimeout(() => {
+          setHasConsent(consent.analytics_storage || consent.ad_storage);
+        }, 0);
       } catch {
-        setHasConsent(false);
+        setTimeout(() => {
+          setHasConsent(false);
+        }, 0);
       }
     } else {
-      setHasConsent(false);
+      setTimeout(() => {
+        setHasConsent(false);
+      }, 0);
     }
   }, []);
 

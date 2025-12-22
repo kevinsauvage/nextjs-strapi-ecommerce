@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { storefrontSdk } from '@/shopify';
 
 export const dynamic = 'force-dynamic'; // Search queries are dynamic
 
 export async function GET(request: NextRequest) {
-  const searchParams = request.nextUrl.searchParams;
+  const {searchParams} = request.nextUrl;
   const query = searchParams.get('q');
 
   if (!query || query.trim().length < 2) {

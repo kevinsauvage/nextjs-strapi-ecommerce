@@ -1,6 +1,5 @@
 'use client';
 
-import { Eye, EyeOff } from 'lucide-react';
 import { useId, useState } from 'react';
 
 import FormFieldError from '@/components/FormFieldError';
@@ -8,6 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+
+import { Eye, EyeOff } from 'lucide-react';
 
 type PasswordFieldProps = {
   id?: string;

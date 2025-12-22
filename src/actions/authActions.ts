@@ -1,7 +1,6 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 
 import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
@@ -10,6 +9,8 @@ import type { CustomerUserError, UserError } from '@/shopify/storefront';
 import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
+
+import { z } from 'zod';
 
 const handleUserError = (
   userError: UserError[] | undefined,

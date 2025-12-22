@@ -1,4 +1,3 @@
-import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
@@ -9,6 +8,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+
+import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.account.addresses.title,

@@ -1,6 +1,5 @@
 'use client';
 
-import { Heart, Info, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
 import QuantityUpdater from '@/components/QuantityUpdater';
@@ -9,13 +8,15 @@ import useProductSelection from '@/hooks/useProductSelection';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 
-import Options from './Options';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Card, CardContent } from './ui/card';
 import { Separator } from './ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
+import Options from './Options';
+
+import { Heart, Info, ShoppingBag } from 'lucide-react';
 
 type ProductDescriptionClientProps = {
   product: NonNullable<GetProductByHandleQuery['product']>;

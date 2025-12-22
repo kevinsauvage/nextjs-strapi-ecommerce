@@ -98,8 +98,10 @@ const useProductSelection = ({
   }, [handleAddToCartContext, quantity, selectedVariant]);
 
   useEffect(() => {
-    if (product?.variants.edges[0]?.node) {
-      setSelectedVariant(product.variants.edges[0].node);
+    if (product?.variants?.edges?.[0]?.node) {
+      setTimeout(() => {
+        setSelectedVariant(product.variants.edges?.[0]?.node);
+      }, 0);
     }
     const optionsArray = product?.options || [];
     const mappedOptions = optionsArray.map((option) => {
@@ -115,13 +117,17 @@ const useProductSelection = ({
       };
     });
 
-    setSelectedProductOption(mappedOptions);
-    selectVariantByOptions(mappedOptions);
+    setTimeout(() => {
+      setSelectedProductOption(mappedOptions);
+    }, 0);
+    setTimeout(() => {
+      selectVariantByOptions(mappedOptions);
+    }, 0);
   }, [product, selectVariantByOptions]);
 
   const isOptionOutOfStock = (name: string, optionValue: OptionValues) => {
     const isOUt = product?.variants.edges.some((variant) => {
-      const selectedOptions = variant.node.selectedOptions;
+      const { selectedOptions } = variant.node;
       return selectedOptions.some(
         (option) => option.name === name && option.value === optionValue?.name,
       );

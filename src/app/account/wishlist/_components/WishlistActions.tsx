@@ -1,9 +1,7 @@
 'use client';
 
-import { Heart, ShoppingCart, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +14,9 @@ import {
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import { removeFromWishlist } from '@/lib/wishlist-client';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
+
+import { Heart, ShoppingCart, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 type WishlistActionsProps = {
   product: ProductFieldsFragment;

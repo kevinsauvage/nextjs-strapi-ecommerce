@@ -1,4 +1,3 @@
-import { ArrowRight, Package } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -6,6 +5,8 @@ import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import type { GetCustomerOrdersQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
+
+import { ArrowRight, Package } from 'lucide-react';
 
 type RecentOrdersPreviewProps = {
   orders: GetCustomerOrdersQuery['customer']['orders']['edges'];

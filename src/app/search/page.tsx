@@ -60,7 +60,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
     sortKey: SearchSortKeys[sortKey] || SearchSortKeys.Relevance,
   });
 
-  const pageInfo = response.search.pageInfo;
+  const {pageInfo} = response.search;
   const filters = response.search.productFilters;
 
   const products = response.search?.edges.map((edge) => ({

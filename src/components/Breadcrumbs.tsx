@@ -1,7 +1,8 @@
 'use client';
-import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
+import { ChevronRight } from 'lucide-react';
 
 const Crumbs = ({ title, href, last }: { title: string; href: string; last: boolean }) => {
   if (last) {

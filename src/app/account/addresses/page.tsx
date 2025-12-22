@@ -1,4 +1,3 @@
-import { Plus } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -18,7 +17,10 @@ import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
 import BackButton from '../_components/BackButton';
+
 import Address from './_components/Address';
+
+import { Plus } from 'lucide-react';
 
 export const dynamic = 'force-dynamic'; // Addresses are user-specific
 

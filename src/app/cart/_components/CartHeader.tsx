@@ -1,9 +1,9 @@
 'use client';
 
-import { ShoppingCart } from 'lucide-react';
-
 import { Badge } from '@/components/ui/badge';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+
+import { ShoppingCart } from 'lucide-react';
 
 const CartHeader = () => {
   const { cart } = useCartContext();

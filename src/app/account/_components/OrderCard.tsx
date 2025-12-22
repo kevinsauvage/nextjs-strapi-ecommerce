@@ -1,10 +1,8 @@
 /* eslint-disable unicorn/consistent-destructuring */
 'use client';
 
-import { ChevronDown, ChevronUp, Package } from 'lucide-react';
-import Link from 'next/link';
 import { useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import Link from 'next/link';
 
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -16,6 +14,9 @@ import type {
   OrderFulfillmentStatus,
 } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
+
+import { ChevronDown, ChevronUp, Package } from 'lucide-react';
+import { v4 as uuidv4 } from 'uuid';
 
 function formatStatus(status?: OrderFulfillmentStatus | OrderFinancialStatus | null) {
   return status

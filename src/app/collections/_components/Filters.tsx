@@ -1,8 +1,7 @@
 'use client';
 
-import { FilterIcon } from 'lucide-react';
-import { usePathname, useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
   Accordion,
@@ -24,6 +23,8 @@ import {
 import { Slider } from '@/components/ui/slider';
 import type { Filter } from '@/shopify/storefront';
 import { FilterType } from '@/shopify/storefront';
+
+import { FilterIcon } from 'lucide-react';
 
 const Filters = ({
   filters,
@@ -107,7 +108,9 @@ const Filters = ({
           item.filterId !== undefined && item.input !== undefined,
       );
 
-    setSelectedFilters(f || []);
+    setTimeout(() => {
+      setSelectedFilters(f || []);
+    }, 0);
   }, [query.filters]);
 
   const getMinMaxPrice = useCallback((): [number, number] | undefined => {
@@ -131,7 +134,9 @@ const Filters = ({
   useEffect(() => {
     const priceRange_ = getMinMaxPrice();
     if (priceRange_) {
-      setPriceRange(priceRange_);
+      setTimeout(() => {
+        setPriceRange(priceRange_);
+      }, 0);
     }
   }, [getMinMaxPrice]);
 
@@ -157,7 +162,9 @@ const Filters = ({
           >
             {filters.map((filter) => (
               <AccordionItem key={filter.id} value={filter.id}>
-                <AccordionTrigger className="text-body-sm font-medium">{filter.label}</AccordionTrigger>
+                <AccordionTrigger className="text-body-sm font-medium">
+                  {filter.label}
+                </AccordionTrigger>
                 <AccordionContent>
                   {filter.type === FilterType.PriceRange && (
                     <div className="space-y-4 py-2">

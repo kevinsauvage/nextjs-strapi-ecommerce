@@ -1,13 +1,14 @@
 'use client';
 
-import { Label } from '@radix-ui/react-dropdown-menu';
-import { Search } from 'lucide-react';
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { searchAction } from '@/actions/SearchAction';
 
 import { Input } from './ui/input';
+
+import { Label } from '@radix-ui/react-dropdown-menu';
+import { Search } from 'lucide-react';
 
 const SubmitButton = ({ ...properties }: React.ComponentProps<'button'>) => {
   const status = useFormStatus();

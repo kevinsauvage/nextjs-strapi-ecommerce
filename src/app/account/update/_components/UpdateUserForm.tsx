@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
 
 import { updateUserAction } from '@/actions/usersActions';
 import FormFieldError from '@/components/FormFieldError';
@@ -13,6 +12,8 @@ import { Label } from '@/components/ui/label';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { userFeedback } from '@/data/userFeedback';
 import type { CustomerUserError } from '@/shopify/storefront';
+
+import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -70,7 +71,9 @@ const UpdateUserForm = () => {
 
   useEffect(() => {
     if (user) {
-      setAcceptsMarketing(user.acceptsMarketing ?? false);
+      setTimeout(() => {
+        setAcceptsMarketing(user.acceptsMarketing ?? false);
+      }, 0);
     }
   }, [user]);
 

@@ -1,9 +1,8 @@
 'use client';
 
-import { ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useCallback, useEffect, useRef, useState } from 'react';
 
 import config from '@/config';
 import useUserContext from '@/contexts/UserContext/useUserContext';
@@ -13,11 +12,13 @@ import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
-import Options from './Options';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Separator } from './ui/separator';
 import { SheetFooter } from './ui/sheet';
+import Options from './Options';
+
+import { ChevronLeft, ChevronRight, Heart, Minus, Plus, ShoppingBag } from 'lucide-react';
 
 type QuickBuyContentProps = {
   product: ProductFieldsFragment;

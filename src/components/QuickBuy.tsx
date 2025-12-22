@@ -1,14 +1,15 @@
 'use client';
 
-import { Eye } from 'lucide-react';
-import dynamic from 'next/dynamic';
 import { useCallback, useState } from 'react';
+import dynamic from 'next/dynamic';
 
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 
-import SpinnerLoader from './SpinnerLoader';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
+import SpinnerLoader from './SpinnerLoader';
+
+import { Eye } from 'lucide-react';
 
 // Only load QuickBuyContent when sheet is opened
 const QuickBuyContent = dynamic(() => import('./QuickBuyContent'), {

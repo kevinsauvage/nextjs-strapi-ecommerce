@@ -1,12 +1,13 @@
 'use client';
 
 import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
-import { toast } from 'sonner';
 
 import { createCartAction } from '@/actions/cartActions';
 import cartMock from '@/mocks/cart';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 import { api } from '@/utils/apiClient';
+
+import { toast } from 'sonner';
 
 type CartResponse = { data: CartFieldsFragment; message?: string };
 

@@ -1,8 +1,6 @@
 'use client';
 
-import { Edit, Heart, MoreVerticalIcon, Trash2 } from 'lucide-react';
 import Link from 'next/link';
-import { toast } from 'sonner';
 
 import { deleteAddressAction, setDefaultAddressAction } from '@/actions/addressesActions';
 import { Badge } from '@/components/ui/badge';
@@ -17,6 +15,9 @@ import {
 } from '@/components/ui/dropdown-menu';
 import config from '@/config';
 import type { MailingAddress } from '@/shopify/storefront';
+
+import { Edit, Heart, MoreVerticalIcon, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 const Address = ({
   address,

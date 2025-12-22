@@ -1,7 +1,7 @@
 'use client';
 
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 
@@ -41,7 +41,9 @@ const EmptyState = ({
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true);
+    setTimeout(() => {
+      setIsVisible(true);
+    }, 0);
   }, []);
 
   // Tips only shown for error variant

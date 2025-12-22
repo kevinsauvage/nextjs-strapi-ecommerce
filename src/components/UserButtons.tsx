@@ -1,12 +1,13 @@
 'use client';
-import { Search, ShoppingBag, User } from 'lucide-react';
 import Link from 'next/link';
 
 import config from '@/config/index';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
-import ThemeToggle from './ThemeToggle';
 import { Badge } from './ui/badge';
+import ThemeToggle from './ThemeToggle';
+
+import { Search, ShoppingBag, User } from 'lucide-react';
 
 const UserButtons = ({ className }: { className?: string }) => {
   const { cart } = useCartContext();

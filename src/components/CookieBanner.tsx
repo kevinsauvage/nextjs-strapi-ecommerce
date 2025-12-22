@@ -1,8 +1,7 @@
 'use client';
 
-import { Settings } from 'lucide-react';
-import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
+import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -20,6 +19,8 @@ import { withGtag } from '@/utils/analytics';
 import type { originalSettingsType } from '@/utils/consents';
 import { transformedSettings } from '@/utils/consents';
 import { getCookieFront, setCookieFront } from '@/utils/cookies';
+
+import { Settings } from 'lucide-react';
 
 const EXPIRY_COOKIE_TIME = config.constants.cookieExpiryDays;
 
@@ -42,7 +43,9 @@ const CookieBanner = () => {
   }, []);
 
   useEffect(() => {
-    handleCookies();
+    setTimeout(() => {
+      handleCookies();
+    }, 0);
   }, [handleCookies]);
 
   const acceptAllCookie = useCallback(() => {

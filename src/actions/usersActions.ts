@@ -2,13 +2,14 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 
 import config from '@/config';
 import { storefrontSdk } from '@/shopify';
 import { getShopifyToken, setShopifyToken } from '@/utils/shopify';
 
 import { delCookieAction } from './cookiesActions';
+
+import { z } from 'zod';
 
 const userSchema = z.object({
   acceptsMarketing: z.string().optional(),

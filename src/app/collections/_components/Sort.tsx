@@ -1,6 +1,5 @@
 'use client';
 
-import { SortDesc } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+
+import { SortDesc } from 'lucide-react';
 
 const Sort = ({
   query,
@@ -23,7 +24,7 @@ const Sort = ({
   const router = useRouter();
 
   const handleChange = (value: string) => {
-    const pathname = window.location.pathname;
+    const {pathname} = window.location;
     const searchParameters = new URLSearchParams();
     searchParameters.set('sort_key', value);
     router.push(`${pathname}?${searchParameters.toString()}`);

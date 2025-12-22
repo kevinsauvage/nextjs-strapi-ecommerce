@@ -2,9 +2,9 @@ import { cn } from '@/lib/utils';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
+import { Badge } from './ui/badge';
 import PhotoGallery from './PhotoGallery';
 import ProductDescriptionClient from './ProductDescriptionClient';
-import { Badge } from './ui/badge';
 
 type ProductDescriptionProps = {
   product: GetProductByHandleQuery['product'];
@@ -15,7 +15,7 @@ type ProductDescriptionProps = {
 const ProductDescription = ({ product, isModal, className }: ProductDescriptionProps) => {
   if (!product) return null;
 
-  const images = product.images;
+  const {images} = product;
   const descriptionHtml: string =
     typeof product.descriptionHtml === 'string' ? product.descriptionHtml : '';
 

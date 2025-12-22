@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
-import { toast } from 'sonner';
 
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
@@ -10,6 +9,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import type { CustomerUserError } from '@/shopify/storefront';
+
+import { toast } from 'sonner';
 
 const SubmitButton = ({ buttonText }: { buttonText: string }) => {
   const status = useFormStatus();

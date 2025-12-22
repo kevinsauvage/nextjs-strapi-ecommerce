@@ -1,12 +1,12 @@
 'use client';
 
-import { Tag } from 'lucide-react';
-
 import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 
 import CouponCodeForm from './CouponCodeForm';
 import DiscountCodes from './DiscountCodes';
+
+import { Tag } from 'lucide-react';
 
 const CartPromoCode = () => {
   return (

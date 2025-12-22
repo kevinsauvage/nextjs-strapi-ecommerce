@@ -1,11 +1,12 @@
 'use client';
 
-import { BookText, BookUser, Heart, LogOut, Package, User } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { accountNav } from '@/config';
 import { cn } from '@/lib/utils';
+
+import { BookText, BookUser, Heart, LogOut, Package, User } from 'lucide-react';
 
 const getLinkIcon = (title: string) => {
   const icons = {

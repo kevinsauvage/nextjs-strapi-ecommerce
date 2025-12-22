@@ -1,11 +1,12 @@
-import { Search } from 'lucide-react';
 import Link from 'next/link';
 
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 
-import OptimizedImage from './OptimizedImage';
 import { Button } from './ui/button';
+import OptimizedImage from './OptimizedImage';
+
+import { Search } from 'lucide-react';
 
 type ProductSearchItem = {
   id: string;

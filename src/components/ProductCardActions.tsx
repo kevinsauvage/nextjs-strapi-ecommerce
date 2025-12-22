@@ -1,14 +1,15 @@
 'use client';
 
-import { Heart } from 'lucide-react';
 import { useState } from 'react';
 
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 
+import { Button } from './ui/button';
 import QuickBuy from './QuickBuy';
 import SpinnerLoader from './SpinnerLoader';
-import { Button } from './ui/button';
+
+import { Heart } from 'lucide-react';
 
 type ProductCardActionsProps = {
   product: ProductFieldsFragment;
@@ -45,7 +46,7 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
         onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
           event.stopPropagation();
           event.preventDefault();
-          void handleWishlist();
+          handleWishlist();
         }}
       >
         {loading ? (
@@ -61,4 +62,3 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
 };
 
 export default ProductCardActions;
-

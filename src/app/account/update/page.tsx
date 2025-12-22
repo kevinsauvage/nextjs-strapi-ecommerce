@@ -11,6 +11,7 @@ import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
 import BackButton from '../_components/BackButton';
+
 import UpdateUserForm from './_components/UpdateUserForm';
 
 export const dynamic = 'force-dynamic';

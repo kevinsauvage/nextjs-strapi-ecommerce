@@ -1,8 +1,4 @@
-import '../styles/globals.css';
-
 import { Inter } from 'next/font/google';
-import { CartProvider } from 'src/contexts/CartContext/CartContext';
-import { UserProvider } from 'src/contexts/UserContext/UserContext';
 
 import CookieBanner from '@/components/CookieBanner';
 import Footer from '@/components/Footer';
@@ -17,6 +13,11 @@ import { getWishlist } from '@/lib/wishlist';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
+import '../styles/globals.css';
+
+import { CartProvider } from 'src/contexts/CartContext/CartContext';
+import { UserProvider } from 'src/contexts/UserContext/UserContext';
+
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -27,7 +28,7 @@ const inter = Inter({
 
 const handleInitialCart = async () => {
   const cartId = await getCartId();
-  return cartId ? await getCart(cartId) : null;
+  return cartId ? getCart(cartId) : null;
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {

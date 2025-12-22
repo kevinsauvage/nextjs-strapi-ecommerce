@@ -1,4 +1,3 @@
-import { ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -12,6 +11,8 @@ import seo from '@/data/seo';
 import { storefrontSdk } from '@/shopify';
 import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 import { getShopifyToken } from '@/utils/shopify';
+
+import { ArrowLeft } from 'lucide-react';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.account.addresses.title,

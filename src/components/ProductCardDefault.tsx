@@ -1,20 +1,21 @@
 'use client';
 
-import { ShoppingBag } from 'lucide-react';
-import Link from 'next/link';
 import { useState } from 'react';
+import Link from 'next/link';
 
 import config from '@/config';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
 import OptimizedImage from './OptimizedImage';
 import Price from './Price';
 import ProductCardActions from './ProductCardActions';
 import SpinnerLoader from './SpinnerLoader';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
+
+import { ShoppingBag } from 'lucide-react';
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 

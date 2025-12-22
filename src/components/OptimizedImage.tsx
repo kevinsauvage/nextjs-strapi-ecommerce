@@ -1,7 +1,7 @@
 'use client';
 
+import { startTransition, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -41,30 +41,32 @@ const OptimizedImage = ({
 }: OptimizedImageProps) => {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
-  const [currentSrc, setCurrentSrc] = useState(src);
+  const [errorSrc, setErrorSrc] = useState<string | null>(null);
   const prevSrcRef = useRef(src);
 
-  // Update currentSrc when src prop changes
+  // Reset state when src changes (using startTransition to avoid cascading renders)
   useEffect(() => {
     if (src !== prevSrcRef.current) {
       prevSrcRef.current = src;
-      setCurrentSrc(src);
-      setImageLoading(true);
-      setImageError(false);
+      startTransition(() => {
+        setImageLoading(true);
+        setImageError(false);
+        setErrorSrc(null);
+      });
     }
   }, [src]);
 
   const handleError = () => {
     setImageError(true);
     setImageLoading(false);
-    if (currentSrc !== fallbackSrc) {
-      setCurrentSrc(fallbackSrc);
-    }
+    setErrorSrc(fallbackSrc);
     onError?.();
   };
 
   const handleLoad = () => {
     setImageLoading(false);
+    setImageError(false);
+    setErrorSrc(null);
   };
 
   // Generate responsive sizes if not provided
@@ -84,6 +86,7 @@ const OptimizedImage = ({
       {imageLoading && !imageError && <Skeleton className="absolute inset-0 z-10" />}
       {blurDataURL && imageLoading && !imageError && (
         <Image
+          key={`blur-${src}`}
           src={blurDataURL}
           alt=""
           fill
@@ -95,7 +98,8 @@ const OptimizedImage = ({
         />
       )}
       <Image
-        src={imageError ? fallbackSrc : currentSrc}
+        key={src}
+        src={errorSrc || src}
         alt={alt}
         width={fill ? undefined : defaultWidth}
         height={fill ? undefined : defaultHeight}

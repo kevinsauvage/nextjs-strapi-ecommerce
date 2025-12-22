@@ -1,5 +1,3 @@
-import { User } from 'lucide-react';
-
 import LoginForm from '@/app/(auth)/login/_components/LoginForm';
 import config from '@/config';
 
@@ -12,6 +10,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from './ui/sheet';
+
+import { User } from 'lucide-react';
 
 const LoginSheet = () => {
   return (

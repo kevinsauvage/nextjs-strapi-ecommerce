@@ -41,6 +41,6 @@ export const setDelegateTokenAction = async (): Promise<void> => {
     }
   } catch (error) {
     console.error('Error creating delegate access token:', JSON.stringify(error, undefined, 2));
-    return;
+    
   }
 };

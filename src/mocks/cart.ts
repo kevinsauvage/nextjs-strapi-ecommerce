@@ -1,4 +1,4 @@
-import { CartFieldsFragment, CurrencyCode } from '@/shopify/storefront';
+import { type CartFieldsFragment, CurrencyCode } from '@/shopify/storefront';
 
 const cartMock: CartFieldsFragment = {
   __typename: 'Cart',

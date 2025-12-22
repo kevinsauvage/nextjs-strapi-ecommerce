@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { handleUserErrors } from '@/helpers/shopify';
 import { getCartId, revalidateCart } from '@/lib/cart-helpers';

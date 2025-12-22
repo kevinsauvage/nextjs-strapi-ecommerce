@@ -28,9 +28,13 @@ const HeightAnimation = ({
   useEffect(() => {
     if (!animationType) {
       if (isOpen && maxHeight !== undefined) {
-        setActualHeight(maxHeight);
+        setTimeout(() => {
+          setActualHeight(maxHeight);
+        }, 0);
       } else {
-        setActualHeight(initialHeight);
+        setTimeout(() => {
+          setActualHeight(initialHeight);
+        }, 0);
       }
     }
   }, [animationType, initialHeight, isOpen, maxHeight]);
@@ -42,7 +46,9 @@ const HeightAnimation = ({
   }
   useEffect(() => {
     // Calculate initial height
-    calculateHeight();
+    setTimeout(() => {
+      calculateHeight();
+    }, 0);
 
     let resizeObserver = {} as ResizeObserver;
     if (referenceChildren.current) {

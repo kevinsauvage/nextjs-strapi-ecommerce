@@ -1,14 +1,14 @@
 'use client';
 
-import { X } from 'lucide-react';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
+import { X } from 'lucide-react';
+
 const DiscountCodes = () => {
   const { cart, updateDiscountCodes } = useCartContext();
-  const discountCodes = cart.discountCodes;
+  const {discountCodes} = cart;
 
   const handleRemoveCode = async (code: string) => {
     const newCoupons = discountCodes

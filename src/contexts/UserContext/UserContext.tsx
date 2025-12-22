@@ -1,12 +1,13 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
 import { createContext, useCallback, useMemo } from 'react';
-import { toast } from 'sonner';
+import { usePathname, useRouter } from 'next/navigation';
 
 import config from '@/config';
 import { addToWishlist, removeFromWishlist } from '@/lib/wishlist-client';
 import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
+
+import { toast } from 'sonner';
 
 export const UserContext = createContext({
   handleSetWishlist: async (_isWishlisted: boolean, _product: ProductFieldsFragment) => {

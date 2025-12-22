@@ -2,11 +2,12 @@
 
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { z } from 'zod';
 
 import config from '@/config';
 import { storefrontSdk } from '@/shopify';
 import { getShopifyToken } from '@/utils/shopify';
+
+import { z } from 'zod';
 
 const defaultErrorMessage = 'Something went wrong';
 const unauthenticatedErrorMessage = 'User not authenticated';

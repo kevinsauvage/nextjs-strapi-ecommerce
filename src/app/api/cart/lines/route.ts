@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 import { handleUserErrors } from '@/helpers/shopify';
 import { getCartId, revalidateCart } from '@/lib/cart-helpers';
@@ -29,7 +29,7 @@ export async function PATCH(request: NextRequest) {
       operation?: 'update' | 'add';
     };
 
-    const searchParams = request.nextUrl.searchParams;
+    const {searchParams} = request.nextUrl;
     const first = searchParams.get('first')
       ? Number.parseInt(searchParams.get('first')!, 10)
       : DEFAULT_PAGINATION.first;
@@ -117,7 +117,7 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const searchParams = request.nextUrl.searchParams;
+    const {searchParams} = request.nextUrl;
     const lineItemId = searchParams.get('lineItemId');
 
     if (!lineItemId) {

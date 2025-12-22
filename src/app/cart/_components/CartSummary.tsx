@@ -14,7 +14,7 @@ const CartSummary = () => {
   const tax = Number.parseFloat(cart.cost.totalTaxAmount?.amount ?? '0');
   const discount = subtotal - total + tax;
   const hasDiscount = discount > 0;
-  const currencyCode = cart.cost.subtotalAmount.currencyCode;
+  const {currencyCode} = cart.cost.subtotalAmount;
 
   return (
     <Card className="lg:sticky lg:top-4">
