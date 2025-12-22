@@ -4,7 +4,10 @@ import Link from 'next/link';
 
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
+import { getCart } from '@/lib/cart';
+import { getCartId } from '@/lib/cart-helpers';
 
+import CartEmptyState from './_components/CartEmptyState';
 import CartHeader from './_components/CartHeader';
 import CartItemsList from './_components/CartItemsList';
 import CartPromoCode from './_components/CartPromoCode';
@@ -17,32 +20,42 @@ export const metadata: Metadata = {
   title: seo.cart.title,
 };
 
-const CartPage = () => {
+const CartPage = async () => {
+  const cartId = await getCartId();
+  const cart = cartId ? await getCart(cartId) : null;
+  const isEmpty = !cart?.lines?.edges || cart.lines.edges.length === 0;
+
   return (
     <div className="pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <PageBanner title="Your Cart" className="w-full pb-6">
-        <div className="flex items-center justify-between gap-4 w-full flex-wrap">
-          <Link
-            href="/"
-            className="group flex items-center text-body-sm text-secondary hover:text-primary transition-colors"
-          >
-            <ChevronLeft className="h-4 w-4 mr-1 text-secondary group-hover:text-primary transition-colors" />
-            Continue Shopping
-          </Link>
-          <CartHeader />
-        </div>
+        {!isEmpty && (
+          <div className="flex items-center justify-between gap-4 w-full flex-wrap">
+            <Link
+              href="/collections"
+              className="group flex items-center text-body-sm text-secondary hover:text-primary transition-colors"
+            >
+              <ChevronLeft className="h-4 w-4 mr-1 text-secondary group-hover:text-primary transition-colors" />
+              Continue Shopping
+            </Link>
+            <CartHeader />
+          </div>
+        )}
       </PageBanner>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <div className="lg:col-span-2">
-          <CartItemsList />
-        </div>
+      {isEmpty ? (
+        <CartEmptyState />
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          <div className="lg:col-span-2">
+            <CartItemsList />
+          </div>
 
-        <div className="lg:col-span-1 space-y-6">
-          <CartSummary />
-          <CartPromoCode />
+          <div className="lg:col-span-1 space-y-6">
+            <CartSummary />
+            <CartPromoCode />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

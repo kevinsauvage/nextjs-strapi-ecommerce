@@ -13,7 +13,7 @@ const Loading = () => {
       <PageBanner title="Your Cart" className="w-full pb-4">
         <div className="flex items-center justify-between gap-2 w-full">
           <Link
-            href="/"
+            href="/collections"
             className="group flex items-center text-body-sm text-secondary hover:text-primary"
           >
             <ChevronLeft className="h-4 w-4 mr-1 text-secondary group-hover:text-primary transition-colors" />
