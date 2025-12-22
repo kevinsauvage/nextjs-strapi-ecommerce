@@ -9,7 +9,7 @@ import { formatPrice } from '@/utils/format';
 import { ArrowRight, Package } from 'lucide-react';
 
 type RecentOrdersPreviewProps = {
-  orders: GetCustomerOrdersQuery['customer']['orders']['edges'];
+  orders: NonNullable<GetCustomerOrdersQuery['customer']>['orders']['edges'];
 };
 
 const RecentOrdersPreview = ({ orders }: RecentOrdersPreviewProps) => {
