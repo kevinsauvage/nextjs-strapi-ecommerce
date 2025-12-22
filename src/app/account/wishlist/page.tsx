@@ -51,10 +51,10 @@ const Wishlist = async () => {
   return (
     <Card>
       <CardHeaderPattern
-        title="Wishlist"
+        title={`Wishlist (${userWishlist.length})`}
         size={3}
         actions={<BackButton />}
-        description="Save and manage your favorite items."
+        description={`You have ${userWishlist.length} ${userWishlist.length === 1 ? 'item' : 'items'} saved in your wishlist.`}
       />
       <CardContent>
         <ProductsList loading={false} layout="grid" products={userWishlist} />

@@ -74,46 +74,61 @@ const Address = ({
   };
 
   return (
-    <Card className="overflow-hidden">
-      <CardContent className="px-4 flex justify-between gap-4">
-        <div className="space-y-1">
-          <p className="text-body font-medium">{name}</p>
-          <p className="text-body-sm text-secondary">
-            {address1}
-            {address2 && `, ${address2}`}
-          </p>
-          <p className="text-body-sm text-secondary">
-            {zip}, {city}
-          </p>
-          <p className="text-body-sm text-secondary">
-            {province}, {country}
-          </p>
+    <Card className="overflow-hidden transition-all hover:shadow-md">
+      <CardContent className="px-4 md:px-6 py-4 md:py-6 flex justify-between gap-4">
+        <div className="space-y-2 flex-1">
+          <div className="flex items-center gap-2">
+            <p className="text-body font-semibold">{name}</p>
+            {isDefault && (
+              <Badge variant="default" className="text-caption-sm">
+                Default
+              </Badge>
+            )}
+          </div>
+          <div className="space-y-1 text-body-sm text-secondary">
+            <p>
+              {address1}
+              {address2 && `, ${address2}`}
+            </p>
+            <p>
+              {city}, {province} {zip}
+            </p>
+            <p>{country}</p>
+          </div>
           {(company || phone) && (
-            <div className="pt-1">
-              {company && <p className="text-body-sm">{company}</p>}
-              {phone && <p className="text-body-sm">{phone}</p>}
+            <div className="pt-2 space-y-1 border-t">
+              {company && (
+                <p className="text-body-sm text-secondary">
+                  <span className="font-medium">Company:</span> {company}
+                </p>
+              )}
+              {phone && (
+                <p className="text-body-sm text-secondary">
+                  <span className="font-medium">Phone:</span> {phone}
+                </p>
+              )}
             </div>
           )}
         </div>
 
-        <div className="flex flex-col items-end justify-between gap-2">
+        <div className="flex flex-col items-end justify-start gap-2 shrink-0">
           {displayButton && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex size-8 text-secondary data-[state=open]:bg-muted"
+                  className="flex size-9 text-secondary data-[state=open]:bg-muted hover:bg-muted"
                   size="icon"
                 >
-                  <MoreVerticalIcon />
+                  <MoreVerticalIcon size={18} />
                   <span className="sr-only">Open menu</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="">
-                <DropdownMenuItem>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem asChild>
                   <Link
                     href={`${config.routes.editAddress}?id=${id}`}
-                    className="flex items-center gap-2"
+                    className="flex items-center gap-2 cursor-pointer"
                   >
                     <Edit size={16} />
                     <span>Edit address</span>
@@ -134,7 +149,7 @@ const Address = ({
                 )}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="cursor-pointer"
+                  className="cursor-pointer text-destructive focus:text-destructive"
                   onClick={() => {
                     handleDelete().catch((error) => {
                       console.error('Error deleting address:', error);
@@ -146,12 +161,6 @@ const Address = ({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          )}
-
-          {isDefault && (
-            <Badge variant="outline" className="text-caption-sm">
-              Default address
-            </Badge>
           )}
         </div>
       </CardContent>

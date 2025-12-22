@@ -1,30 +1,85 @@
 import type { Metadata } from 'next';
 
+import AccountStats from '@/app/account/_components/AccountStats';
 import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Card, CardContent } from '@/components/ui/card';
 import seo from '@/data/seo';
+import { getWishlist } from '@/lib/wishlist';
+import { storefrontSdk } from '@/shopify/index';
+import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
+import { getShopifyToken } from '@/utils/shopify';
+import { getUser } from '@/utils/users';
 
 import BackButton from '../_components/BackButton';
 import UpdateUserForm from './_components/UpdateUserForm';
+
+export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   description: seo.account.update.description,
   title: seo.account.update.title,
 };
 
-const Page = () => {
+const Page = async () => {
+  const shopifyToken = await getShopifyToken();
+  const user = await getUser();
+
+  // Fetch stats in parallel
+  const [ordersResponse, addressesResponse, wishlist] = await Promise.all([
+    shopifyToken
+      ? storefrontSdk().getCustomerOrders({
+          customerAccessToken: shopifyToken,
+          first: 1,
+          identifiers: [],
+          language: LanguageCode.En,
+          sortKey: OrderSortKeys.ProcessedAt,
+        })
+      : Promise.resolve(null),
+    shopifyToken
+      ? storefrontSdk().getCustomerAddresses({
+          customerAccessToken: shopifyToken,
+          first: 1,
+        })
+      : Promise.resolve(null),
+    getWishlist(),
+  ]);
+
+  const ordersCount = Number(ordersResponse?.customer?.orders?.totalCount || 0);
+  const addressesCount = addressesResponse?.customer?.addresses?.edges?.length || 0;
+  const wishlistCount = wishlist?.length || 0;
+
   return (
-    <Card>
-      <CardHeaderPattern
-        title="Update Account"
-        size={3}
-        actions={<BackButton />}
-        description="Update your account information and preferences."
-      />
-      <CardContent>
-        <UpdateUserForm />
-      </CardContent>
-    </Card>
+    <div className="space-y-6">
+      <Card>
+        <CardHeaderPattern
+          title="Update Account"
+          size={3}
+          actions={<BackButton />}
+          description="Update your account information and preferences."
+        />
+        <CardContent className="space-y-6">
+          <UpdateUserForm />
+        </CardContent>
+      </Card>
+
+      {user && (
+        <Card>
+          <CardHeaderPattern
+            title="Account Statistics"
+            size={4}
+            description="Overview of your account activity"
+          />
+          <CardContent>
+            <AccountStats
+              ordersCount={ordersCount}
+              addressesCount={addressesCount}
+              wishlistCount={wishlistCount}
+              memberSince={user.createdAt}
+            />
+          </CardContent>
+        </Card>
+      )}
+    </div>
   );
 };
 

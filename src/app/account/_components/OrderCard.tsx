@@ -1,11 +1,12 @@
 /* eslint-disable unicorn/consistent-destructuring */
 'use client';
 
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, Package } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { DEFAULTS } from '@/config/constants';
@@ -24,6 +25,24 @@ function formatStatus(status?: OrderFulfillmentStatus | OrderFinancialStatus | n
         .replace(/\b\w/g, (match) => match.toUpperCase())
     : DEFAULTS.na;
 }
+
+const getStatusBadgeVariant = (
+  status?: OrderFulfillmentStatus | OrderFinancialStatus | null,
+): 'default' | 'secondary' | 'outline' => {
+  if (!status) return 'outline';
+
+  const statusLower = status.toLowerCase();
+
+  if (statusLower.includes('fulfilled') || statusLower.includes('paid')) {
+    return 'default';
+  }
+
+  if (statusLower.includes('pending') || statusLower.includes('unfulfilled')) {
+    return 'secondary';
+  }
+
+  return 'outline';
+};
 
 const getDate = (timestamp: string | number | Date | undefined | null = new Date()) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -59,25 +78,130 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
 
   const [open, setOpen] = useState(false);
 
+  // Get order items from fulfillments
+  const orderItems =
+    successfulFulfillments
+      ?.flatMap((fulfillment) =>
+        fulfillment.fulfillmentLineItems?.edges?.map((edge) => edge.node.lineItem),
+      )
+      .filter(Boolean) || [];
+
+  const itemsCount = orderItems.reduce((sum, item) => sum + (item?.quantity || 0), 0);
+
   return (
     <li className="list-none">
       <Collapsible open={open} onOpenChange={setOpen}>
-        <Card className="w-full">
-          <CardHeader className="flex flex-row items-center justify-between p-4 cursor-pointer">
+        <Card className="w-full transition-all hover:shadow-md">
+          <CardHeader className="flex flex-row items-center justify-between p-4 md:p-6">
             <CollapsibleTrigger asChild>
-              <button className="group flex items-center justify-between gap-2 w-full">
-                <h5 className="text-heading-4">Order {order.name}</h5>
+              <button className="group flex items-center justify-between gap-4 w-full text-left">
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <h5 className="text-heading-4">Order {order.name}</h5>
+                    {fulfillmentStatus && (
+                      <Badge variant={getStatusBadgeVariant(fulfillmentStatus)}>
+                        {formatStatus(fulfillmentStatus)}
+                      </Badge>
+                    )}
+                    {financialStatus && (
+                      <Badge variant={getStatusBadgeVariant(financialStatus)}>
+                        {formatStatus(financialStatus)}
+                      </Badge>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-4 flex-wrap text-body-sm text-secondary">
+                    {typeof order.processedAt === 'string' && (
+                      <span>{getDate(order.processedAt)}</span>
+                    )}
+                    {totalPrice && (
+                      <span className="font-medium text-foreground">
+                        {formatPrice(totalPrice.amount, totalPrice.currencyCode)}
+                      </span>
+                    )}
+                    {itemsCount > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Package size={14} />
+                        {itemsCount} {itemsCount === 1 ? 'item' : 'items'}
+                      </span>
+                    )}
+                  </div>
+                </div>
                 {open ? (
-                  <ChevronUp className="w-4 h-4 text-secondary group-hover:text-primary transition-colors" />
+                  <ChevronUp className="w-5 h-5 text-secondary group-hover:text-primary transition-colors shrink-0" />
                 ) : (
-                  <ChevronDown className="w-4 h-4 text-secondary group-hover:text-primary transition-colors" />
+                  <ChevronDown className="w-5 h-5 text-secondary group-hover:text-primary transition-colors shrink-0" />
                 )}
               </button>
             </CollapsibleTrigger>
           </CardHeader>
 
           <CollapsibleContent>
-            <CardContent className="space-y-8">
+            <CardContent className="space-y-6 px-4 md:px-6 pb-4 md:pb-6">
+              {orderItems.length > 0 && (
+                <div className="space-y-3 pb-4 border-b">
+                  <h6 className="text-heading-4">Order Items</h6>
+                  <div className="space-y-2">
+                    {orderItems.slice(0, 3).map((item, index) => {
+                      if (!item) return null;
+                      const product = item.variant?.product;
+                      const productHandle = product?.handle;
+                      const collectionHandle = product?.collections?.nodes?.[0]?.handle;
+
+                      return (
+                        <div
+                          key={index}
+                          className="flex items-center justify-between gap-4 py-2 text-body-sm"
+                        >
+                          <div className="flex items-center gap-3 flex-1">
+                            {item.variant?.image && (
+                              <div className="relative w-12 h-12 rounded overflow-hidden bg-muted shrink-0">
+                                <img
+                                  src={item.variant.image.small || item.variant.image.url}
+                                  alt={item.variant.image.altText || item.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            )}
+                            <div className="flex-1 min-w-0">
+                              {productHandle && collectionHandle ? (
+                                <Link
+                                  href={`/collections/${collectionHandle}/products/${productHandle}`}
+                                  className="font-medium hover:underline line-clamp-1"
+                                >
+                                  {item.title}
+                                </Link>
+                              ) : (
+                                <p className="font-medium line-clamp-1">{item.title}</p>
+                              )}
+                              {item.variant?.title && item.variant.title !== 'Default Title' && (
+                                <p className="text-secondary text-caption-sm">
+                                  {item.variant.title}
+                                </p>
+                              )}
+                              <p className="text-secondary">Qty: {item.quantity}</p>
+                            </div>
+                          </div>
+                          {item.discountedTotalPrice && (
+                            <div className="text-body font-medium shrink-0">
+                              {formatPrice(
+                                item.discountedTotalPrice.amount,
+                                item.discountedTotalPrice.currencyCode,
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                    {orderItems.length > 3 && (
+                      <p className="text-body-sm text-secondary pt-2">
+                        +{orderItems.length - 3} more{' '}
+                        {orderItems.length - 3 === 1 ? 'item' : 'items'}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
+
               <div className="space-y-1">
                 <h6 className="text-heading-4">Order Details</h6>
 

@@ -8,7 +8,7 @@ import AccountNavigationSheet from './_components/AccountNavigationSheet';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="max-w-5xl py-8 md:py-12 mx-auto">
+    <div className="max-w-7xl py-8 md:py-12 mx-auto">
       <PageBanner
         title="Account"
         description="Welcome to your account dashboard. Here you can view and update your personal information, manage your orders, addresses, and preferences, as well as access all your account-related settings and features."
