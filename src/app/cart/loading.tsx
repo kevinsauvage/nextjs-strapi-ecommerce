@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import CardHeaderPattern from '@/components/CardHeaderPattern';
 import PageBanner from '@/components/PageBanner';
+import ProductCardSkeleton from '@/components/ProductCardSkeleton';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -36,14 +37,7 @@ const Loading = () => {
                   <div key={index}>
                     <div className="relative flex flex-col gap-2 md:flex-row md:items-center">
                       <div className="flex gap-4 basis-1/2">
-                        <div className="shrink-0">
-                          <Skeleton className="w-20 h-20 rounded-md" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <Skeleton className="h-5 w-32 mb-2" />
-                          <Skeleton className="h-4 w-24 mb-1" />
-                          <Skeleton className="h-4 w-20" />
-                        </div>
+                        <ProductCardSkeleton variant="row" />
                       </div>
                       <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
                         <Skeleton className="h-10 w-24" />

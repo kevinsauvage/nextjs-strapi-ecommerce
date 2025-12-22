@@ -4793,7 +4793,10 @@ export type MediaPresentation = Node & {
   __typename?: 'MediaPresentation';
   /** A JSON object representing a presentation view. */
   asJson?: Maybe<Scalars['JSON']['output']>;
-  /** A globally-unique ID. */
+  /**
+   * A globally-unique ID.
+   * @deprecated MediaPresentation IDs are being deprecated. Access the data directly via the asJson field on the Media type.
+   */
   id: Scalars['ID']['output'];
 };
 
@@ -5103,7 +5106,7 @@ export type Metaobject = Node &
      *
      */
     seo?: Maybe<MetaobjectSeo>;
-    /** The type of the metaobject. Defines the namespace of its associated metafields. */
+    /** The type of the metaobject. */
     type: Scalars['String']['output'];
     /** The date and time when the metaobject was last updated. */
     updatedAt: Scalars['DateTime']['output'];
@@ -8436,7 +8439,7 @@ export type SitemapResourceMetaobject = SitemapResourceInterface & {
   handle: Scalars['String']['output'];
   /** The URL handle for accessing pages of this metaobject type in the Online Store. */
   onlineStoreUrlHandle?: Maybe<Scalars['String']['output']>;
-  /** The type of the metaobject. Defines the namespace of its associated metafields. */
+  /** The type of the metaobject. */
   type: Scalars['String']['output'];
   /** The date and time when the resource was updated. */
   updatedAt: Scalars['DateTime']['output'];

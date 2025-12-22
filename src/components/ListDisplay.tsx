@@ -1,4 +1,4 @@
-import ProductCardSkeleton from './ProductCartSkeleton';
+import ProductCardSkeleton from './ProductCardSkeleton';
 
 const ListDisplay = ({
   children,
