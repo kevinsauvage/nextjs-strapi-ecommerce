@@ -136,6 +136,13 @@ const AddressFormUI = ({
 
   return (
     <form action={actionState} className="space-y-6">
+      {(states.error || states.customerUserErrors?.length) && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {states.error ||
+            states.customerUserErrors?.[0]?.message ||
+            'An error occurred. Please try again.'}
+        </div>
+      )}
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">

@@ -70,6 +70,11 @@ const LoginForm = () => {
 
   return (
     <Form action={action} className="space-y-5">
+      {(states.error || states.customerUserErrors?.length) && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {states.error || states.customerUserErrors?.[0]?.message || userFeedback.login.error}
+        </div>
+      )}
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input

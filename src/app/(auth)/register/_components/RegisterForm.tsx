@@ -64,6 +64,7 @@ const RegisterForm = () => {
       username?: string | string[];
       company?: string | string[];
       customerUserErrors?: CustomerUserError[];
+      userErrors?: Array<{ message: string }>;
     },
     FormData
   >(handleSubmit, initialStates);
@@ -81,6 +82,14 @@ const RegisterForm = () => {
 
   return (
     <Form action={action} autoComplete="off" className="space-y-5">
+      {(states.error || states.customerUserErrors?.length || states.userErrors?.length) && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {states.error ||
+            states.customerUserErrors?.[0]?.message ||
+            states.userErrors?.[0]?.message ||
+            userFeedback.register.error}
+        </div>
+      )}
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input
