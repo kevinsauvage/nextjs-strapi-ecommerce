@@ -287,6 +287,7 @@ fragment ProductFields on Product {
   }
   totalInventory
   vendor
+  updatedAt
   collections(first: 1) {
     edges {
       node {
@@ -311,6 +312,7 @@ fragment CollectionFields on Collection {
   description
   title
   id
+  updatedAt
   image {
     ...ImageFields
   }

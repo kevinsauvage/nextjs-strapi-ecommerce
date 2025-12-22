@@ -11546,6 +11546,7 @@ export type CollectionQuery = {
     description: string;
     title: string;
     id: string;
+    updatedAt: string;
     products: {
       __typename?: 'ProductConnection';
       edges: Array<{
@@ -11562,6 +11563,7 @@ export type CollectionQuery = {
           tags: Array<string>;
           totalInventory?: number | null;
           vendor: string;
+          updatedAt: string;
           featuredImage?: {
             __typename?: 'Image';
             url: string;
@@ -11833,6 +11835,7 @@ export type CollectionsQuery = {
         description: string;
         title: string;
         id: string;
+        updatedAt: string;
         products: {
           __typename?: 'ProductConnection';
           edges: Array<{
@@ -11849,6 +11852,7 @@ export type CollectionsQuery = {
               tags: Array<string>;
               totalInventory?: number | null;
               vendor: string;
+              updatedAt: string;
               featuredImage?: {
                 __typename?: 'Image';
                 url: string;
@@ -13705,6 +13709,7 @@ export type ProductFieldsFragment = {
   tags: Array<string>;
   totalInventory?: number | null;
   vendor: string;
+  updatedAt: string;
   featuredImage?: {
     __typename?: 'Image';
     url: string;
@@ -13850,6 +13855,7 @@ export type CollectionFieldsFragment = {
   description: string;
   title: string;
   id: string;
+  updatedAt: string;
   image?: {
     __typename?: 'Image';
     url: string;
@@ -14251,6 +14257,7 @@ export type GetProductByHandleQuery = {
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
+    updatedAt: string;
     featuredImage?: {
       __typename?: 'Image';
       url: string;
@@ -14426,6 +14433,7 @@ export type ProductRecommendationsQuery = {
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
+    updatedAt: string;
     featuredImage?: {
       __typename?: 'Image';
       url: string;
@@ -14602,6 +14610,7 @@ export type GetProductsQuery = {
         tags: Array<string>;
         totalInventory?: number | null;
         vendor: string;
+        updatedAt: string;
         featuredImage?: {
           __typename?: 'Image';
           url: string;
@@ -14770,6 +14779,7 @@ export type GetProductWithVariantQuery = {
     tags: Array<string>;
     totalInventory?: number | null;
     vendor: string;
+    updatedAt: string;
     selectedOrFirstAvailableVariant?: {
       __typename?: 'ProductVariant';
       id: string;
@@ -14965,6 +14975,7 @@ export type PredictiveSearchQuery = {
       description: string;
       title: string;
       id: string;
+      updatedAt: string;
       image?: {
         __typename?: 'Image';
         url: string;
@@ -15028,6 +15039,7 @@ export type PredictiveSearchQuery = {
       tags: Array<string>;
       totalInventory?: number | null;
       vendor: string;
+      updatedAt: string;
       featuredImage?: {
         __typename?: 'Image';
         url: string;
@@ -15201,6 +15213,7 @@ export type SearchProductsQuery = {
             tags: Array<string>;
             totalInventory?: number | null;
             vendor: string;
+            updatedAt: string;
             featuredImage?: {
               __typename?: 'Image';
               url: string;
@@ -16033,6 +16046,7 @@ export const ProductFieldsFragmentDoc = gql`
     }
     totalInventory
     vendor
+    updatedAt
     collections(first: 1) {
       edges {
         node {
@@ -16064,6 +16078,7 @@ export const CollectionFieldsFragmentDoc = gql`
     description
     title
     id
+    updatedAt
     image {
       ...ImageFields
     }
