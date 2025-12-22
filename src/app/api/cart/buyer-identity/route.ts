@@ -53,7 +53,16 @@ export async function PATCH(request: NextRequest) {
 
     const { cart, userErrors } = updateResponse?.cartBuyerIdentityUpdate || {};
 
-    handleUserErrors(userErrors);
+    const userErrorResult = handleUserErrors(userErrors);
+    if (userErrorResult) {
+      return NextResponse.json(
+        {
+          error: 'Failed to update cart buyer identity',
+          userErrors: userErrorResult.userErrors,
+        },
+        { status: 400 },
+      );
+    }
 
     if (cart) {
       revalidateCart();

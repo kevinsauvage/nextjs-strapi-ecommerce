@@ -11,13 +11,13 @@ import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
-const handleUserError = (userError: UserError[] | undefined) => {
-  if (!userError) return;
-  if (userError?.length) {
-    userError.forEach((error) => {
-      throw new Error(error.message);
-    });
+const handleUserError = (
+  userError: UserError[] | undefined,
+): { userErrors: UserError[] } | null => {
+  if (!userError || !userError.length) {
+    return null;
   }
+  return { userErrors: userError };
 };
 
 const registerSchema = z
@@ -57,7 +57,11 @@ export async function registerAction(input: RegisterInput) {
     return { customerUserErrors };
   }
 
-  handleUserError(userErrors);
+  const userErrorResult = handleUserError(userErrors);
+  if (userErrorResult) {
+    // Return structured userErrors for consistent error handling
+    return { userErrors: userErrorResult.userErrors };
+  }
 
   const dataLogin = await storefrontSdk().customerAccessTokenCreate({
     input: { email, password },

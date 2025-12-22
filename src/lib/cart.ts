@@ -28,8 +28,14 @@ export async function createCart(): Promise<CartFieldsFragment> {
     console.warn('Cart creation warnings:', warnings);
   }
 
-  if (userErrors && Array.isArray(userErrors) && userErrors?.length) {
-    handleUserErrors(userErrors);
+  const userErrorResult = handleUserErrors(userErrors);
+  if (userErrorResult) {
+    console.error('Cart creation user errors:', userErrorResult.userErrors);
+    if (!cart?.id) {
+      throw new Error(
+        userErrorResult.userErrors[0]?.message || 'Failed to create cart due to validation errors',
+      );
+    }
   }
 
   if (!cart?.id) {

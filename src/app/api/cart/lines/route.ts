@@ -64,7 +64,16 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    handleUserErrors(userErrors);
+    const userErrorResult = handleUserErrors(userErrors);
+    if (userErrorResult) {
+      return NextResponse.json(
+        {
+          error: operation === 'add' ? 'Failed to add product' : 'Failed to update cart',
+          userErrors: userErrorResult.userErrors,
+        },
+        { status: 400 },
+      );
+    }
 
     if (cart) {
       revalidateCart();
@@ -131,7 +140,16 @@ export async function DELETE(request: NextRequest) {
 
     const { cart, userErrors } = removeLinesResponse?.cartLinesRemove || {};
 
-    handleUserErrors(userErrors);
+    const userErrorResult = handleUserErrors(userErrors);
+    if (userErrorResult) {
+      return NextResponse.json(
+        {
+          error: 'Failed to remove product',
+          userErrors: userErrorResult.userErrors,
+        },
+        { status: 400 },
+      );
+    }
 
     if (cart) {
       revalidateCart();

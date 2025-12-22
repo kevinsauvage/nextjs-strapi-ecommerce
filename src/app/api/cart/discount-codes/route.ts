@@ -30,7 +30,16 @@ export async function PATCH(request: NextRequest) {
     const { cart, userErrors, warnings } =
       updateDiscountCodesResponse?.cartDiscountCodesUpdate || {};
 
-    handleUserErrors(userErrors);
+    const userErrorResult = handleUserErrors(userErrors);
+    if (userErrorResult) {
+      return NextResponse.json(
+        {
+          error: 'Failed to update discount codes',
+          userErrors: userErrorResult.userErrors,
+        },
+        { status: 400 },
+      );
+    }
 
     if (warnings && Array.isArray(warnings) && warnings?.length) {
       console.warn('Discount code warnings:', warnings);
