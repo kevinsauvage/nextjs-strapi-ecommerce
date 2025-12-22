@@ -67,12 +67,15 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
         onChange={handleChange}
         value={formData.password}
         disabled={isPending}
+        error={states.password}
       />
       <p className="text-body-sm text-secondary">
         Use at least 8 characters. Consider mixing letters, numbers, and symbols.
       </p>
-      {states.password && (
-        <div className="text-destructive text-body-sm mt-2">{states.password}</div>
+      {states.error && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {typeof states.error === 'string' ? states.error : userFeedback.resetPassword.error}
+        </div>
       )}
       <ResetButton />
     </Form>

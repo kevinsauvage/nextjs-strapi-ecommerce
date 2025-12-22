@@ -4,6 +4,7 @@ import { useActionState, useEffect } from 'react';
 import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -149,10 +150,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.firstName}
                 disabled={isPending}
+                aria-invalid={!!states?.firstName?.length}
+                aria-describedby={states?.firstName?.length ? 'firstName-error' : undefined}
               />
-              {states?.firstName?.length && (
-                <p className="text-destructive text-body-sm">{states?.firstName}</p>
-              )}
+              <FormFieldError error={states?.firstName} fieldId="firstName" />
             </div>
 
             <div className="space-y-2">
@@ -165,10 +166,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.lastName}
                 disabled={isPending}
+                aria-invalid={!!states?.lastName?.length}
+                aria-describedby={states?.lastName?.length ? 'lastName-error' : undefined}
               />
-              {states?.lastName?.length && (
-                <p className="text-destructive text-body-sm">{states?.lastName}</p>
-              )}
+              <FormFieldError error={states?.lastName} fieldId="lastName" />
             </div>
 
             <div className="space-y-2">
@@ -180,10 +181,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.company}
                 disabled={isPending}
+                aria-invalid={!!states?.company?.length}
+                aria-describedby={states?.company?.length ? 'company-error' : undefined}
               />
-              {states?.company?.length && (
-                <p className="text-destructive text-body-sm">{states?.company}</p>
-              )}
+              <FormFieldError error={states?.company} fieldId="company" />
             </div>
 
             <div className="space-y-2">
@@ -195,10 +196,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.phone}
                 disabled={isPending}
+                aria-invalid={!!states?.phone?.length}
+                aria-describedby={states?.phone?.length ? 'phone-error' : undefined}
               />
-              {states?.phone?.length && (
-                <p className="text-destructive text-body-sm">{states?.phone}</p>
-              )}
+              <FormFieldError error={states?.phone} fieldId="phone" />
             </div>
           </div>
         </div>
@@ -215,10 +216,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.address1}
                 disabled={isPending}
+                aria-invalid={!!states?.address1?.length}
+                aria-describedby={states?.address1?.length ? 'address1-error' : undefined}
               />
-              {states?.address1?.length && (
-                <p className="text-destructive text-body-sm">{states?.address1}</p>
-              )}
+              <FormFieldError error={states?.address1} fieldId="address1" />
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="address2">Address 2</Label>
@@ -229,10 +230,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.address2}
                 disabled={isPending}
+                aria-invalid={!!states?.address2?.length}
+                aria-describedby={states?.address2?.length ? 'address2-error' : undefined}
               />
-              {states?.address2?.length && (
-                <p className="text-destructive text-body-sm">{states?.address2}</p>
-              )}
+              <FormFieldError error={states?.address2} fieldId="address2" />
             </div>
 
             <div className="space-y-2 w-full">
@@ -245,10 +246,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.city}
                 disabled={isPending}
+                aria-invalid={!!states?.city?.length}
+                aria-describedby={states?.city?.length ? 'city-error' : undefined}
               />
-              {states?.city?.length && (
-                <p className="text-destructive text-body-sm">{states?.city}</p>
-              )}
+              <FormFieldError error={states?.city} fieldId="city" />
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="province">Province</Label>
@@ -260,10 +261,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.province}
                 disabled={isPending}
+                aria-invalid={!!states?.province?.length}
+                aria-describedby={states?.province?.length ? 'province-error' : undefined}
               />
-              {states?.province?.length && (
-                <p className="text-destructive text-body-sm">{states?.province}</p>
-              )}
+              <FormFieldError error={states?.province} fieldId="province" />
             </div>
 
             <div className="space-y-2 w-full">
@@ -276,10 +277,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.country}
                 disabled={isPending}
+                aria-invalid={!!states?.country?.length}
+                aria-describedby={states?.country?.length ? 'country-error' : undefined}
               />
-              {states?.country?.length && (
-                <p className="text-destructive text-body-sm">{states?.country}</p>
-              )}
+              <FormFieldError error={states?.country} fieldId="country" />
             </div>
             <div className="space-y-2 w-full">
               <Label htmlFor="zip">Zip</Label>
@@ -291,10 +292,10 @@ const AddressFormUI = ({
                 type="text"
                 defaultValue={address?.zip}
                 disabled={isPending}
+                aria-invalid={!!states?.zip?.length}
+                aria-describedby={states?.zip?.length ? 'zip-error' : undefined}
               />
-              {states?.zip?.length && (
-                <p className="text-destructive text-body-sm">{states?.zip}</p>
-              )}
+              <FormFieldError error={states?.zip} fieldId="zip" />
             </div>
           </div>
         </div>

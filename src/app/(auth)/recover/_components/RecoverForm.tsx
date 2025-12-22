@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { recoverPasswordAction } from '@/actions/authActions';
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -56,6 +57,9 @@ const RecoverForm = () => {
     }
   }, [states]);
 
+  const emailError = states.email?.at(-1);
+  const hasEmailError = !!emailError;
+
   return (
     <Form action={action} className="space-y-5">
       <div className="space-y-2">
@@ -67,12 +71,19 @@ const RecoverForm = () => {
           placeholder="name@company.com"
           required={true}
           disabled={isPending}
+          aria-invalid={hasEmailError}
+          aria-describedby={hasEmailError ? 'email-error' : undefined}
         />
         <p className="text-body-sm text-secondary">
           We&apos;ll email you a secure link to reset your password.
         </p>
+        <FormFieldError error={states.email} fieldId="email" />
       </div>
-      {states.error && <div className="text-destructive text-body-sm mt-2">{states.error}</div>}
+      {states.error && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {states.error}
+        </div>
+      )}
       <SubmitButton />
     </Form>
   );

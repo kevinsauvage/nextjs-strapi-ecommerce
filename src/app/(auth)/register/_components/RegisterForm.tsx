@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { registerAction } from '@/actions/authActions';
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -92,10 +93,10 @@ const RegisterForm = () => {
           onChange={handleChange}
           value={formData.email}
           disabled={isPending}
+          aria-invalid={!!states.email?.at(-1)}
+          aria-describedby={states.email?.at(-1) ? 'email-error' : undefined}
         />
-        {states.email?.at(-1) && (
-          <p className="text-destructive text-body-sm mt-1">{states.email.at(-1)}</p>
-        )}
+        <FormFieldError error={states.email} fieldId="email" />
       </div>
       <div className="space-y-2">
         <PasswordField
@@ -108,10 +109,8 @@ const RegisterForm = () => {
           onChange={handleChange}
           value={formData.password}
           disabled={isPending}
+          error={states.password}
         />
-        {states.password?.at(-1) && (
-          <p className="text-destructive text-body-sm mt-1">{states.password.at(-1)}</p>
-        )}
       </div>
 
       <div className="space-y-2">
@@ -125,10 +124,8 @@ const RegisterForm = () => {
           onChange={handleChange}
           value={formData.passwordConfirm}
           disabled={isPending}
+          error={states.passwordConfirm}
         />
-        {states.passwordConfirm?.at(-1) && (
-          <p className="text-destructive text-body-sm mt-1">{states.passwordConfirm.at(-1)}</p>
-        )}
       </div>
 
       <div className="space-y-2">
@@ -142,10 +139,10 @@ const RegisterForm = () => {
           onChange={handleChange}
           value={formData.firstName}
           disabled={isPending}
+          aria-invalid={!!states.firstName?.at(-1)}
+          aria-describedby={states.firstName?.at(-1) ? 'firstName-error' : undefined}
         />
-        {states.firstName?.at(-1) && (
-          <p className="text-destructive text-body-sm mt-1">{states.firstName.at(-1)}</p>
-        )}
+        <FormFieldError error={states.firstName} fieldId="firstName" />
       </div>
 
       <div className="space-y-2">
@@ -159,10 +156,10 @@ const RegisterForm = () => {
           onChange={handleChange}
           value={formData.lastName}
           disabled={isPending}
+          aria-invalid={!!states.lastName?.at(-1)}
+          aria-describedby={states.lastName?.at(-1) ? 'lastName-error' : undefined}
         />
-        {states.lastName?.at(-1) && (
-          <p className="text-destructive text-body-sm mt-1">{states.lastName.at(-1)}</p>
-        )}
+        <FormFieldError error={states.lastName} fieldId="lastName" />
       </div>
       <SubmitButton />
     </Form>

@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { updateUserAction } from '@/actions/usersActions';
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -75,46 +76,60 @@ const UpdateUserForm = () => {
 
   return (
     <form action={action} className="space-y-8">
+      {states?.error && (
+        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
+          {states.error || userFeedback.login.error}
+        </div>
+      )}
       {user && (
         <>
           <input type="hidden" name="email" value={user.email ?? ''} />
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Label className="flex flex-col items-start">
-              <p>First Name</p>
+            <div className="space-y-2">
+              <Label htmlFor="firstName">First Name</Label>
               <Input
                 id="firstName"
                 type="text"
                 name="firstName"
                 defaultValue={user.firstName ?? ''}
                 disabled={isPending}
+                aria-invalid={!!states?.firstName?.length}
+                aria-describedby={states?.firstName?.length ? 'firstName-error' : undefined}
               />
-            </Label>
-            <Label className="flex flex-col items-start">
-              <p>Last Name</p>
+              <FormFieldError error={states?.firstName} fieldId="firstName" />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="lastName">Last Name</Label>
               <Input
                 id="lastName"
                 type="text"
                 name="lastName"
                 defaultValue={user.lastName ?? ''}
                 disabled={isPending}
+                aria-invalid={!!states?.lastName?.length}
+                aria-describedby={states?.lastName?.length ? 'lastName-error' : undefined}
               />
-            </Label>
+              <FormFieldError error={states?.lastName} fieldId="lastName" />
+            </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <Label className="flex flex-col items-start">
-              <p>Email</p>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
               <Input id="email" type="email" disabled defaultValue={user.email ?? ''} />
-            </Label>
-            <Label className="flex flex-col items-start">
-              <p>Phone</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="phone">Phone</Label>
               <Input
                 id="phone"
                 type="text"
                 name="phone"
                 defaultValue={user.phone ?? ''}
                 disabled={isPending}
+                aria-invalid={!!states?.phone?.length}
+                aria-describedby={states?.phone?.length ? 'phone-error' : undefined}
               />
-            </Label>
+              <FormFieldError error={states?.phone} fieldId="phone" />
+            </div>
           </div>
         </>
       )}

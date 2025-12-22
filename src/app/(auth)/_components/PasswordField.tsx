@@ -3,6 +3,7 @@
 import { Eye, EyeOff } from 'lucide-react';
 import { useId, useState } from 'react';
 
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,6 +20,7 @@ type PasswordFieldProps = {
   value?: string;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
+  error?: string | string[];
 };
 
 const PasswordField = ({
@@ -32,10 +34,13 @@ const PasswordField = ({
   value,
   onChange,
   className,
+  error,
 }: PasswordFieldProps) => {
   const autoId = useId();
   const inputId = id ?? autoId;
+  const errorId = `${inputId}-error`;
   const [visible, setVisible] = useState(false);
+  const hasError = !!error;
 
   return (
     <div className={cn('space-y-2', className)}>
@@ -52,6 +57,8 @@ const PasswordField = ({
           value={value}
           onChange={onChange}
           className="pr-10"
+          aria-invalid={hasError}
+          aria-describedby={hasError ? errorId : undefined}
         />
         <Button
           type="button"
@@ -64,6 +71,7 @@ const PasswordField = ({
           {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
         </Button>
       </div>
+      <FormFieldError error={error} fieldId={inputId} />
     </div>
   );
 };

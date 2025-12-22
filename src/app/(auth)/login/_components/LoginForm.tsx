@@ -6,6 +6,7 @@ import { useFormStatus } from 'react-dom';
 import { toast } from 'sonner';
 
 import { loginAction } from '@/actions/authActions';
+import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -64,6 +65,9 @@ const LoginForm = () => {
     }
   }, [states]);
 
+  const emailError = states.email?.at(-1);
+  const hasEmailError = !!emailError;
+
   return (
     <Form action={action} className="space-y-5">
       <div className="space-y-2">
@@ -76,7 +80,10 @@ const LoginForm = () => {
           required={true}
           autoComplete="username"
           disabled={isPending}
+          aria-invalid={hasEmailError}
+          aria-describedby={hasEmailError ? 'email-error' : undefined}
         />
+        <FormFieldError error={states.email} fieldId="email" />
       </div>
       <PasswordField
         id="password"
@@ -86,6 +93,7 @@ const LoginForm = () => {
         autoComplete="current-password"
         required={true}
         disabled={isPending}
+        error={states.password}
       />
       <LoginButton />
     </Form>
