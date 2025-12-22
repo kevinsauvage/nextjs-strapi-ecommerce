@@ -1,5 +1,20 @@
-const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <h2 className="text-heading-2 pb-8">{children}</h2>
-);
+import { cn } from '@/lib/utils';
+
+type SectionTitleProps = {
+  children: React.ReactNode;
+  className?: string;
+  as?: 'h1' | 'h2' | 'h3';
+};
+
+const SectionTitle = ({
+  children,
+  className,
+  as = 'h2',
+}: SectionTitleProps) => {
+  const HeadingTag = as;
+  return (
+    <HeadingTag className={cn('text-heading-2', className)}>{children}</HeadingTag>
+  );
+};
 
 export default SectionTitle;

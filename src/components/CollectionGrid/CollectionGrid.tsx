@@ -1,23 +1,24 @@
 import CollectionCard from '@/components/CollectionCard';
-import SectionTitle from '@/components/SectionTitle';
 import type { CollectionsQuery } from '@/shopify/storefront';
 
 const CollectionGrid = ({
   collections,
 }: {
   collections: CollectionsQuery['collections']['edges'];
-}) => (
-  <section className="mb-20">
-    <SectionTitle>Explore our collections</SectionTitle>
+}) => {
+  if (!Array.isArray(collections) || collections.length === 0) {
+    return null;
+  }
+
+  return (
     <ul className="collection-grid">
-      {Array.isArray(collections) &&
-        collections.map((collection, index) => (
-          <li key={collection.node.title + index} className="collection-grid-item">
-            <CollectionCard collection={collection.node} />
-          </li>
-        ))}
+      {collections.map((collection, index) => (
+        <li key={collection.node.id || collection.node.title + index} className="collection-grid-item">
+          <CollectionCard collection={collection.node} />
+        </li>
+      ))}
     </ul>
-  </section>
-);
+  );
+};
 
 export default CollectionGrid;
