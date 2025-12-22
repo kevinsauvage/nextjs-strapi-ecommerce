@@ -119,9 +119,9 @@ const Address = ({
                   variant="ghost"
                   className="flex size-9 text-secondary data-[state=open]:bg-muted hover:bg-muted"
                   size="icon"
+                  aria-label="Address actions menu"
                 >
                   <MoreVerticalIcon size={18} />
-                  <span className="sr-only">Open menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">

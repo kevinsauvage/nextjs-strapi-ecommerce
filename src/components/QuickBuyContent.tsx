@@ -116,6 +116,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   size="icon"
                   className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg hover:bg-background"
                   onClick={prevImage}
+                  aria-label="Previous image"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
@@ -124,6 +125,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg hover:bg-background"
                   onClick={nextImage}
+                  aria-label="Next image"
                 >
                   <ChevronRight className="h-5 w-5" />
                 </Button>
@@ -184,6 +186,8 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                     ? 'border-primary ring-2 ring-primary/20'
                     : 'border-transparent hover:border-muted-foreground/30',
                 )}
+                aria-label={`View product image ${index + 1} of ${productImages.length}`}
+                aria-current={index === currentImageIndex ? 'true' : 'false'}
               >
                 <Image
                   src={image.small || image.src || ''}
@@ -255,6 +259,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   className="h-10 w-10 rounded-r-none"
                   onClick={() => handleChangeInput(Math.max(1, quantity - 1))}
                   disabled={quantity <= 1}
+                  aria-label="Decrease quantity"
                 >
                   <Minus className="h-4 w-4" />
                 </Button>
@@ -265,6 +270,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   className="h-10 w-10 rounded-l-none"
                   onClick={() => handleChangeInput(quantity + 1)}
                   disabled={quantityAvailable ? quantity >= quantityAvailable : false}
+                  aria-label="Increase quantity"
                 >
                   <Plus className="h-4 w-4" />
                 </Button>
@@ -295,6 +301,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
             size="lg"
             className="h-12 w-12"
             onClick={() => handleWishlist().catch(console.error)}
+            aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
           >
             <Heart className={cn('h-5 w-5', isWishlisted && 'fill-current')} />
           </Button>

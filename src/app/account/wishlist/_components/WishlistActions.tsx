@@ -72,9 +72,9 @@ const WishlistActions = ({ product, onRemove }: WishlistActionsProps) => {
           variant="ghost"
           size="icon"
           className="absolute top-2 right-2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
+          aria-label="Wishlist actions"
         >
           <Heart size={18} className="fill-current" />
-          <span className="sr-only">Wishlist actions</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

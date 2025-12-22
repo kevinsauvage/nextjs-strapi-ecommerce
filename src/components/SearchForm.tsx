@@ -16,6 +16,7 @@ const SubmitButton = ({ ...properties }: React.ComponentProps<'button'>) => {
       type="submit"
       disabled={status.pending}
       className="group absolute right-3 top-1/2 -translate-y-1/2"
+      aria-label="Search"
       {...properties}
     >
       <Search className="text-secondary group-hover:text-primary transition-colors" />

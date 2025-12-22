@@ -45,6 +45,7 @@ const DiscountCodes = () => {
                       className="cursor-pointer"
                       size="icon"
                       variant="ghost"
+                      aria-label={`Remove discount code ${code.code}`}
                     >
                       <X size={14} />
                     </Button>
@@ -74,6 +75,7 @@ const DiscountCodes = () => {
                       className="cursor-pointer"
                       size="icon"
                       variant="ghost"
+                      aria-label={`Remove discount code ${code.code}`}
                     >
                       <X size={14} />
                     </Button>

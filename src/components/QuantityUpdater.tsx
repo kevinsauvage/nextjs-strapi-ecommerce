@@ -59,9 +59,9 @@ const QuantityUpdater = ({
           void removeOne();
         }}
         disabled={loading || disabled || originalQuantity <= 1}
+        aria-label="Decrease quantity"
       >
         {loading ? <SpinnerLoader size="sm" /> : <Minus className="h-3 w-3" />}
-        <span className="sr-only">Decrease quantity</span>
       </Button>
       <span className="w-8 text-center text-body-sm font-medium transition-all duration-200">
         {originalQuantity}
@@ -74,9 +74,9 @@ const QuantityUpdater = ({
           void addOne();
         }}
         disabled={loading || disabled || originalQuantity >= quantityAvailable}
+        aria-label="Increase quantity"
       >
         {loading ? <SpinnerLoader size="sm" /> : <Plus className="h-3 w-3" />}
-        <span className="sr-only">Increase quantity</span>
       </Button>
     </div>
   );
