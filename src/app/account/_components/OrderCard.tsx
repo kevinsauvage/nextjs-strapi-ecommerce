@@ -65,9 +65,13 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
         <Card className="w-full">
           <CardHeader className="flex flex-row items-center justify-between p-4 cursor-pointer">
             <CollapsibleTrigger asChild>
-              <button className="flex items-center justify-between gap-2 w-full">
+              <button className="group flex items-center justify-between gap-2 w-full">
                 <h5 className="text-heading-4">Order {order.name}</h5>
-                {open ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                {open ? (
+                  <ChevronUp className="w-4 h-4 text-secondary group-hover:text-primary transition-colors" />
+                ) : (
+                  <ChevronDown className="w-4 h-4 text-secondary group-hover:text-primary transition-colors" />
+                )}
               </button>
             </CollapsibleTrigger>
           </CardHeader>
@@ -133,7 +137,9 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                             {trackingCompany || DEFAULTS.carrier}
                             {successfulFulfillments.length > 1 ? ` (${index + 1})` : ''}
                           </span>
-                          <span className="text-body-sm font-medium">{trackingInfo.length} items</span>
+                          <span className="text-body-sm font-medium">
+                            {trackingInfo.length} items
+                          </span>
                         </div>
 
                         {trackingInfo.map((trackInfo) => (

@@ -24,9 +24,9 @@ const CartPage = () => {
         <div className="flex items-center justify-between gap-4 w-full flex-wrap">
           <Link
             href="/"
-            className="flex items-center text-body-sm text-secondary hover:text-primary transition-colors"
+            className="group flex items-center text-body-sm text-secondary hover:text-primary transition-colors"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="h-4 w-4 mr-1 text-secondary group-hover:text-primary transition-colors" />
             Continue Shopping
           </Link>
           <CartHeader />

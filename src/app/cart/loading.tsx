@@ -14,13 +14,13 @@ const Loading = () => {
         <div className="flex items-center justify-between gap-2 w-full">
           <Link
             href="/"
-            className="flex items-center text-body-sm text-secondary hover:text-primary"
+            className="group flex items-center text-body-sm text-secondary hover:text-primary"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="h-4 w-4 mr-1 text-secondary group-hover:text-primary transition-colors" />
             Continue Shopping
           </Link>
           <div className="flex items-center">
-            <ShoppingCart className="h-5 w-5 mr-2" />
+            <ShoppingCart className="h-5 w-5 mr-2 text-secondary" />
             <Skeleton className="h-5 w-16" />
           </div>
         </div>

@@ -24,7 +24,7 @@ const Crumbs = ({ title, href, last }: { title: string; href: string; last: bool
       >
         {decodeURIComponent(title)}
       </Link>
-      {!last && <ChevronRight size={16} className="text-secondary" />}
+      {!last && <ChevronRight size={16} className="text-secondary shrink-0" />}
     </>
   );
 };

@@ -48,19 +48,19 @@ const HamburgerMenu = ({
   };
 
   const userMenuItems = [
-    { icon: <Home />, id: uuid(), link: '/', text: 'Home' },
-    { icon: <Search />, id: uuid(), link: config.routes.search, text: 'Search' },
+    { icon: <Home className="text-secondary group-hover:text-primary transition-colors" />, id: uuid(), link: '/', text: 'Home' },
+    { icon: <Search className="text-secondary group-hover:text-primary transition-colors" />, id: uuid(), link: config.routes.search, text: 'Search' },
 
     {
-      icon: <User />,
+      icon: <User className="text-secondary group-hover:text-primary transition-colors" />,
       id: uuid(),
       link: shopifyToken ? config.routes.account : config.routes.login,
       text: shopifyToken ? 'Account' : 'Login',
     },
-    { icon: <Heart />, id: uuid(), link: config.routes.wishlist, text: 'Wishlist' },
-    { icon: <ShoppingBag />, id: uuid(), link: config.routes.cart, text: 'Cart' },
+    { icon: <Heart className="text-secondary group-hover:text-primary transition-colors" />, id: uuid(), link: config.routes.wishlist, text: 'Wishlist' },
+    { icon: <ShoppingBag className="text-secondary group-hover:text-primary transition-colors" />, id: uuid(), link: config.routes.cart, text: 'Cart' },
     shopifyToken && {
-      icon: <LogOut />,
+      icon: <LogOut className="text-secondary group-hover:text-primary transition-colors" />,
       id: uuid(),
       link: config.routes.logout,
       text: 'Logout',
@@ -99,7 +99,7 @@ const HamburgerMenu = ({
         >
           <span>{item.title}</span>
           {hasChildren && (
-            <span className="text-secondary">
+            <span className="text-secondary group-hover:text-primary transition-colors">
               {isExpanded ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
             </span>
           )}
@@ -139,7 +139,7 @@ const HamburgerMenu = ({
               <button
                 key={item.id}
                 className={cn(
-                  'flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-body-sm hover:bg-muted/50',
+                  'group flex w-full cursor-pointer items-center justify-between rounded-md px-4 py-2 text-body-sm hover:bg-muted/50',
                   pathname === item.link ? 'bg-muted text-foreground' : '',
                 )}
                 onClick={() => {

@@ -90,7 +90,7 @@ const Query = ({ query }: { query: { text: string } }) => {
         className="w-full justify-start rounded-none text-body font-medium"
         role="option"
       >
-        <Search className="mr-2 h-4 w-4 opacity-60" />
+        <Search className="mr-2 h-4 w-4 text-secondary" />
         {query.text}
       </Button>
     </Link>
