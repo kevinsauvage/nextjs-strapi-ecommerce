@@ -208,9 +208,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
           {/* Title & Price */}
           <div>
             {product.productType && (
-              <span className="text-label-sm text-secondary">
-                {product.productType}
-              </span>
+              <span className="text-label-sm text-secondary">{product.productType}</span>
             )}
             <h2 className="text-heading-4 mt-1">{product.title}</h2>
             <div className="flex items-baseline gap-2 mt-2">
