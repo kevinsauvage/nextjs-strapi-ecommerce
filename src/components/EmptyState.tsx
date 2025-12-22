@@ -73,11 +73,13 @@ const EmptyState = ({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
-        <h4 className="text-heading-3 mb-2">{title}</h4>
-        <p className="max-w-md text-center text-body-sm text-secondary mb-6">{subtitle}</p>
+        <h4 className="text-heading-3 mb-2 px-4">{title}</h4>
+        <p className="max-w-[36rem] mx-auto px-4 text-center text-body-sm md:text-body text-secondary mb-6">
+          {subtitle}
+        </p>
 
         {shouldShowTips && (
-          <div className="mb-6 max-w-md">
+          <div className="mb-6 max-w-[36rem] mx-auto px-4">
             <p className="text-label-sm text-secondary mb-3 font-medium">Helpful tips:</p>
             <ul className="space-y-2 text-left">
               {tips.map((tip, index) => (
@@ -98,12 +100,18 @@ const EmptyState = ({
 
         {(primaryAction || secondaryAction) && (
           <div
-            className={`flex flex-col items-center gap-3 transition-all duration-500 delay-500 ${
+            className={`flex flex-col sm:flex-row items-center justify-center gap-3 w-full sm:w-auto px-4 transition-all duration-500 delay-500 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
             }`}
           >
-            {primaryAction && <div>{primaryAction}</div>}
-            {secondaryAction && <div className="text-body-sm">{secondaryAction}</div>}
+            {primaryAction && (
+              <div className="w-full sm:w-auto [&>a]:w-full sm:[&>a]:w-auto [&>button]:w-full sm:[&>button]:w-auto">
+                {primaryAction}
+              </div>
+            )}
+            {secondaryAction && (
+              <div className="text-body-sm text-center w-full sm:w-auto">{secondaryAction}</div>
+            )}
           </div>
         )}
       </div>
