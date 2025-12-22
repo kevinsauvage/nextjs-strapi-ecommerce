@@ -66,20 +66,20 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
     if (images.length <= maxThumbnails) {
       return { range: images, startIndex: 0 };
     }
-    
+
     // Show thumbnails centered around the selected image when possible
     let start = selectedImageIndex - Math.floor(maxThumbnails / 2);
-    
+
     // Adjust if we're near the beginning
     if (start < 0) {
       start = 0;
     }
-    
+
     // Adjust if we're near the end
     if (start + maxThumbnails > images.length) {
       start = images.length - maxThumbnails;
     }
-    
+
     return {
       range: images.slice(start, start + maxThumbnails),
       startIndex: start,
@@ -108,7 +108,11 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
           <>
             <button
               type="button"
-              onClick={() => handleImageChange(selectedImageIndex > 0 ? selectedImageIndex - 1 : images.length - 1)}
+              onClick={() =>
+                handleImageChange(
+                  selectedImageIndex > 0 ? selectedImageIndex - 1 : images.length - 1,
+                )
+              }
               className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm rounded-full p-2 border border-border/50 hover:bg-background hover:border-border transition-all opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label="Previous image"
             >
@@ -126,7 +130,11 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
             </button>
             <button
               type="button"
-              onClick={() => handleImageChange(selectedImageIndex < images.length - 1 ? selectedImageIndex + 1 : 0)}
+              onClick={() =>
+                handleImageChange(
+                  selectedImageIndex < images.length - 1 ? selectedImageIndex + 1 : 0,
+                )
+              }
               className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-background/80 backdrop-blur-sm rounded-full p-2 border border-border/50 hover:bg-background hover:border-border transition-all opacity-0 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               aria-label="Next image"
             >
@@ -148,18 +156,20 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
         {/* Main Image */}
         <OptimizedImage
           key={`main-image-${selectedImageIndex}`}
-          src={selectedImage.large || selectedImage.src}
-          alt={selectedImage.altText || `Product image ${selectedImageIndex + 1} of ${images.length}`}
-          width={selectedImage.width || 1200}
-          height={selectedImage.height || 1200}
-          blurDataURL={selectedImage.blurDataURL}
+          src={selectedImage?.large || selectedImage?.src || ''}
+          alt={
+            selectedImage?.altText ?? `Product image ${selectedImageIndex + 1} of ${images.length}`
+          }
+          width={selectedImage?.width || 1200}
+          height={selectedImage?.height || 1200}
+          blurDataURL={selectedImage?.blurDataURL}
           priority={selectedImageIndex === 0}
           quality={90}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
           fill
           className={cn(
             'object-cover transition-all duration-300 group-hover:scale-105',
-            isTransitioning && 'opacity-70'
+            isTransitioning && 'opacity-70',
           )}
         />
       </div>
@@ -170,7 +180,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
           {thumbnailRange.map((image, localIndex) => {
             const globalIndex = thumbnailStartIndex + localIndex;
             const isSelected = globalIndex === selectedImageIndex;
-            
+
             return (
               <button
                 key={`thumbnail-${globalIndex}`}
@@ -203,7 +213,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
               </button>
             );
           })}
-          
+
           {/* Show indicator if there are more images beyond what's displayed */}
           {images.length > maxThumbnails && (
             <button

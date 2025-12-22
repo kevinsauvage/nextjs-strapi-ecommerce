@@ -74,4 +74,3 @@ const RecentOrdersPreview = ({ orders }: RecentOrdersPreviewProps) => {
 };
 
 export default RecentOrdersPreview;
-

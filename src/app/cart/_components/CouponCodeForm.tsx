@@ -69,7 +69,7 @@ const CouponCodeForm = () => {
             aria-invalid={hasError}
             aria-describedby={hasError ? 'couponCode-error' : undefined}
           />
-          <FormFieldError error={error} fieldId="couponCode" />
+          <FormFieldError error={error ?? undefined} fieldId="couponCode" />
         </div>
         <Button type="submit" loading={isLoading} className="shrink-0">
           Apply
