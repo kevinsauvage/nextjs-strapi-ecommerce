@@ -25,12 +25,12 @@ const AccountError = ({
         variant="error"
         altText="Account error illustration"
         image={NotFoundIllustration}
-        subtitle="We couldn't load your account information. Please try again or contact support if the problem persists."
+        subtitle="We couldn't load your account information. Please try again or contact support if the problem continues."
         title="Unable to load account"
         tips={[
           'Try refreshing the page',
           'Clear your browser cache',
-          'Contact support if the issue persists',
+          'Contact support if the problem continues',
         ]}
         primaryAction={
           <Button onClick={reset} variant="default">

@@ -18,7 +18,7 @@ const SubmitButton = () => {
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Register
+      Create account
     </Button>
   );
 };

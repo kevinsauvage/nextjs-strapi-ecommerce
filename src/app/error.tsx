@@ -19,8 +19,8 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
         variant="error"
         altText="Error illustration"
         image={NotFoundIllustration}
-        subtitle="Something went wrong. Please try again or contact support if the problem persists."
-        title="Oops! Something went wrong"
+        subtitle="We encountered an error. Please try again or contact support if the problem continues."
+        title="Something went wrong"
         tips={[
           'Try refreshing the page',
           'Clear your browser cache',

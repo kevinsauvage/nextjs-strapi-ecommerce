@@ -50,7 +50,7 @@ type AddressAction = (input: {
 const AddressFormUI = ({
   action,
   address,
-  buttonText = 'Create',
+  buttonText = 'Add address',
 }: {
   action: AddressAction;
   address?: {

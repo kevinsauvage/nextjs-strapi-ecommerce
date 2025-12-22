@@ -18,12 +18,12 @@ const CartError = ({ error, reset }: { error: Error & { digest?: string }; reset
         variant="error"
         altText="Cart error illustration"
         image={NotFoundIllustration}
-        subtitle="We couldn't load your cart. Please try again or contact support if the problem persists."
+        subtitle="We couldn't load your cart. Please try again or contact support if the problem continues."
         title="Unable to load cart"
         tips={[
           'Try refreshing the page',
           'Your cart items are saved',
-          'Contact support if the issue persists',
+          'Contact support if the problem continues',
         ]}
         primaryAction={
           <Button onClick={reset} variant="default">

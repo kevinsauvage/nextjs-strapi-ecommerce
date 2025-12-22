@@ -26,12 +26,12 @@ const GlobalError = ({
             variant="error"
             altText="Error illustration"
             image={NotFoundIllustration}
-            subtitle="A critical error occurred. Please try refreshing the page or contact support if the problem persists."
-            title="Critical Error"
+            subtitle="A critical error occurred. Please refresh the page or contact support if the problem continues."
+            title="Critical error"
             tips={[
               'Refresh the page',
               'Clear browser cache and cookies',
-              'Contact support if the issue persists',
+              'Contact support if the problem continues',
             ]}
             primaryAction={
               <Button onClick={reset} variant="default">

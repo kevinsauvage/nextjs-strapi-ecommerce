@@ -68,8 +68,8 @@ const Addresses = async ({
           <EmptyState
             variant="addresses"
             image={NoAddressIllustration}
-            title="No Address Yet"
-            subtitle="Add your shipping addresses to make checkout faster and easier. You can add multiple addresses and set a default."
+            title="No addresses saved"
+            subtitle="Add shipping addresses to speed up checkout. You can save multiple addresses and set a default for faster ordering."
             altText="No Address Yet"
             primaryAction={
               <Link href={config.routes.createAddress}>
@@ -105,7 +105,7 @@ const Addresses = async ({
             </Button>
           </div>
         }
-        description="Manage your addresses for a better shopping experience."
+        description="Manage your shipping addresses for faster checkout."
       />
       <CardContent>
         <div className="grid grid-cols-1 gap-4 mb-6">

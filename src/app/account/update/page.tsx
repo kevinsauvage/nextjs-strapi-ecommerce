@@ -19,7 +19,7 @@ const Page = () => {
         title="Update Account"
         size={3}
         actions={<BackButton />}
-        description="Update your account information and preferences. Ensure your details are up to date for a better experience."
+        description="Update your account information and preferences."
       />
       <CardContent>
         <UpdateUserForm />

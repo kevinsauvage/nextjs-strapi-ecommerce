@@ -15,7 +15,7 @@ const SubmitButton = () => {
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Contact Us
+      Send message
     </Button>
   );
 };
@@ -58,13 +58,13 @@ const ContactForm = () => {
     >
       <Label className="mb-2 flex flex-col items-start" htmlFor="email">
         Email address
-        <Input id="email" name="email" placeholder="Email" required={true} disabled={isPending} />
+        <Input id="email" name="email" placeholder="name@company.com" required={true} disabled={isPending} />
         {states.email && <span className="text-destructive text-body-sm">{states.email}</span>}
       </Label>
       <Label className="mb-2 flex flex-col items-start" htmlFor="name">
         Name
         <Input
-          placeholder="Name"
+          placeholder="Your name"
           name="name"
           id="name"
           required={true}
@@ -75,7 +75,7 @@ const ContactForm = () => {
       <Label className="mb-2 flex flex-col items-start" htmlFor="message">
         Message
         <Textarea
-          placeholder="Message"
+          placeholder="Your message"
           name="message"
           id="message"
           required={true}

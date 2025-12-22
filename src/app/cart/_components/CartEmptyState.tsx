@@ -16,7 +16,7 @@ const CartEmptyState = () => {
             height: 200,
           }}
           title="Your cart is empty"
-          subtitle="Looks like you haven't added anything to your cart yet. Start shopping to fill it up!"
+          subtitle="Add items to your cart to get started. Browse our collections to find products you'll love."
           altText="Empty shopping cart"
           primaryAction={
             <Link href="/">

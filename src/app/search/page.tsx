@@ -101,7 +101,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
           <EmptyState
             variant="search"
             title="No results found"
-            subtitle="We couldn't find any products matching your search. Try adjusting your search terms or browse our collections."
+            subtitle="We couldn't find any products matching your search. Try different keywords or browse our collections."
             altText="No search results"
             primaryAction={
               <Link href="/collections">

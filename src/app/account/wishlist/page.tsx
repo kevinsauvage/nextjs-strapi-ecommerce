@@ -30,7 +30,7 @@ const Wishlist = async () => {
             variant="wishlist"
             image={NoFavoriteIllustration}
             title="Your wishlist is empty"
-            subtitle="Start saving items you love! Click the heart icon on any product to add it to your wishlist."
+            subtitle="Save your favorite items for later. Click the heart icon on any product to add it to your wishlist."
             altText="Empty wishlist"
             primaryAction={
               <Link href="/">
@@ -54,7 +54,7 @@ const Wishlist = async () => {
         title="Wishlist"
         size={3}
         actions={<BackButton />}
-        description="Manage your wishlist for a better shopping experience."
+        description="Save and manage your favorite items."
       />
       <CardContent>
         <ProductsList loading={false} layout="grid" products={userWishlist} />

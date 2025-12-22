@@ -108,7 +108,7 @@ const CollectionSlugPage = async ({
       <div className="container mx-auto px-4 py-8">
         <EmptyState
           variant="default"
-          title="Collection Not Found"
+          title="Collection not found"
           subtitle="This collection doesn't exist or has been removed. Browse our other collections to find what you're looking for."
           altText="Collection Not Found"
           primaryAction={
@@ -163,7 +163,7 @@ const CollectionSlugPage = async ({
         <EmptyState
           variant="default"
           title="No products found"
-          subtitle="This collection doesn't have any products yet, or your filters are too specific. Try adjusting your filters or browse other collections."
+          subtitle="This collection is empty or your filters are too specific. Try adjusting your filters or browse other collections."
           altText="No products found"
           primaryAction={
             <Link href="/collections">

@@ -16,7 +16,7 @@ const SubmitButton = () => {
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Send mail
+      Send reset link
     </Button>
   );
 };

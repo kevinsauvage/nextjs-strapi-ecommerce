@@ -1,36 +1,36 @@
 export const userFeedback = {
   addLinesToCart: {
-    error: 'Something went wrong adding the item to the cart, please try again',
-    success: 'Item correctly added to the cart',
+    error: 'Unable to add item to cart. Please try again.',
+    success: 'Item added to cart',
   },
   login: {
-    error: 'There was an error trying to login',
-    success: 'You were successfully logged in',
+    error: 'Unable to sign in. Please check your credentials and try again.',
+    success: 'Signed in successfully',
   },
   logout: {
-    error: 'An error occurred while logging out',
-    success: 'You were successfully logged out',
+    error: 'Unable to sign out. Please try again.',
+    success: 'Signed out successfully',
   },
-  missingFields: 'Fill in missing required fields',
-  passwordDifferent: 'The password are different.',
-  passwordLength: 'Your password must be at least 8 characters',
+  missingFields: 'Please fill in all required fields',
+  passwordDifferent: 'Passwords do not match',
+  passwordLength: 'Password must be at least 8 characters',
   register: {
-    error: 'There was an error trying to register',
-    success: 'You were successfully registered',
+    error: 'Unable to create account. Please try again.',
+    success: 'Account created successfully',
   },
   removeLinesFromCart: {
-    error: 'Something went wrong removing the item from the cart, please try again',
-    success: 'Item correctly removed from the cart',
+    error: 'Unable to remove item from cart. Please try again.',
+    success: 'Item removed from cart',
   },
   resetPassword: {
-    error: 'There was an error trying to reset your password',
-    success: 'Your password was successfully reset, your are logged in',
+    error: 'Unable to reset password. Please try again.',
+    success: 'Password reset successfully. You are now signed in.',
   },
   sendRecoverEmail: {
-    success: 'Your email was successfully sent',
+    success: 'Password reset link sent to your email',
   },
   updateLines: {
-    error: 'Something went wrong updating the item in the cart, please try again',
-    success: 'Item correctly updated in the cart',
+    error: 'Unable to update item in cart. Please try again.',
+    success: 'Cart updated',
   },
 } as const;

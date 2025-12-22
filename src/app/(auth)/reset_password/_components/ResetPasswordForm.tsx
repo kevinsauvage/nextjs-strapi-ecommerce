@@ -19,7 +19,7 @@ const ResetButton = () => {
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Reset
+      Reset password
     </Button>
   );
 };

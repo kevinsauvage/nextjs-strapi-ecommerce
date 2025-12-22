@@ -17,7 +17,7 @@ const SubmitButton = () => {
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Update
+      Save changes
     </Button>
   );
 };
@@ -131,7 +131,7 @@ const UpdateUserForm = () => {
           id="acceptsMarketing"
           disabled={isPending}
         />
-        <p>Check this case to receive our last update</p>
+        <p>Subscribe to receive updates and special offers</p>
       </Label>
       <SubmitButton />
     </form>

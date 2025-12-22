@@ -9,7 +9,7 @@ const seo = {
       'On the user account page, manage your personal information, update your password and view your account activity all in one place.',
 
     logout: {
-      title: 'Login out',
+      title: 'Sign out',
     },
     orders: {
       description:
@@ -84,7 +84,7 @@ const seo = {
   },
   reset: {
     description:
-      'Reset your password quickly and easily with our secure reset password page. Enter your new pawword and follow the instructions to create a new password.',
+      'Reset your password quickly and securely. Enter your new password and follow the instructions to complete the reset process.',
     title: 'Reset Password',
   },
   search: {

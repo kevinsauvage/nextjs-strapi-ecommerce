@@ -20,7 +20,7 @@ const CartPromoCode = () => {
             Promo Code
           </span>
         }
-        description="Enter your promo code to get a discount on your order."
+        description="Enter a promo code to apply a discount to your order."
       />
       <CardContent>
         <CouponCodeForm />

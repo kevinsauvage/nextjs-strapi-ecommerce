@@ -26,7 +26,7 @@ const CreateAddresses = () => {
         title="Addresses"
         size={3}
         descriptionClassName="max-w-md"
-        description="Add a new address to your account. This will help us deliver your orders more efficiently."
+        description="Add a new shipping address to your account."
         actions={
           <Button variant="secondary" size="sm" asChild>
             <Link href={config.routes.addresses} className="gap-2">
@@ -37,7 +37,7 @@ const CreateAddresses = () => {
         }
       />
       <CardContent>
-        <AddressFormUI address={undefined} action={createAddressAction} buttonText="Create" />
+        <AddressFormUI address={undefined} action={createAddressAction} buttonText="Add address" />
       </CardContent>
     </Card>
   );

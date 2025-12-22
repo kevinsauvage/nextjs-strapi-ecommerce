@@ -55,8 +55,8 @@ const Page = async ({
     return (
       <EmptyState
         variant="orders"
-        title="Your Order List is Empty"
-        subtitle="Looks like you haven't made any order yet. Start shopping to see your orders here!"
+        title="No orders yet"
+        subtitle="When you place an order, it will appear here. Start shopping to see your order history."
         altText="Order List is Empty"
         primaryAction={
           <Link href="/">
@@ -80,8 +80,8 @@ const Page = async ({
         <CardContent>
           <EmptyState
             variant="orders"
-            title="No Orders Found"
-            subtitle="Looks like you haven't made any orders yet. Start shopping to see your orders here!"
+            title="No orders found"
+            subtitle="When you place an order, it will appear here. Start shopping to see your order history."
             altText="No Orders Found"
             primaryAction={
               <Link href="/">
@@ -105,7 +105,7 @@ const Page = async ({
         title={`Your Orders (${response.customer?.orders?.totalCount})`}
         size={3}
         actions={<BackButton />}
-        description="Manage your orders for a better shopping experience."
+        description="View and manage your order history."
       />
       <CardContent>
         <Orders orders={response.customer} />

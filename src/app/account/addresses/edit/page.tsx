@@ -127,7 +127,7 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
         title="Edit Addresses"
         size={3}
         descriptionClassName="max-w-md"
-        description="Update an existing address for your account. This will help us deliver your orders more efficiently."
+        description="Update your shipping address information."
         actions={
           <Button variant="secondary" size="sm" asChild>
             <Link href={config.routes.addresses} className="gap-2">
@@ -138,7 +138,7 @@ const EditAddress = async ({ searchParams }: PageProperties) => {
         }
       />
       <CardContent>
-        <AddressForm address={address} action={updateAddressAction} buttonText="Edit" />
+        <AddressForm address={address} action={updateAddressAction} buttonText="Save address" />
       </CardContent>
     </Card>
   );
