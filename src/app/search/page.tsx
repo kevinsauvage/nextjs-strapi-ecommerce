@@ -85,7 +85,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
         <Search searchQuery={searchParameters.searchQuery} />
       </PageBanner>
       {products.length > 0 ? (
-        <div className="container mx-auto mb-8 px-4">
+        <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 space-y-6">
           <ListingHeader>
             <Sort
               query={{ sort_key: searchParameters?.sort_key || SearchSortKeys.Relevance }}
@@ -97,7 +97,7 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
           <PageInfoPagination pageInfo={pageInfo} searchParameters={searchParameters} />
         </div>
       ) : (
-        <div className="container mx-auto mb-8 px-4">
+        <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 space-y-6">
           <EmptyState
             variant="search"
             title="No results found"

@@ -28,9 +28,11 @@ const AccountCardCTA = ({
   buttonLink: string;
 }) => {
   return (
-    <div className="border rounded-lg p-4">
-      <h3 className="text-heading-4 mb-2">{title}</h3>
-      <p className="text-body-sm text-secondary mb-4">{description}</p>
+    <div className="border rounded-lg p-4 md:p-6">
+      <div className="space-y-2">
+        <h3 className="text-heading-4">{title}</h3>
+        <p className="text-body-sm text-secondary">{description}</p>
+      </div>
       <Button variant="secondary" size="sm" asChild>
         <Link href={buttonLink} scroll>
           {buttonText}
@@ -54,8 +56,8 @@ const Page = () => {
           </>
         }
       />
-      <CardContent>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 justify-items-stretch">
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 justify-items-stretch">
           <AccountCardCTA
             title="Personal Information"
             description="Update your personal details and preferences"

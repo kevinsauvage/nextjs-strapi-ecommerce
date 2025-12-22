@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 const CartEmptyState = () => {
   return (
     <Card>
-      <CardContent className="py-12">
+      <CardContent className="py-8 md:py-12">
         <EmptyState
           variant="cart"
           image={{

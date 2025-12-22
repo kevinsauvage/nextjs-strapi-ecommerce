@@ -105,7 +105,7 @@ const CollectionSlugPage = async ({
 
   if (!edges?.length) {
     return (
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
         <EmptyState
           variant="default"
           title="Collection not found"
@@ -144,7 +144,7 @@ const CollectionSlugPage = async ({
   ];
 
   return (
-    <div className="container mx-auto mb-8">
+    <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 space-y-6">
       <ListingHeader>
         <Sort
           query={

@@ -107,8 +107,8 @@ const Addresses = async ({
         }
         description="Manage your shipping addresses for faster checkout."
       />
-      <CardContent>
-        <div className="grid grid-cols-1 gap-4 mb-6">
+      <CardContent className="space-y-6">
+        <div className="grid grid-cols-1 gap-4">
           {addresses.map((item) => (
             <Address key={item.id} address={item} isDefault={isDefault(item)} />
           ))}

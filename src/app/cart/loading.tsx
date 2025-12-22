@@ -10,8 +10,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 const Loading = () => {
   return (
-    <div className="pb-8 max-w-6xl mx-auto">
-      <PageBanner title="Your Cart" className="w-full pb-4">
+    <div className="py-8 md:py-12 max-w-6xl mx-auto px-4 md:px-6">
+      <PageBanner title="Your Cart" className="w-full pb-4 md:pb-6">
         <div className="flex items-center justify-between gap-2 w-full">
           <Link
             href="/collections"
@@ -27,7 +27,7 @@ const Loading = () => {
         </div>
       </PageBanner>
 
-      <div className="container mx-auto p-4 grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         <div className="lg:col-span-2">
           <Card>
             <CardHeaderPattern title="Cart Items" size={4} />
@@ -42,7 +42,7 @@ const Loading = () => {
                       <div className="flex flex-row justify-between items-center gap-4 flex-1 min-w-0 md:justify-end">
                         <Skeleton className="h-10 w-24" />
                         <div className="flex flex-col items-end">
-                          <Skeleton className="h-5 w-16 mb-1" />
+                          <Skeleton className="h-5 w-16" />
                         </div>
                         <Skeleton className="h-10 w-10 rounded-full" />
                       </div>
@@ -83,7 +83,7 @@ const Loading = () => {
             </CardFooter>
           </Card>
 
-          <Card className="mt-4">
+          <Card className="mt-6">
             <CardHeaderPattern
               title="Promo Code"
               size={4}

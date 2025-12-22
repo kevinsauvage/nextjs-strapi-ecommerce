@@ -14,7 +14,7 @@ const Error = ({ error, reset }: { error: Error & { digest?: string }; reset: ()
   }, [error]);
 
   return (
-    <div className="container mx-auto px-4 py-12 min-h-[calc(100vh-76px)] flex items-center justify-center">
+    <div className="container mx-auto px-4 md:px-6 py-8 md:py-12 min-h-[calc(100vh-76px)] flex items-center justify-center">
       <EmptyState
         variant="error"
         altText="Error illustration"

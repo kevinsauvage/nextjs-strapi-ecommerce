@@ -12,7 +12,7 @@ const CartPromoCode = () => {
   return (
     <Card>
       <CardHeaderPattern
-        className="pb-4"
+        className="pb-4 md:pb-6"
         size={4}
         title={
           <span className="flex items-center gap-2">
@@ -25,7 +25,7 @@ const CartPromoCode = () => {
       <CardContent>
         <CouponCodeForm />
       </CardContent>
-      <CardFooter className="pt-4">
+      <CardFooter className="pt-4 md:pt-6">
         <DiscountCodes />
       </CardFooter>
     </Card>

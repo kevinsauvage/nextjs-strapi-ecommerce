@@ -26,8 +26,8 @@ const CartPage = async () => {
   const isEmpty = !cart?.lines?.edges || cart.lines.edges.length === 0;
 
   return (
-    <div className="pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <PageBanner title="Your Cart" className="w-full pb-6">
+    <div className="py-8 md:py-12 max-w-7xl mx-auto px-4 md:px-6">
+      <PageBanner title="Your Cart" className="w-full pb-4 md:pb-6">
         {!isEmpty && (
           <div className="flex items-center justify-between gap-4 w-full flex-wrap">
             <Link

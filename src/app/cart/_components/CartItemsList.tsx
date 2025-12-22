@@ -12,7 +12,7 @@ const CartItemsList = () => {
 
   return (
     <Card>
-      <CardHeaderPattern className="pb-4" title="Cart Items" size={4} />
+      <CardHeaderPattern className="pb-4 md:pb-6" title="Cart Items" size={4} />
       <CardContent>
         <div className="space-y-6">
           {cart.lines.edges.map(({ node }, index) => (
@@ -24,7 +24,7 @@ const CartItemsList = () => {
         </div>
       </CardContent>
       {cart.lines.pageInfo.hasNextPage && (
-        <CardFooter className="pt-4 border-t">
+        <CardFooter className="pt-4 md:pt-6 border-t">
           <p className="text-body-sm text-secondary">More items available</p>
         </CardFooter>
       )}

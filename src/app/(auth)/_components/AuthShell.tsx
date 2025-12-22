@@ -21,7 +21,7 @@ const AuthShell = ({ title, description, children, footer, className }: AuthShel
         className,
       )}
     >
-      <div className="container mx-auto px-4 py-10 sm:py-14">
+      <div className="container mx-auto px-4 md:px-6 py-8 md:py-12">
         <div className="mx-auto w-full max-w-md">
           <Card className="shadow-lg border-border/60 bg-background/80 backdrop-blur supports-backdrop-filter:bg-background/70">
             <CardHeaderPattern
