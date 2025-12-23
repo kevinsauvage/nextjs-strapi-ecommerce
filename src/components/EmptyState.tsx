@@ -84,7 +84,7 @@ const EmptyState = ({
             <ul className="space-y-2 text-left">
               {tips.map((tip, index) => (
                 <li
-                  key={index}
+                  key={tip || `tip-${index}`}
                   className={`flex items-start gap-2 text-body-sm text-secondary transition-all duration-300 ${
                     isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
                   }`}

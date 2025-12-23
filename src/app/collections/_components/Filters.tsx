@@ -185,7 +185,10 @@ const Filters = ({
                   {filter.type === FilterType.List && (
                     <div className="space-y-2">
                       {filter.values.map((value, index) => (
-                        <div key={value.id + index} className="flex items-center space-x-2">
+                        <div
+                          key={`${value.id}-${index + 1}`}
+                          className="flex items-center space-x-2"
+                        >
                           <Checkbox
                             id={value.id}
                             checked={isSelected(value.id, value.input as string)}

@@ -17,8 +17,11 @@ const Loading = () => {
       />
       <CardContent className="space-y-6">
         <div className="grid grid-cols-1 gap-4">
-          {new Array(3).fill(0).map((_, index) => (
-            <div key={index} className="border rounded-lg p-4 md:p-6 space-y-3">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <div
+              key={`skeleton-address-${index + 1}`}
+              className="border rounded-lg p-4 md:p-6 space-y-3"
+            >
               <div className="flex justify-between items-start">
                 <div className="space-y-2 flex-1">
                   <Skeleton className="h-5 w-32" />

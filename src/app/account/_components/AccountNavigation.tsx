@@ -32,7 +32,7 @@ const AccountNavigation = ({ handleClose }: { handleClose?: () => void }) => {
 
         return (
           <Link
-            key={index}
+            key={`${link.title}-${index + 1}`}
             href={link.url}
             className={cn(
               'flex items-center gap-3 px-4 py-3 text-body-sm transition-colors',

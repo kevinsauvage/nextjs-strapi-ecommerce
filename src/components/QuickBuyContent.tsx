@@ -157,9 +157,9 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
           {/* Dot Indicators */}
           {productImages.length > 1 && (
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {productImages.map((_, index) => (
+              {productImages.map((image, index) => (
                 <button
-                  key={index}
+                  key={image.src || `image-${index}`}
                   onClick={() => setCurrentImageIndex(index)}
                   className={cn(
                     'w-2 h-2 rounded-full transition-all duration-200',
@@ -179,7 +179,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
           <div ref={thumbnailsRef} className="flex gap-2 p-4 overflow-x-auto scroll-smooth">
             {productImages.map((image, index) => (
               <button
-                key={index}
+                key={image.src || `image-${index}`}
                 onClick={() => setCurrentImageIndex(index)}
                 className={cn(
                   'relative w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 border-2 transition-all',

@@ -25,8 +25,8 @@ const Loading = () => {
       <div className="my-12">
         <Skeleton className="h-7 w-48 mb-4" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {new Array(4).fill(0).map((_, index) => (
-            <div key={index} className="space-y-2">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={`skeleton-product-${index + 1}`} className="space-y-2">
               <Skeleton className="aspect-square w-full rounded-lg" />
               <Skeleton className="h-4 w-3/4" />
               <Skeleton className="h-5 w-1/2" />

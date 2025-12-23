@@ -150,7 +150,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
 
                       return (
                         <div
-                          key={index}
+                          key={`order-item-${index + 1}`}
                           className="flex items-center justify-between gap-4 py-2 text-body-sm"
                         >
                           <div className="flex items-center gap-3 flex-1">

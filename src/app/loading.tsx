@@ -15,8 +15,8 @@ const Loading = () => {
       <div className="mb-8">
         <Skeleton className="h-8 w-48 mb-4" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {new Array(3).fill(0).map((_, index) => (
-            <Skeleton key={index} className="h-64 rounded-lg" />
+          {Array.from({ length: 3 }).map((_, index) => (
+            <Skeleton key={`skeleton-product-${index + 1}`} className="h-64 rounded-lg" />
           ))}
         </div>
       </div>

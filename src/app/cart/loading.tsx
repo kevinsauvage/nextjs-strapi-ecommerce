@@ -34,8 +34,8 @@ const Loading = () => {
             <CardHeaderPattern title="Cart Items" size={4} />
             <CardContent>
               <div className="space-y-2">
-                {new Array(3).fill(0).map((_, index) => (
-                  <div key={index}>
+                {Array.from({ length: 3 }).map((_, index) => (
+                  <div key={`cart-item-${index + 1}`}>
                     <div className="relative flex flex-col gap-2 md:flex-row md:items-center">
                       <div className="flex gap-4 basis-1/2">
                         <ProductCardSkeleton variant="row" />

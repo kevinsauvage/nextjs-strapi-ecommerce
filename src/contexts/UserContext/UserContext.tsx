@@ -53,7 +53,7 @@ export const UserProvider = ({
         toast.error(error instanceof Error ? error.message : 'Something went wrong');
       }
     },
-    [pathname, router, user, userWishlist],
+    [pathname, router, user],
   );
 
   const values = useMemo(

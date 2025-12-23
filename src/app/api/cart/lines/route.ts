@@ -29,12 +29,12 @@ export async function PATCH(request: NextRequest) {
       operation?: 'update' | 'add';
     };
 
-    const {searchParams} = request.nextUrl;
+    const { searchParams } = request.nextUrl;
     const first = searchParams.get('first')
-      ? Number.parseInt(searchParams.get('first')!, 10)
+      ? Number.parseInt(searchParams.get('first') || '', 10)
       : DEFAULT_PAGINATION.first;
     const last = searchParams.get('last')
-      ? Number.parseInt(searchParams.get('last')!, 10)
+      ? Number.parseInt(searchParams.get('last') || '', 10)
       : DEFAULT_PAGINATION.last;
     const after = searchParams.get('after') || DEFAULT_PAGINATION.after;
     const before = searchParams.get('before') || DEFAULT_PAGINATION.before;
@@ -117,17 +117,17 @@ export async function DELETE(request: NextRequest) {
   }
 
   try {
-    const {searchParams} = request.nextUrl;
+    const { searchParams } = request.nextUrl;
     const lineItemId = searchParams.get('lineItemId');
 
     if (!lineItemId) {
       return NextResponse.json({ error: 'Missing line item ID' }, { status: 400 });
     }
     const first = searchParams.get('first')
-      ? Number.parseInt(searchParams.get('first')!, 10)
+      ? Number.parseInt(searchParams.get('first') || '', 10)
       : DEFAULT_PAGINATION.first;
     const last = searchParams.get('last')
-      ? Number.parseInt(searchParams.get('last')!, 10)
+      ? Number.parseInt(searchParams.get('last') || '', 10)
       : DEFAULT_PAGINATION.last;
     const after = searchParams.get('after') || DEFAULT_PAGINATION.after;
     const before = searchParams.get('before') || DEFAULT_PAGINATION.before;

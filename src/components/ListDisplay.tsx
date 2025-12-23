@@ -18,7 +18,9 @@ const ListDisplay = ({
       }`}
     >
       {loading
-        ? new Array(6).fill(0).map((_, index) => <ProductCardSkeleton key={index} />)
+        ? Array.from({ length: 6 }).map((_, index) => (
+            <ProductCardSkeleton key={`skeleton-product-${index + 1}`} />
+          ))
         : children}
     </ul>
   );
