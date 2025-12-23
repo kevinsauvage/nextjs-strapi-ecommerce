@@ -4,7 +4,6 @@ import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { updateUserAction } from '@/actions/usersActions';
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -65,7 +64,6 @@ const UpdateUserForm = () => {
 
   return (
     <form action={action} className="space-y-8">
-      <FormError error={states?.error} fallback={userFeedback.login.error} />
       {user && (
         <>
           <input type="hidden" name="email" value={user.email ?? ''} />

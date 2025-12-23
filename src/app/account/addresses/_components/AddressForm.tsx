@@ -3,7 +3,6 @@
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -127,11 +126,6 @@ const AddressFormUI = ({
 
   return (
     <form action={actionState} className="space-y-6">
-      <FormError
-        error={states.error}
-        customerUserErrors={states.customerUserErrors}
-        fallback="An error occurred. Please try again."
-      />
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">

@@ -2,7 +2,6 @@
 
 import { useRef, useState } from 'react';
 
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,7 +46,6 @@ const CouponCodeForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3" ref={formRef}>
-      <FormError error={error ? error : undefined} fallback="Please enter a promo code" />
       {existingCodes.map((code) => (
         <input key={code.code} type="hidden" name="couponCode" value={code.code} />
       ))}

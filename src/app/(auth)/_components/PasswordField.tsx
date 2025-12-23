@@ -41,7 +41,8 @@ const PasswordField = ({
   const inputId = id ?? autoId;
   const errorId = `${inputId}-error`;
   const [visible, setVisible] = useState(false);
-  const hasError = !!error;
+  const errorMessage = Array.isArray(error) ? error.at(-1) : error;
+  const hasError = !!errorMessage;
 
   return (
     <div className={cn('space-y-2', className)}>

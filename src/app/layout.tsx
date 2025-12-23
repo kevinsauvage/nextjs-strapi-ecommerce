@@ -45,6 +45,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       lang="en"
       className={`${inter.variable} font-sans scroll-smooth antialiased`}
       suppressHydrationWarning
+      data-scroll-behavior="smooth"
     >
       <head>
         <link rel="preconnect" href="https://cdn.shopify.com" />

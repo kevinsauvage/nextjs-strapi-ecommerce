@@ -1,3 +1,5 @@
+import { getBaseUrl } from './metadata';
+
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
 
 type ApiClientOptions = {
@@ -12,6 +14,24 @@ type ApiResponse<T> = {
   error?: string;
   message?: string;
 };
+
+/**
+ * Converts a relative path to an absolute URL
+ * @param path - The path (relative or absolute)
+ * @returns An absolute URL
+ */
+function getAbsoluteUrl(path: string): string {
+  // If path is already an absolute URL, return it as is
+  if (path.startsWith('http://') || path.startsWith('https://')) {
+    return path;
+  }
+
+  // Get base URL and ensure path starts with /
+  const baseUrl = getBaseUrl();
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+
+  return `${baseUrl}${normalizedPath}`;
+}
 
 export async function apiClient<T = unknown>(
   path: string,
@@ -35,7 +55,9 @@ export async function apiClient<T = unknown>(
   }
 
   try {
-    const response = await fetch(path, requestOptions);
+    // Convert relative path to absolute URL for server-side fetch
+    const absoluteUrl = getAbsoluteUrl(path);
+    const response = await fetch(absoluteUrl, requestOptions);
 
     if (!response.ok) {
       const errorData = (await response.json().catch(() => ({}))) as ApiResponse<T>;

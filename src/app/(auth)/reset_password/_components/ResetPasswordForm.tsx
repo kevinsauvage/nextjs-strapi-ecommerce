@@ -4,7 +4,6 @@ import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { resetPasswordAction } from '@/actions/authActions';
-import FormError from '@/components/FormError';
 import { Button } from '@/components/ui/button';
 import { userFeedback } from '@/data/userFeedback';
 import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
@@ -72,10 +71,6 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
       <p className="text-body-sm text-secondary">
         Use at least 8 characters. Consider mixing letters, numbers, and symbols.
       </p>
-      <FormError
-        error={typeof states.error === 'string' ? states.error : undefined}
-        fallback={userFeedback.resetPassword.error}
-      />
       <ResetButton />
     </Form>
   );

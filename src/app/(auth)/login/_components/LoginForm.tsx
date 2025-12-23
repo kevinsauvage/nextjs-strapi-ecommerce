@@ -5,7 +5,6 @@ import { useFormStatus } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
 
 import { loginAction } from '@/actions/authActions';
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -64,11 +63,6 @@ const LoginForm = () => {
 
   return (
     <Form action={action} className="space-y-5">
-      <FormError
-        error={states.error}
-        customerUserErrors={states.customerUserErrors}
-        fallback={userFeedback.login.error}
-      />
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input

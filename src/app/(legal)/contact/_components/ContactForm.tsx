@@ -4,7 +4,6 @@ import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { contactAction } from '@/actions/contactActions';
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -99,11 +98,6 @@ const ContactForm = () => {
         />
         <FormFieldError error={states.message} fieldId="message" />
       </div>
-      <FormError
-        error={states.error}
-        customerUserErrors={states.customerUserErrors}
-        fallback="An error occurred while sending the email."
-      />
       <SubmitButton />
     </form>
   );

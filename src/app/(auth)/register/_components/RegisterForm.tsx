@@ -4,7 +4,6 @@ import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { registerAction } from '@/actions/authActions';
-import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -79,12 +78,6 @@ const RegisterForm = () => {
 
   return (
     <Form action={action} autoComplete="off" className="space-y-5">
-      <FormError
-        error={states.error}
-        customerUserErrors={states.customerUserErrors}
-        userErrors={states.userErrors}
-        fallback={userFeedback.register.error}
-      />
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input

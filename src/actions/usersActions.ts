@@ -1,7 +1,6 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 import config from '@/config';
 import { zodErrorsToFormActionResult } from '@/helpers/formActions';
@@ -88,5 +87,7 @@ export async function updateUserAction(
 
 export const logoutAction = async () => {
   await delCookieAction(config.cookies.shopifyToken);
-  redirect(config.routes.login);
+  return {
+    success: 'Logged out successfully',
+  };
 };
