@@ -7,7 +7,7 @@ export const getUser = async () => {
 
   if (!customerAccessToken) return;
 
-  const response = await storefrontSdk().getCustomer({
+  const response = await storefrontSdk('no-store').getCustomer({
     customerAccessToken,
     metafields: [],
   });

@@ -18,7 +18,7 @@ export const getWishlist = async (): Promise<ProductFieldsFragment[]> => {
 
   if (!shopifyToken) return [];
 
-  const wishlistResponse = await storefrontSdk().getCustomerMetafields({
+  const wishlistResponse = await storefrontSdk('no-store').getCustomerMetafields({
     customerAccessToken: shopifyToken,
     metafields: [{ key: 'wishlist', namespace: 'custom' }],
   });

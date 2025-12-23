@@ -28,7 +28,7 @@ const Page = async () => {
   // Fetch stats in parallel
   const [ordersResponse, addressesResponse, wishlist] = await Promise.all([
     shopifyToken
-      ? storefrontSdk().getCustomerOrders({
+      ? storefrontSdk('no-store').getCustomerOrders({
           customerAccessToken: shopifyToken,
           first: 1,
           identifiers: [],
@@ -37,7 +37,7 @@ const Page = async () => {
         })
       : Promise.resolve(null),
     shopifyToken
-      ? storefrontSdk().getCustomerAddresses({
+      ? storefrontSdk('no-store').getCustomerAddresses({
           customerAccessToken: shopifyToken,
           first: 1,
         })

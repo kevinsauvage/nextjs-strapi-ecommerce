@@ -29,7 +29,9 @@ const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default')
       };
 
       if (cacheOption === 'no-store') {
+        // Explicitly prevent caching for customer-specific data
         fetchOptions.cache = 'no-store';
+        fetchOptions.next = { revalidate: 0 };
       } else {
         fetchOptions.next = { revalidate: config.constants.revalidate.shopify };
       }
