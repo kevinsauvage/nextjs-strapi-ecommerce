@@ -1,5 +1,34 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
+const getStorefrontSchemaUrl = (): string => {
+  const url = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL;
+
+  if (!url) {
+    throw new Error(
+      'Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL environment variable. ' +
+        'Set it to your Shopify Storefront API endpoint (e.g., https://your-store.myshopify.com/api/2025-01/graphql.json)',
+    );
+  }
+
+  return url;
+};
+
+const getAccessToken = (): string => {
+  const accessToken = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
+
+  if (!accessToken) {
+    throw new Error(
+      'Missing SHOPIFY_STORE_FRONT_ACCESS_TOKEN environment variable. ' +
+        'This is required for GraphQL schema introspection.',
+    );
+  }
+
+  return accessToken;
+};
+
+const storefrontSchemaUrl = getStorefrontSchemaUrl();
+const accessToken = getAccessToken();
+
 const config: CodegenConfig = {
   documents: 'src/shopify/storefront/**/*.graphql',
   generates: {
@@ -20,13 +49,11 @@ const config: CodegenConfig = {
     },
   },
   hooks: { afterAllFileWrite: ['prettier --write'] },
-  // Generate schema base on the Shopify Storefront API
-  // https://shopify.dev/api/storefront/2025-01
   schema: {
-    'https://ecomfashionstore.myshopify.com/api/2025-01/graphql.json': {
+    [storefrontSchemaUrl]: {
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN || '',
+        'X-Shopify-Storefront-Access-Token': accessToken,
       },
     },
   },

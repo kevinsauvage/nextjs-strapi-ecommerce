@@ -1,5 +1,34 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
+const getAdminSchemaUrl = (): string => {
+  const url = process.env.SHOPIFY_ADMIN_URL;
+
+  if (!url) {
+    throw new Error(
+      'Missing SHOPIFY_ADMIN_URL environment variable. ' +
+        'Set it to your Shopify Admin API endpoint (e.g., https://your-store.myshopify.com/admin/api/2025-01/graphql.json)',
+    );
+  }
+
+  return url;
+};
+
+const getAccessToken = (): string => {
+  const accessToken = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
+
+  if (!accessToken) {
+    throw new Error(
+      'Missing SHOPIFY_STORE_FRONT_ADMIN_TOKEN environment variable. ' +
+        'This is required for GraphQL schema introspection.',
+    );
+  }
+
+  return accessToken;
+};
+
+const adminSchemaUrl = getAdminSchemaUrl();
+const adminToken = getAccessToken();
+
 const config: CodegenConfig = {
   config: {
     fragmentMasking: false,
@@ -30,13 +59,11 @@ const config: CodegenConfig = {
     },
   },
   overwrite: true,
-  // Generate schema base on the Shopify Admin API
-  // https://shopify.dev/api/admin-graphql/2025-01
   schema: {
-    'https://ecomfashionstore.myshopify.com/admin/api/2025-01/graphql.json': {
+    [adminSchemaUrl]: {
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Access-Token': process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN || '',
+        'X-Shopify-Access-Token': adminToken,
       },
     },
   },
