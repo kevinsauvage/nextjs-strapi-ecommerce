@@ -1,21 +1,21 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { useSearchParams } from 'next/navigation';
 
 import { loginAction } from '@/actions/authActions';
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { userFeedback } from '@/data/userFeedback';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
 import PasswordField from '../../_components/PasswordField';
-
-import { toast } from 'sonner';
 
 const LoginButton = () => {
   const status = useFormStatus();
@@ -44,6 +44,7 @@ const LoginForm = () => {
       password?: string | string[];
       customerUserErrors?: CustomerUserError[];
       error?: string;
+      success?: string;
     },
     FormData
   >(handleSubmit, {
@@ -51,31 +52,23 @@ const LoginForm = () => {
     email: [],
     error: '',
     password: [],
+    success: '',
   });
 
-  useEffect(() => {
-    if (states.customerUserErrors?.length) {
-      states.customerUserErrors.forEach((error: CustomerUserError) => {
-        toast.error(error.message || userFeedback.login.error);
-      });
-      return;
-    }
-
-    if (states.error) {
-      toast.error(states.error);
-    }
-  }, [states]);
-
-  const emailError = states.email?.at(-1);
-  const hasEmailError = !!emailError;
+  useFormStatesEffect({
+    states,
+    userFeedback: {
+      error: userFeedback.login.error,
+    },
+  });
 
   return (
     <Form action={action} className="space-y-5">
-      {(states.error || states.customerUserErrors?.length) && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error || states.customerUserErrors?.[0]?.message || userFeedback.login.error}
-        </div>
-      )}
+      <FormError
+        error={states.error}
+        customerUserErrors={states.customerUserErrors}
+        fallback={userFeedback.login.error}
+      />
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input
@@ -86,8 +79,8 @@ const LoginForm = () => {
           required={true}
           autoComplete="username"
           disabled={isPending}
-          aria-invalid={hasEmailError}
-          aria-describedby={hasEmailError ? 'email-error' : undefined}
+          aria-invalid={!!states.email?.at(-1)}
+          aria-describedby={states.email?.at(-1) ? 'email-error' : undefined}
         />
         <FormFieldError error={states.email} fieldId="email" />
       </div>

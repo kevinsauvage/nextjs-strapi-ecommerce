@@ -4,8 +4,10 @@ import { redirect } from 'next/navigation';
 
 import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
+import { zodErrorsToFormActionResult } from '@/helpers/formActions';
 import { storefrontSdk } from '@/shopify';
-import type { CustomerUserError, UserError } from '@/shopify/storefront';
+import type { UserError } from '@/shopify/storefront';
+import type { FormActionResult } from '@/types/formActions';
 import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
@@ -42,9 +44,22 @@ const registerSchema = z
 
 type RegisterInput = z.infer<typeof registerSchema>;
 
-export async function registerAction(input: RegisterInput) {
+type RegisterFieldErrors = {
+  email?: string | string[];
+  firstName?: string | string[];
+  lastName?: string | string[];
+  password?: string | string[];
+  passwordConfirm?: string | string[];
+};
+
+export async function registerAction(
+  input: RegisterInput,
+): Promise<FormActionResult<RegisterFieldErrors> & RegisterFieldErrors> {
   const result = registerSchema.safeParse(input);
-  if (!result?.success) return result.error.formErrors.fieldErrors;
+  if (!result?.success) {
+    const fieldErrors = result.error.formErrors.fieldErrors as RegisterFieldErrors;
+    return { ...zodErrorsToFormActionResult(result.error), ...fieldErrors };
+  }
 
   const { email, password, firstName, lastName } = result.data;
 
@@ -60,7 +75,6 @@ export async function registerAction(input: RegisterInput) {
 
   const userErrorResult = handleUserError(userErrors);
   if (userErrorResult) {
-    // Return structured userErrors for consistent error handling
     return { userErrors: userErrorResult.userErrors };
   }
 
@@ -94,14 +108,19 @@ const loginSchema = z.object({
 
 type LoginInput = z.infer<typeof loginSchema>;
 
-export async function loginAction(input: LoginInput): Promise<{
-  customerUserErrors?: CustomerUserError[];
-  email?: string[];
-  error?: string;
-  password?: string[];
-}> {
+type LoginFieldErrors = {
+  email?: string | string[];
+  password?: string | string[];
+};
+
+export async function loginAction(
+  input: LoginInput,
+): Promise<FormActionResult<LoginFieldErrors> & LoginFieldErrors> {
   const result = loginSchema.safeParse(input);
-  if (!result?.success) return result.error.formErrors.fieldErrors;
+  if (!result?.success) {
+    const fieldErrors = result.error.formErrors.fieldErrors as LoginFieldErrors;
+    return { ...zodErrorsToFormActionResult(result.error), ...fieldErrors };
+  }
 
   const { email, password, redirectUrl } = result.data;
 
@@ -116,7 +135,9 @@ export async function loginAction(input: LoginInput): Promise<{
     return { customerUserErrors };
   }
 
-  if (!customerAccessToken) return { error: userFeedback.login.error };
+  if (!customerAccessToken) {
+    return { error: userFeedback.login.error };
+  }
 
   await setShopifyToken(customerAccessToken);
 
@@ -144,9 +165,18 @@ const recoverSchema = z.object({
 
 type RecoverPasswordInput = z.infer<typeof recoverSchema>;
 
-export const recoverPasswordAction = async (input: RecoverPasswordInput) => {
+type RecoverFieldErrors = {
+  email?: string | string[];
+};
+
+export const recoverPasswordAction = async (
+  input: RecoverPasswordInput,
+): Promise<FormActionResult<RecoverFieldErrors> & RecoverFieldErrors> => {
   const result = recoverSchema.safeParse(input);
-  if (!result.success) return result.error.formErrors.fieldErrors;
+  if (!result.success) {
+    const fieldErrors = result.error.formErrors.fieldErrors as RecoverFieldErrors;
+    return { ...zodErrorsToFormActionResult(result.error), ...fieldErrors };
+  }
 
   const { email } = result.data;
 
@@ -166,9 +196,18 @@ const resetSchema = z.object({
 
 type ResetPasswordInput = z.infer<typeof resetSchema>;
 
-export const resetPasswordAction = async (input: ResetPasswordInput) => {
+type ResetFieldErrors = {
+  password?: string | string[];
+};
+
+export const resetPasswordAction = async (
+  input: ResetPasswordInput,
+): Promise<FormActionResult<ResetFieldErrors> & ResetFieldErrors> => {
   const result = resetSchema.safeParse(input);
-  if (!result.success) return result.error.formErrors.fieldErrors;
+  if (!result.success) {
+    const fieldErrors = result.error.formErrors.fieldErrors as ResetFieldErrors;
+    return { ...zodErrorsToFormActionResult(result.error), ...fieldErrors };
+  }
 
   const { password, resetUrl } = result.data;
 

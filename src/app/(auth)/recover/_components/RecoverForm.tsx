@@ -1,18 +1,18 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { recoverPasswordAction } from '@/actions/authActions';
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
-
-import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -24,7 +24,6 @@ const SubmitButton = () => {
 };
 
 const RecoverForm = () => {
-  // Wrapper function to extract FormData and call typed server action
   const handleSubmit = async (_previousState: unknown, formData: FormData) => {
     const email = formData.get('email') as string;
     return recoverPasswordAction({ email });
@@ -42,27 +41,20 @@ const RecoverForm = () => {
     email: '',
   });
 
-  useEffect(() => {
-    if (states.error) {
-      toast.error(states.error);
-    }
-
-    if (states.success) {
-      toast.success(states.success);
-    }
-
-    if (states.customerUserErrors?.length) {
-      states.customerUserErrors.forEach((error: CustomerUserError) => {
-        toast.error(error.message || 'An error occurred while recovering the password.');
-      });
-    }
-  }, [states]);
-
-  const emailError = states.email?.at(-1);
-  const hasEmailError = !!emailError;
+  useFormStatesEffect({
+    states,
+    userFeedback: {
+      error: 'An error occurred while recovering the password.',
+    },
+  });
 
   return (
     <Form action={action} className="space-y-5">
+      <FormError
+        error={states.error}
+        customerUserErrors={states.customerUserErrors}
+        fallback="An error occurred while recovering the password."
+      />
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input
@@ -72,19 +64,15 @@ const RecoverForm = () => {
           placeholder="name@company.com"
           required={true}
           disabled={isPending}
-          aria-invalid={hasEmailError}
-          aria-describedby={hasEmailError ? 'email-error' : undefined}
+          aria-invalid={!!states.email?.at(-1)}
+          aria-describedby={states.email?.at(-1) ? 'email-error' : undefined}
         />
         <p className="text-body-sm text-secondary">
           We&apos;ll email you a secure link to reset your password.
         </p>
         <FormFieldError error={states.email} fieldId="email" />
       </div>
-      {states.error && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error}
-        </div>
-      )}
+
       <SubmitButton />
     </Form>
   );

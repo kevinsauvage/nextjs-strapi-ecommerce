@@ -1,6 +1,8 @@
 'use client';
+
 import { useRef, useState } from 'react';
 
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -42,15 +44,10 @@ const CouponCodeForm = () => {
   };
 
   const existingCodes = cart?.discountCodes || [];
-  const hasError = !!error;
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3" ref={formRef}>
-      {error && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {error}
-        </div>
-      )}
+      <FormError error={error ? error : undefined} fallback="Please enter a promo code" />
       {existingCodes.map((code) => (
         <input key={code.code} type="hidden" name="couponCode" value={code.code} />
       ))}
@@ -66,8 +63,8 @@ const CouponCodeForm = () => {
             placeholder="Enter promo code"
             className="w-full"
             disabled={isLoading}
-            aria-invalid={hasError}
-            aria-describedby={hasError ? 'couponCode-error' : undefined}
+            aria-invalid={!!error?.at(-1)}
+            aria-describedby={error?.at(-1) ? 'couponCode-error' : undefined}
           />
           <FormFieldError error={error ?? undefined} fieldId="couponCode" />
         </div>

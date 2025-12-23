@@ -1,16 +1,16 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { resetPasswordAction } from '@/actions/authActions';
+import FormError from '@/components/FormError';
 import { Button } from '@/components/ui/button';
 import { userFeedback } from '@/data/userFeedback';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 
 import Form from '../../_components/Form';
 import PasswordField from '../../_components/PasswordField';
-
-import { toast } from 'sonner';
 
 const initialStates = {
   password: '',
@@ -48,13 +48,12 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
     setFormData((previous) => ({ ...previous, [name]: value || '' }));
   };
 
-  useEffect(() => {
-    if (states.error) {
-      toast.error(
-        typeof states.error === 'string' ? states.error : userFeedback.resetPassword.error,
-      );
-    }
-  }, [states]);
+  useFormStatesEffect({
+    states,
+    userFeedback: {
+      error: userFeedback.resetPassword.error,
+    },
+  });
 
   return (
     <Form action={action} autoComplete="off" className="space-y-5">
@@ -73,11 +72,10 @@ const ResetForm = ({ resetUrl }: { resetUrl: string }) => {
       <p className="text-body-sm text-secondary">
         Use at least 8 characters. Consider mixing letters, numbers, and symbols.
       </p>
-      {states.error && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {typeof states.error === 'string' ? states.error : userFeedback.resetPassword.error}
-        </div>
-      )}
+      <FormError
+        error={typeof states.error === 'string' ? states.error : undefined}
+        fallback={userFeedback.resetPassword.error}
+      />
       <ResetButton />
     </Form>
   );

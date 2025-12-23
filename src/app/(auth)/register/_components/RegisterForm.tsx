@@ -1,20 +1,20 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { registerAction } from '@/actions/authActions';
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { userFeedback } from '@/data/userFeedback';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 import type { CustomerUserError } from '@/shopify/storefront';
 
 import Form from '../../_components/Form';
 import PasswordField from '../../_components/PasswordField';
-
-import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -23,6 +23,16 @@ const SubmitButton = () => {
       Create account
     </Button>
   );
+};
+
+const handleSubmit = async (_previousState: unknown, formData_: FormData) => {
+  const email = formData_.get('email') as string;
+  const firstName = formData_.get('firstName') as string;
+  const lastName = formData_.get('lastName') as string;
+  const password = formData_.get('password') as string;
+  const passwordConfirm = formData_.get('passwordConfirm') as string;
+
+  return registerAction({ email, firstName, lastName, password, passwordConfirm });
 };
 
 const RegisterForm = () => {
@@ -43,16 +53,6 @@ const RegisterForm = () => {
     setFormData((previous) => ({ ...previous, [name]: value || '' }));
   };
 
-  const handleSubmit = async (_previousState: unknown, formData_: FormData) => {
-    const email = formData_.get('email') as string;
-    const firstName = formData_.get('firstName') as string;
-    const lastName = formData_.get('lastName') as string;
-    const password = formData_.get('password') as string;
-    const passwordConfirm = formData_.get('passwordConfirm') as string;
-
-    return registerAction({ email, firstName, lastName, password, passwordConfirm });
-  };
-
   const [states, action, isPending] = useActionState<
     {
       email?: string | string[];
@@ -70,27 +70,21 @@ const RegisterForm = () => {
     FormData
   >(handleSubmit, initialStates);
 
-  useEffect(() => {
-    if (states.customerUserErrors?.length) {
-      states.customerUserErrors.forEach((error: CustomerUserError) => {
-        toast.error(error.message || userFeedback.register.error);
-      });
-    }
-    if (states.error) {
-      toast.error(typeof states.error === 'string' ? states.error : userFeedback.register.error);
-    }
-  }, [states]);
+  useFormStatesEffect({
+    states,
+    userFeedback: {
+      error: userFeedback.register.error,
+    },
+  });
 
   return (
     <Form action={action} autoComplete="off" className="space-y-5">
-      {(states.error || states.customerUserErrors?.length || states.userErrors?.length) && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error ||
-            states.customerUserErrors?.[0]?.message ||
-            states.userErrors?.[0]?.message ||
-            userFeedback.register.error}
-        </div>
-      )}
+      <FormError
+        error={states.error}
+        customerUserErrors={states.customerUserErrors}
+        userErrors={states.userErrors}
+        fallback={userFeedback.register.error}
+      />
       <div className="space-y-2">
         <Label htmlFor="email">Email address</Label>
         <Input

@@ -1,5 +1,8 @@
 'use server';
 
+import { zodErrorsToFormActionResult } from '@/helpers/formActions';
+import type { FormActionResult } from '@/types/formActions';
+
 import nodemailer from 'nodemailer';
 import { z } from 'zod';
 
@@ -27,9 +30,20 @@ const contactSchema = z.object({
 
 type ContactInput = z.infer<typeof contactSchema>;
 
-export const contactAction = async (input: ContactInput) => {
+type ContactFieldErrors = {
+  email?: string | string[];
+  name?: string | string[];
+  message?: string | string[];
+};
+
+export const contactAction = async (
+  input: ContactInput,
+): Promise<FormActionResult<ContactFieldErrors> & ContactFieldErrors> => {
   const formData = contactSchema.safeParse(input);
-  if (!formData.success) return formData.error.formErrors.fieldErrors;
+  if (!formData.success) {
+    const fieldErrors = formData.error.formErrors.fieldErrors as ContactFieldErrors;
+    return { ...zodErrorsToFormActionResult(formData.error), ...fieldErrors };
+  }
 
   const { name, email, message } = formData.data;
 
@@ -48,13 +62,11 @@ export const contactAction = async (input: ContactInput) => {
   try {
     await transporter.sendMail(mailOptions);
     return {
-      message: 'Email sent successfully',
-      success: true,
+      success: 'Email sent successfully',
     };
   } catch {
     return {
       error: 'An error occurred while sending the email',
-      success: false,
     };
   }
 };

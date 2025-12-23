@@ -1,17 +1,17 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { contactAction } from '@/actions/contactActions';
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { userFeedback } from '@/data/userFeedback';
-
-import { toast } from 'sonner';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
+import type { CustomerUserError } from '@/shopify/storefront';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -23,7 +23,6 @@ const SubmitButton = () => {
 };
 
 const ContactForm = () => {
-  // Wrapper function to extract FormData and call typed server action
   const handleSubmit = async (_previousState: unknown, formData: FormData) => {
     const email = formData.get('email') as string;
     const name = formData.get('name') as string;
@@ -36,8 +35,9 @@ const ContactForm = () => {
       email?: string | string[];
       message?: string | string[];
       name?: string | string[];
-      customerUserErrors?: { message?: string }[];
+      customerUserErrors?: CustomerUserError[];
       error?: string;
+      success?: string;
     },
     FormData
   >(handleSubmit, {
@@ -46,15 +46,13 @@ const ContactForm = () => {
     name: '',
   });
 
-  useEffect(() => {
-    if (states.error) {
-      toast.error(states.error || userFeedback.login.error);
-    }
-  }, [states]);
-
-  const emailError = Array.isArray(states.email) ? states.email.at(-1) : states.email;
-  const nameError = Array.isArray(states.name) ? states.name.at(-1) : states.name;
-  const messageError = Array.isArray(states.message) ? states.message.at(-1) : states.message;
+  useFormStatesEffect({
+    states,
+    userFeedback: {
+      error: 'An error occurred while sending the email.',
+      success: 'Email sent successfully',
+    },
+  });
 
   return (
     <form
@@ -70,8 +68,8 @@ const ContactForm = () => {
           placeholder="name@company.com"
           required={true}
           disabled={isPending}
-          aria-invalid={!!emailError}
-          aria-describedby={emailError ? 'email-error' : undefined}
+          aria-invalid={!!states.email?.at(-1)}
+          aria-describedby={states.email?.at(-1) ? 'email-error' : undefined}
         />
         <FormFieldError error={states.email} fieldId="email" />
       </div>
@@ -83,8 +81,8 @@ const ContactForm = () => {
           id="name"
           required={true}
           disabled={isPending}
-          aria-invalid={!!nameError}
-          aria-describedby={nameError ? 'name-error' : undefined}
+          aria-invalid={!!states.name?.at(-1)}
+          aria-describedby={states.name?.at(-1) ? 'name-error' : undefined}
         />
         <FormFieldError error={states.name} fieldId="name" />
       </div>
@@ -96,16 +94,16 @@ const ContactForm = () => {
           id="message"
           required={true}
           disabled={isPending}
-          aria-invalid={!!messageError}
-          aria-describedby={messageError ? 'message-error' : undefined}
+          aria-invalid={!!states.message?.at(-1)}
+          aria-describedby={states.message?.at(-1) ? 'message-error' : undefined}
         />
         <FormFieldError error={states.message} fieldId="message" />
       </div>
-      {states.error && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error || userFeedback.login.error}
-        </div>
-      )}
+      <FormError
+        error={states.error}
+        customerUserErrors={states.customerUserErrors}
+        fallback="An error occurred while sending the email."
+      />
       <SubmitButton />
     </form>
   );

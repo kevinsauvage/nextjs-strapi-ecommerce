@@ -4,7 +4,9 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import config from '@/config';
+import { zodErrorsToFormActionResult } from '@/helpers/formActions';
 import { storefrontSdk } from '@/shopify';
+import type { FormActionResult } from '@/types/formActions';
 import { getShopifyToken, setShopifyToken } from '@/utils/shopify';
 
 import { delCookieAction } from './cookiesActions';
@@ -22,11 +24,23 @@ const userSchema = z.object({
 
 type UpdateUserInput = z.infer<typeof userSchema>;
 
-export async function updateUserAction(input: UpdateUserInput) {
+type UpdateUserFieldErrors = {
+  email?: string | string[];
+  firstName?: string | string[];
+  lastName?: string | string[];
+  phone?: string | string[];
+  company?: string | string[];
+  acceptsMarketing?: string | string[];
+};
+
+export async function updateUserAction(
+  input: UpdateUserInput,
+): Promise<FormActionResult<UpdateUserFieldErrors> & UpdateUserFieldErrors> {
   const result = userSchema.safeParse(input);
 
   if (!result?.success) {
-    return result.error.formErrors.fieldErrors;
+    const fieldErrors = result.error.formErrors.fieldErrors as UpdateUserFieldErrors;
+    return { ...zodErrorsToFormActionResult(result.error), ...fieldErrors };
   }
 
   const { email, firstName, lastName, acceptsMarketing, company, phone } = result.data;
@@ -65,7 +79,6 @@ export async function updateUserAction(input: UpdateUserInput) {
   if (customer) {
     revalidatePath(config.routes.updateAccount);
     return {
-      customer,
       success: 'User updated successfully',
     };
   }

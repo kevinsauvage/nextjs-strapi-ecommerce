@@ -1,16 +1,16 @@
 'use client';
 
-import { useActionState, useEffect } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 import type { CustomerUserError } from '@/shopify/storefront';
-
-import { toast } from 'sonner';
 
 const SubmitButton = ({ buttonText }: { buttonText: string }) => {
   const status = useFormStatus();
@@ -121,29 +121,17 @@ const AddressFormUI = ({
     FormData
   >(handleSubmit, {});
 
-  useEffect(() => {
-    if (states.customerUserErrors?.length) {
-      states.customerUserErrors.forEach((error) => {
-        if (error?.message) {
-          toast.error(error.message);
-        }
-      });
-    }
-
-    if (states.error) {
-      toast.error(states.error);
-    }
-  }, [states]);
+  useFormStatesEffect({
+    states,
+  });
 
   return (
     <form action={actionState} className="space-y-6">
-      {(states.error || states.customerUserErrors?.length) && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error ||
-            states.customerUserErrors?.[0]?.message ||
-            'An error occurred. Please try again.'}
-        </div>
-      )}
+      <FormError
+        error={states.error}
+        customerUserErrors={states.customerUserErrors}
+        fallback="An error occurred. Please try again."
+      />
       {address?.id && <input type="hidden" name="id" value={address?.id} />}
       <div className="space-y-6">
         <div className="space-y-4">

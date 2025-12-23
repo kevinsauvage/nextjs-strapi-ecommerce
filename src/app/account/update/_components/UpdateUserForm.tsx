@@ -1,9 +1,10 @@
 'use client';
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
 import { updateUserAction } from '@/actions/usersActions';
+import FormError from '@/components/FormError';
 import FormFieldError from '@/components/FormFieldError';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -11,9 +12,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { userFeedback } from '@/data/userFeedback';
+import { useFormStatesEffect } from '@/hooks/useFormStatesEffect';
 import type { CustomerUserError } from '@/shopify/storefront';
-
-import { toast } from 'sonner';
 
 const SubmitButton = () => {
   const status = useFormStatus();
@@ -44,46 +44,28 @@ const UpdateUserForm = () => {
       firstName?: string | string[];
       lastName?: string | string[];
       phone?: string | string[];
-      acceptsMarketing?: boolean | string[];
+      company?: string | string[];
+      acceptsMarketing?: string | string[];
       customerUserErrors?: CustomerUserError[];
       error?: string;
       success?: string;
     },
     FormData
   >(handleSubmit, {});
-  const [acceptsMarketing, setAcceptsMarketing] = useState(false);
 
-  useEffect(() => {
-    if (states?.error) {
-      toast.error(states.error || userFeedback.login.error);
-    }
+  const [acceptsMarketing, setAcceptsMarketing] = useState(() => user?.acceptsMarketing ?? false);
 
-    if (states?.success) {
-      toast.success(states.success || userFeedback.login.success);
-    }
-
-    if (states?.customerUserErrors?.length) {
-      states.customerUserErrors.forEach((error: CustomerUserError) => {
-        toast.error(error.message || userFeedback.login.error);
-      });
-    }
-  }, [states]);
-
-  useEffect(() => {
-    if (user) {
-      setTimeout(() => {
-        setAcceptsMarketing(user.acceptsMarketing ?? false);
-      }, 0);
-    }
-  }, [user]);
+  useFormStatesEffect({
+    states: states || {},
+    userFeedback: {
+      error: userFeedback.login.error,
+      success: userFeedback.login.success,
+    },
+  });
 
   return (
     <form action={action} className="space-y-8">
-      {states?.error && (
-        <div role="alert" aria-live="polite" className="text-destructive text-body-sm">
-          {states.error || userFeedback.login.error}
-        </div>
-      )}
+      <FormError error={states?.error} fallback={userFeedback.login.error} />
       {user && (
         <>
           <input type="hidden" name="email" value={user.email ?? ''} />
