@@ -75,7 +75,7 @@ const Address = ({
   };
 
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-md">
+    <Card className="overflow-hidden transition-all hover:shadow-md py-0">
       <CardContent className="px-4 md:px-6 py-4 md:py-6 flex justify-between gap-4">
         <div className="space-y-2 flex-1">
           <div className="flex items-center gap-2">
