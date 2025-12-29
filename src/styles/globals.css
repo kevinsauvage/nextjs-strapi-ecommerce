@@ -483,9 +483,13 @@ h6 {
 
 /* Link utility (used explicitly via `className="link"`) */
 .link {
-  @apply underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm;
   /* Accent: #2563EB (blue-600) - meets AA contrast on white background */
+  /* Underline ensures links are distinguishable without relying solely on color */
   color: var(--primary);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  @apply hover:underline-offset-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm;
 }
 
 .dark .link {
