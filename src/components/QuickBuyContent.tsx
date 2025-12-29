@@ -97,12 +97,13 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
             {productImages.length > 0 && (
               <Image
                 src={
-                  productImages[currentImageIndex]?.large ||
+                  productImages[currentImageIndex]?.medium ||
                   productImages[currentImageIndex]?.src ||
                   ''
                 }
                 alt={productImages[currentImageIndex]?.altText || product.title}
                 fill
+                quality={75}
                 className="object-contain transition-opacity duration-300"
                 sizes="(max-width: 640px) 100vw, 500px"
                 priority
@@ -194,6 +195,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   src={image.small || image.src || ''}
                   alt={image.altText || `Product image ${index + 1}`}
                   fill
+                  quality={70}
                   className="object-cover"
                   sizes="64px"
                 />

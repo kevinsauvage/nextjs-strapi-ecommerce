@@ -50,6 +50,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
             width={800}
             height={800}
             fill
+            quality={75}
             className="object-cover"
           />
         </div>
@@ -160,11 +161,11 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
           alt={
             selectedImage?.altText ?? `Product image ${selectedImageIndex + 1} of ${images.length}`
           }
-          width={selectedImage?.width || 1200}
-          height={selectedImage?.height || 1200}
+          width={selectedImage?.width || 1000}
+          height={selectedImage?.height || 1000}
           blurDataURL={selectedImage?.blurDataURL}
           priority={selectedImageIndex === 0}
-          quality={90}
+          quality={80}
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 40vw"
           fill
           className={cn(
@@ -197,12 +198,12 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
                 aria-current={isSelected ? 'true' : 'false'}
               >
                 <OptimizedImage
-                  src={image.medium || image.small || image.src}
+                  src={image.small || image.medium || image.src}
                   alt={image.altText || `Product thumbnail ${globalIndex + 1}`}
-                  width={200}
-                  height={200}
+                  width={150}
+                  height={150}
                   blurDataURL={image.blurDataURL}
-                  quality={75}
+                  quality={70}
                   sizes="(max-width: 640px) 25vw, 20vw"
                   fill
                   className="object-cover"

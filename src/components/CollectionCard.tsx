@@ -20,6 +20,7 @@ const CollectionCard = ({
           src={image.src}
           alt={image.altText || title || 'Collection image'}
           fill
+          quality={75}
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />

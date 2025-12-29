@@ -15,7 +15,7 @@ export function getOptimizedImageUrl(
 ): string {
   if (!url) return '';
 
-  const { width, height, format, quality = 85 } = options || {};
+  const { width, height, format, quality = 75 } = options || {};
 
   // Shopify CDN format conversion
   // Format: ?format=webp or ?format=avif
@@ -34,7 +34,7 @@ export function getOptimizedImageUrl(
     params.append('height', height.toString());
   }
 
-  if (quality && quality !== 85) {
+  if (quality && quality !== 75) {
     params.append('quality', quality.toString());
   }
 
@@ -62,11 +62,12 @@ export function getImageSizeForViewport(viewport: 'mobile' | 'tablet' | 'desktop
   width: number;
   height?: number;
 } {
+  // Optimized sizes for better performance
   const sizes = {
     mobile: { width: 400 },
-    tablet: { width: 600 },
-    desktop: { width: 800 },
-    large: { width: 1200 },
+    tablet: { width: 500 },
+    desktop: { width: 600 },
+    large: { width: 1000 },
   };
   return sizes[viewport];
 }

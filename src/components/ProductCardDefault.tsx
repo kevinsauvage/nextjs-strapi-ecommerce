@@ -40,14 +40,14 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
       >
         <div className="relative overflow-hidden aspect-square">
           <OptimizedImage
-            src={primaryImage?.large || primaryImage?.src || ''}
+            src={primaryImage?.medium || primaryImage?.small || primaryImage?.src || ''}
             alt={primaryImage?.altText || title}
-            width={800}
-            height={800}
+            width={500}
+            height={500}
             blurDataURL={primaryImage?.blurDataURL}
             priority={priority}
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw"
-            quality={85}
+            quality={75}
             className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
             aria-label={`Image of ${title}`}
           />

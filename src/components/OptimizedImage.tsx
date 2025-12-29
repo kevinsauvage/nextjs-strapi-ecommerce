@@ -34,7 +34,7 @@ const OptimizedImage = ({
   priority = false,
   className,
   sizes,
-  quality = 85,
+  quality = 75,
   fill = false,
   onError,
   fallbackSrc = PLACEHOLDER_IMAGE,
@@ -74,8 +74,9 @@ const OptimizedImage = ({
     sizes || '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1536px) 33vw, 25vw';
 
   // Default dimensions for aspect ratio if not provided
-  const defaultWidth = width || 800;
-  const defaultHeight = height || 800;
+  // Reduced from 800x800 to 500x500 for better performance
+  const defaultWidth = width || 500;
+  const defaultHeight = height || 500;
 
   const containerClassName = fill
     ? cn('absolute inset-0 overflow-hidden', className)
