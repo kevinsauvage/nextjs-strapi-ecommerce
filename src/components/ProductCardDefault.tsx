@@ -1,21 +1,15 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 
 import config from '@/config';
-import useCartContext from '@/contexts/CartContext/useCartContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
 import { Badge } from './ui/badge';
-import { Button } from './ui/button';
 import OptimizedImage from './OptimizedImage';
 import Price from './Price';
 import ProductCardActions from './ProductCardActions';
-import SpinnerLoader from './SpinnerLoader';
-
-import { ShoppingBag } from 'lucide-react';
 
 const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(0);
 
@@ -28,27 +22,9 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
   const { title, images, handle, variants, id, priceRange } = product;
   const { price, compareAtPrice, availableForSale, quantityAvailable } =
     variants?.edges?.[0]?.node || {};
-  const [addingToCart, setAddingToCart] = useState(false);
-  const { handleAddToCart } = useCartContext();
 
   const productImages = mapShopifyImagesToImageFields(images?.edges);
-  const variantId = variants?.edges?.[0]?.node?.id;
   const primaryImage = productImages?.[0];
-
-  const handleQuickAddToCart = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (!variantId || !availableForSale) return;
-
-    setAddingToCart(true);
-    try {
-      await handleAddToCart(String(variantId), 1);
-    } catch (error) {
-      console.error('Error adding to cart:', error);
-    } finally {
-      setAddingToCart(false);
-    }
-  };
 
   const isLowStock = quantityAvailable && quantityAvailable < 5 && availableForSale;
   const isSoldOut = !availableForSale;
@@ -102,54 +78,6 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
             >
               Low Stock
             </Badge>
-          )}
-
-          {/* Quick Add to Cart Button - Shows on Hover */}
-          {availableForSale && variantId && (
-            <div className="absolute inset-x-0 bottom-0 z-10 p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:block hidden">
-              <Button
-                size="sm"
-                className="w-full gap-2 shadow-lg"
-                onClick={handleQuickAddToCart}
-                disabled={addingToCart}
-              >
-                {addingToCart ? (
-                  <>
-                    <SpinnerLoader size="sm" />
-                    Adding...
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="h-4 w-4" />
-                    Add to Cart
-                  </>
-                )}
-              </Button>
-            </div>
-          )}
-
-          {/* Mobile Add to Cart Button - Always Visible */}
-          {availableForSale && variantId && (
-            <div className="absolute inset-x-0 bottom-0 z-10 p-2 md:hidden">
-              <Button
-                size="sm"
-                className="w-full gap-2 shadow-lg"
-                onClick={handleQuickAddToCart}
-                disabled={addingToCart}
-              >
-                {addingToCart ? (
-                  <>
-                    <SpinnerLoader size="sm" />
-                    Adding...
-                  </>
-                ) : (
-                  <>
-                    <ShoppingBag className="h-4 w-4" />
-                    Add to Cart
-                  </>
-                )}
-              </Button>
-            </div>
           )}
         </div>
 
