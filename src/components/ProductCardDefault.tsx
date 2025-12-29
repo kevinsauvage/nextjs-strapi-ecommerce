@@ -60,7 +60,6 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
       <Link
         className="block cursor-pointer"
         href={`${config.routes.collection}/products/${handle}`}
-        aria-label={`View product details for ${title}`}
         scroll
       >
         <div className="relative overflow-hidden aspect-square">

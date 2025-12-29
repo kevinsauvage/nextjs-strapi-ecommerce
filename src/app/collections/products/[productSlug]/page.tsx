@@ -77,7 +77,7 @@ const ProductPage = async ({ params }: PageProperties) => {
     recommendations?.productRecommendations && recommendations.productRecommendations.length > 0;
 
   return (
-    <main className="min-h-[calc(100vh-76px)]">
+    <div className="min-h-[calc(100vh-76px)]">  
       <div className="container mx-auto px-4 md:px-6 py-6 md:py-8">
         <Breadcrumbs lastElement={title} />
       </div>
@@ -93,7 +93,7 @@ const ProductPage = async ({ params }: PageProperties) => {
           </HomeSection>
         </section>
       )}
-    </main>
+    </div>
   );
 };
 

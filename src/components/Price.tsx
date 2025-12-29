@@ -22,7 +22,7 @@ const Price = ({
         </Badge>
       )}
       {isDiscount && compareAtPrice && (
-        <p className="text-caption-sm text-muted line-through">
+        <p className="text-caption-sm text-muted-foreground line-through">
           {formatPrice(compareAtPrice.amount, compareAtPrice.currencyCode)}
         </p>
       )}

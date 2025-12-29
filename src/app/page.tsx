@@ -46,7 +46,7 @@ const Home = async () => {
   const newArrivalProducts = newArrival.products.edges.map((edge) => edge.node);
 
   return (
-    <main className="space-y-12 md:space-y-16">
+    <div className="space-y-12 md:space-y-16">
       <PageBanner
         title="Shop the Latest Trends"
         description="Discover the latest trends and exclusive collections that will elevate your style. Shop now and enjoy a seamless shopping experience with us. From fashion to home decor, we have something for everyone."
@@ -77,7 +77,7 @@ const Home = async () => {
           />
         )}
       </div>
-    </main>
+    </div>
   );
 };
 
