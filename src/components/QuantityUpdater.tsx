@@ -55,7 +55,7 @@ const QuantityUpdater = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-8 w-8 transition-all duration-200 hover:scale-110"
+        className="min-h-11 min-w-11 transition-all duration-200 hover:scale-110"
         onClick={() => {
           removeOne();
         }}
@@ -70,7 +70,7 @@ const QuantityUpdater = ({
       <Button
         variant="outline"
         size="icon"
-        className="h-8 w-8 transition-all duration-200 hover:scale-110"
+        className="min-h-11 min-w-11 transition-all duration-200 hover:scale-110"
         onClick={() => {
           addOne();
         }}

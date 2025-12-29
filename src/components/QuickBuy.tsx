@@ -36,7 +36,7 @@ const QuickBuy = ({ product }: QuickBuyProps) => {
       <SheetTrigger asChild>
         <Button
           variant="ghost"
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/95 backdrop-blur-sm text-secondary transition-all duration-200 hover:bg-muted hover:scale-110 shadow-md"
+          className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-border bg-background/95 backdrop-blur-sm text-secondary transition-all duration-200 hover:bg-muted hover:scale-110 shadow-md"
           type="button"
           aria-label="Quick view"
           onClick={(e) => e.stopPropagation()}

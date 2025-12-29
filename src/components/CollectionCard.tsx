@@ -28,7 +28,7 @@ const CollectionCard = ({
         <p className="text-heading-2 text-white">
           <span>{title} </span>
         </p>
-        <Button variant="secondary">
+        <Button variant="secondary" size="default" asChild>
           <Link href={`${config.routes.collection}/${handle}`} className="flex items-center gap-2">
             Shop now
           </Link>

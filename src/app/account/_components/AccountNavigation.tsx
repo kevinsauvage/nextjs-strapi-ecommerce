@@ -35,7 +35,7 @@ const AccountNavigation = ({ handleClose }: { handleClose?: () => void }) => {
             key={`${link.title}-${index + 1}`}
             href={link.url}
             className={cn(
-              'flex items-center gap-3 px-4 py-3 text-body-sm transition-colors',
+              'flex items-center gap-3 px-4 min-h-11 text-body-sm transition-colors',
               'hover:bg-muted',
               isActive && 'bg-muted font-medium',
             )}

@@ -6,9 +6,11 @@ import config from '@/config';
 import { ArrowLeft } from 'lucide-react';
 
 const BackButton: React.FC = () => (
-  <Button variant="secondary">
-    <ArrowLeft size={16} />
-    <Link href={config.routes.account}>Back to account</Link>
+  <Button variant="secondary" asChild>
+    <Link href={config.routes.account} className="flex items-center gap-2">
+      <ArrowLeft size={16} />
+      Back to account
+    </Link>
   </Button>
 );
 

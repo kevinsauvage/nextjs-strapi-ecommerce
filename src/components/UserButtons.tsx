@@ -15,7 +15,11 @@ const UserButtons = ({ className }: { className?: string }) => {
   return (
     <div className={`hidden md:flex md:items-center md:order-3 gap-2 lg:gap-4 ${className}`}>
       <ThemeToggle />
-      <Link aria-label="Search" className="group cursor-pointer" href={config.routes.search}>
+      <Link
+        aria-label="Search"
+        className="group cursor-pointer flex items-center justify-center min-h-11 min-w-11"
+        href={config.routes.search}
+      >
         <Search
           size={30}
           strokeWidth={1}
@@ -25,7 +29,7 @@ const UserButtons = ({ className }: { className?: string }) => {
 
       <Link
         aria-label={'User account'}
-        className="group cursor-pointer flex items-center justify-center"
+        className="group cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.account}
       >
         <User
@@ -36,7 +40,7 @@ const UserButtons = ({ className }: { className?: string }) => {
       </Link>
 
       <Link
-        className="group relative cursor-pointer flex items-center justify-center"
+        className="group relative cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.cart}
         aria-label={'Toggle Checkout'}
       >

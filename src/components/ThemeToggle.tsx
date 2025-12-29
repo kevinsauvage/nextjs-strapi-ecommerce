@@ -17,7 +17,10 @@ const ThemeToggle = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="flex items-center justify-center">
-        <button aria-label="toggle theme" className="cursor-pointer">
+        <button
+          aria-label="toggle theme"
+          className="cursor-pointer flex items-center justify-center min-h-11 min-w-11"
+        >
           <Sun
             size={30}
             strokeWidth={1}
