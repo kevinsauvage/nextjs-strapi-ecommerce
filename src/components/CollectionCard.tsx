@@ -8,8 +8,10 @@ import { Button } from './ui/button';
 
 const CollectionCard = ({
   collection,
+  priority = false,
 }: {
   collection: CollectionsQuery['collections']['edges'][number]['node'];
+  priority?: boolean;
 }) => {
   const { title, image, handle } = collection || {};
 
@@ -21,6 +23,7 @@ const CollectionCard = ({
           alt={image.altText || title || 'Collection image'}
           fill
           quality={75}
+          priority={priority}
           className="object-cover transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
