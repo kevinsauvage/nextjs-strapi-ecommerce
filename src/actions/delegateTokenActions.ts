@@ -15,7 +15,7 @@ export const setDelegateTokenAction = async (): Promise<void> => {
 
   if (!delegateAccessScope) {
     console.error('SHOPIFY_SCOPE environment variable is not set');
-    return;
+    throw new Error('SHOPIFY_SCOPE environment variable is required for delegate token creation');
   }
 
   try {

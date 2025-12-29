@@ -10,6 +10,7 @@ import type { RequestConfig } from 'node_modules/graphql-request/build/esm/types
 
 const ACCESS_TOKEN = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
 const ADMIN_TOKEN = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
+const ADMIN_URL = process.env.SHOPIFY_ADMIN_URL;
 
 const SHOPIFY_URL = process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL;
 
@@ -19,6 +20,22 @@ if (!ACCESS_TOKEN) {
 
 if (!SHOPIFY_URL) {
   throw new Error('Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL');
+}
+
+if (!ADMIN_URL) {
+  throw new Error(
+    'Missing SHOPIFY_ADMIN_URL environment variable. ' +
+      'Set it to your Shopify Admin API endpoint (e.g., https://your-store.myshopify.com/admin/api/2025-01/graphql.json). ' +
+      'This is required for Admin-backed features like wishlist metafields and delegate tokens.',
+  );
+}
+
+if (!ADMIN_TOKEN) {
+  throw new Error(
+    'Missing SHOPIFY_STORE_FRONT_ADMIN_TOKEN environment variable. ' +
+      'Set it to your Shopify Admin API access token. ' +
+      'This is required for Admin-backed features like wishlist metafields and delegate tokens.',
+  );
 }
 
 const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default') => {
@@ -94,11 +111,11 @@ export const storefrontSdk = (cacheOption: 'default' | 'no-store' = 'default') =
 const adminHeaders = {
   headers: {
     'Content-Type': 'application/json',
-    'X-Shopify-Access-Token': ADMIN_TOKEN || '',
+    'X-Shopify-Access-Token': ADMIN_TOKEN,
   },
 };
 
-export const adminClient = new GraphQLClient(process.env.SHOPIFY_ADMIN_URL || '', adminHeaders);
+export const adminClient = new GraphQLClient(ADMIN_URL, adminHeaders);
 
 export const adminSdk = () => {
   return getAdminSdk(adminClient);
