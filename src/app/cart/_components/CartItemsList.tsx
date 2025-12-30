@@ -12,7 +12,7 @@ const CartItemsList = () => {
 
   return (
     <Card>
-      <CardHeaderPattern className="pb-4 md:pb-6" title="Cart Items" size={4} />
+      <CardHeaderPattern className="pb-4 md:pb-6" title="Cart Items" size={3} as="h2" />
       <CardContent>
         <div className="space-y-6">
           {cart.lines.edges.map(({ node }, index) => (
