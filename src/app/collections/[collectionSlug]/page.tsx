@@ -166,9 +166,9 @@ const CollectionSlugPage = async ({
           subtitle="This collection is empty or your filters are too specific. Try adjusting your filters or browse other collections."
           altText="No products found"
           primaryAction={
-            <Link href="/collections">
-              <Button variant="default">Browse All Collections</Button>
-            </Link>
+            <Button variant="default" asChild>
+              <Link href="/collections">Browse All Collections</Link>
+            </Button>
           }
           secondaryAction={
             <Link href="/" className="link">

@@ -33,9 +33,9 @@ const Wishlist = async () => {
             subtitle="Save your favorite items for later. Click the heart icon on any product to add it to your wishlist."
             altText="Empty wishlist"
             primaryAction={
-              <Link href="/">
-                <Button variant="default">Start Shopping</Button>
-              </Link>
+              <Button variant="default" asChild>
+                <Link href="/">Start Shopping</Link>
+              </Button>
             }
             secondaryAction={
               <Link href="/collections" className="link">

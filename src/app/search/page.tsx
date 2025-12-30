@@ -104,9 +104,9 @@ const Page = async ({ searchParams }: { searchParams: Promise<SearchParameters> 
             subtitle="We couldn't find any products matching your search. Try different keywords or browse our collections."
             altText="No search results"
             primaryAction={
-              <Link href="/collections">
-                <Button variant="default">Browse Collections</Button>
-              </Link>
+              <Button variant="default" asChild>
+                <Link href="/collections">Browse Collections</Link>
+              </Button>
             }
             secondaryAction={
               <Link href="/" className="link">

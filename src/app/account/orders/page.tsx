@@ -59,9 +59,9 @@ const Page = async ({
         subtitle="When you place an order, it will appear here. Start shopping to see your order history."
         altText="Order List is Empty"
         primaryAction={
-          <Link href="/">
-            <Button variant="default">Start Shopping</Button>
-          </Link>
+          <Button variant="default" asChild>
+            <Link href="/">Start Shopping</Link>
+          </Button>
         }
         secondaryAction={
           <Link href="/collections" className="link">
@@ -84,9 +84,9 @@ const Page = async ({
             subtitle="When you place an order, it will appear here. Start shopping to see your order history."
             altText="No Orders Found"
             primaryAction={
-              <Link href="/">
-                <Button variant="default">Start Shopping</Button>
-              </Link>
+              <Button variant="default" asChild>
+                <Link href="/">Start Shopping</Link>
+              </Button>
             }
             secondaryAction={
               <Link href="/collections" className="link">

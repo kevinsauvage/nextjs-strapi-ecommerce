@@ -16,9 +16,10 @@ const isWhatPercentOf = (x: number, y: number) => (((x - y) / y) * 100).toFixed(
 type ProductCardDefaultProps = {
   product: ProductFieldsFragment;
   priority: boolean;
+  asListItem?: boolean;
 };
 
-const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
+const ProductCardDefault = ({ product, priority, asListItem = true }: ProductCardDefaultProps) => {
   const { title, images, handle, variants, id, priceRange } = product;
   const { price, compareAtPrice, availableForSale, quantityAvailable } =
     variants?.edges?.[0]?.node || {};
@@ -29,8 +30,10 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
   const isLowStock = quantityAvailable && quantityAvailable < 5 && availableForSale;
   const isSoldOut = !availableForSale;
 
+  const Component = asListItem ? 'li' : 'div';
+
   return (
-    <li className="relative group overflow-hidden rounded-sm transition-all hover:shadow-lg">
+    <Component className="relative group overflow-hidden rounded-sm transition-all hover:shadow-lg">
       <ProductCardActions product={product} productId={id} />
 
       <Link
@@ -88,7 +91,7 @@ const ProductCardDefault = ({ product, priority }: ProductCardDefaultProps) => {
           </div>
         </div>
       </Link>
-    </li>
+    </Component>
   );
 };
 

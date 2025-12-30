@@ -33,6 +33,7 @@ const CollectionNav = ({
                           ? 'default'
                           : 'secondary'
                       }
+                      asChild
                     >
                       <Link
                         href={

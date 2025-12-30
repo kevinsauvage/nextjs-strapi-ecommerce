@@ -136,6 +136,7 @@ const CarouselContent = ({ className, ...properties }: React.ComponentProps<'div
   return (
     <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
       <div
+        role="list"
         className={cn('flex', orientation === 'horizontal' ? '-ml-4' : '-mt-4 flex-col', className)}
         {...properties}
       />
@@ -148,7 +149,7 @@ const CarouselItem = ({ className, ...properties }: React.ComponentProps<'div'>)
 
   return (
     <div
-      role="group"
+      role="listitem"
       aria-roledescription="slide"
       data-slot="carousel-item"
       className={cn(

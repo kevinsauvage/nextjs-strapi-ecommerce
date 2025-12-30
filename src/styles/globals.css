@@ -40,8 +40,8 @@
   --sidebar-foreground: #111827; /* Primary: #111827 */
 
   /* Accent/Link Color - Used for links and interactive elements */
-  --primary: #2563eb; /* Accent: #2563EB (blue-600) */
-  --sidebar-primary: #2563eb; /* Accent: #2563EB */
+  --primary: #1d4ed8; /* Accent: #1D4ED8 (blue-700) - better contrast for buttons */
+  --sidebar-primary: #1d4ed8; /* Accent: #1D4ED8 */
   --primary-foreground: #ffffff; /* White text on accent */
   --sidebar-primary-foreground: #ffffff;
 
@@ -98,11 +98,11 @@
   --popover-foreground: #ffffff;
   --sidebar-foreground: #ffffff;
 
-  /* Accent/Link Color - Lighter blue for better contrast on dark */
-  --primary: #60a5fa; /* blue-400 - better contrast on dark backgrounds */
-  --sidebar-primary: #60a5fa;
-  --primary-foreground: #111827; /* Dark text on light accent */
-  --sidebar-primary-foreground: #111827;
+  /* Accent/Link Color - Darker blue for better contrast with white text */
+  --primary: #2563eb; /* blue-600 - better contrast with white text (5.2:1) */
+  --sidebar-primary: #2563eb;
+  --primary-foreground: #ffffff; /* White text on dark accent */
+  --sidebar-primary-foreground: #ffffff;
 
   /* Secondary and Accent Surfaces */
   --secondary: #374151; /* gray-700 - darker muted surface */
@@ -114,8 +114,8 @@
 
   /* Muted Colors */
   --muted: #374151; /* gray-700 - darker muted surface */
-  --muted-foreground: #9ca3af; /* gray-400 - lighter secondary text */
-  --muted-text: #6b7280; /* gray-500 - muted text for captions */
+  --muted-foreground: #d1d5db; /* gray-300 - lighter secondary text for better contrast on dark */
+  --muted-text: #d1d5db; /* gray-300 - muted text for captions, better contrast on dark */
 
   /* Destructive */
   --destructive: #ef4444; /* red-500 - lighter red for dark mode */
@@ -124,8 +124,8 @@
   /* Borders and Inputs */
   --border: #374151; /* gray-700 - darker borders */
   --sidebar-border: #374151;
-  --ring: #60a5fa; /* Lighter blue for focus rings */
-  --sidebar-ring: #60a5fa;
+  --ring: #2563eb; /* blue-600 for focus rings */
+  --sidebar-ring: #2563eb;
   --input: #374151; /* Darker input borders */
 
   /* Chart Colors (unchanged) */
@@ -470,6 +470,13 @@ h6 {
 .text-label-sm.text-secondary {
   /* Use a darker shade for better contrast on small text */
   color: #374151; /* gray-700 - 8.5:1 contrast on white, meets AAA for small text */
+}
+
+/* Dark mode: ensure small secondary text has sufficient contrast */
+.dark .text-caption-sm.text-secondary,
+.dark .text-label-sm.text-secondary {
+  /* Use a much lighter shade for better contrast on dark backgrounds */
+  color: #f3f4f6; /* gray-100 - high contrast on dark backgrounds, meets WCAG AAA */
 }
 
 .text-muted {
