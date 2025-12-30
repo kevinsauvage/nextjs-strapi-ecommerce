@@ -31,7 +31,7 @@ const Loading = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         <div className="lg:col-span-2">
           <Card>
-            <CardHeaderPattern title="Cart Items" size={4} />
+            <CardHeaderPattern title="Cart Items" size={3} />
             <CardContent>
               <div className="space-y-2">
                 {Array.from({ length: 3 }).map((_, index) => (
