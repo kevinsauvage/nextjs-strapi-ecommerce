@@ -80,3 +80,15 @@ query getProductWithVariant(
     }
   }
 }
+
+query getProductsByIds(
+  $ids: [ID!]!
+  $identifiers: [HasMetafieldsIdentifier!]!
+  $language: LanguageCode
+) @inContext(language: $language) {
+  nodes(ids: $ids) {
+    ... on Product {
+      ...ProductFields
+    }
+  }
+}

@@ -40,7 +40,7 @@ export const UserProvider = ({
       try {
         const result = isWishlisted
           ? await removeFromWishlist(product.id)
-          : await addToWishlist(product);
+          : await addToWishlist(product.id);
 
         if (result?.success && result.data) {
           toast.success(result.message);

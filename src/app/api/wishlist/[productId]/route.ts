@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from 'next/server';
 import {
   getWishlist,
   getWishlistErrorStatus,
+  getWishlistIds,
   requireWishlistAuth,
   updateWishlistMetafields,
 } from '@/lib/wishlist';
@@ -30,23 +31,25 @@ export async function DELETE(
 
     const productId = decodeURIComponent(rawProductId);
 
-    const currentWishlist = await getWishlist();
-    const newWishList = currentWishlist.filter((item) => item.id !== productId);
+    const currentWishlistIds = await getWishlistIds();
+    const newWishlistIds = currentWishlistIds.filter((id) => id !== productId);
 
-    if (currentWishlist.length === newWishList.length) {
+    if (currentWishlistIds.length === newWishlistIds.length) {
       return NextResponse.json(
         { error: true, message: 'Product not found in wishlist' },
         { status: 404 },
       );
     }
 
-    const result = await updateWishlistMetafields(newWishList, user.id);
+    const result = await updateWishlistMetafields(newWishlistIds, user.id);
 
-    if (result.success && result.data) {
+    if (result.success && result.data !== undefined) {
+      // Resolve products to return full data
+      const wishlist = await getWishlist();
       return NextResponse.json(
         {
           message: 'Product correctly removed from wishlist',
-          data: result.data,
+          data: wishlist,
           success: true,
         },
         {

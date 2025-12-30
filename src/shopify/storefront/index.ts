@@ -14958,6 +14958,209 @@ export type GetProductWithVariantQuery = {
   } | null;
 };
 
+export type GetProductsByIdsQueryVariables = Exact<{
+  ids: Array<Scalars['ID']['input']> | Scalars['ID']['input'];
+  identifiers: Array<HasMetafieldsIdentifier> | HasMetafieldsIdentifier;
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type GetProductsByIdsQuery = {
+  __typename?: 'QueryRoot';
+  nodes: Array<
+    | { __typename?: 'AppliedGiftCard' }
+    | { __typename?: 'Article' }
+    | { __typename?: 'Blog' }
+    | { __typename?: 'Cart' }
+    | { __typename?: 'CartLine' }
+    | { __typename?: 'Collection' }
+    | { __typename?: 'Comment' }
+    | { __typename?: 'Company' }
+    | { __typename?: 'CompanyContact' }
+    | { __typename?: 'CompanyLocation' }
+    | { __typename?: 'ComponentizableCartLine' }
+    | { __typename?: 'ExternalVideo' }
+    | { __typename?: 'GenericFile' }
+    | { __typename?: 'Location' }
+    | { __typename?: 'MailingAddress' }
+    | { __typename?: 'Market' }
+    | { __typename?: 'MediaImage' }
+    | { __typename?: 'MediaPresentation' }
+    | { __typename?: 'Menu' }
+    | { __typename?: 'MenuItem' }
+    | { __typename?: 'Metafield' }
+    | { __typename?: 'Metaobject' }
+    | { __typename?: 'Model3d' }
+    | { __typename?: 'Order' }
+    | { __typename?: 'Page' }
+    | {
+        __typename?: 'Product';
+        handle: string;
+        id: string;
+        title: string;
+        availableForSale: boolean;
+        descriptionHtml: string;
+        productType: string;
+        tags: Array<string>;
+        totalInventory?: number | null;
+        vendor: string;
+        updatedAt: string;
+        featuredImage?: {
+          __typename?: 'Image';
+          url: string;
+          src: string;
+          altText?: string | null;
+          width?: number | null;
+          height?: number | null;
+          small: string;
+          medium: string;
+          large: string;
+          blurDataURL: string;
+        } | null;
+        images: {
+          __typename?: 'ImageConnection';
+          edges: Array<{
+            __typename?: 'ImageEdge';
+            node: {
+              __typename?: 'Image';
+              url: string;
+              src: string;
+              altText?: string | null;
+              width?: number | null;
+              height?: number | null;
+              small: string;
+              medium: string;
+              large: string;
+              blurDataURL: string;
+            };
+          }>;
+        };
+        priceRange: {
+          __typename?: 'ProductPriceRange';
+          maxVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+          minVariantPrice: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+        };
+        options: Array<{
+          __typename?: 'ProductOption';
+          id: string;
+          name: string;
+          optionValues: Array<{
+            __typename?: 'ProductOptionValue';
+            id: string;
+            name: string;
+            firstSelectableVariant?: { __typename?: 'ProductVariant'; id: string } | null;
+            swatch?: { __typename?: 'ProductOptionValueSwatch'; color?: string | null } | null;
+          }>;
+        }>;
+        collections: {
+          __typename?: 'CollectionConnection';
+          edges: Array<{
+            __typename?: 'CollectionEdge';
+            node: { __typename?: 'Collection'; handle: string };
+          }>;
+        };
+        variants: {
+          __typename?: 'ProductVariantConnection';
+          edges: Array<{
+            __typename?: 'ProductVariantEdge';
+            node: {
+              __typename?: 'ProductVariant';
+              id: string;
+              availableForSale: boolean;
+              quantityAvailable?: number | null;
+              title: string;
+              sku?: string | null;
+              weight?: number | null;
+              weightUnit: WeightUnit;
+              compareAtPrice?: {
+                __typename?: 'MoneyV2';
+                amount: string;
+                currencyCode: CurrencyCode;
+              } | null;
+              selectedOptions: Array<{
+                __typename?: 'SelectedOption';
+                name: string;
+                value: string;
+              }>;
+              image?: {
+                __typename?: 'Image';
+                url: string;
+                src: string;
+                altText?: string | null;
+                width?: number | null;
+                height?: number | null;
+                small: string;
+                medium: string;
+                large: string;
+                blurDataURL: string;
+              } | null;
+              price: { __typename?: 'MoneyV2'; amount: string; currencyCode: CurrencyCode };
+              product: {
+                __typename?: 'Product';
+                handle: string;
+                title: string;
+                collections: {
+                  __typename?: 'CollectionConnection';
+                  nodes: Array<{ __typename?: 'Collection'; handle: string }>;
+                };
+              };
+            };
+          }>;
+        };
+        metafields: Array<{
+          __typename?: 'Metafield';
+          id: string;
+          key: string;
+          namespace: string;
+          value: string;
+          type: string;
+          createdAt: string;
+          updatedAt: string;
+          parentResource:
+            | {
+                __typename?: 'Article';
+                id: string;
+                metafields: Array<{
+                  __typename?: 'Metafield';
+                  id: string;
+                  key: string;
+                  value: string;
+                  type: string;
+                  createdAt: string;
+                  updatedAt: string;
+                } | null>;
+              }
+            | { __typename?: 'Blog'; id: string }
+            | { __typename?: 'Cart'; id: string }
+            | { __typename?: 'Collection'; id: string }
+            | { __typename?: 'Company'; id: string }
+            | { __typename?: 'CompanyLocation'; id: string }
+            | { __typename?: 'Customer'; id: string }
+            | { __typename?: 'Location'; id: string }
+            | { __typename?: 'Market'; id: string }
+            | { __typename?: 'Order'; id: string }
+            | { __typename?: 'Page'; id: string }
+            | { __typename?: 'Product'; id: string }
+            | { __typename?: 'ProductVariant'; id: string }
+            | { __typename?: 'SellingPlan'; id: string }
+            | { __typename?: 'Shop'; id: string };
+        } | null>;
+        seo: { __typename?: 'SEO'; description?: string | null; title?: string | null };
+      }
+    | { __typename?: 'ProductOption' }
+    | { __typename?: 'ProductOptionValue' }
+    | { __typename?: 'ProductVariant' }
+    | { __typename?: 'Shop' }
+    | { __typename?: 'ShopPayInstallmentsFinancingPlan' }
+    | { __typename?: 'ShopPayInstallmentsFinancingPlanTerm' }
+    | { __typename?: 'ShopPayInstallmentsProductVariantPricing' }
+    | { __typename?: 'ShopPolicy' }
+    | { __typename?: 'TaxonomyCategory' }
+    | { __typename?: 'UrlRedirect' }
+    | { __typename?: 'Video' }
+    | null
+  >;
+};
+
 export type PredictiveSearchQueryVariables = Exact<{
   query: Scalars['String']['input'];
   types?: InputMaybe<Array<PredictiveSearchType> | PredictiveSearchType>;
@@ -17050,6 +17253,20 @@ export const GetProductWithVariantDocument = gql`
   ${ProductFieldsFragmentDoc}
   ${ProductVariantFieldsFragmentDoc}
 `;
+export const GetProductsByIdsDocument = gql`
+  query getProductsByIds(
+    $ids: [ID!]!
+    $identifiers: [HasMetafieldsIdentifier!]!
+    $language: LanguageCode
+  ) @inContext(language: $language) {
+    nodes(ids: $ids) {
+      ... on Product {
+        ...ProductFields
+      }
+    }
+  }
+  ${ProductFieldsFragmentDoc}
+`;
 export const PredictiveSearchDocument = gql`
   query predictiveSearch(
     $query: String!
@@ -17993,6 +18210,24 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             signal,
           }),
         'getProductWithVariant',
+        'query',
+        variables,
+      );
+    },
+    getProductsByIds(
+      variables: GetProductsByIdsQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+      signal?: RequestInit['signal'],
+    ): Promise<GetProductsByIdsQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetProductsByIdsQuery>({
+            document: GetProductsByIdsDocument,
+            variables,
+            requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders },
+            signal,
+          }),
+        'getProductsByIds',
         'query',
         variables,
       );

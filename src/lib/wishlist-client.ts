@@ -10,10 +10,16 @@ type WishlistResponse = {
   data?: ProductFieldsFragment[];
 };
 
-export const addToWishlist = async (product: ProductFieldsFragment): Promise<WishlistResponse> => {
-  return api.post<WishlistResponse>('/api/wishlist', { product });
+/**
+ * Add a product to wishlist by sending only the product ID
+ */
+export const addToWishlist = async (productId: string): Promise<WishlistResponse> => {
+  return api.post<WishlistResponse>('/api/wishlist', { productId });
 };
 
+/**
+ * Remove a product from wishlist by product ID
+ */
 export const removeFromWishlist = async (productId: string): Promise<WishlistResponse> => {
   const encodedProductId = encodeURIComponent(productId);
   return api.delete<WishlistResponse>(`/api/wishlist/${encodedProductId}`);

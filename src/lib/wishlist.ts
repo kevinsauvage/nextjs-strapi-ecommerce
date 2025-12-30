@@ -5,6 +5,10 @@ import { adminSdk, storefrontSdk } from '@/shopify';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { getShopifyToken } from '@/utils/shopify';
 
+export const WISHLIST_MAX_ITEMS = 100;
+
+export type WishlistIds = string[];
+
 export async function requireWishlistAuth() {
   const shopifyToken = await getShopifyToken();
   if (!shopifyToken) {
@@ -13,7 +17,10 @@ export async function requireWishlistAuth() {
   return shopifyToken;
 }
 
-export const getWishlist = async (): Promise<ProductFieldsFragment[]> => {
+/**
+ * Get wishlist product IDs from metafield
+ */
+export const getWishlistIds = async (): Promise<WishlistIds> => {
   const shopifyToken = await getShopifyToken();
 
   if (!shopifyToken) return [];
@@ -24,19 +31,82 @@ export const getWishlist = async (): Promise<ProductFieldsFragment[]> => {
   });
 
   const metafields = wishlistResponse?.customer?.metafields;
-  const wishlist = metafields?.[0]?.value;
+  const wishlistValue = metafields?.[0]?.value;
 
-  if (typeof wishlist === 'string') {
-    return JSON.parse(wishlist) as ProductFieldsFragment[];
+  if (typeof wishlistValue === 'string') {
+    try {
+      const parsed = JSON.parse(wishlistValue);
+      
+      if (Array.isArray(parsed)) {
+        return parsed.filter((id): id is string => typeof id === 'string');
+      }
+    } catch (error) {
+      console.error('Error parsing wishlist:', error);
+      return [];
+    }
   }
 
   return [];
 };
 
+/**
+ * Resolve product IDs to full product fragments
+ * Fetches products from Shopify using their IDs via the nodes query
+ */
+const resolveProductsByIds = async (productIds: string[]): Promise<ProductFieldsFragment[]> => {
+  if (productIds.length === 0) return [];
+
+  try {
+    const response = await storefrontSdk('no-store').getProductsByIds({
+      ids: productIds,
+      identifiers: [],
+    });
+
+    if (!response.nodes || response.nodes.length === 0) {
+      return [];
+    }
+
+    // Since we use `... on Product` in the query, all non-null nodes are Products
+    // Filter out null values and cast to ProductFieldsFragment
+    const productMap = new Map(
+      response.nodes
+        .filter((node) => node !== null && node !== undefined)
+        .map((node) => {
+          // TypeScript sees this as a union, but we know it's a Product due to `... on Product`
+          // Cast directly since the query guarantees it's a Product
+          const product = node as unknown as ProductFieldsFragment;
+          return [product.id, product] as [string, ProductFieldsFragment];
+        }),
+    );
+    
+    // Maintain order based on input IDs
+    return productIds
+      .map((id) => productMap.get(id))
+      .filter((p): p is ProductFieldsFragment => p !== undefined);
+  } catch (error) {
+    console.error('Error resolving wishlist products:', error);
+    return [];
+  }
+};
+
+/**
+ * Get wishlist with resolved product data
+ * This is the main function to use when you need full product information
+ */
+export const getWishlist = async (): Promise<ProductFieldsFragment[]> => {
+  const productIds = await getWishlistIds();
+  return resolveProductsByIds(productIds);
+};
+
+/**
+ * Create metafield payload for wishlist (stores only product IDs)
+ */
 export const createWishlistMetafields = (
-  wishlist: Array<ProductFieldsFragment> | ProductFieldsFragment | undefined,
+  productIds: WishlistIds,
   userId: string,
 ) => {
+  const limitedIds = productIds.slice(0, WISHLIST_MAX_ITEMS);
+  
   return {
     metafields: [
       {
@@ -44,17 +114,25 @@ export const createWishlistMetafields = (
         namespace: 'custom',
         ownerId: userId,
         type: 'json',
-        value: JSON.stringify(wishlist),
+        value: JSON.stringify(limitedIds),
       },
     ],
   };
 };
 
+/**
+ * Update wishlist metafield with product IDs
+ * Returns the updated list of product IDs
+ */
 export const updateWishlistMetafields = async (
-  wishlist: ProductFieldsFragment[],
+  productIds: WishlistIds,
   userId: string,
-): Promise<{ success: boolean; data?: ProductFieldsFragment[]; message?: string }> => {
-  const { metafields } = createWishlistMetafields(wishlist, userId);
+): Promise<{ success: boolean; data?: WishlistIds; message?: string }> => {
+  const limitedIds = productIds.slice(0, WISHLIST_MAX_ITEMS);
+  
+  const uniqueIds = Array.from(new Set(limitedIds));
+
+  const { metafields } = createWishlistMetafields(uniqueIds, userId);
 
   const responseMetafield = await adminSdk().MetafieldsSet({ metafields });
   const errors = responseMetafield?.metafieldsSet?.userErrors;
@@ -71,14 +149,21 @@ export const updateWishlistMetafields = async (
     (field) => field.key === 'wishlist',
   )?.[0]?.value;
 
-  const parsed = value ? (JSON.parse(value) as ProductFieldsFragment[]) : undefined;
-
-  if (parsed) {
-    revalidateWishlist();
-    return {
-      success: true,
-      data: parsed,
-    };
+  if (value) {
+    try {
+      const parsed = JSON.parse(value) as WishlistIds;
+      revalidateWishlist();
+      return {
+        success: true,
+        data: parsed,
+      };
+    } catch (error) {
+      console.error('Error parsing wishlist response:', error);
+      return {
+        success: false,
+        message: "Couldn't parse wishlist response",
+      };
+    }
   }
 
   return {
@@ -89,7 +174,7 @@ export const updateWishlistMetafields = async (
 
 export function revalidateWishlist(): void {
   revalidatePath(config.routes.wishlist);
-  revalidatePath('/', 'layout'); // Also revalidate layout since wishlist is used there
+  revalidatePath('/', 'layout');
 }
 
 export function getWishlistErrorStatus(error: unknown): number {

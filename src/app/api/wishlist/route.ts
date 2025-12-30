@@ -3,10 +3,11 @@ import { type NextRequest, NextResponse } from 'next/server';
 import {
   getWishlist,
   getWishlistErrorStatus,
+  getWishlistIds,
   requireWishlistAuth,
   updateWishlistMetafields,
+  WISHLIST_MAX_ITEMS,
 } from '@/lib/wishlist';
-import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { getUser } from '@/utils/users';
 
 export const dynamic = 'force-dynamic';
@@ -34,30 +35,41 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { product } = body as { product: ProductFieldsFragment };
+    const { productId } = body as { productId: string };
 
-    if (!product?.id) {
-      return NextResponse.json({ error: 'Missing product' }, { status: 400 });
+    if (!productId || typeof productId !== 'string') {
+      return NextResponse.json({ error: 'Missing or invalid product ID' }, { status: 400 });
     }
 
-    const currentWishlist = await getWishlist();
-    const isWishlisted = currentWishlist.some((item) => item.id === product.id);
-
-    if (isWishlisted) {
+    const currentWishlistIds = await getWishlistIds();
+    
+    if (currentWishlistIds.includes(productId)) {
       return NextResponse.json(
         { error: true, message: 'Product already in wishlist' },
         { status: 400 },
       );
     }
 
-    const newWishList = [...currentWishlist, product];
-    const result = await updateWishlistMetafields(newWishList, user.id);
+    if (currentWishlistIds.length >= WISHLIST_MAX_ITEMS) {
+      return NextResponse.json(
+        {
+          error: true,
+          message: `Wishlist is full. Maximum ${WISHLIST_MAX_ITEMS} items allowed.`,
+        },
+        { status: 400 },
+      );
+    }
 
-    if (result.success && result.data) {
+    const newWishlistIds = [...currentWishlistIds, productId];
+    const result = await updateWishlistMetafields(newWishlistIds, user.id);
+
+    if (result.success && result.data !== undefined) {
+      // Resolve products to return full data
+      const wishlist = await getWishlist();
       return NextResponse.json(
         {
           message: 'Product correctly added to wishlist',
-          data: result.data,
+          data: wishlist,
           success: true,
         },
         {
