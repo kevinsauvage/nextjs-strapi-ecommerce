@@ -116,7 +116,7 @@ const LineItem: React.FC<{
               )}
             </div>
             {node.quantity > 1 && (
-              <p className="text-caption-sm text-secondary mt-1">
+              <p className="text-caption-sm text-muted mt-1">
                 {formatPrice(unitPrice, currencyCode)} each
               </p>
             )}
