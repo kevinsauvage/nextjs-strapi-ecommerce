@@ -61,11 +61,12 @@ const EmptyState = ({
         }`}
       >
         <Image
-          className="w-full h-full max-h-[200px] object-contain animate-pulse-subtle"
+          className="object-contain animate-pulse-subtle"
           alt={altText}
           src={image.src}
           width={image.width}
           height={image.height}
+          style={{ maxHeight: '200px', width: 'auto', height: 'auto' }}
         />
       </div>
       <div
@@ -73,13 +74,13 @@ const EmptyState = ({
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
         }`}
       >
-        <h4 className="text-heading-3 mb-2 px-4">{title}</h4>
-        <p className="max-w-[36rem] mx-auto px-4 text-center text-body-sm md:text-body text-secondary mb-6">
+        <h2 className="text-heading-3 mb-2 px-4">{title}</h2>
+        <p className="max-w-xl mx-auto px-4 text-center text-body-sm md:text-body text-secondary mb-6">
           {subtitle}
         </p>
 
         {shouldShowTips && (
-          <div className="mb-6 max-w-[36rem] mx-auto px-4">
+          <div className="mb-6 max-w-xl mx-auto px-4">
             <p className="text-label-sm text-secondary mb-3 font-medium">Helpful tips:</p>
             <ul className="space-y-2 text-left">
               {tips.map((tip, index) => (
