@@ -8,7 +8,7 @@ import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import seo from '@/data/seo';
-import { getWishlist } from '@/lib/wishlist';
+import { WishlistService } from '@/services/wishlist.service';
 
 import BackButton from '../_components/BackButton';
 
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 };
 
 const Wishlist = async () => {
-  const userWishlist = await getWishlist();
+  const userWishlist = await WishlistService.getWishlist();
 
   if (!userWishlist?.length) {
     return (

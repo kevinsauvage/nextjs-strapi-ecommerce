@@ -1,12 +1,9 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
-
 import config from '@/config';
-import { handleCustomerUserErrors, zodErrorsToFormActionResult } from '@/lib/formActions';
-import { storefrontSdk } from '@/shopify';
+import { UserService } from '@/services/user.service';
 import type { FormActionResult } from '@/types/formActions';
-import { getShopifyToken, setShopifyToken } from '@/utils/shopify';
+import { zodErrorsToFormActionResult } from '@/utils/form-actions';
 
 import { delCookieAction } from './cookiesActions';
 
@@ -44,44 +41,22 @@ export async function updateUserAction(
 
   const { email, firstName, lastName, acceptsMarketing, company, phone } = result.data;
 
-  const shopifyToken = await getShopifyToken();
-
-  if (!shopifyToken) {
-    return { error: 'User not logged in' };
-  }
-
-  const customerInput = {
-    acceptsMarketing: acceptsMarketing === 'true',
-    company,
+  const serviceResult = await UserService.updateUser({
     email,
     firstName,
     lastName,
-    phone: phone || undefined,
-  };
-
-  const updateResponse = await storefrontSdk().customerUpdate({
-    customer: customerInput,
-    customerAccessToken: shopifyToken,
+    acceptsMarketing,
+    company,
+    phone,
   });
 
-  const { customerUserErrors, customer, customerAccessToken } =
-    updateResponse?.customerUpdate || {};
-
-  const errorResult = handleCustomerUserErrors(customerUserErrors);
-  if (errorResult) return errorResult;
-
-  if (customerAccessToken) {
-    await setShopifyToken(customerAccessToken);
+  if ('error' in serviceResult) {
+    return serviceResult;
   }
 
-  if (customer) {
-    revalidatePath(config.routes.updateAccount);
-    return {
-      success: 'User updated successfully',
-    };
-  }
-
-  return { error: 'Failed to update user' };
+  return {
+    success: serviceResult.success || 'User updated successfully',
+  };
 }
 
 export const logoutAction = async () => {

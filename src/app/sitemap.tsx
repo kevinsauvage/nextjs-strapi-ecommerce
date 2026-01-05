@@ -1,8 +1,8 @@
 import type { MetadataRoute } from 'next';
 
 import { sitemap as sitemapConfig } from '@/config';
+import { getBaseUrl } from '@/lib/server/metadata';
 import { storefrontSdk } from '@/shopify';
-import { getBaseUrl } from '@/utils/metadata';
 
 const getBaseSitemap = (): MetadataRoute.Sitemap => {
   const baseUrl = getBaseUrl();

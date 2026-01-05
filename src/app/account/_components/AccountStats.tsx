@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 import { Calendar, Heart, MapPin, Package } from 'lucide-react';
 

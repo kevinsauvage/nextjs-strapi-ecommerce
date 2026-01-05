@@ -7,9 +7,8 @@ import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import config from '@/config';
-import { getCart } from '@/lib/cart';
-import { getCartId } from '@/lib/cart-helpers';
-import { getWishlist } from '@/lib/wishlist';
+import { CartService } from '@/services/cart.service';
+import { WishlistService } from '@/services/wishlist.service';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
@@ -27,8 +26,8 @@ const inter = Inter({
 });
 
 const handleInitialCart = async () => {
-  const cartId = await getCartId();
-  return cartId ? getCart(cartId) : null;
+  const cartId = await CartService.getCartId();
+  return cartId ? CartService.getCart(cartId) : null;
 };
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -37,7 +36,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
     storefrontSdk().getMenuByHandle({ handle: config.constants.menuHandles.footer }),
     handleInitialCart(),
     getUser(),
-    getWishlist(),
+    WishlistService.getWishlist(),
   ]);
 
   return (

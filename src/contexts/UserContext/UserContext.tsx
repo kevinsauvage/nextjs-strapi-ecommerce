@@ -4,8 +4,8 @@ import { createContext, useCallback, useMemo } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
 import config from '@/config';
-import { addToWishlist, removeFromWishlist } from '@/lib/wishlist-client';
 import type { GetCustomerQuery, ProductFieldsFragment } from '@/shopify/storefront';
+import { addToWishlist, removeFromWishlist } from '@/utils/wishlist-client';
 
 import { toast } from 'sonner';
 

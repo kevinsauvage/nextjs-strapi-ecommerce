@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { accountNav } from '@/config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 import { BookText, BookUser, Heart, LogOut, Package, User } from 'lucide-react';
 

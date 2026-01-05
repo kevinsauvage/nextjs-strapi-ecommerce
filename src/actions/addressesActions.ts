@@ -1,18 +1,12 @@
 'use server';
 
-import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import config from '@/config';
-import { safeLogError } from '@/lib/api-responses';
-import { handleCustomerUserErrors } from '@/lib/formActions';
-import { storefrontSdk } from '@/shopify';
-import { getShopifyToken } from '@/utils/shopify';
+import { AddressService } from '@/services/address.service';
+import { zodErrorsToFormActionResult } from '@/utils/form-actions';
 
 import { z } from 'zod';
-
-const defaultErrorMessage = 'Something went wrong';
-const unauthenticatedErrorMessage = 'User not authenticated';
 
 const addressSchema = z.object({
   address1: z.string().min(1, 'Address is required'),
@@ -32,115 +26,50 @@ type AddressInput = z.infer<typeof addressSchema>;
 
 export async function createAddressAction(input: AddressInput) {
   const result = addressSchema.safeParse(input);
-  if (!result?.success) return result.error.formErrors.fieldErrors;
-
-  const customerAccessToken = await getShopifyToken();
-  if (!customerAccessToken) {
-    return { error: unauthenticatedErrorMessage };
+  if (!result?.success) {
+    return zodErrorsToFormActionResult(result.error);
   }
 
-  const response = await storefrontSdk().customerAddressCreate({
-    address: result.data,
-    customerAccessToken,
-  });
+  const serviceResult = await AddressService.createAddress(result.data);
 
-  const { customerUserErrors, customerAddress } = response?.customerAddressCreate || {};
-
-  if (customerAddress) {
-    revalidatePath(config.routes.addresses);
-    return redirect(config.routes.addresses);
+  if ('error' in serviceResult) {
+    return serviceResult;
   }
 
-  const errorResult = handleCustomerUserErrors(customerUserErrors);
-  if (errorResult) return errorResult;
-
-  return { error: defaultErrorMessage };
+  return redirect(config.routes.addresses);
 }
 
 export async function deleteAddressAction(addressId: string) {
-  const customerAccessToken = await getShopifyToken();
-  if (!customerAccessToken) {
-    return { error: unauthenticatedErrorMessage };
+  const serviceResult = await AddressService.deleteAddress(addressId);
+
+  if ('error' in serviceResult) {
+    return serviceResult;
   }
 
-  const response = await storefrontSdk().customerAddressDelete({
-    addressId,
-    customerAccessToken,
-  });
-
-  const { customerUserErrors, deletedCustomerAddressId } = response?.customerAddressDelete || {};
-
-  if (deletedCustomerAddressId) {
-    revalidatePath(config.routes.addresses);
-    return redirect(config.routes.addresses);
-  }
-
-  const errorResult = handleCustomerUserErrors(customerUserErrors);
-  if (errorResult) return errorResult;
-
-  return { error: defaultErrorMessage };
+  return redirect(config.routes.addresses);
 }
 
 export async function setDefaultAddressAction(addressId: string) {
-  const customerAccessToken = await getShopifyToken();
-  if (!customerAccessToken) {
-    return { error: unauthenticatedErrorMessage };
+  const serviceResult = await AddressService.setDefaultAddress(addressId);
+
+  if ('error' in serviceResult) {
+    return serviceResult;
   }
 
-  let response;
-  try {
-    response = await storefrontSdk().customerDefaultAddressUpdate({
-      addressId,
-      customerAccessToken,
-    });
-  } catch (error) {
-    safeLogError('setDefaultAddressAction', error);
-    return { error: 'Failed to set default address' };
-  }
-  const { customerUserErrors, customer } = response?.customerDefaultAddressUpdate || {};
-
-  const errorResult = handleCustomerUserErrors(customerUserErrors);
-  if (errorResult) return errorResult;
-
-  if (customer) {
-    revalidatePath(config.routes.addresses);
-    return redirect(config.routes.addresses);
-  }
-
-  return { error: defaultErrorMessage };
+  return redirect(config.routes.addresses);
 }
 
 export async function updateAddressAction(input: AddressInput) {
   const result = addressSchema.safeParse(input);
-  if (!result?.success) return result.error.formErrors.fieldErrors;
-
-  const customerAccessToken = await getShopifyToken();
-  if (!customerAccessToken) {
-    return { error: unauthenticatedErrorMessage };
+  if (!result?.success) {
+    return zodErrorsToFormActionResult(result.error);
   }
 
-  const { id, ...address } = result.data;
-  if (!id) {
-    return { error: 'Address ID is required for update' };
+  const serviceResult = await AddressService.updateAddress(result.data);
+
+  if ('error' in serviceResult) {
+    return serviceResult;
   }
 
-  const response = await storefrontSdk().customerAddressUpdate({
-    address,
-    addressId: id,
-    customerAccessToken,
-  });
-
-  const { customerUserErrors, customerAddress } = response?.customerAddressUpdate || {};
-
-  const errorResult = handleCustomerUserErrors(customerUserErrors);
-  if (errorResult) return errorResult;
-
-  if (customerAddress) {
-    revalidatePath(`${config.routes.addresses}/edit`);
-    revalidatePath(config.routes.addresses);
-
-    return redirect(config.routes.addresses);
-  }
-
-  return { error: defaultErrorMessage };
+  return redirect(config.routes.addresses);
 }

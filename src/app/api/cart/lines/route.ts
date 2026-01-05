@@ -1,15 +1,15 @@
 import { type NextRequest } from 'next/server';
 
+import { CartService } from '@/services/cart.service';
+import { storefrontSdk } from '@/shopify';
+import { adjustPaginationVariables } from '@/shopify/helpers';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
   mapShopifyUserErrors,
-} from '@/lib/api-responses';
-import { getCartId, revalidateCart } from '@/lib/cart-helpers';
-import { storefrontSdk } from '@/shopify';
-import { adjustPaginationVariables } from '@/shopify/helpers';
+} from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,7 +34,7 @@ function getPaginationParams(searchParams: URLSearchParams) {
 }
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getCartId();
+  const cartId = await CartService.getCartId();
 
   if (!cartId) {
     return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
@@ -98,8 +98,9 @@ export async function PATCH(request: NextRequest) {
       });
     }
 
-    revalidateCart();
-    const successMsg = operation === 'add' ? 'Product added successfully' : 'Cart updated successfully';
+    CartService.revalidate();
+    const successMsg =
+      operation === 'add' ? 'Product added successfully' : 'Cart updated successfully';
     return createSuccessResponse(cart, { message: successMsg, noCache: true });
   } catch (error) {
     return handleApiError('PATCH /api/cart/lines', error, 'Failed to update cart lines');
@@ -107,7 +108,7 @@ export async function PATCH(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
-  const cartId = await getCartId();
+  const cartId = await CartService.getCartId();
 
   if (!cartId) {
     return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
@@ -144,7 +145,7 @@ export async function DELETE(request: NextRequest) {
       });
     }
 
-    revalidateCart();
+    CartService.revalidate();
     return createSuccessResponse(cart, { message: 'Product removed successfully' });
   } catch (error) {
     return handleApiError('DELETE /api/cart/lines', error, 'Failed to remove cart line');

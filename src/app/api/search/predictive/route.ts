@@ -1,12 +1,12 @@
 import { type NextRequest } from 'next/server';
 
+import { storefrontSdk } from '@/shopify';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
-} from '@/lib/api-responses';
-import { storefrontSdk } from '@/shopify';
+} from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 

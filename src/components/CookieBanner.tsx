@@ -15,10 +15,10 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import config from '@/config';
-import { withGtag } from '@/utils/analytics';
+import { withGtag } from '@/lib/client/analytics';
+import { getCookieFront, setCookieFront } from '@/lib/client/cookies';
 import type { originalSettingsType } from '@/utils/consents';
 import { transformedSettings } from '@/utils/consents';
-import { getCookieFront, setCookieFront } from '@/utils/cookies';
 
 import { Settings } from 'lucide-react';
 

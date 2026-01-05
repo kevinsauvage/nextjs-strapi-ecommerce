@@ -4,7 +4,7 @@ import Link from 'next/link';
 import AuthShell from '@/app/(auth)/_components/AuthShell';
 import config from '@/config';
 import seo from '@/data/seo';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 import RegisterForm from './_components/RegisterForm';
 

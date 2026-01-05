@@ -12,8 +12,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import useCartContext from '@/contexts/CartContext/useCartContext';
-import { removeFromWishlist } from '@/lib/wishlist-client';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
+import { removeFromWishlist } from '@/utils/wishlist-client';
 
 import { Heart, ShoppingCart, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';

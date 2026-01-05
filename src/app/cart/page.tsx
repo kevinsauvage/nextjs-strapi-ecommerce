@@ -3,8 +3,7 @@ import Link from 'next/link';
 
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
-import { getCart } from '@/lib/cart';
-import { getCartId } from '@/lib/cart-helpers';
+import { CartService } from '@/services/cart.service';
 
 import CartEmptyState from './_components/CartEmptyState';
 import CartHeader from './_components/CartHeader';
@@ -22,8 +21,8 @@ export const metadata: Metadata = {
 };
 
 const CartPage = async () => {
-  const cartId = await getCartId();
-  const cart = cartId ? await getCart(cartId) : null;
+  const cartId = await CartService.getCartId();
+  const cart = cartId ? await CartService.getCart(cartId) : null;
   const isEmpty = !cart?.lines?.edges || cart.lines.edges.length === 0;
 
   return (

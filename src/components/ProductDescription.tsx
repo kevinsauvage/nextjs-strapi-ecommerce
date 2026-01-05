@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
+import { cn } from '@/utils/cn';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 
 import { Badge } from './ui/badge';

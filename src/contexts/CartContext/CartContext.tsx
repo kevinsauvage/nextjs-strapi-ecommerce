@@ -5,7 +5,7 @@ import { createContext, useCallback, useEffect, useMemo, useState } from 'react'
 import { createCartAction } from '@/actions/cartActions';
 import cartMock from '@/mocks/cart';
 import type { CartFieldsFragment } from '@/shopify/storefront';
-import { api } from '@/utils/apiClient';
+import { api } from '@/utils/api-client';
 
 import { toast } from 'sonner';
 

@@ -1,7 +1,7 @@
 import Logo from '@/components/Logo';
 import UserButtons from '@/components/UserButtons';
+import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import type { GetMenuByHandleQuery } from '@/shopify/storefront';
-import { getShopifyToken } from '@/utils/shopify';
 
 import HamburgerMenu from './HamburgerMenu';
 

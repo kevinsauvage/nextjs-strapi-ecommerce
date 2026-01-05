@@ -1,8 +1,8 @@
 'use server';
 
 import config from '@/config';
-import { safeLogError } from '@/lib/api-responses';
 import { adminSdk } from '@/shopify';
+import { safeLogError } from '@/utils/api-responses';
 import { getSecureCookieOptions } from '@/utils/cookie-security';
 
 import { getCookieAction, setCookieAction } from './cookiesActions';

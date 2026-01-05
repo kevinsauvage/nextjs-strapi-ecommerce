@@ -1,26 +1,19 @@
 import { type NextRequest } from 'next/server';
 
+import { WISHLIST_MAX_ITEMS,WishlistService } from '@/services/wishlist.service';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
-} from '@/lib/api-responses';
-import {
-  getWishlist,
-  getWishlistErrorStatus,
-  getWishlistIds,
-  requireWishlistAuth,
-  updateWishlistMetafields,
-  WISHLIST_MAX_ITEMS,
-} from '@/lib/wishlist';
+} from '@/utils/api-responses';
 import { getUser } from '@/utils/users';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const wishlist = await getWishlist();
+    const wishlist = await WishlistService.getWishlist();
     return createSuccessResponse(wishlist);
   } catch (error) {
     return handleApiError('GET /api/wishlist', error, 'Failed to fetch wishlist');
@@ -29,7 +22,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    await requireWishlistAuth();
+    await WishlistService.requireAuth();
     const user = await getUser();
 
     if (!user?.id) {
@@ -40,13 +33,17 @@ export async function POST(request: NextRequest) {
     const { productId } = body as { productId: string };
 
     if (!productId || typeof productId !== 'string') {
-      return createErrorResponse('Missing or invalid product ID', { status: HTTP_STATUS.BAD_REQUEST });
+      return createErrorResponse('Missing or invalid product ID', {
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
-    const currentWishlistIds = await getWishlistIds();
-    
+    const currentWishlistIds = await WishlistService.getWishlistIds();
+
     if (currentWishlistIds.includes(productId)) {
-      return createErrorResponse('Product already in wishlist', { status: HTTP_STATUS.BAD_REQUEST });
+      return createErrorResponse('Product already in wishlist', {
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
     if (currentWishlistIds.length >= WISHLIST_MAX_ITEMS) {
@@ -56,8 +53,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const newWishlistIds = [...currentWishlistIds, productId];
-    const result = await updateWishlistMetafields(newWishlistIds, user.id);
+    const result = await WishlistService.addProduct(productId, user.id);
 
     if (!result.success || result.data === undefined) {
       return createErrorResponse("Couldn't add product to user wishlist", {
@@ -66,13 +62,13 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const wishlist = await getWishlist();
+    const wishlist = await WishlistService.getWishlist();
     return createSuccessResponse(wishlist, {
       message: 'Product correctly added to wishlist',
       noCache: true,
     });
   } catch (error) {
-    const status = getWishlistErrorStatus(error);
+    const status = WishlistService.getErrorStatus(error);
     return createErrorResponse('Failed to add product to wishlist', {
       message: error instanceof Error ? error.message : 'An unexpected error occurred',
       status,

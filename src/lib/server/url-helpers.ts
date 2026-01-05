@@ -4,6 +4,11 @@ import { cookies } from 'next/headers';
 
 import config from '@/config';
 
+/**
+ * Server-side URL helpers
+ * Utilities for working with URLs stored in cookies (set by middleware)
+ */
+
 export const getCurrentUrl = async () => {
   const cookiesStore = await cookies();
   return cookiesStore.get(config.cookies.url)?.value;
@@ -34,27 +39,3 @@ export const getCurrentOrigin = async () => {
   return currentURL.origin;
 };
 
-/* eslint-disable no-param-reassign */
-function processHtml(html: string) {
-  // remove all style attributes
-  if (!html) return '';
-
-  html = html.replace(/style="[^"]*"/g, '');
-
-  // remove <br> tags
-  html = html.replace(/<br[^>]*>/g, '');
-
-  // remove <img> tags
-  html = html.replace(/<img[^>]*>/g, '');
-
-  // remove comments
-  html = html.replace(/<!--[^>]*-->/g, '');
-
-  // remove scripts
-  html = html.replace(/<script[^>]*>[^<]*<\/script>/g, '');
-
-  // remove link tags
-  return html.replace(/<link[^>]*>/g, '');
-}
-
-export default processHtml;

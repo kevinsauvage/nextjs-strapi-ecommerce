@@ -7,8 +7,8 @@ import Link from 'next/link';
 import config from '@/config';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import useProductSelection from '@/hooks/useProductSelection';
-import { cn } from '@/lib/utils';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
+import { cn } from '@/utils/cn';
 import { formatPrice } from '@/utils/format';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
 

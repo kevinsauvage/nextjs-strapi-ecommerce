@@ -2,15 +2,9 @@ import { type NextRequest } from 'next/server';
 
 import { delCookieAction } from '@/actions/cookiesActions';
 import config from '@/config';
-import {
-  createErrorResponse,
-  createSuccessResponse,
-  handleApiError,
-  HTTP_STATUS,
-  safeLogError,
-} from '@/lib/api-responses';
+import { clearShopifyToken, getShopifyToken } from '@/lib/server/shopify-helpers';
 import { storefrontSdk } from '@/shopify';
-import { clearShopifyToken, getShopifyToken } from '@/utils/shopify';
+import { createSuccessResponse, handleApiError, safeLogError } from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 
@@ -35,4 +29,3 @@ export async function POST(_request: NextRequest) {
     return handleApiError('POST /api/logout', error, 'Failed to logout');
   }
 }
-

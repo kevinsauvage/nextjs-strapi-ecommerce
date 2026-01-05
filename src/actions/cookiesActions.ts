@@ -1,7 +1,8 @@
 'use server';
 
-import { safeLogError } from '@/lib/api-responses';
 import { cookies } from 'next/headers';
+
+import { safeLogError } from '@/utils/api-responses';
 
 export const delCookieAction = async (name: string) => {
   const cookieStore = await cookies();

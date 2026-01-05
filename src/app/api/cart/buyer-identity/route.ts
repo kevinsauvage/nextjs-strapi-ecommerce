@@ -1,21 +1,21 @@
 import { type NextRequest } from 'next/server';
 
+import { CartService } from '@/services/cart.service';
+import { storefrontSdk } from '@/shopify';
+import { adjustPaginationVariables } from '@/shopify/helpers';
+import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefront';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
   mapShopifyUserErrors,
-} from '@/lib/api-responses';
-import { getCartId, revalidateCart } from '@/lib/cart-helpers';
-import { storefrontSdk } from '@/shopify';
-import { adjustPaginationVariables } from '@/shopify/helpers';
-import type { CartBuyerIdentityInput, GetCustomerQuery } from '@/shopify/storefront';
+} from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getCartId();
+  const cartId = await CartService.getCartId();
 
   if (!cartId) {
     return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
@@ -33,7 +33,9 @@ export async function PATCH(request: NextRequest) {
     };
 
     if (!customerAccessToken) {
-      return createErrorResponse('Missing customerAccessToken', { status: HTTP_STATUS.BAD_REQUEST });
+      return createErrorResponse('Missing customerAccessToken', {
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
     if (!user) {
@@ -74,9 +76,13 @@ export async function PATCH(request: NextRequest) {
       });
     }
 
-    revalidateCart();
+    CartService.revalidate();
     return createSuccessResponse(cart, { message: 'Cart buyer identity updated successfully' });
   } catch (error) {
-    return handleApiError('PATCH /api/cart/buyer-identity', error, 'Failed to update cart buyer identity');
+    return handleApiError(
+      'PATCH /api/cart/buyer-identity',
+      error,
+      'Failed to update cart buyer identity',
+    );
   }
 }

@@ -4,10 +4,10 @@ import AccountStats from '@/app/account/_components/AccountStats';
 import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Card, CardContent } from '@/components/ui/card';
 import seo from '@/data/seo';
-import { getWishlist } from '@/lib/wishlist';
+import { getShopifyToken } from '@/lib/server/shopify-helpers';
+import { WishlistService } from '@/services/wishlist.service';
 import { storefrontSdk } from '@/shopify/index';
 import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
-import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
 import BackButton from '../_components/BackButton';
@@ -42,7 +42,7 @@ const Page = async () => {
           first: 1,
         })
       : Promise.resolve(null),
-    getWishlist(),
+    WishlistService.getWishlist(),
   ]);
 
   const ordersCount = Number(ordersResponse?.customer?.orders?.totalCount || 0);

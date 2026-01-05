@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 
 import globalConfig from '@/config';
 import config from '@/config';
-import { getCurrentUrlWithoutParameters } from '@/utils';
+import { getCurrentUrlWithoutParameters } from '@/lib/server/url-helpers';
 
 import type { PageInfo, ProductFilter } from './storefront';
 

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 import { ArrowLeft } from 'lucide-react';
 

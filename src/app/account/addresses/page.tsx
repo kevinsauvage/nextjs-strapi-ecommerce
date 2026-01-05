@@ -10,10 +10,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config/index';
 import seo from '@/data/seo';
+import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import type { MailingAddress } from '@/shopify/storefront';
-import { getShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
 import BackButton from '../_components/BackButton';

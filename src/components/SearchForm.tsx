@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 
-import { searchAction } from '@/actions/SearchAction';
+import { searchAction } from '@/actions/searchActions';
 
 import { Input } from './ui/input';
 

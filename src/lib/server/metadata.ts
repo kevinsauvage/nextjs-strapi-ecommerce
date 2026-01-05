@@ -2,6 +2,10 @@ import type { Metadata } from 'next';
 
 import siteMetadata from '@/data/siteMetadata';
 
+/**
+ * Get base URL for the application
+ * Server-side utility for metadata generation
+ */
 export function getBaseUrl(): string {
   const envBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -31,6 +35,10 @@ type MetadataOptions = {
   noindex?: boolean;
 };
 
+/**
+ * Generate Next.js metadata object
+ * Server-side utility for SEO metadata
+ */
 export function generateMetadata({
   title,
   description,
@@ -88,3 +96,4 @@ export function generateMetadata({
     },
   };
 }
+

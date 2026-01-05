@@ -17,7 +17,7 @@ export const revalidate = 3600; // Revalidate every hour
 
 type parametersType = { collectionSlug: string };
 
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 export async function generateMetadata({
   params,

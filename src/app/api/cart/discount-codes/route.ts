@@ -1,21 +1,21 @@
 import { type NextRequest } from 'next/server';
 
+import { CartService } from '@/services/cart.service';
+import { storefrontSdk } from '@/shopify';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
   mapShopifyUserErrors,
-} from '@/lib/api-responses';
-import { getCartId, revalidateCart } from '@/lib/cart-helpers';
-import { storefrontSdk } from '@/shopify';
+} from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 
 const ERROR_MESSAGE = 'Failed to update discount codes';
 
 export async function PATCH(request: NextRequest) {
-  const cartId = await getCartId();
+  const cartId = await CartService.getCartId();
 
   if (!cartId) {
     return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
@@ -56,7 +56,7 @@ export async function PATCH(request: NextRequest) {
       });
     }
 
-    revalidateCart();
+    CartService.revalidate();
     return createSuccessResponse(
       { ...cart, warnings: warnings || [] },
       { message: 'Discount codes updated successfully' },

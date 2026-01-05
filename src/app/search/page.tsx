@@ -11,6 +11,7 @@ import Search from '@/components/Search';
 import { Button } from '@/components/ui/button';
 import config from '@/config';
 import seo from '@/data/seo';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import {
   adjustPaginationVariables,
   buildShopifySearchQuery,
@@ -19,7 +20,6 @@ import {
 import { storefrontSdk } from '@/shopify/index';
 import type { ProductFieldsFragment, SearchProductsQuery } from '@/shopify/storefront';
 import { SearchSortKeys } from '@/shopify/storefront';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import Filters from '../collections/_components/Filters';
 import Sort from '../collections/_components/Sort';

@@ -1,22 +1,21 @@
+import { CartService } from '@/services/cart.service';
 import {
   createErrorResponse,
   createSuccessResponse,
   handleApiError,
   HTTP_STATUS,
-} from '@/lib/api-responses';
-import { getCart } from '@/lib/cart';
-import { getCartId } from '@/lib/cart-helpers';
+} from '@/utils/api-responses';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
-    const cartId = await getCartId();
+    const cartId = await CartService.getCartId();
     if (!cartId) {
       return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
     }
 
-    const cart = await getCart(cartId);
+    const cart = await CartService.getCart(cartId);
     if (!cart) {
       throw new Error('Failed to fetch cart');
     }

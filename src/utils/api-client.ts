@@ -1,6 +1,5 @@
-import type { ApiErrorResponse, ApiResponse } from '@/lib/api-responses';
-
-import { getBaseUrl } from './metadata';
+import { getBaseUrl } from '@/lib/server/metadata';
+import type { ApiErrorResponse, ApiResponse } from '@/utils/api-responses';
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
 

@@ -1,3 +1,5 @@
+'use client';
+
 declare global {
   interface Window {
     gtag?: (
@@ -8,6 +10,11 @@ declare global {
     dataLayer?: Array<Record<string, unknown>>;
   }
 }
+
+/**
+ * Client-side analytics utilities
+ * Google Analytics and Google Tag Manager integration
+ */
 
 /**
  * Helper to safely execute gtag callback if gtag is available
@@ -63,7 +70,7 @@ const event = ({
     ...params,
   });
 
-  withGtag((gtag) => {  
+  withGtag((gtag) => {
     gtag('event', action, params);
   });
 };
@@ -75,3 +82,4 @@ const analytics = {
 };
 
 export default analytics;
+

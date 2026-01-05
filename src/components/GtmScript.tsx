@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Script from 'next/script';
 
-import { getCookieFront } from '@/utils/cookies';
+import { getCookieFront } from '@/lib/client/cookies';
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 

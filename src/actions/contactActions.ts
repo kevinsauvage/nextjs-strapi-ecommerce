@@ -1,7 +1,7 @@
 'use server';
 
-import { zodErrorsToFormActionResult } from '@/lib/formActions';
 import type { FormActionResult } from '@/types/formActions';
+import { zodErrorsToFormActionResult } from '@/utils/form-actions';
 
 import nodemailer from 'nodemailer';
 import { z } from 'zod';

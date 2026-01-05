@@ -1,3 +1,10 @@
+'use client';
+
+/**
+ * Client-side cookie utilities
+ * Browser cookie manipulation helpers
+ */
+
 export const getCookieFront = (name: string) => {
   if (typeof document === 'undefined') return '';
   // eslint-disable-next-line unicorn/no-document-cookie
@@ -46,3 +53,4 @@ export const setCookieFront = (
     console.error(`Failed to set cookie: ${JSON.stringify(error, undefined, 2)}`);
   }
 };
+

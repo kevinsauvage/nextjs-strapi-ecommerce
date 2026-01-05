@@ -3,9 +3,9 @@ import type { Metadata } from 'next';
 import CollectionGrid from '@/components/CollectionGrid/CollectionGrid';
 import PageBanner from '@/components/PageBanner';
 import seo from '@/data/seo';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { storefrontSdk } from '@/shopify/index';
 import { CollectionSortKeys, ProductSortKeys } from '@/shopify/storefront/index';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 import HomeSection from './_components/HomeSection';
 import ProductSection from './_components/ProductSection';

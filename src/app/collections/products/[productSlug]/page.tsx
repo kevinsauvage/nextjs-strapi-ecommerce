@@ -5,8 +5,8 @@ import HomeSection from '@/app/_components/HomeSection';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import ProductDescription from '@/components/ProductDescription';
 import ProductRecommendations from '@/components/ProductRecommendations';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { storefrontSdk } from '@/shopify/index';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
 
 export const revalidate = 3600;
 

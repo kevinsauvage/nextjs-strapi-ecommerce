@@ -1,16 +1,20 @@
 import { cookies } from 'next/headers';
 
 import config from '@/config';
-import { safeLogError } from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 import type { CustomerAccessToken } from '@/shopify/storefront';
+import { safeLogError } from '@/utils/api-responses';
 import { getSecureCookieOptions } from '@/utils/cookie-security';
 
+/**
+ * Shopify token management helpers
+ * Server-side utilities for managing Shopify customer access tokens
+ */
 export const setShopifyToken = async (customerAccessToken: CustomerAccessToken): Promise<void> => {
   if (!customerAccessToken) return;
   const { accessToken, expiresAt } = customerAccessToken || {};
   if (!accessToken || !expiresAt) return;
-  
+
   const expiresAtDate = new Date(expiresAt as string);
 
   const cookieStore = await cookies();
@@ -77,7 +81,6 @@ export const getShopifyToken = async (): Promise<
   return token;
 };
 
-
 export const clearShopifyToken = async (): Promise<void> => {
   const cookieStore = await cookies();
   cookieStore.delete(config.cookies.shopifyToken);
@@ -88,3 +91,4 @@ export const getShopifyCartId = async () => {
   const cookieStore = await cookies();
   return cookieStore.get(config.cookies.cartId)?.value;
 };
+

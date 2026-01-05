@@ -1,5 +1,5 @@
 import config from '@/config';
-import { safeLogError } from '@/lib/api-responses';
+import { safeLogError } from '@/utils/api-responses';
 
 import { getSdk as getAdminSdk } from './admin/index';
 import type { SdkFunctionWrapper } from './storefront/index';

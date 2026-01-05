@@ -1,7 +1,6 @@
-import { safeLogError } from '@/lib/api-responses';
+import { clearShopifyToken, getShopifyToken } from '@/lib/server/shopify-helpers';
 import { storefrontSdk } from '@/shopify';
-
-import { clearShopifyToken, getShopifyToken } from './shopify';
+import { safeLogError } from '@/utils/api-responses';
 
 
 export const getUser = async () => {

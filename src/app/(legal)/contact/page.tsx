@@ -4,7 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import config from '@/config';
 import seo from '@/data/seo';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 import ContactForm from './_components/ContactForm';
 

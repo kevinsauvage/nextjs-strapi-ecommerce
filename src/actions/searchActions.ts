@@ -7,3 +7,4 @@ import config from '@/config';
 export const searchAction = async (searchQuery: string) => {
   redirect(`${config.routes.search}?searchQuery=${searchQuery}`);
 };
+

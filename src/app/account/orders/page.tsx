@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
+import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
 import { LanguageCode, OrderSortKeys } from '@/shopify/storefront';
-import { getShopifyToken } from '@/utils/shopify';
 
 import BackButton from '../_components/BackButton';
 import Orders from '../_components/Orders';

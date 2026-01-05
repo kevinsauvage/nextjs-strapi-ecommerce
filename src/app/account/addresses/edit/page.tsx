@@ -8,9 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
+import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { storefrontSdk } from '@/shopify';
-import { generateMetadata as generateMetadataUtil } from '@/utils/metadata';
-import { getShopifyToken } from '@/utils/shopify';
 
 import { ArrowLeft } from 'lucide-react';
 

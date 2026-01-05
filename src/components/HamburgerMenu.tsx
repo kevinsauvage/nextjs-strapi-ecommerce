@@ -13,8 +13,8 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import config from '@/config/index';
-import { cn } from '@/lib/utils';
 import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
+import { cn } from '@/utils/cn';
 
 import {
   ChevronDown,
