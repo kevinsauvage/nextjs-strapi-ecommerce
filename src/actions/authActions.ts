@@ -6,7 +6,7 @@ import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
 import { zodErrorsToFormActionResult } from '@/helpers/formActions';
 import { storefrontSdk } from '@/shopify';
-import type { UserError } from '@/shopify/storefront';
+import type { GetCustomerQuery, UserError } from '@/shopify/storefront';
 import type { FormActionResult } from '@/types/formActions';
 import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
@@ -97,6 +97,12 @@ export async function registerAction(
 
   await setShopifyToken(customerAccessToken);
 
+  const userResponse = await getUser();
+
+  if (userResponse) {
+    await updateCartBuyerIdentityWithRetry(customerAccessToken.accessToken, userResponse);
+  }
+
   redirect(config.routes.account);
 }
 
@@ -143,17 +149,8 @@ export async function loginAction(
 
   const userResponse = await getUser();
 
-  try {
-    await api.patch('/api/cart/buyer-identity', {
-      customerAccessToken: customerAccessToken?.accessToken,
-      user: userResponse,
-      first: 0,
-      last: 0,
-      after: '',
-      before: '',
-    });
-  } catch (error) {
-    console.error('Failed to update cart buyer identity:', error);
+  if (userResponse) {
+    await updateCartBuyerIdentityWithRetry(customerAccessToken.accessToken, userResponse);
   }
 
   redirect(redirectUrl || config.routes.account);
@@ -220,6 +217,14 @@ export const resetPasswordAction = async (
 
   if (customerAccessToken) {
     await setShopifyToken(customerAccessToken);
+
+    const userResponse = await getUser();
+
+    // Update cart buyer identity with retry logic
+    if (userResponse) {
+      await updateCartBuyerIdentityWithRetry(customerAccessToken.accessToken, userResponse);
+    }
+
     redirect(config.routes.account);
   }
 
@@ -229,3 +234,109 @@ export const resetPasswordAction = async (
 
   return { error: userFeedback.resetPassword.error };
 };
+
+function isSuccessResponse(response: unknown): response is { data: unknown } {
+  return (
+    response !== null &&
+    response !== undefined &&
+    typeof response === 'object' &&
+    'data' in response
+  );
+}
+
+function extractErrorMessage(response: unknown): string {
+  if (
+    response &&
+    typeof response === 'object' &&
+    'error' in response &&
+    typeof (response as { error: unknown }).error === 'string'
+  ) {
+    return (response as { error: string }).error;
+  }
+  return 'Unexpected response format: missing data property';
+}
+
+async function waitForBackoff(attempt: number): Promise<void> {
+  const delay = Math.min(100 * Math.pow(2, attempt - 1), 1000);
+  return new Promise<void>((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, delay);
+  });
+}
+
+function handleFailedAttempt(
+  attempt: number,
+  retries: number,
+  error: unknown,
+  response?: unknown,
+): void {
+  const isLastAttempt = attempt === retries;
+  const errorMessage = error instanceof Error ? error.message : String(error);
+
+  if (isLastAttempt) {
+    console.error(
+      `Failed to update cart buyer identity after ${retries} attempts. Last error: ${errorMessage}`,
+      response ? { response } : undefined,
+    );
+  } else {
+    console.warn(
+      `Cart buyer identity update attempt ${attempt}/${retries} failed. Retrying...`,
+      response ? { response } : undefined,
+    );
+  }
+}
+
+async function updateCartBuyerIdentityWithRetry(
+  customerAccessToken: string,
+  user: GetCustomerQuery['customer'],
+  retries = 3,
+): Promise<void> {
+  let lastError: unknown = null;
+
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      // eslint-disable-next-line no-await-in-loop
+      const response = await api.patch('/api/cart/buyer-identity', {
+        customerAccessToken,
+        user,
+        first: 0,
+        last: 0,
+        after: '',
+        before: '',
+      });
+
+      if (isSuccessResponse(response)) {
+        return;
+      }
+
+      lastError = new Error(extractErrorMessage(response));
+      handleFailedAttempt(attempt, retries, lastError, response);
+
+      if (attempt === retries) {
+        return;
+      }
+    } catch (error) {
+      lastError = error;
+      handleFailedAttempt(attempt, retries, error);
+
+      if (attempt === retries) {
+        return;
+      }
+    }
+
+    // Exponential backoff: wait 100ms, 200ms, 400ms between retries
+    if (attempt < retries) {
+      // eslint-disable-next-line no-await-in-loop
+      await waitForBackoff(attempt - 1);
+    }
+  }
+
+  // This should never be reached, but log if it does
+  if (lastError) {
+    console.error(
+      `Cart buyer identity update completed all ${retries} attempts without success. Last error:`,
+      lastError instanceof Error ? lastError.message : lastError,
+    );
+  }
+}

@@ -1,16 +1,30 @@
 import { storefrontSdk } from '@/shopify';
 
-import { getShopifyToken } from './shopify';
+import { clearShopifyToken, getShopifyToken } from './shopify';
+
 
 export const getUser = async () => {
   const customerAccessToken = await getShopifyToken();
 
   if (!customerAccessToken) return;
 
-  const response = await storefrontSdk('no-store').getCustomer({
-    customerAccessToken,
-    metafields: [],
-  });
+  try {
+    const response = await storefrontSdk('no-store').getCustomer({
+      customerAccessToken,
+      metafields: [],
+    });
 
-  return response?.customer;
+    if (!response?.customer) {
+      await clearShopifyToken();
+      return;
+    }
+
+    return response.customer;
+  } catch (error) {
+    if (error instanceof Error && (error.message.includes('Unauthorized') || error.message.includes('401'))) {
+      await clearShopifyToken();
+    }
+    console.error('Error fetching user:', error);
+    return null;
+  }
 };
