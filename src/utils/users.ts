@@ -1,3 +1,4 @@
+import { safeLogError } from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 
 import { clearShopifyToken, getShopifyToken } from './shopify';
@@ -24,7 +25,7 @@ export const getUser = async () => {
     if (error instanceof Error && (error.message.includes('Unauthorized') || error.message.includes('401'))) {
       await clearShopifyToken();
     }
-    console.error('Error fetching user:', error);
+    safeLogError('getUser', error);
     return null;
   }
 };

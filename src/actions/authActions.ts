@@ -4,24 +4,20 @@ import { redirect } from 'next/navigation';
 
 import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
-import { zodErrorsToFormActionResult } from '@/helpers/formActions';
+import { safeLogError } from '@/lib/api-responses';
+import {
+  handleCustomerUserErrors,
+  handleUserErrors,
+  zodErrorsToFormActionResult,
+} from '@/lib/formActions';
 import { storefrontSdk } from '@/shopify';
-import type { GetCustomerQuery, UserError } from '@/shopify/storefront';
+import type { GetCustomerQuery } from '@/shopify/storefront';
 import type { FormActionResult } from '@/types/formActions';
 import { api } from '@/utils/apiClient';
 import { setShopifyToken } from '@/utils/shopify';
 import { getUser } from '@/utils/users';
 
 import { z } from 'zod';
-
-const handleUserError = (
-  userError: UserError[] | undefined,
-): { userErrors: UserError[] } | null => {
-  if (!userError || !userError.length) {
-    return null;
-  }
-  return { userErrors: userError };
-};
 
 const registerSchema = z
   .object({
@@ -69,14 +65,11 @@ export async function registerAction(
 
   const { customerUserErrors, userErrors } = registerResponse?.customerCreate || {};
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const customerErrorResult = handleCustomerUserErrors(customerUserErrors);
+  if (customerErrorResult) return customerErrorResult;
 
-  const userErrorResult = handleUserError(userErrors);
-  if (userErrorResult) {
-    return { userErrors: userErrorResult.userErrors };
-  }
+  const userErrorResult = handleUserErrors(userErrors);
+  if (userErrorResult) return userErrorResult;
 
   const dataLogin = await storefrontSdk().customerAccessTokenCreate({
     input: { email, password },
@@ -85,11 +78,8 @@ export async function registerAction(
   const { customerAccessToken, customerUserErrors: loginCustomerErrors } =
     dataLogin?.customerAccessTokenCreate || {};
 
-  if (loginCustomerErrors?.length) {
-    return {
-      customerUserErrors: loginCustomerErrors,
-    };
-  }
+  const loginErrorResult = handleCustomerUserErrors(loginCustomerErrors);
+  if (loginErrorResult) return loginErrorResult;
 
   if (!customerAccessToken) {
     return { error: userFeedback.register.error };
@@ -137,9 +127,8 @@ export async function loginAction(
   const { customerUserErrors, customerAccessToken } =
     responsesLogin?.customerAccessTokenCreate || {};
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const loginErrorResult = handleCustomerUserErrors(customerUserErrors);
+  if (loginErrorResult) return loginErrorResult;
 
   if (!customerAccessToken) {
     return { error: userFeedback.login.error };
@@ -181,9 +170,10 @@ export const recoverPasswordAction = async (
 
   const { customerUserErrors } = recoverResponse?.customerRecover || {};
 
-  return customerUserErrors?.length
-    ? { customerUserErrors }
-    : { success: userFeedback.sendRecoverEmail.success };
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
+
+  return { success: userFeedback.sendRecoverEmail.success };
 };
 
 const resetSchema = z.object({
@@ -228,8 +218,11 @@ export const resetPasswordAction = async (
     redirect(config.routes.account);
   }
 
-  if (customerUserErrors && customerUserErrors.length > 0) {
-    return { error: customerUserErrors[0]?.message || userFeedback.resetPassword.error };
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) {
+    // Extract first error message for user feedback
+    const firstError = customerUserErrors?.[0]?.message;
+    return { error: firstError || userFeedback.resetPassword.error };
   }
 
   return { error: userFeedback.resetPassword.error };
@@ -274,17 +267,11 @@ function handleFailedAttempt(
   const isLastAttempt = attempt === retries;
   const errorMessage = error instanceof Error ? error.message : String(error);
 
-  if (isLastAttempt) {
-    console.error(
-      `Failed to update cart buyer identity after ${retries} attempts. Last error: ${errorMessage}`,
-      response ? { response } : undefined,
-    );
-  } else {
-    console.warn(
-      `Cart buyer identity update attempt ${attempt}/${retries} failed. Retrying...`,
-      response ? { response } : undefined,
-    );
-  }
+  const context = isLastAttempt
+    ? `updateCartBuyerIdentityWithRetry - failed after ${retries} attempts`
+    : `updateCartBuyerIdentityWithRetry - attempt ${attempt}/${retries} failed`;
+  
+  safeLogError(context, response ? { error: errorMessage, response } : error);
 }
 
 async function updateCartBuyerIdentityWithRetry(
@@ -334,8 +321,8 @@ async function updateCartBuyerIdentityWithRetry(
 
   // This should never be reached, but log if it does
   if (lastError) {
-    console.error(
-      `Cart buyer identity update completed all ${retries} attempts without success. Last error:`,
+    safeLogError(
+      'updateCartBuyerIdentityWithRetry - unexpected completion',
       lastError instanceof Error ? lastError.message : lastError,
     );
   }

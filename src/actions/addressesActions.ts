@@ -4,6 +4,8 @@ import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
 import config from '@/config';
+import { safeLogError } from '@/lib/api-responses';
+import { handleCustomerUserErrors } from '@/lib/formActions';
 import { storefrontSdk } from '@/shopify';
 import { getShopifyToken } from '@/utils/shopify';
 
@@ -49,9 +51,8 @@ export async function createAddressAction(input: AddressInput) {
     return redirect(config.routes.addresses);
   }
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
 
   return { error: defaultErrorMessage };
 }
@@ -74,9 +75,8 @@ export async function deleteAddressAction(addressId: string) {
     return redirect(config.routes.addresses);
   }
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
 
   return { error: defaultErrorMessage };
 }
@@ -94,14 +94,13 @@ export async function setDefaultAddressAction(addressId: string) {
       customerAccessToken,
     });
   } catch (error) {
-    console.error('Error setting default address:', JSON.stringify(error, undefined, 2));
+    safeLogError('setDefaultAddressAction', error);
     return { error: 'Failed to set default address' };
   }
   const { customerUserErrors, customer } = response?.customerDefaultAddressUpdate || {};
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
 
   if (customer) {
     revalidatePath(config.routes.addresses);
@@ -133,9 +132,8 @@ export async function updateAddressAction(input: AddressInput) {
 
   const { customerUserErrors, customerAddress } = response?.customerAddressUpdate || {};
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
 
   if (customerAddress) {
     revalidatePath(`${config.routes.addresses}/edit`);

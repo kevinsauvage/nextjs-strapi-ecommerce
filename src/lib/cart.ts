@@ -25,7 +25,7 @@ export async function createCart(): Promise<CartFieldsFragment> {
   const { cart, userErrors, warnings } = createCartResponse.cartCreate || {};
 
   if (warnings && Array.isArray(warnings) && warnings?.length) {
-    console.warn('Cart creation warnings:', warnings);
+    safeLogError('createCart - warnings', warnings);
   }
 
   const mappedUserErrors = mapShopifyUserErrors(userErrors);

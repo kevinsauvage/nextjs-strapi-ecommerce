@@ -1,3 +1,5 @@
+import type { ApiErrorResponse, ApiResponse } from '@/lib/api-responses';
+
 import { getBaseUrl } from './metadata';
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE' | 'PUT';
@@ -7,12 +9,6 @@ type ApiClientOptions = {
   body?: unknown;
   headers?: Record<string, string>;
   cache?: RequestCache;
-};
-
-type ApiResponse<T> = {
-  data?: T;
-  error?: string;
-  message?: string;
 };
 
 /**
@@ -31,6 +27,22 @@ function getAbsoluteUrl(path: string): string {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
 
   return `${baseUrl}${normalizedPath}`;
+}
+
+function extractErrorMessage(errorData: unknown, fallback: string): string {
+  if (typeof errorData === 'object' && errorData !== null) {
+    if ('error' in errorData && typeof errorData.error === 'string') {
+      return errorData.error;
+    }
+    if ('message' in errorData && typeof errorData.message === 'string') {
+      return errorData.message;
+    }
+  }
+  return fallback;
+}
+
+function isErrorResponse(data: unknown): data is ApiErrorResponse {
+  return typeof data === 'object' && data !== null && 'error' in data;
 }
 
 export async function apiClient<T = unknown>(
@@ -55,24 +67,19 @@ export async function apiClient<T = unknown>(
   }
 
   try {
-    // Convert relative path to absolute URL for server-side fetch
     const absoluteUrl = getAbsoluteUrl(path);
     const response = await fetch(absoluteUrl, requestOptions);
 
     if (!response.ok) {
       const errorData = (await response.json().catch(() => ({}))) as ApiResponse<T>;
-      throw new Error(
-        errorData.error || errorData.message || `API request failed: ${response.statusText}`,
-      );
+      const errorMessage = extractErrorMessage(errorData, `API request failed: ${response.statusText}`);
+      throw new Error(errorMessage);
     }
 
     const data = (await response.json()) as ApiResponse<T> | T;
 
-    if (typeof data === 'object' && data !== null && 'error' in data) {
-      const apiResponse = data as ApiResponse<T>;
-      if (apiResponse.error) {
-        throw new Error(apiResponse.error);
-      }
+    if (isErrorResponse(data)) {
+      throw new Error(data.error);
     }
 
     return data as T;

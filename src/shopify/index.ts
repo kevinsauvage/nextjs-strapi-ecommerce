@@ -1,4 +1,5 @@
 import config from '@/config';
+import { safeLogError } from '@/lib/api-responses';
 
 import { getSdk as getAdminSdk } from './admin/index';
 import type { SdkFunctionWrapper } from './storefront/index';
@@ -83,22 +84,11 @@ const defaultWrapper: SdkFunctionWrapper = async (
   try {
     return await action(extraHeader);
   } catch (error) {
-    if (error instanceof Error) {
-      console.error(
-        'Error in GraphQL request:',
-        JSON.stringify(
-          {
-            _operationName,
-            _operationType,
-            _variables,
-            error: error.message,
-          },
-          undefined,
-          2,
-        ),
-      );
-      throw error;
-    }
+    safeLogError(`GraphQL request - ${_operationName}`, {
+      operationType: _operationType,
+      variables: _variables,
+      error: error instanceof Error ? error.message : String(error),
+    });
     throw error;
   }
 };

@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 
 import config from '@/config';
-import { zodErrorsToFormActionResult } from '@/helpers/formActions';
+import { handleCustomerUserErrors, zodErrorsToFormActionResult } from '@/lib/formActions';
 import { storefrontSdk } from '@/shopify';
 import type { FormActionResult } from '@/types/formActions';
 import { getShopifyToken, setShopifyToken } from '@/utils/shopify';
@@ -67,9 +67,8 @@ export async function updateUserAction(
   const { customerUserErrors, customer, customerAccessToken } =
     updateResponse?.customerUpdate || {};
 
-  if (customerUserErrors?.length) {
-    return { customerUserErrors };
-  }
+  const errorResult = handleCustomerUserErrors(customerUserErrors);
+  if (errorResult) return errorResult;
 
   if (customerAccessToken) {
     await setShopifyToken(customerAccessToken);

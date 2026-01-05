@@ -1,6 +1,7 @@
 'use server';
 
 import config from '@/config';
+import { safeLogError } from '@/lib/api-responses';
 import { adminSdk } from '@/shopify';
 import { getSecureCookieOptions } from '@/utils/cookie-security';
 
@@ -14,7 +15,7 @@ export const setDelegateTokenAction = async (): Promise<void> => {
   if (tokenCookie?.value) return;
 
   if (!delegateAccessScope) {
-    console.error('SHOPIFY_SCOPE environment variable is not set');
+    safeLogError('setDelegateTokenAction', new Error('SHOPIFY_SCOPE environment variable is not set'));
     throw new Error('SHOPIFY_SCOPE environment variable is required for delegate token creation');
   }
 
@@ -29,7 +30,7 @@ export const setDelegateTokenAction = async (): Promise<void> => {
     const { delegateAccessToken, userErrors } = responseToken?.delegateAccessTokenCreate || {};
 
     if (userErrors && userErrors.length > 0) {
-      console.error(userErrors);
+      safeLogError('setDelegateTokenAction - user errors', userErrors);
     }
 
     if (delegateAccessToken) {
@@ -40,7 +41,7 @@ export const setDelegateTokenAction = async (): Promise<void> => {
       );
     }
   } catch (error) {
-    console.error('Error creating delegate access token:', JSON.stringify(error, undefined, 2));
-    
+    safeLogError('setDelegateTokenAction', error);
+    throw error;
   }
 };

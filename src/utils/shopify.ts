@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 
 import config from '@/config';
+import { safeLogError } from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 import type { CustomerAccessToken } from '@/shopify/storefront';
 import { getSecureCookieOptions } from '@/utils/cookie-security';
@@ -43,7 +44,7 @@ const renewTokenIfNeeded = async (token: string): Promise<CustomerAccessToken | 
     const { customerAccessToken, userErrors } = response?.customerAccessTokenRenew || {};
 
     if (userErrors && userErrors.length > 0) {
-      console.error('Token renewal errors:', userErrors);
+      safeLogError('renewTokenIfNeeded - user errors', userErrors);
       return null;
     }
 
@@ -54,7 +55,7 @@ const renewTokenIfNeeded = async (token: string): Promise<CustomerAccessToken | 
 
     return null;
   } catch (error) {
-    console.error('Error renewing token:', error);
+    safeLogError('renewTokenIfNeeded', error);
     return null;
   }
 };

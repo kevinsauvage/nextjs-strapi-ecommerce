@@ -1,5 +1,6 @@
 'use server';
 
+import { safeLogError } from '@/lib/api-responses';
 import { cookies } from 'next/headers';
 
 export const delCookieAction = async (name: string) => {
@@ -9,7 +10,7 @@ export const delCookieAction = async (name: string) => {
 
 export const getCookieAction = async (name: string) => {
   if (!name) {
-    console.error('Cookie name is required');
+    safeLogError('getCookieAction', new Error('Cookie name is required'));
     return;
   }
   const cookieStore = await cookies();
@@ -18,7 +19,7 @@ export const getCookieAction = async (name: string) => {
 
 export const setCookieAction = async (name: string, value: string, options = {}) => {
   if (!name || !value) {
-    console.error('Cookie name and value are required');
+    safeLogError('setCookieAction', new Error('Cookie name and value are required'));
     return;
   }
 
