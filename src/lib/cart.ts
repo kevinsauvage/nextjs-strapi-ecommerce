@@ -1,4 +1,4 @@
-import { handleUserErrors } from '@/helpers/shopify';
+import { mapShopifyUserErrors, safeLogError } from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import type { CartFieldsFragment } from '@/shopify/storefront';
@@ -12,7 +12,7 @@ export async function getCart(cartId: string): Promise<CartFieldsFragment | null
 
     return response?.cart || null;
   } catch (error) {
-    console.error('getCart error:', error);
+    safeLogError('getCart', error);
     return null;
   }
 }
@@ -28,12 +28,12 @@ export async function createCart(): Promise<CartFieldsFragment> {
     console.warn('Cart creation warnings:', warnings);
   }
 
-  const userErrorResult = handleUserErrors(userErrors);
-  if (userErrorResult) {
-    console.error('Cart creation user errors:', userErrorResult.userErrors);
+  const mappedUserErrors = mapShopifyUserErrors(userErrors);
+  if (mappedUserErrors) {
+    safeLogError('createCart - user errors', mappedUserErrors);
     if (!cart?.id) {
       throw new Error(
-        userErrorResult.userErrors[0]?.message || 'Failed to create cart due to validation errors',
+        mappedUserErrors[0]?.message || 'Failed to create cart due to validation errors',
       );
     }
   }

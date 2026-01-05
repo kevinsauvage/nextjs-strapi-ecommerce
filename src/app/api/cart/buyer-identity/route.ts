@@ -1,6 +1,12 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
-import { handleUserErrors } from '@/helpers/shopify';
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleApiError,
+  HTTP_STATUS,
+  mapShopifyUserErrors,
+} from '@/lib/api-responses';
 import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
@@ -12,7 +18,7 @@ export async function PATCH(request: NextRequest) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+    return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
   }
 
   try {
@@ -27,11 +33,11 @@ export async function PATCH(request: NextRequest) {
     };
 
     if (!customerAccessToken) {
-      return NextResponse.json({ error: 'Missing customerAccessToken' }, { status: 400 });
+      return createErrorResponse('Missing customerAccessToken', { status: HTTP_STATUS.BAD_REQUEST });
     }
 
     if (!user) {
-      return NextResponse.json({ error: 'Missing user' }, { status: 400 });
+      return createErrorResponse('Missing user', { status: HTTP_STATUS.BAD_REQUEST });
     }
 
     const buyerIdentity = {
@@ -53,32 +59,24 @@ export async function PATCH(request: NextRequest) {
 
     const { cart, userErrors } = updateResponse?.cartBuyerIdentityUpdate || {};
 
-    const userErrorResult = handleUserErrors(userErrors);
-    if (userErrorResult) {
-      return NextResponse.json(
-        {
-          error: 'Failed to update cart buyer identity',
-          userErrors: userErrorResult.userErrors,
-        },
-        { status: 400 },
-      );
+    const mappedUserErrors = mapShopifyUserErrors(userErrors);
+    if (mappedUserErrors) {
+      return createErrorResponse('Failed to update cart buyer identity', {
+        userErrors: mappedUserErrors,
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
-    if (cart) {
-      revalidateCart();
-
-      return NextResponse.json(
-        { data: cart, message: 'Cart buyer identity updated successfully' },
-        { status: 200 },
-      );
+    if (!cart) {
+      return createErrorResponse('Failed to update cart buyer identity', {
+        message: 'Cart update did not return a valid cart',
+        status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      });
     }
 
-    return NextResponse.json({ error: 'Failed to update cart buyer identity' }, { status: 500 });
+    revalidateCart();
+    return createSuccessResponse(cart, { message: 'Cart buyer identity updated successfully' });
   } catch (error) {
-    console.error('PATCH /api/cart/buyer-identity error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to update cart buyer identity' },
-      { status: 500 },
-    );
+    return handleApiError('PATCH /api/cart/buyer-identity', error, 'Failed to update cart buyer identity');
   }
 }

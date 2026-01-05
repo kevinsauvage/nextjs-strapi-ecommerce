@@ -1,52 +1,47 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleApiError,
+  HTTP_STATUS,
+} from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 
-export const dynamic = 'force-dynamic'; // Search queries are dynamic
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
-  const {searchParams} = request.nextUrl;
-  const query = searchParams.get('q');
+  const query = request.nextUrl.searchParams.get('q');
 
   if (!query || query.trim().length < 2) {
-    return NextResponse.json({ predictiveSearch: null }, { status: 200 });
+    return createSuccessResponse({ predictiveSearch: null });
   }
 
-  const trimmedQuery = query.trim();
-
   try {
-    const response = await storefrontSdk().predictiveSearch({
-      query: trimmedQuery,
-    });
+    const response = await storefrontSdk().predictiveSearch({ query: query.trim() });
 
     if (!response) {
-      return NextResponse.json({ predictiveSearch: null }, { status: 200 });
+      return createSuccessResponse({ predictiveSearch: null });
     }
 
-    return NextResponse.json(response, {
-      status: 200,
+    return createSuccessResponse(response, {
       headers: {
         'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
       },
     });
   } catch (error) {
-    console.error('Predictive search error:', error);
-
     if (
       error instanceof Error &&
       (error.message.includes('rate limit') ||
         error.message.includes('429') ||
         error.message.includes('Too Many Requests'))
     ) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded. Please try again in a moment.' },
-        { status: 429 },
-      );
+      return createErrorResponse('Rate limit exceeded', {
+        message: 'Rate limit exceeded. Please try again in a moment.',
+        status: HTTP_STATUS.TOO_MANY_REQUESTS,
+      });
     }
 
-    return NextResponse.json(
-      { error: 'Failed to fetch predictive search results' },
-      { status: 500 },
-    );
+    return handleApiError('GET /api/search/predictive', error, 'Failed to fetch predictive search results');
   }
 }

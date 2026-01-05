@@ -1,6 +1,12 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
-import { handleUserErrors } from '@/helpers/shopify';
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleApiError,
+  HTTP_STATUS,
+  mapShopifyUserErrors,
+} from '@/lib/api-responses';
 import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
@@ -14,11 +20,24 @@ const DEFAULT_PAGINATION = {
   before: '',
 };
 
+function getPaginationParams(searchParams: URLSearchParams) {
+  return {
+    first: searchParams.get('first')
+      ? Number.parseInt(searchParams.get('first') || '', 10)
+      : DEFAULT_PAGINATION.first,
+    last: searchParams.get('last')
+      ? Number.parseInt(searchParams.get('last') || '', 10)
+      : DEFAULT_PAGINATION.last,
+    after: searchParams.get('after') || DEFAULT_PAGINATION.after,
+    before: searchParams.get('before') || DEFAULT_PAGINATION.before,
+  };
+}
+
 export async function PATCH(request: NextRequest) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+    return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
   }
 
   try {
@@ -29,15 +48,15 @@ export async function PATCH(request: NextRequest) {
       operation?: 'update' | 'add';
     };
 
-    const { searchParams } = request.nextUrl;
-    const first = searchParams.get('first')
-      ? Number.parseInt(searchParams.get('first') || '', 10)
-      : DEFAULT_PAGINATION.first;
-    const last = searchParams.get('last')
-      ? Number.parseInt(searchParams.get('last') || '', 10)
-      : DEFAULT_PAGINATION.last;
-    const after = searchParams.get('after') || DEFAULT_PAGINATION.after;
-    const before = searchParams.get('before') || DEFAULT_PAGINATION.before;
+    if (!lines && !body.addLines) {
+      return createErrorResponse('Invalid request body', {
+        message: 'Request body must include either lines or addLines',
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
+    }
+
+    const pagination = getPaginationParams(request.nextUrl.searchParams);
+    const paginationVars = adjustPaginationVariables(pagination);
 
     let cart;
     let userErrors;
@@ -46,7 +65,7 @@ export async function PATCH(request: NextRequest) {
       const addLineResponse = await storefrontSdk('no-store').cartLinesAdd({
         cartId,
         lines: body.addLines,
-        ...adjustPaginationVariables({ after, before, first, last }),
+        ...paginationVars,
       });
 
       cart = addLineResponse?.cartLinesAdd?.cart;
@@ -55,57 +74,35 @@ export async function PATCH(request: NextRequest) {
       const updateLinesResponse = await storefrontSdk('no-store').cartLinesUpdate({
         cartId,
         lines,
-        ...adjustPaginationVariables({ after, before, first, last }),
+        ...paginationVars,
       });
 
       cart = updateLinesResponse?.cartLinesUpdate?.cart;
       userErrors = updateLinesResponse?.cartLinesUpdate?.userErrors;
-    } else {
-      return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
     }
 
-    const userErrorResult = handleUserErrors(userErrors);
-    if (userErrorResult) {
-      return NextResponse.json(
-        {
-          error: operation === 'add' ? 'Failed to add product' : 'Failed to update cart',
-          userErrors: userErrorResult.userErrors,
-        },
-        { status: 400 },
-      );
+    const mappedUserErrors = mapShopifyUserErrors(userErrors);
+    if (mappedUserErrors) {
+      const errorMsg = operation === 'add' ? 'Failed to add product' : 'Failed to update cart';
+      return createErrorResponse(errorMsg, {
+        userErrors: mappedUserErrors,
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
-    if (cart) {
-      revalidateCart();
-
-      return NextResponse.json(
-        {
-          data: cart,
-          message: operation === 'add' ? 'Product added successfully' : 'Cart updated successfully',
-        },
-        {
-          status: 200,
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-            Pragma: 'no-cache',
-            Expires: '0',
-          },
-        },
-      );
+    if (!cart) {
+      const errorMsg = operation === 'add' ? 'Failed to add product' : 'Failed to update cart';
+      return createErrorResponse(errorMsg, {
+        message: 'Cart operation did not return a valid cart',
+        status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      });
     }
 
-    return NextResponse.json(
-      {
-        error: operation === 'add' ? 'Failed to add product' : 'Failed to update cart',
-      },
-      { status: 500 },
-    );
+    revalidateCart();
+    const successMsg = operation === 'add' ? 'Product added successfully' : 'Cart updated successfully';
+    return createSuccessResponse(cart, { message: successMsg, noCache: true });
   } catch (error) {
-    console.error('PATCH /api/cart/lines error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to update cart lines' },
-      { status: 500 },
-    );
+    return handleApiError('PATCH /api/cart/lines', error, 'Failed to update cart lines');
   }
 }
 
@@ -113,59 +110,43 @@ export async function DELETE(request: NextRequest) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+    return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
   }
 
   try {
     const { searchParams } = request.nextUrl;
     const lineItemId = searchParams.get('lineItemId');
-
     if (!lineItemId) {
-      return NextResponse.json({ error: 'Missing line item ID' }, { status: 400 });
+      return createErrorResponse('Missing line item ID', { status: HTTP_STATUS.BAD_REQUEST });
     }
-    const first = searchParams.get('first')
-      ? Number.parseInt(searchParams.get('first') || '', 10)
-      : DEFAULT_PAGINATION.first;
-    const last = searchParams.get('last')
-      ? Number.parseInt(searchParams.get('last') || '', 10)
-      : DEFAULT_PAGINATION.last;
-    const after = searchParams.get('after') || DEFAULT_PAGINATION.after;
-    const before = searchParams.get('before') || DEFAULT_PAGINATION.before;
 
+    const pagination = getPaginationParams(searchParams);
     const removeLinesResponse = await storefrontSdk('no-store').cartLinesRemove({
       cartId,
       lineIds: [lineItemId],
-      ...adjustPaginationVariables({ after, before, first, last }),
+      ...adjustPaginationVariables(pagination),
     });
 
     const { cart, userErrors } = removeLinesResponse?.cartLinesRemove || {};
 
-    const userErrorResult = handleUserErrors(userErrors);
-    if (userErrorResult) {
-      return NextResponse.json(
-        {
-          error: 'Failed to remove product',
-          userErrors: userErrorResult.userErrors,
-        },
-        { status: 400 },
-      );
+    const mappedUserErrors = mapShopifyUserErrors(userErrors);
+    if (mappedUserErrors) {
+      return createErrorResponse('Failed to remove product', {
+        userErrors: mappedUserErrors,
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
-    if (cart) {
-      revalidateCart();
-
-      return NextResponse.json(
-        { data: cart, message: 'Product removed successfully' },
-        { status: 200 },
-      );
+    if (!cart) {
+      return createErrorResponse('Failed to remove product', {
+        message: 'Cart operation did not return a valid cart',
+        status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      });
     }
 
-    return NextResponse.json({ error: 'Failed to remove product' }, { status: 500 });
+    revalidateCart();
+    return createSuccessResponse(cart, { message: 'Product removed successfully' });
   } catch (error) {
-    console.error('DELETE /api/cart/lines error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to remove cart line' },
-      { status: 500 },
-    );
+    return handleApiError('DELETE /api/cart/lines', error, 'Failed to remove cart line');
   }
 }

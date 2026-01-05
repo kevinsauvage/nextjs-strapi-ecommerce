@@ -1,12 +1,18 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
 import { delCookieAction } from '@/actions/cookiesActions';
 import config from '@/config';
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleApiError,
+  HTTP_STATUS,
+  safeLogError,
+} from '@/lib/api-responses';
 import { storefrontSdk } from '@/shopify';
 import { clearShopifyToken, getShopifyToken } from '@/utils/shopify';
 
 export const dynamic = 'force-dynamic';
-
 
 export async function POST(_request: NextRequest) {
   try {
@@ -17,21 +23,16 @@ export async function POST(_request: NextRequest) {
           customerAccessToken: token,
         });
       } catch (error) {
-        console.warn('Failed to delete token on Shopify side:', error);
+        safeLogError('POST /api/logout - token deletion', error);
       }
     }
 
     await clearShopifyToken();
-
     await delCookieAction(config.cookies.delegateToken);
 
-    return NextResponse.json({ success: 'Logged out successfully' }, { status: 200 });
+    return createSuccessResponse({ success: 'Logged out successfully' });
   } catch (error) {
-    console.error('Logout error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to logout' },
-      { status: 500 },
-    );
+    return handleApiError('POST /api/logout', error, 'Failed to logout');
   }
 }
 

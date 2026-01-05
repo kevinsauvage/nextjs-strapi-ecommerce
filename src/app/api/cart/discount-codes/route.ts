@@ -1,16 +1,24 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
-import { handleUserErrors } from '@/helpers/shopify';
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  handleApiError,
+  HTTP_STATUS,
+  mapShopifyUserErrors,
+} from '@/lib/api-responses';
 import { getCartId, revalidateCart } from '@/lib/cart-helpers';
 import { storefrontSdk } from '@/shopify';
 
 export const dynamic = 'force-dynamic';
 
+const ERROR_MESSAGE = 'Failed to update discount codes';
+
 export async function PATCH(request: NextRequest) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    return NextResponse.json({ error: 'Cart not found' }, { status: 404 });
+    return createErrorResponse('Cart not found', { status: HTTP_STATUS.NOT_FOUND });
   }
 
   try {
@@ -18,7 +26,10 @@ export async function PATCH(request: NextRequest) {
     const { discountCodes } = body as { discountCodes: string[] };
 
     if (!Array.isArray(discountCodes)) {
-      return NextResponse.json({ error: 'Invalid discount codes format' }, { status: 400 });
+      return createErrorResponse('Invalid discount codes format', {
+        message: 'Discount codes must be an array',
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
     const updateDiscountCodesResponse = await storefrontSdk('no-store').cartDiscountCodesUpdate({
@@ -30,40 +41,27 @@ export async function PATCH(request: NextRequest) {
     const { cart, userErrors, warnings } =
       updateDiscountCodesResponse?.cartDiscountCodesUpdate || {};
 
-    const userErrorResult = handleUserErrors(userErrors);
-    if (userErrorResult) {
-      return NextResponse.json(
-        {
-          error: 'Failed to update discount codes',
-          userErrors: userErrorResult.userErrors,
-        },
-        { status: 400 },
-      );
+    const mappedUserErrors = mapShopifyUserErrors(userErrors);
+    if (mappedUserErrors) {
+      return createErrorResponse(ERROR_MESSAGE, {
+        userErrors: mappedUserErrors,
+        status: HTTP_STATUS.BAD_REQUEST,
+      });
     }
 
-    if (warnings && Array.isArray(warnings) && warnings?.length) {
-      console.warn('Discount code warnings:', warnings);
+    if (!cart) {
+      return createErrorResponse(ERROR_MESSAGE, {
+        message: 'Cart update did not return a valid cart',
+        status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      });
     }
 
-    if (cart) {
-      revalidateCart();
-
-      return NextResponse.json(
-        {
-          data: cart,
-          message: 'Discount codes updated successfully',
-          warnings: warnings || [],
-        },
-        { status: 200 },
-      );
-    }
-
-    return NextResponse.json({ error: 'Failed to update discount codes' }, { status: 500 });
-  } catch (error) {
-    console.error('PATCH /api/cart/discount-codes error:', error);
-    return NextResponse.json(
-      { error: error instanceof Error ? error.message : 'Failed to update discount codes' },
-      { status: 500 },
+    revalidateCart();
+    return createSuccessResponse(
+      { ...cart, warnings: warnings || [] },
+      { message: 'Discount codes updated successfully' },
     );
+  } catch (error) {
+    return handleApiError('PATCH /api/cart/discount-codes', error, ERROR_MESSAGE);
   }
 }

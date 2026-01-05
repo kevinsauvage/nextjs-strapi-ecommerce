@@ -1,5 +1,10 @@
-import { type NextRequest, NextResponse } from 'next/server';
+import { type NextRequest } from 'next/server';
 
+import {
+  createErrorResponse,
+  createSuccessResponse,
+  HTTP_STATUS,
+} from '@/lib/api-responses';
 import {
   getWishlist,
   getWishlistErrorStatus,
@@ -20,65 +25,41 @@ export async function DELETE(
     const user = await getUser();
 
     if (!user?.id) {
-      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+      return createErrorResponse('User not found', { status: HTTP_STATUS.NOT_FOUND });
     }
 
     const { productId: rawProductId } = await params;
-
     if (!rawProductId) {
-      return NextResponse.json({ error: 'Missing product ID' }, { status: 400 });
+      return createErrorResponse('Missing product ID', { status: HTTP_STATUS.BAD_REQUEST });
     }
 
     const productId = decodeURIComponent(rawProductId);
-
     const currentWishlistIds = await getWishlistIds();
     const newWishlistIds = currentWishlistIds.filter((id) => id !== productId);
 
     if (currentWishlistIds.length === newWishlistIds.length) {
-      return NextResponse.json(
-        { error: true, message: 'Product not found in wishlist' },
-        { status: 404 },
-      );
+      return createErrorResponse('Product not found in wishlist', { status: HTTP_STATUS.NOT_FOUND });
     }
 
     const result = await updateWishlistMetafields(newWishlistIds, user.id);
 
-    if (result.success && result.data !== undefined) {
-      // Resolve products to return full data
-      const wishlist = await getWishlist();
-      return NextResponse.json(
-        {
-          message: 'Product correctly removed from wishlist',
-          data: wishlist,
-          success: true,
-        },
-        {
-          status: 200,
-          headers: {
-            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-            Pragma: 'no-cache',
-            Expires: '0',
-          },
-        },
-      );
+    if (!result.success || result.data === undefined) {
+      return createErrorResponse('Something went wrong removing the product from the wishlist', {
+        message: result.message || 'Something went wrong removing the product from the wishlist',
+        status: HTTP_STATUS.INTERNAL_SERVER_ERROR,
+      });
     }
 
-    return NextResponse.json(
-      {
-        error: true,
-        message: result.message || 'Something went wrong removing the product from the wishlist',
-      },
-      { status: 500 },
-    );
+    const wishlist = await getWishlist();
+    return createSuccessResponse(wishlist, {
+      message: 'Product correctly removed from wishlist',
+      noCache: true,
+    });
   } catch (error) {
-    console.error('DELETE /api/wishlist/[productId] error:', error);
     const status = getWishlistErrorStatus(error);
-    return NextResponse.json(
-      {
-        error: true,
-        message: error instanceof Error ? error.message : 'Failed to remove product from wishlist',
-      },
-      { status },
-    );
+    return createErrorResponse('Failed to remove product from wishlist', {
+      message: error instanceof Error ? error.message : 'An unexpected error occurred',
+      status,
+    });
   }
 }
