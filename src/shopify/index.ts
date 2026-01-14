@@ -105,7 +105,7 @@ export const storefrontSdk = (cacheOption: 'default' | 'no-store' = 'default') =
  */
 const staticWrapper: SdkFunctionWrapper = async (action) => {
   // No extra headers needed for static generation
-  return await action({});
+  return action({});
 };
 
 /**
