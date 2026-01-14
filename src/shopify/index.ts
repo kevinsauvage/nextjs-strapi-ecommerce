@@ -6,8 +6,8 @@ import type { SdkFunctionWrapper } from './storefront/index';
 import { getSdk as getStorefrontSdk } from './storefront/index';
 import { buildExtraHeaders } from './helpers';
 
+import type { RequestConfig } from 'graphql-request';
 import { GraphQLClient } from 'graphql-request';
-import type { RequestConfig } from 'node_modules/graphql-request/build/esm/types';
 
 const ACCESS_TOKEN = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
 const ADMIN_TOKEN = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;

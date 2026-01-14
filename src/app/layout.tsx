@@ -14,8 +14,8 @@ import { getUser } from '@/utils/users';
 
 import '../styles/globals.css';
 
-import { CartProvider } from 'src/contexts/CartContext/CartContext';
-import { UserProvider } from 'src/contexts/UserContext/UserContext';
+import { CartProvider } from '@/contexts/CartContext/CartContext';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 
 const inter = Inter({
   subsets: ['latin'],
