@@ -1,4 +1,6 @@
-import { type CartFieldsFragment, CurrencyCode } from '@/shopify/storefront';
+import type { CartFieldsFragment } from '@/shopify/storefront';
+
+const USD = 'USD' as const;
 
 const cartMock: CartFieldsFragment = {
   __typename: 'Cart',
@@ -26,22 +28,22 @@ const cartMock: CartFieldsFragment = {
     totalAmount: {
       __typename: 'MoneyV2',
       amount: '0.00',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: USD as any,
     },
     subtotalAmount: {
       __typename: 'MoneyV2',
       amount: '0.00',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: USD as any,
     },
     totalTaxAmount: {
       __typename: 'MoneyV2',
       amount: '0.00',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: USD as any,
     },
     totalDutyAmount: {
       __typename: 'MoneyV2',
       amount: '0.00',
-      currencyCode: CurrencyCode.Usd,
+      currencyCode: USD as any,
     },
   },
   discountCodes: [],

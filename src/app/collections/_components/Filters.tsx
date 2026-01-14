@@ -22,9 +22,16 @@ import {
 } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
 import type { Filter } from '@/shopify/storefront';
-import { FilterType } from '@/shopify/storefront';
 
 import { FilterIcon } from 'lucide-react';
+
+// IMPORTANT: do not import runtime enums from `@/shopify/storefront` in client components.
+// The generated Storefront SDK pulls in `graphql-request`/`graphql-tag` and will bloat the client bundle.
+const FILTER_TYPE = {
+  boolean: 'BOOLEAN',
+  list: 'LIST',
+  priceRange: 'PRICE_RANGE',
+} as const;
 
 const Filters = ({
   filters,
@@ -114,7 +121,7 @@ const Filters = ({
   }, [query.filters]);
 
   const getMinMaxPrice = useCallback((): [number, number] | undefined => {
-    const priceRangeFilter = filters?.find((filter) => filter.type === FilterType.PriceRange);
+    const priceRangeFilter = filters?.find((filter) => filter.type === FILTER_TYPE.priceRange);
     if (!priceRangeFilter || !priceRangeFilter.values?.[0]) {
       return undefined;
     }
@@ -166,7 +173,7 @@ const Filters = ({
                   {filter.label}
                 </AccordionTrigger>
                 <AccordionContent>
-                  {filter.type === FilterType.PriceRange && (
+                  {filter.type === FILTER_TYPE.priceRange && (
                     <div className="space-y-4 py-2">
                       <Slider
                         defaultValue={[getMinMaxPrice()?.[0] || 0, getMinMaxPrice()?.[1] || 200]}
@@ -182,7 +189,7 @@ const Filters = ({
                       </div>
                     </div>
                   )}
-                  {filter.type === FilterType.List && (
+                  {filter.type === FILTER_TYPE.list && (
                     <div className="space-y-2">
                       {filter.values.map((value, index) => (
                         <div
