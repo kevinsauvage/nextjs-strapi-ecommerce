@@ -7,7 +7,6 @@
 
 export const getCookieFront = (name: string) => {
   if (typeof document === 'undefined') return '';
-  // eslint-disable-next-line unicorn/no-document-cookie
   const cookies = document.cookie.split(';');
 
   for (const cooky of cookies) {
@@ -46,7 +45,6 @@ export const setCookieFront = (
 
   try {
     if (typeof document !== 'undefined') {
-      // eslint-disable-next-line unicorn/no-document-cookie
       document.cookie = cookie;
     }
   } catch (error) {

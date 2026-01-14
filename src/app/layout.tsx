@@ -7,15 +7,14 @@ import Header from '@/components/Header';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import config from '@/config';
+import { CartProvider } from '@/contexts/CartContext/CartContext';
+import { UserProvider } from '@/contexts/UserContext/UserContext';
 import { CartService } from '@/services/cart.service';
 import { WishlistService } from '@/services/wishlist.service';
 import { storefrontSdk } from '@/shopify';
 import { getUser } from '@/utils/users';
 
 import '../styles/globals.css';
-
-import { CartProvider } from '@/contexts/CartContext/CartContext';
-import { UserProvider } from '@/contexts/UserContext/UserContext';
 
 const inter = Inter({
   subsets: ['latin'],

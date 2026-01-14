@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/consistent-destructuring */
 'use client';
 
 import { useState } from 'react';

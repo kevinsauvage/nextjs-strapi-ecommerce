@@ -240,7 +240,7 @@ export class AuthService {
 
     // Only log in development or if it's the last attempt
     if (isLastAttempt || process.env.NODE_ENV === 'development') {
-      // eslint-disable-next-line no-console
+       
       console.warn(context, response ? { error: errorMessage, response } : error);
     }
   }
