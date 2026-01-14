@@ -99,6 +99,24 @@ export const storefrontSdk = (cacheOption: 'default' | 'no-store' = 'default') =
   return getStorefrontSdk(client, defaultWrapper);
 };
 
+/**
+ * Static SDK wrapper that doesn't use cookies - for static generation (sitemap, robots.txt, etc.)
+ * This avoids making routes dynamic when they don't need user-specific data.
+ */
+const staticWrapper: SdkFunctionWrapper = async (action) => {
+  // No extra headers needed for static generation
+  return await action({});
+};
+
+/**
+ * Storefront SDK for static generation (no cookies, no user-specific headers)
+ * Use this in sitemap, robots.txt, and other static routes
+ */
+export const storefrontSdkStatic = (cacheOption: 'default' | 'no-store' = 'no-store') => {
+  const client = cacheOption === 'no-store' ? createStorefrontClient('no-store') : storefrontClient;
+  return getStorefrontSdk(client, staticWrapper);
+};
+
 const adminHeaders = {
   headers: {
     'Content-Type': 'application/json',

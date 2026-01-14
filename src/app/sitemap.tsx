@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 
 import { sitemap as sitemapConfig } from '@/config';
 import { getBaseUrl } from '@/lib/server/metadata';
-import { storefrontSdk } from '@/shopify';
+import { storefrontSdkStatic } from '@/shopify';
 
 const getBaseSitemap = (): MetadataRoute.Sitemap => {
   const baseUrl = getBaseUrl();
@@ -29,7 +29,7 @@ async function getAllProducts(): Promise<Array<{ handle: string; updatedAt?: str
 
   while (hasNextPage && consecutiveErrors < maxConsecutiveErrors) {
     try {
-      const response = await storefrontSdk('no-store').getProducts({
+      const response = await storefrontSdkStatic('no-store').getProducts({
         first: pageSize,
         after: cursor || undefined,
         identifiers: [],
@@ -79,7 +79,7 @@ async function getAllCollections(): Promise<Array<{ handle: string; updatedAt?: 
   const pageSize = 250; // Shopify allows up to 250 items per page
 
   while (hasNextPage) {
-    const response = await storefrontSdk('no-store').collections({
+    const response = await storefrontSdkStatic('no-store').collections({
       first: pageSize,
       after: cursor || undefined,
       identifiers: [],
