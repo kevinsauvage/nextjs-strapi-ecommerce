@@ -6,8 +6,9 @@ import type { SdkFunctionWrapper } from './storefront/index';
 import { getSdk as getStorefrontSdk } from './storefront/index';
 import { buildExtraHeaders } from './helpers';
 
-import type { RequestConfig } from 'graphql-request';
 import { GraphQLClient } from 'graphql-request';
+
+type GraphQLClientOptions = ConstructorParameters<typeof GraphQLClient>[1];
 
 const ACCESS_TOKEN = process.env.SHOPIFY_STORE_FRONT_ACCESS_TOKEN;
 const ADMIN_TOKEN = process.env.SHOPIFY_STORE_FRONT_ADMIN_TOKEN;
@@ -68,7 +69,7 @@ const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default')
     },
   };
 
-  return new GraphQLClient(SHOPIFY_URL, options as RequestConfig);
+  return new GraphQLClient(SHOPIFY_URL, options as GraphQLClientOptions);
 };
 
 const storefrontClient = createStorefrontClient('default');
