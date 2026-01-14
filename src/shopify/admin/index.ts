@@ -29128,6 +29128,8 @@ export enum MetafieldDefinitionCreateUserErrorCode {
   LimitExceeded = 'LIMIT_EXCEEDED',
   /** You have reached the maximum allowed definitions for automated collections. */
   OwnerTypeLimitExceededForAutomatedCollections = 'OWNER_TYPE_LIMIT_EXCEEDED_FOR_AUTOMATED_COLLECTIONS',
+  /** You have reached the maximum allowed definitions to be used as admin filters. */
+  OwnerTypeLimitExceededForUseAsAdminFilters = 'OWNER_TYPE_LIMIT_EXCEEDED_FOR_USE_AS_ADMIN_FILTERS',
   /** The pinned limit has been reached for the owner type. */
   PinnedLimitReached = 'PINNED_LIMIT_REACHED',
   /** The input value needs to be blank. */
@@ -29489,6 +29491,8 @@ export enum MetafieldDefinitionUpdateUserErrorCode {
   NotFound = 'NOT_FOUND',
   /** You have reached the maximum allowed definitions for automated collections. */
   OwnerTypeLimitExceededForAutomatedCollections = 'OWNER_TYPE_LIMIT_EXCEEDED_FOR_AUTOMATED_COLLECTIONS',
+  /** You have reached the maximum allowed definitions to be used as admin filters. */
+  OwnerTypeLimitExceededForUseAsAdminFilters = 'OWNER_TYPE_LIMIT_EXCEEDED_FOR_USE_AS_ADMIN_FILTERS',
   /** The pinned limit has been reached for the owner type. */
   PinnedLimitReached = 'PINNED_LIMIT_REACHED',
   /** The input value needs to be blank. */
@@ -40727,15 +40731,15 @@ export enum OrderTransactionErrorCode {
   ExpiredCard = 'EXPIRED_CARD',
   /** There was an unknown error with processing the payment. */
   GenericError = 'GENERIC_ERROR',
-  /** The address does not match the card number. */
+  /** The address is incorrect. */
   IncorrectAddress = 'INCORRECT_ADDRESS',
-  /** The CVC does not match the card number. */
+  /** The card security code (CVC/CVV) is incorrect. */
   IncorrectCvc = 'INCORRECT_CVC',
   /** The card number is incorrect. */
   IncorrectNumber = 'INCORRECT_NUMBER',
-  /** The entered PIN is incorrect. */
+  /** The PIN entered is incorrect. */
   IncorrectPin = 'INCORRECT_PIN',
-  /** The ZIP or postal code does not match the card number. */
+  /** The ZIP or postal code doesn't match the one on file. */
   IncorrectZip = 'INCORRECT_ZIP',
   /** The amount is either too high or too low for the provider. */
   InvalidAmount = 'INVALID_AMOUNT',
@@ -57243,6 +57247,8 @@ export enum StandardMetafieldDefinitionEnableUserErrorCode {
   InvalidInputCombination = 'INVALID_INPUT_COMBINATION',
   /** The maximum number of definitions per owner type has been exceeded. */
   LimitExceeded = 'LIMIT_EXCEEDED',
+  /** You have reached the maximum allowed definitions to be used as admin filters. */
+  OwnerTypeLimitExceededForUseAsAdminFilters = 'OWNER_TYPE_LIMIT_EXCEEDED_FOR_USE_AS_ADMIN_FILTERS',
   /** The input value is already taken. */
   Taken = 'TAKEN',
   /** The standard metafield definition template was not found. */
@@ -62433,7 +62439,7 @@ export type WebhookSubscription = LegacyInteroperability & Node & {
   format: WebhookSubscriptionFormat;
   /** A globally-unique ID. */
   id: Scalars['ID']['output'];
-  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify_payloads). */
+  /** The list of fields to be included in the webhook subscription. Only the fields specified will be included in the webhook payload. If null, then all fields will be included. Learn more about [modifying webhook payloads](https://shopify.dev/docs/apps/build/webhooks/customize/modify-payloads). */
   includeFields: Array<Scalars['String']['output']>;
   /** The ID of the corresponding resource in the REST Admin API. */
   legacyResourceId: Scalars['UnsignedInt64']['output'];
