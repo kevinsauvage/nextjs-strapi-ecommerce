@@ -15839,6 +15839,64 @@ export type GetShopProductTagsQuery = {
   };
 };
 
+export type GetProductsForSitemapQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  sortKey?: InputMaybe<ProductSortKeys>;
+  query?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type GetProductsForSitemapQuery = {
+  __typename?: 'QueryRoot';
+  products: {
+    __typename?: 'ProductConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'ProductEdge';
+      cursor: string;
+      node: { __typename?: 'Product'; handle: string; updatedAt: string };
+    }>;
+  };
+};
+
+export type GetCollectionsForSitemapQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  sortKey?: InputMaybe<CollectionSortKeys>;
+  query?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<LanguageCode>;
+}>;
+
+export type GetCollectionsForSitemapQuery = {
+  __typename?: 'QueryRoot';
+  collections: {
+    __typename?: 'CollectionConnection';
+    pageInfo: {
+      __typename?: 'PageInfo';
+      hasNextPage: boolean;
+      hasPreviousPage: boolean;
+      startCursor?: string | null;
+      endCursor?: string | null;
+    };
+    edges: Array<{
+      __typename?: 'CollectionEdge';
+      cursor: string;
+      node: { __typename?: 'Collection'; handle: string; updatedAt: string };
+    }>;
+  };
+};
+
 export const UserErrorsFieldsFragmentDoc = gql`
   fragment UserErrorsFields on UserError {
     field
@@ -17535,6 +17593,74 @@ export const GetShopProductTagsDocument = gql`
     }
   }
 `;
+export const GetProductsForSitemapDocument = gql`
+  query getProductsForSitemap(
+    $first: Int
+    $last: Int
+    $after: String
+    $before: String
+    $sortKey: ProductSortKeys
+    $query: String
+    $language: LanguageCode
+  ) @inContext(language: $language) {
+    products(
+      first: $first
+      last: $last
+      after: $after
+      before: $before
+      sortKey: $sortKey
+      query: $query
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          handle
+          updatedAt
+        }
+      }
+    }
+  }
+`;
+export const GetCollectionsForSitemapDocument = gql`
+  query getCollectionsForSitemap(
+    $first: Int
+    $last: Int
+    $after: String
+    $before: String
+    $sortKey: CollectionSortKeys
+    $query: String
+    $language: LanguageCode
+  ) @inContext(language: $language) {
+    collections(
+      first: $first
+      last: $last
+      after: $after
+      before: $before
+      sortKey: $sortKey
+      query: $query
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          handle
+          updatedAt
+        }
+      }
+    }
+  }
+`;
 
 export type SdkFunctionWrapper = <T>(
   action: (requestHeaders?: Record<string, string>) => Promise<T>,
@@ -18498,6 +18624,42 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
             signal,
           }),
         'getShopProductTags',
+        'query',
+        variables,
+      );
+    },
+    getProductsForSitemap(
+      variables?: GetProductsForSitemapQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+      signal?: RequestInit['signal'],
+    ): Promise<GetProductsForSitemapQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetProductsForSitemapQuery>({
+            document: GetProductsForSitemapDocument,
+            variables,
+            requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders },
+            signal,
+          }),
+        'getProductsForSitemap',
+        'query',
+        variables,
+      );
+    },
+    getCollectionsForSitemap(
+      variables?: GetCollectionsForSitemapQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders,
+      signal?: RequestInit['signal'],
+    ): Promise<GetCollectionsForSitemapQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<GetCollectionsForSitemapQuery>({
+            document: GetCollectionsForSitemapDocument,
+            variables,
+            requestHeaders: { ...requestHeaders, ...wrappedRequestHeaders },
+            signal,
+          }),
+        'getCollectionsForSitemap',
         'query',
         variables,
       );
