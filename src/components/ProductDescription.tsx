@@ -1,4 +1,5 @@
 import type { ProductVariantView } from '@/hooks/useProductVariantView';
+import { getSizeChart } from '@/lib/server/cmsSections';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
 import { mapShopifyImagesToImageFields } from '@/utils/images';
@@ -64,6 +65,9 @@ const ProductDescription = async ({ product, isModal, className }: ProductDescri
     typeof product.descriptionHtml === 'string' ? product.descriptionHtml : '',
   );
 
+  const sizeChart = await getSizeChart();
+  const sizeChartHtml = sizeChart ? await sanitizeHtmlCached(sizeChart.body) : '';
+
   // Default variant data for initial render (server-side)
   const defaultVariant = getDefaultVariant(product);
 
@@ -106,6 +110,9 @@ const ProductDescription = async ({ product, isModal, className }: ProductDescri
         defaultVariant={defaultVariant}
         descriptionHtml={descriptionHtml}
         productId={product.id}
+        sizeChart={
+          sizeChart ? { html: sizeChartHtml, note: sizeChart.note, title: sizeChart.title } : null
+        }
       />
     </div>
   );

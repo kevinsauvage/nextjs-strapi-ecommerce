@@ -34,7 +34,10 @@
     "navigation:sync": "node bin/shopify-navigation.mjs sync",
     "metaobjects:list": "node bin/shopify-metaobjects.mjs list",
     "metaobjects:ensure": "node bin/shopify-metaobjects.mjs ensure",
-    "metaobjects:seed": "node bin/shopify-metaobjects.mjs seed"
+    "metaobjects:seed": "node bin/shopify-metaobjects.mjs seed",
+    "sections:list": "node bin/shopify-sections.mjs list",
+    "sections:ensure": "node bin/shopify-sections.mjs ensure",
+    "sections:seed": "node bin/shopify-sections.mjs seed"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

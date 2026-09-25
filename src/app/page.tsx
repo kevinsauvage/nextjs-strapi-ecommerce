@@ -1,20 +1,21 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import CollectionGrid from '@/components/CollectionGrid/CollectionGrid';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import seo from '@/data/seo';
+import { getFaqSection, getHeroSection } from '@/lib/server/cmsSections';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { storefrontSdk } from '@/shopify/index';
 
+import FaqSection from './_components/FaqSection';
+import HomeHero from './_components/HomeHero';
 import HomeSection from './_components/HomeSection';
 import ProductSection from './_components/ProductSection';
 
-import { ArrowRight, Award, RotateCcw, ShieldCheck, Sparkles, Star, Truck } from 'lucide-react';
+import { ArrowRight, Award, RotateCcw, ShieldCheck, Star, Truck } from 'lucide-react';
 
 export const metadata: Metadata = generateMetadataUtil({
   title: seo.home.title,
@@ -50,32 +51,10 @@ const testimonials = [
   },
 ];
 
-const MARQUEE_ITEMS = [
-  'Free shipping over $150',
-  'New drop weekly',
-  'Small-batch makers',
-  '30-day returns',
-  'Secure checkout',
-  'Member perks',
-];
-
-// Duplicated for the seamless marquee loop; each half gets a stable suffix so
-// keys stay unique without using the array index.
-const MARQUEE_LOOP = [
-  ...MARQUEE_ITEMS.map((item) => ({ item, id: `${item}-a` })),
-  ...MARQUEE_ITEMS.map((item) => ({ item, id: `${item}-b` })),
-];
-
-const HERO_STATS: Array<[string, string]> = [
-  ['4.9', 'Average rating'],
-  ['12k+', 'Happy customers'],
-  ['30-day', 'Free returns'],
-];
-
 const RATING_STARS = [0, 1, 2, 3, 4];
 
 const Home = async () => {
-  const [collections, bestSelling, newArrival] = await Promise.all([
+  const [collections, bestSelling, newArrival, heroSection, faqSection] = await Promise.all([
     storefrontSdk().collections({
       first: 100,
       firstProducts: 1,
@@ -92,6 +71,8 @@ const Home = async () => {
       identifiers: [],
       sortKey: 'CREATED_AT',
     }),
+    getHeroSection(),
+    getFaqSection(),
   ]);
 
   const featuredCollections = collections.collections.edges.filter((collection) =>
@@ -100,100 +81,10 @@ const Home = async () => {
 
   const bestSellingProducts = bestSelling.products.edges.map((edge) => edge.node);
   const newArrivalProducts = newArrival.products.edges.map((edge) => edge.node);
-  const heroImage = featuredCollections[0]?.node.image;
 
   return (
     <div className="pb-16 md:pb-24">
-      {/* Editorial hero */}
-      <section className="hero-mesh relative overflow-hidden border-b border-border/60">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-          <div className="absolute -top-28 right-[6%] size-96 rounded-full bg-[var(--gold)]/10 blur-3xl" />
-          <div className="absolute -left-24 bottom-0 size-80 rounded-full bg-[var(--gold-soft)] blur-3xl" />
-        </div>
-        <div className="container relative mx-auto grid items-center gap-10 px-4 py-14 md:px-6 md:py-20 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-7">
-            <span className="text-eyebrow-gold animate-rise inline-flex items-center gap-3">
-              <Sparkles size={14} aria-hidden="true" />
-              New Season · Curated Drop
-            </span>
-            <h1 className="text-display animate-rise animate-rise-1 mt-5 max-w-2xl">
-              Wear the story you want to tell.
-            </h1>
-            <p className="text-body-lg animate-rise animate-rise-2 mt-6 max-w-xl text-secondary">
-              Discover the latest trends and exclusive collections that elevate everyday dressing —
-              small-batch quality at an honest price, from wardrobe staples to statement pieces.
-            </p>
-            <div className="animate-rise animate-rise-3 mt-8 flex flex-wrap items-center gap-3">
-              <Button size="lg" asChild className="rounded-full px-7">
-                <Link href={config.routes.collection}>
-                  Shop the collection
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild className="rounded-full px-7">
-                <Link href="#new-arrivals">New arrivals</Link>
-              </Button>
-            </div>
-            <dl className="mt-10 flex flex-wrap gap-x-10 gap-y-4">
-              {HERO_STATS.map(([value, label]) => (
-                <div key={label}>
-                  <dt className="sr-only">{label}</dt>
-                  <dd className="font-display text-2xl font-semibold">{value}</dd>
-                  <dd className="text-caption-sm uppercase tracking-widest text-secondary">
-                    {label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
-          <div className="lg:col-span-5">
-            <div className="media-frame lift animate-rise animate-rise-2 relative aspect-[4/5] shadow-[0_32px_80px_-32px_rgb(12_10_9/0.45)]">
-              {heroImage?.src ? (
-                <Image
-                  src={heroImage.large || heroImage.src}
-                  alt={
-                    heroImage.altText || featuredCollections[0]?.node.title || 'Featured collection'
-                  }
-                  fill
-                  preload
-                  sizes="(max-width: 1024px) 100vw, 40vw"
-                  className="object-cover"
-                />
-              ) : (
-                <div className="absolute inset-0 bg-gradient-to-br from-[var(--gold-soft)] via-muted to-background" />
-              )}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                <Badge className="border-white/20 bg-white/15 text-white backdrop-blur-md">
-                  Featured collection
-                </Badge>
-                <p className="font-display mt-3 text-2xl font-medium leading-tight">
-                  {featuredCollections[0]?.node.title ?? 'The Autumn Edit'}
-                </p>
-                <Button size="sm" variant="secondary" asChild className="mt-4 rounded-full">
-                  <Link href={config.routes.collection}>
-                    Explore <ArrowRight className="size-4" aria-hidden="true" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          aria-hidden="true"
-          className="relative border-t border-border/60 bg-background/60 py-3 backdrop-blur"
-        >
-          <div className="flex overflow-hidden">
-            <div className="animate-marquee flex shrink-0 items-center gap-10 pr-10 text-[12px] font-semibold uppercase tracking-[0.18em] text-secondary">
-              {MARQUEE_LOOP.map(({ item, id }) => (
-                <span key={id} className="flex items-center gap-10">
-                  {item} <Star size={12} className="text-[var(--gold)]" aria-hidden="true" />
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      <HomeHero hero={heroSection} collection={featuredCollections[0]?.node ?? null} />
 
       <div className="container mx-auto px-4 md:px-6">
         {/* Perks */}
@@ -272,6 +163,8 @@ const Home = async () => {
             />
           </div>
         )}
+
+        {faqSection ? <FaqSection section={faqSection} /> : null}
 
         {/* Closing CTA */}
         <section className="pb-4 pt-6">

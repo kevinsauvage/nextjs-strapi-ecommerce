@@ -2,6 +2,10 @@
 
 A modern, full-featured e-commerce application built with Next.js and Shopify Storefront API.
 
+> **Merchant / client handover:** [docs/SHOPIFY.md](docs/SHOPIFY.md) is the
+> Shopify data contract — what the storefront needs from your store, and every
+> section (hero, FAQ, menus, pages, policies…) you can edit without a developer.
+
 ## Tech Stack
 
 - **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
@@ -238,6 +242,41 @@ yarn metaobjects:list             # show all metaobject definitions
 yarn metaobjects:ensure           # create the popular_search_term definition if missing
 yarn metaobjects:seed             # upsert terms from content/popular-searches.json
 ```
+
+## CMS sections (metaobjects)
+
+Editorial sections are authored in Shopify Admin → Content → Metaobjects and read
+through the Storefront API by `src/lib/server/cmsSections.ts`. Every section
+fails soft: an unset or unreadable metaobject falls back to the built-in content,
+so the storefront never breaks when nothing is curated.
+
+| Section          | Type           | Handle       | Fields (first non-empty key wins)                                                                                                                            |
+| ---------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Homepage hero    | `hero_section` | `home-hero`  | `heading` (required; `title` also accepted), `eyebrow`, `subheading`, `image`, `image_alt`, `primary_label`/`primary_url`, `secondary_label`/`secondary_url` |
+| Header promo bar | `promo_bar`    | `promo-bar`  | `text` (required), `link_label`, `link_url`, `tone` (`ink`, `gold`, or `neutral`), `active` (`false` hides the bar)                                          |
+| PDP size chart   | `size_chart`   | `size-chart` | `body` (required, HTML: table/list/paragraph), `title`, `note`                                                                                               |
+| FAQ heading      | `faq_section`  | `home-faq`   | `title`, `intro`                                                                                                                                             |
+| FAQ item (list)  | `faq_item`     | —            | `question` (required), `answer` (HTML), `position` (sort order)                                                                                              |
+
+- Single sections are read with `getShopMetaobjectByHandle`; FAQ items are listed
+  with `getShopMetaObjects` (capped at 12) and sorted by `position` — the same
+  pattern as popular searches.
+- `image` must be an absolute `https:` URL on `cdn.shopify.com` or
+  `res.cloudinary.com` (the `next/image` + CSP allowlist). Any other host is
+  ignored and the built-in artwork is used.
+- `body`/`answer` HTML is sanitized via `@/utils/sanitize` before rendering.
+- The promo bar replaces the built-in shipping message; set `active: false` to
+  hide the bar entirely. Only one promo bar and one hero are read (by handle).
+
+```bash
+yarn sections:list     # show all metaobject definitions
+yarn sections:ensure   # create the five section definitions if missing
+yarn sections:seed     # upsert every section from content/sections.json
+```
+
+Edit `content/sections.json` then run `sections:seed`; re-running is safe.
+`sections:ensure` never mutates an existing definition, so adding a field is an
+Admin change (or a script edit) before seeding.
 
 ## Device-local state (no account, no server)
 

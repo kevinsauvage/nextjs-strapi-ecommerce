@@ -27,7 +27,10 @@ type ProductDescriptionClientProps = {
   defaultVariant: ProductVariantView;
   descriptionHtml: string;
   productId: string;
+  sizeChart: SizeChart | null;
 };
+
+type SizeChart = { title: string; html: string; note: string | null };
 
 const MetaItem = ({ label, value }: { label: string; value: string }) => (
   <div className="flex flex-col gap-1">
@@ -155,6 +158,7 @@ const DetailsAccordion = ({
   weight,
   weightUnit,
   quantityAvailable,
+  sizeChart,
 }: {
   descriptionHtml: string;
   sku?: string | null;
@@ -162,6 +166,7 @@ const DetailsAccordion = ({
   weight?: number | null;
   weightUnit?: string | null;
   quantityAvailable?: number | null;
+  sizeChart: SizeChart | null;
 }) => (
   <Accordion type="single" collapsible defaultValue="details" className="w-full">
     <AccordionItem value="details">
@@ -199,6 +204,23 @@ const DetailsAccordion = ({
         </dl>
       </AccordionContent>
     </AccordionItem>
+    {sizeChart?.html ? (
+      <AccordionItem value="size-chart">
+        <AccordionTrigger className="text-label hover:no-underline">
+          {sizeChart.title}
+        </AccordionTrigger>
+        <AccordionContent>
+          {/* Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`. */}
+          <div
+            className="product-description max-w-none text-secondary"
+            dangerouslySetInnerHTML={{ __html: sizeChart.html }}
+          />
+          {sizeChart.note ? (
+            <p className="mt-3 text-caption-sm text-muted">{sizeChart.note}</p>
+          ) : null}
+        </AccordionContent>
+      </AccordionItem>
+    ) : null}
   </Accordion>
 );
 
@@ -208,6 +230,7 @@ const ProductDescriptionClient = ({
   defaultVariant,
   descriptionHtml,
   productId,
+  sizeChart,
 }: ProductDescriptionClientProps) => {
   const {
     handleAddToCart,
@@ -263,6 +286,7 @@ const ProductDescriptionClient = ({
           weight={weight}
           weightUnit={weightUnit}
           quantityAvailable={quantityAvailable}
+          sizeChart={sizeChart}
         />
       )}
 

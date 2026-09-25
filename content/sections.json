@@ -1,0 +1,55 @@
+{
+  "hero": {
+    "handle": "home-hero",
+    "eyebrow": "New Season · Curated Drop",
+    "heading": "Wear the story you want to tell.",
+    "subheading": "Discover the latest trends and exclusive collections that elevate everyday dressing — small-batch quality at an honest price, from wardrobe staples to statement pieces.",
+    "image": "",
+    "imageAlt": "",
+    "primaryLabel": "Shop the collection",
+    "primaryUrl": "/collections",
+    "secondaryLabel": "New arrivals",
+    "secondaryUrl": "#new-arrivals"
+  },
+  "promoBar": {
+    "handle": "promo-bar",
+    "text": "Complimentary shipping on orders over $150 · Easy 30-day returns",
+    "linkLabel": "",
+    "linkUrl": "",
+    "tone": "ink",
+    "active": true
+  },
+  "sizeChart": {
+    "handle": "size-chart",
+    "title": "Size chart",
+    "note": "Measure over light clothing; if you are between sizes, size up — especially for outerwear.",
+    "body": "<table><caption>Tops (cm)</caption><thead><tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hips</th></tr></thead><tbody><tr><td>XS</td><td>80–84</td><td>62–66</td><td>88–92</td></tr><tr><td>S</td><td>84–88</td><td>66–70</td><td>92–96</td></tr><tr><td>M</td><td>88–94</td><td>70–76</td><td>96–102</td></tr><tr><td>L</td><td>94–100</td><td>76–82</td><td>102–108</td></tr><tr><td>XL</td><td>100–107</td><td>82–89</td><td>108–115</td></tr></tbody></table>"
+  },
+  "faq": {
+    "handle": "home-faq",
+    "title": "Frequently asked questions",
+    "intro": "Shipping, returns and sizing — the answers shoppers ask for most.",
+    "items": [
+      {
+        "question": "How long does delivery take?",
+        "answer": "Orders ship within 1–2 business days. Standard delivery takes 3–5 business days; express options are shown at checkout."
+      },
+      {
+        "question": "What is the return window?",
+        "answer": "30 days from delivery, unworn and with tags attached. See our <a href=\"/refund\">refund policy</a> for the full terms."
+      },
+      {
+        "question": "How do I find my size?",
+        "answer": "Check our <a href=\"/pages/size-guide\">size guide</a>. Between sizes? Size up for outerwear, stay true for jersey."
+      },
+      {
+        "question": "How can I track my order?",
+        "answer": "Sign in and open <a href=\"/account/orders\">My orders</a> — every order has a detail page with live tracking links."
+      },
+      {
+        "question": "Do I need an account to order?",
+        "answer": "No, guest checkout works. An account just makes tracking, reordering and address management faster."
+      }
+    ]
+  }
+}
