@@ -278,6 +278,26 @@ Edit `content/sections.json` then run `sections:seed`; re-running is safe.
 `sections:ensure` never mutates an existing definition, so adding a field is an
 Admin change (or a script edit) before seeding.
 
+## Cart delivery estimate (delivery groups)
+
+The cart estimates shipping/local pickup before checkout with the modern
+Storefront delivery API — `cart.deliveryGroups.deliveryOptions` plus the
+`cartDeliveryAddressesAdd/Update/Remove` and `cartSelectedDeliveryOptionsUpdate`
+mutations. The deprecated `buyerIdentity.deliveryAddressPreferences` field is no
+longer queried.
+
+- `src/app/cart/_components/DeliveryEstimate.tsx` collects a country + postal
+  code, attaches it as the selected cart address, and renders the options
+  Shopify returns (title, description, estimated cost).
+- Selecting an option also mirrors the method into
+  `buyerIdentity.preferences.delivery` so checkout opens on the same
+  shipping/pickup method; the service/action additionally support `pickupHandle`.
+- Country options come from `getLocalization` (`availableCountries`); a failed
+  lookup degrades to the cart's own localized country rather than breaking the
+  page.
+- The estimate is informational: the cart total stays Shopify-authoritative and
+  final shipping/taxes are still calculated at checkout.
+
 ## Device-local state (no account, no server)
 
 Two small client caches make browsing feel continuous without touching Shopify:

@@ -3,29 +3,39 @@ import type * as ClientIpModule from '@/lib/server/client-ip';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const {
+  addDeliveryAddress,
   addLines,
   getCart,
   getCartId,
   getOrderById,
   getShopifyToken,
   rateLimited,
+  removeDeliveryAddress,
   removeGiftCardCode,
   removeLine,
+  selectDeliveryOptions,
   updateAttributes,
+  updateDeliveryAddress,
+  updateDeliveryPreference,
   updateDiscountCodes,
   updateGiftCards,
   updateLines,
   updateNote,
 } = vi.hoisted(() => ({
+  addDeliveryAddress: vi.fn(),
   addLines: vi.fn(),
   getCart: vi.fn(),
   getCartId: vi.fn(async (): Promise<string | null> => 'cart-1'),
   getOrderById: vi.fn(),
   getShopifyToken: vi.fn(),
   rateLimited: vi.fn(async () => false),
+  removeDeliveryAddress: vi.fn(),
   removeGiftCardCode: vi.fn(),
   removeLine: vi.fn(),
+  selectDeliveryOptions: vi.fn(),
   updateAttributes: vi.fn(),
+  updateDeliveryAddress: vi.fn(),
+  updateDeliveryPreference: vi.fn(),
   updateDiscountCodes: vi.fn(),
   updateGiftCards: vi.fn(),
   updateLines: vi.fn(),
@@ -44,12 +54,17 @@ vi.mock('@/lib/server/account', () => ({ getOrderById }));
 vi.mock('@/lib/server/shopify-helpers', () => ({ getShopifyToken }));
 vi.mock('@/services/cart.service', () => ({
   CartService: {
+    addDeliveryAddress,
     addLines,
     getCart,
     getCartId,
+    removeDeliveryAddress,
     removeGiftCardCode,
     removeLine,
+    selectDeliveryOptions,
     updateAttributes,
+    updateDeliveryAddress,
+    updateDeliveryPreference,
     updateDiscountCodes,
     updateGiftCardCodes: updateGiftCards,
     updateLines,
@@ -58,12 +73,17 @@ vi.mock('@/services/cart.service', () => ({
 }));
 
 import {
+  addCartDeliveryAddressAction,
   addCartLinesAction,
   getCartAction,
+  removeCartDeliveryAddressAction,
   removeCartLineAction,
   removeGiftCardCodeAction,
   reorderAction,
+  selectCartDeliveryOptionAction,
   updateCartAttributesAction,
+  updateCartDeliveryAddressAction,
+  updateCartDeliveryPreferenceAction,
   updateCartLinesAction,
   updateCartNoteAction,
   updateDiscountCodesAction,
@@ -492,5 +512,153 @@ describe('updateCartAttributesAction', () => {
 
     await expect(updateCartAttributesAction(attributes)).rejects.toThrow('Invalid cart attributes');
     expect(updateAttributes).not.toHaveBeenCalled();
+  });
+});
+
+describe('addCartDeliveryAddressAction', () => {
+  beforeEach(() => {
+    addDeliveryAddress.mockReset();
+    addDeliveryAddress.mockResolvedValue(CART);
+    rateLimited.mockReset();
+    rateLimited.mockResolvedValue(false);
+  });
+
+  it('normalizes the country code and passes a valid address through', async () => {
+    const result = await addCartDeliveryAddressAction({ countryCode: 'us', zip: ' 90210 ' });
+
+    expect(addDeliveryAddress).toHaveBeenCalledWith({ countryCode: 'US', zip: '90210' });
+    expect(result).toEqual({ data: CART, message: 'Delivery estimate updated' });
+  });
+
+  it('rejects an invalid country code or a blank postal code', async () => {
+    await expect(
+      addCartDeliveryAddressAction({ countryCode: 'USA', zip: '90210' }),
+    ).rejects.toThrow('Invalid delivery address');
+    await expect(addCartDeliveryAddressAction({ countryCode: 'US', zip: '   ' })).rejects.toThrow(
+      'Invalid delivery address',
+    );
+    expect(addDeliveryAddress).not.toHaveBeenCalled();
+  });
+
+  it('rejects when rate limited before touching the cart', async () => {
+    rateLimited.mockResolvedValueOnce(true);
+
+    await expect(addCartDeliveryAddressAction({ countryCode: 'US', zip: '90210' })).rejects.toThrow(
+      'Too many cart updates',
+    );
+    expect(addDeliveryAddress).not.toHaveBeenCalled();
+  });
+});
+
+describe('updateCartDeliveryAddressAction', () => {
+  const ADDRESS_ID = 'gid://shopify/CartSelectableAddress/1';
+
+  beforeEach(() => {
+    updateDeliveryAddress.mockReset();
+    updateDeliveryAddress.mockResolvedValue(CART);
+    rateLimited.mockReset();
+    rateLimited.mockResolvedValue(false);
+  });
+
+  it('passes a valid selectable address through', async () => {
+    const input = {
+      address: { deliveryAddress: { countryCode: 'US' as const, zip: '90210' } },
+      id: ADDRESS_ID,
+      selected: true,
+    };
+    const result = await updateCartDeliveryAddressAction(input);
+
+    expect(updateDeliveryAddress).toHaveBeenCalledWith(input);
+    expect(result).toEqual({ data: CART, message: 'Delivery address updated' });
+  });
+
+  it('rejects a non-gid id without a Shopify round-trip', async () => {
+    await expect(
+      updateCartDeliveryAddressAction({ id: 'address-1', selected: true }),
+    ).rejects.toThrow('Invalid delivery address');
+    expect(updateDeliveryAddress).not.toHaveBeenCalled();
+  });
+});
+
+describe('removeCartDeliveryAddressAction', () => {
+  const ADDRESS_ID = 'gid://shopify/CartSelectableAddress/1';
+
+  beforeEach(() => {
+    removeDeliveryAddress.mockReset();
+    removeDeliveryAddress.mockResolvedValue(CART);
+    rateLimited.mockReset();
+    rateLimited.mockResolvedValue(false);
+  });
+
+  it('passes a valid address id through', async () => {
+    const result = await removeCartDeliveryAddressAction(ADDRESS_ID);
+
+    expect(removeDeliveryAddress).toHaveBeenCalledWith(ADDRESS_ID);
+    expect(result).toEqual({ data: CART, message: 'Delivery address removed' });
+  });
+
+  it('rejects a non-gid address id without a Shopify round-trip', async () => {
+    await expect(removeCartDeliveryAddressAction('address-1')).rejects.toThrow(
+      'Invalid delivery address',
+    );
+    expect(removeDeliveryAddress).not.toHaveBeenCalled();
+  });
+});
+
+describe('selectCartDeliveryOptionAction', () => {
+  const SELECTION = [
+    { deliveryGroupId: 'gid://shopify/CartDeliveryGroup/1', deliveryOptionHandle: 'std' },
+  ];
+
+  beforeEach(() => {
+    selectDeliveryOptions.mockReset();
+    selectDeliveryOptions.mockResolvedValue(CART);
+    rateLimited.mockReset();
+    rateLimited.mockResolvedValue(false);
+  });
+
+  it('passes valid selections through', async () => {
+    const result = await selectCartDeliveryOptionAction(SELECTION);
+
+    expect(selectDeliveryOptions).toHaveBeenCalledWith(SELECTION);
+    expect(result).toEqual({ data: CART, message: 'Delivery method updated' });
+  });
+
+  it('rejects an empty selection or a non-gid group id', async () => {
+    await expect(selectCartDeliveryOptionAction([])).rejects.toThrow('Invalid delivery option');
+    await expect(
+      selectCartDeliveryOptionAction([{ deliveryGroupId: 'group-1', deliveryOptionHandle: 'std' }]),
+    ).rejects.toThrow('Invalid delivery option');
+    expect(selectDeliveryOptions).not.toHaveBeenCalled();
+  });
+});
+
+describe('updateCartDeliveryPreferenceAction', () => {
+  beforeEach(() => {
+    updateDeliveryPreference.mockReset();
+    updateDeliveryPreference.mockResolvedValue(CART);
+    rateLimited.mockReset();
+    rateLimited.mockResolvedValue(false);
+  });
+
+  it('passes valid preferences through', async () => {
+    const preference = { deliveryMethod: ['PICK_UP'] as const, pickupHandle: ['loc-1'] };
+    const result = await updateCartDeliveryPreferenceAction({
+      deliveryMethod: [...preference.deliveryMethod],
+      pickupHandle: preference.pickupHandle,
+    });
+
+    expect(updateDeliveryPreference).toHaveBeenCalledWith({
+      deliveryMethod: ['PICK_UP'],
+      pickupHandle: ['loc-1'],
+    });
+    expect(result).toEqual({ data: CART, message: 'Delivery preference saved' });
+  });
+
+  it('rejects an unknown delivery method', async () => {
+    await expect(
+      updateCartDeliveryPreferenceAction({ deliveryMethod: ['DRONE' as 'SHIPPING'] }),
+    ).rejects.toThrow('Invalid delivery preference');
+    expect(updateDeliveryPreference).not.toHaveBeenCalled();
   });
 });

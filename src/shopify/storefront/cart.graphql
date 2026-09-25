@@ -63,6 +63,72 @@ mutation cartCreate(
   }
 }
 
+mutation cartDeliveryAddressesAdd(
+  $addresses: [CartSelectableAddressInput!]!
+  $cartId: ID!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $language: LanguageCode
+) @inContext(language: $language) {
+  cartDeliveryAddressesAdd(addresses: $addresses, cartId: $cartId) {
+    cart {
+      ...CartFields
+    }
+    userErrors {
+      ...CartUserErrors
+    }
+    warnings {
+      message
+    }
+  }
+}
+
+mutation cartDeliveryAddressesRemove(
+  $addressIds: [ID!]!
+  $cartId: ID!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $language: LanguageCode
+) @inContext(language: $language) {
+  cartDeliveryAddressesRemove(addressIds: $addressIds, cartId: $cartId) {
+    cart {
+      ...CartFields
+    }
+    userErrors {
+      ...CartUserErrors
+    }
+    warnings {
+      message
+    }
+  }
+}
+
+mutation cartDeliveryAddressesUpdate(
+  $addresses: [CartSelectableAddressUpdateInput!]!
+  $cartId: ID!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $language: LanguageCode
+) @inContext(language: $language) {
+  cartDeliveryAddressesUpdate(addresses: $addresses, cartId: $cartId) {
+    cart {
+      ...CartFields
+    }
+    userErrors {
+      ...CartUserErrors
+    }
+    warnings {
+      message
+    }
+  }
+}
+
 mutation cartDiscountCodesUpdate(
   $cartId: ID!
   $discountCodes: [String!]!
@@ -204,6 +270,31 @@ mutation cartNoteUpdate(
   $language: LanguageCode
 ) @inContext(language: $language) {
   cartNoteUpdate(cartId: $cartId, note: $note) {
+    cart {
+      ...CartFields
+    }
+    userErrors {
+      ...CartUserErrors
+    }
+    warnings {
+      message
+    }
+  }
+}
+
+mutation cartSelectedDeliveryOptionsUpdate(
+  $cartId: ID!
+  $selectedDeliveryOptions: [CartSelectedDeliveryOptionInput!]!
+  $first: Int
+  $last: Int
+  $after: String
+  $before: String
+  $language: LanguageCode
+) @inContext(language: $language) {
+  cartSelectedDeliveryOptionsUpdate(
+    cartId: $cartId
+    selectedDeliveryOptions: $selectedDeliveryOptions
+  ) {
     cart {
       ...CartFields
     }

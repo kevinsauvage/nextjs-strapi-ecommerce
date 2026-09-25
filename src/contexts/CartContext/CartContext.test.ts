@@ -8,13 +8,17 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { mocks, runtime } = vi.hoisted(() => ({
   mocks: {
+    addCartDeliveryAddressAction: vi.fn(),
     addCartLinesAction: vi.fn(),
     getCartAction: vi.fn(),
     getCookieFront: vi.fn(),
+    removeCartDeliveryAddressAction: vi.fn(),
     removeCartLineAction: vi.fn(),
     reportError: vi.fn(),
+    selectCartDeliveryOptionAction: vi.fn(),
     toastError: vi.fn(),
     toastSuccess: vi.fn(),
+    updateCartDeliveryPreferenceAction: vi.fn(),
     updateCartLinesAction: vi.fn(),
     updateDiscountCodesAction: vi.fn(),
   },
@@ -73,9 +77,13 @@ vi.mock('react', async (importOriginal) => {
 });
 
 vi.mock('@/actions/cartActions', () => ({
+  addCartDeliveryAddressAction: mocks.addCartDeliveryAddressAction,
   addCartLinesAction: mocks.addCartLinesAction,
   getCartAction: mocks.getCartAction,
+  removeCartDeliveryAddressAction: mocks.removeCartDeliveryAddressAction,
   removeCartLineAction: mocks.removeCartLineAction,
+  selectCartDeliveryOptionAction: mocks.selectCartDeliveryOptionAction,
+  updateCartDeliveryPreferenceAction: mocks.updateCartDeliveryPreferenceAction,
   updateCartLinesAction: mocks.updateCartLinesAction,
   updateDiscountCodesAction: mocks.updateDiscountCodesAction,
 }));
@@ -94,8 +102,16 @@ type CartValue = {
   isLoading: boolean;
   handleAddToCart: (variantId: string, quantity?: number) => Promise<void>;
   handleQuantityChange: (id: string, quantity: number) => Promise<void>;
+  removeDeliveryAddress: (addressId: string) => Promise<void>;
   removeFromCart: (lineItemId: string) => Promise<void>;
+  updateDeliveryAddress: (address: { countryCode: string; zip: string }) => Promise<void>;
+  updateDeliveryPreference: (preference: {
+    deliveryMethod?: Array<'SHIPPING' | 'PICK_UP' | 'PICKUP_POINT'>;
+  }) => Promise<void>;
   updateDiscountCodes: (discountCodes: string[]) => Promise<void>;
+  updateSelectedDeliveryOption: (
+    selectedDeliveryOptions: Array<{ deliveryGroupId: string; deliveryOptionHandle: string }>,
+  ) => Promise<void>;
 };
 
 const CART_A = { id: 'cart-a' } as unknown as CartFieldsFragment;
@@ -419,5 +435,84 @@ describe('CartProvider mutations', () => {
     await value.updateDiscountCodes(['SAVE10']);
 
     expect(mocks.toastError).toHaveBeenCalledWith('discount failed');
+  });
+
+  it('estimates delivery by attaching an address', async () => {
+    mocks.addCartDeliveryAddressAction.mockResolvedValue({ data: CART_B, message: 'Estimate' });
+    const value = await settleInitial();
+
+    await value.updateDeliveryAddress({ countryCode: 'US', zip: '90210' });
+    const settled = renderCart();
+
+    expect(mocks.addCartDeliveryAddressAction).toHaveBeenCalledWith({
+      countryCode: 'US',
+      zip: '90210',
+    });
+    expect(settled.cart).toBe(CART_B);
+    expect(mocks.toastSuccess).toHaveBeenCalledWith('Estimate');
+  });
+
+  it('reports invalid delivery addresses and estimate failures', async () => {
+    const value = await settleInitial();
+
+    await value.updateDeliveryAddress(null as unknown as { countryCode: string; zip: string });
+
+    expect(mocks.addCartDeliveryAddressAction).not.toHaveBeenCalled();
+    expect(mocks.reportError).toHaveBeenCalledWith('cart/delivery-address', expect.any(Error));
+
+    mocks.addCartDeliveryAddressAction.mockRejectedValue('oops');
+
+    await value.updateDeliveryAddress({ countryCode: 'US', zip: '90210' });
+
+    expect(mocks.toastError).toHaveBeenCalledWith('Failed to update delivery estimate');
+  });
+
+  it('clears a delivery address and guards the missing id', async () => {
+    mocks.removeCartDeliveryAddressAction.mockResolvedValue({ data: CART_B, message: 'Cleared' });
+    const value = await settleInitial();
+
+    await value.removeDeliveryAddress('');
+
+    expect(mocks.removeCartDeliveryAddressAction).not.toHaveBeenCalled();
+    expect(mocks.reportError).toHaveBeenCalledWith(
+      'cart/delivery-address-remove',
+      expect.any(Error),
+    );
+
+    await value.removeDeliveryAddress('gid://shopify/CartSelectableAddress/1');
+
+    expect(mocks.removeCartDeliveryAddressAction).toHaveBeenCalledWith(
+      'gid://shopify/CartSelectableAddress/1',
+    );
+  });
+
+  it('selects a delivery option and ignores an empty selection', async () => {
+    mocks.selectCartDeliveryOptionAction.mockResolvedValue({ data: CART_B, message: 'Method' });
+    const value = await settleInitial();
+
+    await value.updateSelectedDeliveryOption([]);
+
+    expect(mocks.selectCartDeliveryOptionAction).not.toHaveBeenCalled();
+    expect(mocks.reportError).toHaveBeenCalledWith('cart/delivery-option', expect.any(Error));
+
+    await value.updateSelectedDeliveryOption([
+      { deliveryGroupId: 'gid://shopify/CartDeliveryGroup/1', deliveryOptionHandle: 'std' },
+    ]);
+
+    expect(mocks.selectCartDeliveryOptionAction).toHaveBeenCalledWith([
+      { deliveryGroupId: 'gid://shopify/CartDeliveryGroup/1', deliveryOptionHandle: 'std' },
+    ]);
+    expect(mocks.toastSuccess).toHaveBeenCalledWith('Method');
+  });
+
+  it('saves the delivery preference', async () => {
+    mocks.updateCartDeliveryPreferenceAction.mockResolvedValue({ data: CART_B, message: 'Saved' });
+    const value = await settleInitial();
+
+    await value.updateDeliveryPreference({ deliveryMethod: ['PICK_UP'] });
+
+    expect(mocks.updateCartDeliveryPreferenceAction).toHaveBeenCalledWith({
+      deliveryMethod: ['PICK_UP'],
+    });
   });
 });

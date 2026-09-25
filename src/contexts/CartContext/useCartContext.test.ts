@@ -7,9 +7,13 @@ import useCartContext from './useCartContext';
 import { describe, expect, it, vi } from 'vitest';
 
 vi.mock('@/actions/cartActions', () => ({
+  addCartDeliveryAddressAction: vi.fn(),
   addCartLinesAction: vi.fn(),
   getCartAction: vi.fn(),
+  removeCartDeliveryAddressAction: vi.fn(),
   removeCartLineAction: vi.fn(),
+  selectCartDeliveryOptionAction: vi.fn(),
+  updateCartDeliveryPreferenceAction: vi.fn(),
   updateCartLinesAction: vi.fn(),
   updateDiscountCodesAction: vi.fn(),
 }));
@@ -39,6 +43,18 @@ describe('useCartContext', () => {
     await expect(value.handleAddToCart('variant-1')).resolves.toBeUndefined();
     await expect(value.handleQuantityChange('line-1', 2)).resolves.toBeUndefined();
     await expect(value.removeFromCart('line-1')).resolves.toBeUndefined();
+    await expect(value.removeDeliveryAddress('address-1')).resolves.toBeUndefined();
+    await expect(
+      value.updateDeliveryAddress({ countryCode: 'US', zip: '90210' }),
+    ).resolves.toBeUndefined();
+    await expect(
+      value.updateSelectedDeliveryOption([
+        { deliveryGroupId: 'group-1', deliveryOptionHandle: 'std' },
+      ]),
+    ).resolves.toBeUndefined();
+    await expect(
+      value.updateDeliveryPreference({ deliveryMethod: ['SHIPPING'] }),
+    ).resolves.toBeUndefined();
     await expect(value.updateDiscountCodes(['SAVE10'])).resolves.toBeUndefined();
   });
 });

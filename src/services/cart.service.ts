@@ -6,7 +6,15 @@ import config from '@/config';
 import { reportError } from '@/lib/logger';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables } from '@/shopify/helpers';
-import type { CartFieldsFragment, CartLineInput, CartLineUpdateInput } from '@/shopify/storefront';
+import type {
+  CartDeliveryAddressInput,
+  CartDeliveryPreferenceInput,
+  CartFieldsFragment,
+  CartLineInput,
+  CartLineUpdateInput,
+  CartSelectableAddressUpdateInput,
+  CartSelectedDeliveryOptionInput,
+} from '@/shopify/storefront';
 import {
   getCookieDeleteOptions,
   getReadableCookieOptions,
@@ -297,6 +305,92 @@ export class CartService {
           ...adjustPaginationVariables({ first: 100 }),
         })
         .then((response) => response?.cartAttributesUpdate),
+    );
+  }
+
+  /**
+   * Attach a delivery address and let Shopify compute the delivery groups and
+   * estimated shipping/pickup options for it. The address is marked `selected`
+   * so it becomes the one Shopify prices the cart against.
+   */
+  static async addDeliveryAddress(address: CartDeliveryAddressInput): Promise<CartFieldsFragment> {
+    return this.mutate('Failed to update delivery estimate', (cartId) =>
+      storefrontSdk('private')
+        .cartDeliveryAddressesAdd({
+          addresses: [{ address: { deliveryAddress: address }, selected: true }],
+          cartId,
+          ...adjustPaginationVariables({ first: 100 }),
+        })
+        .then((response) => response?.cartDeliveryAddressesAdd),
+    );
+  }
+
+  /**
+   * Update an existing selectable delivery address in place (id required).
+   */
+  static async updateDeliveryAddress(
+    address: CartSelectableAddressUpdateInput,
+  ): Promise<CartFieldsFragment> {
+    return this.mutate('Failed to update delivery address', (cartId) =>
+      storefrontSdk('private')
+        .cartDeliveryAddressesUpdate({
+          addresses: [address],
+          cartId,
+          ...adjustPaginationVariables({ first: 100 }),
+        })
+        .then((response) => response?.cartDeliveryAddressesUpdate),
+    );
+  }
+
+  /**
+   * Detach one selectable delivery address by its cart-scoped id.
+   */
+  static async removeDeliveryAddress(addressId: string): Promise<CartFieldsFragment> {
+    return this.mutate('Failed to remove delivery address', (cartId) =>
+      storefrontSdk('private')
+        .cartDeliveryAddressesRemove({
+          addressIds: [addressId],
+          cartId,
+          ...adjustPaginationVariables({ first: 100 }),
+        })
+        .then((response) => response?.cartDeliveryAddressesRemove),
+    );
+  }
+
+  /**
+   * Choose the shipping or pickup option for one or more delivery groups
+   * (`deliveryGroupId` + `deliveryOptionHandle` from `cart.deliveryGroups`).
+   */
+  static async selectDeliveryOptions(
+    selectedDeliveryOptions: CartSelectedDeliveryOptionInput[],
+  ): Promise<CartFieldsFragment> {
+    return this.mutate('Failed to update delivery method', (cartId) =>
+      storefrontSdk('private')
+        .cartSelectedDeliveryOptionsUpdate({
+          cartId,
+          selectedDeliveryOptions,
+          ...adjustPaginationVariables({ first: 100 }),
+        })
+        .then((response) => response?.cartSelectedDeliveryOptionsUpdate),
+    );
+  }
+
+  /**
+   * Set the buyer's delivery preferences (preferred method and pickup handle).
+   * This only pre-fills checkout — the priced choice still comes from
+   * `selectDeliveryOptions`.
+   */
+  static async updateDeliveryPreference(
+    preference: CartDeliveryPreferenceInput,
+  ): Promise<CartFieldsFragment> {
+    return this.mutate('Failed to update delivery preference', (cartId) =>
+      storefrontSdk('private')
+        .cartBuyerIdentityUpdate({
+          buyerIdentity: { preferences: { delivery: preference } },
+          cartId,
+          ...adjustPaginationVariables({ first: 100 }),
+        })
+        .then((response) => response?.cartBuyerIdentityUpdate),
     );
   }
 }

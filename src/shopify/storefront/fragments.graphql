@@ -170,9 +170,10 @@ fragment BuyerIdentityFields on CartBuyerIdentity {
   customer {
     ...CustomerDetails
   }
-  deliveryAddressPreferences {
-    ... on MailingAddress {
-      ...AddressFields
+  preferences {
+    delivery {
+      deliveryMethod
+      pickupHandle
     }
   }
 }
@@ -189,6 +190,54 @@ fragment CartCostFields on CartCost {
   }
   totalDutyAmount {
     ...MoneyFields
+  }
+}
+
+fragment CartDeliveryAddressFields on CartDeliveryAddress {
+  address1
+  address2
+  city
+  company
+  countryCode
+  firstName
+  formattedArea
+  lastName
+  phone
+  provinceCode
+  zip
+}
+
+fragment CartSelectableAddressFields on CartSelectableAddress {
+  id
+  oneTimeUse
+  selected
+  address {
+    ...CartDeliveryAddressFields
+  }
+}
+
+fragment CartDeliveryOptionFields on CartDeliveryOption {
+  code
+  deliveryMethodType
+  description
+  estimatedCost {
+    ...MoneyFields
+  }
+  handle
+  title
+}
+
+fragment CartDeliveryGroupFields on CartDeliveryGroup {
+  id
+  groupType
+  deliveryAddress {
+    ...AddressFields
+  }
+  deliveryOptions {
+    ...CartDeliveryOptionFields
+  }
+  selectedDeliveryOption {
+    ...CartDeliveryOptionFields
   }
 }
 
@@ -229,6 +278,21 @@ fragment CartFields on Cart {
   discountCodes {
     applicable
     code
+  }
+  delivery {
+    addresses {
+      ...CartSelectableAddressFields
+    }
+  }
+  deliveryGroups(first: $first, last: $last, after: $after, before: $before) {
+    edges {
+      node {
+        ...CartDeliveryGroupFields
+      }
+    }
+    pageInfo {
+      ...PageInfoFields
+    }
   }
 
   buyerIdentity {

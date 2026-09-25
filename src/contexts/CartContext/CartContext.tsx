@@ -3,11 +3,16 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import {
+  addCartDeliveryAddressAction,
   addCartLinesAction,
+  type DeliveryAddressInput,
   getCartAction,
+  removeCartDeliveryAddressAction,
   removeCartLineAction,
   removeGiftCardCodeAction,
+  selectCartDeliveryOptionAction,
   updateCartAttributesAction,
+  updateCartDeliveryPreferenceAction,
   updateCartLinesAction,
   updateCartNoteAction,
   updateDiscountCodesAction,
@@ -16,7 +21,11 @@ import {
 import config from '@/config';
 import { getCookieFront } from '@/lib/client/cookies';
 import { reportError } from '@/lib/logger';
-import type { CartFieldsFragment } from '@/shopify/storefront';
+import type {
+  CartDeliveryPreferenceInput,
+  CartFieldsFragment,
+  CartSelectedDeliveryOptionInput,
+} from '@/shopify/storefront';
 
 import { toast } from 'sonner';
 
@@ -32,9 +41,15 @@ interface CartContextType {
   removeGiftCardCode: (appliedGiftCardId: string) => Promise<void>;
   setCart: (cart: CartFieldsFragment) => void;
   updateAttributes: (attributes: Array<{ key: string; value: string }>) => Promise<void>;
+  updateDeliveryAddress: (address: DeliveryAddressInput) => Promise<void>;
+  updateDeliveryPreference: (preference: CartDeliveryPreferenceInput) => Promise<void>;
   updateDiscountCodes: (discountCodes: string[]) => Promise<void>;
   updateGiftCardCodes: (giftCardCodes: string[]) => Promise<void>;
   updateNote: (note: string) => Promise<void>;
+  updateSelectedDeliveryOption: (
+    selectedDeliveryOptions: CartSelectedDeliveryOptionInput[],
+  ) => Promise<void>;
+  removeDeliveryAddress: (addressId: string) => Promise<void>;
 }
 
 export const CartContext = createContext<CartContextType>({
@@ -44,12 +59,16 @@ export const CartContext = createContext<CartContextType>({
   handleAddToCart: async () => {},
   handleQuantityChange: async () => {},
   removeFromCart: async () => {},
+  removeDeliveryAddress: async () => {},
   removeGiftCardCode: async () => {},
   setCart: () => {},
   updateAttributes: async () => {},
+  updateDeliveryAddress: async () => {},
+  updateDeliveryPreference: async () => {},
   updateDiscountCodes: async () => {},
   updateGiftCardCodes: async () => {},
   updateNote: async () => {},
+  updateSelectedDeliveryOption: async () => {},
 });
 
 const getErrorMessage = (error: unknown, defaultMessage: string): string => {
@@ -279,6 +298,98 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     [handleMutationError, handleResponse],
   );
 
+  const updateDeliveryAddress = useCallback(
+    async (address: DeliveryAddressInput) => {
+      if (!address) {
+        reportError('cart/delivery-address', new Error('Missing delivery address'));
+        return;
+      }
+
+      const requestId = (requestIdRef.current += 1);
+      try {
+        const response = await addCartDeliveryAddressAction(address);
+        handleResponse(requestId, response);
+      } catch (caughtError) {
+        handleMutationError(
+          requestId,
+          'cart/delivery-address',
+          caughtError,
+          'Failed to update delivery estimate',
+        );
+      }
+    },
+    [handleMutationError, handleResponse],
+  );
+
+  const removeDeliveryAddress = useCallback(
+    async (addressId: string) => {
+      if (!addressId) {
+        reportError('cart/delivery-address-remove', new Error('Missing delivery address ID'));
+        return;
+      }
+
+      const requestId = (requestIdRef.current += 1);
+      try {
+        const response = await removeCartDeliveryAddressAction(addressId);
+        handleResponse(requestId, response);
+      } catch (caughtError) {
+        handleMutationError(
+          requestId,
+          'cart/delivery-address-remove',
+          caughtError,
+          'Failed to clear delivery estimate',
+        );
+      }
+    },
+    [handleMutationError, handleResponse],
+  );
+
+  const updateSelectedDeliveryOption = useCallback(
+    async (selectedDeliveryOptions: CartSelectedDeliveryOptionInput[]) => {
+      if (!Array.isArray(selectedDeliveryOptions) || selectedDeliveryOptions.length === 0) {
+        reportError('cart/delivery-option', new Error('Missing delivery option'));
+        return;
+      }
+
+      const requestId = (requestIdRef.current += 1);
+      try {
+        const response = await selectCartDeliveryOptionAction(selectedDeliveryOptions);
+        handleResponse(requestId, response);
+      } catch (caughtError) {
+        handleMutationError(
+          requestId,
+          'cart/delivery-option',
+          caughtError,
+          'Failed to update delivery method',
+        );
+      }
+    },
+    [handleMutationError, handleResponse],
+  );
+
+  const updateDeliveryPreference = useCallback(
+    async (preference: CartDeliveryPreferenceInput) => {
+      if (!preference) {
+        reportError('cart/delivery-preference', new Error('Missing delivery preference'));
+        return;
+      }
+
+      const requestId = (requestIdRef.current += 1);
+      try {
+        const response = await updateCartDeliveryPreferenceAction(preference);
+        handleResponse(requestId, response);
+      } catch (caughtError) {
+        handleMutationError(
+          requestId,
+          'cart/delivery-preference',
+          caughtError,
+          'Failed to save delivery preference',
+        );
+      }
+    },
+    [handleMutationError, handleResponse],
+  );
+
   // Adopt a cart returned by a mutation outside this context (move-to-cart).
   const setCart = useCallback((nextCart: CartFieldsFragment) => {
     setCartState(nextCart);
@@ -292,13 +403,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       isLoading,
       handleAddToCart,
       handleQuantityChange,
+      removeDeliveryAddress,
       removeFromCart,
       removeGiftCardCode,
       setCart,
       updateAttributes,
+      updateDeliveryAddress,
+      updateDeliveryPreference,
       updateDiscountCodes,
       updateGiftCardCodes,
       updateNote,
+      updateSelectedDeliveryOption,
     }),
     [
       cart,
@@ -306,13 +421,17 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       isLoading,
       handleAddToCart,
       handleQuantityChange,
+      removeDeliveryAddress,
       removeFromCart,
       removeGiftCardCode,
       setCart,
       updateAttributes,
+      updateDeliveryAddress,
+      updateDeliveryPreference,
       updateDiscountCodes,
       updateGiftCardCodes,
       updateNote,
+      updateSelectedDeliveryOption,
     ],
   );
 

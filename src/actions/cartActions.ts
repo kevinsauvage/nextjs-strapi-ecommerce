@@ -5,8 +5,16 @@ import { getClientIp, rateLimitKey } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { CartService } from '@/services/cart.service';
-import type { CartFieldsFragment, CartLineInput, CartLineUpdateInput } from '@/shopify/storefront';
-import { shopifyGidField } from '@/utils/validation';
+import type {
+  CartDeliveryPreferenceInput,
+  CartFieldsFragment,
+  CartLineInput,
+  CartLineUpdateInput,
+  CartSelectableAddressUpdateInput,
+  CartSelectedDeliveryOptionInput,
+  CountryCode,
+} from '@/shopify/storefront';
+import { companyField, phoneField, shopifyGidField } from '@/utils/validation';
 
 import { z } from 'zod';
 
@@ -197,6 +205,156 @@ export async function updateCartAttributesAction(
 
   const cart = await CartService.updateAttributes(parsed.data);
   return { data: cart, message: 'Cart updated successfully' };
+}
+
+const MAX_DELIVERY_GROUPS = 10;
+
+const INVALID_DELIVERY_ADDRESS = 'Invalid delivery address';
+const INVALID_DELIVERY_OPTION = 'Invalid delivery option';
+const INVALID_DELIVERY_PREFERENCE = 'Invalid delivery preference';
+
+/**
+ * Delivery address as the client submits it. `countryCode` stays a plain string
+ * until `countryCodeField` narrows it to Shopify's generated `CountryCode`
+ * union, so callers never have to cast.
+ */
+export type DeliveryAddressInput = {
+  address1?: string;
+  address2?: string;
+  city?: string;
+  company?: string;
+  countryCode: string;
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  provinceCode?: string;
+  zip: string;
+};
+
+/**
+ * Shopify's `CountryCode` is a schema-generated string union with no runtime
+ * enum (`enumsAsTypes`), so it cannot be parsed by value. Two ASCII letters is
+ * the documented shape; validate that and take the union at this single
+ * boundary — the same "one assertion point" approach as `normalizeMenuHref`'s
+ * `as Route`.
+ */
+const countryCodeField = z
+  .string()
+  .trim()
+  .regex(/^[A-Za-z]{2}$/, 'Invalid country')
+  .transform((code) => code.toUpperCase() as CountryCode);
+
+const deliveryAddressSchema = z.object({
+  address1: z.string().trim().max(255).optional(),
+  address2: z.string().trim().max(255).optional(),
+  city: z.string().trim().max(255).optional(),
+  company: companyField,
+  countryCode: countryCodeField,
+  firstName: z.string().trim().max(100).optional(),
+  lastName: z.string().trim().max(100).optional(),
+  phone: phoneField,
+  provinceCode: z.string().trim().max(3).optional(),
+  zip: z.string().trim().min(1).max(20),
+});
+
+/** Attach the delivery address Shopify prices the cart against (shipping/pickup). */
+export async function addCartDeliveryAddressAction(
+  address: DeliveryAddressInput,
+): Promise<CartActionResult> {
+  const parsed = deliveryAddressSchema.safeParse(address);
+  if (!parsed.success) {
+    throw new Error(INVALID_DELIVERY_ADDRESS);
+  }
+
+  await assertNotRateLimited();
+
+  const cart = await CartService.addDeliveryAddress(parsed.data);
+  return { data: cart, message: 'Delivery estimate updated' };
+}
+
+const selectableAddressUpdateSchema = z.object({
+  address: z.object({ deliveryAddress: deliveryAddressSchema }).optional(),
+  id: shopifyGidField,
+  oneTimeUse: z.boolean().optional(),
+  selected: z.boolean().optional(),
+});
+
+/** Update an existing selectable delivery address (id required). */
+export async function updateCartDeliveryAddressAction(
+  address: CartSelectableAddressUpdateInput,
+): Promise<CartActionResult> {
+  const parsed = selectableAddressUpdateSchema.safeParse(address);
+  if (!parsed.success) {
+    throw new Error(INVALID_DELIVERY_ADDRESS);
+  }
+
+  await assertNotRateLimited();
+
+  const cart = await CartService.updateDeliveryAddress(parsed.data);
+  return { data: cart, message: 'Delivery address updated' };
+}
+
+/** Detach a selectable delivery address by its cart-scoped id. */
+export async function removeCartDeliveryAddressAction(
+  addressId: string,
+): Promise<CartActionResult> {
+  const parsed = shopifyGidField.safeParse(addressId);
+  if (!parsed.success) {
+    throw new Error(INVALID_DELIVERY_ADDRESS);
+  }
+
+  await assertNotRateLimited();
+
+  const cart = await CartService.removeDeliveryAddress(parsed.data);
+  return { data: cart, message: 'Delivery address removed' };
+}
+
+const selectedDeliveryOptionsSchema = z
+  .array(
+    z.object({
+      deliveryGroupId: shopifyGidField,
+      deliveryOptionHandle: z.string().trim().min(1).max(255),
+    }),
+  )
+  .min(1)
+  .max(MAX_DELIVERY_GROUPS);
+
+/** Choose the shipping or pickup option for one or more delivery groups. */
+export async function selectCartDeliveryOptionAction(
+  selectedDeliveryOptions: CartSelectedDeliveryOptionInput[],
+): Promise<CartActionResult> {
+  const parsed = selectedDeliveryOptionsSchema.safeParse(selectedDeliveryOptions);
+  if (!parsed.success) {
+    throw new Error(INVALID_DELIVERY_OPTION);
+  }
+
+  await assertNotRateLimited();
+
+  const cart = await CartService.selectDeliveryOptions(parsed.data);
+  return { data: cart, message: 'Delivery method updated' };
+}
+
+const deliveryPreferenceSchema = z.object({
+  deliveryMethod: z
+    .array(z.enum(['PICKUP_POINT', 'PICK_UP', 'SHIPPING']))
+    .max(3)
+    .optional(),
+  pickupHandle: z.array(z.string().trim().min(1).max(255)).max(20).optional(),
+});
+
+/** Pre-fill the buyer's preferred delivery method and pickup location. */
+export async function updateCartDeliveryPreferenceAction(
+  preference: CartDeliveryPreferenceInput,
+): Promise<CartActionResult> {
+  const parsed = deliveryPreferenceSchema.safeParse(preference);
+  if (!parsed.success) {
+    throw new Error(INVALID_DELIVERY_PREFERENCE);
+  }
+
+  await assertNotRateLimited();
+
+  const cart = await CartService.updateDeliveryPreference(parsed.data);
+  return { data: cart, message: 'Delivery preference saved' };
 }
 
 const reorderSchema = z.object({

@@ -6,7 +6,11 @@ const { sdk, cookieGet, cookieSet, cookieDelete } = vi.hoisted(() => ({
   cookieSet: vi.fn(),
   sdk: {
     cartAttributesUpdate: vi.fn(),
+    cartBuyerIdentityUpdate: vi.fn(),
     cartCreate: vi.fn(),
+    cartDeliveryAddressesAdd: vi.fn(),
+    cartDeliveryAddressesRemove: vi.fn(),
+    cartDeliveryAddressesUpdate: vi.fn(),
     cartDiscountCodesUpdate: vi.fn(),
     cartGiftCardCodesRemove: vi.fn(),
     cartGiftCardCodesUpdate: vi.fn(),
@@ -14,6 +18,7 @@ const { sdk, cookieGet, cookieSet, cookieDelete } = vi.hoisted(() => ({
     cartLinesRemove: vi.fn(),
     cartLinesUpdate: vi.fn(),
     cartNoteUpdate: vi.fn(),
+    cartSelectedDeliveryOptionsUpdate: vi.fn(),
     getCart: vi.fn(),
   },
 }));
@@ -379,6 +384,116 @@ describe('CartService', () => {
 
       expect(sdk.cartAttributesUpdate).toHaveBeenCalledWith(
         expect.objectContaining({ attributes, cartId: EXISTING_CART }),
+      );
+      expect(cart).toEqual({ id: EXISTING_CART });
+    });
+  });
+
+  describe('addDeliveryAddress', () => {
+    it('attaches the address as selected and returns the cart', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartDeliveryAddressesAdd.mockResolvedValue({
+        cartDeliveryAddressesAdd: { cart: { id: EXISTING_CART }, userErrors: [] },
+      });
+
+      const cart = await CartService.addDeliveryAddress({ countryCode: 'US', zip: '90210' });
+
+      expect(sdk.cartDeliveryAddressesAdd).toHaveBeenCalledWith(
+        expect.objectContaining({
+          addresses: [
+            {
+              address: { deliveryAddress: { countryCode: 'US', zip: '90210' } },
+              selected: true,
+            },
+          ],
+          cartId: EXISTING_CART,
+        }),
+      );
+      expect(cart).toEqual({ id: EXISTING_CART });
+    });
+
+    it('surfaces the fallback message when the mutation fails validation', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartDeliveryAddressesAdd.mockResolvedValue({
+        cartDeliveryAddressesAdd: { cart: null, userErrors: [] },
+      });
+      sdk.getCart.mockResolvedValue({ cart: { id: EXISTING_CART } });
+
+      await expect(CartService.addDeliveryAddress({ zip: '90210' })).rejects.toThrow(
+        'Failed to update delivery estimate',
+      );
+    });
+  });
+
+  describe('updateDeliveryAddress', () => {
+    it('updates the address in place', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartDeliveryAddressesUpdate.mockResolvedValue({
+        cartDeliveryAddressesUpdate: { cart: { id: EXISTING_CART }, userErrors: [] },
+      });
+
+      const address = { id: 'gid://shopify/CartSelectableAddress/1', selected: true };
+      const cart = await CartService.updateDeliveryAddress(address);
+
+      expect(sdk.cartDeliveryAddressesUpdate).toHaveBeenCalledWith(
+        expect.objectContaining({ addresses: [address], cartId: EXISTING_CART }),
+      );
+      expect(cart).toEqual({ id: EXISTING_CART });
+    });
+  });
+
+  describe('removeDeliveryAddress', () => {
+    it('detaches one address by id', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartDeliveryAddressesRemove.mockResolvedValue({
+        cartDeliveryAddressesRemove: { cart: { id: EXISTING_CART }, userErrors: [] },
+      });
+
+      const cart = await CartService.removeDeliveryAddress('gid://shopify/CartSelectableAddress/1');
+
+      expect(sdk.cartDeliveryAddressesRemove).toHaveBeenCalledWith(
+        expect.objectContaining({
+          addressIds: ['gid://shopify/CartSelectableAddress/1'],
+          cartId: EXISTING_CART,
+        }),
+      );
+      expect(cart).toEqual({ id: EXISTING_CART });
+    });
+  });
+
+  describe('selectDeliveryOptions', () => {
+    it('updates the selected delivery options', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartSelectedDeliveryOptionsUpdate.mockResolvedValue({
+        cartSelectedDeliveryOptionsUpdate: { cart: { id: EXISTING_CART }, userErrors: [] },
+      });
+
+      const options = [
+        { deliveryGroupId: 'gid://shopify/CartDeliveryGroup/1', deliveryOptionHandle: 'std' },
+      ];
+      const cart = await CartService.selectDeliveryOptions(options);
+
+      expect(sdk.cartSelectedDeliveryOptionsUpdate).toHaveBeenCalledWith(
+        expect.objectContaining({ cartId: EXISTING_CART, selectedDeliveryOptions: options }),
+      );
+      expect(cart).toEqual({ id: EXISTING_CART });
+    });
+  });
+
+  describe('updateDeliveryPreference', () => {
+    it('sets the preference through buyer identity', async () => {
+      cookieGet.mockReturnValue({ value: EXISTING_CART });
+      sdk.cartBuyerIdentityUpdate.mockResolvedValue({
+        cartBuyerIdentityUpdate: { cart: { id: EXISTING_CART }, userErrors: [] },
+      });
+
+      const cart = await CartService.updateDeliveryPreference({ pickupHandle: ['loc-1'] });
+
+      expect(sdk.cartBuyerIdentityUpdate).toHaveBeenCalledWith(
+        expect.objectContaining({
+          buyerIdentity: { preferences: { delivery: { pickupHandle: ['loc-1'] } } },
+          cartId: EXISTING_CART,
+        }),
       );
       expect(cart).toEqual({ id: EXISTING_CART });
     });

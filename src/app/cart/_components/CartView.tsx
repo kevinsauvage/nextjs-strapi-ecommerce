@@ -15,6 +15,7 @@ import CartHeader from './CartHeader';
 import CartItemsList from './CartItemsList';
 import CartPromoCode from './CartPromoCode';
 import CartSummary from './CartSummary';
+import DeliveryEstimate from './DeliveryEstimate';
 import OrderNoteForm from './OrderNoteForm';
 
 import { ChevronLeft, Lock, RotateCcw, Truck } from 'lucide-react';
@@ -60,7 +61,7 @@ const FreeShippingBar = ({ subtotal }: { subtotal: number }) => {
  * cart is resolving client-side it reuses the route's `loading.tsx` skeleton,
  * so there is a single cart skeleton to maintain.
  */
-const CartView = () => {
+const CartView = ({ countries }: { countries: Array<{ code: string; name: string }> }) => {
   const { cart, error, isLoading } = useCartContext();
   const isEmpty = !cart?.lines?.edges?.length;
 
@@ -130,6 +131,7 @@ const CartView = () => {
 
           <div className="space-y-6 lg:col-span-1">
             <CartSummary />
+            <DeliveryEstimate countries={countries} />
             <CartPromoCode />
             <OrderNoteForm />
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-caption text-secondary">

@@ -8,13 +8,13 @@
 
 ## 1. TL;DR
 
-| Area                               | Verdict                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Shipped                            | Catalog, collections (filters/sort), cart (lines, note, gift cards, discount codes, attributes), checkout redirect, auth (login/register/recover/reset/activate), account (profile, addresses, orders + detail/tracking), Pages CMS, navigation CMS, metaobject popular searches, wishlist (guest → login merge, share, move-to-cart), recently viewed, best sellers, predictive + full search, newsletter, contact form, legal policies, JSON-LD (Organization/WebSite/Breadcrumb/Collection/Product), sitemap (products/collections/pages); metaobject CMS sections (hero, promo bar, size chart, FAQ) |
-| Genuinely unwired                  | Blog/articles, Markets/localization, product media (video/3D), selling plans, bundles, modern cart delivery (delivery groups/pickup), automatic-discount surfacing, Multipass (Plus-only)                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **Missing from the original plan** | On-demand cache purge webhooks, Enhanced Ecommerce measurement, error monitoring, i18n SEO plumbing (hreflang/canonical/localized sitemap), email lifecycle, performance budget                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Biggest lever                      | **Measurement first**, then content-led SEO, then Markets. You cannot grow what you do not measure.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| Build order                        | **P0** measure + purge → **P1** blog, markets, metaobject sections, promo, reviews → **P2** subscriptions, bundles, delivery/pickup, loyalty, email → **P3** SSO, returns, AI search, PWA                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Area                               | Verdict                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shipped                            | Catalog, collections (filters/sort), cart (lines, note, gift cards, discount codes, attributes), checkout redirect, auth (login/register/recover/reset/activate), account (profile, addresses, orders + detail/tracking), Pages CMS, navigation CMS, metaobject popular searches, wishlist (guest → login merge, share, move-to-cart), recently viewed, best sellers, predictive + full search, newsletter, contact form, legal policies, JSON-LD (Organization/WebSite/Breadcrumb/Collection/Product), sitemap (products/collections/pages); metaobject CMS sections (hero, promo bar, size chart, FAQ); cart delivery estimate (address → `deliveryGroups` shipping/pickup options, `pickupHandle` preference) |
+| Genuinely unwired                  | Blog/articles, Markets/localization, product media (video/3D), selling plans, bundles, automatic-discount surfacing, Multipass (Plus-only)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| **Missing from the original plan** | On-demand cache purge webhooks, Enhanced Ecommerce measurement, error monitoring, i18n SEO plumbing (hreflang/canonical/localized sitemap), email lifecycle, performance budget                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| Biggest lever                      | **Measurement first**, then content-led SEO, then Markets. You cannot grow what you do not measure.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| Build order                        | **P0** measure + purge → **P1** blog, markets, metaobject sections, promo, reviews → **P2** subscriptions, bundles, loyalty, email → **P3** SSO, returns, AI search, PWA                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 ## 2. Corrections to the previous plan
 
@@ -41,10 +41,11 @@ do not carry them forward.
 4. **Pickup/delivery was described with a deprecated API.** The previous plan
    pointed at cart **buyer identity delivery address**, but
    `buyerIdentity.deliveryAddressPreferences` is **deprecated as of 2025-01**
-   (schema note in `storefront/index.ts:857`), and the codebase still queries it
-   (`fragments.graphql:173`). The current path is
+   (schema note in `storefront/index.ts:857`). **Resolved (P2 #8):** the
+   deprecated field is removed from `BuyerIdentityFields`; the app now uses
    `cartDeliveryAddressesAdd/Update/Remove` + `cart.deliveryGroups.deliveryOptions`
-   - `cartSelectedDeliveryOptionsUpdate` (+ `CartDeliveryPreference.pickupHandle`).
+   - `cartSelectedDeliveryOptionsUpdate` (+ `CartDeliveryPreference.pickupHandle`
+     via `buyerIdentity.preferences.delivery`).
 
 5. **Multipass is a Shopify Plus feature.** It was listed as a generic P2. Label
    it Plus-only; if the store is not Plus, **delete
@@ -96,17 +97,17 @@ hand-written code.
 
 All confirmed present in the generated 2026-07 schema.
 
-| Capability                                                                                                                            | Current state                                                    | Opportunity                                                          |
-| ------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- | -------------------------------------------------------------------- |
-| **Cart delivery groups** (`cart.deliveryGroups`, `CartDeliveryOption`, `cartSelectedDeliveryOptionsUpdate`, `cartDeliveryAddresses*`) | Not queried; only deprecated `deliveryAddressPreferences`        | P2 — shipping estimator + pickup selection before checkout           |
-| **Cart metafields** (`cartMetafieldsSet`, `CartInput.metafields`)                                                                     | Cart uses `attributes` (`cart.graphql`)                          | P2 — structured gift/personalization data that survives to the order |
-| **Selling plans** (`sellingPlanGroups`, `CartLineInput.sellingPlanId`)                                                                | Not queried                                                      | P2 — subscriptions/pre-orders                                        |
-| **Bundles** (`ProductVariant.components`/`requiresComponents`/`groupedBy`, componentizable cart lines, `parent`)                      | Not queried                                                      | P2 — fixed bundles / shop-the-look                                   |
-| **Product media** (video, 3D)                                                                                                         | `ProductFields` only has `images`                                | P2 — media gallery upgrade                                           |
-| **Automatic discounts** (`CartAutomaticDiscountAllocation` in `cart.lines[].discountAllocations`)                                     | Fragment reads only `discountedAmount` + `targetType`            | P1 — surface auto-applied savings + promo banner                     |
-| **Blog / articles** (`blog`, `blogs`, `article`, `articles`)                                                                          | Unused                                                           | P1 — content-led SEO                                                 |
-| **Localization `availableLanguages`/`language`**                                                                                      | Unused                                                           | P1 — language + currency switcher                                    |
-| **Predictive search types** (`ARTICLE`, `PAGE`, …)                                                                                    | Only products/collections/queries requested (`search.graphql:2`) | Follows blog (P1)                                                    |
+| Capability                                                                                                                            | Current state                                                                             | Opportunity                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| **Cart delivery groups** (`cart.deliveryGroups`, `CartDeliveryOption`, `cartSelectedDeliveryOptionsUpdate`, `cartDeliveryAddresses*`) | **Shipped** — queried and wired into the cart delivery estimator (`DeliveryEstimate.tsx`) | P2 #8 — done; replaces deprecated `deliveryAddressPreferences`       |
+| **Cart metafields** (`cartMetafieldsSet`, `CartInput.metafields`)                                                                     | Cart uses `attributes` (`cart.graphql`)                                                   | P2 — structured gift/personalization data that survives to the order |
+| **Selling plans** (`sellingPlanGroups`, `CartLineInput.sellingPlanId`)                                                                | Not queried                                                                               | P2 — subscriptions/pre-orders                                        |
+| **Bundles** (`ProductVariant.components`/`requiresComponents`/`groupedBy`, componentizable cart lines, `parent`)                      | Not queried                                                                               | P2 — fixed bundles / shop-the-look                                   |
+| **Product media** (video, 3D)                                                                                                         | `ProductFields` only has `images`                                                         | P2 — media gallery upgrade                                           |
+| **Automatic discounts** (`CartAutomaticDiscountAllocation` in `cart.lines[].discountAllocations`)                                     | Fragment reads only `discountedAmount` + `targetType`                                     | P1 — surface auto-applied savings + promo banner                     |
+| **Blog / articles** (`blog`, `blogs`, `article`, `articles`)                                                                          | Unused                                                                                    | P1 — content-led SEO                                                 |
+| **Localization `availableLanguages`/`language`**                                                                                      | Unused                                                                                    | P1 — language + currency switcher                                    |
+| **Predictive search types** (`ARTICLE`, `PAGE`, …)                                                                                    | Only products/collections/queries requested (`search.graphql:2`)                          | Follows blog (P1)                                                    |
 
 > Note: **Do not** put merchant commerce data in localStorage as a substitute for
 > Shopify state (the wishlist/guest pattern is fine because it re-merges on
@@ -114,9 +115,10 @@ All confirmed present in the generated 2026-07 schema.
 
 ### 3.3 Correctness debt to fix alongside the roadmap
 
-- `BuyerIdentityFields.deliveryAddressPreferences` (`fragments.graphql:173`) is
-  deprecated — migrate to `cart.deliveryGroups` when picking up delivery (P2),
-  and remove the field then.
+- ~~`BuyerIdentityFields.deliveryAddressPreferences` is deprecated~~ — **done
+  (P2 #8)**: removed from `fragments.graphql`; delivery now reads
+  `cart.deliveryGroups` and the buyer preference moved to
+  `buyerIdentity.preferences.delivery`.
 - Public reads are cached for `revalidate.shopify = 600`s under tag `shopify`
   (`src/config/index.ts:11`, `src/shopify/index.ts:49-51`) with **no purge
   webhook**, so `content:seed` / `navigation:sync` are stale up to 10 minutes
@@ -182,37 +184,43 @@ Legitimate untapped, server-side-only uses (each needs scope review per
    add `/blog`, `/blog/[handle]`, article cards, related posts, sitemap entries,
    `Article` JSON-LD, and `robots`/metadata. Register routes in
    `src/config/index.ts`.
-2. ~~**Metaobject CMS sections**~~ — **Shipped**: `hero_section`, `promo_bar`,
-   `size_chart`, `faq_section`/`faq_item` read by `src/lib/server/cmsSections.ts`
-   (hero + promo fall back to the built-in content, size chart renders in the PDP
-   accordion, FAQ as a homepage accordion); authored via
-   `yarn sections:ensure|seed` from `content/sections.json`; handles documented in
-   README.
-3. **Markets / i18n** — extend `getLocalization` (`availableCountries`,
+
+2. **Markets / i18n** — extend `getLocalization` (`availableCountries`,
    `availableLanguages`, `language`), add country/language + currency switcher,
    persist in a cookie, thread `@inContext(country/language)` through
    product/collection/cart/search, add `hreflang`/canonical/localized sitemap.
    Decide path (`/fr/...`) vs cookie **before** coding.
-4. **Automatic discounts & promo banner** — read
+
+3. **Automatic discounts & promo banner** — read
    `cart.lines[].discountAllocations` (typed allocation) for auto-applied savings
    and drive a banner from a metaobject. Complements existing code entry.
-5. **Reviews** — pick provider (app vs metaobject-backed), render aggregate
+
+4. **Reviews** — pick provider (app vs metaobject-backed), render aggregate
    rating + `AggregateRating`/`Review` JSON-LD, gate on consent/privacy update.
 
 ### P2 — Conversion and retention (needs scoping)
 
 6. **Subscriptions / pre-orders** — `sellingPlanGroups` + variant plan selector,
    `cartLinesAdd.sellingPlanId`, manage-subscription link to the app portal.
+
 7. **Bundles / shop-the-look** — `ProductVariant.components` / `requiresComponents`,
    add parent + child lines with `CartLineInput.parent`.
-8. **Pickup + delivery estimate** — `cartDeliveryAddresses*` +
-   `cart.deliveryGroups.deliveryOptions` + `cartSelectedDeliveryOptionsUpdate`
-   (+ `pickupHandle`), **replacing** the deprecated buyer-identity address.
+
+8. ~~**Pickup + delivery estimate**~~ — **Shipped**: the cart page estimates
+   shipping/pickup from `cartDeliveryAddressesAdd/Update/Remove` +
+   `cart.deliveryGroups.deliveryOptions` + `cartSelectedDeliveryOptionsUpdate`,
+   and mirrors the chosen method into `buyerIdentity.preferences.delivery`
+   (`pickupHandle` supported on the service/action). The deprecated
+   buyer-identity delivery address is removed.
+
 9. **Loyalty / referral** — read/write customer metafields via the existing
    `getCustomer(metafields:)` + Admin `MetafieldsSet`; provider vs custom, then
    surface points on the account page.
+
 10. **Email lifecycle** — welcome, abandoned cart, post-purchase; depends on 0.1.
+
 11. **Product media gallery** — video/3D from `Product.media`.
+
 12. **Cart metafields** — structured gift/personalization (`cartMetafieldsSet`).
 
 ### P3 — Bets (validate demand first)
