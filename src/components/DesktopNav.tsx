@@ -239,6 +239,8 @@ const CompactMenu = ({ item, pathname }: { item: NavItem; pathname: string }) =>
 };
 
 const DesktopNav = ({ items, pathname = '' }: { items: NavItems; pathname?: string }) => {
+  const navT = useTranslations('nav');
+
   return (
     <NavigationMenu
       className="hidden lg:flex"
@@ -251,7 +253,7 @@ const DesktopNav = ({ items, pathname = '' }: { items: NavItems; pathname?: stri
               href={config.routes.home}
               className={triggerClass(pathname === config.routes.home)}
             >
-              Home
+              {navT('home')}
             </Link>
           </NavigationMenuLink>
         </NavigationMenuItem>

@@ -1,14 +1,17 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { Badge } from '@/components/ui/badge';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 
 import { ShoppingCart } from 'lucide-react';
 
 const CartHeader = () => {
+  const t = useTranslations('cart');
   const { cart } = useCartContext();
   const itemCount = cart?.totalQuantity || 0;
-  const itemText = itemCount === 1 ? 'Item' : 'Items';
+  const itemText = itemCount === 1 ? t('itemSingular') : t('itemPlural');
 
   return (
     <div className="flex items-center gap-2">

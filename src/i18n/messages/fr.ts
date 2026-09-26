@@ -256,6 +256,9 @@ export const fr: Messages = {
     giftCardTaken: 'Cette carte cadeau est déjà appliquée',
     giftWrap: 'Ajouter un emballage cadeau',
     humanSupport: 'Assistance humaine',
+    itemPlural: 'Articles',
+    itemSingular: 'Article',
+    insuredDelivery: 'Livraison assurée',
     notApplicableDiscountCodes: 'Non applicables :',
     nothingHereYet: 'Rien pour le moment',
     orderExtras: 'Options de commande',
@@ -534,6 +537,7 @@ export const fr: Messages = {
     descriptionFallback:
       'Profitez d’une qualité premium et d’un design exceptionnel avec ce produit. Parfait pour un usage quotidien comme pour les grandes occasions.',
     inStock: 'En stock',
+    outOfStock: 'épuisé',
     leftCount: 'Plus que {count}',
     lowStock: 'Stock faible',
     sku: 'SKU',

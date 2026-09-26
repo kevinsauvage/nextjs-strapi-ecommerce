@@ -13,6 +13,7 @@ import config from '@/config';
 import { getSeo } from '@/data/seo';
 import { type Locale, LOCALES } from '@/i18n/routing';
 import { contentLanguage, getTranslations, localeFromParams } from '@/i18n/server';
+import { localizedCollectionTitle } from '@/lib/server/localized-content';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getStorefront } from '@/lib/server/storefront';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/server/structured-data';
@@ -120,6 +121,7 @@ const ProductPage = async ({ params }: PageProperties) => {
   const parameters = await params;
   const locale = await localeFromParams(params);
   const t = getTranslations(locale, 'shared');
+  const collectionT = getTranslations(locale, 'collection');
 
   const product = await getProduct(locale, parameters.productSlug);
 
@@ -158,12 +160,20 @@ const ProductPage = async ({ params }: PageProperties) => {
       availableForSale: product.availableForSale,
     }),
     breadcrumbJsonLd([
-      { name: 'Home', url: config.routes.home },
-      { name: 'Collections', url: config.routes.collection },
+      // Breadcrumb labels are read by search engines, so they follow the
+      // rendered language like every other string on the page.
+      { name: t('home'), url: config.routes.home },
+      { name: collectionT('title'), url: config.routes.collection },
       ...(collectionHandle
         ? [
             {
-              name: collectionHandle.replace(/-/g, ' '),
+              // The handle is a slug, not a label: resolve the translated title
+              // and only fall back to de-slugging it.
+              name: localizedCollectionTitle(
+                collectionHandle,
+                locale,
+                collectionHandle.replace(/-/g, ' '),
+              ),
               url: `${config.routes.collection}/${collectionHandle}`,
             },
           ]

@@ -37,21 +37,41 @@ import {
   User,
 } from 'lucide-react';
 
-type QuickLink = { Icon: typeof Home; id: string; link: RoutePath; text: string };
+type QuickLink = {
+  Icon: typeof Home;
+  id: string;
+  link: RoutePath;
+  /** Dotted `namespace.key`, resolved in the component so the label is localized. */
+  labelKey:
+    | 'nav.home'
+    | 'nav.search'
+    | 'nav.account'
+    | 'nav.wishlist'
+    | 'nav.cart'
+    | 'auth.loginTitle'
+    | 'account.logout';
+};
 
 const getQuickLinks = (isLoggedIn: boolean): QuickLink[] => [
-  { Icon: Home, id: 'home', link: '/', text: 'Home' },
-  { Icon: Search, id: 'search', link: config.routes.search, text: 'Search' },
+  { Icon: Home, id: 'home', link: '/', labelKey: 'nav.home' },
+  { Icon: Search, id: 'search', link: config.routes.search, labelKey: 'nav.search' },
   {
     Icon: User,
     id: 'account',
     link: isLoggedIn ? config.routes.account : config.routes.login,
-    text: isLoggedIn ? 'Account' : 'Login',
+    labelKey: isLoggedIn ? 'nav.account' : 'auth.loginTitle',
   },
-  { Icon: Heart, id: 'wishlist', link: config.routes.wishlist, text: 'Wishlist' },
-  { Icon: ShoppingBag, id: 'cart', link: config.routes.cart, text: 'Cart' },
+  { Icon: Heart, id: 'wishlist', link: config.routes.wishlist, labelKey: 'nav.wishlist' },
+  { Icon: ShoppingBag, id: 'cart', link: config.routes.cart, labelKey: 'nav.cart' },
   ...(isLoggedIn
-    ? [{ Icon: LogOut, id: 'logout', link: config.routes.logout, text: 'Logout' }]
+    ? [
+        {
+          Icon: LogOut,
+          id: 'logout',
+          link: config.routes.logout,
+          labelKey: 'account.logout',
+        } as const,
+      ]
     : []),
 ];
 
@@ -262,6 +282,8 @@ const HamburgerMenu = ({
   const [expandedMenus, setExpandedMenus] = useState<{ [key: string]: boolean }>({});
   const { isLoggedIn } = useUserContext();
   const push = useLocalizedPush();
+  const accountT = useTranslations('account');
+  const authT = useTranslations('auth');
   const footerT = useTranslations('footer');
   const navT = useTranslations('nav');
   const t = useTranslations('common');
@@ -275,6 +297,22 @@ const HamburgerMenu = ({
   };
 
   const quickLinks = getQuickLinks(isLoggedIn);
+
+  // Labels are declared as dotted `namespace.key` so this module stays free of
+  // translator instances; only the three namespaces the quick links can use are
+  // resolved here.
+  const quickLinkLabel = (labelKey: QuickLink['labelKey']): string => {
+    const [namespace, key] = labelKey.split('.');
+
+    switch (namespace) {
+      case 'auth':
+        return authT(key as Parameters<typeof authT>[0]);
+      case 'account':
+        return accountT(key as Parameters<typeof accountT>[0]);
+      default:
+        return navT(key as Parameters<typeof navT>[0]);
+    }
+  };
 
   const menuItems = headerMenu?.items || [];
 
@@ -404,7 +442,7 @@ const HamburgerMenu = ({
 
         <div className="glass shrink-0 border-t border-border/60 p-4">
           <div className="grid grid-cols-3 gap-2">
-            {quickLinks.map(({ Icon, id, link, text }) => {
+            {quickLinks.map(({ Icon, id, labelKey, link }) => {
               const active = pathname === link;
               return (
                 <button
@@ -428,7 +466,7 @@ const HamburgerMenu = ({
                       active ? 'text-[var(--gold)]' : 'group-hover:text-foreground',
                     )}
                   />
-                  {text}
+                  {quickLinkLabel(labelKey)}
                 </button>
               );
             })}

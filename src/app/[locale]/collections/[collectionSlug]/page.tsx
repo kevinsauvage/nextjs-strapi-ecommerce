@@ -123,6 +123,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
   const { collectionSlug } = await params;
   const locale = await localeFromParams(params);
   const commonT = getTranslations(locale, 'common');
+  const t = getTranslations(locale, 'collection');
 
   const collection = await getCollection(
     locale,
@@ -158,8 +159,10 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
             url: basePath,
           }),
           breadcrumbJsonLd([
-            { name: 'Home', url: config.routes.home },
-            { name: 'Collections', url: config.routes.collection },
+            // Breadcrumb labels are read by search engines, so they follow the
+            // rendered language like every other string on the page.
+            { name: commonT('home'), url: config.routes.home },
+            { name: t('title'), url: config.routes.collection },
             { name: collectionName, url: basePath },
           ]),
         ]}

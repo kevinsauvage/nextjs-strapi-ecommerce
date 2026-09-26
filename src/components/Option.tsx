@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
@@ -19,6 +21,8 @@ const Option = ({
   isOptionOutOfStock: (id: string, optionValue: OptionValues) => boolean;
   onClick: (optionId: string, name: string, value: OptionValues) => void;
 }) => {
+  const t = useTranslations('product');
+
   if (!Array.isArray(option.optionValues) || option.optionValues.length <= 1) {
     return null;
   }
@@ -45,7 +49,7 @@ const Option = ({
                 <button
                   type="button"
                   disabled={isOutOfStock}
-                  aria-label={`${option.name}: ${value.name}${isOutOfStock ? ' (out of stock)' : ''}`}
+                  aria-label={`${option.name}: ${value.name}${isOutOfStock ? ` (${t('outOfStock')})` : ''}`}
                   aria-pressed={isSelected}
                   title={value.name}
                   onClick={() => onClick(option.id, option.name, value)}

@@ -149,13 +149,13 @@ const CartView = ({ countries }: { countries: Array<{ code: string; name: string
             <OrderNoteForm />
             <div className="flex flex-wrap gap-x-5 gap-y-2 text-caption text-secondary">
               <span className="inline-flex items-center gap-1.5">
-                <Lock size={13} aria-hidden="true" /> Secure checkout
+                <Lock size={13} aria-hidden="true" /> {t('secureCheckout')}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <RotateCcw size={13} aria-hidden="true" /> 30-day returns
+                <RotateCcw size={13} aria-hidden="true" /> {t('thirtyDayReturns')}
               </span>
               <span className="inline-flex items-center gap-1.5">
-                <Truck size={13} aria-hidden="true" /> Insured delivery
+                <Truck size={13} aria-hidden="true" /> {t('insuredDelivery')}
               </span>
             </div>
           </div>

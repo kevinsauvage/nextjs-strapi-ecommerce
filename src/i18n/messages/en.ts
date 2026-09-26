@@ -256,6 +256,9 @@ export const en = {
     giftCardTaken: 'This gift card is already applied',
     giftWrap: 'Add gift wrapping',
     humanSupport: 'Human support',
+    itemPlural: 'Items',
+    itemSingular: 'Item',
+    insuredDelivery: 'Insured delivery',
     notApplicableDiscountCodes: 'Not applicable:',
     nothingHereYet: 'Nothing here yet',
     orderExtras: 'Order extras',
@@ -525,6 +528,7 @@ export const en = {
     descriptionFallback:
       'Experience premium quality and exceptional design with this product. Perfect for everyday use and special occasions alike.',
     inStock: 'In stock',
+    outOfStock: 'out of stock',
     leftCount: '{count} left',
     lowStock: 'Low stock',
     available: 'Available',
