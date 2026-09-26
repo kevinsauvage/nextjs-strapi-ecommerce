@@ -2,6 +2,7 @@
 
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
+import { useTranslations } from 'next-intl';
 
 import { contactAction } from '@/actions/contactActions';
 import FormFieldError from '@/components/FormFieldError';
@@ -13,15 +14,17 @@ import { useFormToast } from '@/hooks/useFormToast';
 import { emptyFormState, type FormState } from '@/types/formActions';
 
 const SubmitButton = () => {
+  const t = useTranslations('legal');
   const status = useFormStatus();
   return (
     <Button type="submit" loading={status.pending}>
-      Send message
+      {t('contactSubmit')}
     </Button>
   );
 };
 
 const ContactForm = () => {
+  const t = useTranslations('legal');
   const handleSubmit = async (_previousState: unknown, formData: FormData) => {
     const email = formData.get('email') as string;
     const name = formData.get('name') as string;
@@ -40,7 +43,7 @@ const ContactForm = () => {
   return (
     <form action={action} className="space-y-6 py-8 md:py-12 max-w-md mx-auto w-full px-4 md:px-6">
       <div className="space-y-2">
-        <Label htmlFor="email">Email address</Label>
+        <Label htmlFor="email">{t('contactEmailLabel')}</Label>
         <Input
           id="email"
           name="email"
@@ -53,9 +56,9 @@ const ContactForm = () => {
         <FormFieldError error={state.errors?.email} fieldId="email" />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="name">Name</Label>
+        <Label htmlFor="name">{t('contactNameLabel')}</Label>
         <Input
-          placeholder="Your name"
+          placeholder={t('contactNamePlaceholder')}
           name="name"
           id="name"
           required={true}
@@ -66,9 +69,9 @@ const ContactForm = () => {
         <FormFieldError error={state.errors?.name} fieldId="name" />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="message">Message</Label>
+        <Label htmlFor="message">{t('contactMessageLabel')}</Label>
         <Textarea
-          placeholder="Your message"
+          placeholder={t('contactMessagePlaceholder')}
           name="message"
           id="message"
           required={true}

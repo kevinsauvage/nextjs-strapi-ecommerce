@@ -5,7 +5,7 @@ import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { contentLanguage, getTranslations, localeFromParams } from '@/i18n/server';
 import { getFaqSection, getHeroSection } from '@/lib/server/cmsSections';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
@@ -26,14 +26,17 @@ export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> =>
-  generateMetadataUtil({
-    title: seo.home.title,
-    description: seo.home.description,
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    title: getSeo(locale).home.title,
+    description: getSeo(locale).home.description,
     url: '/',
     absoluteTitle: true,
-    locale: await localeFromParams(params),
+    locale,
   });
+};
 
 type Perk = { title: string; text: string };
 type Testimonial = { quote: string; name: string; detail: string };

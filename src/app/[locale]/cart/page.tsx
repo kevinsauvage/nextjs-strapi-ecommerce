@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import type { Locale } from '@/i18n/routing';
 import { localeFromParams } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getStorefront } from '@/lib/server/storefront';
 
 import CartView from './_components/CartView';
@@ -16,12 +17,22 @@ import CartView from './_components/CartView';
  */
 export const instant = false;
 
-export const metadata: Metadata = {
-  description: seo.cart.description,
-  title: seo.cart.title,
-  // The cart is user-specific and already disallowed in robots.ts; the
-  // `noindex` directive additionally prevents indexing of linked URLs.
-  robots: { index: false, follow: false },
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).cart.description,
+    title: getSeo(locale).cart.title,
+    url: '/cart',
+    // The cart is user-specific and already disallowed in robots.ts; the
+    // `noindex` directive additionally prevents indexing of linked URLs.
+    noindex: true,
+    locale,
+  });
 };
 
 /**

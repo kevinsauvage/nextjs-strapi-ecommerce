@@ -13,7 +13,7 @@ import Search from '@/components/Search';
 import SearchAnalytics from '@/components/SearchAnalytics';
 import { Button } from '@/components/ui/button';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams } from '@/i18n/server';
 import { normalizeSortKey } from '@/lib/server/collection';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
@@ -58,14 +58,17 @@ export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> =>
-  generateMetadataUtil({
-    title: seo.search.title,
-    description: seo.search.description,
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    title: getSeo(locale).search.title,
+    description: getSeo(locale).search.description,
     url: config.routes.search,
     noindex: true, // Search result pages have no crawl value and are disallowed in robots.ts
-    locale: await localeFromParams(params),
+    locale,
   });
+};
 
 type SearchParameters = {
   searchQuery: string;
@@ -123,10 +126,10 @@ const Page = async ({
   const popularTerms = await getPopularSearchTerms(locale);
 
   const banner = {
-    description: seo.search.description,
+    description: getSeo(locale).search.description,
     eyebrow: t('eyebrow'),
     popularLabel: t('popular'),
-    title: seo.search.title,
+    title: getSeo(locale).search.title,
   };
 
   // Never burn a Storefront request on the empty state.

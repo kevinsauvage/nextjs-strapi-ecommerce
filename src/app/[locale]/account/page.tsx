@@ -6,9 +6,10 @@ import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams, redirectToPath } from '@/i18n/server';
 import { getAccountStats } from '@/lib/server/account';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { getUser } from '@/utils/users';
 
@@ -17,9 +18,20 @@ import UserFullName from './_components/UserFullName';
 
 import { ArrowRight, MapPin, UserRound } from 'lucide-react';
 
-export const metadata: Metadata = {
-  description: seo.account.description,
-  title: seo.account.title,
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).account.description,
+    title: getSeo(locale).account.title,
+    url: config.routes.account,
+    noindex: true, // Private page, don't index
+    locale,
+  });
 };
 
 const AccountCardCTA = ({

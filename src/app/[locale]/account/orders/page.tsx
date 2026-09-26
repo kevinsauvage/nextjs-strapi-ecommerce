@@ -7,8 +7,9 @@ import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams, redirectToPath } from '@/i18n/server';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
@@ -16,9 +17,20 @@ import { storefrontSdk } from '@/shopify/index';
 import BackButton from '../_components/BackButton';
 import Orders from '../_components/Orders';
 
-export const metadata: Metadata = {
-  description: seo.account.orders.description,
-  title: seo.account.orders.title,
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).account.orders.description,
+    title: getSeo(locale).account.orders.title,
+    url: config.routes.orders,
+    noindex: true, // Private page, don't index
+    locale,
+  });
 };
 
 const Page = async ({

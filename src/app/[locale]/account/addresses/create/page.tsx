@@ -6,7 +6,7 @@ import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams } from '@/i18n/server';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
@@ -20,14 +20,17 @@ export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> =>
-  generateMetadataUtil({
-    title: seo.account.addresses.title,
-    description: seo.account.addresses.description,
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    title: getSeo(locale).account.addresses.title,
+    description: getSeo(locale).account.addresses.description,
     url: '/account/addresses/create',
     noindex: true, // Private page, don't index
-    locale: await localeFromParams(params),
+    locale,
   });
+};
 
 import AddressFormUI from '../_components/AddressForm';
 

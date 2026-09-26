@@ -80,7 +80,7 @@ const getErrorMessage = (error: unknown, defaultMessage: string): string => {
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const feedback = getUserFeedback(useRenderedLocale());
   // Stable string for the mount-only hydration effect below.
-  const cartLoadFailed = feedback.client.cartLoadFailed;
+  const { cartLoadFailed } = feedback.client;
   const [cart, setCartState] = useState<CartFieldsFragment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

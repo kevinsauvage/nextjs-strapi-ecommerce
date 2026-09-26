@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PageBanner from '@/components/PageBanner';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { contentLanguage, localeFromParams } from '@/i18n/server';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getStorefront } from '@/lib/server/storefront';
@@ -20,13 +20,16 @@ export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> =>
-  generateMetadataUtil({
-    title: seo.pages.terms.title,
-    description: seo.pages.terms.description,
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    title: getSeo(locale).pages.terms.title,
+    description: getSeo(locale).pages.terms.description,
     url: config.routes.terms,
-    locale: await localeFromParams(params),
+    locale,
   });
+};
 
 const TermsPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
   const locale = await localeFromParams(params);
@@ -35,7 +38,7 @@ const TermsPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
     await getStorefront(locale)
   ).getTermsOfService({ language: contentLanguage(locale) });
   const { termsOfService } = response?.shop || {};
-  const { title, description } = seo.pages.terms || {};
+  const { title, description } = getSeo(locale).pages.terms;
   const termsHtml = await sanitizeHtmlCached(termsOfService?.body);
   return (
     <div>

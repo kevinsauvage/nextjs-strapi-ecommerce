@@ -4,9 +4,10 @@ import AccountStats from '@/app/[locale]/account/_components/AccountStats';
 import CardHeaderPattern from '@/components/CardHeaderPattern';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams, redirectToPath } from '@/i18n/server';
 import { getAccountStats } from '@/lib/server/account';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { getUser } from '@/utils/users';
 
@@ -14,9 +15,20 @@ import BackButton from '../_components/BackButton';
 
 import UpdateUserForm from './_components/UpdateUserForm';
 
-export const metadata: Metadata = {
-  description: seo.account.update.description,
-  title: seo.account.update.title,
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).account.update.description,
+    title: getSeo(locale).account.update.title,
+    url: config.routes.updateAccount,
+    noindex: true, // Private page, don't index
+    locale,
+  });
 };
 
 const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {

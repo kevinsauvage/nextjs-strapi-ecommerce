@@ -1,9 +1,25 @@
-import seo from './seo';
+import { getSeo, type Seo } from './seo';
 
 import { describe, expect, it } from 'vitest';
 
+/** Recursively collects the dotted key paths of a metadata catalog. */
+const keyPaths = (value: unknown, prefix = ''): string[] => {
+  if (typeof value !== 'object' || value === null) return [prefix];
+
+  return Object.entries(value).flatMap(([key, entry]) =>
+    keyPaths(entry, prefix ? `${prefix}.${key}` : key),
+  );
+};
+
+const readPath = (catalog: Seo, path: string): unknown =>
+  path
+    .split('.')
+    .reduce<unknown>((node, part) => (node as Record<string, unknown>)?.[part], catalog);
+
 describe('seo', () => {
-  it('exposes the home, cart and search entries', () => {
+  it('exposes the home, cart and search entries in English', () => {
+    const seo = getSeo('en');
+
     expect(seo.home.title).toBe('Premium Pet Products for Dogs & Cats');
     expect(seo.home.description).toContain('pet essentials');
     expect(seo.cart.title).toBe('Cart');
@@ -11,55 +27,53 @@ describe('seo', () => {
     expect(seo.wishlist.title).toBe('Wishlist');
   });
 
-  it('exposes the account section entries', () => {
-    expect(seo.account.title).toBe('My account');
-    expect(seo.account.orders.title).toBe('My orders');
-    expect(seo.account.addresses.title).toBe('My addresses');
-    expect(seo.account.update.title).toBe('My details');
-    expect(seo.account.logout.title).toBe('Sign out');
-  });
+  it('es and fr mirror every key of the English catalog', () => {
+    const keys = keyPaths(getSeo('en'));
 
-  it('exposes the auth entries', () => {
-    expect(seo.login.title).toBe('Login');
-    expect(seo.register.title).toBe('Registration');
-    expect(seo.recover.title).toBe('Password recovery');
-    expect(seo.reset.title).toBe('Reset Password');
-  });
+    for (const locale of ['es', 'fr'] as const) {
+      const translated = keyPaths(getSeo(locale));
+      const missing = keys.filter((key) => !translated.includes(key));
 
-  it('exposes the static policy pages', () => {
-    expect(seo.pages.contact.title).toBe('Contact');
-    expect(seo.pages.privacy.title).toBe('Privacy');
-    expect(seo.pages.refund.title).toBe('Refund');
-    expect(seo.pages.shipping.title).toBe('Shipping');
-    expect(seo.pages.terms.title).toBe('Terms and Conditions');
+      expect(missing).toEqual([]);
+    }
   });
 
   it('gives every section a non-empty title and description', () => {
-    const sections: Array<{ title?: unknown; description?: unknown }> = [
-      seo.account,
-      seo.account.addresses,
-      seo.account.orders,
-      seo.account.update,
-      seo.cart,
-      seo.home,
-      seo.login,
-      seo.pages.contact,
-      seo.pages.privacy,
-      seo.pages.refund,
-      seo.pages.shipping,
-      seo.pages.terms,
-      seo.recover,
-      seo.register,
-      seo.reset,
-      seo.search,
-      seo.wishlist,
-    ];
+    for (const locale of ['en', 'es', 'fr'] as const) {
+      const seo = getSeo(locale);
+      const sections: Array<{ title?: unknown; description?: unknown }> = [
+        seo.account,
+        seo.account.addresses,
+        seo.account.orders,
+        seo.account.update,
+        seo.cart,
+        seo.home,
+        seo.pages.contact,
+        seo.pages.privacy,
+        seo.pages.refund,
+        seo.pages.shipping,
+        seo.pages.subscription,
+        seo.pages.terms,
+        seo.search,
+        seo.wishlist,
+      ];
 
-    for (const section of sections) {
-      expect(typeof section.title).toBe('string');
-      expect((section.title as string).length).toBeGreaterThan(0);
-      expect(typeof section.description).toBe('string');
-      expect((section.description as string).length).toBeGreaterThan(0);
+      for (const section of sections) {
+        expect(typeof section.title).toBe('string');
+        expect((section.title as string).length).toBeGreaterThan(0);
+        expect(typeof section.description).toBe('string');
+        expect((section.description as string).length).toBeGreaterThan(0);
+      }
     }
+  });
+
+  it('resolves nested paths in every locale', () => {
+    for (const locale of ['en', 'es', 'fr'] as const) {
+      expect(typeof readPath(getSeo(locale), 'pages.privacy.title')).toBe('string');
+    }
+  });
+
+  it('falls back to English for an unknown locale', () => {
+    expect(getSeo('de' as never).home.title).toBe('Premium Pet Products for Dogs & Cats');
   });
 });

@@ -8,8 +8,9 @@ import PageInfoPagination from '@/components/PageInfoPagination';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config/index';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams, redirectToPath } from '@/i18n/server';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import { adjustPaginationVariables } from '@/shopify/helpers';
 import { storefrontSdk } from '@/shopify/index';
@@ -23,9 +24,20 @@ import Address from './_components/Address';
 
 import { Plus } from 'lucide-react';
 
-export const metadata: Metadata = {
-  description: seo.account.addresses.description,
-  title: seo.account.addresses.title,
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).account.addresses.description,
+    title: getSeo(locale).account.addresses.title,
+    url: config.routes.addresses,
+    noindex: true, // Private page, don't index
+    locale,
+  });
 };
 
 const Addresses = async ({

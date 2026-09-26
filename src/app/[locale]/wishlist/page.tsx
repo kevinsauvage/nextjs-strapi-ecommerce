@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 
 import PageBanner from '@/components/PageBanner';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import { DEFAULT_LOCALE } from '@/i18n/routing';
 import { getTranslations } from '@/i18n/server';
+import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 import WishlistContent from './_components/WishlistContent';
 
@@ -15,13 +16,16 @@ import WishlistContent from './_components/WishlistContent';
  */
 export const instant = false;
 
-export const metadata: Metadata = {
-  description: seo.wishlist.description,
-  title: seo.wishlist.title,
-  // The list lives in per-browser storage (localStorage), so the page has no
-  // server-rendered content worth indexing; robots.ts disallows it as well.
-  robots: { index: false, follow: false },
-};
+export const generateMetadata = async (): Promise<Metadata> =>
+  generateMetadataUtil({
+    description: getSeo(DEFAULT_LOCALE).wishlist.description,
+    title: getSeo(DEFAULT_LOCALE).wishlist.title,
+    url: '/wishlist',
+    // The list lives in per-browser storage (localStorage), so the page has no
+    // server-rendered content worth indexing; robots.ts disallows it as well.
+    noindex: true,
+    locale: DEFAULT_LOCALE,
+  });
 
 // The page carries no route params (the list is client state), so the banner
 // renders in the default language.

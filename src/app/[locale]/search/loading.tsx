@@ -4,12 +4,15 @@ import PageBanner from '@/components/PageBanner';
 import ProductGridSkeleton from '@/components/ProductGridSkeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import config from '@/config';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
+import { DEFAULT_LOCALE } from '@/i18n/routing';
 
 const Loading = () => {
+  const pageSeo = getSeo(DEFAULT_LOCALE).search;
+
   return (
     <div>
-      <PageBanner title={seo.search.title} description={seo.search.description}>
+      <PageBanner title={pageSeo.title} description={pageSeo.description}>
         <Breadcrumbs path={config.routes.search} />
         <Skeleton className="mx-auto h-11 w-full max-w-lg" />
       </PageBanner>

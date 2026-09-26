@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
 import { DEFAULTS } from '@/config/constants';
-import seo from '@/data/seo';
+import { getSeo } from '@/data/seo';
 import type { Locale } from '@/i18n/routing';
 import { getTranslations, localeFromParams, redirectToPath } from '@/i18n/server';
 import { getOrderById } from '@/lib/server/account';
@@ -46,13 +46,14 @@ export const generateMetadata = async ({
 }): Promise<Metadata> => {
   const { orderId } = await params;
   const locale = await localeFromParams(params);
+  const t = getTranslations(locale, 'account');
   const order = await getOrder(orderId, locale);
 
   if (!order) return {};
 
   return {
-    description: seo.account.orders.description,
-    title: `Order ${order.name}`,
+    description: getSeo(locale).account.orders.description,
+    title: t('orderTitle', { name: order.name }),
     robots: { index: false, follow: false },
   };
 };
