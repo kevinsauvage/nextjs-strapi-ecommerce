@@ -72,6 +72,8 @@ vi.mock('@/services/wishlist.service', () => ({
 }));
 vi.mock('@/lib/logger', () => ({ reportError: vi.fn() }));
 
+import { userFeedback } from '@/data/userFeedback';
+
 import {
   createWishlistShareLinkAction,
   getSharedWishlistProductsAction,
@@ -167,6 +169,7 @@ describe('setWishlistMembershipAction', () => {
     expect(mutateWishlist).toHaveBeenCalledWith(
       { action: 'add', productId: PRODUCT_ID },
       CUSTOMER_ID,
+      userFeedback,
     );
     expect(result).toEqual({
       success: true,
@@ -185,6 +188,7 @@ describe('setWishlistMembershipAction', () => {
     expect(mutateWishlist).toHaveBeenCalledWith(
       { action: 'remove', productId: PRODUCT_ID },
       CUSTOMER_ID,
+      userFeedback,
     );
     expect(result).toEqual({
       success: true,
@@ -341,7 +345,7 @@ describe('mergeWishlistAction', () => {
     const result = await mergeWishlistAction([]);
 
     expect(result).toEqual({ success: true, data: [OTHER_ID], message: undefined });
-    expect(mergeWishlist).toHaveBeenCalledWith([], CUSTOMER_ID);
+    expect(mergeWishlist).toHaveBeenCalledWith([], CUSTOMER_ID, userFeedback);
     expect(updateTag).not.toHaveBeenCalled();
   });
 
@@ -351,7 +355,7 @@ describe('mergeWishlistAction', () => {
 
     await mergeWishlistAction(['not-a-gid', 'gid://shopify/Customer/1']);
 
-    expect(mergeWishlist).toHaveBeenCalledWith([], CUSTOMER_ID);
+    expect(mergeWishlist).toHaveBeenCalledWith([], CUSTOMER_ID, userFeedback);
   });
 
   it('merges a valid guest list and invalidates the cache tag', async () => {
@@ -360,7 +364,7 @@ describe('mergeWishlistAction', () => {
 
     const result = await mergeWishlistAction([PRODUCT_ID, PRODUCT_ID]);
 
-    expect(mergeWishlist).toHaveBeenCalledWith([PRODUCT_ID], CUSTOMER_ID);
+    expect(mergeWishlist).toHaveBeenCalledWith([PRODUCT_ID], CUSTOMER_ID, userFeedback);
     expect(result.success).toBe(true);
     expect(result.data).toEqual([OTHER_ID, PRODUCT_ID]);
     expect(updateTag).toHaveBeenCalledWith('wishlist');
@@ -502,11 +506,11 @@ describe('moveWishlistToCartAction', () => {
 
     const result = await moveWishlistToCartAction([PRODUCT_ID]);
 
-    expect(resolveMoveToCart).toHaveBeenCalledWith([PRODUCT_ID]);
+    expect(resolveMoveToCart).toHaveBeenCalledWith([PRODUCT_ID], userFeedback);
     expect(addLines).toHaveBeenCalledWith([
       { merchandiseId: 'gid://shopify/ProductVariant/1', quantity: 1 },
     ]);
-    expect(removeFromWishlist).toHaveBeenCalledWith([PRODUCT_ID], CUSTOMER_ID);
+    expect(removeFromWishlist).toHaveBeenCalledWith([PRODUCT_ID], CUSTOMER_ID, userFeedback);
     expect(result.success).toBe(true);
     expect(result.cart).toEqual({ id: 'gid://shopify/Cart/1', lines: { edges: [] } });
     expect(result.message).toBe('1 item moved to your cart');

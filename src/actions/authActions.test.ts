@@ -119,6 +119,7 @@ describe('loginAction', () => {
 
     expect(login).toHaveBeenCalledWith(
       expect.objectContaining({ email: 'a@b.com', password: 'secret1' }),
+      userFeedback,
     );
   });
 
@@ -154,12 +155,15 @@ describe('registerAction', () => {
 
     await registerAction(INPUT);
 
-    expect(register).toHaveBeenCalledWith({
-      email: 'a@b.com',
-      firstName: 'Ada',
-      lastName: 'Lovelace',
-      password: 'secret1',
-    });
+    expect(register).toHaveBeenCalledWith(
+      {
+        email: 'a@b.com',
+        firstName: 'Ada',
+        lastName: 'Lovelace',
+        password: 'secret1',
+      },
+      userFeedback,
+    );
     expect(redirect).toHaveBeenCalledWith(config.routes.account);
   });
 
@@ -251,10 +255,13 @@ describe('resetPasswordAction', () => {
 
     await resetPasswordAction({ password: NEW_PASSWORD, resetUrl: RESET_URL });
 
-    expect(resetPassword).toHaveBeenCalledWith({
-      password: NEW_PASSWORD,
-      resetToken: RESET_URL,
-    });
+    expect(resetPassword).toHaveBeenCalledWith(
+      {
+        password: NEW_PASSWORD,
+        resetToken: RESET_URL,
+      },
+      userFeedback,
+    );
     expect(redirect).toHaveBeenCalledWith(config.routes.account);
   });
 
@@ -312,10 +319,13 @@ describe('activateAccountAction', () => {
 
     await activateAccountAction({ password: NEW_PASSWORD, activationUrl: ACTIVATION_URL });
 
-    expect(activate).toHaveBeenCalledWith({
-      activationUrl: ACTIVATION_URL,
-      password: NEW_PASSWORD,
-    });
+    expect(activate).toHaveBeenCalledWith(
+      {
+        activationUrl: ACTIVATION_URL,
+        password: NEW_PASSWORD,
+      },
+      userFeedback,
+    );
     expect(redirect).toHaveBeenCalledWith(config.routes.account);
   });
 

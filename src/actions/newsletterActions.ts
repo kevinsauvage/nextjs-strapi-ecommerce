@@ -1,6 +1,7 @@
 'use server';
 
-import { userFeedback } from '@/data/userFeedback';
+import { getUserFeedback } from '@/data/userFeedback';
+import { getCurrentLocale } from '@/i18n/server';
 import { getClientIp } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
 import { UserService } from '@/services/user.service';
@@ -25,6 +26,7 @@ export const subscribeNewsletterAction = async (
   }
 
   const { email } = result.data;
+  const feedback = getUserFeedback(await getCurrentLocale());
 
   const ip = await getClientIp();
   // Two buckets like password recovery: per-target stops list-bombing one
@@ -35,15 +37,15 @@ export const subscribeNewsletterAction = async (
   ]);
   if (targetLimited || ipLimited) {
     return {
-      message: 'Too many attempts. Please try again in a few minutes.',
+      message: feedback.rateLimit.attempts,
       ok: false,
     };
   }
 
   const serviceResult = await UserService.subscribeNewsletter({ email });
 
-  const errorState = serviceErrorsToFormState(serviceResult, userFeedback.newsletter.error);
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.newsletter.error);
   if (errorState) return errorState;
 
-  return formSuccess(userFeedback.newsletter.success);
+  return formSuccess(feedback.newsletter.success);
 };

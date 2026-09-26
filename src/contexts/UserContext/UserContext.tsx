@@ -18,7 +18,9 @@ import {
   moveWishlistToCartAction,
   setWishlistMembershipAction,
 } from '@/actions/wishlistActions';
+import { useRenderedLocale } from '@/components/LocaleProvider';
 import config from '@/config';
+import { getUserFeedback } from '@/data/userFeedback';
 import { useLocalList } from '@/hooks/useLocalList';
 import { useLocalizedPush } from '@/i18n/client';
 import { getCookieFront } from '@/lib/client/cookies';
@@ -35,9 +37,6 @@ import { mergeWishlistIds } from '@/lib/wishlist';
 import type { CartFieldsFragment } from '@/shopify/storefront';
 
 import { toast } from 'sonner';
-
-/** Client-side fallback toast copy for wishlist failures. */
-const TOAST_ERROR = 'Something went wrong';
 
 type UserContextValue = {
   handleSetWishlist: (isWishlisted: boolean, productId: string) => Promise<void>;
@@ -79,6 +78,7 @@ const PathnameWatcher = ({ onChange }: { onChange: (pathname: string) => void })
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const push = useLocalizedPush();
+  const feedback = getUserFeedback(useRenderedLocale());
   const [pathname, setPathname] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionResolved, setSessionResolved] = useState(false);
@@ -174,10 +174,10 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
       if (!isLoggedIn) {
         if (isWishlisted) {
           removeGuestWishlist(productId);
-          toast.success('Product removed from wishlist');
+          toast.success(feedback.wishlist.removed);
         } else {
           addGuestWishlist(productId);
-          toast.success('Product added to wishlist');
+          toast.success(feedback.wishlist.added);
         }
         return;
       }
@@ -207,11 +207,11 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
               setWishlistIds(result.data);
               toast.success(result.message);
             } else {
-              toast.error(result?.message || TOAST_ERROR);
+              toast.error(result?.message || feedback.client.generic);
             }
           } catch (error) {
             reportError('wishlist/toggle', error, { productId });
-            toast.error(TOAST_ERROR);
+            toast.error(feedback.client.generic);
           } finally {
             setPendingWishlistIds((previous) => previous.filter((id) => id !== productId));
             resolve();
@@ -219,13 +219,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         });
       });
     },
-    [isLoggedIn],
+    [feedback, isLoggedIn],
   );
 
   const handleMoveToCart = useCallback(
     async (productIds: string[]): Promise<CartFieldsFragment | null> => {
       if (!isLoggedIn) {
-        toast.info('You need to login to move items to your cart');
+        toast.info(feedback.client.loginRequired);
         push(config.routes.login);
         return null;
       }
@@ -238,7 +238,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         const result = await moveWishlistToCartAction(productIds);
 
         if (!result.success || !result.cart) {
-          toast.error(result.message || TOAST_ERROR);
+          toast.error(result.message || feedback.client.generic);
           return null;
         }
 
@@ -247,13 +247,13 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         return result.cart;
       } catch (error) {
         reportError('wishlist/move-to-cart', error);
-        toast.error(TOAST_ERROR);
+        toast.error(feedback.client.generic);
         return null;
       } finally {
         setPendingWishlistIds([]);
       }
     },
-    [isLoggedIn, push],
+    [isLoggedIn, feedback, push],
   );
 
   const values = useMemo(() => {

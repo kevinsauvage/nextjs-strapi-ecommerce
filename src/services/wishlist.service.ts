@@ -2,6 +2,7 @@ import 'server-only';
 
 import { cacheLife, cacheTag } from 'next/cache';
 
+import { type UserFeedback, userFeedback } from '@/data/userFeedback';
 import { reportError } from '@/lib/logger';
 import { getShopifyToken } from '@/lib/server/shopify-helpers';
 import {
@@ -15,12 +16,6 @@ import type { CartLineInput, ProductFieldsFragment } from '@/shopify/storefront'
 
 // Re-exported so existing importers keep a single source of truth.
 export { isValidWishlistProductId, mergeWishlistIds, WISHLIST_MAX_ID_LENGTH, WISHLIST_MAX_ITEMS };
-
-/** Shared copy for a service call whose session rotated/expired mid-flight. */
-const UNAUTHENTICATED_MESSAGE = 'User not authenticated';
-
-/** Shared copy for a rejected/malformed product id. */
-const INVALID_PRODUCT_ID_MESSAGE = 'Invalid product ID';
 
 const WISHLIST_METAFIELD = { key: 'wishlist', namespace: 'custom' } as const;
 
@@ -161,6 +156,7 @@ export class WishlistService {
   static async updateWishlist(
     productIds: string[],
     customerId: string,
+    feedback: UserFeedback = userFeedback,
   ): Promise<{ success: boolean; data?: string[]; message?: string }> {
     const uniqueIds = Array.from(new Set(productIds.filter(isValidWishlistProductId))).slice(
       0,
@@ -184,14 +180,14 @@ export class WishlistService {
       reportError('WishlistService.updateWishlist - admin unavailable', error);
       return {
         success: false,
-        message: 'Wishlist is unavailable: the Shopify Admin API is not configured.',
+        message: feedback.wishlist.unavailable,
       };
     }
 
     const errors = responseMetafield?.metafieldsSet?.userErrors;
     if (errors && errors.length > 0) {
       reportError('WishlistService.updateWishlist - MetafieldsSet errors', errors);
-      return { success: false, message: 'Something went wrong updating the wishlist' };
+      return { success: false, message: feedback.wishlist.updateError };
     }
 
     return { success: true, data: uniqueIds };
@@ -209,9 +205,10 @@ export class WishlistService {
   static async mutateWishlist(
     mutation: WishlistMutation,
     customerId: string,
+    feedback: UserFeedback = userFeedback,
   ): Promise<{ success: boolean; data?: string[]; message?: string }> {
     if (!isValidWishlistProductId(mutation.productId)) {
-      return { success: false, message: INVALID_PRODUCT_ID_MESSAGE };
+      return { success: false, message: feedback.wishlist.invalidId };
     }
 
     return withCustomerLock(customerId, async () => {
@@ -219,7 +216,7 @@ export class WishlistService {
 
       // The session changed (expired/rotated) while queued: do not write.
       if (currentCustomerId !== customerId) {
-        return { success: false, message: UNAUTHENTICATED_MESSAGE };
+        return { success: false, message: feedback.wishlist.unauthenticated };
       }
 
       const alreadyPresent = ids.includes(mutation.productId);
@@ -229,7 +226,7 @@ export class WishlistService {
         if (ids.length >= WISHLIST_MAX_ITEMS) {
           return {
             success: false,
-            message: `Wishlist is full. Maximum ${WISHLIST_MAX_ITEMS} items allowed.`,
+            message: feedback.wishlist.full.replace('{max}', String(WISHLIST_MAX_ITEMS)),
           };
         }
       } else if (!alreadyPresent) {
@@ -241,7 +238,7 @@ export class WishlistService {
           ? [...ids, mutation.productId]
           : ids.filter((id) => id !== mutation.productId);
 
-      return this.updateWishlist(nextIds, customerId);
+      return this.updateWishlist(nextIds, customerId, feedback);
     });
   }
 
@@ -252,6 +249,7 @@ export class WishlistService {
   static async mergeWishlist(
     guestIds: string[],
     customerId: string,
+    feedback: UserFeedback = userFeedback,
   ): Promise<{ success: boolean; data?: string[]; merged?: boolean; message?: string }> {
     const normalizedGuestIds = guestIds
       .filter(isValidWishlistProductId)
@@ -260,7 +258,7 @@ export class WishlistService {
     if (normalizedGuestIds.length === 0) {
       const { customerId: currentCustomerId, ids } = await this.getWishlistState();
       if (currentCustomerId !== customerId) {
-        return { success: false, message: UNAUTHENTICATED_MESSAGE };
+        return { success: false, message: feedback.wishlist.unauthenticated };
       }
       return { success: true, data: ids, merged: false };
     }
@@ -270,7 +268,7 @@ export class WishlistService {
 
       // The session changed while queued: do not write.
       if (currentCustomerId !== customerId) {
-        return { success: false, message: UNAUTHENTICATED_MESSAGE };
+        return { success: false, message: feedback.wishlist.unauthenticated };
       }
 
       const mergedIds = mergeWishlistIds(ids, normalizedGuestIds);
@@ -280,7 +278,7 @@ export class WishlistService {
         return { success: true, data: ids, merged: false };
       }
 
-      const result = await this.updateWishlist(mergedIds, customerId);
+      const result = await this.updateWishlist(mergedIds, customerId, feedback);
       return { ...result, merged: result.success };
     });
   }
@@ -289,7 +287,10 @@ export class WishlistService {
    * First purchasable variant of each product, as cart lines. Pure: the caller
    * adds to the cart first, then removes from the wishlist.
    */
-  static async resolveMoveToCart(productIds: string[]): Promise<{
+  static async resolveMoveToCart(
+    productIds: string[],
+    feedback: UserFeedback = userFeedback,
+  ): Promise<{
     success: boolean;
     lines?: CartLineInput[];
     movedProductIds?: string[];
@@ -301,7 +302,7 @@ export class WishlistService {
       WISHLIST_MAX_ITEMS,
     );
 
-    if (ids.length === 0) return { success: false, message: INVALID_PRODUCT_ID_MESSAGE };
+    if (ids.length === 0) return { success: false, message: feedback.wishlist.invalidId };
 
     const products = await this.resolveProductsByIds(ids);
     const lines: CartLineInput[] = [];
@@ -324,7 +325,7 @@ export class WishlistService {
     }
 
     if (lines.length === 0) {
-      return { success: false, skipped, message: 'No wishlisted items are available to buy' };
+      return { success: false, skipped, message: feedback.wishlist.noItems };
     }
 
     return { success: true, lines, movedProductIds, skipped };
@@ -334,23 +335,24 @@ export class WishlistService {
   static async removeFromWishlist(
     productIds: string[],
     customerId: string,
+    feedback: UserFeedback = userFeedback,
   ): Promise<{ success: boolean; data?: string[]; message?: string }> {
     const toRemove = new Set(productIds.filter(isValidWishlistProductId));
 
-    if (toRemove.size === 0) return { success: false, message: INVALID_PRODUCT_ID_MESSAGE };
+    if (toRemove.size === 0) return { success: false, message: feedback.wishlist.invalidId };
 
     return withCustomerLock(customerId, async () => {
       const { customerId: currentCustomerId, ids } = await this.getWishlistState();
 
       if (currentCustomerId !== customerId) {
-        return { success: false, message: UNAUTHENTICATED_MESSAGE };
+        return { success: false, message: feedback.wishlist.unauthenticated };
       }
 
       const nextIds = ids.filter((id) => !toRemove.has(id));
 
       if (nextIds.length === ids.length) return { success: true, data: ids };
 
-      return this.updateWishlist(nextIds, customerId);
+      return this.updateWishlist(nextIds, customerId, feedback);
     });
   }
 }

@@ -3,6 +3,8 @@
 import { updateTag } from 'next/cache';
 
 import config from '@/config';
+import { getUserFeedback } from '@/data/userFeedback';
+import { getCurrentLocale } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { fingerprintForRateLimit, getClientIp, rateLimitKey } from '@/lib/server/client-ip';
 import { getBaseUrl } from '@/lib/server/metadata';
@@ -23,11 +25,6 @@ export type WishlistActionResult = {
   data?: string[];
   message?: string;
 };
-
-/** Generic copy so failures never echo Shopify/GraphQL internals. */
-const GENERIC_ERROR = 'Something went wrong. Please try again.';
-const UNAUTHENTICATED_ERROR = 'User not authenticated';
-const RATE_LIMITED_ERROR = 'Too many wishlist updates. Please slow down.';
 
 /** Throttle wishlist writes, which each trigger an Admin API mutation. Fail closed, and key by IP plus the fingerprinted session token so off-Vercel `unknown`-IP traffic does not share one global bucket. */
 const assertNotRateLimited = async (): Promise<boolean> => {
@@ -96,13 +93,14 @@ export async function createWishlistShareLinkAction(productIds: string[]): Promi
   const ids = normalizeIds(productIds)
     .filter(isValidWishlistProductId)
     .slice(0, WISHLIST_MAX_ITEMS);
+  const feedback = getUserFeedback(await getCurrentLocale());
 
   if (ids.length === 0) {
-    return { success: false, message: 'Your wishlist is empty' };
+    return { success: false, message: feedback.wishlist.empty };
   }
 
   if (await assertReadsNotRateLimited()) {
-    return { success: false, message: 'Too many requests. Please slow down.' };
+    return { success: false, message: feedback.rateLimit.wishlistRequests };
   }
 
   const path = `${config.routes.sharedWishlist}?ids=${ids.join(',')}`;
@@ -159,28 +157,28 @@ export async function setWishlistMembershipAction(
   isWishlisted: boolean,
   productId: string,
 ): Promise<WishlistActionResult> {
+  const feedback = getUserFeedback(await getCurrentLocale());
+
   if (!isValidWishlistProductId(productId)) {
-    return { success: false, message: 'Invalid product ID' };
+    return { success: false, message: feedback.wishlist.invalidId };
   }
 
   if (await assertNotRateLimited()) {
-    return { success: false, message: RATE_LIMITED_ERROR };
+    return { success: false, message: feedback.rateLimit.wishlist };
   }
 
   try {
     const { customerId, ids } = await WishlistService.getWishlistState();
 
     if (!customerId) {
-      return { success: false, message: UNAUTHENTICATED_ERROR };
+      return { success: false, message: feedback.wishlist.unauthenticated };
     }
 
     if (isWishlisted ? !ids.includes(productId) : ids.includes(productId)) {
       return {
         success: true,
         data: ids,
-        message: isWishlisted
-          ? 'Product already removed from wishlist'
-          : 'Product already in wishlist',
+        message: isWishlisted ? feedback.wishlist.alreadyRemoved : feedback.wishlist.alreadyAdded,
       };
     }
 
@@ -189,10 +187,11 @@ export async function setWishlistMembershipAction(
     const result = await WishlistService.mutateWishlist(
       { action: isWishlisted ? 'remove' : 'add', productId },
       customerId,
+      feedback,
     );
 
     if (!result.success) {
-      return { success: false, message: result.message || GENERIC_ERROR };
+      return { success: false, message: result.message || feedback.genericError };
     }
 
     // Read-your-own-writes: expire the cached ids so the header/UI reflect the change.
@@ -201,11 +200,11 @@ export async function setWishlistMembershipAction(
     return {
       success: true,
       data: result.data,
-      message: isWishlisted ? 'Product removed from wishlist' : 'Product added to wishlist',
+      message: isWishlisted ? feedback.wishlist.removed : feedback.wishlist.added,
     };
   } catch (error) {
     reportError('setWishlistMembershipAction', error);
-    return { success: false, message: GENERIC_ERROR };
+    return { success: false, message: feedback.genericError };
   }
 }
 
@@ -216,25 +215,26 @@ export async function setWishlistMembershipAction(
  * server wishlist. The client clears its local copy after `success`.
  */
 export async function mergeWishlistAction(guestIds: string[]): Promise<WishlistActionResult> {
+  const feedback = getUserFeedback(await getCurrentLocale());
   const ids = normalizeGuestIds(guestIds);
 
   if (await assertNotRateLimited()) {
-    return { success: false, message: RATE_LIMITED_ERROR };
+    return { success: false, message: feedback.rateLimit.wishlist };
   }
 
   try {
     const { customerId } = await WishlistService.getWishlistState();
 
     if (!customerId) {
-      return { success: false, message: UNAUTHENTICATED_ERROR };
+      return { success: false, message: feedback.wishlist.unauthenticated };
     }
 
     // An empty guest list makes this a plain read of the metafield (no write),
     // so a returning shopper still sees their saved items.
-    const result = await WishlistService.mergeWishlist(ids, customerId);
+    const result = await WishlistService.mergeWishlist(ids, customerId, feedback);
 
     if (!result.success) {
-      return { success: false, message: result.message || GENERIC_ERROR };
+      return { success: false, message: result.message || feedback.genericError };
     }
 
     // Only invalidate when something actually changed.
@@ -243,11 +243,11 @@ export async function mergeWishlistAction(guestIds: string[]): Promise<WishlistA
     return {
       success: true,
       data: result.data,
-      message: result.merged ? 'Saved your wishlist items to your account' : undefined,
+      message: result.merged ? feedback.wishlist.merged : undefined,
     };
   } catch (error) {
     reportError('mergeWishlistAction', error);
-    return { success: false, message: GENERIC_ERROR };
+    return { success: false, message: feedback.genericError };
   }
 }
 
@@ -279,26 +279,27 @@ export async function moveWishlistToCartAction(productIds: string[]): Promise<{
   message?: string;
 }> {
   const ids = normalizeIds(productIds).filter(isValidWishlistProductId);
+  const feedback = getUserFeedback(await getCurrentLocale());
 
   if (ids.length === 0) {
-    return { success: false, message: 'Invalid product ID' };
+    return { success: false, message: feedback.wishlist.invalidId };
   }
 
   if (await assertNotRateLimited()) {
-    return { success: false, message: RATE_LIMITED_ERROR };
+    return { success: false, message: feedback.rateLimit.wishlist };
   }
 
   try {
     const { customerId } = await WishlistService.getWishlistState();
 
     if (!customerId) {
-      return { success: false, message: UNAUTHENTICATED_ERROR };
+      return { success: false, message: feedback.wishlist.unauthenticated };
     }
 
-    const resolution = await WishlistService.resolveMoveToCart(ids);
+    const resolution = await WishlistService.resolveMoveToCart(ids, feedback);
 
     if (!resolution.success || !resolution.lines || !resolution.movedProductIds) {
-      return { success: false, message: resolution.message || GENERIC_ERROR };
+      return { success: false, message: resolution.message || feedback.genericError };
     }
 
     // Add to the cart *before* removing from the wishlist: if the cart write
@@ -308,6 +309,7 @@ export async function moveWishlistToCartAction(productIds: string[]): Promise<{
     const removal = await WishlistService.removeFromWishlist(
       resolution.movedProductIds,
       customerId,
+      feedback,
     );
 
     if (!removal.success) {
@@ -320,6 +322,7 @@ export async function moveWishlistToCartAction(productIds: string[]): Promise<{
 
     const count = resolution.movedProductIds.length;
     const skipped = resolution.skipped ?? 0;
+    const unit = count === 1 ? feedback.wishlist.movedOne : feedback.wishlist.movedOther;
 
     return {
       success: true,
@@ -327,11 +330,13 @@ export async function moveWishlistToCartAction(productIds: string[]): Promise<{
       data: removal.success ? removal.data : undefined,
       message:
         skipped > 0
-          ? `${count} ${count === 1 ? 'item' : 'items'} moved to your cart (${skipped} unavailable skipped)`
-          : `${count} ${count === 1 ? 'item' : 'items'} moved to your cart`,
+          ? (count === 1 ? feedback.wishlist.movedSkippedOne : feedback.wishlist.movedSkippedOther)
+              .replace('{count}', String(count))
+              .replace('{skipped}', String(skipped))
+          : unit.replace('{count}', String(count)),
     };
   } catch (error) {
     reportError('moveWishlistToCartAction', error);
-    return { success: false, message: GENERIC_ERROR };
+    return { success: false, message: feedback.genericError };
   }
 }

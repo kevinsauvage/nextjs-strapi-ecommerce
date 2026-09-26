@@ -1,5 +1,6 @@
 import 'server-only';
 
+import { type UserFeedback, userFeedback } from '@/data/userFeedback';
 import { reportError } from '@/lib/logger';
 import { setShopifyToken } from '@/lib/server/shopify-helpers';
 import { CartService } from '@/services/cart.service';
@@ -43,7 +44,7 @@ export class AuthService {
   /**
    * Register a new customer
    */
-  static async register(input: RegisterInput) {
+  static async register(input: RegisterInput, feedback: UserFeedback = userFeedback) {
     const { email, password, firstName, lastName } = input;
 
     const registerResponse = await storefrontSdk('private').customerCreate({
@@ -70,7 +71,7 @@ export class AuthService {
     if (loginErrorResult) return loginErrorResult;
 
     if (!customerAccessToken) {
-      return { error: 'Failed to create account' };
+      return { error: feedback.createAccountFailed };
     }
 
     await setShopifyToken(customerAccessToken);
@@ -86,7 +87,7 @@ export class AuthService {
   /**
    * Login a customer
    */
-  static async login(input: LoginInput) {
+  static async login(input: LoginInput, feedback: UserFeedback = userFeedback) {
     const { email, password } = input;
 
     const response = await storefrontSdk('private').customerAccessTokenCreate({
@@ -99,7 +100,7 @@ export class AuthService {
     if (loginErrorResult) return loginErrorResult;
 
     if (!customerAccessToken) {
-      return { error: 'Invalid email or password' };
+      return { error: feedback.invalidCredentials };
     }
 
     await setShopifyToken(customerAccessToken);
@@ -133,7 +134,7 @@ export class AuthService {
   /**
    * Reset password with token
    */
-  static async resetPassword(input: ResetPasswordInput) {
+  static async resetPassword(input: ResetPasswordInput, feedback: UserFeedback = userFeedback) {
     const { password, resetToken } = input;
 
     const response = await storefrontSdk('private').customerResetByUrl({
@@ -147,7 +148,7 @@ export class AuthService {
     if (errorResult) return errorResult;
 
     if (!customerAccessToken) {
-      return { error: 'Failed to reset password' };
+      return { error: feedback.resetFailed };
     }
 
     await setShopifyToken(customerAccessToken);
@@ -159,7 +160,7 @@ export class AuthService {
    * Activate an invited customer with the activation URL from the invite email.
    * Signs the customer in on success, mirroring the reset-password flow.
    */
-  static async activate(input: ActivateAccountInput) {
+  static async activate(input: ActivateAccountInput, feedback: UserFeedback = userFeedback) {
     const { activationUrl, password } = input;
 
     const response = await storefrontSdk('private').customerActivateByUrl({
@@ -173,7 +174,7 @@ export class AuthService {
     if (errorResult) return errorResult;
 
     if (!customerAccessToken) {
-      return { error: 'Failed to activate account' };
+      return { error: feedback.activateFailed };
     }
 
     await setShopifyToken(customerAccessToken);

@@ -38,6 +38,7 @@ vi.mock('@/services/address.service', () => ({
 vi.mock('@/lib/logger', () => ({ reportError: vi.fn() }));
 
 import config from '@/config';
+import { userFeedback } from '@/data/userFeedback';
 
 import {
   createAddressAction,
@@ -172,14 +173,14 @@ describe('deleteAddressAction', () => {
   it('deletes the address and redirects on success', async () => {
     await deleteAddressAction(ADDRESS_GID);
 
-    expect(deleteAddress).toHaveBeenCalledWith(ADDRESS_GID);
+    expect(deleteAddress).toHaveBeenCalledWith(ADDRESS_GID, userFeedback);
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 
   it('accepts the token-suffixed ids Shopify returns and forwards them untouched', async () => {
     await deleteAddressAction(SUFFIXED_ADDRESS_GID);
 
-    expect(deleteAddress).toHaveBeenCalledWith(SUFFIXED_ADDRESS_GID);
+    expect(deleteAddress).toHaveBeenCalledWith(SUFFIXED_ADDRESS_GID, userFeedback);
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 
@@ -215,14 +216,14 @@ describe('setDefaultAddressAction', () => {
   it('sets the default address and redirects on success', async () => {
     await setDefaultAddressAction(ADDRESS_GID);
 
-    expect(setDefaultAddress).toHaveBeenCalledWith(ADDRESS_GID);
+    expect(setDefaultAddress).toHaveBeenCalledWith(ADDRESS_GID, userFeedback);
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 
   it('accepts the token-suffixed ids Shopify returns and forwards them untouched', async () => {
     await setDefaultAddressAction(SUFFIXED_ADDRESS_GID);
 
-    expect(setDefaultAddress).toHaveBeenCalledWith(SUFFIXED_ADDRESS_GID);
+    expect(setDefaultAddress).toHaveBeenCalledWith(SUFFIXED_ADDRESS_GID, userFeedback);
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 
@@ -277,14 +278,17 @@ describe('updateAddressAction', () => {
   it('updates the address and redirects on success', async () => {
     await updateAddressAction(INPUT);
 
-    expect(updateAddress).toHaveBeenCalledWith(INPUT);
+    expect(updateAddress).toHaveBeenCalledWith(INPUT, userFeedback);
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 
   it('forwards the round-tripped address id untouched', async () => {
     await updateAddressAction({ ...INPUT, id: SUFFIXED_ADDRESS_GID });
 
-    expect(updateAddress).toHaveBeenCalledWith({ ...INPUT, id: SUFFIXED_ADDRESS_GID });
+    expect(updateAddress).toHaveBeenCalledWith(
+      { ...INPUT, id: SUFFIXED_ADDRESS_GID },
+      userFeedback,
+    );
     expect(redirect).toHaveBeenCalledWith(config.routes.addresses);
   });
 

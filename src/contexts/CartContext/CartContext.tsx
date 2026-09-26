@@ -18,7 +18,9 @@ import {
   updateDiscountCodesAction,
   updateGiftCardCodesAction,
 } from '@/actions/cartActions';
+import { useRenderedLocale } from '@/components/LocaleProvider';
 import config from '@/config';
+import { getUserFeedback } from '@/data/userFeedback';
 import { getCookieFront } from '@/lib/client/cookies';
 import { reportError } from '@/lib/logger';
 import type {
@@ -76,6 +78,9 @@ const getErrorMessage = (error: unknown, defaultMessage: string): string => {
 };
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
+  const feedback = getUserFeedback(useRenderedLocale());
+  // Stable string for the mount-only hydration effect below.
+  const cartLoadFailed = feedback.client.cartLoadFailed;
   const [cart, setCartState] = useState<CartFieldsFragment | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -100,7 +105,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       })
       .catch((loadError) => {
         if (cancelled) return;
-        const message = getErrorMessage(loadError, 'Failed to load your cart');
+        const message = getErrorMessage(loadError, cartLoadFailed);
         setError(message);
         toast.error(message);
       })
@@ -111,7 +116,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [cartLoadFailed]);
 
   const handleResponse = useCallback((requestId: number, response: CartResponse) => {
     if (requestId !== requestIdRef.current) return;
@@ -143,10 +148,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await removeCartLineAction(lineItemId);
         handleResponse(requestId, response);
       } catch (caughtError) {
-        handleMutationError(requestId, 'cart/remove', caughtError, 'Failed to remove item');
+        handleMutationError(requestId, 'cart/remove', caughtError, feedback.cart.fallbackRemove);
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const removeGiftCardCode = useCallback(
@@ -169,7 +174,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const handleQuantityChange = useCallback(
@@ -184,10 +189,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await updateCartLinesAction([{ id, quantity }]);
         handleResponse(requestId, response);
       } catch (caughtError) {
-        handleMutationError(requestId, 'cart/quantity', caughtError, 'Failed to update cart');
+        handleMutationError(
+          requestId,
+          'cart/quantity',
+          caughtError,
+          feedback.cart.fallbackQuantity,
+        );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const handleAddToCart = useCallback(
@@ -202,10 +212,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await addCartLinesAction([{ merchandiseId: variantId, quantity }]);
         handleResponse(requestId, response);
       } catch (caughtError) {
-        handleMutationError(requestId, 'cart/add', caughtError, 'Failed to add to cart');
+        handleMutationError(requestId, 'cart/add', caughtError, feedback.cart.fallbackAdd);
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateDiscountCodes = useCallback(
@@ -228,11 +238,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/discount',
           caughtError,
-          'Failed to update discount codes',
+          feedback.cart.fallbackDiscount,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateGiftCardCodes = useCallback(
@@ -255,11 +265,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/gift-card',
           caughtError,
-          'Failed to update gift cards',
+          feedback.cart.fallbackGiftCard,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateNote = useCallback(
@@ -274,10 +284,10 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await updateCartNoteAction(note);
         handleResponse(requestId, response);
       } catch (caughtError) {
-        handleMutationError(requestId, 'cart/note', caughtError, 'Failed to save order note');
+        handleMutationError(requestId, 'cart/note', caughtError, feedback.cart.fallbackNote);
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateAttributes = useCallback(
@@ -292,10 +302,15 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         const response = await updateCartAttributesAction(attributes);
         handleResponse(requestId, response);
       } catch (caughtError) {
-        handleMutationError(requestId, 'cart/attributes', caughtError, 'Failed to update cart');
+        handleMutationError(
+          requestId,
+          'cart/attributes',
+          caughtError,
+          feedback.cart.fallbackAttributes,
+        );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateDeliveryAddress = useCallback(
@@ -314,11 +329,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/delivery-address',
           caughtError,
-          'Failed to update delivery estimate',
+          feedback.cart.fallbackEstimate,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const removeDeliveryAddress = useCallback(
@@ -337,11 +352,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/delivery-address-remove',
           caughtError,
-          'Failed to clear delivery estimate',
+          feedback.cart.fallbackClearEstimate,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateSelectedDeliveryOption = useCallback(
@@ -360,11 +375,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/delivery-option',
           caughtError,
-          'Failed to update delivery method',
+          feedback.cart.fallbackMethod,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   const updateDeliveryPreference = useCallback(
@@ -383,11 +398,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           requestId,
           'cart/delivery-preference',
           caughtError,
-          'Failed to save delivery preference',
+          feedback.cart.fallbackPreference,
         );
       }
     },
-    [handleMutationError, handleResponse],
+    [feedback, handleMutationError, handleResponse],
   );
 
   // Adopt a cart returned by a mutation outside this context (move-to-cart).

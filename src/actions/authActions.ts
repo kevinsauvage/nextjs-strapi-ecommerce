@@ -1,7 +1,7 @@
 'use server';
 
 import config from '@/config';
-import { userFeedback } from '@/data/userFeedback';
+import { getUserFeedback, type UserFeedback } from '@/data/userFeedback';
 import { getCurrentLocale, redirectToPath } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { getClientIp } from '@/lib/server/client-ip';
@@ -21,33 +21,33 @@ import { emailField, nameField, passwordField } from '@/utils/validation';
 
 import { z } from 'zod';
 
-const tooManyAttempts = (): FormState =>
-  formError('Too many attempts. Please try again in a few minutes.');
+const tooManyAttempts = (feedback: UserFeedback): FormState =>
+  formError(feedback.rateLimit.attempts);
 
-const INVALID_RESET_LINK_MESSAGE = 'Invalid or expired reset link';
+const getRegisterSchema = (feedback: UserFeedback) =>
+  z
+    .object({
+      email: emailField,
+      firstName: nameField,
+      lastName: nameField,
+      password: passwordField,
+      passwordConfirm: passwordField,
+    })
+    .superRefine(({ passwordConfirm, password }, context) => {
+      if (passwordConfirm !== password) {
+        context.addIssue({
+          code: 'custom',
+          message: feedback.passwordDifferent,
+          path: ['passwordConfirm'],
+        });
+      }
+    });
 
-const registerSchema = z
-  .object({
-    email: emailField,
-    firstName: nameField,
-    lastName: nameField,
-    password: passwordField,
-    passwordConfirm: passwordField,
-  })
-  .superRefine(({ passwordConfirm, password }, context) => {
-    if (passwordConfirm !== password) {
-      context.addIssue({
-        code: 'custom',
-        message: userFeedback.passwordDifferent,
-        path: ['passwordConfirm'],
-      });
-    }
-  });
-
-type RegisterInput = z.infer<typeof registerSchema>;
+type RegisterInput = z.infer<ReturnType<typeof getRegisterSchema>>;
 
 export async function registerAction(input: RegisterInput): Promise<FormState> {
-  const result = registerSchema.safeParse(input);
+  const feedback = getUserFeedback(await getCurrentLocale());
+  const result = getRegisterSchema(feedback).safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
   }
@@ -56,12 +56,15 @@ export async function registerAction(input: RegisterInput): Promise<FormState> {
 
   const ip = await getClientIp();
   if (await isRateLimited('auth:register', ip, 5, '10 m', { failClosed: true })) {
-    return tooManyAttempts();
+    return tooManyAttempts(feedback);
   }
 
-  const serviceResult = await AuthService.register({ email, password, firstName, lastName });
+  const serviceResult = await AuthService.register(
+    { email, password, firstName, lastName },
+    feedback,
+  );
 
-  const errorState = serviceErrorsToFormState(serviceResult, 'Failed to create account');
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.createAccountFailed);
   if (errorState) return errorState;
 
   redirectToPath(config.routes.account, await getCurrentLocale());
@@ -76,6 +79,7 @@ const loginSchema = z.object({
 type LoginInput = z.infer<typeof loginSchema>;
 
 export async function loginAction(input: LoginInput): Promise<FormState> {
+  const feedback = getUserFeedback(await getCurrentLocale());
   const result = loginSchema.safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
@@ -94,12 +98,12 @@ export async function loginAction(input: LoginInput): Promise<FormState> {
     isRateLimited('auth:login:ip', ip, 30, '10 m', { failClosed: true }),
   ]);
   if (targetLimited || ipLimited) {
-    return tooManyAttempts();
+    return tooManyAttempts(feedback);
   }
 
-  const serviceResult = await AuthService.login({ email, password });
+  const serviceResult = await AuthService.login({ email, password }, feedback);
 
-  const errorState = serviceErrorsToFormState(serviceResult, 'Invalid email or password');
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.invalidCredentials);
   if (errorState) return errorState;
 
   const destination = safeInternalPath(redirectUrl, config.routes.account);
@@ -114,6 +118,7 @@ const recoverSchema = z.object({
 type RecoverPasswordInput = z.infer<typeof recoverSchema>;
 
 export const recoverPasswordAction = async (input: RecoverPasswordInput): Promise<FormState> => {
+  const feedback = getUserFeedback(await getCurrentLocale());
   const result = recoverSchema.safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
@@ -127,36 +132,35 @@ export const recoverPasswordAction = async (input: RecoverPasswordInput): Promis
     isRateLimited('auth:recover:ip', ip, 10, '15 m', { failClosed: true }),
   ]);
   if (targetLimited || ipLimited) {
-    return tooManyAttempts();
+    return tooManyAttempts(feedback);
   }
 
   const serviceResult = await AuthService.recoverPassword({ email: result.data.email });
 
-  const errorState = serviceErrorsToFormState(
-    serviceResult,
-    'An error occurred while recovering the password.',
-  );
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.recoverFailed);
   if (errorState) return errorState;
 
-  return formSuccess(userFeedback.sendRecoverEmail.success);
+  return formSuccess(feedback.sendRecoverEmail.success);
 };
 
-const resetSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: userFeedback.passwordLength })
-    .max(128, { message: userFeedback.passwordLength }),
-  resetUrl: z
-    .string()
-    .url({ message: INVALID_RESET_LINK_MESSAGE })
-    .max(RESET_URL_MAX_LENGTH, { message: INVALID_RESET_LINK_MESSAGE })
-    .refine(isAllowedPasswordResetUrl, { message: INVALID_RESET_LINK_MESSAGE }),
-});
+const getResetSchema = (feedback: UserFeedback) =>
+  z.object({
+    password: z
+      .string()
+      .min(8, { message: feedback.passwordLength })
+      .max(128, { message: feedback.passwordLength }),
+    resetUrl: z
+      .string()
+      .url({ message: feedback.invalidResetLink })
+      .max(RESET_URL_MAX_LENGTH, { message: feedback.invalidResetLink })
+      .refine(isAllowedPasswordResetUrl, { message: feedback.invalidResetLink }),
+  });
 
-type ResetPasswordInput = z.infer<typeof resetSchema>;
+type ResetPasswordInput = z.infer<ReturnType<typeof getResetSchema>>;
 
 export const resetPasswordAction = async (input: ResetPasswordInput): Promise<FormState> => {
-  const result = resetSchema.safeParse(input);
+  const feedback = getUserFeedback(await getCurrentLocale());
+  const result = getResetSchema(feedback).safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
   }
@@ -165,37 +169,40 @@ export const resetPasswordAction = async (input: ResetPasswordInput): Promise<Fo
 
   const ip = await getClientIp();
   if (await isRateLimited('auth:reset', ip, 5, '15 m', { failClosed: true })) {
-    return tooManyAttempts();
+    return tooManyAttempts(feedback);
   }
 
-  const serviceResult = await AuthService.resetPassword({ password, resetToken: resetUrl });
+  const serviceResult = await AuthService.resetPassword(
+    { password, resetToken: resetUrl },
+    feedback,
+  );
 
-  const errorState = serviceErrorsToFormState(serviceResult, userFeedback.resetPassword.error);
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.resetPassword.error);
   if (errorState) return errorState;
 
   redirectToPath(config.routes.account, await getCurrentLocale());
 };
 
-const INVALID_ACTIVATION_LINK_MESSAGE = 'Invalid or expired activation link';
+const getActivateSchema = (feedback: UserFeedback) =>
+  z.object({
+    password: z
+      .string()
+      .min(8, { message: feedback.passwordLength })
+      .max(128, { message: feedback.passwordLength }),
+    activationUrl: z
+      .string()
+      .url({ message: feedback.invalidActivationLink })
+      .max(RESET_URL_MAX_LENGTH, { message: feedback.invalidActivationLink })
+      // Activation links are Shopify-hosted account URLs with the same shape as
+      // password-reset links, so they share the store-origin allowlist.
+      .refine(isAllowedPasswordResetUrl, { message: feedback.invalidActivationLink }),
+  });
 
-const activateSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: userFeedback.passwordLength })
-    .max(128, { message: userFeedback.passwordLength }),
-  activationUrl: z
-    .string()
-    .url({ message: INVALID_ACTIVATION_LINK_MESSAGE })
-    .max(RESET_URL_MAX_LENGTH, { message: INVALID_ACTIVATION_LINK_MESSAGE })
-    // Activation links are Shopify-hosted account URLs with the same shape as
-    // password-reset links, so they share the store-origin allowlist.
-    .refine(isAllowedPasswordResetUrl, { message: INVALID_ACTIVATION_LINK_MESSAGE }),
-});
-
-type ActivateAccountInput = z.infer<typeof activateSchema>;
+type ActivateAccountInput = z.infer<ReturnType<typeof getActivateSchema>>;
 
 export const activateAccountAction = async (input: ActivateAccountInput): Promise<FormState> => {
-  const result = activateSchema.safeParse(input);
+  const feedback = getUserFeedback(await getCurrentLocale());
+  const result = getActivateSchema(feedback).safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
   }
@@ -204,12 +211,12 @@ export const activateAccountAction = async (input: ActivateAccountInput): Promis
 
   const ip = await getClientIp();
   if (await isRateLimited('auth:activate', ip, 5, '15 m', { failClosed: true })) {
-    return tooManyAttempts();
+    return tooManyAttempts(feedback);
   }
 
-  const serviceResult = await AuthService.activate({ activationUrl, password });
+  const serviceResult = await AuthService.activate({ activationUrl, password }, feedback);
 
-  const errorState = serviceErrorsToFormState(serviceResult, userFeedback.activateAccount.error);
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.activateAccount.error);
   if (errorState) return errorState;
 
   redirectToPath(config.routes.account, await getCurrentLocale());

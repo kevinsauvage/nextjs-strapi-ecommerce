@@ -1,6 +1,8 @@
 'use server';
 
 import { getContactMailEnv } from '@/config/env';
+import { getUserFeedback, type UserFeedback } from '@/data/userFeedback';
+import { getCurrentLocale } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { getClientIp } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
@@ -19,41 +21,42 @@ const hasLineBreak = (value: string): boolean => /[\r\n]/.test(value);
 
 const singleLine = (value: string): string => value.replace(/[\r\n]+/g, ' ').trim();
 
-const contactSchema = z.object({
-  email: z
-    .string()
-    .trim()
-    .toLowerCase()
-    .email()
-    .max(254)
-    .refine((value) => !hasLineBreak(value), {
-      message: 'Invalid email address',
-    }),
-  message: z
-    .string()
-    .min(3, {
-      message: 'Message must be at least 3 characters long',
-    })
-    .max(255, {
-      message: 'Message must be at most 255 characters long',
-    }),
-  name: z
-    .string()
-    .trim()
-    .min(3, {
-      message: 'Name must be at least 3 characters long',
-    })
-    .max(255, {
-      message: 'Name must be at most 255 characters long',
-    })
-    .refine((value) => !hasLineBreak(value), {
-      message: 'Name must not contain line breaks',
-    }),
-  // Honeypot: real visitors never fill this field.
-  website: z.string().nullish(),
-});
+const getContactSchema = (feedback: UserFeedback) =>
+  z.object({
+    email: z
+      .string()
+      .trim()
+      .toLowerCase()
+      .email()
+      .max(254)
+      .refine((value) => !hasLineBreak(value), {
+        message: feedback.contact.invalidEmail,
+      }),
+    message: z
+      .string()
+      .min(3, {
+        message: feedback.contact.messageMin,
+      })
+      .max(255, {
+        message: feedback.contact.messageMax,
+      }),
+    name: z
+      .string()
+      .trim()
+      .min(3, {
+        message: feedback.contact.nameMin,
+      })
+      .max(255, {
+        message: feedback.contact.nameMax,
+      })
+      .refine((value) => !hasLineBreak(value), {
+        message: feedback.contact.nameLineBreaks,
+      }),
+    // Honeypot: real visitors never fill this field.
+    website: z.string().nullish(),
+  });
 
-type ContactInput = z.infer<typeof contactSchema>;
+type ContactInput = z.infer<ReturnType<typeof getContactSchema>>;
 
 /**
  * Process-wide Gmail transporter, created once per credential set instead of
@@ -76,7 +79,8 @@ const getTransporter = (from: string, pass: string) => {
 };
 
 export const contactAction = async (input: ContactInput): Promise<FormState> => {
-  const formData = contactSchema.safeParse(input);
+  const feedback = getUserFeedback(await getCurrentLocale());
+  const formData = getContactSchema(feedback).safeParse(input);
   if (!formData.success) {
     return zodErrorsToFormState(formData.error);
   }
@@ -85,7 +89,7 @@ export const contactAction = async (input: ContactInput): Promise<FormState> => 
 
   // Silently accept honeypot submissions so bots do not learn they were caught.
   if (website) {
-    return formSuccess('Email sent successfully');
+    return formSuccess(feedback.contact.sentSuccess);
   }
 
   const ip = await getClientIp();
@@ -100,14 +104,14 @@ export const contactAction = async (input: ContactInput): Promise<FormState> => 
       { failClosed: true },
     )
   ) {
-    return formError('Too many messages sent. Please try again later.');
+    return formError(feedback.rateLimit.contact);
   }
 
   const mailConfig = getContactMailEnv();
 
   if (!mailConfig) {
     reportError('contactAction', new Error('Contact email is not configured'));
-    return formError('The contact form is temporarily unavailable. Please try again later.');
+    return formError(feedback.contact.unavailable);
   }
 
   const transporter = getTransporter(mailConfig.from, mailConfig.pass);
@@ -124,9 +128,9 @@ export const contactAction = async (input: ContactInput): Promise<FormState> => 
       to: mailConfig.recipient,
     });
 
-    return formSuccess('Email sent successfully');
+    return formSuccess(feedback.contact.sentSuccess);
   } catch (error) {
     reportError('contactAction', error);
-    return formError('An error occurred while sending the email');
+    return formError(feedback.contact.sendError);
   }
 };

@@ -90,6 +90,10 @@ vi.mock('@/actions/cartActions', () => ({
 
 vi.mock('@/lib/client/cookies', () => ({ getCookieFront: mocks.getCookieFront }));
 
+// `CartProvider` reads the rendered locale for localized toasts; the
+// hand-rolled React mock above runs outside a render, so provide it directly.
+vi.mock('@/components/LocaleProvider', () => ({ useRenderedLocale: () => 'en' }));
+
 vi.mock('@/lib/logger', () => ({ reportError: mocks.reportError }));
 
 vi.mock('sonner', () => ({

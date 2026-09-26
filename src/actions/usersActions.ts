@@ -1,5 +1,7 @@
 'use server';
 
+import { getUserFeedback } from '@/data/userFeedback';
+import { getCurrentLocale } from '@/i18n/server';
 import { getClientIp, rateLimitKey } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
 import { UserService } from '@/services/user.service';
@@ -28,6 +30,7 @@ const userSchema = z.object({
 type UpdateUserInput = z.infer<typeof userSchema>;
 
 export async function updateUserAction(input: UpdateUserInput): Promise<FormState> {
+  const feedback = getUserFeedback(await getCurrentLocale());
   const result = userSchema.safeParse(input);
   if (!result.success) {
     return zodErrorsToFormState(result.error);
@@ -44,7 +47,7 @@ export async function updateUserAction(input: UpdateUserInput): Promise<FormStat
       failClosed: true,
     })
   ) {
-    return formError('Too many attempts. Please try again in a few minutes.');
+    return formError(feedback.rateLimit.attempts);
   }
 
   const serviceResult = await UserService.updateUser({
@@ -56,7 +59,7 @@ export async function updateUserAction(input: UpdateUserInput): Promise<FormStat
     phone,
   });
 
-  const errorState = serviceErrorsToFormState(serviceResult, 'Failed to update user');
+  const errorState = serviceErrorsToFormState(serviceResult, feedback.updateUserFailed);
   if (errorState) return errorState;
 
   // Deliberately no revalidatePath here. Invalidating the current route makes
@@ -65,5 +68,5 @@ export async function updateUserAction(input: UpdateUserInput): Promise<FormStat
   // customer just saved. This action is the only mutating action in the app
   // that needs to keep the user on the page, so it returns state and leaves
   // the component in charge (matching the redirect-based flows elsewhere).
-  return formSuccess('User updated successfully');
+  return formSuccess(feedback.updateUserSuccess);
 }
