@@ -1,4 +1,6 @@
 import type { ProductVariantView } from '@/hooks/useProductVariantView';
+import type { Locale } from '@/i18n/routing';
+import { getTranslations } from '@/i18n/server';
 import { getSizeChart } from '@/lib/server/cmsSections';
 import type { GetProductByHandleQuery } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
@@ -12,6 +14,7 @@ import ProductDescriptionClient from './ProductDescriptionClient';
 
 type ProductDescriptionProps = {
   product: GetProductByHandleQuery['product'];
+  locale: Locale;
   isModal?: boolean;
   className?: string;
 };
@@ -57,7 +60,12 @@ const getDefaultVariant = (
   };
 };
 
-const ProductDescription = async ({ product, isModal, className }: ProductDescriptionProps) => {
+const ProductDescription = async ({
+  product,
+  locale,
+  isModal,
+  className,
+}: ProductDescriptionProps) => {
   if (!product) return null;
 
   const { images } = product;
@@ -65,8 +73,9 @@ const ProductDescription = async ({ product, isModal, className }: ProductDescri
     typeof product.descriptionHtml === 'string' ? product.descriptionHtml : '',
   );
 
-  const sizeChart = await getSizeChart();
+  const sizeChart = await getSizeChart(locale);
   const sizeChartHtml = sizeChart ? await sanitizeHtmlCached(sizeChart.body) : '';
+  const t = getTranslations(locale, 'product');
 
   // Default variant data for initial render (server-side)
   const defaultVariant = getDefaultVariant(product);
@@ -90,7 +99,7 @@ const ProductDescription = async ({ product, isModal, className }: ProductDescri
             variant="destructive"
             className="absolute right-4 top-4 z-10 px-3 py-1.5 text-body-sm font-medium shadow-md"
           >
-            Sold Out
+            {t('soldOut')}
           </Badge>
         ) : null}
 
@@ -99,7 +108,7 @@ const ProductDescription = async ({ product, isModal, className }: ProductDescri
             variant="secondary"
             className="absolute right-4 top-4 z-10 px-3 py-1.5 text-body-sm font-medium shadow-md"
           >
-            Low Stock: {quantityAvailable} left
+            {t('lowStock')}: {t('leftCount', { count: quantityAvailable ?? 0 })}
           </Badge>
         ) : null}
       </div>

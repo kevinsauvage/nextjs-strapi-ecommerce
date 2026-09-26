@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import Link from '@/components/LocalizedLink';
 import type { PromoBarSection, PromoBarTone } from '@/lib/server/cmsSections';
 import { cn } from '@/utils/cn';
 import { normalizeMenuHref } from '@/utils/url';

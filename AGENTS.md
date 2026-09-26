@@ -65,11 +65,26 @@ yarn build                  # yarn codegen && next build (needs Shopify env)
   relative → CSS. Run `yarn lint-fix` instead of hand-sorting.
 - Types: `import type { X }` inline type imports; `noUncheckedIndexedAccess`
   is on — handle `T | undefined` from indexing explicitly.
-- Routes: `typedRoutes` is on. New links must satisfy `Route`:
-  `config.routes` literals, `` `/collections/${string}` ``-shaped templates
-  for dynamic paths, `withQuery()` (`src/utils/url.ts`) for query-string
-  navigations. CMS-driven URLs funnel through `normalizeMenuHref` (the single
-  `as Route` point) — never scatter assertions at call sites.
+- Routes: every page lives under `src/app/[locale]/`, and the locale is part of
+  the route. Internal navigation goes through `LocalizedLink`
+  (`src/components/`) or, imperatively, `useLocalizedPush`
+  (`src/i18n/client.ts`) with unprefixed `config.routes` literals; together they
+  hold the only `as Route` assertions in the app. `config.routes` and
+  `normalizeMenuHref`/`withQuery()` (`src/utils/url.ts`) return `RoutePath` (an
+  unprefixed `/…` path), not `Route` — Next's generated types only accept
+  locale-prefixed paths, so the assertion cannot be avoided, only centralised.
+  Never scatter `as Route` at call sites.
+- Locales: resolve the locale from the route, never from a request read. Pages
+  call `localeFromParams(params)`; helpers take the locale as an argument
+  (`getStorefront(locale)`, `contentLanguage(locale)`, `getTranslations(locale, ns)`,
+  `redirectToPath(path, locale)`). `getCurrentLocale()` (header-based) is only for
+  server actions and route handlers. Reading `headers()`/`cookies()` in a page
+  opts it out of prerendering, and `usePathname()` does the same — a client
+  component that needs the path or the locale must take it as a prop, read
+  `LocaleProvider`, or sit behind its own `<Suspense>` (see `UserContext`).
+  `src/proxy.ts` rewrites unprefixed URLs to `/en/...`, redirects `/en/...` back
+  to the canonical unprefixed form, and sends non-English visitors to their
+  prefix.
 - Errors: use `reportError`/`src/lib/logger.ts`, never raw `console.*`
   (production strips all but `warn`/`error` via `next.config.ts:14-16`).
   Post-response reporting goes through `after()` in

@@ -1,10 +1,11 @@
 'use client';
 
 import { useState } from 'react';
-import type { Route } from 'next';
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
+import LocaleSwitcher from '@/components/LocaleSwitcher';
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import {
   Sheet,
@@ -16,6 +17,8 @@ import {
 } from '@/components/ui/sheet';
 import config from '@/config/index';
 import useUserContext from '@/contexts/UserContext/useUserContext';
+import { useLocalizedPush } from '@/i18n/client';
+import { type RoutePath, splitLocalePrefix } from '@/i18n/routing';
 import type { GetMenuByHandleQuery, MenuItem } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
 import { normalizeMenuHref } from '@/utils/url';
@@ -34,7 +37,7 @@ import {
   User,
 } from 'lucide-react';
 
-type QuickLink = { Icon: typeof Home; id: string; link: Route; text: string };
+type QuickLink = { Icon: typeof Home; id: string; link: RoutePath; text: string };
 
 const getQuickLinks = (isLoggedIn: boolean): QuickLink[] => [
   { Icon: Home, id: 'home', link: '/', text: 'Home' },
@@ -57,12 +60,12 @@ const isMenuHrefActive = (href: string | null, pathname: string): boolean =>
   href.length > 0 &&
   (pathname === href || (href !== '/' && pathname.startsWith(`${href}/`)));
 
-const getMenuHref = (item: MenuItem): Route | null =>
+const getMenuHref = (item: MenuItem): RoutePath | null =>
   typeof item.url === 'string' ? normalizeMenuHref(item.url) : null;
 
 const hasMenuChildren = (item: MenuItem): boolean => Boolean(item.items && item.items.length > 0);
 
-type MenuHref = Route | null;
+type MenuHref = RoutePath | null;
 
 type MenuItemRowProps = {
   item: MenuItem;
@@ -71,7 +74,7 @@ type MenuItemRowProps = {
   pathname: string;
   isExpanded: boolean;
   onToggle: (id: string) => void;
-  onNavigate: (href: Route) => void;
+  onNavigate: (href: string) => void;
   onClose: () => void;
   renderChild: (child: MenuItem, childIndex: number, level: number) => React.ReactNode;
 };
@@ -153,7 +156,7 @@ const TopLevelMenuItem = ({
   renderChild: MenuItemRowProps['renderChild'];
   level: number;
   onToggle: (id: string) => void;
-  onNavigate: (href: Route) => void;
+  onNavigate: (href: RoutePath) => void;
 }) => {
   const handleActivate = () => {
     if (hasChildren) {
@@ -255,7 +258,10 @@ const HamburgerMenu = ({
   const [open, setOpen] = useState(false);
   const [expandedMenus, setExpandedMenus] = useState<{ [key: string]: boolean }>({});
   const { isLoggedIn } = useUserContext();
-  const router = useRouter();
+  const push = useLocalizedPush();
+  const footerT = useTranslations('footer');
+  const t = useTranslations('common');
+  const searchT = useTranslations('search');
 
   const toggleMenu = (id: string) => {
     setExpandedMenus((previous) => ({
@@ -268,8 +274,10 @@ const HamburgerMenu = ({
 
   const menuItems = headerMenu?.items || [];
 
-  const handleNavigate = (href: Route) => {
-    router.push(href);
+  // Menu hrefs arrive from Shopify unprefixed, so the active language is applied
+  // before the client-side navigation.
+  const handleNavigate = (href: RoutePath) => {
+    push(href);
     setOpen(false);
   };
 
@@ -321,7 +329,7 @@ const HamburgerMenu = ({
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <button
-          aria-label="Open menu"
+          aria-label={t('openMenu')}
           type="button"
           className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-border/70 bg-background/60 py-2 pl-3 pr-4 transition-all duration-200 hover:-translate-y-px hover:bg-muted hover:shadow-[0_10px_24px_-14px_rgb(12_10_9/0.5)]"
         >
@@ -340,18 +348,18 @@ const HamburgerMenu = ({
           <div className="relative p-6 pb-5 pr-14">
             <span className="text-eyebrow-gold inline-flex items-center gap-2">
               <Sparkles size={13} aria-hidden="true" />
-              Menu
+              {t('menu')}
             </span>
             <SheetTitle className="font-display mt-2 text-3xl font-medium tracking-tight">
-              Shop categories
+              {t('shopCategories')}
             </SheetTitle>
             <SheetDescription className="text-body-sm mt-1.5 text-secondary">
-              Curated collections, new drops and timeless staples.
+              {t('shopCategoriesDescription')}
             </SheetDescription>
             <div className="mt-4 flex gap-2">
               <Button size="sm" asChild className="rounded-full" onClick={() => setOpen(false)}>
                 <Link href={config.routes.collection}>
-                  Shop all <ArrowRight className="size-4" aria-hidden="true" />
+                  {t('shopAll')} <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
               <Button
@@ -362,31 +370,29 @@ const HamburgerMenu = ({
                 onClick={() => setOpen(false)}
               >
                 <Link href={config.routes.search}>
-                  <Search className="size-4" aria-hidden="true" /> Search
+                  <Search className="size-4" aria-hidden="true" /> {searchT('submit')}
                 </Link>
               </Button>
             </div>
           </div>
         </SheetHeader>
 
-        <nav aria-label="Shop categories" className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+        <nav aria-label={t('shopCategories')} className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
           {menuItems.length > 0 ? (
             <div className="space-y-2">
               {menuItems.map((item, index) => renderMenuItem(item as MenuItem, 0, index))}
             </div>
           ) : (
             <div className="rounded-2xl border border-dashed border-border p-8 text-center">
-              <p className="text-body-sm font-medium">No categories yet</p>
-              <p className="text-caption mt-1 text-secondary">
-                Browse the full collection instead.
-              </p>
+              <p className="text-body-sm font-medium">{t('noCategories')}</p>
+              <p className="text-caption mt-1 text-secondary">{t('browseFullCollection')}</p>
               <Button
                 size="sm"
                 asChild
                 className="mt-4 rounded-full"
                 onClick={() => setOpen(false)}
               >
-                <Link href={config.routes.collection}>Shop all products</Link>
+                <Link href={config.routes.collection}>{t('shopAllProducts')}</Link>
               </Button>
             </div>
           )}
@@ -424,8 +430,11 @@ const HamburgerMenu = ({
             })}
           </div>
           <p className="mt-3 text-center text-caption text-secondary">
-            Free shipping over €80 · 30-day returns
+            {footerT('freeShipping')} · {footerT('thirtyDayReturns')}
           </p>
+          <div className="mt-4 flex justify-center">
+            <LocaleSwitcher />
+          </div>
         </div>
       </SheetContent>
     </Sheet>
@@ -436,6 +445,10 @@ const HamburgerMenu = ({
  * Reads the route pathname (which suspends on routes with unknown dynamic
  * params under Cache Components) so callers can wrap it in `<Suspense>` and
  * keep the static shell — see `Header`.
+ *
+ * The locale segment is stripped, so the active-item checks below compare a
+ * canonical `/collections/dogs` against menu hrefs that come from Shopify
+ * unprefixed.
  */
 const HamburgerMenuWithPathname = ({
   headerMenu,
@@ -443,7 +456,8 @@ const HamburgerMenuWithPathname = ({
   headerMenu: GetMenuByHandleQuery['menu'] | null | undefined;
 }) => {
   const pathname = usePathname();
-  return <HamburgerMenu headerMenu={headerMenu} pathname={pathname} />;
+
+  return <HamburgerMenu headerMenu={headerMenu} pathname={splitLocalePrefix(pathname).pathname} />;
 };
 
 export { HamburgerMenu as HamburgerMenuView };

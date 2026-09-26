@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import config from '@/config';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
@@ -29,19 +30,21 @@ const CardBadges = ({
   discountPercent: string | null;
   lowStock: boolean;
 }) => {
+  const t = useTranslations('product');
+
   if (!soldOut && !discountPercent && !lowStock) return null;
 
   return (
     <div className="pointer-events-none absolute left-3 top-3 z-10 flex flex-col items-start gap-1.5">
       {soldOut ? (
         <Badge variant="secondary" className="border-border/50 bg-background/90 backdrop-blur-md">
-          Sold out
+          {t('soldOut')}
         </Badge>
       ) : null}
       {discountPercent ? <Badge variant="destructive">-{discountPercent}%</Badge> : null}
       {lowStock ? (
         <Badge variant="outline" className="border-border/60 bg-background/90 backdrop-blur-md">
-          Low stock
+          {t('lowStock')}
         </Badge>
       ) : null}
     </div>

@@ -2,8 +2,9 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import config from '@/config';
 import useProductSelection from '@/hooks/useProductSelection';
 import useProductVariantView from '@/hooks/useProductVariantView';
@@ -30,6 +31,8 @@ type QuickBuyContentProps = {
 };
 
 const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
+  const t = useTranslations('product');
+  const shared = useTranslations('shared');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const thumbnailsRef = useRef<HTMLDivElement>(null);
 
@@ -109,7 +112,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   size="icon"
                   className="absolute left-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg hover:bg-background"
                   onClick={prevImage}
-                  aria-label="Previous image"
+                  aria-label={shared('previousImage')}
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
@@ -118,7 +121,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                   size="icon"
                   className="absolute right-2 top-1/2 -translate-y-1/2 h-10 w-10 rounded-full bg-background/80 backdrop-blur-sm shadow-lg hover:bg-background"
                   onClick={nextImage}
-                  aria-label="Next image"
+                  aria-label={shared('nextImage')}
                 >
                   <ChevronRight className="h-5 w-5" />
                 </Button>
@@ -129,12 +132,12 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
             <div className="absolute top-3 left-3 flex flex-col gap-2">
               {isSoldOut(availableForSale) ? (
                 <Badge variant="destructive" className="px-2.5 py-1">
-                  Sold Out
+                  {t('soldOut')}
                 </Badge>
               ) : null}
               {isLowStock(quantityAvailable, availableForSale) ? (
                 <Badge variant="secondary" className="px-2.5 py-1">
-                  Only {quantityAvailable} left
+                  {t('leftCount', { count: quantityAvailable ?? 0 })}
                 </Badge>
               ) : null}
               {hasDiscount && compareAtPrice && price ? (

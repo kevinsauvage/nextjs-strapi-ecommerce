@@ -10,7 +10,7 @@
  * (`http:`, `https:`, `mailto:`, `tel:`) are left untouched; anything else
  * (`javascript:`, `data:`, unparseable) normalizes to `''`.
  */
-import type { Route } from 'next';
+import type { RoutePath } from '@/i18n/routing';
 
 const PLACEHOLDER_ORIGIN = 'https://menu.invalid';
 
@@ -44,11 +44,11 @@ const isInternalOrigin = (origin: string, hostname: string): boolean =>
  * against the placeholder base, so the check must run after parsing. */
 const EXTERNAL_PROTOCOLS = new Set(['http:', 'https:', 'mailto:', 'tel:']);
 
-export const normalizeMenuHref = (url?: string | null): Route => {
-  if (!url) return '' as Route;
+export const normalizeMenuHref = (url?: string | null): RoutePath => {
+  if (!url) return '' as RoutePath;
 
   const trimmed = url.trim();
-  if (!trimmed) return '' as Route;
+  if (!trimmed) return '' as RoutePath;
 
   try {
     const parsed = new URL(trimmed, PLACEHOLDER_ORIGIN);
@@ -60,7 +60,7 @@ export const normalizeMenuHref = (url?: string | null): Route => {
       // manifest, so the single assertion lives here instead of at every
       // `Link` call site. Absolute URLs with a protocol and statically
       // known shapes still satisfy `Route` at runtime.
-      return path as Route;
+      return path as RoutePath;
     }
 
     // Absolute store URL - strip the origin so navigation stays on this site.
@@ -68,19 +68,19 @@ export const normalizeMenuHref = (url?: string | null): Route => {
       (parsed.protocol === 'http:' || parsed.protocol === 'https:') &&
       isInternalOrigin(parsed.origin, parsed.hostname)
     ) {
-      return path as Route;
+      return path as RoutePath;
     }
 
     // Genuinely external URL: only safe navigation protocols pass through.
     // Anything else (e.g. `javascript:`, `data:`) is rejected even though
     // merchants, not end users, author menu values.
     if (EXTERNAL_PROTOCOLS.has(parsed.protocol)) {
-      return trimmed as Route;
+      return trimmed as RoutePath;
     }
 
-    return '' as Route;
+    return '' as RoutePath;
   } catch {
-    return '' as Route;
+    return '' as RoutePath;
   }
 };
 
@@ -91,9 +91,12 @@ export const normalizeMenuHref = (url?: string | null): Route => {
  * (`/\host`) values so a `?redirect=` query cannot bounce an authenticated
  * user off-site.
  */
-export const safeInternalPath = (value: string | null | undefined, fallback: Route): Route => {
+export const safeInternalPath = (
+  value: string | null | undefined,
+  fallback: RoutePath,
+): RoutePath => {
   if (value?.startsWith('/') && !value.startsWith('//') && !value.startsWith('/\\')) {
-    return value as Route;
+    return value as RoutePath;
   }
 
   return fallback;
@@ -131,5 +134,5 @@ export const isAllowedPasswordResetUrl = (value: string | null | undefined): boo
  * assertion for programmatically built URLs (filters, sort, pagination) so
  * `typedRoutes` stays enabled without an `as Route` at every call site.
  */
-export const withQuery = (pathname: string, parameters: URLSearchParams): Route =>
-  `${pathname}?${parameters.toString()}` as Route;
+export const withQuery = (pathname: string, parameters: URLSearchParams): RoutePath =>
+  `${pathname}?${parameters.toString()}` as RoutePath;

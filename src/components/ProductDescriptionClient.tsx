@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import config from '@/config';
 import useProductSelection from '@/hooks/useProductSelection';
 import type { ProductVariantView } from '@/hooks/useProductVariantView';
@@ -167,62 +168,67 @@ const DetailsAccordion = ({
   weightUnit?: string | null;
   quantityAvailable?: number | null;
   sizeChart: SizeChart | null;
-}) => (
-  <Accordion type="single" collapsible defaultValue="details" className="w-full">
-    <AccordionItem value="details">
-      <AccordionTrigger className="text-label hover:no-underline">Description</AccordionTrigger>
-      <AccordionContent>
-        {descriptionHtml ? (
-          // Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`.
-          <div
-            className="product-description max-w-none text-secondary"
-            dangerouslySetInnerHTML={{ __html: descriptionHtml }}
-          />
-        ) : (
-          <p className="text-body text-secondary">
-            Experience premium quality and exceptional design with this product. Perfect for
-            everyday use and special occasions alike.
-          </p>
-        )}
-      </AccordionContent>
-    </AccordionItem>
-    <AccordionItem value="specs">
-      <AccordionTrigger className="text-label hover:no-underline">Specifications</AccordionTrigger>
-      <AccordionContent>
-        <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {sku ? <MetaItem label="SKU" value={sku} /> : null}
-          {variantTitle ? <MetaItem label="Variant" value={variantTitle} /> : null}
-          {weight ? (
-            <MetaItem
-              label="Weight"
-              value={`${weight} ${weightUnit?.toLowerCase() ?? ''}`.trim()}
-            />
-          ) : null}
-          {quantityAvailable !== null && quantityAvailable !== undefined ? (
-            <MetaItem label="Available" value={`${quantityAvailable} units`} />
-          ) : null}
-        </dl>
-      </AccordionContent>
-    </AccordionItem>
-    {sizeChart?.html ? (
-      <AccordionItem value="size-chart">
+}) => {
+  const t = useTranslations('product');
+
+  return (
+    <Accordion type="single" collapsible defaultValue="details" className="w-full">
+      <AccordionItem value="details">
         <AccordionTrigger className="text-label hover:no-underline">
-          {sizeChart.title}
+          {t('description')}
         </AccordionTrigger>
         <AccordionContent>
-          {/* Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`. */}
-          <div
-            className="product-description max-w-none text-secondary"
-            dangerouslySetInnerHTML={{ __html: sizeChart.html }}
-          />
-          {sizeChart.note ? (
-            <p className="mt-3 text-caption-sm text-muted">{sizeChart.note}</p>
-          ) : null}
+          {descriptionHtml ? (
+            // Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`.
+            <div
+              className="product-description max-w-none text-secondary"
+              dangerouslySetInnerHTML={{ __html: descriptionHtml }}
+            />
+          ) : (
+            <p className="text-body text-secondary">{t('descriptionFallback')}</p>
+          )}
         </AccordionContent>
       </AccordionItem>
-    ) : null}
-  </Accordion>
-);
+      <AccordionItem value="specs">
+        <AccordionTrigger className="text-label hover:no-underline">
+          {t('specifications')}
+        </AccordionTrigger>
+        <AccordionContent>
+          <dl className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {sku ? <MetaItem label={t('sku')} value={sku} /> : null}
+            {variantTitle ? <MetaItem label={t('variant')} value={variantTitle} /> : null}
+            {weight ? (
+              <MetaItem
+                label={t('weight')}
+                value={`${weight} ${weightUnit?.toLowerCase() ?? ''}`.trim()}
+              />
+            ) : null}
+            {quantityAvailable !== null && quantityAvailable !== undefined ? (
+              <MetaItem label={t('available')} value={`${quantityAvailable} ${t('units')}`} />
+            ) : null}
+          </dl>
+        </AccordionContent>
+      </AccordionItem>
+      {sizeChart?.html ? (
+        <AccordionItem value="size-chart">
+          <AccordionTrigger className="text-label hover:no-underline">
+            {sizeChart.title}
+          </AccordionTrigger>
+          <AccordionContent>
+            {/* Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`. */}
+            <div
+              className="product-description max-w-none text-secondary"
+              dangerouslySetInnerHTML={{ __html: sizeChart.html }}
+            />
+            {sizeChart.note ? (
+              <p className="mt-3 text-caption-sm text-muted">{sizeChart.note}</p>
+            ) : null}
+          </AccordionContent>
+        </AccordionItem>
+      ) : null}
+    </Accordion>
+  );
+};
 
 const ProductDescriptionClient = ({
   product,

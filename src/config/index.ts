@@ -1,4 +1,6 @@
-import type { MetadataRoute, Route } from 'next';
+import type { MetadataRoute } from 'next';
+
+import type { RoutePath } from '@/i18n/routing';
 
 import { COOKIES } from './constants';
 
@@ -27,6 +29,7 @@ const config = {
     cart: '/cart',
     login: '/login',
     collection: '/collections',
+    page: '/pages',
     contact: '/contact',
     account: '/account',
     addresses: '/account/addresses',
@@ -45,9 +48,10 @@ const config = {
     shipping: '/shipping',
     subscription: '/subscription',
     terms: '/terms',
-    // Literal types so `Link href`/`redirect` stay type-checked with
-    // `typedRoutes`; `satisfies` proves every entry is a real route.
-  } as const satisfies Record<string, Route>,
+    // Canonical, unprefixed paths. `localizedPath`/`LocalizedLink` add the
+    // locale segment for the visitor's language; `satisfies` keeps every entry a
+    // real absolute path. See `RoutePath`.
+  } as const satisfies Record<string, RoutePath>,
 };
 
 export const accountNav = [

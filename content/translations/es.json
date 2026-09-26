@@ -1,0 +1,173 @@
+{
+  "collections": {
+    "all-products": {
+      "description": "Todos los productos de la colección.",
+      "title": "Todos los productos"
+    },
+    "cats": {
+      "description": "Piezas pensadas para gatos: camas acogedoras, rascadores y comederos que encajan en un hogar moderno.",
+      "title": "Gatos"
+    },
+    "dogs": {
+      "description": "Esenciales para el día a día de tu perro: camas, transportines, arneses y comederos elegidos por comodidad, función y buen diseño.",
+      "title": "Perros"
+    },
+    "feeding": {
+      "description": "Comederos, bebederos y bolsas para premios con un acabado limpio y cuidado.",
+      "title": "Alimentación"
+    },
+    "home-comfort": {
+      "description": "Camas, colchones y nidos diseñados para integrarse en un interior moderno.",
+      "title": "Hogar y confort"
+    },
+    "made-in-europe": {
+      "description": "Piezas elaboradas por talleres y marcas europeas.",
+      "title": "Fabricado en Europa"
+    },
+    "new-arrivals": {
+      "description": "Lo último de la colección: las nuevas piezas según llegan.",
+      "title": "Novedades"
+    },
+    "play-enrichment": {
+      "description": "Juguetes y muebles para gatos que mantienen curiosas y felices a tus mascotas.",
+      "title": "Juego y enriquecimiento"
+    },
+    "walk-travel": {
+      "description": "Transportines, arneses y correas para paseos tranquilos y viajes sin complicaciones.",
+      "title": "Paseo y viajes"
+    }
+  },
+  "menuItems": {
+    "footer > Account": "Cuenta",
+    "footer > Account > Log in": "Iniciar sesión",
+    "footer > Account > My account": "Mi cuenta",
+    "footer > Account > My orders": "Mis pedidos",
+    "footer > Account > Register": "Crear cuenta",
+    "footer > Help": "Ayuda",
+    "footer > Help > About us": "Sobre nosotros",
+    "footer > Help > Contact": "Contacto",
+    "footer > Help > FAQ": "Preguntas frecuentes",
+    "footer > Help > Pet care & sizing": "Cuidados y tallas",
+    "footer > Help > Refund policy": "Política de devoluciones",
+    "footer > Help > Search": "Buscar",
+    "footer > Help > Shipping": "Envíos",
+    "footer > Legal": "Legal",
+    "footer > Legal > Privacy policy": "Política de privacidad",
+    "footer > Legal > Terms of service": "Términos del servicio",
+    "footer > Shop": "Tienda",
+    "footer > Shop > All products": "Todos los productos",
+    "footer > Shop > Cats": "Gatos",
+    "footer > Shop > Dogs": "Perros",
+    "footer > Shop > Home & Comfort": "Hogar y confort",
+    "footer > Shop > Made in Europe": "Fabricado en Europa",
+    "footer > Shop > New arrivals": "Novedades",
+    "footer > Shop > Play & Enrichment": "Juego y enriquecimiento",
+    "footer > Shop > Walk & Travel": "Paseo y viajes",
+    "main-menu > About": "Sobre nosotros",
+    "main-menu > Shop": "Tienda",
+    "main-menu > Shop > Cats": "Gatos",
+    "main-menu > Shop > Dogs": "Perros",
+    "main-menu > Shop > Feeding": "Alimentación",
+    "main-menu > Shop > Home & Comfort": "Hogar y confort",
+    "main-menu > Shop > New arrivals": "Novedades",
+    "main-menu > Shop > Play & Enrichment": "Juego y enriquecimiento",
+    "main-menu > Shop > Walk & Travel": "Paseo y viajes"
+  },
+  "metaobjects": {
+    "faq_item:faq-1-where-do-you-ship": {
+      "answer": "Enviamos a toda España y Francia, y pronto al resto de la UE. El envío es gratuito en pedidos a partir de 80 €.",
+      "question": "¿A dónde enviáis?"
+    },
+    "faq_item:faq-2-how-long-does-delivery-take": {
+      "answer": "Preparamos el pedido en 1–2 días laborables y se entrega en 3–6 días laborables con seguimiento.",
+      "question": "¿Cuánto tarda el envío?"
+    },
+    "faq_item:faq-3-what-is-the-return-window": {
+      "answer": "Tienes 30 días desde la entrega, sin usar y en su embalaje original. Consulta nuestra <a href=\"/refund\">política de devoluciones</a>.",
+      "question": "¿Cuál es el plazo de devolución?"
+    },
+    "faq_item:faq-4-how-do-i-choose-the-right-size": {
+      "answer": "Consulta nuestra <a href=\"/pages/pet-care\">guía de cuidados y tallas</a>. Si tu mascota está entre dos tallas, sube una para camas y transportines.",
+      "question": "¿Cómo elijo la talla correcta?"
+    },
+    "faq_item:faq-5-how-can-i-track-my-order": {
+      "answer": "Inicia sesión y abre <a href=\"/account/orders\">Mis pedidos</a>: cada pedido tiene su propia página con enlaces de seguimiento.",
+      "question": "¿Cómo puedo seguir mi pedido?"
+    },
+    "faq_section:home-faq": {
+      "intro": "Envíos, devoluciones y cómo elegir la talla correcta: las respuestas que más nos preguntan.",
+      "title": "Preguntas frecuentes"
+    },
+    "hero_section:home-hero": {
+      "eyebrow": "Esenciales europeos para mascotas",
+      "heading": "Mejores productos para mejores momentos juntos.",
+      "primary_label": "Ver todos los productos",
+      "secondary_label": "Novedades",
+      "subheading": "Camas, transportines, comederos y juguetes seleccionados para perros y gatos, fabricados en Europa y pensados para vivir bien en un hogar moderno."
+    },
+    "popular_search_term:cat-trees": {
+      "term": "Rascadores para gatos"
+    },
+    "popular_search_term:cushions": {
+      "term": "Cojines"
+    },
+    "popular_search_term:dog-beds": {
+      "term": "Camas para perros"
+    },
+    "popular_search_term:dog-carriers": {
+      "term": "Transportines"
+    },
+    "popular_search_term:harnesses": {
+      "term": "Arneses"
+    },
+    "popular_search_term:leashes": {
+      "term": "Correas"
+    },
+    "popular_search_term:treat-bags": {
+      "term": "Bolsas para premios"
+    },
+    "promo_bar:promo-bar": {
+      "text": "Envío gratuito en la UE a partir de 80 € · Devoluciones en 30 días"
+    },
+    "size_chart:size-chart": {
+      "note": "Mide a tu mascota de pie. Si está entre dos tallas, sube una para que pueda estirarse cómodamente.",
+      "title": "Cuidados y tallas"
+    }
+  },
+  "pages": {
+    "about-us": {
+      "title": "Sobre nosotros",
+      "body": "<h2>Nuestra historia</h2><p>Empezamos con una convicción sencilla: los productos que nuestras mascotas usan a diario deberían estar tan cuidados como los que elegimos para nosotros. Eso significa camas que encajan en un salón moderno, transportines con los que da gusto viajar y comederos tan funcionales como bonitos.</p><p>Seleccionamos una colección cuidada de esenciales europeos premium para perros y gatos: elegidos por su calidad, comodidad, funcionalidad y diseño, y hechos para durar mucho más que una temporada.</p><h2>En lo que creemos</h2><ul><li><strong>Selección meditada:</strong> una gama pequeña de productos realmente útiles, nunca un montón de artículos al azar.</li><li><strong>Calidad europea:</strong> piezas fabricadas de forma responsable, con atención a la artesanía europea.</li><li><strong>Precios justos:</strong> precios honestos en productos que merece la pena conservar.</li><li><strong>Devoluciones sencillas:</strong> 30 días para cambiar de opinión. Consulta nuestra <a href=\"/refund\">política de devoluciones</a>.</li></ul><h2>Habla con nosotros</h2><p>¿Dudas sobre un pedido, un producto o una talla? Visita nuestra <a href=\"/contact\">página de contacto</a>: te responde una persona real, normalmente en un día laborable.</p>"
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "body": "<h2>Pedidos y envíos</h2><p><strong>¿A dónde enviáis?</strong><br>Actualmente enviamos a España y Francia, y pronto al resto de la UE. El envío es gratuito en pedidos superiores a 80 €.</p><p><strong>¿Cuánto tarda la entrega?</strong><br>Los pedidos se preparan en 1–2 días laborables y suelen llegar en 3–6 días laborables con entrega con seguimiento.</p><p><strong>¿Cómo puedo seguir mi pedido?</strong><br>Inicia sesión y abre <a href=\"/account/orders\">Mis pedidos</a>: cada pedido tiene una página de detalle con enlaces de seguimiento en vivo.</p><h2>Tallas y cuidados</h2><p><strong>¿Cómo elijo la talla correcta?</strong><br>Consulta nuestra <a href=\"/pages/pet-care\">guía de cuidados y tallas</a>. Si tu mascota está entre dos tallas, elige la mayor para camas y transportines.</p><p><strong>¿Cómo cuido mis productos?</strong><br>La mayoría de las fundas de cama y cojines son extraíbles y lavables a máquina a 30 °C. Consulta la etiqueta de cuidado de cada producto para las instrucciones exactas.</p><h2>Devoluciones y cambios</h2><p><strong>¿Cuál es el plazo de devolución?</strong><br>30 días desde la entrega, sin usar y en su embalaje original. Consulta nuestra <a href=\"/refund\">política de devoluciones</a> para las condiciones completas.</p><p><strong>¿Ha llegado algo dañado?</strong><br>Escríbenos a través de la <a href=\"/contact\">página de contacto</a> con tu número de pedido y una foto: lo solucionaremos.</p><h2>Cuenta y pago</h2><p><strong>¿Necesito una cuenta para comprar?</strong><br>No, puedes comprar como invitado. Una cuenta hace más rápidos el seguimiento, la repetición de pedidos y la gestión de direcciones.</p><p><strong>¿Qué métodos de pago aceptáis?</strong><br>Todas las tarjetas principales y las carteras exprés que se muestran al finalizar la compra. Los pagos se procesan mediante una conexión cifrada.</p>"
+    },
+    "pet-care": {
+      "title": "Cuidados y tallas",
+      "body": "<h2>Elegir la talla correcta</h2><p>Mide a tu mascota de pie, con una cinta suave. La medida más útil es la distancia desde la base del cuello hasta la base de la cola, más el perímetro torácico para arneses y transportines. Si tu mascota está entre dos tallas, elige la mayor para camas y transportines, para que pueda estirarse cómodamente.</p><h2>Camas y mantas</h2><table><thead><tr><th>Talla</th><th>Peso de la mascota</th><th>Talla típica</th></tr></thead><tbody><tr><td>S</td><td>hasta 7 kg</td><td>~50 × 40 cm</td></tr><tr><td>M</td><td>7–15 kg</td><td>~65 × 50 cm</td></tr><tr><td>L</td><td>15–25 kg</td><td>~80 × 60 cm</td></tr><tr><td>XL</td><td>25–40 kg</td><td>~100 × 70 cm</td></tr><tr><td>XXL / XXXL</td><td>40 kg +</td><td>~120 × 80 cm</td></tr></tbody></table><h2>Transportines y arneses</h2><table><thead><tr><th>Talla</th><th>Peso de la mascota</th><th>Notas</th></tr></thead><tbody><tr><td>S</td><td>hasta 5 kg</td><td>Gatos pequeños y razas miniatura</td></tr><tr><td>M</td><td>5–9 kg</td><td>La mayoría de gatos y perros pequeños</td></tr><tr><td>L</td><td>9–15 kg</td><td>Perros medianos</td></tr><tr><td>XL</td><td>15 kg +</td><td>Perros grandes</td></tr></tbody></table><h2>Cuidados</h2><p>Retira el pelo suelto con un cepillo suave antes de lavar. La mayoría de las fundas de cama y cojines son extraíbles y lavables a máquina a 30 °C en ciclo suave; sécalos al aire siempre que sea posible. Las piezas de mimbre y madera deben limpiarse con un paño húmedo. Consulta siempre la etiqueta de cuidado de cada producto.</p><p>¿Tienes dudas sobre un producto concreto? Visita nuestra <a href=\"/contact\">página de contacto</a> y te ayudaremos a elegir.</p>"
+    }
+  },
+  "products": {
+    "danoo-cat-tree-with-hammock-and-den-grey": {
+      "title": "Rascador Danoo con hamaca y cueva — Gris",
+      "description": "<p>Dale a tu gato un lugar para trepar, arañar y acurrucarse con el rascador Danoo en gris. Una plataforma de observación superior, baldas para trepar, hamaca y una acogedora cueva ofrecen varios puntos de juego y descanso en un espacio compacto de 52 × 32 × 69 cm.</p><p>El poste rascador de sisal natural ofrece una superficie dedicada para las uñas, mientras que el suave forro de piel sintética crea zonas de descanso cómodas. La estructura de aglomerado proporciona una base estable. El rascador puede fijarse a la pared para mayor estabilidad.</p><ul><li>Color: Gris</li><li>Talla: única</li><li>Dimensiones: 52 × 32 × 69 cm (largo × ancho × alto)</li><li>Peso: 5 kg</li><li>Características: plataforma superior, baldas, hamaca, cueva y poste rascador de sisal</li><li>Materiales: forro de piel sintética, sisal natural y aglomerado</li><li>Tiempo de montaje: aproximadamente 20 minutos</li><li>Posibilidad de fijación a la pared</li><li>Incluye taco, llave Allen e instrucciones</li></ul>"
+    },
+    "dog-treat-bag-boho": {
+      "title": "Bolso para premios Boho",
+      "description": "<p>Practicidad y estilo en uno: ¡nuestra bolsa es la solución perfecta para cualquier amante de los perros! Su construcción sólida garantiza la durabilidad, y su fácil apertura permite acceder a los premios en cualquier momento. La parte exterior está hecha de resistente oxford con estampado, y la interior de tejido de poliéster; ambos materiales hacen que la bolsa sea muy duradera. Incluye tres correas y un mosquetón para que puedas llevarla fácilmente en tus paseos.</p>"
+    },
+    "doudou-teddy-dog-carrier-bag-vanilla-m": {
+      "title": "Transportín Doudou de peluche — Vainilla, M",
+      "description": "<p>Lleva a tu perro pequeño cerca en tus paseos por la ciudad y en las visitas al veterinario con el transportín Doudou de peluche en vainilla. Esta talla M mide 42 × 25 × 22 cm y ofrece un lugar suave y acolchado donde descansar mientras estáis en movimiento.</p><p>El interior acolchado amortigua el movimiento al caminar, y el relleno de espuma Classic sostiene el peso de tu perro. El tejido de peluche está hecho de 100 % poliéster, no contiene PFC y cuenta con la certificación OEKO-TEX Standard 100. Se ha sometido a pruebas de resistencia al enganche según la norma BS 8479 para que la superficie texturizada resista el contacto con las uñas.</p><p>Elige el transportín comparando sus dimensiones con el tamaño de tu perro cuando está acurrucado, en lugar de guiarte solo por el peso. El color vainilla combina fácilmente con un abrigo liso para los paseos diarios. La funda es lavable a máquina a 30 °C.</p><ul><li>Modelo: Doudou (colección Arrm bag)</li><li>Color: Vainilla</li><li>Talla: M</li><li>Dimensiones: 42 × 25 × 22 cm (largo × ancho × alto)</li><li>Material: tejido de peluche, 100 % poliéster</li><li>Certificación del tejido: OEKO-TEX Standard 100</li><li>Tejido sin PFC, probado frente al enganche según BS 8479</li><li>Interior acolchado y embutido con relleno de espuma Classic</li><li>Cuidados: funda lavable a máquina a 30 °C</li><li>Fabricado en Polonia</li></ul>"
+    },
+    "hano-dog-cat-bed-with-removable-cover-brown-xxxl": {
+      "title": "Cama Hano para perro y gato con funda extraíble — Marrón, XXXL",
+      "description": "<p>La cama Hano en marrón, talla XXXL, ofrece un generoso espacio de descanso de 132 × 106 × 32 cm. Un grueso cojín y los laterales envolventes la convierten en un lugar cómodo para que perros y gatos se tumben, se acurruquen o cambien de postura.</p><p>La funda extraíble tiene cremallera para quitarla y lavarla a máquina fácilmente. Para las manchas del día a día, un paño húmedo basta para una limpieza rápida. El resistente tejido EKOLEN ofrece propiedades repelentes al agua para usarla en interiores o en un balcón o terraza.</p><p>La espuma de poliuretano reciclada aporta un acolchado de soporte, mientras que la base de fibra de polipropileno añade cierta resistencia al agua. Los materiales utilizados cuentan con certificación OEKO-TEX.</p><ul><li>Color: Marrón</li><li>Talla: XXXL</li><li>Dimensiones: 132 × 106 × 32 cm (largo × ancho × alto)</li><li>Grosor del cojín: 14 cm</li><li>Laterales elevados y funda extraíble con cremallera</li><li>Funda: resistente tejido EKOLEN</li><li>Relleno: espuma de poliuretano reciclada</li><li>Base: fibra de polipropileno</li><li>Tejido repelente al agua</li><li>Cuidados: funda lavable a máquina; limpiar con un paño para el cuidado diario</li><li>Apta para perros y gatos</li></ul>"
+    },
+    "pressure-free-harness-travel": {
+      "title": "Arnés sin presión para paseo",
+      "description": "<p>Fabricado con resistente cinta de polipropileno y malla espaciadora transpirable, garantiza una distribución uniforme de la presión para proteger la columna de tu perro. Gracias a las correas ajustables alrededor de la cabeza y el cuello, el arnés se adapta perfectamente al cuerpo de tu mascota. Los elementos reflectantes mejoran la visibilidad en los paseos nocturnos, mientras que las anillas niqueladas aportan durabilidad.<br><br>S - Ancho 15 mm; Ajuste 29-39 cm</p><p>M - Ancho 15 mm; Ajuste 34-48 cm</p><p>L - Ancho 20 mm; Ajuste 42-56 cm</p><p>XL - Ancho 25 mm; Ajuste 60-85 cm</p><p>XXL - Ancho 25 mm; Ajuste 70-105 cm</p>"
+    }
+  }
+}

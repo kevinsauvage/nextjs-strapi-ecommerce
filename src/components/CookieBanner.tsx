@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -26,6 +27,7 @@ import { Settings } from 'lucide-react';
 const EXPIRY_COOKIE_TIME = config.constants.cookieExpiryDays;
 
 const CookieBanner = () => {
+  const t = useTranslations('cookies');
   const [show, setShow] = useState<boolean | undefined>(false);
 
   const setShowBannerCookies = useCallback((payload: boolean) => {
@@ -133,13 +135,12 @@ const CookieBanner = () => {
           {/* Content */}
           <div className="flex-1 space-y-2">
             <h3 id="cookie-banner-title" className="text-heading-4">
-              We use cookies
+              {t('bannerTitle')}
             </h3>
             <p id="cookie-banner-description" className="text-body-sm text-secondary">
-              We use cookies to enhance your browsing experience and analyze site traffic. By
-              clicking &quot;Accept All&quot;, you consent to our use of cookies.{' '}
+              {t('bannerDescription')}{' '}
               <Link href={config.routes.privacy} className="link">
-                Learn more
+                {t('learnMore')}
               </Link>
             </p>
           </div>
@@ -155,7 +156,7 @@ const CookieBanner = () => {
                 onClick={rejectAllCookie}
                 className="flex-1 sm:flex-initial"
               >
-                Reject All
+                {t('rejectAll')}
               </Button>
               <Button
                 type="button"
@@ -163,7 +164,7 @@ const CookieBanner = () => {
                 onClick={acceptAllCookie}
                 className="flex-1 sm:flex-initial"
               >
-                Accept All
+                {t('acceptAll')}
               </Button>
             </div>
 
@@ -177,15 +178,14 @@ const CookieBanner = () => {
                   className="text-body-sm text-secondary hover:text-primary"
                 >
                   <Settings className="mr-2 h-4 w-4" />
-                  Settings
+                  {t('settingsTrigger')}
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-[500px]">
                 <DialogHeader>
-                  <DialogTitle className="text-heading-3">Cookie Settings</DialogTitle>
+                  <DialogTitle className="text-heading-3">{t('settingsTitle')}</DialogTitle>
                   <DialogDescription className="text-body-sm text-secondary">
-                    Choose which cookies you want to allow. You can change these settings at any
-                    time.
+                    {t('settingsDescription')}
                   </DialogDescription>
                 </DialogHeader>
 
@@ -196,10 +196,10 @@ const CookieBanner = () => {
                       <div className="flex items-start gap-3">
                         <div className="flex-1">
                           <h4 className="text-body font-semibold mb-1">
-                            Strictly Necessary Cookies
+                            {t('strictlyNecessaryTitle')}
                           </h4>
                           <p className="text-body-sm text-secondary">
-                            Essential for the website to function. Cannot be disabled.
+                            {t('strictlyNecessaryDescription')}
                           </p>
                         </div>
                       </div>
@@ -208,9 +208,20 @@ const CookieBanner = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-3">
                         <div className="flex-1">
-                          <h4 className="text-body font-semibold mb-1">Analytics Cookies</h4>
+                          <h4 className="text-body font-semibold mb-1">{t('analyticsTitle')}</h4>
+                          <p className="text-body-sm text-secondary">{t('analyticsDescription')}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <div className="flex items-start gap-3">
+                        <div className="flex-1">
+                          <h4 className="text-body font-semibold mb-1">
+                            {t('personalizationTitle')}
+                          </h4>
                           <p className="text-body-sm text-secondary">
-                            Help us understand how visitors interact with our website.
+                            {t('personalizationDescription')}
                           </p>
                         </div>
                       </div>
@@ -219,21 +230,9 @@ const CookieBanner = () => {
                     <div className="space-y-2">
                       <div className="flex items-start gap-3">
                         <div className="flex-1">
-                          <h4 className="text-body font-semibold mb-1">Personalization Cookies</h4>
+                          <h4 className="text-body font-semibold mb-1">{t('advertisingTitle')}</h4>
                           <p className="text-body-sm text-secondary">
-                            Remember your preferences and provide personalized content.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div className="flex items-start gap-3">
-                        <div className="flex-1">
-                          <h4 className="text-body font-semibold mb-1">Advertising Cookies</h4>
-                          <p className="text-body-sm text-secondary">
-                            Used to deliver relevant advertisements and measure campaign
-                            effectiveness.
+                            {t('advertisingDescription')}
                           </p>
                         </div>
                       </div>
@@ -254,15 +253,15 @@ const CookieBanner = () => {
                           htmlFor="functionality_storage"
                           className="text-body-sm cursor-not-allowed opacity-60"
                         >
-                          Strictly Necessary Cookies
-                          <span className="text-caption-sm text-muted ml-1">(Required)</span>
+                          {t('strictlyNecessaryTitle')}
+                          <span className="text-caption-sm text-muted ml-1">{t('required')}</span>
                         </Label>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <Checkbox id="analytics_storage" name="analytics_storage" defaultChecked />
                         <Label htmlFor="analytics_storage" className="text-body-sm cursor-pointer">
-                          Analytics Cookies
+                          {t('analyticsTitle')}
                         </Label>
                       </div>
 
@@ -276,21 +275,21 @@ const CookieBanner = () => {
                           htmlFor="personalization_storage"
                           className="text-body-sm cursor-pointer"
                         >
-                          Personalization Cookies
+                          {t('personalizationTitle')}
                         </Label>
                       </div>
 
                       <div className="flex items-center gap-3">
                         <Checkbox id="ad_storage" name="ad_storage" defaultChecked />
                         <Label htmlFor="ad_storage" className="text-body-sm cursor-pointer">
-                          Advertising Cookies
+                          {t('advertisingTitle')}
                         </Label>
                       </div>
                     </div>
 
                     <div className="flex gap-2 pt-2">
                       <Button type="submit" className="flex-1">
-                        Save Preferences
+                        {t('savePreferences')}
                       </Button>
                     </div>
                   </form>

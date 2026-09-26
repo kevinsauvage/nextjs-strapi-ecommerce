@@ -74,4 +74,25 @@ describe('generateMetadata', () => {
     expect(metadata.title).toEqual({ absolute: `Home | ${siteMetadata.companyName}` });
     expect(metadata.robots).toMatchObject({ follow: false, index: false });
   });
+
+  it('emits hreflang alternates for every locale', () => {
+    vi.stubEnv('NEXT_PUBLIC_BASE_URL', BASE_URL);
+
+    const metadata = generateMetadata({
+      description: 'Search the store',
+      locale: 'es',
+      title: 'Search',
+      url: '/search',
+    });
+
+    expect(metadata.alternates).toEqual({
+      canonical: `${BASE_URL}/es/search`,
+      languages: {
+        en: `${BASE_URL}/search`,
+        es: `${BASE_URL}/es/search`,
+        fr: `${BASE_URL}/fr/search`,
+        'x-default': `${BASE_URL}/search`,
+      },
+    });
+  });
 });

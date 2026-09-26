@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
 
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
@@ -38,6 +39,7 @@ type QuickBuyProps = {
 };
 
 const QuickBuy = ({ product, triggerLabel, triggerClassName }: QuickBuyProps) => {
+  const t = useTranslations('product');
   const [isOpen, setIsOpen] = useState(false);
   // A product grid can hold dozens of cards; mounting a Radix dialog for each
   // one is the bulk of the per-card client cost. Mount the sheet only after the
@@ -62,7 +64,7 @@ const QuickBuy = ({ product, triggerLabel, triggerClassName }: QuickBuyProps) =>
             triggerClassName,
           )}
           type="button"
-          aria-label={triggerLabel ? `Quick add ${product.title}` : 'Quick view'}
+          aria-label={triggerLabel ? t('quickAddAria', { title: product.title }) : t('quickView')}
           onFocus={activate}
           onPointerEnter={activate}
           onClick={(event) => {
@@ -83,7 +85,7 @@ const QuickBuy = ({ product, triggerLabel, triggerClassName }: QuickBuyProps) =>
       {isReady && (
         <SheetContent side="right" className="w-full sm:max-w-md p-0 flex flex-col h-full gap-0">
           <SheetHeader className="p-4 border-b">
-            <SheetTitle>Quick view</SheetTitle>
+            <SheetTitle>{t('quickView')}</SheetTitle>
           </SheetHeader>
           {isOpen && <QuickBuyContent product={product} onClose={handleClose} />}
         </SheetContent>

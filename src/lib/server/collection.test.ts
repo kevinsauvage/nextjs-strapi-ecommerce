@@ -42,7 +42,7 @@ describe('fetchCollectionPage', () => {
   it('fetches one page with the resolved sort key', async () => {
     collection.mockResolvedValue({ collection: { handle: 'all' } });
 
-    await expect(fetchCollectionPage('all', { sort_key: 'price' })).resolves.toEqual({
+    await expect(fetchCollectionPage('en', 'all', { sort_key: 'price' })).resolves.toEqual({
       handle: 'all',
     });
     expect(collection).toHaveBeenCalledWith(
@@ -53,7 +53,7 @@ describe('fetchCollectionPage', () => {
   it('returns null when the collection is missing', async () => {
     collection.mockResolvedValue({ collection: null });
 
-    await expect(fetchCollectionPage('gone')).resolves.toBeNull();
+    await expect(fetchCollectionPage('en', 'gone')).resolves.toBeNull();
   });
 });
 

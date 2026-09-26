@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect } from 'react';
-import Link from 'next/link';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 import EmptyState from '@/components/EmptyState';
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { reportError } from '@/lib/logger';
 

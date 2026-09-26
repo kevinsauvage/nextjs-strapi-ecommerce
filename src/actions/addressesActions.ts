@@ -1,8 +1,7 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import config from '@/config';
+import { getCurrentLocale, redirectToPath } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { fingerprintForRateLimit, getClientIp, rateLimitKey } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
@@ -69,7 +68,7 @@ export async function createAddressAction(input: AddressInput): Promise<FormStat
   const errorState = serviceErrorsToFormState(serviceResult);
   if (errorState) return errorState;
 
-  redirect(config.routes.addresses);
+  redirectToPath(config.routes.addresses, await getCurrentLocale());
 }
 
 export async function deleteAddressAction(addressId: string): Promise<FormState> {
@@ -95,7 +94,7 @@ export async function deleteAddressAction(addressId: string): Promise<FormState>
   const errorState = serviceErrorsToFormState(serviceResult);
   if (errorState) return errorState;
 
-  redirect(config.routes.addresses);
+  redirectToPath(config.routes.addresses, await getCurrentLocale());
 }
 
 export async function setDefaultAddressAction(addressId: string): Promise<FormState> {
@@ -118,7 +117,7 @@ export async function setDefaultAddressAction(addressId: string): Promise<FormSt
   const errorState = serviceErrorsToFormState(serviceResult);
   if (errorState) return errorState;
 
-  redirect(config.routes.addresses);
+  redirectToPath(config.routes.addresses, await getCurrentLocale());
 }
 
 export async function updateAddressAction(input: AddressInput): Promise<FormState> {
@@ -141,5 +140,5 @@ export async function updateAddressAction(input: AddressInput): Promise<FormStat
   const errorState = serviceErrorsToFormState(serviceResult);
   if (errorState) return errorState;
 
-  redirect(config.routes.addresses);
+  redirectToPath(config.routes.addresses, await getCurrentLocale());
 }

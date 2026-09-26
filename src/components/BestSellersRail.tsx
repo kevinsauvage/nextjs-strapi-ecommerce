@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { getBestSellersAction } from '@/actions/productsActions';
-import HomeSection from '@/app/_components/HomeSection';
+import HomeSection from '@/app/[locale]/_components/HomeSection';
 import { reportError } from '@/lib/logger';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 
@@ -15,6 +16,7 @@ import ProductRail from './ProductRail';
  * Renders nothing — heading included — until there is something to show.
  */
 const BestSellersRail = () => {
+  const t = useTranslations('shared');
   const [products, setProducts] = useState<ProductFieldsFragment[]>([]);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const BestSellersRail = () => {
   return (
     <section className="border-t border-border/60">
       <div className="container mx-auto px-4 md:px-6">
-        <HomeSection eyebrow="Popular" title="Best sellers">
+        <HomeSection eyebrow={t('popular')} title={t('bestSellers')}>
           <ProductRail products={products} />
         </HomeSection>
       </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import SpinnerLoader from '@/components/SpinnerLoader';
 import { cn } from '@/utils/cn';
@@ -32,6 +33,7 @@ const QuantityStepper = ({
   showAvailable = false,
   className,
 }: QuantityStepperProps) => {
+  const t = useTranslations('shared');
   const [pending, setPending] = useState(false);
   const cap = getQuantityCap(quantityAvailable);
 
@@ -64,7 +66,7 @@ const QuantityStepper = ({
           className="h-10 w-10 rounded-r-none"
           onClick={() => update(quantity - 1)}
           disabled={disabled || pending || quantity <= 1}
-          aria-label="Decrease quantity"
+          aria-label={t('decreaseQuantity')}
         >
           <Minus className="h-4 w-4" />
         </Button>
@@ -80,7 +82,7 @@ const QuantityStepper = ({
           className="h-10 w-10 rounded-l-none"
           onClick={() => update(quantity + 1)}
           disabled={disabled || pending || (cap !== undefined && quantity >= cap)}
-          aria-label="Increase quantity"
+          aria-label={t('increaseQuantity')}
         >
           <Plus className="h-4 w-4" />
         </Button>

@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { cn } from '@/utils/cn';
@@ -46,6 +47,7 @@ const THUMB_RAIL_MAX_HEIGHT = 'lg:max-h-[clamp(26rem,72vh,44rem)]';
  * - Stage opens a full-screen lightbox; arrow keys cycle images everywhere.
  */
 const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
+  const t = useTranslations('shared');
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const galleryRef = useRef<HTMLDivElement | null>(null);
@@ -96,7 +98,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
         <div
           className={cn('media-frame flex w-full items-center justify-center', IMAGE_ASPECT_RATIO)}
         >
-          <span className="text-body-sm text-secondary">No image available</span>
+          <span className="text-body-sm text-secondary">{t('noImageAvailable')}</span>
         </div>{' '}
       </div>
     );
@@ -110,7 +112,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
           event.stopPropagation();
           goTo(selectedImageIndex - 1);
         }}
-        aria-label="Previous image"
+        aria-label={t('previousImage')}
         className="absolute left-2 top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-background/85 text-foreground shadow-sm opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-background focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 group-hover/stage:opacity-100 sm:left-3"
       >
         <ChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -121,7 +123,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
           event.stopPropagation();
           goTo(selectedImageIndex + 1);
         }}
-        aria-label="Next image"
+        aria-label={t('nextImage')}
         className="absolute right-2 top-1/2 z-20 flex size-11 -translate-y-1/2 items-center justify-center rounded-full border border-border/50 bg-background/85 text-foreground shadow-sm opacity-0 backdrop-blur-md transition-all duration-300 hover:bg-background focus-visible:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 group-hover/stage:opacity-100 sm:right-3"
       >
         <ChevronRight className="h-5 w-5" aria-hidden="true" />
@@ -142,7 +144,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
             THUMB_RAIL_MAX_HEIGHT,
           )}
           role="tablist"
-          aria-label="Product images"
+          aria-label={t('productImages')}
         >
           {images.map((image, index) => {
             const isSelected = index === selectedImageIndex;

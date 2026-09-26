@@ -1,6 +1,6 @@
-import { generate } from '@graphql-codegen/cli';
+import './load-env';
 
-import 'dotenv/config'; // should be at the very top
+import { generate } from '@graphql-codegen/cli';
 
 import configAdmin from '../codegen.admin';
 import configStorefront from '../codegen.storefront';

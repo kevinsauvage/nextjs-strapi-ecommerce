@@ -1,9 +1,10 @@
 'use client';
 
 import type { Route } from 'next';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,6 +15,7 @@ import {
   navigationMenuTriggerStyle,
 } from '@/components/ui/navigation-menu';
 import config from '@/config';
+import { splitLocalePrefix } from '@/i18n/routing';
 import { cn } from '@/utils/cn';
 import { normalizeMenuHref } from '@/utils/url';
 
@@ -160,6 +162,7 @@ const MegaGroup = ({ label, items, pathname }: { label: string } & LinkListProps
  * link. The panel only renders entries owned by the Shopify menu.
  */
 const MegaMenu = ({ item, pathname }: { item: NavItem; pathname: string }) => {
+  const t = useTranslations('common');
   const children = navigableChildren(item);
   const columns = children.filter((child) => hasNavigableChildren(child));
   const shallow = children.filter((child) => !hasNavigableChildren(child));
@@ -175,7 +178,7 @@ const MegaMenu = ({ item, pathname }: { item: NavItem; pathname: string }) => {
         {columns.map((child) => (
           <MegaColumn key={child.id} item={child} pathname={pathname} />
         ))}
-        {shallow.length > 0 && <MegaGroup label="More" items={shallow} pathname={pathname} />}
+        {shallow.length > 0 && <MegaGroup label={t('more')} items={shallow} pathname={pathname} />}
       </div>
       {shopAll && (
         <div className="border-t border-border/60 bg-muted/40 px-6 py-3">
@@ -183,7 +186,7 @@ const MegaMenu = ({ item, pathname }: { item: NavItem; pathname: string }) => {
             href={shopAll}
             className="group/link inline-flex items-center gap-1.5 text-body-sm font-medium text-foreground transition-colors hover:text-[var(--gold-strong)]"
           >
-            Shop all
+            {t('shopAll')}
             <ArrowRight
               size={14}
               aria-hidden="true"
@@ -198,6 +201,7 @@ const MegaMenu = ({ item, pathname }: { item: NavItem; pathname: string }) => {
 
 /** Compact dropdown for an item whose children are all leaf links. */
 const CompactMenu = ({ item, pathname }: { item: NavItem; pathname: string }) => {
+  const t = useTranslations('common');
   const children = navigableChildren(item);
   const shopAll = resolveHref(item.url);
 
@@ -225,7 +229,7 @@ const CompactMenu = ({ item, pathname }: { item: NavItem; pathname: string }) =>
               href={shopAll}
               className="flex-row items-center gap-1.5 rounded-xl px-3.5 py-2.5 text-body-sm font-medium text-[var(--gold-strong)]"
             >
-              Shop all <ArrowRight size={14} aria-hidden="true" />
+              {t('shopAll')} <ArrowRight size={14} aria-hidden="true" />
             </Link>
           </NavigationMenuLink>
         </div>
@@ -299,10 +303,14 @@ const DesktopNav = ({ items, pathname = '' }: { items: NavItems; pathname?: stri
  * Reads the route pathname (which suspends on routes with unknown dynamic
  * params under Cache Components) so callers can wrap it in `<Suspense>` and
  * keep the static shell — see `Header`.
+ *
+ * The locale segment is stripped, so the active-item checks compare a canonical
+ * `/collections/dogs` against menu hrefs that come from Shopify unprefixed.
  */
 const DesktopNavWithPathname = ({ items }: { items: NavItems }) => {
   const pathname = usePathname();
-  return <DesktopNav items={items} pathname={pathname} />;
+
+  return <DesktopNav items={items} pathname={splitLocalePrefix(pathname).pathname} />;
 };
 
 export { DesktopNav as DesktopNavView };

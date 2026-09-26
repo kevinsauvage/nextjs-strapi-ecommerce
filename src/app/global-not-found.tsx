@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 
 import NotFoundIllustration from '@/assets/NotFoundIllustration.png';
 import EmptyState from '@/components/EmptyState';
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import config from '@/config';
 

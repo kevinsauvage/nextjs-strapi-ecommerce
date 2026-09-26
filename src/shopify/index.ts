@@ -1,6 +1,7 @@
 import 'server-only';
 
 import config from '@/config';
+import { ACCEPT_LANGUAGE, type Locale } from '@/i18n/routing';
 import { reportError } from '@/lib/logger';
 
 import type { SdkFunctionWrapper } from './storefront/index';
@@ -34,12 +35,28 @@ if (!SHOPIFY_URL) {
   throw new Error('Missing NEXT_PUBLIC_SHOPIFY_STOREFRONT_URL');
 }
 
-const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default') => {
+/**
+ * Builds a Storefront client. `locale` is an explicit argument — never read
+ * from the request here — because these fetches run inside `"use cache"`
+ * scopes (e.g. the sitemap), where dynamic sources are not allowed. Callers in
+ * the request path use `getStorefront(locale)` (`src/lib/server/storefront.ts`), which
+ * resolves the locale first and passes it in.
+ */
+const createStorefrontClient = (
+  cacheOption: 'default' | 'no-store' = 'default',
+  locale?: Locale,
+) => {
   const options = {
     fetch: async (url: string, parameters: RequestInit) => {
       const fetchOptions: RequestInit = {
         ...parameters,
       };
+
+      if (locale) {
+        const requestHeaders = new Headers(fetchOptions.headers);
+        requestHeaders.set('Accept-Language', ACCEPT_LANGUAGE[locale]);
+        fetchOptions.headers = requestHeaders;
+      }
 
       if (cacheOption === 'no-store') {
         // Explicitly prevent caching for customer-specific data
@@ -67,8 +84,6 @@ const createStorefrontClient = (cacheOption: 'default' | 'no-store' = 'default')
 
   return new GraphQLClient(SHOPIFY_URL, options as GraphQLClientOptions);
 };
-
-const storefrontClient = createStorefrontClient('default');
 
 /** Keys whose values must never reach a log sink (auth payloads). */
 const SENSITIVE_KEY = /password|token|secret|reseturl|authorization/i;
@@ -132,9 +147,31 @@ const privateWrapper: SdkFunctionWrapper = async (
   }
 };
 
-export const storefrontSdk = (mode: StorefrontMode = 'public') => {
+/** One cached client per locale so the request path never rebuilds it. */
+const publicClients = new Map<Locale | 'default', GraphQLClient>();
+
+const getPublicClient = (locale?: Locale) => {
+  const key = locale ?? 'default';
+  const existing = publicClients.get(key);
+
+  if (existing) return existing;
+
+  const client = createStorefrontClient('default', locale);
+  publicClients.set(key, client);
+
+  return client;
+};
+
+/**
+ * Storefront SDK factory.
+ *
+ * Pass `locale` to receive translated catalog content; omit it (the default) in
+ * cached/static contexts such as the sitemap. Prefer `getStorefront(locale)` from
+ * `src/lib/server/storefront.ts` inside the request path.
+ */
+export const storefrontSdk = (mode: StorefrontMode = 'public', locale?: Locale) => {
   const isPrivate = mode === 'private';
-  const client = isPrivate ? createStorefrontClient('no-store') : storefrontClient;
+  const client = isPrivate ? createStorefrontClient('no-store') : getPublicClient(locale);
 
   return getStorefrontSdk(client, isPrivate ? privateWrapper : publicWrapper);
 };

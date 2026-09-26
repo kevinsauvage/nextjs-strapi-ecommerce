@@ -1,0 +1,173 @@
+{
+  "collections": {
+    "all-products": {
+      "description": "Tous les produits de la collection.",
+      "title": "Tous les produits"
+    },
+    "cats": {
+      "description": "Des pièces pensées pour les chats : lits douillets, arbres à chat et gamelles qui s'intègrent à un intérieur moderne.",
+      "title": "Chats"
+    },
+    "dogs": {
+      "description": "Les essentiels du quotidien pour votre chien : lits, sacs de transport, harnais et gamelles choisis pour le confort, la fonction et le design.",
+      "title": "Chiens"
+    },
+    "feeding": {
+      "description": "Gamelles, abreuvoirs et poches à friandises au design net et soigné.",
+      "title": "Alimentation"
+    },
+    "home-comfort": {
+      "description": "Lits, matelas et paniers conçus pour se fondre dans un intérieur moderne.",
+      "title": "Maison & confort"
+    },
+    "made-in-europe": {
+      "description": "Des pièces réalisées par des ateliers et des marques européennes.",
+      "title": "Fabriqué en Europe"
+    },
+    "new-arrivals": {
+      "description": "Les dernières arrivées : les nouvelles pièces au fil de l'eau.",
+      "title": "Nouveautés"
+    },
+    "play-enrichment": {
+      "description": "Jouets et meubles pour chats qui occupent et épatent les esprits curieux.",
+      "title": "Jeu & enrichissement"
+    },
+    "walk-travel": {
+      "description": "Sacs de transport, harnais et laisse pour des promenades sereines et des voyages sans contrainte.",
+      "title": "Balades & voyages"
+    }
+  },
+  "menuItems": {
+    "footer > Account": "Compte",
+    "footer > Account > Log in": "Connexion",
+    "footer > Account > My account": "Mon compte",
+    "footer > Account > My orders": "Mes commandes",
+    "footer > Account > Register": "Créer un compte",
+    "footer > Help": "Aide",
+    "footer > Help > About us": "À propos",
+    "footer > Help > Contact": "Contact",
+    "footer > Help > FAQ": "Questions fréquentes",
+    "footer > Help > Pet care & sizing": "Soins et tailles",
+    "footer > Help > Refund policy": "Politique de remboursement",
+    "footer > Help > Search": "Rechercher",
+    "footer > Help > Shipping": "Livraison",
+    "footer > Legal": "Mentions légales",
+    "footer > Legal > Privacy policy": "Politique de confidentialité",
+    "footer > Legal > Terms of service": "Conditions d'utilisation",
+    "footer > Shop": "Boutique",
+    "footer > Shop > All products": "Tous les produits",
+    "footer > Shop > Cats": "Chats",
+    "footer > Shop > Dogs": "Chiens",
+    "footer > Shop > Home & Comfort": "Maison & confort",
+    "footer > Shop > Made in Europe": "Fabriqué en Europe",
+    "footer > Shop > New arrivals": "Nouveautés",
+    "footer > Shop > Play & Enrichment": "Jeu & enrichissement",
+    "footer > Shop > Walk & Travel": "Balades & voyages",
+    "main-menu > About": "À propos",
+    "main-menu > Shop": "Boutique",
+    "main-menu > Shop > Cats": "Chats",
+    "main-menu > Shop > Dogs": "Chiens",
+    "main-menu > Shop > Feeding": "Alimentation",
+    "main-menu > Shop > Home & Comfort": "Maison & confort",
+    "main-menu > Shop > New arrivals": "Nouveautés",
+    "main-menu > Shop > Play & Enrichment": "Jeu & enrichissement",
+    "main-menu > Shop > Walk & Travel": "Balades & voyages"
+  },
+  "metaobjects": {
+    "faq_item:faq-1-where-do-you-ship": {
+      "answer": "Nous livrons partout en Espagne et en France, et bientôt dans toute l'UE. La livraison est offerte dès 80 € de commande.",
+      "question": "Où livrez-vous ?"
+    },
+    "faq_item:faq-2-how-long-does-delivery-take": {
+      "answer": "La commande est préparée sous 1 à 2 jours ouvrés et livrée en 3 à 6 jours ouvrés, avec suivi.",
+      "question": "Quel est le délai de livraison ?"
+    },
+    "faq_item:faq-3-what-is-the-return-window": {
+      "answer": "Vous disposez de 30 jours après réception, article non utilisé et dans son emballage d'origine. Voir notre <a href=\"/refund\">politique de remboursement</a>.",
+      "question": "Quel est le délai de retour ?"
+    },
+    "faq_item:faq-4-how-do-i-choose-the-right-size": {
+      "answer": "Consultez notre <a href=\"/pages/pet-care\">guide des soins et des tailles</a>. Entre deux tailles, prenez la plus grande pour les lits et les sacs de transport.",
+      "question": "Comment choisir la bonne taille ?"
+    },
+    "faq_item:faq-5-how-can-i-track-my-order": {
+      "answer": "Connectez-vous et ouvrez <a href=\"/account/orders\">Mes commandes</a> : chaque commande dispose d'une page avec ses liens de suivi.",
+      "question": "Comment suivre ma commande ?"
+    },
+    "faq_section:home-faq": {
+      "intro": "Livraison, retours et choix de la taille : les réponses les plus demandées.",
+      "title": "Questions fréquentes"
+    },
+    "hero_section:home-hero": {
+      "eyebrow": "L'essentiel pour nos amis à quatre pattes",
+      "heading": "De meilleurs produits pour de meilleurs moments ensemble.",
+      "primary_label": "Voir tous les produits",
+      "secondary_label": "Nouveautés",
+      "subheading": "Lits, sacs de transport, gamelles et jouets sélectionnés pour chiens et chats, fabriqués en Europe et pensés pour vivre dans un intérieur moderne."
+    },
+    "popular_search_term:cat-trees": {
+      "term": "Arbres à chat"
+    },
+    "popular_search_term:cushions": {
+      "term": "Coussins"
+    },
+    "popular_search_term:dog-beds": {
+      "term": "Lits pour chiens"
+    },
+    "popular_search_term:dog-carriers": {
+      "term": "Sacs de transport"
+    },
+    "popular_search_term:harnesses": {
+      "term": "Harnais"
+    },
+    "popular_search_term:leashes": {
+      "term": "Laisse"
+    },
+    "popular_search_term:treat-bags": {
+      "term": "Poches à friandises"
+    },
+    "promo_bar:promo-bar": {
+      "text": "Livraison offerte dans l'UE dès 80 € · Retours sous 30 jours"
+    },
+    "size_chart:size-chart": {
+      "note": "Mesurez votre animal debout. Entre deux tailles, prenez la plus grande pour qu'il puisse s'étirer confortablement.",
+      "title": "Soins et tailles"
+    }
+  },
+  "pages": {
+    "about-us": {
+      "title": "À propos",
+      "body": "<h2>Notre histoire</h2><p>Nous sommes partis d'une conviction simple : les produits que nos animaux utilisent au quotidien devraient être aussi bien pensés que ceux que nous choisissons pour nous. Cela signifie des lits qui s'intègrent dans un salon moderne, des sacs de transport agréables à utiliser en voyage et des gamelles aussi fonctionnelles que belles.</p><p>Nous sélectionnons une gamme resserrée d'essentiels européens premium pour chiens et chats, choisis pour leur qualité, leur confort, leur fonction et leur design, et conçus pour durer bien au-delà d'une saison.</p><h2>Nos engagements</h2><ul><li><strong>Sélection réfléchie :</strong> une petite gamme de produits réellement utiles, jamais un mur d'articles aléatoires.</li><li><strong>Qualité européenne :</strong> des pièces fabriquées de manière responsable, avec un accent sur l'artisanat européen.</li><li><strong>Prix justes :</strong> des prix honnêtes sur des produits faits pour durer.</li><li><strong>Retours faciles :</strong> 30 jours pour changer d'avis. Voir notre <a href=\"/refund\">politique de remboursement</a>.</li></ul><h2>Parlez-nous</h2><p>Des questions sur une commande, un produit ou une taille ? Rendez-vous sur notre <a href=\"/contact\">page de contact</a> — une vraie personne vous répond, généralement sous un jour ouvré.</p>"
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "body": "<h2>Commandes et livraison</h2><p><strong>Où livrez-vous ?</strong><br>Nous livrons actuellement en Espagne et en France, et bientôt dans le reste de l'UE. La livraison est offerte dès 80 € d'achat.</p><p><strong>Quels sont les délais de livraison ?</strong><br>Les commandes sont préparées sous 1 à 2 jours ouvrés et arrivent généralement en 3 à 6 jours ouvrés, avec suivi.</p><p><strong>Comment suivre ma commande ?</strong><br>Connectez-vous et ouvrez <a href=\"/account/orders\">Mes commandes</a> — chaque commande dispose d'une page de détail avec des liens de suivi en direct.</p><h2>Tailles et entretien</h2><p><strong>Comment choisir la bonne taille ?</strong><br>Consultez notre <a href=\"/pages/pet-care\">guide des soins et des tailles</a>. Si votre animal est entre deux tailles, prenez la plus grande pour les lits et les sacs de transport.</p><p><strong>Comment entretenir mes produits ?</strong><br>La plupart des housses de lit et des coussins sont amovibles et lavables en machine à 30 °C. Vérifiez l'étiquette d'entretien de chaque produit pour les instructions exactes.</p><h2>Retours et échanges</h2><p><strong>Quel est le délai de retour ?</strong><br>30 jours à compter de la livraison, non utilisé et dans son emballage d'origine. Voir notre <a href=\"/refund\">politique de remboursement</a> pour les conditions complètes.</p><p><strong>Un article est arrivé endommagé ?</strong><br>Contactez-nous via la <a href=\"/contact\">page de contact</a> avec votre numéro de commande et une photo — nous réglerons le problème.</p><h2>Compte et paiement</h2><p><strong>Ai-je besoin d'un compte pour commander ?</strong><br>Non, la commande en tant qu'invité fonctionne. Un compte facilite le suivi, le réachat et la gestion des adresses.</p><p><strong>Quels moyens de paiement acceptez-vous ?</strong><br>Toutes les principales cartes et les portefeuilles express affichés au paiement. Les paiements sont traités via une connexion chiffrée.</p>"
+    },
+    "pet-care": {
+      "title": "Soins et tailles",
+      "body": "<h2>Choisir la bonne taille</h2><p>Mesurez votre animal debout, avec un mètre ruban souple. La mesure la plus utile est la distance de la base du cou à la base de la queue, plus le tour de poitrine pour les harnais et les sacs de transport. Si votre animal est entre deux tailles, prenez la plus grande pour les lits et les sacs de transport afin qu'il puisse s'étirer confortablement.</p><h2>Lits et tapis</h2><table><thead><tr><th>Taille</th><th>Poids de l'animal</th><th>Taille typique</th></tr></thead><tbody><tr><td>S</td><td>jusqu'à 7 kg</td><td>~50 × 40 cm</td></tr><tr><td>M</td><td>7–15 kg</td><td>~65 × 50 cm</td></tr><tr><td>L</td><td>15–25 kg</td><td>~80 × 60 cm</td></tr><tr><td>XL</td><td>25–40 kg</td><td>~100 × 70 cm</td></tr><tr><td>XXL / XXXL</td><td>40 kg +</td><td>~120 × 80 cm</td></tr></tbody></table><h2>Sacs de transport et harnais</h2><table><thead><tr><th>Taille</th><th>Poids de l'animal</th><th>Remarques</th></tr></thead><tbody><tr><td>S</td><td>jusqu'à 5 kg</td><td>Petits chats et races toys</td></tr><tr><td>M</td><td>5–9 kg</td><td>La plupart des chats et petits chiens</td></tr><tr><td>L</td><td>9–15 kg</td><td>Chiens de taille moyenne</td></tr><tr><td>XL</td><td>15 kg +</td><td>Grands chiens</td></tr></tbody></table><h2>Entretien</h2><p>Retirez les poils morts avec une brosse douce avant le lavage. La plupart des housses de lit et des coussins sont amovibles et lavables en machine à 30 °C sur un cycle délicat ; séchez à l'air libre si possible. Les pièces en osier et en bois doivent être essuyées avec un chiffon humide. Vérifiez toujours l'étiquette d'entretien de chaque produit.</p><p>Des questions sur un produit précis ? Consultez notre <a href=\"/contact\">page de contact</a> et nous vous aiderons à choisir.</p>"
+    }
+  },
+  "products": {
+    "danoo-cat-tree-with-hammock-and-den-grey": {
+      "title": "Arbre à chat Danoo avec hamac et niche — Gris",
+      "description": "<p>Offrez à votre chat un endroit pour grimper, griffer et se blottir avec l'arbre à chat Danoo en gris. Une plateforme d'observation au sommet, des étagères, un hamac et une niche douillette offrent plusieurs espaces de jeu et de repos dans un encombrement compact de 52 × 32 × 69 cm.</p><p>Le griffoir en sisal naturel offre une surface dédiée aux griffes, tandis que la douce peluche en fausse fourrure crée des zones de repos confortables. La structure en panneaux de particules assure une base stable. L'arbre peut être fixé au mur pour plus de stabilité.</p><ul><li>Couleur : Gris</li><li>Taille : unique</li><li>Dimensions : 52 × 32 × 69 cm (longueur × largeur × hauteur)</li><li>Poids : 5 kg</li><li>Caractéristiques : plateforme supérieure, étagères, hamac, niche et griffoir en sisal</li><li>Matériaux : peluche en fausse fourrure, sisal naturel et panneaux de particules</li><li>Temps de montage : environ 20 minutes</li><li>Fixation murale possible</li><li>Cheville, clé Allen et notice incluses</li></ul>"
+    },
+    "dog-treat-bag-boho": {
+      "title": "Poche à friandises Boho",
+      "description": "<p>Pratique et élégant à la fois : notre poche est la solution parfaite pour tout amoureux des chiens ! Sa construction solide garantit la durabilité, et son ouverture facile permet d'accéder aux friandises à tout moment. L'extérieur est en oxford résistant avec impression, et l'intérieur en tissu polyester ; ces deux matériaux rendent la poche très durable. La poche dispose de trois sangles et d'un mousqueton pour l'emporter facilement en promenade.</p>"
+    },
+    "doudou-teddy-dog-carrier-bag-vanilla-m": {
+      "title": "Sac de transport Doudou en peluche — Vanille, M",
+      "description": "<p>Gardez votre petit chien tout près lors de vos sorties en ville et de vos visites chez le vétérinaire avec le sac de transport Doudou en peluche, coloris vanille. Cette taille M mesure 42 × 25 × 22 cm et offre un endroit doux et rembourré où s'installer en déplacement.</p><p>L'intérieur matelassé amortit les mouvements lorsque vous marchez, et le rembourrage en mousse Classic soutient le poids de votre chien. Le tissu peluche est fabriqué en 100 % polyester, sans PFC, et certifié OEKO-TEX Standard 100. Il a été testé contre l'accrochage selon la norme BS 8479 pour que la surface texturée résiste au contact des griffes.</p><p>Choisissez le sac en comparant ses dimensions à la taille de votre chien lorsqu'il est recroquevillé, plutôt qu'en vous fiant uniquement au poids. Le coloris vanille s'associe facilement à un manteau uni pour les sorties quotidiennes. La housse est lavable en machine à 30 °C.</p><ul><li>Modèle : Doudou (collection Arrm bag)</li><li>Couleur : Vanille</li><li>Taille : M</li><li>Dimensions : 42 × 25 × 22 cm (longueur × largeur × hauteur)</li><li>Matière : tissu peluche, 100 % polyester</li><li>Certification du tissu : OEKO-TEX Standard 100</li><li>Tissu sans PFC, testé contre l'accrochage selon BS 8479</li><li>Intérieur rembourré et matelassé avec garnissage mousse Classic</li><li>Entretien : housse lavable en machine à 30 °C</li><li>Fabriqué en Pologne</li></ul>"
+    },
+    "hano-dog-cat-bed-with-removable-cover-brown-xxxl": {
+      "title": "Lit Hano chien et chat à housse amovible — Marron, XXXL",
+      "description": "<p>Le lit Hano en marron, taille XXXL, offre un généreux espace de repos de 132 × 106 × 32 cm. Un coussin épais et des bords enveloppants en font un endroit confortable où chiens et chats peuvent s'allonger, se blottir ou changer de position.</p><p>La housse amovible dispose d'une fermeture à glissière pour un retrait et un lavage en machine faciles. Pour les taches du quotidien, un chiffon humide suffit pour un nettoyage rapide. Le tissu résistant EKOLEN offre des propriétés déperlantes pour un usage à l'intérieur ou sur un balcon ou une terrasse.</p><p>La mousse de polyuréthane recyclée assure un rembourrage de soutien, tandis qu'une base en fibre de polypropylène ajoute une résistance partielle à l'eau. Les matériaux utilisés sont certifiés OEKO-TEX.</p><ul><li>Couleur : Marron</li><li>Taille : XXXL</li><li>Dimensions : 132 × 106 × 32 cm (longueur × largeur × hauteur)</li><li>Épaisseur du coussin : 14 cm</li><li>Bords relevés et housse amovible zippée</li><li>Housse : tissu résistant EKOLEN</li><li>Garnissage : mousse de polyuréthane recyclée</li><li>Base : fibre de polypropylène</li><li>Tissu déperlant</li><li>Entretien : housse lavable en machine ; nettoyage au chiffon au quotidien</li><li>Convient aux chiens et aux chats</li></ul>"
+    },
+    "pressure-free-harness-travel": {
+      "title": "Harnais sans pression pour les promenades",
+      "description": "<p>Fabriqué en sangle de polypropylène résistante et en mesh espacé respirant, il assure une répartition uniforme de la pression pour protéger la colonne vertébrale de votre chien. Grâce aux sangles réglables autour de la tête et du cou, le harnais s'adapte parfaitement au corps de votre animal. Les éléments réfléchissants améliorent la visibilité lors des promenades du soir, tandis que les anneaux nickelés assurent la durabilité.<br><br>S - Largeur 15 mm ; Réglage 29-39 cm</p><p>M - Largeur 15 mm ; Réglage 34-48 cm</p><p>L - Largeur 20 mm ; Réglage 42-56 cm</p><p>XL - Largeur 25 mm ; Réglage 60-85 cm</p><p>XXL - Largeur 25 mm ; Réglage 70-105 cm</p>"
+    }
+  }
+}

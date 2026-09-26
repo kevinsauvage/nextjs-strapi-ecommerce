@@ -1,6 +1,7 @@
 'use client';
 
 import { useActionState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { subscribeNewsletterAction } from '@/actions/newsletterActions';
 import FormFieldError from '@/components/FormFieldError';
@@ -12,6 +13,7 @@ import { emptyFormState, type FormState } from '@/types/formActions';
 import { ArrowRight, Check } from 'lucide-react';
 
 const FooterNewsletterForm = () => {
+  const t = useTranslations('shared');
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (_previousState: unknown, formData: FormData) => {
@@ -46,7 +48,7 @@ const FooterNewsletterForm = () => {
             name="email"
             type="email"
             required
-            placeholder="Email for drops & offers"
+            placeholder={t('emailPlaceholder')}
             className="bg-background"
             disabled={isPending || done}
             autoComplete="email"

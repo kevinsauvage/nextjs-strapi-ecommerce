@@ -1,7 +1,8 @@
 'use client';
 
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import config from '@/config';
 import { useLocalList } from '@/hooks/useLocalList';
 import {
@@ -17,6 +18,7 @@ import { History, X } from 'lucide-react';
  * through `useLocalList` (hydration-safe) and renders nothing when empty.
  */
 const RecentSearches = () => {
+  const t = useTranslations('shared');
   const terms = useLocalList(RECENT_SEARCHES_KEY, RECENT_SEARCHES_MAX);
 
   if (terms.length === 0) return null;
@@ -25,7 +27,7 @@ const RecentSearches = () => {
     <div className="flex flex-wrap items-center justify-center gap-2">
       <span className="inline-flex items-center gap-1.5 text-caption text-secondary">
         <History size={13} aria-hidden="true" />
-        Recent:
+        {t('recent')}
       </span>
       {terms.map((term) => (
         <Link
@@ -39,11 +41,11 @@ const RecentSearches = () => {
       <button
         type="button"
         onClick={clearRecentSearches}
-        aria-label="Clear recent searches"
+        aria-label={t('clearRecentSearches')}
         className="inline-flex items-center gap-1 rounded-full px-2 py-1 text-caption text-secondary transition-colors hover:text-primary"
       >
         <X size={13} aria-hidden="true" />
-        Clear
+        {t('clear')}
       </button>
     </div>
   );

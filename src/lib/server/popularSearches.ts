@@ -1,7 +1,10 @@
 import 'server-only';
 
+import type { Locale } from '@/i18n/routing';
+import { contentLanguage } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
-import { storefrontSdk } from '@/shopify';
+import { selectLocalizedValue } from '@/lib/server/localized-value';
+import { getStorefront } from '@/lib/server/storefront';
 
 /**
  * Metaobject type a merchant creates to curate the "Popular searches" chips on
@@ -16,16 +19,20 @@ const MAX_POPULAR_SEARCHES = 8;
 
 /** Fallback chips shown when the merchant has not curated any terms. */
 export const DEFAULT_POPULAR_SEARCHES: readonly string[] = [
-  'Linen',
-  'Denim',
-  'Dress',
-  'Knit',
-  'Boots',
+  'Dog beds',
+  'Cat trees',
+  'Dog carriers',
+  'Harnesses',
+  'Cushions',
 ];
 
-const pickTerm = (fields: Array<{ key: string; value?: string | null }>): string | null => {
+const pickTerm = (
+  fields: Array<{ key: string; value?: string | null }>,
+  locale: Locale,
+): string | null => {
   for (const key of TERM_FIELD_KEYS) {
-    const value = fields.find((field) => field.key === key)?.value?.trim();
+    const raw = fields.find((field) => field.key === key)?.value;
+    const value = selectLocalizedValue(raw, locale);
 
     if (value) return value;
   }
@@ -37,15 +44,18 @@ const pickTerm = (fields: Array<{ key: string; value?: string | null }>): string
  * Curated popular search terms from a `popular_search_term` metaobject, falling
  * back to a static list when the type is missing/empty or the read fails.
  */
-export const getPopularSearchTerms = async (): Promise<string[]> => {
+export const getPopularSearchTerms = async (locale: Locale): Promise<string[]> => {
   try {
-    const response = await storefrontSdk().getShopMetaObjects({
+    const response = await (
+      await getStorefront(locale)
+    ).getShopMetaObjects({
       first: MAX_POPULAR_SEARCHES,
+      language: contentLanguage(locale),
       type: POPULAR_SEARCH_METAOBJECT_TYPE,
     });
 
     const terms = (response.metaobjects?.edges ?? [])
-      .map((edge) => pickTerm(edge.node.fields))
+      .map((edge) => pickTerm(edge.node.fields, locale))
       .filter((term): term is string => Boolean(term));
 
     return terms.length > 0

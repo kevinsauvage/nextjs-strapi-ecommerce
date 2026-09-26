@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/utils/cn';
@@ -175,6 +176,7 @@ const CarouselPrevious = ({
   size = 'icon',
   ...properties
 }: React.ComponentProps<typeof Button>) => {
+  const t = useTranslations('shared');
   const { orientation, scrollPrev, canScrollPrev } = useCarousel();
 
   return (
@@ -194,7 +196,7 @@ const CarouselPrevious = ({
       {...properties}
     >
       <ArrowLeft />
-      <span className="sr-only">Previous slide</span>
+      <span className="sr-only">{t('previousSlide')}</span>
     </Button>
   );
 };
@@ -205,6 +207,7 @@ const CarouselNext = ({
   size = 'icon',
   ...properties
 }: React.ComponentProps<typeof Button>) => {
+  const t = useTranslations('shared');
   const { orientation, scrollNext, canScrollNext } = useCarousel();
 
   return (
@@ -224,7 +227,7 @@ const CarouselNext = ({
       {...properties}
     >
       <ArrowRight />
-      <span className="sr-only">Next slide</span>
+      <span className="sr-only">{t('nextSlide')}</span>
     </Button>
   );
 };

@@ -3,6 +3,13 @@ import 'server-only';
 import type { Metadata } from 'next';
 
 import siteMetadata from '@/data/siteMetadata';
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  localeAlternates,
+  localizedPath,
+  OG_LOCALE,
+} from '@/i18n/routing';
 
 /**
  * Get base URL for the application
@@ -36,6 +43,12 @@ type MetadataOptions = {
   type?: 'website' | 'article';
   noindex?: boolean;
   /**
+   * Locale of the page being rendered. Sets the canonical to the URL this
+   * language is actually served at, which must match the rendered URL or search
+   * engines will treat the translated page as a duplicate.
+   */
+  locale?: Locale;
+  /**
    * Emit the title as an absolute string (with the site name appended). Use for
    * pages in the root segment, where the root layout's title template does not
    * apply.
@@ -54,13 +67,17 @@ export function generateMetadata({
   url,
   type = 'website',
   noindex = false,
+  locale,
   absoluteTitle = false,
 }: MetadataOptions): Metadata {
   // Use getBaseUrl() to ensure consistency and proper env var handling
   const siteUrl = getBaseUrl();
   const fullTitle = `${title} | ${siteMetadata.companyName}`;
   const imageUrl = image || siteMetadata.siteLogo;
-  const pageUrl = url ? `${siteUrl}${url}` : siteUrl;
+  // `url` is the canonical, unprefixed path; the current language decides which
+  // URL of the page this render is.
+  const path = url ?? '/';
+  const pageUrl = locale ? `${siteUrl}${localizedPath(locale, path)}` : `${siteUrl}${path}`;
 
   return {
     // Nested routes inherit the root layout's title template, so their titles
@@ -70,12 +87,14 @@ export function generateMetadata({
     metadataBase: new URL(siteUrl),
     alternates: {
       canonical: pageUrl,
+      languages: localeAlternates(path, siteUrl),
     },
     openGraph: {
       title: fullTitle,
       description,
       url: pageUrl,
       siteName: siteMetadata.companyName,
+      locale: locale ? OG_LOCALE[locale] : OG_LOCALE[DEFAULT_LOCALE],
       images: [
         {
           url: imageUrl,
@@ -85,7 +104,6 @@ export function generateMetadata({
         },
       ],
       type,
-      locale: 'en_US',
     },
     twitter: {
       card: 'summary_large_image',

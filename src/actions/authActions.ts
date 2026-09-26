@@ -1,9 +1,8 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import config from '@/config';
 import { userFeedback } from '@/data/userFeedback';
+import { getCurrentLocale, redirectToPath } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { getClientIp } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
@@ -65,7 +64,7 @@ export async function registerAction(input: RegisterInput): Promise<FormState> {
   const errorState = serviceErrorsToFormState(serviceResult, 'Failed to create account');
   if (errorState) return errorState;
 
-  redirect(config.routes.account);
+  redirectToPath(config.routes.account, await getCurrentLocale());
 }
 
 const loginSchema = z.object({
@@ -103,7 +102,9 @@ export async function loginAction(input: LoginInput): Promise<FormState> {
   const errorState = serviceErrorsToFormState(serviceResult, 'Invalid email or password');
   if (errorState) return errorState;
 
-  redirect(safeInternalPath(redirectUrl, config.routes.account));
+  const destination = safeInternalPath(redirectUrl, config.routes.account);
+
+  redirectToPath(destination, await getCurrentLocale());
 }
 
 const recoverSchema = z.object({
@@ -172,7 +173,7 @@ export const resetPasswordAction = async (input: ResetPasswordInput): Promise<Fo
   const errorState = serviceErrorsToFormState(serviceResult, userFeedback.resetPassword.error);
   if (errorState) return errorState;
 
-  redirect(config.routes.account);
+  redirectToPath(config.routes.account, await getCurrentLocale());
 };
 
 const INVALID_ACTIVATION_LINK_MESSAGE = 'Invalid or expired activation link';
@@ -211,7 +212,7 @@ export const activateAccountAction = async (input: ActivateAccountInput): Promis
   const errorState = serviceErrorsToFormState(serviceResult, userFeedback.activateAccount.error);
   if (errorState) return errorState;
 
-  redirect(config.routes.account);
+  redirectToPath(config.routes.account, await getCurrentLocale());
 };
 
 /**
@@ -237,5 +238,5 @@ export async function logoutAction(): Promise<void> {
     }
   }
 
-  redirect(config.routes.login);
+  redirectToPath(config.routes.login, await getCurrentLocale());
 }

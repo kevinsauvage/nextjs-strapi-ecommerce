@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import { catchError, type ErrorInfo } from 'next/error';
+import { useTranslations } from 'next-intl';
 
 import { reportError } from '@/lib/logger';
 
@@ -14,6 +15,7 @@ const SearchResultsFallback = (
   _properties: { children?: React.ReactNode },
   errorInfo: ErrorInfo,
 ) => {
+  const t = useTranslations('shared');
   useEffect(() => {
     reportError('search-results-boundary', errorInfo.error);
   }, [errorInfo]);
@@ -23,7 +25,7 @@ const SearchResultsFallback = (
       role="status"
       className="absolute border z-50 w-full mt-2 shadow-lg text-start overflow-hidden bg-background rounded-lg p-4"
     >
-      <p className="text-body-sm text-secondary">Suggestions are unavailable right now.</p>
+      <p className="text-body-sm text-secondary">{t('suggestionsUnavailable')}</p>
       <button
         type="button"
         onClick={() => errorInfo.retry()}

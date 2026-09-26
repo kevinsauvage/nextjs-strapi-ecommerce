@@ -1,7 +1,7 @@
-'use client';
-import type { Route } from 'next';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from '@/components/LocalizedLink';
+import config from '@/config';
+import { DEFAULT_LOCALE } from '@/i18n/routing';
+import { getTranslations } from '@/i18n/server';
 
 import { ChevronRight } from 'lucide-react';
 
@@ -18,7 +18,7 @@ const safeDecode = (value: string): string => {
   }
 };
 
-const Crumbs = ({ title, href, last }: { title: string; href: Route; last: boolean }) => {
+const Crumbs = ({ title, href, last }: { title: string; href: string; last: boolean }) => {
   if (last) {
     const t = safeDecode(title)
       .replace('gid://shopify/Order/', '')
@@ -47,60 +47,58 @@ const Crumbs = ({ title, href, last }: { title: string; href: Route; last: boole
   );
 };
 
-const Breadcrumbs = ({ lastElement }: { lastElement?: string }) => {
-  const pathname = usePathname();
+/** Segments that are structure, not a step the visitor can click back to. */
+const FILTERED = new Set(['pages', 'reset', 'collections', 'products']);
 
-  const filterCrumb = new Set(['pages', 'reset', 'collections', 'products']);
+/**
+ * Trail of links derived from the current page's canonical path.
+ *
+ * `path` is passed in rather than read with `usePathname()`: that hook prevents a
+ * route from being prerendered, and every caller already knows its own path.
+ * The locale segment is not a step in the journey — `/es/collections/dogs` is
+ * Home › collections › dogs — and `LocalizedLink` re-applies the locale to each
+ * generated href.
+ */
+const Breadcrumbs = ({ lastElement, path }: { lastElement?: string; path: string }) => {
+  const shared = getTranslations(DEFAULT_LOCALE, 'shared');
+  const segments = path.split('/').filter(Boolean);
 
-  function generateBreadcrumbs() {
-    const asPathNestedRoutes = pathname.split('/').filter((v) => v.length > 0);
+  const crumbs = segments
+    .map((segment, index) => ({
+      href: `/${segments.slice(0, index + 1).join('/')}`,
+      isFiltered: FILTERED.has(segment.split('-').join(' ').toLowerCase()),
+      title: segment.split('-').join(' ').replaceAll('_', ' '),
+    }))
+    .filter((crumb) => !crumb.isFiltered);
 
-    const crumbList = asPathNestedRoutes
-      .map((subpath, index) => {
-        // Built from the live pathname, so it cannot be statically verified;
-        // the single assertion lives here instead of at each `Link`.
-        const href = `/${asPathNestedRoutes.slice(0, index + 1).join('/')}` as Route;
-        const title = subpath.split('-').join(' ').replaceAll('_', ' ');
-        return {
-          href,
-          isNotClickable: filterCrumb.has(title.toLowerCase()),
-          title,
-        };
-      })
-      .filter((crumb) => !filterCrumb.has(crumb.title.toLowerCase()));
+  const breadcrumbs = [{ href: config.routes.home, title: shared('home') }, ...crumbs];
 
-    return [{ href: '/', title: 'Home' } as const, ...crumbList];
-  }
-
-  // Call the function to generate the breadcrumbs list
-  const breadcrumbs = generateBreadcrumbs();
+  if (breadcrumbs.length <= 1) return null;
 
   return (
-    breadcrumbs.length > 1 && (
-      <div>
-        <nav aria-label="Breadcrumb" className="md:block container mx-auto">
-          <ol className="flex items-center space-x-1">
-            {breadcrumbs.map((crumb, index) => (
-              <li
-                key={crumb.href}
-                className="flex items-center space-x-1 overflow-ellipsis overflow-hidden"
-              >
-                {lastElement && index === breadcrumbs.length - 1 ? (
-                  <p
-                    aria-current="page"
-                    className="text-body-sm text-secondary font-medium text-ellipsis whitespace-nowrap overflow-hidden"
-                  >
-                    {lastElement}
-                  </p>
-                ) : (
-                  <Crumbs {...crumb} last={index === breadcrumbs.length - 1} />
-                )}
-              </li>
-            ))}
-          </ol>
-        </nav>
-      </div>
-    )
+    <div>
+      <nav aria-label={shared('breadcrumb')} className="md:block container mx-auto">
+        <ol className="flex items-center space-x-1">
+          {breadcrumbs.map((crumb, index) => (
+            <li
+              key={crumb.href}
+              className="flex items-center space-x-1 overflow-ellipsis overflow-hidden"
+            >
+              {lastElement && index === breadcrumbs.length - 1 ? (
+                <p
+                  aria-current="page"
+                  className="text-body-sm text-secondary font-medium text-ellipsis whitespace-nowrap overflow-hidden"
+                >
+                  {lastElement}
+                </p>
+              ) : (
+                <Crumbs {...crumb} last={index === breadcrumbs.length - 1} />
+              )}
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </div>
   );
 };
 export default Breadcrumbs;

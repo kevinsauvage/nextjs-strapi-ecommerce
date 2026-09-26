@@ -1,7 +1,8 @@
-import Link from 'next/link';
-
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import siteMetadata from '@/data/siteMetadata';
+import type { Locale } from '@/i18n/routing';
+import { getTranslations } from '@/i18n/server';
 import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 import { normalizeMenuHref } from '@/utils/url';
 
@@ -13,6 +14,7 @@ import { Award, Instagram, Linkedin, RotateCcw, ShieldCheck, Truck, Twitter } fr
 type MenuItem = NonNullable<GetMenuByHandleQuery['menu']>['items'][number];
 
 type FooterProps = {
+  locale: Locale;
   menuItems: MenuItem[] | undefined;
 };
 
@@ -26,7 +28,9 @@ const socials = [
 // a stable prerenderable value under Cache Components.
 const CURRENT_YEAR = new Date().getFullYear();
 
-const Footer = ({ menuItems }: FooterProps) => {
+const Footer = async ({ locale, menuItems }: FooterProps) => {
+  const t = getTranslations(locale, 'footer');
+
   return (
     <footer className="mt-auto border-t border-border bg-[var(--sidebar)]">
       <div className="container mx-auto px-4 py-14 md:px-6 md:py-16">
@@ -48,7 +52,7 @@ const Footer = ({ menuItems }: FooterProps) => {
             </div>
           </div>
 
-          <nav className="lg:col-span-7" aria-label="Footer">
+          <nav className="lg:col-span-7" aria-label={t('footerNav')}>
             <ul className="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3">
               {Array.isArray(menuItems) &&
                 menuItems.map((item) => (
@@ -85,25 +89,26 @@ const Footer = ({ menuItems }: FooterProps) => {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-caption text-secondary md:justify-between">
           <span className="inline-flex items-center gap-2">
-            <Truck className="size-4 text-[var(--gold)]" aria-hidden="true" /> Free EU shipping over
-            €80
+            <Truck className="size-4 text-[var(--gold)]" aria-hidden="true" /> {t('freeShipping')}
           </span>
           <span className="inline-flex items-center gap-2">
-            <RotateCcw className="size-4 text-[var(--gold)]" aria-hidden="true" /> 30-day returns
+            <RotateCcw className="size-4 text-[var(--gold)]" aria-hidden="true" />{' '}
+            {t('thirtyDayReturns')}
           </span>
           <span className="inline-flex items-center gap-2">
-            <ShieldCheck className="size-4 text-[var(--gold)]" aria-hidden="true" /> Secure checkout
+            <ShieldCheck className="size-4 text-[var(--gold)]" aria-hidden="true" />{' '}
+            {t('secureCheckout')}
           </span>
           <span className="inline-flex items-center gap-2">
-            <Award className="size-4 text-[var(--gold)]" aria-hidden="true" /> Made in Europe
+            <Award className="size-4 text-[var(--gold)]" aria-hidden="true" /> {t('madeInEurope')}
           </span>
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
           <p className="text-caption text-secondary">
-            Copyright © {CURRENT_YEAR} {siteMetadata.companyName}. All rights reserved.
+            {t('copyright', { year: CURRENT_YEAR, name: siteMetadata.companyName })} {t('rights')}
           </p>
-          <p className="text-caption text-secondary">Crafted with care.</p>
+          <p className="text-caption text-secondary">{t('craftedWithCare')}</p>
         </div>
       </div>
     </footer>

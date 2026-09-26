@@ -21,6 +21,8 @@ type EmptyStateProps = {
   altText: string;
   /** Tips list - only shown for error variant */
   tips?: string[];
+  /** Label above the tips list (localized by the caller) */
+  tipsLabel?: string;
   /** Variant type */
   variant?: 'default' | 'cart' | 'search' | 'wishlist' | 'orders' | 'addresses' | 'error';
 };
@@ -38,6 +40,7 @@ const EmptyState = ({
   subtitle,
   altText,
   tips,
+  tipsLabel = 'Helpful tips:',
   variant = 'default',
 }: EmptyStateProps) => {
   // Tips only shown for error variant
@@ -63,7 +66,7 @@ const EmptyState = ({
 
         {shouldShowTips && (
           <div className="mb-6 max-w-xl mx-auto px-4">
-            <p className="text-label-sm text-secondary mb-3 font-medium">Helpful tips:</p>
+            <p className="text-label-sm text-secondary mb-3 font-medium">{tipsLabel}</p>
             <ul className="space-y-2 text-left">
               {tips.map((tip, index) => (
                 <li

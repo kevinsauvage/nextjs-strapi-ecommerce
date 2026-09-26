@@ -94,6 +94,10 @@ vi.mock('next/navigation', () => ({
   useRouter: () => ({ push: mocks.push }),
 }));
 
+// `useLocalizedPush` reads the rendered locale from context; the hand-rolled
+// React mock above runs outside a render, so provide the default directly.
+vi.mock('@/components/LocaleProvider', () => ({ useRenderedLocale: () => 'en' }));
+
 vi.mock('@/actions/wishlistActions', () => ({
   mergeWishlistAction: mocks.mergeWishlistAction,
   moveWishlistToCartAction: mocks.moveWishlistToCartAction,

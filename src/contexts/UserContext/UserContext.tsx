@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 import {
   mergeWishlistAction,
@@ -20,6 +20,7 @@ import {
 } from '@/actions/wishlistActions';
 import config from '@/config';
 import { useLocalList } from '@/hooks/useLocalList';
+import { useLocalizedPush } from '@/i18n/client';
 import { getCookieFront } from '@/lib/client/cookies';
 import {
   addGuestWishlist,
@@ -77,7 +78,7 @@ const PathnameWatcher = ({ onChange }: { onChange: (pathname: string) => void })
 };
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const router = useRouter();
+  const push = useLocalizedPush();
   const [pathname, setPathname] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [sessionResolved, setSessionResolved] = useState(false);
@@ -225,7 +226,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     async (productIds: string[]): Promise<CartFieldsFragment | null> => {
       if (!isLoggedIn) {
         toast.info('You need to login to move items to your cart');
-        router.push(config.routes.login);
+        push(config.routes.login);
         return null;
       }
 
@@ -252,7 +253,7 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
         setPendingWishlistIds([]);
       }
     },
-    [isLoggedIn, router],
+    [isLoggedIn, push],
   );
 
   const values = useMemo(() => {

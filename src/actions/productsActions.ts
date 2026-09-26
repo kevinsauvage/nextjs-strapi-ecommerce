@@ -1,10 +1,11 @@
 'use server';
 
+import { contentLanguage, getCurrentLocale } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
 import { getClientIp } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
+import { getStorefront } from '@/lib/server/storefront';
 import { WISHLIST_MAX_ITEMS, WishlistService } from '@/services/wishlist.service';
-import { storefrontSdk } from '@/shopify';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 
 const MAX_BEST_SELLERS = 8;
@@ -42,7 +43,13 @@ export async function getBestSellersAction(
   const first = Math.min(Math.max(1, Math.trunc(limit)), MAX_BEST_SELLERS);
 
   try {
-    const response = await storefrontSdk().getProducts({
+    // A server action is per-request, never prerendered, so the locale the proxy
+    // resolved for the visitor's URL is read from the request.
+    const locale = await getCurrentLocale();
+    const response = await (
+      await getStorefront(locale)
+    ).getProducts({
+      language: contentLanguage(locale),
       first,
       identifiers: [],
       sortKey: 'BEST_SELLING',

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
@@ -22,6 +24,7 @@ type ProductCardActionsProps = {
  */
 const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => {
   const { pendingWishlistIds, wishlistIds, handleSetWishlist } = useUserContext();
+  const t = useTranslations('product');
 
   const isWishlisted = wishlistIds.includes(productId);
   // True for the whole server round-trip (the context clears it at completion),
@@ -40,7 +43,7 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
         <Button
           variant="ghost"
           type="button"
-          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          aria-label={isWishlisted ? t('removeFromWishlist') : t('addToWishlist')}
           aria-pressed={isWishlisted}
           disabled={loading}
           onClick={(event) => {
@@ -66,7 +69,7 @@ const ProductCardActions = ({ product, productId }: ProductCardActionsProps) => 
       <div className="absolute inset-x-3 bottom-3">
         <QuickBuy
           product={product}
-          triggerLabel="Quick add"
+          triggerLabel={t('quickAdd')}
           triggerClassName={cn(
             'pointer-events-auto w-full',
             'md:translate-y-2 md:opacity-0 md:group-hover/card:translate-y-0 md:group-hover/card:opacity-100 md:focus-visible:translate-y-0 md:focus-visible:opacity-100',

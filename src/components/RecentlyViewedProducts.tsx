@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 
 import { getProductsByIdsAction } from '@/actions/productsActions';
-import HomeSection from '@/app/_components/HomeSection';
+import HomeSection from '@/app/[locale]/_components/HomeSection';
 import { useLocalList } from '@/hooks/useLocalList';
 import { RECENTLY_VIEWED_KEY, RECENTLY_VIEWED_MAX } from '@/lib/client/recentlyViewed';
 import { reportError } from '@/lib/logger';
@@ -24,6 +25,7 @@ const RecentlyViewedProducts = ({
   excludeId?: string;
   limit?: number;
 }) => {
+  const t = useTranslations('shared');
   const [products, setProducts] = useState<ProductFieldsFragment[]>([]);
   const viewedIds = useLocalList(RECENTLY_VIEWED_KEY, RECENTLY_VIEWED_MAX);
 
@@ -52,7 +54,7 @@ const RecentlyViewedProducts = ({
   return (
     <section className="border-t border-border/60">
       <div className="container mx-auto px-4 md:px-6">
-        <HomeSection eyebrow="Your history" title="Recently viewed">
+        <HomeSection eyebrow={t('yourHistory')} title={t('recentlyViewed')}>
           <ProductRail products={products} />
         </HomeSection>
       </div>

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import useUserContext from '@/contexts/UserContext/useUserContext';
 import { cn } from '@/utils/cn';
 
@@ -32,10 +34,15 @@ const ProductActions = ({
   unavailable = false,
 }: ProductActionsProps) => {
   const { wishlistIds, handleSetWishlist } = useUserContext();
+  const t = useTranslations('product');
   const isWishlisted = wishlistIds.includes(productId);
   const isPurchasable = availableForSale && !unavailable;
 
-  const label = unavailable ? 'Unavailable' : availableForSale ? 'Add to Cart' : 'Sold Out';
+  const label = unavailable
+    ? t('unavailableShort')
+    : availableForSale
+      ? t('addToCart')
+      : t('soldOut');
 
   return (
     <div className={cn('flex w-full', compact ? 'gap-2' : 'gap-3')}>
@@ -57,11 +64,11 @@ const ProductActions = ({
         onClick={() => {
           handleSetWishlist(isWishlisted, productId);
         }}
-        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+        aria-label={isWishlisted ? t('removeFromWishlist') : t('addToWishlist')}
       >
         <Heart className={cn('h-5 w-5', isWishlisted && 'fill-current')} />
         {!compact && (
-          <span className="sr-only md:not-sr-only">{isWishlisted ? 'Saved' : 'Save'}</span>
+          <span className="sr-only md:not-sr-only">{isWishlisted ? t('saved') : t('save')}</span>
         )}
       </Button>
     </div>

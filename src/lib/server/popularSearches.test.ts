@@ -25,9 +25,10 @@ describe('getPopularSearchTerms', () => {
       metaobjects: { edges: [metaobject([{ key: 'term', value: 'Linen' }])] },
     });
 
-    await expect(getPopularSearchTerms()).resolves.toEqual(['Linen']);
+    await expect(getPopularSearchTerms('en')).resolves.toEqual(['Linen']);
     expect(getShopMetaObjects).toHaveBeenCalledWith({
       first: 8,
+      language: 'EN',
       type: POPULAR_SEARCH_METAOBJECT_TYPE,
     });
   });
@@ -42,7 +43,7 @@ describe('getPopularSearchTerms', () => {
       },
     });
 
-    await expect(getPopularSearchTerms()).resolves.toEqual(['Denim', 'Knit']);
+    await expect(getPopularSearchTerms('en')).resolves.toEqual(['Denim', 'Knit']);
   });
 
   it('de-duplicates and drops blanks', async () => {
@@ -56,18 +57,18 @@ describe('getPopularSearchTerms', () => {
       },
     });
 
-    await expect(getPopularSearchTerms()).resolves.toEqual(['Linen']);
+    await expect(getPopularSearchTerms('en')).resolves.toEqual(['Linen']);
   });
 
   it('falls back to the defaults when nothing is curated', async () => {
     getShopMetaObjects.mockResolvedValue({ metaobjects: { edges: [] } });
 
-    await expect(getPopularSearchTerms()).resolves.toEqual([...DEFAULT_POPULAR_SEARCHES]);
+    await expect(getPopularSearchTerms('en')).resolves.toEqual([...DEFAULT_POPULAR_SEARCHES]);
   });
 
   it('falls back to the defaults when the read fails', async () => {
     getShopMetaObjects.mockRejectedValue(new Error('network down'));
 
-    await expect(getPopularSearchTerms()).resolves.toEqual([...DEFAULT_POPULAR_SEARCHES]);
+    await expect(getPopularSearchTerms('en')).resolves.toEqual([...DEFAULT_POPULAR_SEARCHES]);
   });
 });

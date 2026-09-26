@@ -14,6 +14,7 @@ vi.mock('./lib/token-renewal', async (importOriginal) => {
   return { ...actual, renewCustomerToken };
 });
 
+import { LOCALE_COOKIE } from './i18n/routing';
 import config from './config';
 import proxy from './proxy';
 
@@ -28,6 +29,21 @@ const request = (path: string, cookieHeader?: string) =>
   new NextRequest(`https://example.com${path}`, {
     headers: cookieHeader ? { cookie: cookieHeader } : {},
   });
+
+const localizedRequest = (path: string, acceptLanguage?: string, cookieHeader?: string) =>
+  new NextRequest(`https://example.com${path}`, {
+    headers: {
+      ...(acceptLanguage ? { 'accept-language': acceptLanguage } : {}),
+      ...(cookieHeader ? { cookie: cookieHeader } : {}),
+    },
+  });
+
+/** Path a rewrite points at, or `null` when the response is not a rewrite. */
+const rewrittenTo = (response: Response): string | null => {
+  const target = response.headers.get('x-middleware-rewrite');
+
+  return target ? new URL(target).pathname : null;
+};
 
 const sessionCookies = (token: string, expiresAt: string, marker = true) =>
   [
@@ -165,5 +181,94 @@ describe('proxy', () => {
     expect(response.headers.get('location')).toBeNull();
     expect(response.cookies.get(MARKER)?.value).toBe('1');
     expect(response.cookies.get(TOKEN)).toBeUndefined();
+  });
+
+  describe('locale routing', () => {
+    it('rewrites an unprefixed path to the English route without changing the URL', async () => {
+      const response = await proxy(request('/collections/dogs'));
+
+      expect(rewrittenTo(response)).toBe('/en/collections/dogs');
+      // A rewrite, not a redirect: the visitor keeps the clean URL.
+      expect(response.headers.get('location')).toBeNull();
+    });
+
+    it('rewrites the home page to the English route', async () => {
+      const response = await proxy(request('/'));
+
+      expect(rewrittenTo(response)).toBe('/en');
+    });
+
+    it('passes a prefixed path through untouched', async () => {
+      const response = await proxy(request('/es/collections/dogs'));
+
+      expect(rewrittenTo(response)).toBeNull();
+      expect(response.headers.get('location')).toBeNull();
+    });
+
+    it('redirects the prefixed English form to the canonical unprefixed URL', async () => {
+      const response = await proxy(request('/en/collections/dogs'));
+
+      expect(response.headers.get('location')).toBe('https://example.com/collections/dogs');
+    });
+
+    it('redirects the bare prefixed English root to the site root', async () => {
+      const response = await proxy(request('/en'));
+
+      expect(response.headers.get('location')).toBe('https://example.com/');
+    });
+
+    it('sends a Spanish-preferring visitor to their own language', async () => {
+      const response = await proxy(localizedRequest('/collections', 'es-ES,es;q=0.9'));
+
+      expect(response.headers.get('location')).toBe('https://example.com/es/collections');
+    });
+
+    it('keeps the query string when redirecting to the visitor language', async () => {
+      const response = await proxy(localizedRequest('/search?searchQuery=collar', 'fr-FR,fr'));
+
+      expect(response.headers.get('location')).toBe(
+        'https://example.com/fr/search?searchQuery=collar',
+      );
+    });
+
+    it('honours an explicit locale cookie over the browser preference', async () => {
+      const response = await proxy(
+        localizedRequest('/collections', 'es-ES,es', `${LOCALE_COOKIE}=fr`),
+      );
+
+      expect(response.headers.get('location')).toBe('https://example.com/fr/collections');
+    });
+
+    it('lets a prefixed URL win over the cookie and the browser preference', async () => {
+      const response = await proxy(
+        localizedRequest('/es/collections', 'fr-FR,fr', `${LOCALE_COOKIE}=fr`),
+      );
+
+      expect(rewrittenTo(response)).toBeNull();
+      expect(response.headers.get('location')).toBeNull();
+    });
+
+    it('does not resolve an unsupported locale segment to a language', async () => {
+      // `/de/...` has no locale prefix, so it is treated as an unprefixed
+      // English path and rewritten to `/en/de/...` — which matches no route, so
+      // the router 404s. The point is that it is never silently served as a
+      // working English or Spanish page.
+      const response = await proxy(request('/de/collections'));
+
+      expect(response.headers.get('location')).toBeNull();
+      expect(rewrittenTo(response)).toBe('/en/de/collections');
+    });
+
+    it('bounces a signed-out visitor to login in their own language', async () => {
+      const response = await proxy(request('/es/account/orders'));
+
+      expect(response.headers.get('location')).toBe('https://example.com/es/login');
+    });
+
+    it('does not let a locale segment defeat the account-route check', async () => {
+      const response = await proxy(request('/es/accounting'));
+
+      expect(response.headers.get('location')).toBeNull();
+    });
   });
 });

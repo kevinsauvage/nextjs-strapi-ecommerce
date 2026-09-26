@@ -1,5 +1,8 @@
 import 'server-only';
 
+import type { Locale } from '@/i18n/routing';
+import { contentLanguage } from '@/i18n/server';
+import { getStorefront } from '@/lib/server/storefront';
 import { storefrontSdk } from '@/shopify';
 import { adjustPaginationVariables, parseFiltersQuery } from '@/shopify/helpers';
 import type { ProductCollectionSortKeys } from '@/shopify/storefront';
@@ -38,8 +41,15 @@ export const resolveCollectionSortKey = (raw?: string): ProductCollectionSortKey
 };
 
 /** Fetch a single page of a collection. */
-export const fetchCollectionPage = async (handle: string, query: CollectionQuery = {}) => {
-  const response = await storefrontSdk().collection({
+export const fetchCollectionPage = async (
+  locale: Locale,
+  handle: string,
+  query: CollectionQuery = {},
+) => {
+  const response = await (
+    await getStorefront(locale)
+  ).collection({
+    language: contentLanguage(locale),
     filters: parseFiltersQuery(query.filters),
     ...adjustPaginationVariables({
       after: query.after,
@@ -73,7 +83,9 @@ export const getCollectionHandlesForStaticParams = async (): Promise<
   while (hasNextPage) {
     // Sequential cursor pagination: each request depends on the previous cursor.
     // eslint-disable-next-line no-await-in-loop
-    const { collections } = await storefrontSdk().getCollectionsForSitemap({
+    const { collections } = await (
+      await storefrontSdk('public')
+    ).getCollectionsForSitemap({
       after,
       first: STATIC_PARAMS_PAGE_SIZE,
     });

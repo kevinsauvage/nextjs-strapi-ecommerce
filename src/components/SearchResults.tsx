@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import Link from '@/components/LocalizedLink';
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 

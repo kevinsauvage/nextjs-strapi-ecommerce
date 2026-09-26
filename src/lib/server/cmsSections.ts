@@ -1,7 +1,10 @@
 import 'server-only';
 
+import type { Locale } from '@/i18n/routing';
+import { contentLanguage } from '@/i18n/server';
 import { reportError } from '@/lib/logger';
-import { storefrontSdk } from '@/shopify';
+import { selectLocalizedValue } from '@/lib/server/localized-value';
+import { getStorefront } from '@/lib/server/storefront';
 
 /**
  * Storefront CMS sections backed by Shopify metaobjects.
@@ -39,11 +42,11 @@ export const MAX_FAQ_ITEMS = 12;
 
 type MetaobjectField = { key: string; value?: string | null };
 
-const toFieldMap = (fields: readonly MetaobjectField[]): Map<string, string> => {
+const toFieldMap = (fields: readonly MetaobjectField[], locale: Locale): Map<string, string> => {
   const map = new Map<string, string>();
 
   for (const field of fields) {
-    const value = field.value?.trim();
+    const value = selectLocalizedValue(field.value, locale);
     if (value) map.set(field.key, value);
   }
 
@@ -69,14 +72,18 @@ const parseBoolean = (value: string | null, fallback: boolean): boolean => {
 const getMetaobjectFields = async (
   handle: string,
   type: string,
+  locale: Locale,
 ): Promise<Map<string, string> | null> => {
   try {
-    const response = await storefrontSdk().getShopMetaobjectByHandle({
+    const response = await (
+      await getStorefront(locale)
+    ).getShopMetaobjectByHandle({
       handle: { handle, type },
+      language: contentLanguage(locale),
     });
 
     const fields = response?.metaobject?.fields;
-    return fields ? toFieldMap(fields) : null;
+    return fields ? toFieldMap(fields, locale) : null;
   } catch (error) {
     reportError(`cmsSections.${type}`, error);
     return null;
@@ -99,8 +106,8 @@ export type HeroSection = {
  * Homepage hero override. Returns `null` when the merchant has not curated a
  * heading, so `HomeHero` keeps its built-in editorial hero.
  */
-export const getHeroSection = async (): Promise<HeroSection | null> => {
-  const fields = await getMetaobjectFields(CMS_HANDLES.hero, CMS_TYPES.hero);
+export const getHeroSection = async (locale: Locale): Promise<HeroSection | null> => {
+  const fields = await getMetaobjectFields(CMS_HANDLES.hero, CMS_TYPES.hero, locale);
   if (!fields) return null;
 
   const heading = pick(fields, 'heading', 'title');
@@ -137,8 +144,8 @@ const parseTone = (value: string | null): PromoBarTone => {
 };
 
 /** Announcement bar override for the header. */
-export const getPromoBar = async (): Promise<PromoBarSection | null> => {
-  const fields = await getMetaobjectFields(CMS_HANDLES.promoBar, CMS_TYPES.promoBar);
+export const getPromoBar = async (locale: Locale): Promise<PromoBarSection | null> => {
+  const fields = await getMetaobjectFields(CMS_HANDLES.promoBar, CMS_TYPES.promoBar, locale);
   if (!fields) return null;
 
   const text = pick(fields, 'text', 'message');
@@ -161,8 +168,8 @@ export type SizeChartSection = {
 };
 
 /** Size chart shown in the product-details accordion. */
-export const getSizeChart = async (): Promise<SizeChartSection | null> => {
-  const fields = await getMetaobjectFields(CMS_HANDLES.sizeChart, CMS_TYPES.sizeChart);
+export const getSizeChart = async (locale: Locale): Promise<SizeChartSection | null> => {
+  const fields = await getMetaobjectFields(CMS_HANDLES.sizeChart, CMS_TYPES.sizeChart, locale);
   if (!fields) return null;
 
   const body = pick(fields, 'body', 'content', 'table');
@@ -188,16 +195,19 @@ export type FaqSection = {
   items: FaqItem[];
 };
 
-const getFaqItems = async (): Promise<FaqItem[]> => {
+const getFaqItems = async (locale: Locale): Promise<FaqItem[]> => {
   try {
-    const response = await storefrontSdk().getShopMetaObjects({
+    const response = await (
+      await getStorefront(locale)
+    ).getShopMetaObjects({
       first: MAX_FAQ_ITEMS,
+      language: contentLanguage(locale),
       type: CMS_TYPES.faqItem,
     });
 
     const parsed = (response.metaobjects?.edges ?? [])
       .map((edge) => {
-        const map = toFieldMap(edge.node.fields);
+        const map = toFieldMap(edge.node.fields, locale);
         const question = pick(map, 'question', 'title', 'label');
         if (!question) return null;
 
@@ -225,10 +235,10 @@ const getFaqItems = async (): Promise<FaqItem[]> => {
  * Homepage FAQ accordion. Returns `null` when neither a heading nor any items
  * are curated, so the section is simply omitted.
  */
-export const getFaqSection = async (): Promise<FaqSection | null> => {
+export const getFaqSection = async (locale: Locale): Promise<FaqSection | null> => {
   const [fields, items] = await Promise.all([
-    getMetaobjectFields(CMS_HANDLES.faq, CMS_TYPES.faqSection),
-    getFaqItems(),
+    getMetaobjectFields(CMS_HANDLES.faq, CMS_TYPES.faqSection, locale),
+    getFaqItems(locale),
   ]);
 
   const title = fields ? pick(fields, 'title', 'heading') : null;

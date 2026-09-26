@@ -1,9 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
 
+import { DEFAULT_LOCALE, isLocale } from '@/i18n/routing';
 import { reportError } from '@/lib/logger';
 import { getClientIp } from '@/lib/server/client-ip';
 import { isRateLimited } from '@/lib/server/rate-limit';
-import { storefrontSdk } from '@/shopify';
+import { getStorefront } from '@/lib/server/storefront';
 
 const MIN_QUERY_LENGTH = 2;
 const MAX_QUERY_LENGTH = 100;
@@ -43,7 +44,12 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await storefrontSdk().predictiveSearch({ query });
+    // The proxy opts `/api` out of its matcher, so the locale arrives as a query
+    // parameter from the client (`Search.tsx`) rather than the request header.
+    // It is part of the URL, so the CDN cache key already varies by language.
+    const requestedLocale = request.nextUrl.searchParams.get('locale');
+    const locale = isLocale(requestedLocale) ? requestedLocale : DEFAULT_LOCALE;
+    const response = await (await getStorefront(locale)).predictiveSearch({ query });
 
     if (!response) {
       return NextResponse.json({ data: { predictiveSearch: null }, success: true });

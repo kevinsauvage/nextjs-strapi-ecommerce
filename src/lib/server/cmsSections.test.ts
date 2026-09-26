@@ -45,7 +45,7 @@ describe('cmsSections', () => {
         ),
       );
 
-      await expect(getHeroSection()).resolves.toEqual({
+      await expect(getHeroSection('en')).resolves.toEqual({
         eyebrow: 'New Season',
         heading: 'Wear the story',
         image: 'https://cdn.shopify.com/hero.jpg',
@@ -59,25 +59,26 @@ describe('cmsSections', () => {
 
       expect(getShopMetaobjectByHandle).toHaveBeenCalledWith({
         handle: { handle: CMS_HANDLES.hero, type: CMS_TYPES.hero },
+        language: 'EN',
       });
     });
 
     it('returns null when no heading is curated', async () => {
       getShopMetaobjectByHandle.mockResolvedValue(metaobject({ key: 'image', value: 'x' }));
 
-      await expect(getHeroSection()).resolves.toBeNull();
+      await expect(getHeroSection('en')).resolves.toBeNull();
     });
 
     it('returns null when the read fails', async () => {
       getShopMetaobjectByHandle.mockRejectedValue(new Error('network down'));
 
-      await expect(getHeroSection()).resolves.toBeNull();
+      await expect(getHeroSection('en')).resolves.toBeNull();
     });
 
     it('returns null when the metaobject does not exist', async () => {
       getShopMetaobjectByHandle.mockResolvedValue({ metaobject: null });
 
-      await expect(getHeroSection()).resolves.toBeNull();
+      await expect(getHeroSection('en')).resolves.toBeNull();
     });
   });
 
@@ -87,7 +88,7 @@ describe('cmsSections', () => {
         metaobject({ key: 'text', value: 'Free shipping over $150' }),
       );
 
-      await expect(getPromoBar()).resolves.toEqual({
+      await expect(getPromoBar('en')).resolves.toEqual({
         active: true,
         linkLabel: null,
         linkUrl: null,
@@ -107,7 +108,7 @@ describe('cmsSections', () => {
         ),
       );
 
-      await expect(getPromoBar()).resolves.toEqual({
+      await expect(getPromoBar('en')).resolves.toEqual({
         active: false,
         linkLabel: 'Shop sale',
         linkUrl: '/collections/sale',
@@ -120,10 +121,10 @@ describe('cmsSections', () => {
       getShopMetaobjectByHandle.mockResolvedValue(
         metaobject({ key: 'text', value: 'Hi' }, { key: 'tone', value: 'neon' }),
       );
-      await expect(getPromoBar()).resolves.toMatchObject({ tone: 'ink' });
+      await expect(getPromoBar('en')).resolves.toMatchObject({ tone: 'ink' });
 
       getShopMetaobjectByHandle.mockResolvedValue(metaobject({ key: 'link_url', value: '/sale' }));
-      await expect(getPromoBar()).resolves.toBeNull();
+      await expect(getPromoBar('en')).resolves.toBeNull();
     });
   });
 
@@ -133,7 +134,7 @@ describe('cmsSections', () => {
         metaobject({ key: 'body', value: '<table><tr><td>S</td></tr></table>' }),
       );
 
-      await expect(getSizeChart()).resolves.toEqual({
+      await expect(getSizeChart('en')).resolves.toEqual({
         body: '<table><tr><td>S</td></tr></table>',
         note: null,
         title: 'Size chart',
@@ -143,7 +144,7 @@ describe('cmsSections', () => {
     it('returns null when the body is empty', async () => {
       getShopMetaobjectByHandle.mockResolvedValue(metaobject({ key: 'title', value: 'Sizes' }));
 
-      await expect(getSizeChart()).resolves.toBeNull();
+      await expect(getSizeChart('en')).resolves.toBeNull();
     });
   });
 
@@ -169,7 +170,7 @@ describe('cmsSections', () => {
         },
       });
 
-      await expect(getFaqSection()).resolves.toEqual({
+      await expect(getFaqSection('en')).resolves.toEqual({
         intro: 'Answers',
         items: [
           { answer: 'A', position: 1, question: 'First?' },
@@ -180,6 +181,7 @@ describe('cmsSections', () => {
 
       expect(getShopMetaObjects).toHaveBeenCalledWith({
         first: MAX_FAQ_ITEMS,
+        language: 'EN',
         type: CMS_TYPES.faqItem,
       });
     });
@@ -199,7 +201,7 @@ describe('cmsSections', () => {
         },
       });
 
-      await expect(getFaqSection()).resolves.toEqual({
+      await expect(getFaqSection('en')).resolves.toEqual({
         intro: null,
         items: [
           { answer: null, position: 0, question: 'One?' },
@@ -213,14 +215,14 @@ describe('cmsSections', () => {
       getShopMetaobjectByHandle.mockResolvedValue({ metaobject: null });
       getShopMetaObjects.mockResolvedValue({ metaobjects: { edges: [] } });
 
-      await expect(getFaqSection()).resolves.toBeNull();
+      await expect(getFaqSection('en')).resolves.toBeNull();
     });
 
     it('still returns the section copy when the item read fails', async () => {
       getShopMetaobjectByHandle.mockResolvedValue(metaobject({ key: 'title', value: 'FAQ' }));
       getShopMetaObjects.mockRejectedValue(new Error('network down'));
 
-      await expect(getFaqSection()).resolves.toEqual({
+      await expect(getFaqSection('en')).resolves.toEqual({
         intro: null,
         items: [],
         title: 'FAQ',

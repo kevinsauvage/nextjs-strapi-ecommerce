@@ -1,4 +1,9 @@
 import type { NextConfig } from 'next';
+import createNextIntlPlugin from 'next-intl/plugin';
+
+// Wires `src/i18n/request.ts` as the message source for `next-intl` on both the
+// server and the client. Must wrap the config object before exporting.
+const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 
 const nextConfig: NextConfig = {
   cacheComponents: true,
@@ -134,4 +139,4 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

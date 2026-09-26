@@ -1,4 +1,5 @@
 import CollectionCard from '@/components/CollectionCard';
+import type { Locale } from '@/i18n/routing';
 import type { CollectionsQuery } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
 
@@ -13,9 +14,11 @@ import { cn } from '@/utils/cn';
  */
 const CollectionGrid = ({
   collections,
+  locale,
   preloadFeatured = false,
 }: {
   collections: CollectionsQuery['collections']['edges'];
+  locale: Locale;
   preloadFeatured?: boolean;
 }) => {
   if (!Array.isArray(collections) || collections.length === 0) {
@@ -31,6 +34,7 @@ const CollectionGrid = ({
         >
           <CollectionCard
             collection={collection.node}
+            locale={locale}
             preload={preloadFeatured && index === 0}
             featured={index === 0}
           />

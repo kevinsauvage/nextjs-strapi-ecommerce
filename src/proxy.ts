@@ -1,6 +1,15 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import {
+  DEFAULT_LOCALE,
+  type Locale,
+  LOCALE_COOKIE,
+  LOCALE_HEADER,
+  localizedPath,
+  resolveLocale,
+  splitLocalePrefix,
+} from './i18n/routing';
 import { isTokenExpired, renewCustomerToken, shouldRenewToken } from './lib/token-renewal';
 import {
   getCookieDeleteOptions,
@@ -10,27 +19,142 @@ import {
 import globalConfig from './config';
 
 /**
- * Runs on every navigation. It only manages session state (token renewal and
- * auth redirects) and never sets cookies on anonymous catalog responses, so
- * statically rendered pages stay cacheable at the CDN.
+ * Runs on every navigation. It normalises the locale segment, and manages
+ * session state (token renewal and auth redirects). It never sets cookies on
+ * anonymous catalog responses, so statically rendered pages stay cacheable at
+ * the CDN.
  *
  * Cookie writes must also happen here (not while rendering server components),
  * which is why stale-token cleanup lives in this file.
  */
+
+/** How the locale prefix of a request maps onto a response. */
+type LocaleRouting = {
+  /** Locale to use for this request. */
+  locale: Locale;
+  /**
+   * Unprefixed path, without the query string (`/collections`, not
+   * `/en/collections?page=2`). Kept separate so a rewrite or redirect only has
+   * to set `pathname` and cannot accidentally encode the query into it.
+   */
+  pathname: string;
+  /** True when the URL already carried a locale segment. */
+  hasPrefix: boolean;
+};
+
+/**
+ * Resolves the locale and the canonical unprefixed path.
+ *
+ * A locale in the path is authoritative — it is what makes each language
+ * addressable and prerenderable. An unprefixed path means English, so it is
+ * rewritten internally to `/en/...` and keeps the URL the visitor sees.
+ */
+const resolveLocaleRouting = (request: NextRequest): LocaleRouting => {
+  const { locale: pathLocale, pathname: unprefixed } = splitLocalePrefix(request.nextUrl.pathname);
+
+  if (pathLocale) return { locale: pathLocale, pathname: unprefixed, hasPrefix: true };
+
+  // No prefix: honour an explicit choice or the visitor's `Accept-Language`, so
+  // a Spanish or French first visit still lands on its own language. English
+  // needs no redirect — it is served from the root.
+  const locale = resolveLocale({
+    acceptLanguage: request.headers.get('accept-language'),
+    cookie: request.cookies.get(LOCALE_COOKIE)?.value,
+  });
+
+  return { locale, pathname: unprefixed, hasPrefix: false };
+};
+
+/**
+ * Decides the response for a request. Extracted from `proxy` to keep that
+ * function focused on session state.
+ */
+const chooseResponse = ({
+  request,
+  hasSession,
+  isAccountRoute,
+  isAuthRoute,
+  isServerAction,
+  locale,
+  pathname,
+  hasPrefix,
+}: {
+  request: NextRequest;
+  hasSession: boolean;
+  isAccountRoute: boolean;
+  isAuthRoute: boolean;
+  isServerAction: boolean;
+  locale: LocaleRouting['locale'];
+  pathname: string;
+  hasPrefix: boolean;
+}) => {
+  // One resolved locale per request, forwarded to the server tree so the Store
+  // front client, the API route handler and the server actions all agree.
+  const headers = new Headers(request.headers);
+  headers.set(LOCALE_HEADER, locale);
+  const forward = { request: { headers } };
+
+  if (isServerAction) return NextResponse.next(forward);
+
+  // `/en/collections` and `/collections` are the same page: keep one canonical
+  // URL by redirecting the prefixed English form to the root.
+  if (hasPrefix && locale === DEFAULT_LOCALE) {
+    const target = request.nextUrl.clone();
+    target.pathname = pathname;
+
+    return NextResponse.redirect(target);
+  }
+
+  // A non-English visitor arriving on an unprefixed URL is sent to their own
+  // language, where the page is a normal, cacheable, indexable URL.
+  if (!hasPrefix && locale !== DEFAULT_LOCALE) {
+    const target = request.nextUrl.clone();
+    target.pathname = localizedPath(locale, pathname);
+
+    return NextResponse.redirect(target);
+  }
+
+  if (isAccountRoute && !hasSession) {
+    const target = request.nextUrl.clone();
+    target.pathname = localizedPath(locale, globalConfig.routes.login);
+
+    return NextResponse.redirect(target);
+  }
+
+  if (isAuthRoute && hasSession) {
+    const target = request.nextUrl.clone();
+    target.pathname = localizedPath(locale, globalConfig.routes.account);
+
+    return NextResponse.redirect(target);
+  }
+
+  // Unprefixed English: rewrite to the `/en/...` route internally so the
+  // `[locale]` layout renders with a route param instead of a request header.
+  if (!hasPrefix) {
+    const target = request.nextUrl.clone();
+    target.pathname = `/${DEFAULT_LOCALE}${pathname}`;
+
+    return NextResponse.rewrite(target, forward);
+  }
+
+  return NextResponse.next(forward);
+};
+
 async function proxy(request: NextRequest) {
-  const { nextUrl, cookies, url } = request;
-  const { pathname } = nextUrl;
+  const { cookies } = request;
+  const { locale, pathname, hasPrefix } = resolveLocaleRouting(request);
 
   const cookieShopify = cookies.get(globalConfig.cookies.shopifyToken);
   const tokenExpiresAt = cookies.get(globalConfig.cookies.shopifyTokenExpire)?.value;
 
   // Exact match: `startsWith('/account')` alone also matches `/accounting`.
+  const accountPath = splitLocalePrefix(pathname).pathname;
   const isAccountRoute =
-    pathname === globalConfig.routes.account ||
-    pathname.startsWith(`${globalConfig.routes.account}/`);
+    accountPath === globalConfig.routes.account ||
+    accountPath.startsWith(`${globalConfig.routes.account}/`);
   const isAuthRoute =
-    pathname.startsWith(globalConfig.routes.login) ||
-    pathname.startsWith(globalConfig.routes.register);
+    accountPath.startsWith(globalConfig.routes.login) ||
+    accountPath.startsWith(globalConfig.routes.register);
 
   // Server Actions are POSTed to the route that declares them and expect an RSC
   // response. Redirecting one — e.g. a session that was cleared between the page
@@ -66,17 +190,16 @@ async function proxy(request: NextRequest) {
     hasToken && validationFailed && (tokenExpired || isAuthRoute || isAccountRoute);
   const hasSession = hasToken && !hasStaleSession;
 
-  let response: NextResponse;
-
-  if (isServerAction) {
-    response = NextResponse.next();
-  } else if (isAccountRoute && !hasSession) {
-    response = NextResponse.redirect(new URL(globalConfig.routes.login, url));
-  } else if (isAuthRoute && hasSession) {
-    response = NextResponse.redirect(new URL(globalConfig.routes.account, url));
-  } else {
-    response = NextResponse.next();
-  }
+  const response = chooseResponse({
+    request,
+    hasSession,
+    isAccountRoute,
+    isAuthRoute,
+    isServerAction,
+    locale,
+    pathname,
+    hasPrefix,
+  });
 
   if (hasStaleSession) {
     const deleteOptions = getCookieDeleteOptions();

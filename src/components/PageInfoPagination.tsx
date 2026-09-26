@@ -1,6 +1,7 @@
 import type { Route } from 'next';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import { Button } from '@/components/ui/button';
 import { getNextPath, getPreviousPath } from '@/shopify/helpers';
 import type { PageInfo } from '@/shopify/storefront';
@@ -19,6 +20,7 @@ const PageInfoPagination = ({
   };
   basePath: string;
 }) => {
+  const t = useTranslations('shared');
   const previousPath = getPreviousPath(pageInfo, searchParameters, basePath);
   const nextPath = getNextPath(pageInfo, searchParameters, basePath);
   return (
@@ -27,19 +29,19 @@ const PageInfoPagination = ({
         <Button asChild variant="secondary" size="default">
           {/* Helpers build `${Route}?${params}`; the Link renders only when
               the page exists, so the single assertion lives here. */}
-          <Link href={previousPath as Route} aria-label="Previous Page">
+          <Link href={previousPath as Route} aria-label={t('previousPage')}>
             Previous
           </Link>
         </Button>
       ) : (
-        <Button variant="secondary" size="default" disabled aria-label="Previous Page">
+        <Button variant="secondary" size="default" disabled aria-label={t('previousPage')}>
           Previous
         </Button>
       )}
 
       {pageInfo.hasNextPage ? (
         <Button asChild variant="secondary" size="default">
-          <Link href={nextPath as Route} aria-label="Next Page">
+          <Link href={nextPath as Route} aria-label={t('nextPage')}>
             Next
           </Link>
         </Button>
@@ -48,7 +50,7 @@ const PageInfoPagination = ({
           variant="secondary"
           size="default"
           disabled
-          aria-label="Next Page"
+          aria-label={t('nextPage')}
           className={cn('cursor-not-allowed')}
         >
           Next

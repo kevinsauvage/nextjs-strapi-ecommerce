@@ -1,5 +1,4 @@
-import Link from 'next/link';
-
+import Link from '@/components/LocalizedLink';
 import siteMetadata from '@/data/siteMetadata';
 import { cn } from '@/utils/cn';
 

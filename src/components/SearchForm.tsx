@@ -1,6 +1,7 @@
 'use client';
 
 import Form from 'next/form';
+import { useTranslations } from 'next-intl';
 
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -20,15 +21,18 @@ const SearchForm = ({
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }) => {
+  const t = useTranslations('shared');
+  const label = t('search');
+
   return (
     <Form action="/search" className="relative w-full max-w-2xl mx-auto">
-      <Label aria-label="Search" className="flex items-center">
+      <Label aria-label={label} className="flex items-center">
         <Input
           className="py-7 pl-8 pr-11"
           type="text"
           name="searchQuery"
-          placeholder="Search"
-          aria-label="Search"
+          placeholder={label}
+          aria-label={label}
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="off"
@@ -39,7 +43,7 @@ const SearchForm = ({
       </Label>
       <button
         type="submit"
-        aria-label="Search"
+        aria-label={label}
         className="group absolute right-3 top-1/2 -translate-y-1/2"
       >
         <Search className="text-secondary group-hover:text-primary transition-colors" />

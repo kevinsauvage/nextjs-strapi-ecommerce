@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { cacheLife, cacheTag } from 'next/cache';
 
 import config, { sitemap as sitemapConfig } from '@/config';
+import { localeAlternates, LOCALES, localizedPath } from '@/i18n/routing';
 import { reportError } from '@/lib/logger';
 import { getBaseUrl } from '@/lib/server/metadata';
 import { storefrontSdk } from '@/shopify';
@@ -62,11 +63,30 @@ const getAllPages = (): Promise<SitemapItem[]> =>
     return pages;
   });
 
-const getStaticEntries = (baseUrl: string, now: Date): MetadataRoute.Sitemap =>
-  sitemapConfig.map((entry) => ({
-    ...entry,
-    lastModified: now,
-    url: entry.url.startsWith('http') ? entry.url : `${baseUrl}${entry.url}`,
+/**
+ * Expands one canonical path into a sitemap entry per language.
+ *
+ * Every page is served in every supported language, so each path expands into
+ * its `localizedPath` variants, each cross-linked with the full `hreflang` set
+ * (including `x-default`). Without this the `/es` and `/fr` trees would only be
+ * reachable through the alternates in each page's metadata.
+ */
+const localizedEntries = (
+  path: string,
+  baseUrl: string,
+  now: Date,
+  options: {
+    changeFrequency?: MetadataRoute.Sitemap[number]['changeFrequency'];
+    priority?: number;
+    lastModified?: Date;
+  } = {},
+): MetadataRoute.Sitemap =>
+  LOCALES.map((locale) => ({
+    alternates: { languages: localeAlternates(path, baseUrl) },
+    changeFrequency: options.changeFrequency,
+    lastModified: options.lastModified ?? now,
+    priority: options.priority,
+    url: `${baseUrl}${localizedPath(locale, path)}`,
   }));
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -92,31 +112,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   ]);
 
-  const collectionEntries: MetadataRoute.Sitemap = collections.map((item) => ({
-    changeFrequency: 'daily',
-    lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
-    priority: 0.8,
-    url: `${baseUrl}${config.routes.collection}/${item.handle}`,
-  }));
+  const staticEntries = sitemapConfig.flatMap((entry) =>
+    entry.url.startsWith('http')
+      ? [{ ...entry, lastModified: now }]
+      : localizedEntries(entry.url, baseUrl, now, {
+          changeFrequency: entry.changeFrequency,
+          priority: entry.priority,
+        }),
+  );
 
-  const productEntries: MetadataRoute.Sitemap = products.map((item) => ({
-    changeFrequency: 'weekly',
-    lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
-    priority: 0.7,
-    url: `${baseUrl}${config.routes.collection}/products/${item.handle}`,
-  }));
+  const collectionEntries = collections.flatMap((item) =>
+    localizedEntries(`${config.routes.collection}/${item.handle}`, baseUrl, now, {
+      changeFrequency: 'daily',
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      priority: 0.8,
+    }),
+  );
 
-  const pageEntries: MetadataRoute.Sitemap = pages.map((item) => ({
-    changeFrequency: 'monthly',
-    lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
-    priority: 0.5,
-    url: `${baseUrl}/pages/${item.handle}`,
-  }));
+  const productEntries = products.flatMap((item) =>
+    localizedEntries(`${config.routes.collection}/products/${item.handle}`, baseUrl, now, {
+      changeFrequency: 'weekly',
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      priority: 0.7,
+    }),
+  );
 
-  return [
-    ...getStaticEntries(baseUrl, now),
-    ...collectionEntries,
-    ...productEntries,
-    ...pageEntries,
-  ];
+  const pageEntries = pages.flatMap((item) =>
+    localizedEntries(`${config.routes.page}/${item.handle}`, baseUrl, now, {
+      changeFrequency: 'monthly',
+      lastModified: item.updatedAt ? new Date(item.updatedAt) : now,
+      priority: 0.5,
+    }),
+  );
+
+  return [...staticEntries, ...collectionEntries, ...productEntries, ...pageEntries];
 }

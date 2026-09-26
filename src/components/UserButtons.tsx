@@ -1,24 +1,28 @@
 'use client';
-import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
+import Link from '@/components/LocalizedLink';
 import config from '@/config/index';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import useUserContext from '@/contexts/UserContext/useUserContext';
 
 import { Badge } from './ui/badge';
+import LocaleSwitcher from './LocaleSwitcher';
 import ThemeToggle from './ThemeToggle';
 
 import { Heart, Search, ShoppingBag, User } from 'lucide-react';
 
 const UserButtons = ({ className }: { className?: string }) => {
+  const t = useTranslations('shared');
   const { cart } = useCartContext();
   const { wishlistIds } = useUserContext();
 
   return (
     <div className={`hidden md:flex md:items-center md:order-3 gap-2 lg:gap-4 ${className}`}>
       <ThemeToggle />
+      <LocaleSwitcher />
       <Link
-        aria-label="Search"
+        aria-label={t('search')}
         className="group cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.search}
       >
@@ -30,7 +34,7 @@ const UserButtons = ({ className }: { className?: string }) => {
       </Link>
 
       <Link
-        aria-label={'User account'}
+        aria-label={t('accountAria')}
         className="group cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.account}
       >
@@ -44,7 +48,7 @@ const UserButtons = ({ className }: { className?: string }) => {
       <Link
         className="group relative cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.wishlist}
-        aria-label="Wishlist"
+        aria-label={t('wishlistAria')}
       >
         <Heart
           size={22}
@@ -59,7 +63,7 @@ const UserButtons = ({ className }: { className?: string }) => {
       <Link
         className="group relative cursor-pointer flex items-center justify-center min-h-11 min-w-11"
         href={config.routes.cart}
-        aria-label="Cart"
+        aria-label={t('cartAria')}
       >
         <ShoppingBag
           size={22}
