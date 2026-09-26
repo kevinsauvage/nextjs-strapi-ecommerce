@@ -94,6 +94,7 @@ type ProductCardDefaultProps = {
  * the parent (`ListDisplay`, `CarouselItem`), so no list element is nested.
  */
 const ProductCardDefault = ({ product, preload = false, className }: ProductCardDefaultProps) => {
+  const t = useTranslations('product');
   const { title, images, handle, variants, id, priceRange, vendor, availableForSale } = product;
   const firstVariant = variants?.edges?.[0]?.node;
   const price = firstVariant?.price ?? priceRange?.minVariantPrice ?? null;
@@ -117,7 +118,7 @@ const ProductCardDefault = ({ product, preload = false, className }: ProductCard
       <div className="media-frame relative shadow-none transition-shadow duration-300 group-hover/card:shadow-lg group-hover/card:shadow-black/5">
         <Link
           href={href}
-          aria-label={`View ${title}`}
+          aria-label={t('viewProductAria', { title })}
           className="block rounded-[var(--radius)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
         >
           <div className="relative aspect-[3/4] w-full overflow-hidden bg-muted">

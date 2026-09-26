@@ -154,7 +154,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
                 type="button"
                 role="tab"
                 aria-selected={isSelected}
-                aria-label={`Product image ${index + 1} of ${imageCount}`}
+                aria-label={t('productImageAria', { index: index + 1, count: imageCount })}
                 onClick={() => setSelectedImageIndex(index)}
                 className={cn(
                   IMAGE_ASPECT_RATIO,
@@ -167,7 +167,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
               >
                 <Image
                   src={image.small || image.medium || image.src}
-                  alt={image.altText || `Product thumbnail ${index + 1}`}
+                  alt={image.altText || t('productThumbnailAria', { index: index + 1 })}
                   fill
                   quality={70}
                   sizes="76px"
@@ -184,7 +184,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
         <button
           type="button"
           onClick={() => setIsLightboxOpen(true)}
-          aria-label={`Open image ${selectedImageIndex + 1} in full screen`}
+          aria-label={t('openImageFullScreen', { index: selectedImageIndex + 1 })}
           className={cn(
             'media-frame relative block cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background',
             STAGE_SIZE,
@@ -207,7 +207,8 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
             key={`stage-${selectedImageIndex}`}
             src={selectedImage?.large || selectedImage?.src || ''}
             alt={
-              selectedImage?.altText ?? `Product image ${selectedImageIndex + 1} of ${imageCount}`
+              selectedImage?.altText ??
+              t('productImageAria', { index: selectedImageIndex + 1, count: imageCount })
             }
             fill
             preload={selectedImageIndex === 0}
@@ -233,7 +234,10 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
       {/* Lightbox */}
       <Dialog open={isLightboxOpen} onOpenChange={setIsLightboxOpen}>
         <DialogContent className="max-w-4xl gap-0 border-border/60 bg-background p-0">
-          <DialogTitle className="sr-only">{`${selectedImage?.altText || 'Product image'} (${selectedImageIndex + 1} of ${imageCount})`}</DialogTitle>
+          <DialogTitle className="sr-only">
+            {selectedImage?.altText ||
+              t('productImageAria', { index: selectedImageIndex + 1, count: imageCount })}
+          </DialogTitle>
           {/* Height-capped so tall portrait images never overflow the viewport. */}
           <div className={cn('relative mx-auto max-h-[85vh] w-full', IMAGE_ASPECT_RATIO)}>
             {selectedImage?.blurDataURL ? (
@@ -248,7 +252,7 @@ const PhotoGallery = ({ images, className }: PhotoGalleryProps) => {
             ) : null}
             <Image
               src={selectedImage?.large || selectedImage?.src || ''}
-              alt={selectedImage?.altText ?? 'Product image'}
+              alt={selectedImage?.altText ?? t('productImageAlt')}
               fill
               quality={90}
               sizes="(max-width: 768px) 100vw, 80vw"

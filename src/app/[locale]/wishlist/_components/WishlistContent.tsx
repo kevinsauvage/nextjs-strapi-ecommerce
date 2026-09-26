@@ -27,6 +27,7 @@ import { toast } from 'sonner';
 
 const WishlistContent = () => {
   const t = useTranslations('wishlist');
+  const tError = useTranslations('error');
   const { wishlistIds, wishlistReady, handleMoveToCart, pendingWishlistIds } = useUserContext();
   const { setCart } = useCartContext();
   const [fetched, setFetched] = useState<ProductFieldsFragment[]>([]);
@@ -79,23 +80,23 @@ const WishlistContent = () => {
       const result = await createWishlistShareLinkAction(wishlistIds);
 
       if (!result.success || !result.url) {
-        toast.error(result.message || 'Something went wrong');
+        toast.error(result.message || tError('genericTitle'));
         return;
       }
 
       // Prefer the native share sheet (mobile); fall back to the clipboard.
       if (typeof navigator !== 'undefined' && typeof navigator.share === 'function') {
-        await navigator.share({ title: 'My wishlist', url: result.url });
+        await navigator.share({ title: t('shareLinkTitle'), url: result.url });
         return;
       }
 
       await navigator.clipboard.writeText(result.url);
-      toast.success('Wishlist link copied to clipboard');
+      toast.success(t('shareCopied'));
     } catch (error) {
       // AbortError = the user dismissed the share sheet; not a failure.
       if (error instanceof DOMException && error.name === 'AbortError') return;
       reportError('wishlist/share', error);
-      toast.error('Could not share your wishlist');
+      toast.error(t('shareFailed'));
     } finally {
       setSharing(false);
     }
@@ -103,7 +104,7 @@ const WishlistContent = () => {
 
   const handleMoveAllToCart = async () => {
     if (availableIds.length === 0) {
-      toast.info('None of your wishlisted items are available right now');
+      toast.info(t('noneAvailable'));
       return;
     }
 
@@ -165,7 +166,7 @@ const WishlistContent = () => {
     <Card>
       <CardHeaderPattern
         as="h2"
-        title={`Wishlist (${wishlistIds.length})`}
+        title={t('titleWithCount', { count: wishlistIds.length })}
         size={3}
         actions={
           <div className="flex flex-wrap items-center gap-2">
@@ -176,7 +177,7 @@ const WishlistContent = () => {
               disabled={busy || availableIds.length === 0}
             >
               {moving ? <Loader2 className="animate-spin" size={16} /> : <ShoppingBag size={16} />}
-              Move all to cart
+              {t('moveAllToCart')}
             </Button>
             <Button
               variant="secondary"
@@ -185,11 +186,11 @@ const WishlistContent = () => {
               disabled={sharing || wishlistIds.length === 0}
             >
               {sharing ? <Loader2 className="animate-spin" size={16} /> : <Share2 size={16} />}
-              Share
+              {t('share')}
             </Button>
           </div>
         }
-        description={`You have ${wishlistIds.length} ${wishlistIds.length === 1 ? 'item' : 'items'} saved in your wishlist.`}
+        description={t('itemsSavedDescription', { count: wishlistIds.length })}
       />
       <CardContent>
         <ProductsList loading={!productsLoaded} layout="grid" products={products} />

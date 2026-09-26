@@ -89,6 +89,7 @@ const Filters = ({
   };
 }) => {
   const t = useTranslations('shared');
+  const tCollection = useTranslations('collection');
   const priceBounds = getPriceBounds(filters);
   const [selectedFilters, setSelectedFilters] = useState<SelectedFilter[]>([]);
   const [open, setOpen] = useState(false);
@@ -210,7 +211,7 @@ const Filters = ({
           className="relative gap-2 rounded-full border-border/70 bg-background/70 px-5 backdrop-blur transition-all duration-200 hover:-translate-y-px hover:shadow-[0_12px_24px_-16px_rgb(12_10_9/0.5)]"
         >
           <SlidersHorizontal size={15} strokeWidth={1.75} aria-hidden="true" />
-          <span>Filters</span>
+          <span>{tCollection('filters')}</span>
           {activeCount > 0 && (
             <Badge className="h-5 min-w-5 justify-center rounded-full bg-[var(--gold)] px-1.5 text-[11px] font-bold text-[var(--gold-foreground)]">
               {activeCount}
@@ -230,20 +231,20 @@ const Filters = ({
           <div className="relative p-6 pb-5 pr-14">
             <span className="text-eyebrow-gold inline-flex items-center gap-2">
               <Sparkles size={13} aria-hidden="true" />
-              Refine
+              {tCollection('refine')}
             </span>
             <div className="mt-2 flex items-center gap-3">
               <SheetTitle className="font-display text-3xl font-medium tracking-tight">
-                Filters
+                {tCollection('filters')}
               </SheetTitle>
               {activeCount > 0 && (
                 <Badge className="rounded-full bg-[var(--gold-soft)] text-[var(--gold)]">
-                  {activeCount} active
+                  {tCollection('activeCount', { count: activeCount })}
                 </Badge>
               )}
             </div>
             <SheetDescription className="text-body-sm mt-1.5 text-secondary">
-              Narrow the collection to exactly your taste.
+              {tCollection('narrowDescription')}
             </SheetDescription>
           </div>
         </SheetHeader>
@@ -285,7 +286,7 @@ const Filters = ({
                           step={0.1}
                           value={priceRange}
                           onValueChange={handlePriceChange}
-                          thumbLabels={['Minimum price', 'Maximum price']}
+                          thumbLabels={[tCollection('minPrice'), tCollection('maxPrice')]}
                         />
                         <div className="flex items-center justify-between gap-2">
                           <span className="rounded-full border border-border/70 bg-card px-3 py-1 text-body-sm font-semibold tabular-nums">
@@ -357,16 +358,17 @@ const Filters = ({
               disabled={activeCount === 0}
             >
               <RotateCcw size={15} aria-hidden="true" />
-              Clear{activeCount > 0 ? ` (${activeCount})` : ''}
+              {t('clear')}
+              {activeCount > 0 ? ` (${activeCount})` : ''}
             </Button>
             <Button className="h-11 flex-[2] cursor-pointer rounded-full" onClick={applyFilters}>
-              Show results
+              {tCollection('showResults')}
             </Button>
           </div>
           <p className="mt-3 text-center text-caption text-secondary">
             {activeCount > 0
-              ? `${activeCount} filter${activeCount === 1 ? '' : 's'} selected`
-              : 'No filters selected — showing everything'}
+              ? tCollection('filtersSelected', { count: activeCount })
+              : tCollection('noFiltersSelected')}
           </p>
         </div>
       </SheetContent>

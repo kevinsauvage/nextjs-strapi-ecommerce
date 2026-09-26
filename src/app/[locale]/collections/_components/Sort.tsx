@@ -2,6 +2,7 @@
 
 import { Suspense } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -35,36 +36,40 @@ const SortView = ({
   activeOption?: SortOption;
   onSelect?: (value: string) => void;
   sortingOptions: SortOption[];
-}) => (
-  <div className="flex items-center gap-2">
-    <span className="hidden text-caption-sm uppercase tracking-widest text-muted sm:block">
-      Sort
-    </span>
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" className="gap-2">
-          {activeOption?.label || 'Sort'}
-          <SortDesc className="h-4 w-4 opacity-60" aria-hidden="true" />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56" sideOffset={5} align="end">
-        {sortingOptions.map((option) => {
-          const isActive = option.name.toLowerCase() === activeOption?.name.toLowerCase();
-          return (
-            <DropdownMenuItem
-              key={option.name}
-              onClick={() => onSelect?.(option.name)}
-              className="justify-between"
-            >
-              {option.label}
-              {isActive ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
-            </DropdownMenuItem>
-          );
-        })}
-      </DropdownMenuContent>
-    </DropdownMenu>
-  </div>
-);
+}) => {
+  const t = useTranslations('collection');
+
+  return (
+    <div className="flex items-center gap-2">
+      <span className="hidden text-caption-sm uppercase tracking-widest text-muted sm:block">
+        {t('sortBy')}
+      </span>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="outline" size="sm" className="gap-2">
+            {activeOption?.label || t('sortBy')}
+            <SortDesc className="h-4 w-4 opacity-60" aria-hidden="true" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56" sideOffset={5} align="end">
+          {sortingOptions.map((option) => {
+            const isActive = option.name.toLowerCase() === activeOption?.name.toLowerCase();
+            return (
+              <DropdownMenuItem
+                key={option.name}
+                onClick={() => onSelect?.(option.name)}
+                className="justify-between"
+              >
+                {option.label}
+                {isActive ? <Check className="h-4 w-4" aria-hidden="true" /> : null}
+              </DropdownMenuItem>
+            );
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
+  );
+};
 
 const SortInner = ({ query, sortingOptions }: SortProps) => {
   const router = useRouter();

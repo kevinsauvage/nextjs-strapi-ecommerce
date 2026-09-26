@@ -39,7 +39,7 @@ const ContactPage = async ({ params }: { params: Promise<{ locale: string }> }) 
   return (
     <div className="pb-16 md:pb-24">
       <PageBanner title={title} eyebrow={t('contactEyebrow')} description={description}>
-        <Breadcrumbs path={config.routes.contact} />
+        <Breadcrumbs path={config.routes.contact} locale={locale} />
       </PageBanner>
       <div className="container mx-auto grid gap-6 px-4 pt-10 md:px-6 md:pt-14 lg:grid-cols-5">
         <Card className="h-fit border-border/70 lg:col-span-2">

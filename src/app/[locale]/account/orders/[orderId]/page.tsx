@@ -258,7 +258,7 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
         </CardContent>
       </Card>
 
-      <BackButton />
+      <BackButton locale={locale} />
     </div>
   );
 };

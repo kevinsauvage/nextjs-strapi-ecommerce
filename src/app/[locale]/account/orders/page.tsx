@@ -122,7 +122,7 @@ const Page = async ({
         as="h2"
         title={t('ordersTitle', { count: response.customer?.orders?.totalCount ?? 0 })}
         size={3}
-        actions={<BackButton />}
+        actions={<BackButton locale={locale} />}
         description={t('ordersDescription')}
       />
       <CardContent>

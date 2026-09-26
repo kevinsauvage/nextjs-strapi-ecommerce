@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 
 import PageBanner from '@/components/PageBanner';
 import { getSeo } from '@/data/seo';
-import { DEFAULT_LOCALE } from '@/i18n/routing';
-import { getTranslations } from '@/i18n/server';
+import { getTranslations, localeFromParams } from '@/i18n/server';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
 import WishlistContent from './_components/WishlistContent';
@@ -16,33 +15,41 @@ import WishlistContent from './_components/WishlistContent';
  */
 export const instant = false;
 
-export const generateMetadata = async (): Promise<Metadata> =>
-  generateMetadataUtil({
-    description: getSeo(DEFAULT_LOCALE).wishlist.description,
-    title: getSeo(DEFAULT_LOCALE).wishlist.title,
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    description: getSeo(locale).wishlist.description,
+    title: getSeo(locale).wishlist.title,
     url: '/wishlist',
     // The list lives in per-browser storage (localStorage), so the page has no
     // server-rendered content worth indexing; robots.ts disallows it as well.
     noindex: true,
-    locale: DEFAULT_LOCALE,
+    locale,
   });
+};
 
-// The page carries no route params (the list is client state), so the banner
-// renders in the default language.
-const t = getTranslations(DEFAULT_LOCALE, 'wishlist');
+const WishlistPage = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const locale = await localeFromParams(params);
+  const t = getTranslations(locale, 'wishlist');
 
-const WishlistPage = () => (
-  <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
-    <PageBanner
-      eyebrow={t('bannerEyebrow')}
-      title={t('bannerTitle')}
-      description={t('bannerDescription')}
-      className="w-full rounded-[var(--radius)]"
-    />
-    <div className="mt-8">
-      <WishlistContent />
+  return (
+    <div className="mx-auto max-w-7xl px-4 py-8 md:px-6 md:py-12">
+      <PageBanner
+        eyebrow={t('bannerEyebrow')}
+        title={t('bannerTitle')}
+        description={t('bannerDescription')}
+        className="w-full rounded-[var(--radius)]"
+      />
+      <div className="mt-8">
+        <WishlistContent />
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default WishlistPage;

@@ -52,7 +52,7 @@ const Page = async ({ params }: { params: Promise<{ locale: string }> }) => {
           as="h2"
           title={t('updateTitle')}
           size={3}
-          actions={<BackButton />}
+          actions={<BackButton locale={locale} />}
           description={t('updateDescription')}
         />
         <CardContent className="space-y-6">

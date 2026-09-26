@@ -49,16 +49,17 @@ const AvailabilityLine = ({
   quantityAvailable?: number | null;
   unavailable?: boolean;
 }) => {
+  const t = useTranslations('product');
   const soldOut = isSoldOut(availableForSale);
   const lowStock = isLowStock(quantityAvailable, availableForSale);
 
   const label = unavailable
-    ? 'Unavailable in this combination'
+    ? t('unavailableCombination')
     : soldOut
-      ? 'Sold out'
+      ? t('soldOut')
       : lowStock
-        ? `Only ${quantityAvailable} left`
-        : 'In stock';
+        ? t('leftCount', { count: quantityAvailable ?? 0 })
+        : t('inStock');
 
   return (
     <p
@@ -123,34 +124,38 @@ const PriceHeader = ({
   availableForSale,
   quantityAvailable,
   unavailable,
-}: PriceHeaderProps) => (
-  <div className="space-y-4">
-    <h1 className="text-heading-2">{title}</h1>
+}: PriceHeaderProps) => {
+  const t = useTranslations('product');
 
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap items-baseline gap-3">
-        <ProductPrice
-          price={price}
-          compareAtPrice={compareAtPrice}
-          hasDiscount={hasDiscount}
-          priceClassName="text-heading-3 font-semibold tabular-nums text-foreground"
-          compareAtPriceClassName="text-body text-muted line-through tabular-nums"
+  return (
+    <div className="space-y-4">
+      <h1 className="text-heading-2">{title}</h1>
+
+      <div className="flex flex-col gap-2">
+        <div className="flex flex-wrap items-baseline gap-3">
+          <ProductPrice
+            price={price}
+            compareAtPrice={compareAtPrice}
+            hasDiscount={hasDiscount}
+            priceClassName="text-heading-3 font-semibold tabular-nums text-foreground"
+            compareAtPriceClassName="text-body text-muted line-through tabular-nums"
+          />
+          {hasDiscount ? <Badge variant="destructive">{t('sale')}</Badge> : null}
+        </div>
+        {quantity > 1 && price ? (
+          <span className="text-body-sm text-secondary">
+            {t('total')}: {formatPrice(totalPrice, price.currencyCode)}
+          </span>
+        ) : null}
+        <AvailabilityLine
+          availableForSale={availableForSale}
+          quantityAvailable={quantityAvailable}
+          unavailable={unavailable}
         />
-        {hasDiscount ? <Badge variant="destructive">Sale</Badge> : null}
       </div>
-      {quantity > 1 && price ? (
-        <span className="text-body-sm text-secondary">
-          Total: {formatPrice(totalPrice, price.currencyCode)}
-        </span>
-      ) : null}
-      <AvailabilityLine
-        availableForSale={availableForSale}
-        quantityAvailable={quantityAvailable}
-        unavailable={unavailable}
-      />
     </div>
-  </div>
-);
+  );
+};
 
 const DetailsAccordion = ({
   descriptionHtml,
@@ -238,6 +243,8 @@ const ProductDescriptionClient = ({
   productId,
   sizeChart,
 }: ProductDescriptionClientProps) => {
+  const t = useTranslations('product');
+  const tFooter = useTranslations('footer');
   const {
     handleAddToCart,
     selectedVariant,
@@ -309,9 +316,11 @@ const ProductDescriptionClient = ({
 
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2">
-              <h2 className="text-label">Quantity</h2>
+              <h2 className="text-label">{t('quantity')}</h2>
               {quantityAvailable !== null && quantityAvailable !== undefined ? (
-                <span className="text-caption-sm text-muted">{quantityAvailable} available</span>
+                <span className="text-caption-sm text-muted">
+                  {t('availableCount', { count: quantityAvailable })}
+                </span>
               ) : null}
             </div>
             <QuantityStepper
@@ -336,12 +345,12 @@ const ProductDescriptionClient = ({
       <ul className="flex flex-wrap gap-x-6 gap-y-2 text-caption-sm text-secondary">
         <li className="inline-flex items-center gap-2">
           <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-          Secure checkout
+          {tFooter('secureCheckout')}
         </li>
         <li className="inline-flex items-center gap-2">
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           <Link href={config.routes.refund} className="link-underline">
-            Returns &amp; refunds
+            {t('returnsAndRefunds')}
           </Link>
         </li>
       </ul>

@@ -14,6 +14,7 @@ import { ArrowRight, Check } from 'lucide-react';
 
 const FooterNewsletterForm = () => {
   const t = useTranslations('shared');
+  const tFooter = useTranslations('footer');
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (_previousState: unknown, formData: FormData) => {
@@ -41,7 +42,7 @@ const FooterNewsletterForm = () => {
       <div className="flex gap-2">
         <div className="flex-1">
           <label htmlFor="footer-newsletter" className="sr-only">
-            Email for newsletter
+            {tFooter('newsletterPlaceholder')}
           </label>
           <Input
             id="footer-newsletter"
@@ -58,7 +59,7 @@ const FooterNewsletterForm = () => {
         </div>
         <Button
           type="submit"
-          aria-label={done ? 'Subscribed' : 'Subscribe'}
+          aria-label={done ? tFooter('subscribed') : tFooter('subscribe')}
           disabled={isPending || done}
           loading={isPending}
         >
@@ -71,7 +72,7 @@ const FooterNewsletterForm = () => {
       </div>
       <FormFieldError error={state.errors?.email} fieldId="footer-newsletter" />
       <span aria-live="polite" className="sr-only">
-        {done ? (state.message ?? 'Thanks — you are on the list.') : ''}
+        {done ? (state.message ?? tFooter('newsletterThanks')) : ''}
       </span>
     </form>
   );

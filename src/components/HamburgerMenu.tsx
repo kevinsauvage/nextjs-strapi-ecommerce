@@ -158,6 +158,9 @@ const TopLevelMenuItem = ({
   onToggle: (id: string) => void;
   onNavigate: (href: RoutePath) => void;
 }) => {
+  const t = useTranslations('common');
+  const sharedT = useTranslations('shared');
+
   const handleActivate = () => {
     if (hasChildren) {
       onToggle(item.id);
@@ -198,9 +201,9 @@ const TopLevelMenuItem = ({
             </span>
             {hasChildren && (
               <span className="mt-0.5 block text-caption text-secondary">
-                {item.items.length} collections
+                {t('collectionsCount', { count: item.items.length })}
                 <span aria-hidden="true"> · </span>
-                {isExpanded ? 'Tap to collapse' : 'Tap to explore'}
+                {isExpanded ? sharedT('tapCollapse') : sharedT('tapExplore')}
               </span>
             )}
           </span>

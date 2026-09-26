@@ -162,7 +162,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                       ? 'bg-primary w-6'
                       : 'bg-primary/30 hover:bg-primary/50',
                   )}
-                  aria-label={`Go to image ${index + 1}`}
+                  aria-label={shared('goToImage', { index: index + 1 })}
                 />
               ))}
             </div>
@@ -182,12 +182,15 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
                     ? 'border-primary ring-2 ring-primary/20'
                     : 'border-transparent hover:border-muted-foreground/30',
                 )}
-                aria-label={`View product image ${index + 1} of ${productImages.length}`}
+                aria-label={shared('productImageAria', {
+                  index: index + 1,
+                  count: productImages.length,
+                })}
                 aria-pressed={index === currentImageIndex}
               >
                 <Image
                   src={image.small || image.src || ''}
-                  alt={image.altText || `Product image ${index + 1}`}
+                  alt={image.altText || shared('productThumbnailAria', { index: index + 1 })}
                   fill
                   quality={70}
                   className="object-cover"

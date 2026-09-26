@@ -1,6 +1,6 @@
 import Link from '@/components/LocalizedLink';
 import config from '@/config';
-import { DEFAULT_LOCALE } from '@/i18n/routing';
+import { DEFAULT_LOCALE, type Locale } from '@/i18n/routing';
 import { getTranslations } from '@/i18n/server';
 
 import { ChevronRight } from 'lucide-react';
@@ -59,8 +59,16 @@ const FILTERED = new Set(['pages', 'reset', 'collections', 'products']);
  * Home › collections › dogs — and `LocalizedLink` re-applies the locale to each
  * generated href.
  */
-const Breadcrumbs = ({ lastElement, path }: { lastElement?: string; path: string }) => {
-  const shared = getTranslations(DEFAULT_LOCALE, 'shared');
+const Breadcrumbs = ({
+  lastElement,
+  path,
+  locale = DEFAULT_LOCALE,
+}: {
+  lastElement?: string;
+  path: string;
+  locale?: Locale;
+}) => {
+  const shared = getTranslations(locale, 'shared');
   const segments = path.split('/').filter(Boolean);
 
   const crumbs = segments

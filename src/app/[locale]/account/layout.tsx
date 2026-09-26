@@ -29,7 +29,7 @@ const Layout = async ({
     <div className="hero-mesh border-b border-border/60">
       <div className="container mx-auto px-4 py-10 md:px-6 md:py-14">
         <header className="mb-8 md:mb-10">
-          <Breadcrumbs path={config.routes.account} />
+          <Breadcrumbs path={config.routes.account} locale={locale} />
           <div className="mt-6 flex flex-col gap-3">
             <span className="text-eyebrow-gold inline-flex items-center gap-3">
               <span aria-hidden="true" className="h-px w-8 bg-[var(--gold)]/60" />

@@ -14,6 +14,7 @@ import SearchAnalytics from '@/components/SearchAnalytics';
 import { Button } from '@/components/ui/button';
 import config from '@/config';
 import { getSeo } from '@/data/seo';
+import type { Locale } from '@/i18n/routing';
 import { getTranslations, localeFromParams } from '@/i18n/server';
 import { normalizeSortKey } from '@/lib/server/collection';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
@@ -87,6 +88,7 @@ const SearchBanner = ({
   eyebrow,
   description,
   popularLabel,
+  locale,
 }: {
   searchQuery?: string;
   popularTerms: string[];
@@ -94,9 +96,10 @@ const SearchBanner = ({
   eyebrow: string;
   description: string;
   popularLabel: string;
+  locale: Locale;
 }) => (
   <PageBanner title={title} eyebrow={eyebrow} description={description}>
-    <Breadcrumbs path={config.routes.search} />
+    <Breadcrumbs path={config.routes.search} locale={locale} />
     <Search key={searchQuery ?? ''} searchQuery={searchQuery ?? ''} />
     <div className="flex flex-wrap items-center justify-center gap-2">
       <span className="text-caption text-secondary">{popularLabel}</span>
@@ -128,6 +131,7 @@ const Page = async ({
   const banner = {
     description: getSeo(locale).search.description,
     eyebrow: t('eyebrow'),
+    locale,
     popularLabel: t('popular'),
     title: getSeo(locale).search.title,
   };

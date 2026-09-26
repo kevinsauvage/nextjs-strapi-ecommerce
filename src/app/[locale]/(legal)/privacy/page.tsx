@@ -44,7 +44,7 @@ const PrivacyPage = async ({ params }: { params: Promise<{ locale: string }> }) 
   return (
     <div>
       <PageBanner title={title} description={description}>
-        <Breadcrumbs path={config.routes.privacy} lastElement={title} />
+        <Breadcrumbs path={config.routes.privacy} lastElement={title} locale={locale} />
       </PageBanner>
       <MainContent>
         {privacyHtml ? (

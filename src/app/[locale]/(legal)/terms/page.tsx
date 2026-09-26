@@ -43,7 +43,7 @@ const TermsPage = async ({ params }: { params: Promise<{ locale: string }> }) =>
   return (
     <div>
       <PageBanner title={title} description={description}>
-        <Breadcrumbs path={config.routes.terms} lastElement={title} />
+        <Breadcrumbs path={config.routes.terms} lastElement={title} locale={locale} />
       </PageBanner>
       <MainContent>
         {termsHtml ? (

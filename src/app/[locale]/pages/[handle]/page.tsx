@@ -62,7 +62,11 @@ const ShopifyPage = async ({ params }: { params: Promise<PagesParams> }) => {
   return (
     <div>
       <PageBanner title={page.title} description={page.bodySummary}>
-        <Breadcrumbs path={`${config.routes.page}/${handle}`} lastElement={page.title} />
+        <Breadcrumbs
+          path={`${config.routes.page}/${handle}`}
+          lastElement={page.title}
+          locale={locale}
+        />
       </PageBanner>
       <MainContent>
         {pageHtml ? (

@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import useCartContext from '@/contexts/CartContext/useCartContext';
@@ -8,6 +10,7 @@ import { reportError } from '@/lib/logger';
 import { X } from 'lucide-react';
 
 const DiscountCodes = () => {
+  const t = useTranslations('cart');
   const { cart, updateDiscountCodes } = useCartContext();
   const discountCodes = cart?.discountCodes ?? [];
 
@@ -30,7 +33,9 @@ const DiscountCodes = () => {
     <div className="flex flex-col gap-1 mt-2 space-y-4">
       {applicableCodes.length > 0 && (
         <div>
-          <span className="block mb-2 text-body-sm text-secondary"> Applied: </span>
+          <span className="block mb-2 text-body-sm text-secondary">
+            {t('appliedDiscountCodes')}
+          </span>
           <div className="flex flex-wrap gap-2">
             {applicableCodes.map((code) => {
               return (
@@ -46,7 +51,7 @@ const DiscountCodes = () => {
                       className="cursor-pointer"
                       size="icon"
                       variant="ghost"
-                      aria-label={`Remove discount code ${code.code}`}
+                      aria-label={t('removeDiscountCodeAria', { code: code.code })}
                     >
                       <X size={14} />
                     </Button>
@@ -60,7 +65,9 @@ const DiscountCodes = () => {
 
       {notApplicableCodes.length > 0 && (
         <div>
-          <span className="block mb-2 text-body-sm text-secondary"> Not Applicable: </span>
+          <span className="block mb-2 text-body-sm text-secondary">
+            {t('notApplicableDiscountCodes')}
+          </span>
           <div className="flex flex-wrap gap-2">
             {notApplicableCodes.map((code) => {
               return (
@@ -76,7 +83,7 @@ const DiscountCodes = () => {
                       className="cursor-pointer"
                       size="icon"
                       variant="ghost"
-                      aria-label={`Remove discount code ${code.code}`}
+                      aria-label={t('removeDiscountCodeAria', { code: code.code })}
                     >
                       <X size={14} />
                     </Button>

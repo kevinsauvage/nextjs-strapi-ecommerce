@@ -164,7 +164,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
       {/* Breadcrumb bar */}
       <div className="border-b border-border/60 bg-secondary/30">
         <div className="container mx-auto px-4 py-3 md:px-6">
-          <Breadcrumbs path={basePath} lastElement={collectionName} />
+          <Breadcrumbs path={basePath} lastElement={collectionName} locale={locale} />
         </div>
       </div>
 
@@ -275,18 +275,18 @@ const CollectionProducts = async ({
 
   const sortingOptions = [
     {
-      label: 'Best Selling',
+      label: t('bestSelling'),
       name: 'BEST_SELLING',
     },
     {
-      label: 'Relevance',
+      label: t('relevance'),
       name: 'RELEVANCE',
     },
     {
-      label: 'Price, low to high',
+      label: t('priceLowToHigh'),
       name: 'PRICE',
     },
-    { label: 'New Arrivals', name: 'CREATED' },
+    { label: t('newArrivals'), name: 'CREATED' },
   ];
 
   return (
@@ -296,8 +296,8 @@ const CollectionProducts = async ({
           <div className="sticky top-16 z-30 -mx-4 mb-8 border-b border-border/60 bg-background/85 px-4 py-3 backdrop-blur-md md:top-20 md:-mx-6 md:px-6">
             <ListingHeader className="mb-0 items-center">
               <span className="text-caption-sm uppercase tracking-widest text-muted">
-                Showing {pageCount}
-                {safePageInfo.hasNextPage ? '+' : ''} {pageCount === 1 ? 'piece' : 'pieces'}
+                {t('showing')} {pageCount}
+                {safePageInfo.hasNextPage ? '+' : ''} {pageCount === 1 ? t('piece') : t('pieces')}
               </span>
               <div className="flex items-center gap-2">
                 {activeFilterCount > 0 ? (
@@ -305,7 +305,7 @@ const CollectionProducts = async ({
                     href={basePath}
                     className="link-underline text-caption-sm font-medium text-secondary"
                   >
-                    Clear filters
+                    {t('clearFilters')}
                   </Link>
                 ) : null}
                 <Sort

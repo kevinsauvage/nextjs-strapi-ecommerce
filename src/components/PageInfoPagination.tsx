@@ -30,19 +30,19 @@ const PageInfoPagination = ({
           {/* Helpers build `${Route}?${params}`; the Link renders only when
               the page exists, so the single assertion lives here. */}
           <Link href={previousPath as Route} aria-label={t('previousPage')}>
-            Previous
+            {t('previous')}
           </Link>
         </Button>
       ) : (
         <Button variant="secondary" size="default" disabled aria-label={t('previousPage')}>
-          Previous
+          {t('previous')}
         </Button>
       )}
 
       {pageInfo.hasNextPage ? (
         <Button asChild variant="secondary" size="default">
           <Link href={nextPath as Route} aria-label={t('nextPage')}>
-            Next
+            {t('next')}
           </Link>
         </Button>
       ) : (
@@ -53,7 +53,7 @@ const PageInfoPagination = ({
           aria-label={t('nextPage')}
           className={cn('cursor-not-allowed')}
         >
-          Next
+          {t('next')}
         </Button>
       )}
     </div>

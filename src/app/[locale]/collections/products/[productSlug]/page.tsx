@@ -174,7 +174,7 @@ const ProductPage = async ({ params }: PageProperties) => {
       <RecentlyViewedTracker productId={product.id} />
       <div className="hero-mesh border-b border-border/60">
         <div className="container mx-auto px-4 py-3 md:px-6">
-          <Breadcrumbs path={productUrl} lastElement={title} />
+          <Breadcrumbs path={productUrl} lastElement={title} locale={locale} />
         </div>
       </div>
 

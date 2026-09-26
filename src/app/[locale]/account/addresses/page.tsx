@@ -133,7 +133,7 @@ const Addresses = async ({
         size={3}
         actions={
           <div className="flex flex-wrap items-center justify-end gap-2">
-            <BackButton />
+            <BackButton locale={locale} />
             <Button variant="default" asChild>
               <Link href={config.routes.createAddress} className="gap-2">
                 <Plus size={16} />
