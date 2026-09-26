@@ -263,6 +263,7 @@ const HamburgerMenu = ({
   const { isLoggedIn } = useUserContext();
   const push = useLocalizedPush();
   const footerT = useTranslations('footer');
+  const navT = useTranslations('nav');
   const t = useTranslations('common');
   const searchT = useTranslations('search');
 
@@ -337,7 +338,7 @@ const HamburgerMenu = ({
           className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-full border border-border/70 bg-background/60 py-2 pl-3 pr-4 transition-all duration-200 hover:-translate-y-px hover:bg-muted hover:shadow-[0_10px_24px_-14px_rgb(12_10_9/0.5)]"
         >
           <Menu size={18} strokeWidth={1.75} />
-          <span className="text-[13px] font-semibold tracking-wide">Menu</span>
+          <span className="text-[13px] font-semibold tracking-wide">{navT('menu')}</span>
         </button>
       </SheetTrigger>
       <SheetContent

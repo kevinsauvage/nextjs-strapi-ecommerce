@@ -95,6 +95,7 @@ type ProductCardDefaultProps = {
  */
 const ProductCardDefault = ({ product, preload = false, className }: ProductCardDefaultProps) => {
   const t = useTranslations('product');
+  const sharedT = useTranslations('shared');
   const { title, images, handle, variants, id, priceRange, vendor, availableForSale } = product;
   const firstVariant = variants?.edges?.[0]?.node;
   const price = firstVariant?.price ?? priceRange?.minVariantPrice ?? null;
@@ -125,7 +126,7 @@ const ProductCardDefault = ({ product, preload = false, className }: ProductCard
             {primary ? (
               <Image
                 src={primary.medium || primary.src}
-                alt={primary.altText || title || 'Product image'}
+                alt={primary.altText || title || sharedT('productImageAlt')}
                 fill
                 preload={preload}
                 quality={75}

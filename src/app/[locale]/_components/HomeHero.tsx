@@ -57,6 +57,7 @@ const safeImageSrc = (url?: string | null): string | null => {
 
 const HomeHero = ({ hero, collection, stats, marquee, locale }: HomeHeroProps) => {
   const t = getTranslations(locale, 'common');
+  const homeT = getTranslations(locale, 'home');
   // Duplicated for the seamless marquee loop; each half gets a stable suffix so
   // keys stay unique without relying on the array index.
   const marqueeLoop = [
@@ -70,11 +71,11 @@ const HomeHero = ({ hero, collection, stats, marquee, locale }: HomeHeroProps) =
   const imageSrc = customImage ?? collectionImageSrc;
   const showCollectionOverlay = !customImage && Boolean(collectionImageSrc);
 
-  const heading = hero?.heading ?? 'Better products for better everyday moments together.';
-  const eyebrow = hero?.eyebrow ?? 'European pet essentials';
-  const subheading =
-    hero?.subheading ??
-    'Beautiful, useful products for dogs and cats — thoughtfully selected and made to last.';
+  // The hero is content-managed, so these only show when the metaobject is
+  // missing or untranslated for this market.
+  const heading = hero?.heading ?? homeT('hero.fallbackHeading');
+  const eyebrow = hero?.eyebrow ?? homeT('hero.fallbackEyebrow');
+  const subheading = hero?.subheading ?? homeT('hero.fallbackSubheading');
 
   const primary =
     hero?.primaryLabel && hero.primaryUrl
@@ -89,7 +90,7 @@ const HomeHero = ({ hero, collection, stats, marquee, locale }: HomeHeroProps) =
         : { label: t('newArrivals'), href: normalizeMenuHref('#new-arrivals') };
 
   const imageAlt =
-    hero?.imageAlt ?? collectionImage?.altText ?? collection?.title ?? 'Featured collection';
+    hero?.imageAlt ?? collectionImage?.altText ?? collection?.title ?? homeT('hero.imageAlt');
 
   return (
     <section className="hero-mesh relative overflow-hidden border-b border-border/60">

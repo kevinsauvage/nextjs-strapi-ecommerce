@@ -33,6 +33,7 @@ const GlobalError = ({
             image={NotFoundIllustration}
             subtitle="A critical error occurred. Please refresh the page or contact support if the problem continues."
             title="Critical error"
+            tipsLabel="Helpful tips:"
             tips={[
               'Refresh the page',
               'Clear browser cache and cookies',

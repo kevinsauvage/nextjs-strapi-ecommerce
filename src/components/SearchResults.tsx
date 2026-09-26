@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Link from '@/components/LocalizedLink';
 import type { PredictiveSearchQuery } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
@@ -107,6 +109,8 @@ const SearchResults = ({
 }: {
   results: PredictiveSearchQuery['predictiveSearch'] | null | undefined;
 }) => {
+  const t = useTranslations('search');
+
   if (!results) {
     return null;
   }
@@ -131,7 +135,7 @@ const SearchResults = ({
         {queries.length > 0 && (
           <>
             <SectionTitle className="px-4 pt-4 text-label-sm text-secondary">
-              Suggestions
+              {t('suggestions')}
             </SectionTitle>
             <div className="pb-4">
               {queries.map((q) => (
@@ -143,7 +147,9 @@ const SearchResults = ({
 
         {products.length > 0 && (
           <>
-            <SectionTitle className="px-4 pt-4 text-label-sm text-secondary">Products</SectionTitle>
+            <SectionTitle className="px-4 pt-4 text-label-sm text-secondary">
+              {t('products')}
+            </SectionTitle>
             <div className="pb-4">
               {products.map((product) => (
                 <Product key={product.id} product={product as ProductSearchItem} />

@@ -245,7 +245,7 @@ const QuickBuyContent = ({ product, onClose }: QuickBuyContentProps) => {
           <div className="space-y-2">
             {/* Plain text, not a label: `QuantityStepper` renders buttons (already
                 labelled) and a live-region value, not a labelled input. */}
-            <span className="text-label">Quantity</span>
+            <span className="text-label">{t('quantity')}</span>
             <QuantityStepper
               quantity={quantity}
               onChange={handleChangeInput}

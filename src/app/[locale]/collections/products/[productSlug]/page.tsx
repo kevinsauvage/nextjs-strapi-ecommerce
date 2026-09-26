@@ -10,6 +10,7 @@ import ProductRecommendations from '@/components/ProductRecommendations';
 import RecentlyViewedProducts from '@/components/RecentlyViewedProducts';
 import RecentlyViewedTracker from '@/components/RecentlyViewedTracker';
 import config from '@/config';
+import { getSeo } from '@/data/seo';
 import { type Locale, LOCALES } from '@/i18n/routing';
 import { contentLanguage, getTranslations, localeFromParams } from '@/i18n/server';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
@@ -89,15 +90,18 @@ export async function generateMetadata({
 
   if (!product) {
     return generateMetadataUtil({
-      title: 'Product Not Found',
-      description: 'Product not found',
+      ...getSeo(locale).notFound.product,
       url: `/collections/products/${productSlug}`,
       noindex: true,
+      locale,
     });
   }
 
-  const title = product.seo?.title || product.title || 'Product';
-  const description = product.seo?.description || product.description || 'Product';
+  // Shopify returns empty strings when a product has no SEO fields set, so fall
+  // back to the product copy and finally to a localized generic name.
+  const commonT = getTranslations(locale, 'common');
+  const title = product.seo?.title || product.title || commonT('product');
+  const description = product.seo?.description || product.description || commonT('product');
 
   return generateMetadataUtil({
     title,

@@ -377,6 +377,7 @@ export const es: Messages = {
     newArrivals: 'Novedades',
     noCategories: 'Aún no hay categorías',
     openMenu: 'Abrir menú',
+    product: 'Producto',
     shopAll: 'Ver todo',
     shopAllProducts: 'Ver todos los productos',
     shopCategories: 'Categorías',
@@ -419,6 +420,11 @@ export const es: Messages = {
       viewAll: 'Ver todos los destacados',
     },
     hero: {
+      fallbackEyebrow: 'Esenciales europeos para mascotas',
+      fallbackHeading: 'Mejores productos para mejores momentos del día a día.',
+      fallbackSubheading:
+        'Productos bonitos y útiles para perros y gatos, seleccionados con cuidado y hechos para durar.',
+      imageAlt: 'Colección destacada',
       marquee: [
         'Envío gratis en la UE desde 80 €',
         'Fabricado en Europa',
@@ -510,6 +516,7 @@ export const es: Messages = {
     account: 'Cuenta',
     cart: 'Carrito',
     home: 'Inicio',
+    menu: 'Menú',
     search: 'Buscar',
     wishlist: 'Favoritos',
   },
@@ -563,11 +570,13 @@ export const es: Messages = {
     noResultsTitle: 'No se han encontrado resultados',
     placeholder: 'Buscar productos',
     popular: 'Popular:',
+    products: 'Productos',
     relevance: 'Relevancia',
     resultsFor: 'Resultados para',
     resultsSr: 'Resultados de búsqueda',
     sortPrice: 'Precio: de menor a mayor',
     submit: 'Buscar',
+    suggestions: 'Sugerencias',
   },
   wishlist: {
     bannerDescription:
@@ -716,6 +725,7 @@ export const es: Messages = {
     search: 'Buscar',
     sku: 'SKU',
     suggestionsUnavailable: 'Las sugerencias no están disponibles ahora mismo.',
+    tryAgain: 'Reintentar',
     tapCollapse: 'Toca para contraer',
     tapExplore: 'Toca para explorar',
     themeDark: 'Oscuro',

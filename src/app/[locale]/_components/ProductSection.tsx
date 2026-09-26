@@ -13,7 +13,8 @@ type ProductSectionProps = {
   eyebrow?: string;
   products: ProductFieldsFragment[];
   viewAllLink?: string;
-  viewAllLabel?: string;
+  /** Required: the label is user-facing, so the caller localizes it. */
+  viewAllLabel: string;
   className?: string;
 };
 
@@ -22,7 +23,7 @@ const ProductSection = ({
   eyebrow,
   products,
   viewAllLink = config.routes.collection,
-  viewAllLabel = 'View all products',
+  viewAllLabel,
   className,
 }: ProductSectionProps) => {
   if (!products || products.length === 0) {

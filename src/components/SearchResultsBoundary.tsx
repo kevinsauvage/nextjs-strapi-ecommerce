@@ -31,7 +31,7 @@ const SearchResultsFallback = (
         onClick={() => errorInfo.retry()}
         className="link-underline text-body-sm font-medium text-secondary cursor-pointer"
       >
-        Try again
+        {t('tryAgain')}
       </button>
     </div>
   );

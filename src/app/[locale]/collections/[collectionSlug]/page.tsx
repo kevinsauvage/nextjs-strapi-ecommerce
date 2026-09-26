@@ -14,6 +14,7 @@ import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import config from '@/config';
+import { getSeo } from '@/data/seo';
 import { type Locale, LOCALES } from '@/i18n/routing';
 import { getTranslations, localeFromParams } from '@/i18n/server';
 import { fetchCollectionPage, getCollectionHandlesForStaticParams } from '@/lib/server/collection';
@@ -70,6 +71,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { collectionSlug } = await params;
   const locale = await localeFromParams(params);
+  const commonT = getTranslations(locale, 'common');
 
   const collection = await getCollection(
     locale,
@@ -83,23 +85,23 @@ export async function generateMetadata({
 
   if (!collection) {
     return generateMetadataUtil({
-      title: 'Collection Not Found',
-      description: 'Collection not found',
+      ...getSeo(locale).notFound.collection,
       url: `/collections/${collectionSlug}`,
       noindex: true,
+      locale,
     });
   }
 
   const collectionName = localizedCollectionTitle(
     collectionSlug,
     locale,
-    collection.title || 'Collection',
+    collection.title || commonT('collection'),
   );
   const title = collection.seo?.title || collectionName;
   const description = localizedCollectionDescription(
     collectionSlug,
     locale,
-    collection.seo?.description || collection.description || 'Collection',
+    collection.seo?.description || collection.description || commonT('collection'),
   );
   const collectionImage = collection.image?.src;
 
@@ -120,6 +122,7 @@ export async function generateMetadata({
 const CollectionHeader = async ({ params }: { params: Promise<parametersType> }) => {
   const { collectionSlug } = await params;
   const locale = await localeFromParams(params);
+  const commonT = getTranslations(locale, 'common');
 
   const collection = await getCollection(
     locale,
@@ -140,7 +143,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
   const collectionName = localizedCollectionTitle(
     collectionSlug,
     locale,
-    collection.title || 'Collection',
+    collection.title || commonT('collection'),
   );
   const collectionImage = collection.image;
   const basePath: `/collections/${string}` = `${config.routes.collection}/${collectionSlug}`;
@@ -174,7 +177,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
           <div className="relative h-[40vh] min-h-[300px] w-full md:h-[52vh] md:min-h-[420px]">
             <Image
               src={collectionImage.large || collectionImage.src}
-              alt={collectionImage.altText || collection.title || 'Collection image'}
+              alt={collectionImage.altText || collection.title || commonT('collectionImage')}
               fill
               preload
               quality={80}
@@ -187,7 +190,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
           </div>
           <div className="absolute inset-0 flex items-end">
             <div className="container mx-auto px-4 pb-10 md:px-6 md:pb-14">
-              <span className="text-eyebrow text-white/80">Collection</span>
+              <span className="text-eyebrow text-white/80">{commonT('collection')}</span>
               <h1 className="mt-3 max-w-3xl text-white">{collectionName}</h1>
               {collection.description ? (
                 <p className="mt-4 max-w-2xl text-body-lg text-white/85">
@@ -200,7 +203,7 @@ const CollectionHeader = async ({ params }: { params: Promise<parametersType> })
       ) : (
         <section className="border-b border-border/60">
           <div className="container mx-auto px-4 py-14 text-center md:px-6 md:py-20">
-            <span className="text-eyebrow">Collection</span>
+            <span className="text-eyebrow">{commonT('collection')}</span>
             <h1 className="mt-4 text-balance">{collectionName}</h1>
             {collection.description ? (
               <p className="mx-auto mt-5 max-w-2xl text-pretty text-body-lg text-secondary">
@@ -227,6 +230,7 @@ const CollectionProducts = async ({
 }) => {
   const { collectionSlug } = await params;
   const locale = await localeFromParams(params);
+  const commonT = getTranslations(locale, 'common');
   const t = getTranslations(locale, 'collection');
   const searchParameters = (await searchParams) || {};
 
@@ -247,7 +251,7 @@ const CollectionProducts = async ({
   const collectionName = localizedCollectionTitle(
     collectionSlug,
     locale,
-    collection.title || 'Collection',
+    collection.title || commonT('collection'),
   );
 
   const { products } = collection;

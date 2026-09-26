@@ -43,6 +43,16 @@ const en = {
       'Thoughtfully selected pet essentials for modern dogs and cats — beds, carriers, feeders and toys made in Europe. Free EU shipping over €80.',
     title: 'Premium Pet Products for Dogs & Cats',
   },
+  notFound: {
+    collection: {
+      description: 'This collection is no longer available.',
+      title: 'Collection not found',
+    },
+    product: {
+      description: 'This product is no longer available.',
+      title: 'Product not found',
+    },
+  },
   pages: {
     contact: {
       description:
@@ -83,6 +93,10 @@ const en = {
   wishlist: {
     description:
       'Create a wishlist of your favorite items for future purchases. Our wishlist page makes it easy to save and track items you love. Start building your wishlist now.',
+    shared: {
+      description: 'A wishlist shared with you.',
+      title: 'Shared wishlist',
+    },
     title: 'Wishlist',
   },
 } as const;
@@ -121,6 +135,16 @@ const es: Seo = {
     description:
       'Esenciales para mascotas seleccionados con cuidado para perros y gatos modernos: camas, transportines, comederos y juguetes fabricados en Europa. Envío gratis en la UE desde 80 €.',
     title: 'Productos premium para perros y gatos',
+  },
+  notFound: {
+    collection: {
+      description: 'Esta colección ya no está disponible.',
+      title: 'Colección no encontrada',
+    },
+    product: {
+      description: 'Este producto ya no está disponible.',
+      title: 'Producto no encontrado',
+    },
   },
   pages: {
     contact: {
@@ -162,6 +186,10 @@ const es: Seo = {
   wishlist: {
     description:
       'Crea una lista con tus artículos favoritos para futuras compras. Nuestra página de favoritos facilita guardar y seguir lo que te gusta. Empieza a crear tu lista ahora.',
+    shared: {
+      description: 'Una lista de favoritos compartida contigo.',
+      title: 'Lista de favoritos compartida',
+    },
     title: 'Favoritos',
   },
 };
@@ -196,6 +224,16 @@ const fr: Seo = {
     description:
       'Des essentiels pour animaux sélectionnés avec soin pour chiens et chats modernes — lits, sacs de transport, gamelles et jouets fabriqués en Europe. Livraison offerte dans l’UE dès 80 €.',
     title: 'Produits premium pour chiens et chats',
+  },
+  notFound: {
+    collection: {
+      description: "Cette collection n'est plus disponible.",
+      title: 'Collection introuvable',
+    },
+    product: {
+      description: "Ce produit n'est plus disponible.",
+      title: 'Produit introuvable',
+    },
   },
   pages: {
     contact: {
@@ -237,6 +275,10 @@ const fr: Seo = {
   wishlist: {
     description:
       'Créez une liste de vos articles préférés pour vos futurs achats. Notre page de favoris facilite l’enregistrement et le suivi de vos coups de cœur. Commencez votre liste.',
+    shared: {
+      description: 'Une liste de favoris partagée avec vous.',
+      title: 'Liste de favoris partagée',
+    },
     title: 'Favoris',
   },
 };

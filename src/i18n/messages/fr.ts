@@ -381,6 +381,7 @@ export const fr: Messages = {
     newArrivals: 'Nouveautés',
     noCategories: 'Aucune catégorie pour le moment',
     openMenu: 'Ouvrir le menu',
+    product: 'Produit',
     shopAll: 'Tout voir',
     shopAllProducts: 'Voir tous les produits',
     shopCategories: 'Catégories',
@@ -423,6 +424,11 @@ export const fr: Messages = {
       viewAll: 'Voir tous les produits vedettes',
     },
     hero: {
+      fallbackEyebrow: 'L’essentiel pour vos animaux en Europe',
+      fallbackHeading: 'De meilleurs produits pour de meilleurs moments du quotidien.',
+      fallbackSubheading:
+        'Des produits beaux et utiles pour chiens et chats, choisis avec soin et conçus pour durer.',
+      imageAlt: 'Collection en vedette',
       marquee: [
         "Livraison offerte dans l'UE dès 80 €",
         'Fabriqué en Europe',
@@ -515,6 +521,7 @@ export const fr: Messages = {
     account: 'Compte',
     cart: 'Panier',
     home: 'Accueil',
+    menu: 'Menu',
     search: 'Rechercher',
     wishlist: 'Favoris',
   },
@@ -568,11 +575,13 @@ export const fr: Messages = {
     noResultsTitle: 'Aucun résultat trouvé',
     placeholder: 'Rechercher des produits',
     popular: 'Populaire :',
+    products: 'Produits',
     relevance: 'Pertinence',
     resultsFor: 'Résultats pour',
     resultsSr: 'Résultats de recherche',
     sortPrice: 'Prix croissant',
     submit: 'Rechercher',
+    suggestions: 'Suggestions',
   },
   wishlist: {
     bannerDescription:
@@ -722,6 +731,7 @@ export const fr: Messages = {
     search: 'Rechercher',
     sku: 'SKU',
     suggestionsUnavailable: 'Les suggestions sont indisponibles pour le moment.',
+    tryAgain: 'Réessayer',
     tapCollapse: 'Touchez pour réduire',
     tapExplore: 'Touchez pour explorer',
     themeDark: 'Sombre',

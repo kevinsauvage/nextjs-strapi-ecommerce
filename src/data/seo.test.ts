@@ -48,6 +48,8 @@ describe('seo', () => {
         seo.account.update,
         seo.cart,
         seo.home,
+        seo.notFound.collection,
+        seo.notFound.product,
         seo.pages.contact,
         seo.pages.privacy,
         seo.pages.refund,
@@ -56,6 +58,7 @@ describe('seo', () => {
         seo.pages.terms,
         seo.search,
         seo.wishlist,
+        seo.wishlist.shared,
       ];
 
       for (const section of sections) {

@@ -8,6 +8,7 @@ import PageBanner from '@/components/PageBanner';
 import ProductsList from '@/components/ProductsList';
 import { Button } from '@/components/ui/button';
 import config from '@/config';
+import { getSeo } from '@/data/seo';
 import { getTranslations, localeFromParams } from '@/i18n/server';
 import { generateMetadata as generateMetadataUtil } from '@/lib/server/metadata';
 
@@ -27,15 +28,17 @@ export const generateMetadata = async ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}): Promise<Metadata> =>
-  generateMetadataUtil({
-    title: 'Shared wishlist',
-    description: 'A wishlist shared with you.',
+}): Promise<Metadata> => {
+  const locale = await localeFromParams(params);
+
+  return generateMetadataUtil({
+    ...getSeo(locale).wishlist.shared,
     // A shared link is user-specific and not a landing page: keep it out of the
     // index while still allowing it to be opened and shared.
     noindex: true,
-    locale: await localeFromParams(params),
+    locale,
   });
+};
 
 const SharedWishlistPage = async ({
   params,

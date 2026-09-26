@@ -21,7 +21,7 @@ type EmptyStateProps = {
   altText: string;
   /** Tips list - only shown for error variant */
   tips?: string[];
-  /** Label above the tips list (localized by the caller) */
+  /** Label above the tips list. Localized by the caller; omit when there are no tips. */
   tipsLabel?: string;
   /** Variant type */
   variant?: 'default' | 'cart' | 'search' | 'wishlist' | 'orders' | 'addresses' | 'error';
@@ -40,11 +40,11 @@ const EmptyState = ({
   subtitle,
   altText,
   tips,
-  tipsLabel = 'Helpful tips:',
+  tipsLabel,
   variant = 'default',
 }: EmptyStateProps) => {
   // Tips only shown for error variant
-  const shouldShowTips = variant === 'error' && tips && tips.length > 0;
+  const shouldShowTips = variant === 'error' && tips && tips.length > 0 && tipsLabel;
 
   return (
     <div className="animate-rise flex flex-col items-center justify-center h-full">
@@ -64,7 +64,7 @@ const EmptyState = ({
           {subtitle}
         </p>
 
-        {shouldShowTips && (
+        {shouldShowTips && tipsLabel && (
           <div className="mb-6 max-w-xl mx-auto px-4">
             <p className="text-label-sm text-secondary mb-3 font-medium">{tipsLabel}</p>
             <ul className="space-y-2 text-left">
