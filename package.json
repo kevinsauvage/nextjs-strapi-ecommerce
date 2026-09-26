@@ -37,7 +37,13 @@
     "metaobjects:seed": "node bin/shopify-metaobjects.mjs seed",
     "sections:list": "node bin/shopify-sections.mjs list",
     "sections:ensure": "node bin/shopify-sections.mjs ensure",
-    "sections:seed": "node bin/shopify-sections.mjs seed"
+    "sections:seed": "node bin/shopify-sections.mjs seed",
+    "hertwill:catalog": "node bin/hertwill-catalog.mjs sync",
+    "hertwill:stats": "node bin/hertwill-catalog.mjs stats",
+    "hertwill:import": "node bin/hertwill-import.mjs run",
+    "hertwill:status": "node bin/hertwill-import.mjs status",
+    "hertwill:curate": "node bin/shopify-curate-pets.mjs apply",
+    "shopify:reset": "node bin/shopify-reset-catalog.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

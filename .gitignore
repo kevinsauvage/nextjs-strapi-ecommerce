@@ -42,3 +42,7 @@ next-env.d.ts
 
 # graft's local graph cache — regenerable, not committed (run `graft build`).
 /graft/
+
+# Hertwill import state (environment-specific record ids) — regenerate with
+# `yarn hertwill:import`. The catalog manifest is committed on purpose.
+content/hertwill-import-list.json

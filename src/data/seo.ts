@@ -37,8 +37,8 @@ const seo = {
   },
   home: {
     description:
-      'Shop our curated collection of products. Discover new arrivals, best sellers, and exclusive offers with fast, secure checkout.',
-    title: 'Curated Fashion, Jewelry & Accessories',
+      'Thoughtfully selected pet essentials for modern dogs and cats — beds, carriers, feeders and toys made in Europe. Free EU shipping over €80.',
+    title: 'Premium Pet Products for Dogs & Cats',
   },
   login: {
     description:

@@ -1,0 +1,10 @@
+{
+  "currency": "EUR",
+  "description": "Absolute selling price = wholesale EUR x tier multiplier, rounded up to the nearest X.90. Tiers are checked top-down against the wholesale price.",
+  "tiers": [
+    { "max": 15, "multiplier": 2.5 },
+    { "max": 50, "multiplier": 2.2 },
+    { "max": 150, "multiplier": 1.9 },
+    { "max": null, "multiplier": 1.7 }
+  ]
+}

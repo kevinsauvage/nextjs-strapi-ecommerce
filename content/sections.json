@@ -1,19 +1,19 @@
 {
   "hero": {
     "handle": "home-hero",
-    "eyebrow": "New Season · Curated Drop",
-    "heading": "Wear the story you want to tell.",
-    "subheading": "Discover the latest trends and exclusive collections that elevate everyday dressing — small-batch quality at an honest price, from wardrobe staples to statement pieces.",
+    "eyebrow": "European pet essentials",
+    "heading": "Better products for better everyday moments together.",
+    "subheading": "Thoughtfully selected beds, carriers, feeders and toys for dogs and cats — made in Europe and designed to live beautifully in a modern home.",
     "image": "",
     "imageAlt": "",
-    "primaryLabel": "Shop the collection",
-    "primaryUrl": "/collections",
+    "primaryLabel": "Shop all products",
+    "primaryUrl": "/collections/all-products",
     "secondaryLabel": "New arrivals",
     "secondaryUrl": "#new-arrivals"
   },
   "promoBar": {
     "handle": "promo-bar",
-    "text": "Complimentary shipping on orders over $150 · Easy 30-day returns",
+    "text": "Free EU shipping over €80 · Easy 30-day returns",
     "linkLabel": "",
     "linkUrl": "",
     "tone": "ink",
@@ -21,34 +21,34 @@
   },
   "sizeChart": {
     "handle": "size-chart",
-    "title": "Size chart",
-    "note": "Measure over light clothing; if you are between sizes, size up — especially for outerwear.",
-    "body": "<table><caption>Tops (cm)</caption><thead><tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hips</th></tr></thead><tbody><tr><td>XS</td><td>80–84</td><td>62–66</td><td>88–92</td></tr><tr><td>S</td><td>84–88</td><td>66–70</td><td>92–96</td></tr><tr><td>M</td><td>88–94</td><td>70–76</td><td>96–102</td></tr><tr><td>L</td><td>94–100</td><td>76–82</td><td>102–108</td></tr><tr><td>XL</td><td>100–107</td><td>82–89</td><td>108–115</td></tr></tbody></table>"
+    "title": "Pet care & sizing",
+    "note": "Measure your pet while standing. Between two sizes, size up for beds and carriers so they can stretch out comfortably.",
+    "body": "<table><caption>Beds & mats</caption><thead><tr><th>Size</th><th>Pet weight</th><th>Typical size</th></tr></thead><tbody><tr><td>S</td><td>up to 7 kg</td><td>~50 × 40 cm</td></tr><tr><td>M</td><td>7–15 kg</td><td>~65 × 50 cm</td></tr><tr><td>L</td><td>15–25 kg</td><td>~80 × 60 cm</td></tr><tr><td>XL</td><td>25–40 kg</td><td>~100 × 70 cm</td></tr><tr><td>XXL / XXXL</td><td>40 kg +</td><td>~120 × 80 cm</td></tr></tbody></table><table><caption>Carriers & harnesses</caption><thead><tr><th>Size</th><th>Pet weight</th><th>Notes</th></tr></thead><tbody><tr><td>S</td><td>up to 5 kg</td><td>Small cats and toy breeds</td></tr><tr><td>M</td><td>5–9 kg</td><td>Most cats and small dogs</td></tr><tr><td>L</td><td>9–15 kg</td><td>Medium dogs</td></tr><tr><td>XL</td><td>15 kg +</td><td>Large dogs</td></tr></tbody></table>"
   },
   "faq": {
     "handle": "home-faq",
     "title": "Frequently asked questions",
-    "intro": "Shipping, returns and sizing — the answers shoppers ask for most.",
+    "intro": "Shipping, returns and choosing the right size — the answers pet parents ask for most.",
     "items": [
       {
+        "question": "Where do you ship?",
+        "answer": "We currently ship across Spain and France, with the rest of the EU rolling out soon. Delivery is free on orders over €80."
+      },
+      {
         "question": "How long does delivery take?",
-        "answer": "Orders ship within 1–2 business days. Standard delivery takes 3–5 business days; express options are shown at checkout."
+        "answer": "Orders are prepared within 1–2 business days and typically arrive in 3–6 business days with tracked delivery."
       },
       {
         "question": "What is the return window?",
-        "answer": "30 days from delivery, unworn and with tags attached. See our <a href=\"/refund\">refund policy</a> for the full terms."
+        "answer": "30 days from delivery, unused and in its original packaging. See our <a href=\"/refund\">refund policy</a> for the full terms."
       },
       {
-        "question": "How do I find my size?",
-        "answer": "Check our <a href=\"/pages/size-guide\">size guide</a>. Between sizes? Size up for outerwear, stay true for jersey."
+        "question": "How do I choose the right size?",
+        "answer": "See our <a href=\"/pages/pet-care\">pet care & sizing guide</a>. If your pet is between two sizes, size up for beds and carriers."
       },
       {
         "question": "How can I track my order?",
         "answer": "Sign in and open <a href=\"/account/orders\">My orders</a> — every order has a detail page with live tracking links."
-      },
-      {
-        "question": "Do I need an account to order?",
-        "answer": "No, guest checkout works. An account just makes tracking, reordering and address management faster."
       }
     ]
   }

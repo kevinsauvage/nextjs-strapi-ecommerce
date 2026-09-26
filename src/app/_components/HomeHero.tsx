@@ -31,18 +31,18 @@ type HomeHeroProps = {
 };
 
 const HERO_STATS: Array<[string, string]> = [
-  ['4.9', 'Average rating'],
-  ['12k+', 'Happy customers'],
-  ['30-day', 'Free returns'],
+  ['EU-made', 'European brands'],
+  ['30-day', 'Easy returns'],
+  ['Tracked', 'EU delivery'],
 ];
 
 const MARQUEE_ITEMS = [
-  'Free shipping over $150',
-  'New drop weekly',
-  'Small-batch makers',
+  'Free EU shipping over €80',
+  'Made in Europe',
+  'Dog & cat essentials',
   '30-day returns',
   'Secure checkout',
-  'Member perks',
+  'Ships to Spain & France',
 ];
 
 // Duplicated for the seamless marquee loop; each half gets a stable suffix so
@@ -78,11 +78,11 @@ const HomeHero = ({ hero, collection }: HomeHeroProps) => {
   const imageSrc = customImage ?? collectionImageSrc;
   const showCollectionOverlay = !customImage && Boolean(collectionImageSrc);
 
-  const heading = hero?.heading ?? 'Wear the story you want to tell.';
-  const eyebrow = hero?.eyebrow ?? 'New Season · Curated Drop';
+  const heading = hero?.heading ?? 'Better products for better everyday moments together.';
+  const eyebrow = hero?.eyebrow ?? 'European pet essentials';
   const subheading =
     hero?.subheading ??
-    'Discover the latest trends and exclusive collections that elevate everyday dressing — small-batch quality at an honest price, from wardrobe staples to statement pieces.';
+    'Beautiful, useful products for dogs and cats — thoughtfully selected and made to last.';
 
   const primary =
     hero?.primaryLabel && hero.primaryUrl
@@ -167,7 +167,7 @@ const HomeHero = ({ hero, collection }: HomeHeroProps) => {
                   Featured collection
                 </Badge>
                 <p className="font-display mt-3 text-2xl font-medium leading-tight">
-                  {collection?.title ?? 'The Autumn Edit'}
+                  {collection?.title ?? 'Curated favourites'}
                 </p>
                 <Button size="sm" variant="secondary" asChild className="mt-4 rounded-full">
                   <Link href={config.routes.collection}>

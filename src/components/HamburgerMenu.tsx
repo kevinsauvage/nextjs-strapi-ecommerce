@@ -424,7 +424,7 @@ const HamburgerMenu = ({
             })}
           </div>
           <p className="mt-3 text-center text-caption text-secondary">
-            Free shipping over $150 · 30-day returns
+            Free shipping over €80 · 30-day returns
           </p>
         </div>
       </SheetContent>

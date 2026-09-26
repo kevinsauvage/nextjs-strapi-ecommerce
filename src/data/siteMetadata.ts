@@ -5,7 +5,7 @@ const siteMetadata = {
   about: {
     short:
       process.env.NEXT_PUBLIC_SITE_ABOUT_SHORT ||
-      'CRISP is a fashion brand made for unisex use with an irreverent style. It started with jewelry, but has scaled up to something bigger and the reason for that is that we are fashion lovers.Our goal is to give you the best quality at an affordable price.',
+      'A premium European pet-lifestyle brand. Beautiful, useful products for dogs and cats that improve everyday life while fitting naturally into modern homes.',
   },
   companyName:
     process.env.NEXT_PUBLIC_SITE_NAME ||

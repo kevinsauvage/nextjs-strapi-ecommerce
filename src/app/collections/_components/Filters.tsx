@@ -20,8 +20,10 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet';
 import { Slider } from '@/components/ui/slider';
+import { SHOP } from '@/config/constants';
 import type { Filter } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
+import { formatPrice } from '@/utils/format';
 import { withQuery } from '@/utils/url';
 
 import { Check, RotateCcw, SlidersHorizontal, Sparkles } from 'lucide-react';
@@ -285,11 +287,11 @@ const Filters = ({
                         />
                         <div className="flex items-center justify-between gap-2">
                           <span className="rounded-full border border-border/70 bg-card px-3 py-1 text-body-sm font-semibold tabular-nums">
-                            ${(priceRange?.[0] ?? boundMin ?? 0).toFixed(0)}
+                            {formatPrice(priceRange?.[0] ?? boundMin ?? 0, SHOP.currency)}
                           </span>
                           <span aria-hidden="true" className="h-px w-6 bg-border" />
                           <span className="rounded-full border border-border/70 bg-card px-3 py-1 text-body-sm font-semibold tabular-nums">
-                            ${(priceRange?.[1] ?? boundMax ?? 0).toFixed(0)}
+                            {formatPrice(priceRange?.[1] ?? boundMax ?? 0, SHOP.currency)}
                           </span>
                         </div>
                       </div>

@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
-import { logo } from '@/assets/svg';
 import { Button } from '@/components/ui/button';
 import siteMetadata from '@/data/siteMetadata';
 import type { GetMenuByHandleQuery } from '@/shopify/storefront';
 import { normalizeMenuHref } from '@/utils/url';
 
 import FooterNewsletterForm from './FooterNewsletterForm';
+import Logo from './Logo';
 
 import { Award, Instagram, Linkedin, RotateCcw, ShieldCheck, Truck, Twitter } from 'lucide-react';
 
@@ -32,9 +32,7 @@ const Footer = ({ menuItems }: FooterProps) => {
       <div className="container mx-auto px-4 py-14 md:px-6 md:py-16">
         <div className="grid grid-cols-1 gap-10 rounded-[var(--radius)] border border-border/70 bg-card p-6 shadow-[0_18px_50px_-30px_rgb(12_10_9/0.35)] md:p-10 lg:grid-cols-12 lg:gap-8">
           <div className="lg:col-span-5">
-            <Link href="/" aria-label="Link to home page" className="inline-block text-foreground">
-              {logo}
-            </Link>
+            <Logo className="text-foreground" />
             <p className="mt-5 max-w-sm text-body-sm text-secondary">
               {siteMetadata?.about?.short}
             </p>
@@ -87,8 +85,8 @@ const Footer = ({ menuItems }: FooterProps) => {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-caption text-secondary md:justify-between">
           <span className="inline-flex items-center gap-2">
-            <Truck className="size-4 text-[var(--gold)]" aria-hidden="true" /> Free shipping over
-            $150
+            <Truck className="size-4 text-[var(--gold)]" aria-hidden="true" /> Free EU shipping over
+            €80
           </span>
           <span className="inline-flex items-center gap-2">
             <RotateCcw className="size-4 text-[var(--gold)]" aria-hidden="true" /> 30-day returns
@@ -97,7 +95,7 @@ const Footer = ({ menuItems }: FooterProps) => {
             <ShieldCheck className="size-4 text-[var(--gold)]" aria-hidden="true" /> Secure checkout
           </span>
           <span className="inline-flex items-center gap-2">
-            <Award className="size-4 text-[var(--gold)]" aria-hidden="true" /> Quality guaranteed
+            <Award className="size-4 text-[var(--gold)]" aria-hidden="true" /> Made in Europe
           </span>
         </div>
 

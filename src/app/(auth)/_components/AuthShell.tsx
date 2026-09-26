@@ -15,7 +15,7 @@ type AuthShellProps = {
 };
 
 const benefits = [
-  { Icon: Truck, text: 'Free shipping over $150' },
+  { Icon: Truck, text: 'Free shipping over €80' },
   { Icon: RotateCcw, text: '30-day easy returns' },
   { Icon: ShieldCheck, text: 'Secure member checkout' },
 ];

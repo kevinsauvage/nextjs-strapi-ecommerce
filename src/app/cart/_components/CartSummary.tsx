@@ -7,28 +7,52 @@ import { Separator } from '@/components/ui/separator';
 import useCartContext from '@/contexts/CartContext/useCartContext';
 import { formatPrice } from '@/utils/format';
 
+const amountOf = (money: { amount: string } | null | undefined) =>
+  Number.parseFloat(money?.amount ?? '0') || 0;
+
 const CartSummary = () => {
   const { cart } = useCartContext();
 
   if (!cart) return null;
 
-  // Use Shopify's authoritative totals. `totalAmount` includes shipping, taxes,
-  // discounts and gift cards, so the discount cannot be derived from
-  // `subtotal - total`; it is summed from the per-line discount allocations.
-  const subtotal = Number.parseFloat(cart.cost.subtotalAmount.amount);
-  const total = Number.parseFloat(cart.cost.totalAmount.amount);
+  // Shopify's `totalAmount` is authoritative and already includes shipping,
+  // taxes, discounts and duties once they are known. We break it back out into
+  // lines so the arithmetic on screen always reconciles.
+  const subtotal = amountOf(cart.cost.subtotalAmount);
+  const total = amountOf(cart.cost.totalAmount);
+  const taxes = amountOf(cart.cost.totalTaxAmount);
+  const duties = amountOf(cart.cost.totalDutyAmount);
   const discount = cart.lines.edges.reduce(
     (sum, edge) =>
       sum +
       edge.node.discountAllocations.reduce(
-        (lineSum, allocation) =>
-          lineSum + Number.parseFloat(allocation.discountedAmount.amount || '0'),
+        (lineSum, allocation) => lineSum + amountOf(allocation.discountedAmount),
         0,
       ),
     0,
   );
+
+  // Shipping is only known after the shopper estimates a delivery address and a
+  // delivery option is selected for every group.
+  const groups = cart.deliveryGroups.edges.map((edge) => edge.node);
+  const selectedOptions = groups
+    .map((group) => group.selectedDeliveryOption)
+    .filter((option): option is NonNullable<typeof option> => Boolean(option));
+  const shipping = selectedOptions.reduce((sum, option) => sum + amountOf(option.estimatedCost), 0);
+  const hasShipping = selectedOptions.length > 0;
+  const address = cart.delivery.addresses.find((entry) => entry.selected)?.address ?? null;
+
   const hasDiscount = discount > 0;
+  const hasTaxes = taxes > 0;
+  const hasDuties = duties > 0;
   const { currencyCode } = cart.cost.subtotalAmount;
+
+  const footnote =
+    hasShipping || hasTaxes
+      ? hasTaxes
+        ? 'Estimated for your address — the final total is confirmed at checkout.'
+        : 'Taxes are calculated at checkout.'
+      : 'Shipping and taxes are calculated at checkout.';
 
   return (
     <Card className="lg:sticky lg:top-4">
@@ -49,6 +73,33 @@ const CartSummary = () => {
               </span>
             </div>
           )}
+          {hasShipping && (
+            <div className="flex justify-between items-center text-body-sm">
+              <span className="text-secondary">
+                Shipping
+                {address?.zip ? ` · ${address.zip}` : ''}
+              </span>
+              <span className="text-body font-medium tabular-nums">
+                {shipping > 0 ? formatPrice(shipping, currencyCode) : 'Free'}
+              </span>
+            </div>
+          )}
+          {hasDuties && (
+            <div className="flex justify-between items-center text-body-sm">
+              <span className="text-secondary">Duties</span>
+              <span className="text-body font-medium tabular-nums">
+                {formatPrice(duties, currencyCode)}
+              </span>
+            </div>
+          )}
+          {hasTaxes && (
+            <div className="flex justify-between items-center text-body-sm">
+              <span className="text-secondary">Taxes</span>
+              <span className="text-body font-medium tabular-nums">
+                {formatPrice(taxes, currencyCode)}
+              </span>
+            </div>
+          )}
         </div>
         <Separator />
         <div className="flex justify-between items-baseline pt-2">
@@ -57,9 +108,7 @@ const CartSummary = () => {
             {formatPrice(total, currencyCode)}
           </span>
         </div>
-        <p className="text-caption-sm text-secondary">
-          Shipping and taxes are calculated at checkout.
-        </p>
+        <p className="text-caption-sm text-secondary">{footnote}</p>
       </CardContent>
       <CardFooter className="pt-6">
         <CheckoutButton checkoutUrl={String(cart.checkoutUrl)} />

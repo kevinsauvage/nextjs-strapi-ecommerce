@@ -29,61 +29,61 @@
  */
 
 :root {
-  /* Base Colors - Light Mode */
-  --background: #ffffff; /* Background: #FFFFFF */
-  --card: #ffffff; /* Card surface: #FFFFFF */
-  --popover: #ffffff; /* Popover surface: #FFFFFF */
-  --sidebar: #fafaf9; /* Sidebar surface: #FAFAF9 (stone-50) */
+  /* Base Colors - Light Mode (warm paper + sand, BRAND.md "warm neutrals") */
+  --background: #fbf8f3; /* Warm paper */
+  --card: #ffffff; /* Card surface */
+  --popover: #ffffff; /* Popover surface */
+  --sidebar: #f4eee5; /* Sand surface */
 
-  /* Brand accent — muted brass gold for CTAs, eyebrows, ratings.
-   * #8a5a00 = 5.9:1 on white (AA normal text); solid gold buttons use
-   * near-black text for 9.4:1. */
-  --gold: #8a5a00;
-  --gold-strong: #a16207;
-  --gold-soft: #fef6e0;
-  --gold-foreground: #0c0a09;
+  /* Brand accent — muted sage/olive natural tone for eyebrows, rules, ratings.
+   * #4f5b43 ≈ 7:1 on #FBF8F3 (AA normal text); solid accent buttons use
+   * warm near-black text. */
+  --gold: #4f5b43;
+  --gold-strong: #3f4a36;
+  --gold-soft: #e9ede1;
+  --gold-foreground: #1f1b16;
 
-  --foreground: #0c0a09; /* Ink: #0C0A09 (stone-950) */
-  --card-foreground: #0c0a09; /* Ink */
-  --popover-foreground: #0c0a09; /* Ink */
-  --sidebar-foreground: #0c0a09; /* Ink */
+  --foreground: #1f1b16; /* Warm ink */
+  --card-foreground: #1f1b16;
+  --popover-foreground: #1f1b16;
+  --sidebar-foreground: #1f1b16;
 
-  /* Primary - Ink. Solid actions use near-black for an editorial look. */
-  --primary: #0c0a09; /* Ink */
-  --sidebar-primary: #0c0a09; /* Ink */
-  --primary-foreground: #fafaf9; /* Paper text on ink */
-  --sidebar-primary-foreground: #fafaf9;
+  /* Primary - warm ink. Solid actions stay editorial monochrome. */
+  --primary: #1f1b16;
+  --sidebar-primary: #1f1b16;
+  --primary-foreground: #f8f4ee;
+  --sidebar-primary-foreground: #f8f4ee;
 
   /* Secondary and Accent Surfaces */
-  --secondary: #f5f5f4; /* Muted surface: #F5F5F4 (stone-100) */
-  --accent: #f5f5f4; /* Muted surface: #F5F5F4 */
-  --sidebar-accent: #f5f5f4; /* Muted surface: #F5F5F4 */
-  --secondary-foreground: #0c0a09; /* Ink text on muted surface */
-  --accent-foreground: #0c0a09; /* Ink text on muted surface */
-  --sidebar-accent-foreground: #0c0a09;
+  --secondary: #f1eae0;
+  --accent: #f1eae0;
+  --sidebar-accent: #f1eae0;
+  --secondary-foreground: #1f1b16;
+  --accent-foreground: #1f1b16;
+  --sidebar-accent-foreground: #1f1b16;
 
   /* Muted Colors */
-  --muted: #f5f5f4; /* Muted surface: #F5F5F4 (stone-100) */
-  --muted-foreground: #57534e; /* Secondary text: #57534E (stone-600) */
-  --muted-text: #78716c; /* Muted text: #78716C (stone-500) - captions only */
+  --muted: #f1eae0;
+  --muted-foreground: #6b6157; /* Secondary text */
+  --muted-text: #8a7f72; /* Captions only */
 
   /* Destructive */
-  --destructive: #dc2626; /* Destructive: #DC2626 (red-600) */
-  --destructive-foreground: #ffffff; /* White text on destructive */
+  --destructive: #c2410c; /* Warm clay */
+  --destructive-foreground: #ffffff;
 
   /* Borders and Inputs */
-  --border: #e7e5e4; /* Border: #E7E5E4 (stone-200) */
-  --sidebar-border: #e7e5e4; /* Border: #E7E5E4 */
-  --ring: #0c0a09; /* Ink focus ring */
-  --sidebar-ring: #0c0a09;
-  --input: #e7e5e4; /* Border color for inputs */
+  --border: #e7ded2;
+  --sidebar-border: #e7ded2;
+  --ring: #1f1b16;
+  --sidebar-ring: #1f1b16;
+  --input: #e7ded2;
 
-  /* Chart Colors - warm monochrome ramp with a single red signal */
-  --chart-1: #0c0a09;
-  --chart-2: #57534e;
-  --chart-3: #a8a29e;
-  --chart-4: #d6d3d1;
-  --chart-5: #dc2626;
+  /* Chart Colors - warm natural ramp with a single clay signal */
+  --chart-1: #1f1b16;
+  --chart-2: #6b6157;
+  --chart-3: #8a7f72;
+  --chart-4: #d8cdbd;
+  --chart-5: #c2410c;
 
   --radius: 0.625rem;
 }
@@ -92,63 +92,63 @@
   /**
    * Dark Mode Palette
    *
-   * Inverted warm monochrome. Surfaces step up from stone-950 to stone-800,
-   * text inverts to stone-50, and the primary action becomes paper-on-ink.
+   * Warm dark surfaces (espresso) with a soft sage accent. Text lifts to a
+   * warm paper tone so the brand stays soft and natural in the dark.
    */
 
   /* Base Colors - Dark Mode */
-  --background: #0c0a09; /* Background: #0C0A09 (stone-950) */
-  --card: #1c1917; /* Card surface: #1C1917 (stone-900) */
-  --popover: #1c1917; /* Popover surface: #1C1917 */
-  --sidebar: #0c0a09; /* Sidebar surface: #0C0A09 */
+  --background: #17140f;
+  --card: #221e18;
+  --popover: #221e18;
+  --sidebar: #17140f;
 
-  --foreground: #fafaf9; /* Paper text: #FAFAF9 (stone-50) */
-  --card-foreground: #fafaf9;
-  --popover-foreground: #fafaf9;
-  --sidebar-foreground: #fafaf9;
+  --foreground: #f3ede3;
+  --card-foreground: #f3ede3;
+  --popover-foreground: #f3ede3;
+  --sidebar-foreground: #f3ede3;
 
   /* Primary - Paper. Solid actions invert to light on dark. */
-  --primary: #fafaf9; /* Paper */
-  --sidebar-primary: #fafaf9;
-  --primary-foreground: #0c0a09; /* Ink text on paper */
-  --sidebar-primary-foreground: #0c0a09;
+  --primary: #f3ede3;
+  --sidebar-primary: #f3ede3;
+  --primary-foreground: #17140f;
+  --sidebar-primary-foreground: #17140f;
 
   /* Secondary and Accent Surfaces */
-  --secondary: #292524; /* Muted surface: #292524 (stone-800) */
-  --accent: #292524;
-  --sidebar-accent: #292524;
-  --secondary-foreground: #fafaf9; /* Paper text on muted surface */
-  --accent-foreground: #fafaf9;
-  --sidebar-accent-foreground: #fafaf9;
+  --secondary: #2c2822;
+  --accent: #2c2822;
+  --sidebar-accent: #2c2822;
+  --secondary-foreground: #f3ede3;
+  --accent-foreground: #f3ede3;
+  --sidebar-accent-foreground: #f3ede3;
 
   /* Muted Colors */
-  --muted: #292524; /* Muted surface: #292524 (stone-800) */
-  --muted-foreground: #d6d3d1; /* Secondary text: #D6D3D1 (stone-300) */
-  --muted-text: #a8a29e; /* Muted text: #A8A29E (stone-400) */
+  --muted: #2c2822;
+  --muted-foreground: #cfc7bb;
+  --muted-text: #a79e90;
 
   /* Destructive */
-  --destructive: #ef4444; /* red-500 - lighter red for dark mode */
-  --destructive-foreground: #ffffff;
+  --destructive: #f97316;
+  --destructive-foreground: #17140f;
 
-  /* Brand accent — dark mode */
-  --gold: #eab308;
-  --gold-strong: #facc15;
-  --gold-soft: #292524;
-  --gold-foreground: #0c0a09;
+  /* Brand accent — dark mode (soft sage) */
+  --gold: #c7d2b8;
+  --gold-strong: #d7dfc9;
+  --gold-soft: #2a2f26;
+  --gold-foreground: #17140f;
 
   /* Borders and Inputs */
-  --border: #292524; /* Border: #292524 (stone-800) */
-  --sidebar-border: #292524;
-  --ring: #a8a29e; /* stone-400 focus ring on dark */
-  --sidebar-ring: #a8a29e;
-  --input: #292524;
+  --border: #332e27;
+  --sidebar-border: #332e27;
+  --ring: #a79e90;
+  --sidebar-ring: #a79e90;
+  --input: #332e27;
 
-  /* Chart Colors - inverted warm monochrome ramp */
-  --chart-1: #fafaf9;
-  --chart-2: #d6d3d1;
-  --chart-3: #a8a29e;
-  --chart-4: #78716c;
-  --chart-5: #ef4444;
+  /* Chart Colors - inverted warm natural ramp */
+  --chart-1: #f3ede3;
+  --chart-2: #cfc7bb;
+  --chart-3: #a79e90;
+  --chart-4: #6b6157;
+  --chart-5: #f97316;
 }
 
 /* Add Tailwind v4 @theme configuration as needed */
@@ -293,7 +293,7 @@ table,
 th,
 td {
   padding: 0.2rem;
-  border: 1px solid var(--foreground);
+  border: 1px solid var(--border);
   font-size: 0.8rem;
 }
 
@@ -916,7 +916,7 @@ button[aria-disabled='true'] {
     text-transform: uppercase;
   }
 
-  /* Warm mesh hero surface: paper gradient + gold/rose washes (light) */
+  /* Warm mesh hero surface: paper gradient + sage/clay washes (light) */
   .hero-mesh {
     background:
       radial-gradient(
@@ -926,7 +926,7 @@ button[aria-disabled='true'] {
       ),
       radial-gradient(
         36rem 20rem at 88% 8%,
-        color-mix(in oklab, #f5d0a9 55%, transparent),
+        color-mix(in oklab, #ecd9c2 60%, transparent),
         transparent 70%
       ),
       radial-gradient(
@@ -941,12 +941,12 @@ button[aria-disabled='true'] {
     background:
       radial-gradient(
         42rem 22rem at 12% -8%,
-        color-mix(in oklab, var(--gold) 22%, transparent),
+        color-mix(in oklab, var(--gold) 18%, transparent),
         transparent 70%
       ),
       radial-gradient(
         36rem 20rem at 88% 8%,
-        color-mix(in oklab, #7c2d12 28%, transparent),
+        color-mix(in oklab, #3a332a 70%, transparent),
         transparent 70%
       ),
       var(--background);
@@ -967,7 +967,7 @@ button[aria-disabled='true'] {
   }
 
   .lift:hover {
-    box-shadow: 0 18px 44px -18px rgb(12 10 9 / 0.28);
+    box-shadow: 0 18px 44px -18px rgb(31 27 22 / 0.22);
     transform: translateY(-3px);
   }
 

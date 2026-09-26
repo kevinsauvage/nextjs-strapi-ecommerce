@@ -8,7 +8,9 @@ import EmptyState from '@/components/EmptyState';
 import PageBanner from '@/components/PageBanner';
 import RecentlyViewedProducts from '@/components/RecentlyViewedProducts';
 import { Button } from '@/components/ui/button';
+import { SHOP } from '@/config/constants';
 import useCartContext from '@/contexts/CartContext/useCartContext';
+import { formatPrice } from '@/utils/format';
 
 import CartEmptyState from './CartEmptyState';
 import CartHeader from './CartHeader';
@@ -20,9 +22,15 @@ import OrderNoteForm from './OrderNoteForm';
 
 import { ChevronLeft, Lock, RotateCcw, Truck } from 'lucide-react';
 
-const FREE_SHIPPING_THRESHOLD = 150;
+const FREE_SHIPPING_THRESHOLD = SHOP.freeShippingThreshold;
 
-const FreeShippingBar = ({ subtotal }: { subtotal: number }) => {
+const FreeShippingBar = ({
+  subtotal,
+  currencyCode,
+}: {
+  subtotal: number;
+  currencyCode: string;
+}) => {
   const progress = Math.min(100, Math.round((subtotal / FREE_SHIPPING_THRESHOLD) * 100));
   const remaining = Math.max(0, FREE_SHIPPING_THRESHOLD - subtotal);
 
@@ -32,7 +40,8 @@ const FreeShippingBar = ({ subtotal }: { subtotal: number }) => {
         <Truck size={16} className="text-[var(--gold)]" aria-hidden="true" />
         {remaining > 0 ? (
           <span>
-            You&apos;re <strong>${remaining.toFixed(0)}</strong> away from free shipping
+            You&apos;re <strong>{formatPrice(remaining, currencyCode)}</strong> away from free
+            shipping
           </span>
         ) : (
           <span>You&apos;ve unlocked complimentary shipping</span>
@@ -98,7 +107,7 @@ const CartView = ({ countries }: { countries: Array<{ code: string; name: string
         <PageBanner
           title="Your Cart"
           eyebrow="Secure checkout"
-          description="Review your pieces — taxes and shipping are calculated at checkout."
+          description="Review your selection — taxes and shipping are calculated at checkout."
           className="w-full rounded-[var(--radius)]"
         >
           <div className="flex w-full flex-wrap items-center justify-between gap-4">
@@ -124,7 +133,8 @@ const CartView = ({ countries }: { countries: Array<{ code: string; name: string
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
           <div className="space-y-6 lg:col-span-2">
             <FreeShippingBar
-              subtotal={Number.parseFloat(cart?.cost?.subtotalAmount?.amount ?? '0')}
+              currencyCode={cart.cost.subtotalAmount.currencyCode}
+              subtotal={Number.parseFloat(cart.cost.subtotalAmount.amount ?? '0')}
             />
             <CartItemsList />
           </div>

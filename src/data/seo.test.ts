@@ -4,8 +4,8 @@ import { describe, expect, it } from 'vitest';
 
 describe('seo', () => {
   it('exposes the home, cart and search entries', () => {
-    expect(seo.home.title).toBe('Curated Fashion, Jewelry & Accessories');
-    expect(seo.home.description).toContain('curated collection');
+    expect(seo.home.title).toBe('Premium Pet Products for Dogs & Cats');
+    expect(seo.home.description).toContain('pet essentials');
     expect(seo.cart.title).toBe('Cart');
     expect(seo.search.title).toBe('Search');
     expect(seo.wishlist.title).toBe('Wishlist');

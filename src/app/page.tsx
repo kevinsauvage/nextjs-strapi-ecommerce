@@ -25,29 +25,30 @@ export const metadata: Metadata = generateMetadataUtil({
 });
 
 const perks = [
-  { Icon: Truck, title: 'Free shipping', text: 'On all orders over $150' },
+  { Icon: Truck, title: 'Free EU shipping', text: 'On orders over €80' },
   { Icon: RotateCcw, title: 'Easy returns', text: '30-day hassle-free returns' },
   { Icon: ShieldCheck, title: 'Secure checkout', text: 'Encrypted payment flow' },
-  { Icon: Award, title: 'Curated quality', text: 'Small-batch, vetted makers' },
+  { Icon: Award, title: 'European quality', text: 'Thoughtfully selected, made to last' },
 ];
 
 const testimonials = [
   {
     quote:
-      'The fit, the fabric, the packaging — everything feels considered. My go-to for elevated basics.',
-    name: 'Maya R.',
-    detail: 'Verified buyer · Linen Edit',
+      'The bed arrived in two days and looks like a piece of furniture — exactly what we hoped for.',
+    name: 'Lucía M.',
+    detail: 'Verified buyer · Home & Comfort',
   },
   {
     quote:
-      'Ordered Tuesday, wearing it Friday. Beautifully made and the returns policy made it risk-free.',
-    name: 'Jonas K.',
-    detail: 'Verified buyer · Outerwear',
+      'Beautifully made and easy to travel with. Our cat settles into the carrier straight away.',
+    name: 'Thomas L.',
+    detail: 'Verified buyer · Walk & Travel',
   },
   {
-    quote: 'Editorial taste without the markup. The collections read like a magazine you can shop.',
-    name: 'Priya S.',
-    detail: 'Verified buyer · New Season',
+    quote:
+      'You can tell every product is chosen with care. The treat bag is our everyday essential.',
+    name: 'Marta R.',
+    detail: 'Verified buyer · Feeding',
   },
 ];
 
@@ -128,7 +129,7 @@ const Home = async () => {
               <span aria-hidden="true" className="h-px w-8 bg-[var(--gold)]/60" />
               Loved by customers
             </span>
-            <h2 className="text-heading-2 mt-3 max-w-xl">Rated 4.9 by 12,000+ happy shoppers</h2>
+            <h2 className="text-heading-2 mt-3 max-w-xl">Loved by pet parents across Europe</h2>
             <div className="mt-8 grid gap-4 md:grid-cols-3">
               {testimonials.map(({ quote, name, detail }) => (
                 <figure
@@ -171,11 +172,11 @@ const Home = async () => {
           <div className="hero-mesh relative overflow-hidden rounded-[var(--radius)] border border-border/70 px-6 py-12 text-center md:py-16">
             <span className="text-eyebrow-gold justify-center inline-flex items-center gap-3">
               <span aria-hidden="true" className="h-px w-8 bg-[var(--gold)]/60" />
-              Members get 10% off
+              New arrivals & private offers
               <span aria-hidden="true" className="h-px w-8 bg-[var(--gold)]/60" />
             </span>
             <h2 className="mx-auto mt-4 max-w-2xl text-balance">
-              Join the list for early drops & private offers
+              Join the list for early access & new arrivals
             </h2>
             <p className="text-body mx-auto mt-3 max-w-xl text-secondary">
               One thoughtful email a week. No spam — unsubscribe anytime.

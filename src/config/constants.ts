@@ -16,3 +16,11 @@ export const DEFAULTS = {
   na: 'N/A',
   trackingNumber: 'No Tracking Number',
 };
+
+/** Storefront-wide commercial settings shared by cart + marketing surfaces. */
+export const SHOP = {
+  /** Order subtotal (shop currency) that unlocks free shipping. */
+  freeShippingThreshold: 80,
+  /** Fallback currency for price copy shown before a cart is loaded. */
+  currency: 'EUR',
+};

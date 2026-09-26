@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Playfair_Display } from 'next/font/google';
+import { Fraunces, Inter } from 'next/font/google';
 
 import CookieBanner from '@/components/CookieBanner';
 import Footer from '@/components/Footer';
@@ -77,11 +77,12 @@ const inter = Inter({
   preload: true,
 });
 
-const playfair = Playfair_Display({
+const fraunces = Fraunces({
   subsets: ['latin'],
   variable: '--font-display',
   display: 'swap',
   preload: false,
+  axes: ['SOFT', 'WONK', 'opsz'],
 });
 
 const RootLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -93,7 +94,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} font-sans scroll-smooth antialiased`}
+      className={`${inter.variable} ${fraunces.variable} font-sans scroll-smooth antialiased`}
       suppressHydrationWarning
       data-scroll-behavior="smooth"
     >

@@ -8,45 +8,16 @@
           "title": "Shop",
           "url": "/collections/all-products",
           "items": [
-            { "title": "Dresses", "url": "/collections/dresses" },
-            { "title": "Tops", "url": "/collections/tops" },
-            {
-              "title": "Activewear",
-              "url": "/collections/activewear",
-              "items": [
-                { "title": "Active Tops", "url": "/collections/activewear-tops" },
-                { "title": "Active Bottoms", "url": "/collections/activewear-bottoms" },
-                { "title": "Active Sets", "url": "/collections/activewear-sets" }
-              ]
-            },
-            {
-              "title": "Bottoms",
-              "url": "/collections/bottoms",
-              "items": [
-                { "title": "Pants", "url": "/collections/pants" },
-                { "title": "Leggings", "url": "/collections/leggings" },
-                { "title": "Shorts", "url": "/collections/shorts" },
-                { "title": "Skirts", "url": "/collections/skirts" },
-                { "title": "Denim", "url": "/collections/denim" },
-                { "title": "Jumpsuits & Rompers", "url": "/collections/jumpsuits-rompers" }
-              ]
-            },
-            {
-              "title": "Outerwear",
-              "url": "/collections/outerwear",
-              "items": [
-                { "title": "Jackets", "url": "/collections/jackets" },
-                { "title": "Cardigans", "url": "/collections/cardigans" },
-                { "title": "Sweaters", "url": "/collections/sweaters" },
-                { "title": "Sets", "url": "/collections/sets" }
-              ]
-            },
-            { "title": "Swim & Beachwear", "url": "/collections/swim-beachwear" },
-            { "title": "Accessories", "url": "/collections/accessories" }
+            { "title": "New arrivals", "url": "/collections/new-arrivals" },
+            { "title": "Dogs", "url": "/collections/dogs" },
+            { "title": "Cats", "url": "/collections/cats" },
+            { "title": "Walk & Travel", "url": "/collections/walk-travel" },
+            { "title": "Home & Comfort", "url": "/collections/home-comfort" },
+            { "title": "Play & Enrichment", "url": "/collections/play-enrichment" },
+            { "title": "Feeding", "url": "/collections/feeding" }
           ]
         },
-        { "title": "Vacation", "url": "/collections/vacation" },
-        { "title": "Sale", "url": "/collections/sale" }
+        { "title": "About", "url": "/pages/about-us" }
       ]
     },
     {
@@ -57,12 +28,14 @@
           "title": "Shop",
           "url": "#",
           "items": [
-            { "title": "Shop All", "url": "/collections/all-products" },
-            { "title": "Dresses", "url": "/collections/dresses" },
-            { "title": "Activewear", "url": "/collections/activewear" },
-            { "title": "Bottoms", "url": "/collections/bottoms" },
-            { "title": "Outerwear", "url": "/collections/outerwear" },
-            { "title": "Sale", "url": "/collections/sale" }
+            { "title": "All products", "url": "/collections/all-products" },
+            { "title": "New arrivals", "url": "/collections/new-arrivals" },
+            { "title": "Dogs", "url": "/collections/dogs" },
+            { "title": "Cats", "url": "/collections/cats" },
+            { "title": "Walk & Travel", "url": "/collections/walk-travel" },
+            { "title": "Home & Comfort", "url": "/collections/home-comfort" },
+            { "title": "Play & Enrichment", "url": "/collections/play-enrichment" },
+            { "title": "Made in Europe", "url": "/collections/made-in-europe" }
           ]
         },
         {
@@ -73,7 +46,7 @@
             { "title": "Search", "url": "/search" },
             { "title": "Shipping", "url": "/shipping" },
             { "title": "Refund policy", "url": "/refund" },
-            { "title": "Size guide", "url": "/pages/size-guide" },
+            { "title": "Pet care & sizing", "url": "/pages/pet-care" },
             { "title": "FAQ", "url": "/pages/faq" },
             { "title": "About us", "url": "/pages/about-us" }
           ]

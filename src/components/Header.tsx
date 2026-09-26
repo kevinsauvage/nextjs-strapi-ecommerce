@@ -31,7 +31,7 @@ const Header = async ({
         <div className="bg-primary text-primary-foreground">
           <p className="container mx-auto flex items-center justify-center gap-2 px-4 py-2 text-center text-[12px] font-medium tracking-[0.08em] uppercase">
             <Truck size={14} strokeWidth={1.75} aria-hidden="true" />
-            Complimentary shipping on orders over $150 · Easy 30-day returns
+            Complimentary shipping on orders over €80 · Easy 30-day returns
           </p>
         </div>
       )}
