@@ -69,6 +69,7 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
   const { orderId } = await params;
   const locale = await localeFromParams(params);
   const t = getTranslations(locale, 'account');
+  const statusLabels = t.raw('orderStatus') as Record<string, string>;
   const order = await getOrder(orderId, locale);
 
   if (!order) {
@@ -97,12 +98,12 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
           <div className="flex flex-wrap items-center gap-2">
             {order.fulfillmentStatus && (
               <Badge variant={getStatusBadgeVariant(order.fulfillmentStatus)}>
-                {formatStatus(order.fulfillmentStatus)}
+                {formatStatus(order.fulfillmentStatus, statusLabels)}
               </Badge>
             )}
             {order.financialStatus && (
               <Badge variant={getStatusBadgeVariant(order.financialStatus)}>
-                {formatStatus(order.financialStatus)}
+                {formatStatus(order.financialStatus, statusLabels)}
               </Badge>
             )}
             {typeof order.customerUrl === 'string' && (
@@ -209,10 +210,13 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
                 value={formatPrice(order.totalRefunded.amount, order.totalRefunded.currencyCode)}
               />
             )}
-            <DetailRow label={t('financialStatus')} value={formatStatus(order.financialStatus)} />
+            <DetailRow
+              label={t('financialStatus')}
+              value={formatStatus(order.financialStatus, statusLabels)}
+            />
             <DetailRow
               label={t('fulfillmentStatus')}
-              value={formatStatus(order.fulfillmentStatus)}
+              value={formatStatus(order.fulfillmentStatus, statusLabels)}
             />
             <DetailRow label={t('email')} value={order.email || DEFAULTS.na} />
             {order.phone && <DetailRow label={t('phone')} value={order.phone} />}
@@ -224,7 +228,10 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
             )}
             {typeof order.canceledAt === 'string' && typeof order.cancelReason === 'string' && (
               <>
-                <DetailRow label={t('cancelReason')} value={order.cancelReason} />
+                <DetailRow
+                  label={t('cancelReason')}
+                  value={formatStatus(order.cancelReason, statusLabels)}
+                />
                 <DetailRow label={t('canceledAt')} value={formatDate(order.canceledAt)} />
               </>
             )}

@@ -1,12 +1,23 @@
 import type { OrderFinancialStatus, OrderFulfillmentStatus } from '@/shopify/storefront';
 
-export function formatStatus(status?: OrderFulfillmentStatus | OrderFinancialStatus | null) {
+/**
+ * Localized display name for an order enum value. `labels` comes from the
+ * `account.orderStatus` catalog (`t.raw('orderStatus')`); unknown values fall
+ * back to title-cased English so a new Shopify status never renders blank.
+ */
+export function formatStatus(
+  status?: OrderFinancialStatus | OrderFulfillmentStatus | string | null,
+  labels?: Record<string, string>,
+) {
   if (!status) return 'N/A';
 
-  return status
-    .toLowerCase()
-    .replace(/_/g, ' ')
-    .replace(/\b\w/g, (match) => match.toUpperCase());
+  return (
+    labels?.[status] ??
+    status
+      .toLowerCase()
+      .replace(/_/g, ' ')
+      .replace(/\b\w/g, (match) => match.toUpperCase())
+  );
 }
 
 export const getStatusBadgeVariant = (
@@ -14,9 +25,11 @@ export const getStatusBadgeVariant = (
 ): 'default' | 'secondary' | 'outline' => {
   if (!status) return 'outline';
 
+  // Word boundaries matter: `UNFULFILLED` contains `FULFILLED` as a substring,
+  // so a plain `includes` would highlight unfulfilled orders as fulfilled.
   const statusLower = status.toLowerCase();
 
-  if (statusLower.includes('fulfilled') || statusLower.includes('paid')) {
+  if (/\bfulfilled\b/.test(statusLower) || /\bpaid\b/.test(statusLower)) {
     return 'default';
   }
 

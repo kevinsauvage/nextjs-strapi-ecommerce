@@ -30,6 +30,7 @@ const Detail = ({ label, value }: { label: string; value: string | number | null
 
 const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
   const t = useTranslations('account');
+  const statusLabels = t.raw('orderStatus') as Record<string, string>;
   const {
     financialStatus,
     email,
@@ -78,8 +79,8 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
   }
 
   details.push(
-    { label: t('financialStatus'), value: formatStatus(financialStatus) },
-    { label: t('fulfillmentStatus'), value: formatStatus(fulfillmentStatus) },
+    { label: t('financialStatus'), value: formatStatus(financialStatus, statusLabels) },
+    { label: t('fulfillmentStatus'), value: formatStatus(fulfillmentStatus, statusLabels) },
     { label: t('email'), value: email || DEFAULTS.na },
   );
 
@@ -109,12 +110,12 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
                 <h3 className="text-heading-4">{t('orderTitle', { name: order.name })}</h3>
                 {fulfillmentStatus && (
                   <Badge variant={getStatusBadgeVariant(fulfillmentStatus)}>
-                    {formatStatus(fulfillmentStatus)}
+                    {formatStatus(fulfillmentStatus, statusLabels)}
                   </Badge>
                 )}
                 {financialStatus && (
                   <Badge variant={getStatusBadgeVariant(financialStatus)}>
-                    {formatStatus(financialStatus)}
+                    {formatStatus(financialStatus, statusLabels)}
                   </Badge>
                 )}
               </div>
