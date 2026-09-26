@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
+import { optionNameKey } from '@/i18n/optionNames';
 import type { ProductFieldsFragment } from '@/shopify/storefront';
 import { cn } from '@/utils/cn';
 
@@ -22,6 +23,10 @@ const Option = ({
   onClick: (optionId: string, name: string, value: OptionValues) => void;
 }) => {
   const t = useTranslations('product');
+  // Shopify option names are not translatable, so known ones resolve to a
+  // catalog key; anything merchant-specific renders as typed.
+  const nameKey = optionNameKey(option.name);
+  const name = nameKey ? t(nameKey) : option.name;
 
   if (!Array.isArray(option.optionValues) || option.optionValues.length <= 1) {
     return null;
@@ -32,7 +37,7 @@ const Option = ({
   return (
     <div className="mb-4 last:mb-0">
       <div className="mb-2 flex items-baseline gap-2">
-        <h3 className="text-label">{option.name}</h3>
+        <h3 className="text-label">{name}</h3>
         {selectedValue ? (
           <span className="text-caption-sm text-muted">{selectedValue.name}</span>
         ) : null}
@@ -49,7 +54,7 @@ const Option = ({
                 <button
                   type="button"
                   disabled={isOutOfStock}
-                  aria-label={`${option.name}: ${value.name}${isOutOfStock ? ` (${t('outOfStock')})` : ''}`}
+                  aria-label={`${name}: ${value.name}${isOutOfStock ? ` (${t('outOfStock')})` : ''}`}
                   aria-pressed={isSelected}
                   title={value.name}
                   onClick={() => onClick(option.id, option.name, value)}

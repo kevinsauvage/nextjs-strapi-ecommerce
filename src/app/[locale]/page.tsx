@@ -183,7 +183,7 @@ const Home = async ({ params }: { params: Promise<{ locale: string }> }) => {
           </div>
         )}
 
-        {faqSection ? <FaqSection section={faqSection} /> : null}
+        {faqSection ? <FaqSection locale={locale} section={faqSection} /> : null}
 
         {/* Closing CTA */}
         <section className="pb-4 pt-6">

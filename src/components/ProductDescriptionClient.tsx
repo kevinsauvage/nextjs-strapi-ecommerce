@@ -31,7 +31,7 @@ type ProductDescriptionClientProps = {
   sizeChart: SizeChart | null;
 };
 
-type SizeChart = { title: string; html: string; note: string | null };
+type SizeChart = { title: string | null; html: string; note: string | null };
 
 const MetaItem = ({ label, value }: { label: string; value: string }) => (
   <div className="flex flex-col gap-1">
@@ -217,7 +217,7 @@ const DetailsAccordion = ({
       {sizeChart?.html ? (
         <AccordionItem value="size-chart">
           <AccordionTrigger className="text-label hover:no-underline">
-            {sizeChart.title}
+            {sizeChart.title ?? t('sizeChart')}
           </AccordionTrigger>
           <AccordionContent>
             {/* Sanitized upstream in `ProductDescription` via `sanitizeHtmlCached`. */}

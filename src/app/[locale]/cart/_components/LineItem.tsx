@@ -3,6 +3,7 @@ import { useTranslations } from 'next-intl';
 import Link from '@/components/LocalizedLink';
 import OptimizedImage from '@/components/OptimizedImage';
 import config from '@/config';
+import { optionNameKey } from '@/i18n/optionNames';
 import { type CartFieldsFragment } from '@/shopify/storefront';
 import { formatPrice } from '@/utils/format';
 
@@ -65,27 +66,34 @@ const LineItem: React.FC<{
           {node.merchandise.selectedOptions && node.merchandise.selectedOptions.length > 0 && (
             <div className="flex flex-wrap items-center gap-1.5 mt-1.5 mb-2">
               {node.merchandise.selectedOptions.map(
-                (option: { name: string; value: string }, index: number) => (
-                  <span
-                    key={`${option.name}-${option.value}`}
-                    className="text-body-sm text-secondary"
-                  >
-                    {option.name}: <span className="font-medium">{option.value}</span>
-                    {index < node.merchandise.selectedOptions.length - 1 && (
-                      <span className="mx-1.5">•</span>
-                    )}
-                  </span>
-                ),
+                (option: { name: string; value: string }, index: number) => {
+                  // Shopify option names are not translatable; known ones
+                  // resolve to a catalog key, the rest render as typed.
+                  const nameKey = optionNameKey(option.name);
+
+                  return (
+                    <span
+                      key={`${option.name}-${option.value}`}
+                      className="text-body-sm text-secondary"
+                    >
+                      {nameKey ? t(nameKey) : option.name}:{' '}
+                      <span className="font-medium">{option.value}</span>
+                      {index < node.merchandise.selectedOptions.length - 1 && (
+                        <span className="mx-1.5">•</span>
+                      )}
+                    </span>
+                  );
+                },
               )}
             </div>
           )}
           <div className="flex items-center gap-2 mt-2">
             <p className="text-body-sm text-secondary">
-              Unit: {formatPrice(unitPrice, currencyCode)}
+              {t('unit')}: {formatPrice(unitPrice, currencyCode)}
             </p>
             {hasDiscount && (
               <span className="text-caption-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded-full font-medium">
-                Discounted
+                {t('discounted')}
               </span>
             )}
           </div>

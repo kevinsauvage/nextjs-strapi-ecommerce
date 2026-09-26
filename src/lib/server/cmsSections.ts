@@ -161,7 +161,8 @@ export const getPromoBar = async (locale: Locale): Promise<PromoBarSection | nul
 };
 
 export type SizeChartSection = {
-  title: string;
+  /** `null` when the metaobject has no heading; the caller localizes the default. */
+  title: string | null;
   /** Raw merchant HTML; sanitize before rendering. */
   body: string;
   note: string | null;
@@ -178,7 +179,7 @@ export const getSizeChart = async (locale: Locale): Promise<SizeChartSection | n
   return {
     body,
     note: pick(fields, 'note', 'footnote'),
-    title: pick(fields, 'title', 'heading') ?? 'Size chart',
+    title: pick(fields, 'title', 'heading'),
   };
 };
 
@@ -190,7 +191,8 @@ export type FaqItem = {
 };
 
 export type FaqSection = {
-  title: string;
+  /** `null` when no heading is curated; the caller localizes the default. */
+  title: string | null;
   intro: string | null;
   items: FaqItem[];
 };
@@ -248,6 +250,6 @@ export const getFaqSection = async (locale: Locale): Promise<FaqSection | null> 
   return {
     intro: fields ? pick(fields, 'intro', 'subheading') : null,
     items,
-    title: title ?? 'Frequently asked questions',
+    title,
   };
 };

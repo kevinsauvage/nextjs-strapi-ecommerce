@@ -129,7 +129,7 @@ describe('cmsSections', () => {
   });
 
   describe('getSizeChart', () => {
-    it('returns the sanitizable body and defaults the title', async () => {
+    it('returns the sanitizable body and leaves the title for the caller to localize', async () => {
       getShopMetaobjectByHandle.mockResolvedValue(
         metaobject({ key: 'body', value: '<table><tr><td>S</td></tr></table>' }),
       );
@@ -137,7 +137,7 @@ describe('cmsSections', () => {
       await expect(getSizeChart('en')).resolves.toEqual({
         body: '<table><tr><td>S</td></tr></table>',
         note: null,
-        title: 'Size chart',
+        title: null,
       });
     });
 
@@ -207,7 +207,7 @@ describe('cmsSections', () => {
           { answer: null, position: 0, question: 'One?' },
           { answer: 'B', position: 1, question: 'Two?' },
         ],
-        title: 'Frequently asked questions',
+        title: null,
       });
     });
 
