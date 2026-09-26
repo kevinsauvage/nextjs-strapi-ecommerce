@@ -90,7 +90,7 @@ const OrderDetailPage = async ({ params }: { params: Promise<OrderDetailParams> 
           actions={<OrderDetailActions orderId={orderId} orderName={order.name} />}
           description={
             typeof order.processedAt === 'string'
-              ? `${t('placedOn')} ${formatDate(order.processedAt)} · ${itemsCount} ${itemsWord}`
+              ? `${t('placedOn')} ${formatDate(order.processedAt, locale)} · ${itemsCount} ${itemsWord}`
               : `${itemsCount} ${itemsWord}`
           }
         />

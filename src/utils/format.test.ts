@@ -47,7 +47,7 @@ describe('formatDate', () => {
   const date = new Date(Date.UTC(2024, 0, 5));
 
   it('formats with the default long format', () => {
-    expect(formatDate(date)).toBe('Friday, January 5, 2024');
+    expect(formatDate(date)).toBe('Friday, 5 January 2024');
   });
 
   it('accepts custom options', () => {
@@ -58,7 +58,7 @@ describe('formatDate', () => {
     // 00:30Z is still the previous day in any negative-offset timezone, so a
     // local-time format would differ between server and client. Pinning to UTC
     // keeps the output stable (no hydration mismatch).
-    expect(formatDate('2024-01-05T00:30:00.000Z')).toBe('Friday, January 5, 2024');
+    expect(formatDate('2024-01-05T00:30:00.000Z')).toBe('Friday, 5 January 2024');
   });
 
   it('returns the fallback for missing or invalid values', () => {
@@ -66,5 +66,25 @@ describe('formatDate', () => {
     expect(formatDate(null)).toBe('N/A');
     expect(formatDate('')).toBe('N/A');
     expect(formatDate('not-a-date')).toBe('N/A');
+  });
+
+  // Pinned to UTC noon so the calendar date is stable regardless of the
+  // machine timezone (the implementation also pins UTC for this reason).
+  const NOON_UTC = '2026-09-26T12:00:00.000Z';
+
+  it('formats Spanish and French dates in their own locale', () => {
+    expect(formatDate(NOON_UTC, 'es')).toBe('sábado, 26 de septiembre de 2026');
+    expect(formatDate(NOON_UTC, 'fr')).toBe('samedi 26 septembre 2026');
+  });
+
+  it('keeps custom options while switching the locale', () => {
+    expect(
+      formatDate(NOON_UTC, { day: 'numeric', month: 'short', year: 'numeric' }, undefined, 'es'),
+    ).toBe('26 sept 2026');
+  });
+
+  it('returns the fallback for missing values in any locale', () => {
+    expect(formatDate(null, 'es')).toBe('N/A');
+    expect(formatDate('garbage', undefined, '—')).toBe('—');
   });
 });

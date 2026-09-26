@@ -1,3 +1,5 @@
+import { ACCEPT_LANGUAGE, DEFAULT_LOCALE, type Locale } from '@/i18n/routing';
+
 const DEFAULT_DATE_OPTIONS: Intl.DateTimeFormatOptions = {
   day: 'numeric',
   month: 'long',
@@ -14,18 +16,34 @@ const DEFAULT_DATE_OPTIONS: Intl.DateTimeFormatOptions = {
  * timezone than the server would see a hydration mismatch. Pass `timeZone` in
  * `options` to opt back into a specific zone.
  */
-export const formatDate = (
+export function formatDate(
   value: string | number | Date | null | undefined,
-  options: Intl.DateTimeFormatOptions = DEFAULT_DATE_OPTIONS,
+  locale?: Locale,
+): string;
+export function formatDate(
+  value: string | number | Date | null | undefined,
+  options?: Intl.DateTimeFormatOptions,
+  fallback?: string,
+  locale?: Locale,
+): string;
+export function formatDate(
+  value: string | number | Date | null | undefined,
+  optionsOrLocale: Intl.DateTimeFormatOptions | Locale = DEFAULT_DATE_OPTIONS,
   fallback = 'N/A',
-): string => {
+  locale: Locale = DEFAULT_LOCALE,
+): string {
+  // Second-argument shorthand: `formatDate(date, 'es')` formats with the
+  // default options in that locale.
+  const options = typeof optionsOrLocale === 'string' ? DEFAULT_DATE_OPTIONS : optionsOrLocale;
+  const resolvedLocale = typeof optionsOrLocale === 'string' ? optionsOrLocale : locale;
+
   if (value === null || value === undefined || value === '') return fallback;
 
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) return fallback;
 
-  return date.toLocaleDateString('en-US', { timeZone: 'UTC', ...options });
-};
+  return date.toLocaleDateString(ACCEPT_LANGUAGE[resolvedLocale], { timeZone: 'UTC', ...options });
+}
 
 /**
  * Formats a price amount with currency code

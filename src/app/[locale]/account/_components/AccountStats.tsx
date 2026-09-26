@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
+import { useRenderedLocale } from '@/components/LocaleProvider';
 import Link from '@/components/LocalizedLink';
 import { Card, CardContent } from '@/components/ui/card';
 import config from '@/config';
@@ -90,6 +91,7 @@ const AccountStats = ({
   // context rather than fetching it again on the server.
   const { wishlistIds } = useUserContext();
   const t = useTranslations('account');
+  const locale = useRenderedLocale();
 
   return (
     <div
@@ -118,7 +120,7 @@ const AccountStats = ({
       />
       <StatCard
         title={t('statMember')}
-        value={formatDate(memberSince, { month: 'short', year: 'numeric' })}
+        value={formatDate(memberSince, { month: 'short', year: 'numeric' }, undefined, locale)}
         icon={<Calendar size={20} />}
         description={t('statMemberDescription')}
       />

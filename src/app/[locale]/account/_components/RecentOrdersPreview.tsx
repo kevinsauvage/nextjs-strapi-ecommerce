@@ -52,9 +52,16 @@ const RecentOrdersPreview = ({ orders, locale }: RecentOrdersPreviewProps) => {
               <Card className="py-0 transition-all duration-200 group-hover:border-foreground/20 group-hover:shadow-md">
                 <CardContent className="flex items-center justify-between gap-4 p-4">
                   <div className="min-w-0 space-y-1">
-                    <p className="truncate text-body font-medium">Order {node.name}</p>
+                    <p className="truncate text-body font-medium">
+                      {t('orderTitle', { name: node.name })}
+                    </p>
                     <p className="text-body-sm text-secondary">
-                      {formatDate(orderDate, { day: 'numeric', month: 'short', year: 'numeric' })}
+                      {formatDate(
+                        orderDate,
+                        { day: 'numeric', month: 'short', year: 'numeric' },
+                        undefined,
+                        locale,
+                      )}
                     </p>
                   </div>
                   <div className="flex shrink-0 items-center gap-3">

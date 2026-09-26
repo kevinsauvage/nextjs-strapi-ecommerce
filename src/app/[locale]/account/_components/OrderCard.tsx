@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
+import { useRenderedLocale } from '@/components/LocaleProvider';
 import Link from '@/components/LocalizedLink';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -30,6 +31,7 @@ const Detail = ({ label, value }: { label: string; value: string | number | null
 
 const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
   const t = useTranslations('account');
+  const locale = useRenderedLocale();
   const statusLabels = t.raw('orderStatus') as Record<string, string>;
   const {
     financialStatus,
@@ -88,7 +90,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
     details.push({ label: t('phone'), value: phone });
   }
   if (typeof order.processedAt === 'string') {
-    details.push({ label: t('processedAt'), value: formatDate(order.processedAt) });
+    details.push({ label: t('processedAt'), value: formatDate(order.processedAt, locale) });
   }
   if (shippingAddress?.name) {
     details.push({ label: t('shippingTo'), value: shippingAddress.formatted.join(', ') });
@@ -96,7 +98,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
   if (typeof order.canceledAt === 'string' && typeof cancelReason === 'string') {
     details.push(
       { label: t('cancelReason'), value: cancelReason },
-      { label: t('canceledAt'), value: formatDate(order.canceledAt) },
+      { label: t('canceledAt'), value: formatDate(order.canceledAt, locale) },
     );
   }
 
@@ -121,7 +123,7 @@ const OrderCard = ({ order }: { order: OrderFieldsFragment }) => {
               </div>
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-body-sm text-secondary">
                 {typeof order.processedAt === 'string' && (
-                  <span>{formatDate(order.processedAt)}</span>
+                  <span>{formatDate(order.processedAt, locale)}</span>
                 )}
                 {totalPrice && (
                   <span className="font-medium text-foreground tabular-nums">
